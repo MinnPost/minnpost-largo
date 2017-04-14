@@ -6,7 +6,7 @@
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
- * @package Largo
+ * @package MinnPost Largo
  */
 
 ?>
@@ -14,7 +14,7 @@
 	</div><!-- #content -->
 
 	<nav id="footer-primary" class="footer-navigation" role="navigation">
-		<button class="menu-toggle" aria-controls="footer-primary" aria-expanded="false"><?php esc_html_e( 'Primary Footer', 'largo' ); ?></button>
+		<button class="menu-toggle" aria-controls="footer-primary" aria-expanded="false"><?php esc_html_e( 'Primary Footer', 'minnpost-largo' ); ?></button>
 		<?php wp_nav_menu(
 			array(
 				'theme_location' => 'footer_primary',
@@ -27,7 +27,7 @@
 	</nav><!-- #footer-primary -->
 
 	<nav id="footer-secondary" class="footer-navigation" role="navigation">
-		<button class="menu-toggle" aria-controls="footer-secondary" aria-expanded="false"><?php esc_html_e( 'Secondary Footer', 'largo' ); ?></button>
+		<button class="menu-toggle" aria-controls="footer-secondary" aria-expanded="false"><?php esc_html_e( 'Secondary Footer', 'minnpost-largo' ); ?></button>
 		<?php wp_nav_menu(
 			array(
 				'theme_location' => 'footer_secondary',
@@ -41,9 +41,9 @@
 
 	<footer id="colophon" class="site-footer" role="contentinfo">
 		<div class="site-info">
-			<a href="<?php echo esc_url( __( 'https://wordpress.org/', 'largo' ) ); ?>"><?php printf( esc_html__( 'Proudly powered by %s', 'largo' ), 'WordPress' ); ?></a>
+			<a href="<?php echo esc_url( __( 'https://wordpress.org/', 'minnpost-largo' ) ); ?>"><?php printf( esc_html__( 'Proudly powered by %s', 'minnpost-largo' ), 'WordPress' ); ?></a>
 			<span class="sep"> | </span>
-			<?php printf( esc_html__( 'Theme: %1$s by %2$s.', 'largo' ), 'largo', '<a href="https://automattic.com/" rel="designer">inn_nerds</a>' ); ?>
+			<?php printf( esc_html__( 'Theme: %1$s by %2$s.', 'minnpost-largo' ), 'minnpost-largo', '<a href="https://automattic.com/" rel="designer">inn_nerds</a>' ); ?>
 		</div><!-- .site-info -->
 	</footer><!-- #colophon -->
 </div><!-- #page -->
