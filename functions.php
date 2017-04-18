@@ -13,13 +13,12 @@ if ( ! function_exists( 'minnpost_menus' ) ) :
 		// Add Your Menu Locations
 		register_nav_menus(
 			array(
-				'footer_primary' => __( 'Footer Primary' ), 
-				'footer_secondary' => __( 'Footer Secondary' ),
-				'minnpost_network' => __( 'Network Menu' ),
-				'support_minnpost' => __( 'Support Menu' ),
-				'top_menu' => __( 'Top Menu' ),
-				'secondary_links' => __( 'Secondary' ),
-				'primary_links' => __( 'Primary' ),
+				'footer_primary' => __( 'Footer Primary' ), // main footer. about, advertise, member benefits, etc
+				'footer_secondary' => __( 'Footer Secondary' ), // bottom of footer. careers, etc
+				'minnpost_network' => __( 'Network Menu' ), // social networks, rss
+				'support_minnpost' => __( 'Support Menu' ), // the support box next to the top banner ad
+				'secondary_links' => __( 'Secondary' ), // that weird nav next to logo with columns, weather, events, support
+				'primary_links' => __( 'Primary' ), // main nav below logo
 			)
 		);
 		unregister_nav_menu( 'menu-1' );

@@ -23,6 +23,19 @@
 	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'minnpost-largo' ); ?></a>
 
 	<header id="masthead" class="site-header" role="banner">
+			[ad up here]
+
+			<nav id="navigation-support" class="special-navigation" role="navigation">
+				<?php wp_nav_menu(
+					array(
+						'theme_location' => 'support_minnpost',
+						'menu_id' => 'support-minnpost',
+						'depth' => 1,
+						'container' => false,
+						'walker' => new Minnpost_Walker_Nav_Menu,
+					)
+				); ?>
+			</nav>
 		<div class="site-branding">
 			<?php
 			if ( is_front_page() && is_home() ) : ?>
@@ -39,7 +52,31 @@
 			endif; ?>
 		</div><!-- .site-branding -->
 
-		<nav id="site-navigation" class="main-navigation" role="navigation">
+		<nav id="navigation-secondary" class="secondary-navigation" role="navigation">
+			<?php wp_nav_menu(
+				array(
+					'theme_location' => 'minnpost_network',
+					'menu_id' => 'minnpost-network',
+					'depth' => 1,
+					'container' => false,
+					'walker' => new Minnpost_Walker_Nav_Menu,
+				)
+			); ?>
+
+			<?php get_search_form(); ?>
+
+			<?php wp_nav_menu(
+				array(
+					'theme_location' => 'secondary_links',
+					'menu_id' => 'secondary-links',
+					'depth' => 1,
+					'container' => false,
+					'walker' => new Minnpost_Walker_Nav_Menu,
+				)
+			); ?>
+		</nav>
+
+		<nav id="navigation-primary" class="main-navigation" role="navigation">
 			<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'minnpost-largo' ); ?></button>
 			<?php wp_nav_menu(
 				array(

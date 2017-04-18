@@ -13,7 +13,7 @@
 
 	</div><!-- #content -->
 
-	<nav id="footer-primary" class="footer-navigation" role="navigation">
+	<nav id="footer-primary" class="secondary-navigation" role="navigation">
 		<button class="menu-toggle" aria-controls="footer-primary" aria-expanded="false"><?php esc_html_e( 'Primary Footer', 'minnpost-largo' ); ?></button>
 		<?php wp_nav_menu(
 			array(
@@ -26,7 +26,7 @@
 		); ?>
 	</nav><!-- #footer-primary -->
 
-	<nav id="footer-secondary" class="footer-navigation" role="navigation">
+	<nav id="footer-secondary" class="secondary-navigation" role="navigation">
 		<button class="menu-toggle" aria-controls="footer-secondary" aria-expanded="false"><?php esc_html_e( 'Secondary Footer', 'minnpost-largo' ); ?></button>
 		<?php wp_nav_menu(
 			array(
