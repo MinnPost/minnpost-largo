@@ -35,5 +35,8 @@
     "gulp-util": "~3",
     "gulp-wp-pot": "~2",
     "gulp.spritesmith": "~3"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
   }
 }
