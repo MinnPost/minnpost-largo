@@ -44,9 +44,9 @@ require get_stylesheet_directory() . '/inc/template-tags.php';
 //require get_stylesheet_directory() . '/inc/extras.php';
 
 /**
- * Customizer additions.
+ * Custom ad providers for the ad-code-manager plugin
  */
-//require get_stylesheet_directory() . '/inc/customizer/customizer.php';
+require get_stylesheet_directory() . '/inc/custom-ad-providers.php';
 
 /**
  * Load Jetpack compatibility file.
