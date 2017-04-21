@@ -10,6 +10,7 @@ const del = require( 'del' );
 const eslint = require( 'gulp-eslint' );
 const gulp = require( 'gulp' );
 const gutil = require( 'gulp-util' );
+const globbing = require( 'gulp-css-globbing' );
 const imagemin = require( 'gulp-imagemin' );
 const mqpacker = require( 'css-mqpacker' );
 const neat = require( 'bourbon-neat' ).includePaths;
@@ -31,13 +32,13 @@ const wpPot = require( 'gulp-wp-pot' );
 // Set assets paths.
 const paths = {
 	'css': [ './*.css', '!*.min.css' ],
-	'icons': 'assets/images/svg-icons/*.svg',
-	'images': [ 'assets/images/*', '!assets/images/*.svg' ],
+	'icons': 'assets/img/svg-icons/*.svg',
+	'images': [ 'assets/img/*', '!assets/img/*.svg' ],
 	'php': [ './*.php', './**/*.php' ],
 	'sass': 'sass/**/*.scss',
-	'concat_scripts': 'assets/scripts/concat/*.js',
-	'scripts': [ 'assets/scripts/*.js', '!assets/scripts/*.min.js', '!assets/scripts/customizer.js' ],
-	'sprites': 'assets/images/sprites/*.png'
+	'concat_scripts': 'assets/js/concat/*.js',
+	'scripts': [ 'assets/js/*.js', '!assets/js/*.min.js', '!assets/js/customizer.js' ],
+	'sprites': 'assets/img/sprites/*.png'
 };
 
 /**
@@ -82,9 +83,15 @@ gulp.task( 'postcss', [ 'clean:styles' ], () =>
 		// Wrap tasks in a sourcemap.
 		.pipe( sourcemaps.init() )
 
+			// glob files together
+			.pipe(globbing({
+		        // Configure it to use SCSS files
+		        extensions: ['.scss']
+		    }))
+
 			// Compile Sass using LibSass.
 			.pipe( sass( {
-				'includePaths': [].concat( bourbon, neat ),
+				//'includePaths': [].concat( bourbon, neat ),
 				'errLogToConsole': true,
 				'outputStyle': 'expanded' // Options: nested, expanded, compact, compressed
 			} ) )
@@ -127,7 +134,7 @@ gulp.task( 'cssnano', [ 'postcss' ], () =>
  * Delete the svg-icons.svg before we minify, concat.
  */
 gulp.task( 'clean:icons', () =>
-	del( [ 'assets/images/svg-icons.svg' ] )
+	del( [ 'assets/img/svg-icons.svg' ] )
 );
 
 /**
@@ -163,7 +170,7 @@ gulp.task( 'svg', [ 'clean:icons' ], () =>
 		} ) )
 
 		// Save svg-icons.svg.
-		.pipe( gulp.dest( 'assets/images/' ) )
+		.pipe( gulp.dest( 'assets/img/' ) )
 		.pipe( browserSync.stream() )
 );
 
@@ -180,14 +187,14 @@ gulp.task( 'imagemin', () =>
 			'progressive': true,
 			'interlaced': true
 		} ) )
-		.pipe( gulp.dest( 'assets/images' ) )
+		.pipe( gulp.dest( 'assets/img' ) )
 );
 
 /**
  * Delete the sprites.png before rebuilding sprite.
  */
 gulp.task( 'clean:sprites', () => {
-	del( [ 'assets/images/sprites.png' ] )
+	del( [ 'assets/img/sprites.png' ] )
 } );
 
 /**
@@ -200,11 +207,11 @@ gulp.task( 'spritesmith', [ 'clean:sprites' ], () =>
 		.pipe( plumber( {'errorHandler': handleErrors} ) )
 		.pipe( spritesmith( {
 			'imgName': 'sprites.png',
-			'cssName': '../../assets/sass/base/_sprites.scss',
-			'imgPath': 'assets/images/sprites.png',
+			'cssName': '../../../sass/02_molecule/_m-sprites.scss',
+			'imgPath': 'assets/img/sprites.png',
 			'algorithm': 'binary-tree'
 		} ) )
-		.pipe( gulp.dest( 'assets/images/' ) )
+		.pipe( gulp.dest( 'assets/img/' ) )
 		.pipe( browserSync.stream() )
 );
 
@@ -238,7 +245,7 @@ gulp.task( 'concat', () =>
 		.pipe( sourcemaps.write() )
 
 		// Save project.js
-		.pipe( gulp.dest( 'assets/scripts' ) )
+		.pipe( gulp.dest( 'assets/js' ) )
 		.pipe( browserSync.stream() )
 );
 
@@ -253,7 +260,7 @@ gulp.task( 'uglify', [ 'concat' ], () =>
 		.pipe( uglify( {
 			'mangle': false
 		} ) )
-		.pipe( gulp.dest( 'assets/scripts' ) )
+		.pipe( gulp.dest( 'assets/js' ) )
 );
 
 /**
@@ -301,10 +308,10 @@ gulp.task( 'sass:lint', () =>
  */
 gulp.task( 'js:lint', () =>
 	gulp.src( [
-		'assets/scripts/concat/*.js',
-		'assets/scripts/*.js',
-		'!assets/scripts/project.js',
-		'!assets/scripts/*.min.js',
+		'assets/js/concat/*.js',
+		'assets/js/*.js',
+		'!assets/js/project.js',
+		'!assets/js/*.min.js',
 		'!Gruntfile.js',
 		'!Gulpfile.js',
 		'!node_modules/**'

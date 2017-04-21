@@ -37,6 +37,7 @@
     "gulp.spritesmith": "~3"
   },
   "devDependencies": {
-    "gulp": "^3.9.1"
+    "gulp": "^3.9.1",
+    "gulp-css-globbing": "^0.1.9",
   }
 }
