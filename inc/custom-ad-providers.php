@@ -47,13 +47,40 @@ function add_theme_caps() {
 
 add_filter( 'acm_output_html_after_tokens_processed', 'minnpost_no_ad_users', 10, 2 );
 function minnpost_no_ad_users( $output_html, $tag_id = NULL ) {
+
+	if ( $tag_id === 'TopRight' && $output_html === '' ) {
+		// get the support nav item if there is not an ad
+		if ( ! current_user_can( 'browse_without_ads' ) ) {
+			$placeholder = '';
+		} else {
+			$placeholder = ' appnexus-ad-placeholder';
+			$placeholder = '';
+		}
+		$default_top_right =
+		'<div class="appnexus-ad ad-topright ad-support' . $placeholder . '">
+			<nav id="navigation-support" class="special-navigation" role="navigation">' .
+				wp_nav_menu(
+					array(
+						'theme_location' => 'support_minnpost',
+						'menu_id' => 'support-minnpost',
+						'depth' => 1,
+						'container' => false,
+						'walker' => new Minnpost_Walker_Nav_Menu,
+						'echo' => false
+					)
+				) . 
+			'</nav>
+		</div>';
+		return $default_top_right;
+	}
+
 	if ( ! current_user_can( 'browse_without_ads' ) ) {
 		return $output_html;
 	} else {
 		if ( $tag_id === 'appnexus_head' ) {
 			return '';
 		} else {
-			return '<div class="appnexus-ad-placeholder ad-'. sanitize_title( $tag_id ) . '">AD: ' . $tag_id . '</div>';
+			return '<div class="appnexus-ad appnexus-ad-placeholder ad-'. sanitize_title( $tag_id ) . '">AD: ' . $tag_id . '</div>';
 		}
 	}
 }
