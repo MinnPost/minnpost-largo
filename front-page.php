@@ -13,8 +13,8 @@
  */
 
 get_header(); ?>
-
-	<div id="primary" class="content-area">
+		
+	<div id="primary" class="gi-9 g g-12up">
 		<main id="main" class="site-main" role="main">
 
 		<?php
@@ -25,11 +25,16 @@ get_header(); ?>
 			while ( $the_query->have_posts() ) : $the_query->the_post();
 				get_template_part( 'template-parts/content', 'featured' );
 			endwhile;
-		else : // I'm not sure it's possible to have no posts when this page is shown, but WTH.
+		else : // I'm not sure it's possible to have no posts when this page is shown
 			get_template_part( 'template-parts/content', 'none' );
 		endif; ?>
 
 		</main><!-- #main -->
+
+		<aside id="content-sidebar" class="content-sidebar">
+			glean sidebar here
+		</aside>
+
 	</div><!-- #primary -->
 
 <?php

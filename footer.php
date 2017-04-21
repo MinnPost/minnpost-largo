@@ -11,42 +11,38 @@
 
 ?>
 
-	</div><!-- #content -->
+	<footer id="site-footer" class="g g-12up gi-12 o-footer" role="contentinfo">
 
-	<nav id="footer-primary" class="secondary-navigation" role="navigation">
-		<button class="menu-toggle" aria-controls="footer-primary" aria-expanded="false"><?php esc_html_e( 'Primary Footer', 'minnpost-largo' ); ?></button>
-		<?php wp_nav_menu(
-			array(
-				'theme_location' => 'footer_primary',
-				'menu_id' => 'footer-primary',
-				'depth' => 1,
-				'container' => false,
-				'walker' => new Minnpost_Walker_Nav_Menu,
-			)
-		); ?>
-	</nav><!-- #footer-primary -->
+		<nav id="footer-primary" class="secondary-navigation" role="navigation">
+			<?php wp_nav_menu(
+				array(
+					'theme_location' => 'footer_primary',
+					'menu_id' => 'footer-primary',
+					'depth' => 1,
+					'container' => false,
+					'walker' => new Minnpost_Walker_Nav_Menu,
+				)
+			); ?>
+		</nav><!-- #footer-primary -->
 
-	<nav id="footer-secondary" class="secondary-navigation" role="navigation">
-		<button class="menu-toggle" aria-controls="footer-secondary" aria-expanded="false"><?php esc_html_e( 'Secondary Footer', 'minnpost-largo' ); ?></button>
-		<?php wp_nav_menu(
-			array(
-				'theme_location' => 'footer_secondary',
-				'menu_id' => 'footer-secondary',
-				'depth' => 1,
-				'container' => false,
-				'walker' => new Minnpost_Walker_Nav_Menu,
-			)
-		); ?>
-	</nav><!-- #footer-secondary -->
+		<nav id="footer-secondary" class="secondary-navigation" role="navigation">
+			<?php wp_nav_menu(
+				array(
+					'theme_location' => 'footer_secondary',
+					'menu_id' => 'footer-secondary',
+					'depth' => 1,
+					'container' => false,
+					'walker' => new Minnpost_Walker_Nav_Menu,
+				)
+			); ?>
+		</nav><!-- #footer-secondary -->
+	
+		<div class="company-info vcard">
+			<p><span class="fn">MinnPost</span> | <span class="adr"><span class="street-address">900 6th Avenue SE</span> | <span class="locality">Minneapolis</span>, <span class="region">MN</span> <span class="postal-code">55414</span> | <span class="tel">612.455.6950</span></span></p>
+		</div><!-- .company-info -->
 
-	<footer id="colophon" class="site-footer" role="contentinfo">
-		<div class="site-info">
-			<a href="<?php echo esc_url( __( 'https://wordpress.org/', 'minnpost-largo' ) ); ?>"><?php printf( esc_html__( 'Proudly powered by %s', 'minnpost-largo' ), 'WordPress' ); ?></a>
-			<span class="sep"> | </span>
-			<?php printf( esc_html__( 'Theme: %1$s by %2$s.', 'minnpost-largo' ), 'minnpost-largo', '<a href="https://automattic.com/" rel="designer">inn_nerds</a>' ); ?>
-		</div><!-- .site-info -->
-	</footer><!-- #colophon -->
-</div><!-- #page -->
+	</footer>
+
 
 <?php wp_footer(); ?>
 

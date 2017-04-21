@@ -19,88 +19,72 @@
 </head>
 
 <body <?php body_class(); ?>>
-<div id="page" class="site">
-	<a class="skip-link screen-reader-text" href="#content"><?php esc_html_e( 'Skip to content', 'minnpost-largo' ); ?></a>
 
-	<header id="masthead" class="site-header" role="banner">
-			[ad up here]
+	<div class="m-ad-region m-ad-region-leaderboard">
+		<div class="g g-12up gi12">
+			<?php do_action( 'acm_tag', 'Top' ); ?>
+			<?php do_action( 'acm_tag', 'TopRight' ); ?>
+		</div>
+	</div>
 
-			<nav id="navigation-support" class="special-navigation" role="navigation">
+	<header id="masthead" class="g g-12up gi-12 o-header" role="banner">
+		<div class="m-ad-region m-ad-region-topleft">
+			<?php do_action( 'acm_tag', 'TopLeft' ); ?>
+		</div>
+		<div class="gi-12">
+			<div class="site-branding">
+				<a class="logo" rel="home" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php bloginfo( 'name' ); ?></a>
+			</div><!-- .site-branding -->
+
+			<nav id="navigation-secondary" class="secondary-navigation" role="navigation">
 				<?php wp_nav_menu(
 					array(
-						'theme_location' => 'support_minnpost',
-						'menu_id' => 'support-minnpost',
+						'theme_location' => 'minnpost_network',
+						'menu_id' => 'minnpost-network',
+						'depth' => 1,
+						'container' => false,
+						'walker' => new Minnpost_Walker_Nav_Menu,
+					)
+				); ?>
+
+				<?php get_search_form(); ?>
+
+				<?php wp_nav_menu(
+					array(
+						'theme_location' => 'secondary_links',
+						'menu_id' => 'secondary-links',
 						'depth' => 1,
 						'container' => false,
 						'walker' => new Minnpost_Walker_Nav_Menu,
 					)
 				); ?>
 			</nav>
-		<div class="site-branding">
-			<?php
-			if ( is_front_page() && is_home() ) : ?>
-				<h1 class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></h1>
-			<?php else : ?>
-				<p class="site-title"><a href="<?php echo esc_url( home_url( '/' ) ); ?>" rel="home"><?php bloginfo( 'name' ); ?></a></p>
-			<?php
-			endif;
+		</div>
 
-			$description = get_bloginfo( 'description', 'display' );
-			if ( $description || is_customize_preview() ) : ?>
-				<p class="site-description"><?php echo $description; /* WPCS: xss ok. */ ?></p>
-			<?php
-			endif; ?>
-		</div><!-- .site-branding -->
-
-		<nav id="navigation-secondary" class="secondary-navigation" role="navigation">
-			<?php wp_nav_menu(
-				array(
-					'theme_location' => 'minnpost_network',
-					'menu_id' => 'minnpost-network',
-					'depth' => 1,
-					'container' => false,
-					'walker' => new Minnpost_Walker_Nav_Menu,
-				)
-			); ?>
-
-			<?php get_search_form(); ?>
-
-			<?php wp_nav_menu(
-				array(
-					'theme_location' => 'secondary_links',
-					'menu_id' => 'secondary-links',
-					'depth' => 1,
-					'container' => false,
-					'walker' => new Minnpost_Walker_Nav_Menu,
-				)
-			); ?>
-		</nav>
-
-		<nav id="navigation-primary" class="main-navigation" role="navigation">
-			<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'minnpost-largo' ); ?></button>
-			<?php wp_nav_menu(
-				array(
-					'theme_location' => 'primary_links',
-					'menu_id' => 'primary-links',
-					'depth' => 2,
-					'container' => false,
-					'walker' => new Minnpost_Walker_Nav_Menu,
-				)
-			); ?>
-			<?php wp_nav_menu(
-				array(
-					'theme_location' => 'primary_links',
-					'menu_id' => 'primary-links',
-					'depth' => 2,
-					'container' => false,
-					'walker' => new Minnpost_Walker_Nav_Menu,
-					'sub_menu' => true
-				)
-			); ?>
-		</nav><!-- #site-navigation -->
-
+		<div class="gi-12">
+			<nav id="navigation-primary" class="main-navigation" role="navigation">
+				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'minnpost-largo' ); ?></button>
+				<?php wp_nav_menu(
+					array(
+						'theme_location' => 'primary_links',
+						'menu_id' => 'primary-links',
+						'depth' => 1,
+						'container' => false,
+						'walker' => new Minnpost_Walker_Nav_Menu,
+					)
+				); ?>
+				<?php wp_nav_menu(
+					array(
+						'theme_location' => 'primary_links',
+						'menu_id' => 'primary-links',
+						'depth' => 2,
+						'container' => false,
+						'walker' => new Minnpost_Walker_Nav_Menu,
+						'sub_menu' => true
+					)
+				); ?>
+			</nav><!-- #site-navigation -->
+		</div>
 
 
 	</header><!-- #masthead -->
-
-	<div id="content" class="site-content">
