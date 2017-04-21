@@ -1,0 +1,25 @@
+a {
+	color: $color__action-color;
+	text-decoration: underline;
+
+	&:visited {
+		color: $color__action-color;
+	}
+
+	&:active,
+	&:focus,
+	&:hover {
+		color: darken($color__action-color, 15%);
+		text-decoration: underline;
+	}
+
+	&:active,
+	&:focus {
+		outline: none;
+	}
+
+	&.active {
+		color: $color__black;
+	}
+
+}

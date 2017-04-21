@@ -1,0 +1,109 @@
+// color config
+$_color-base-gray: rgb(122,122,122); // 7a7a7a
+$_color-base-red: rgb(128,16,25); // 801018
+$_color-base-blue: rgb(0,132,168); // 0084a8
+$palettes: (
+    grey: (
+        base:  $_color-base-gray,
+        light: lighten($_color-base-gray, 10%),
+        dark: darken($_color-base-gray, 10%)
+    ),
+    red: (
+        base:  $_color-base-red,
+        light: lighten($_color-base-red, 10%),
+        dark: darken($_color-base-red, 10%)
+    ),
+    blue: (
+        base:  $_color-base-blue,
+        light: lighten($_color-base-blue, 10%),
+        dark: darken($_color-base-blue, 10%)
+    ),
+    purple: (
+        base:   rgb(42,40,80),
+        light:  rgb(51,46,140),
+        dark:   rgb(40,38,65)
+    ),
+);
+
+// Color Names
+$color__black: #000;
+$color__white: #fff;
+$color__dark-gray: #333;
+
+// Font Colors
+$color__base-background-color: #fff;
+$color__base-font-color: $color__dark-gray;
+$color__heading-font-color: $color__dark-gray;
+$color__action-color: palette(red);
+
+// Brand colors
+$color__minnpost-red: palette(red);
+$color__minnpost-black: #1a1818;
+$color__minnpost-white: #f0f0f5;
+$color__minnpost-blue: #1d70a4;
+
+// Grays
+$color__gray-lightest: #cdcdd0;
+$color__gray-light: #ababab;
+$color__gray-med: palette(gray);
+$color__gray-dark: #404040;
+$color__gray-darkest: #282828;
+
+// Membership levels
+$color__minnpost-bronze: #cd7f32;
+$color__minnpost-silver: #c0c0c0;
+$color__minnpost-gold: #ffd700;
+$color__minnpost-platinum: #e5e4e2;
+
+// more colors
+$color__minnpost-green: #469B61;
+$color__minnpost-red-error: lighten(palette(red), 10%);
+
+
+
+
+$color__background-body: #fff;
+$color__background-screen: #f1f1f1;
+$color__background-hr: #ccc;
+$color__background-button: #e6e6e6;
+$color__background-pre: #eee;
+$color__background-ins: #fff9c0;
+
+$color__text-screen: #21759b;
+$color__text-input: #666;
+$color__text-input-focus: #111;
+$color__link: #801019;
+$color__link-visited: purple;
+$color__link-hover: midnightblue;
+$color__text-main: #404040;
+
+$color__border-button: #ccc #ccc #bbb;
+$color__border-button-hover: #ccc #bbb #aaa;
+$color__border-button-focus: #aaa #bbb #bbb;
+$color__border-input: #ccc;
+$color__border-abbr: #666;
+
+
+
+// site structure
+
+$max-width-page: 975px;
+
+$grid-gap: 10px;
+
+// Neat Breakpoints
+$small-screen: 480px;
+$medium-screen: 640px;
+$nav-breaks: 805px;
+$large-screen: 860px;
+
+$medium-screen-up: new-breakpoint(min-width $medium-screen 4);
+$large-screen-up: new-breakpoint(min-width $large-screen 8);
+
+
+$size__site-main: 100%;
+$size__site-sidebar: 25%;
+
+$min-width-full-nav: 37.5em;
+
+

@@ -1,0 +1,26 @@
+.appnexus-ad {
+	&.appnexus-ad-placeholder {
+		text-align: center;
+		background-color: $color__black;
+		color: $color__white;
+	}
+}
+
+.ad-top {
+	&.appnexus-ad-placeholder {
+		min-height: 75px;
+		padding: 30px 0;
+	}
+}
+
+.ad-topright {
+	&.appnexus-ad-placeholder {
+		padding: 30px 0;
+	}
+	&.ad-support {
+		min-height: 90px;
+		&.appnexus-ad-placeholder {
+			padding: 0;
+		}
+	}
+}

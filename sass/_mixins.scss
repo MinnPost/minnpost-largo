@@ -1,0 +1,36 @@
+// Palette function,
+@function palette($palette, $tone: 'base') {
+    @return map-get(map-get($palettes, $palette), $tone);
+}
+
+// used this way
+//a {
+    //color: palette(purple);
+    //&:hover {
+        //color: palette(purple, light);
+    //}
+//}
+
+// hide text
+@mixin hide-text {
+	text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+
+@mixin gi-nums($n, $max) {
+	%num-#{$n} {
+	    @content;
+	}
+	$i: $n;
+	@while $i <= $max {
+	    .gi-#{$i} {
+	        grid-column: col-start / span $i;
+	    }
+	    $i: $i+$n;
+	}
+}
+
+// used like this
+// @include gi-nums(1, 12);

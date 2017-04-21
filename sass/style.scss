@@ -40,24 +40,28 @@ Nicolas Gallagher and Jonathan Neal http://necolas.github.com/normalize.css/
 	## Galleries
 --------------------------------------------------------------*/
 
-@import "variables-site/variables-site";
-@import "mixins/mixins-master";
+@import "mixins"; // put mixins first because they get used in color variable calculations
+@import "variables";
 
 /*--------------------------------------------------------------
-# Normalize
+# Pattern Lab patterns
 --------------------------------------------------------------*/
 
-// using largo version for now
+@import "00_base/*";
+@import "01_atom/*";
+@import "02_molecule/*";
+@import "03_organism/*";
+@import "04_template/*";
+@import "05_page/*";
 
-/*--------------------------------------------------------------
-# Typography
---------------------------------------------------------------*/
-//@import "typography/typography";
 
-/*--------------------------------------------------------------
-# Elements
---------------------------------------------------------------*/
-//@import "elements/elements";
+
+
+
+
+
+
+
 
 /*--------------------------------------------------------------
 # Forms
@@ -65,9 +69,14 @@ Nicolas Gallagher and Jonathan Neal http://necolas.github.com/normalize.css/
 //@import "forms/forms";
 
 /*--------------------------------------------------------------
+# Grid
+--------------------------------------------------------------*/
+//@import "modules/grid";
+
+/*--------------------------------------------------------------
 # Navigation
 --------------------------------------------------------------*/
-@import "navigation/navigation";
+//@import "navigation/navigation";
 
 /*--------------------------------------------------------------
 # Accessibility

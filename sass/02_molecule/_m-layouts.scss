@@ -1,0 +1,25 @@
+.m-ad-region-leaderboard .g {
+	grid-row: 1;
+}
+
+.o-header, .o-footer {
+	grid-row: 2;
+}
+.o-footer {
+	grid-row: 4;
+}
+
+.site-sidebar {
+	grid-column: col-start 10 / span 3;
+    grid-row: 3;
+}
+
+.site-main {
+	grid-column: col-start / span 9;
+	grid-row: 1;
+}
+.content-sidebar {
+	grid-column: col-start 10 / span 3;
+	grid-row: 1;
+}
+
