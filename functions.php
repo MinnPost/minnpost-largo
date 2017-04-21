@@ -2,11 +2,11 @@
 
 // child theme must use get_stylesheet_directory in place of get_template_directory
 
-add_action( 'wp_enqueue_scripts', 'enqueue_parent_styles' );
-
+// use parent styles?
+/*add_action( 'wp_enqueue_scripts', 'enqueue_parent_styles' );
 function enqueue_parent_styles() {
    wp_enqueue_style( 'parent-style', get_template_directory_uri().'/style.min.css' );
-}
+}*/
 
 if ( ! function_exists( 'minnpost_menus' ) ) :
 	function minnpost_menus() {
@@ -27,6 +27,11 @@ if ( ! function_exists( 'minnpost_menus' ) ) :
 	add_action( 'init', 'minnpost_menus' );
 
 endif;
+
+/**
+ * Custom fields for this theme.
+ */
+require get_stylesheet_directory() . '/inc/custom-fields.php';
 
 /**
  * Implement the Custom Header feature.
