@@ -12,6 +12,11 @@ html {
 body {
 	//max-width: $max-width-page;
 	margin: 0 auto;
+	color: $color__base-font-color;
+	font-family: $font__serif;
+	font-size: $base-font-size;
+	line-height: $base-line-height;
+	background: $color__base-background-color;
 }
 
 blockquote, q {
