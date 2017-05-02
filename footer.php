@@ -13,7 +13,7 @@
 
 	<footer id="site-footer" class="g g-12up gi-12 o-footer" role="contentinfo">
 
-		<nav id="footer-primary" class="secondary-navigation" role="navigation">
+		<nav id="footer-primary" class="m-secondary-navigation" role="navigation">
 			<?php wp_nav_menu(
 				array(
 					'theme_location' => 'footer_primary',
@@ -25,7 +25,7 @@
 			); ?>
 		</nav><!-- #footer-primary -->
 
-		<nav id="footer-secondary" class="secondary-navigation" role="navigation">
+		<nav id="footer-secondary" class="m-secondary-navigation" role="navigation">
 			<?php wp_nav_menu(
 				array(
 					'theme_location' => 'footer_secondary',

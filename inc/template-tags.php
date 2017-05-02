@@ -191,6 +191,14 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
             $url = $item->url;
         }
 
+        if ( isset( $args->item_classes ) && $args->item_classes === 'values' ) {
+        	if ( $active_class !== '' ) {
+    			$active_class .= ' ' . sanitize_title( $item->title );
+    		} else {
+    			$active_class = ' class="' . sanitize_title( $item->title ) . '"';
+    		}
+    	}
+
         $output .= '<li'. $active_class . '><a href="' . $url . '">' . $item->title . '</a></li>';
     }
 
