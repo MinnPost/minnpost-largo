@@ -1,8 +1,21 @@
 .appnexus-ad {
+	position: relative;
 	&.appnexus-ad-placeholder {
 		text-align: center;
 		background-color: $color__black;
 		color: $color__white;
+	}
+	.ad-overlay {
+		position: absolute;
+		background-color: $color__black;
+		color: $color__white;
+		padding: 2px;
+		font-size: .5em;
+		text-align: center;
+	}
+	img {
+		max-width: none;
+		max-height: none;
 	}
 }
 
@@ -14,13 +27,48 @@
 }
 
 .ad-topright {
+	height: auto;
+	max-width: 228px;
 	&.appnexus-ad-placeholder {
 		padding: 30px 0;
 	}
+	.ad-overlay {
+		top: 0;
+		right: 0;
+	}
 	&.ad-support {
-		min-height: 90px;
+		height: 90px;
 		&.appnexus-ad-placeholder {
 			padding: 0;
+		}
+		nav {
+			background: $color__minnpost-black;
+			width: 228px;
+			text-align: left;
+			font-family: $font__sans;
+			h2 {
+				text-indent: 200%;
+				white-space: nowrap;
+				overflow: hidden;
+				background: $color__minnpost-red url('assets/img/support.png') no-repeat 14px 10px;
+				margin: 0;
+				padding: 3px 0;
+			}
+			ul, li {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+			}
+			li {
+				padding: 8px 14px;
+				font-weight: bold;
+			}
+			a {
+				color: $color__white;
+				&:after {
+					content: ' ▸';
+				}
+			}
 		}
 	}
 }
