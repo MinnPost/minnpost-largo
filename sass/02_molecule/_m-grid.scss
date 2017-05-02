@@ -9,6 +9,9 @@
 .g-12up {
     grid-template-columns: repeat(12, [col-start] 1fr);
 }
+.g-2up {
+    grid-template-columns: repeat(2, [col-start] 1fr);
+}
 
 .gi-12 {
     grid-column: col-start / span 12;

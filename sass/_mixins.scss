@@ -17,6 +17,7 @@
 	white-space: nowrap;
 	overflow: hidden;
 }
+// @include hide-text;
 
 
 @mixin gi-nums($n, $max) {

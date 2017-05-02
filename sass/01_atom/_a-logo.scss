@@ -1,4 +1,8 @@
-.logo {
+.a-site-branding {
+	font-size: 300%;
+	margin-top: 26px;
+}
+.a-logo {
 	background-image: url('assets/img/logo.png');
 	background-size: contain;
 	background-repeat: no-repeat;
@@ -11,16 +15,16 @@
 }
 // media queries
 @media screen and (min-width: $small-screen) {
-	.logo {
+	.a-logo {
 		width: 264px;
 		height: 37px;
 	}
 }
 @media screen and (min-width: $nav-breaks) {
-	.logo {
+	.a-logo {
 		float: left;
 		width: 330px;
 		height: 46px;
-		margin-top: 1.5em;
+		//margin-top: 1.5em;
 	}
 }

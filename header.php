@@ -31,24 +31,25 @@
 		<div class="m-ad-region m-ad-region-topleft">
 			<?php do_action( 'acm_tag', 'TopLeft' ); ?>
 		</div>
-		<div class="gi-12">
-			<div class="site-branding">
-				<a class="logo" rel="home" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php bloginfo( 'name' ); ?></a>
-			</div><!-- .site-branding -->
+		<div class="g gi-12 g-12up">
+			<div class="a-site-branding">
+				<a class="a-logo" rel="home" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php bloginfo( 'name' ); ?></a>
+			</div><!-- .a-site-branding -->
 
-			<nav id="navigation-secondary" class="secondary-navigation" role="navigation">
+			<nav id="navigation-ext" class="m-secondary-navigation g g-12up" role="navigation">
 				<?php wp_nav_menu(
 					array(
 						'theme_location' => 'minnpost_network',
 						'menu_id' => 'minnpost-network',
 						'depth' => 1,
 						'container' => false,
+						'item_classes' => 'values',
 						'walker' => new Minnpost_Walker_Nav_Menu,
 					)
 				); ?>
 
 				<?php get_search_form(); ?>
-
+			
 				<?php wp_nav_menu(
 					array(
 						'theme_location' => 'secondary_links',
@@ -58,11 +59,11 @@
 						'walker' => new Minnpost_Walker_Nav_Menu,
 					)
 				); ?>
-			</nav>
+			</nav><!-- #navigation-ext -->
 		</div>
 
 		<div class="gi-12">
-			<nav id="navigation-primary" class="main-navigation" role="navigation">
+			<nav id="navigation-primary" class="m-main-navigation" role="navigation">
 				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'minnpost-largo' ); ?></button>
 				<?php wp_nav_menu(
 					array(
@@ -73,17 +74,20 @@
 						'walker' => new Minnpost_Walker_Nav_Menu,
 					)
 				); ?>
-				<?php wp_nav_menu(
+			</nav><!-- #site-navigation -->
+
+			<nav id="navigation-featured" class="m-featured-navigation" role="navigation">
+				Featured: <?php wp_nav_menu(
 					array(
 						'theme_location' => 'primary_links',
-						'menu_id' => 'primary-links',
+						'menu_id' => 'featured-links',
 						'depth' => 2,
 						'container' => false,
 						'walker' => new Minnpost_Walker_Nav_Menu,
 						'sub_menu' => true
 					)
 				); ?>
-			</nav><!-- #site-navigation -->
+			</nav><!-- #featured-navigation -->
 		</div>
 
 
