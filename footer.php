@@ -11,6 +11,8 @@
 
 ?>
 
+	</div>
+
 	<footer id="site-footer" class="g g-12up gi-12 o-footer" role="contentinfo">
 
 		<nav id="footer-primary" class="m-secondary-navigation" role="navigation">

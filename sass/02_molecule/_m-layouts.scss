@@ -9,17 +9,22 @@
 	grid-row: 4;
 }
 
+#primary {
+	//max-width: 640px;
+}
+
 .site-sidebar {
-	grid-column: col-start 10 / span 3;
-    grid-row: 3;
+	grid-column: col 10 / span 3;
+    //grid-row: 3;
+    grid-row: 1;
 }
 
 .site-main {
-	grid-column: col-start / span 9;
+//	grid-column: col-start / span 10;
 	grid-row: 1;
 }
 .content-sidebar {
-	grid-column: col-start 10 / span 3;
+	grid-column: col 11 / span 5;
 	grid-row: 1;
 }
 

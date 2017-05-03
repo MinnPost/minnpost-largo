@@ -6,6 +6,9 @@
   grid-gap: $grid-gap;
 }
 
+.g-16up {
+    grid-template-columns: repeat(16, [col-start] 1fr);
+}
 .g-12up {
     grid-template-columns: repeat(12, [col-start] 1fr);
 }
@@ -16,6 +19,12 @@
 .gi-12 {
     grid-column: col-start / span 12;
 }
+.gi-10 {
+    grid-column: col-start / span 10;
+}
 .gi-9 {
     grid-column: col-start / span 9;
+}
+.gi-5 {
+	grid-column: col-start / span 5;
 }

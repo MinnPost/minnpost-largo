@@ -1,0 +1,9 @@
+.o-homepage-listing {
+	main {
+		grid-column: col-start / span 10;
+	}
+	.content-sidebar {
+		grid-column: 11 / 17;
+		padding-left: 35px;
+	}
+}

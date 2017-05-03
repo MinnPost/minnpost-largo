@@ -49,9 +49,21 @@ require get_stylesheet_directory() . '/inc/template-tags.php';
 //require get_stylesheet_directory() . '/inc/extras.php';
 
 /**
+ * Custom sidebars
+ */
+require get_stylesheet_directory() . '/inc/sidebars.php';
+
+/**
+ * Widgets
+ */
+require get_stylesheet_directory() . '/inc/widgets/glean.php';
+
+/**
  * Custom ad providers for the ad-code-manager plugin
  */
 require get_stylesheet_directory() . '/inc/custom-ad-providers.php';
+
+
 
 /**
  * Load Jetpack compatibility file.
