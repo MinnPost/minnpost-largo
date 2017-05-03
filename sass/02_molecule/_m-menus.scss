@@ -10,32 +10,6 @@
 		line-height: normal;
 	}
 }
-.m-featured-navigation {
-	display: flex;
-	justify-content: flex-start;
-	line-height: normal;
-	padding: 8px;
-	background: $color__minnpost-white;
-	.a-nav-label {
-		text-transform: uppercase;
-		font-weight: normal;
-		font-size: 76.9%;
-		line-height: 1.3em;
-		padding: 2px 10px 0 0;
-	}
-	li {
-		line-height: 1.4em;
-		font-weight: bold;
-		font-size: 92.3%;
-		&.support-minnpost a {
-			color: $color__minnpost-red;
-		}
-	}
-	a {
-		color: $color__minnpost-black;
-		padding-right: 15px;
-	}
-}
 
 #minnpost-network {
 	margin: 2px 0 10px 50px;
@@ -127,3 +101,32 @@
 		color: $color__minnpost-black;
 	}
 }
+
+.m-featured-navigation {
+	display: flex;
+	justify-content: flex-start;
+	line-height: normal;
+	padding: 8px;
+	background: $color__minnpost-white;
+	.a-nav-label {
+		text-transform: uppercase;
+		font-weight: normal;
+		font-size: 76.9%;
+		line-height: 1.3em;
+		padding: 2px 10px 0 0;
+	}
+	li {
+		line-height: 1.4em;
+		font-weight: bold;
+		font-size: 92.3%;
+		&.support-minnpost a {
+			color: $color__minnpost-red;
+		}
+	}
+	a {
+		color: $color__minnpost-black;
+		padding-right: 15px;
+	}
+}
+
+// still going to need a menu for login stuff at some point
