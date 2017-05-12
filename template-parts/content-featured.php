@@ -25,24 +25,22 @@
 
 	<?php endif; ?>
 
-	<header class="entry-header">
-		<?php the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' ); ?>
+	<header class="m-entry-header">
+		<?php the_title( '<h3 class="a-entry-title a-entry-title-largeimage"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
 
 		<?php if ( 'post' === get_post_type() ) : ?>
 
-		<div class="entry-meta">
+		<div class="m-entry-meta">
 			By <?php minnpost_posted_by(); ?> | <?php minnpost_posted_on(); ?> <?php minnpost_edit_link(); ?>
 		</div>
 
 		<?php endif; ?>
 
-	</header><!-- .entry-header -->
+	</header><!-- .m-entry-header -->
 
-	<div class="entry-content">
-		<?php
-			the_excerpt();
-		?>
-	</div><!-- .entry-content -->
+	<div class="m-entry-excerpt">
+		<?php the_excerpt(); ?>
+	</div><!-- .m-entry-excerpt -->
 
 
 </article><!-- #post-## -->

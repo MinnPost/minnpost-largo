@@ -13,7 +13,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: header.php:66
+#: header.php:67
 msgid "Primary Menu"
 msgstr ""
 
@@ -22,28 +22,23 @@ msgctxt "post date"
 msgid "%s"
 msgstr ""
 
-#: inc/template-tags.php:33
-msgctxt "post author"
-msgid "by %s"
-msgstr ""
-
-#: inc/template-tags.php:71, inc/template-tags.php:77
+#: inc/template-tags.php:66, inc/template-tags.php:72
 msgid ", "
 msgstr ""
 
-#: inc/template-tags.php:73
+#: inc/template-tags.php:68
 msgid "Posted in %1$s"
 msgstr ""
 
-#: inc/template-tags.php:79
+#: inc/template-tags.php:74
 msgid "Tagged %1$s"
 msgstr ""
 
 #. translators: %s: post title
-#: inc/template-tags.php:86
+#: inc/template-tags.php:81
 msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
-#: inc/template-tags.php:93, inc/template-tags.php:111
+#: inc/template-tags.php:88, inc/template-tags.php:106
 msgid "Edit %s"
 msgstr ""

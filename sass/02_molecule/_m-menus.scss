@@ -59,7 +59,7 @@
 .m-main-navigation {
 	font-size: 123.1%;
 	letter-spacing: 1px;
-	font-family: NimbusSanNovConD-Bol,Helvetica,Arial,Geneva,sans-serif;
+	font-family: $font__headings;
 	font-weight: normal;
 	font-style: normal;
 	font-variant: normal;
@@ -130,3 +130,15 @@
 }
 
 // still going to need a menu for login stuff at some point
+
+.o-footer .m-secondary-navigation {
+	grid-column: col-start / span 12;
+	ul {
+		justify-content: center;
+		li {
+			margin-right: 20px;
+			font-weight: bold;
+			line-height: 1.5em;
+		}
+	}
+}

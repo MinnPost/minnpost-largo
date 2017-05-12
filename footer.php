@@ -39,9 +39,9 @@
 			); ?>
 		</nav><!-- #footer-secondary -->
 	
-		<div class="company-info vcard">
+		<div class="a-company-info vcard">
 			<p><span class="fn">MinnPost</span> | <span class="adr"><span class="street-address">900 6th Avenue SE</span> | <span class="locality">Minneapolis</span>, <span class="region">MN</span> <span class="postal-code">55414</span> | <span class="tel">612.455.6950</span></span></p>
-		</div><!-- .company-info -->
+		</div><!-- .a-company-info -->
 
 	</footer>
 

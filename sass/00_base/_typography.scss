@@ -1,3 +1,16 @@
+p {
+	margin: 0;
+	padding: 0;
+}
+
+p {
+	margin-bottom: 1em;
+}
+
+p:last-child {
+	margin-bottom: 0;
+}
+
 .screen-reader-text {
     clip: rect(1px, 1px, 1px, 1px);
     clip-path: polygon(0px 0px, 0px 0px,0px 0px, 0px 0px);
