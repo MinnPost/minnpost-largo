@@ -6,35 +6,52 @@
  */
 
 if ( ! function_exists( 'minnpost_largo_glean' ) ) :
-	function minnpost_largo_glean($categories, $terms) {
+	function minnpost_largo_glean( $before_title, $title, $after_title, $categories, $terms ) {
+
+		if ( $title ) {
+			echo $before_title . '<a href="' . esc_url( get_category_link( $categories[0] ) ) . '">' . $title . '</a>' . $after_title;
+		}
 
 		$the_query = new WP_Query(
 			array(
 				'posts_per_page' => 2,
 				'cat' => $categories[0],
-				'orderby' => 'date'
+				'orderby' => 'date',
 			)
 		);
 
 		?>
 
 		<?php if ( $the_query->have_posts() ) : ?>
+			<div class="contents">
+				<!-- the loop -->
+				<?php $i = 0; while ( $the_query->have_posts() ) : $the_query->the_post(); ?>
+					<?php if ( $i === 0 ) : ?>
+						<header class="m-entry-header">
+							<?php the_title( '<h3 class="a-entry-title a-spill-entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
 
-			<!-- the loop -->
-			<?php $i = 0; while ( $the_query->have_posts() ) : $the_query->the_post(); ?>
-				<?php if ( $i === 0 ) : ?>
-					<p class="spill-item-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></p>
-					<div class="entry-meta">
-						By <?php minnpost_posted_by(); ?> | <?php minnpost_posted_on(); ?> <?php minnpost_edit_link(); ?>
-					</div>
-				<?php else: ?>
-					<p><a href="<?php the_permalink(); ?>">Read <?php the_date('l A'); ?> edition</a></p>
-				<?php endif; ?>
-			<?php $i++; endwhile; ?>
-			<!-- end of the loop -->
-			<p><a href="<?php echo esc_url( get_category_link( $categories[0] ) ); ?>">More</a></p>
+							<?php if ( 'post' === get_post_type() ) : ?>
 
-			<?php wp_reset_postdata(); ?>
+							<div class="m-entry-meta">
+								By <?php minnpost_posted_by(); ?> | <?php minnpost_posted_on(); ?> <?php minnpost_edit_link(); ?>
+							</div>
+
+							<?php endif; ?>
+
+						</header><!-- .m-entry-header -->
+
+						<div class="m-entry-excerpt">
+							<?php the_excerpt(); ?>
+						</div><!-- .m-entry-excerpt -->
+					<?php else: ?>
+						<p><a href="<?php the_permalink(); ?>">Read <?php the_date('l A'); ?> edition</a></p>
+					<?php endif; ?>
+				<?php $i++; endwhile; ?>
+				<!-- end of the loop -->
+				<p><a href="<?php echo esc_url( get_category_link( $categories[0] ) ); ?>">More</a></p>
+
+				<?php wp_reset_postdata(); ?>
+			</div>
 
 		<?php endif; ?>
 

@@ -1,0 +1,26 @@
+.o-content-sidebar section {
+	margin-bottom: 15px;
+	.widget-title {
+
+	}
+	&.the-glean .widget-title {
+		background: $color__minnpost-red;
+		font-size: 123.1%;
+		text-transform: uppercase;
+		font-family: $font__headings;
+		font-weight: normal;
+		a {
+			display: inline-block;
+			color: $color__white;
+			padding: 10px 16px 5px 15px;
+		}
+	}
+	.contents {
+		padding: 5px 15px 15px 14px;
+		border: 1px solid $color__gray-lightest;
+		border-top: 0;
+	}
+	&.the-glean .contents {
+		
+	}
+}

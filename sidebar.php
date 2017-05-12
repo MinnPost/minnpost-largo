@@ -12,7 +12,7 @@
 }*/
 ?>
 
-<aside id="secondary" class="site-sidebar" role="complementary">
+<aside id="secondary" class="o-site-sidebar" role="complementary">
 	 site sidebar here
 	<?php dynamic_sidebar( 'sidebar-1' ); ?>
 </aside><!-- #secondary -->

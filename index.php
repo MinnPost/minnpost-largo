@@ -51,7 +51,7 @@ get_header(); ?>
 		</main><!-- #main -->
 
 		<?php //if ( is_active_sidebar( 'sidebar-2' ) ) { // also need to put this with the grid class on site-content ?>
-		<aside class="content-sidebar" role="complementary">
+		<aside class="o-content-sidebar" role="complementary">
 			<?php dynamic_sidebar( 'sidebar-2' ); ?>
 		</aside><!-- #secondary -->
 		<?php //} ?>

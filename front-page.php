@@ -33,7 +33,7 @@ get_header(); ?>
 
 		</main><!-- #main -->
 
-		<aside id="content-sidebar" class="content-sidebar">
+		<aside id="content-sidebar" class="o-content-sidebar">
 			<?php dynamic_sidebar( 'sidebar-2' ); ?>
 		</aside>
 
