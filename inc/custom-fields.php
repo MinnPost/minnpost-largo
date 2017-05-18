@@ -18,6 +18,35 @@ use Carbon_Fields\Field;
 
 
 /**
+ * Post properties
+ *
+ * @uses show_on_post_type()
+ * @uses add_fields()
+ * @uses Field::make()
+ */
+Container::make( 'post_meta', 'Image Settings' )->show_on_post_type( 'post' )->add_fields(
+	array(
+		Field::make( 'select', '_mp_image_settings_homepage_image_size', 'Homepage Image Size' )->add_options(
+			array(
+		    	'' => '- None -',
+		    	'medium' => 'Medium',
+		    	'none' => 'Do not display image',
+		    	'large' => 'Large',
+			)
+		)->set_default_value( 'large' ),
+	)
+);
+Container::make( 'post_meta', 'Subtitle Settings' )->show_on_post_type( 'post' )->add_fields(
+	array(
+		Field::make( 'text', '_mp_subtitle_settings_deck', 'Deck' ),
+		Field::make( 'text', '_mp_subtitle_settings_byline', 'Byline' ),
+	)
+);
+
+
+
+
+/**
  * Category properties
  *
  * @uses show_on_taxonomy()
