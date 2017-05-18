@@ -7,15 +7,20 @@
 
 if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 	function minnpost_largo_glean( $before_title, $title, $after_title, $categories, $terms ) {
-
+		if ( ! isset( $categories[0] ) ) {
+			$category = get_category_by_slug( 'glean' );
+			$category = $category->cat_ID;
+		} else {
+			$category = $categories[0];
+		}
 		if ( $title ) {
-			echo $before_title . '<a href="' . esc_url( get_category_link( $categories[0] ) ) . '">' . $title . '</a>' . $after_title;
+			echo $before_title . '<a href="' . esc_url( get_category_link( $category ) ) . '">' . $title . '</a>' . $after_title;
 		}
 
 		$the_query = new WP_Query(
 			array(
 				'posts_per_page' => 2,
-				'cat' => $categories[0],
+				'cat' => $category,
 				'orderby' => 'date',
 			)
 		);
@@ -48,7 +53,7 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 					<?php endif; ?>
 				<?php $i++; endwhile; ?>
 				<!-- end of the loop -->
-				<p><a href="<?php echo esc_url( get_category_link( $categories[0] ) ); ?>">More</a></p>
+				<p><a href="<?php echo esc_url( get_category_link( $category ) ); ?>">More</a></p>
 
 				<?php wp_reset_postdata(); ?>
 			</div>
