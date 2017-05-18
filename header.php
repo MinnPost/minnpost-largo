@@ -86,7 +86,7 @@
 						'container' => false,
 						'walker' => new Minnpost_Walker_Nav_Menu,
 						'item_classes' => 'values',
-						'sub_menu' => true
+						'sub_menu' => true,
 					)
 				); ?>
 			</nav><!-- #featured-navigation -->

@@ -8,25 +8,10 @@ function enqueue_parent_styles() {
    wp_enqueue_style( 'parent-style', get_template_directory_uri().'/style.min.css' );
 }*/
 
-if ( ! function_exists( 'minnpost_menus' ) ) :
-	function minnpost_menus() {
-		// Add Your Menu Locations
-		register_nav_menus(
-			array(
-				'footer_primary' => __( 'Footer Primary' ), // main footer. about, advertise, member benefits, etc
-				'footer_secondary' => __( 'Footer Secondary' ), // bottom of footer. careers, etc
-				'minnpost_network' => __( 'Network Menu' ), // social networks, rss
-				'support_minnpost' => __( 'Support Menu' ), // the support box next to the top banner ad
-				'secondary_links' => __( 'Secondary' ), // that weird nav next to logo with columns, weather, events, support
-				'primary_links' => __( 'Primary' ), // main nav below logo
-			)
-		);
-		unregister_nav_menu( 'menu-1' );
-	}
-
-	add_action( 'init', 'minnpost_menus' );
-
-endif;
+/**
+ * Menu functionality
+ */
+require get_stylesheet_directory() . '/inc/menus.php';
 
 /**
  * Custom fields for this theme.
