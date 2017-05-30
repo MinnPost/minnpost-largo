@@ -96,7 +96,7 @@
 		text-decoration: none;
 		display: inline-block;
 	}
-	li a:hover, li a:focus, li a:active, li.active a {
+	li a:hover, li a:focus, li a:active, li.active a, li.active-parent a {
 		background: $color__minnpost-white;
 		color: $color__minnpost-black;
 	}
@@ -126,6 +126,9 @@
 	a {
 		color: $color__minnpost-black;
 		padding-right: 15px;
+	}
+	li.active a {
+		color: $color__minnpost-red;
 	}
 }
 

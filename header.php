@@ -77,18 +77,20 @@
 			</nav><!-- #site-navigation -->
 
 			<nav id="navigation-featured" class="m-featured-navigation" role="navigation">
-				<span class="a-nav-label">Featured:</span>
-				<?php wp_nav_menu(
-					array(
-						'theme_location' => 'primary_links',
-						'menu_id' => 'featured-links',
-						'depth' => 2,
-						'container' => false,
-						'walker' => new Minnpost_Walker_Nav_Menu,
-						'item_classes' => 'values',
-						'sub_menu' => true,
-					)
-				); ?>
+				<?php if ( ! is_singular() ) : ?>
+					<span class="a-nav-label">Featured:</span>
+					<?php wp_nav_menu(
+						array(
+							'theme_location' => 'primary_links',
+							'menu_id' => 'featured-links',
+							'depth' => 2,
+							'container' => false,
+							'walker' => new Minnpost_Walker_Nav_Menu,
+							'item_classes' => 'values',
+							'sub_menu' => true,
+						)
+					); ?>
+				<?php endif; ?>
 			</nav><!-- #featured-navigation -->
 		</div>
 

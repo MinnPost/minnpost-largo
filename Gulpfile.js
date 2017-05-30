@@ -357,4 +357,4 @@ gulp.task( 'scripts', [ 'uglify' ] );
 gulp.task( 'styles', [ 'cssnano' ] );
 gulp.task( 'sprites', [ 'spritesmith' ] );
 gulp.task( 'lint', [ 'sass:lint', 'js:lint' ] );
-gulp.task( 'default', [ 'sprites', 'i18n', 'icons', 'styles', 'scripts', 'imagemin'] );
+gulp.task( 'default', [ 'i18n', 'icons', 'styles', 'scripts', 'imagemin'] );

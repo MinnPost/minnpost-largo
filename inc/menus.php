@@ -35,15 +35,34 @@ if ( ! function_exists( 'minnpost_wp_nav_menu_objects_sub_menu' ) ) :
 
 			// find the current menu item
 			foreach ( $sorted_menu_items as $menu_item ) {
+
+				$found_top_parent_ID = false;
+				if ( ($menu_item->menu_item_parent == 0 && $menu_item->current_item_ancestor == 1) || ($menu_item->menu_item_parent == 0 && $menu_item->current == 1) ) {
+					$root_id = $menu_item->ID;
+				}
+
+
 				if ( $menu_item->current ) {
 					// set the root id based on whether the current menu item has a parent or not
 					$root_id = ( $menu_item->menu_item_parent ) ? $menu_item->menu_item_parent : $menu_item->ID;
+					//error_log('yes. value is ' . $root_id);
 					break;
+				}/* else {
+					error_log('no. value is ' . $root_id);
+				}*/
+
+				/*
+				* probably don't need this one since we have no sub nav on individual stories
+				if ( 'category' === $menu_item->object && in_category( $menu_item->object_id ) ) {
+					$root_id = $menu_item->ID;
+					$prev_root_id = $menu_item->menu_item_parent;
 				}
+				*/
+
 			}
 
 			// find the top level parent
-			if ( ! isset( $args->direct_parent ) ) {
+			/*if ( ! isset( $args->direct_parent ) ) {
 				$prev_root_id = $root_id;
 				while ( 0 !== (int) $prev_root_id ) {
 					foreach ( $sorted_menu_items as $menu_item ) {
@@ -57,12 +76,17 @@ if ( ! function_exists( 'minnpost_wp_nav_menu_objects_sub_menu' ) ) :
 						}
 					}
 				}
-			}
+			}*/
+
 			$menu_item_parents = array();
 			foreach ( $sorted_menu_items as $key => $item ) {
+
 				// init menu_item_parents
-				if ( $root_id === (int) $item->ID ) {
+				if ( (int) $root_id === (int) $item->ID ) {
 					$menu_item_parents[] = $item->ID;
+				} else if ( (int) $root_id === (int) $item->menu_item_parent) {
+					$menu_item_parents[] = $item->menu_item_parent;
+					break;
 				}
 				if ( in_array( $item->menu_item_parent, $menu_item_parents ) ) {
 					// part of sub-tree: keep!
@@ -93,6 +117,7 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 	}
 
 	public function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
+
 		$classes = array();
 		if ( ! empty( $item->classes ) ) {
 			$classes = (array) $item->classes;
@@ -105,6 +130,15 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 			$active_class = ' class="active-parent"';
 		} elseif ( in_array( 'current-menu-ancestor', $classes ) ) {
 			$active_class = ' class="active-ancestor"';
+		}
+
+		// if we aren't on the main category, remove the active classes for other categories
+		if ( is_singular( 'post' ) ) {
+			$primary_category = get_post_meta( get_the_id(), '_category_permalink', true );
+			$cat_id = $primary_category['category'];
+			if ( $cat_id !== $item->object_id ) {
+				$active_class = '';
+			}
 		}
 
 		$url = '';
