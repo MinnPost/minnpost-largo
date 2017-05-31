@@ -9,7 +9,8 @@ a {
 	&:active,
 	&:focus,
 	&:hover {
-		color: darken($color__action-color, 15%);
+		//color: darken($color__action-color, 15%);
+		color: $color__action-color;
 		text-decoration: underline;
 	}
 

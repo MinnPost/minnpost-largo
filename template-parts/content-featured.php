@@ -9,7 +9,7 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post' ); ?>>
 
 	<?php if ( has_post_thumbnail( get_the_ID() ) ) : ?>
 

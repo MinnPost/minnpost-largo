@@ -28,7 +28,7 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 		?>
 
 		<?php if ( $the_query->have_posts() ) : ?>
-			<div class="contents">
+			<article id="<?php the_ID(); ?>" class="m-post m-post-glean">
 				<!-- the loop -->
 				<?php $i = 0; while ( $the_query->have_posts() ) : $the_query->the_post(); ?>
 					<?php if ( $i === 0 ) : ?>
@@ -53,10 +53,10 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 					<?php endif; ?>
 				<?php $i++; endwhile; ?>
 				<!-- end of the loop -->
-				<p><a href="<?php echo esc_url( get_category_link( $category ) ); ?>">More</a></p>
+				<p class="a-glean-more"><a href="<?php echo esc_url( get_category_link( $category ) ); ?>">More</a></p>
 
 				<?php wp_reset_postdata(); ?>
-			</div>
+			</article>
 
 		<?php endif; ?>
 
