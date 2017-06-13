@@ -40,8 +40,10 @@ Nicolas Gallagher and Jonathan Neal http://necolas.github.com/normalize.css/
 	## Galleries
 --------------------------------------------------------------*/
 
-@import "mixins"; // put mixins first because they get used in color variable calculations
+@import "bourbon";
+@import "functions"; // put functions first because they get used in color variable calculations
 @import "variables";
+@import "mixins";
 
 /*--------------------------------------------------------------
 # Pattern Lab patterns

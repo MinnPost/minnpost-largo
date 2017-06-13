@@ -1,16 +1,3 @@
-// Palette function,
-@function palette($palette, $tone: 'base') {
-    @return map-get(map-get($palettes, $palette), $tone);
-}
-
-// used this way
-//a {
-    //color: palette(purple);
-    //&:hover {
-        //color: palette(purple, light);
-    //}
-//}
-
 // hide text
 @mixin hide-text {
 	text-indent: 110%;
@@ -35,3 +22,13 @@
 
 // used like this
 // @include gi-nums(1, 12);
+
+
+@mixin outer-container($local-max-width: $max-width) {
+  @include clearfix;
+  max-width: $local-max-width;
+  margin: {
+    left: auto;
+    right: auto;
+  }
+}
