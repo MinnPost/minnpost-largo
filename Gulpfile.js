@@ -92,6 +92,7 @@ gulp.task( 'postcss', [ 'clean:styles' ], () =>
 			// Compile Sass using LibSass.
 			.pipe( sass( {
 				//'includePaths': [].concat( bourbon, neat ),
+				'includePaths': [].concat( bourbon ),
 				'errLogToConsole': true,
 				'outputStyle': 'expanded' // Options: nested, expanded, compact, compressed
 			} ) )
