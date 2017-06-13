@@ -135,7 +135,11 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 		// if we aren't on the main category, remove the active classes for other categories
 		if ( is_singular( 'post' ) ) {
 			$primary_category = get_post_meta( get_the_id(), '_category_permalink', true );
-			$cat_id = $primary_category['category'];
+			if ( isset( $primary_category['category'] ) ) {
+				$cat_id = $primary_category['category'];
+			} else {
+				$cat_id = 0;
+			}
 			if ( $cat_id !== $item->object_id ) {
 				$active_class = '';
 			}
