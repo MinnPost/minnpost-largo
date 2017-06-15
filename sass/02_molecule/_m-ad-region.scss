@@ -1,8 +1,8 @@
 .m-ad-region {
-	.g {
+	/*.g {
 		grid-template-columns: 1fr 228px;
 		grid-gap: 19px;
-	}
+	}*/
 	&.m-ad-region-leaderboard {
 		background: $color__gray-lightest;
 		padding: 10px 0;
@@ -19,3 +19,4 @@
 		text-align: left;
 	}
 }
+
