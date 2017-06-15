@@ -13,7 +13,7 @@
 
 	</div>
 
-	<footer id="site-footer" class="g g-12up gi-12 o-footer" role="contentinfo">
+	<footer id="site-footer" class="o-footer" role="contentinfo">
 
 		<nav id="footer-primary" class="m-secondary-navigation" role="navigation">
 			<?php wp_nav_menu(
