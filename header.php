@@ -27,16 +27,16 @@
 		</div>
 	</div>
 
-	<header id="masthead" class="g g-12up gi-12 o-header" role="banner">
-		<div class="m-ad-region m-ad-region-topleft">
-			<?php do_action( 'acm_tag', 'TopLeft' ); ?>
-		</div>
-		<div class="g gi-12 g-12up">
+	<header id="masthead" class="o-header" role="banner">
+		<div class="o-wrapper o-wrapper-site-header">
+			<div class="m-ad-region m-ad-region-topleft">
+				<?php do_action( 'acm_tag', 'TopLeft' ); ?>
+			</div>
 			<div class="a-site-branding">
 				<a class="a-logo" rel="home" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php bloginfo( 'name' ); ?></a>
 			</div><!-- .a-site-branding -->
 
-			<nav id="navigation-ext" class="m-secondary-navigation g g-12up" role="navigation">
+			<nav id="navigation-ext" class="m-secondary-navigation" role="navigation">
 				<?php wp_nav_menu(
 					array(
 						'theme_location' => 'minnpost_network',
@@ -62,7 +62,7 @@
 			</nav><!-- #navigation-ext -->
 		</div>
 
-		<div class="gi-12">
+		<div class="o-wrapper o-wrapper-site-navigation">
 			<nav id="navigation-primary" class="m-main-navigation" role="navigation">
 				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'minnpost-largo' ); ?></button>
 				<?php wp_nav_menu(
@@ -94,7 +94,6 @@
 			</nav><!-- #featured-navigation -->
 		</div>
 
-
 	</header><!-- #masthead -->
 
-	<div class="g g-12up o-wrapper">
+	<div class="o-wrapper">

@@ -1,0 +1,13 @@
+.o-wrapper {
+	max-width: 100%;
+	margin-left: auto;
+	margin-right: auto;
+	position: relative;
+}
+
+// media queries for wrapper
+@media screen and (min-width: $max-width-page) {
+	.o-wrapper {
+		@include outer-container($max-width-page);
+	}
+}
