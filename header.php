@@ -21,7 +21,7 @@
 <body <?php body_class(); ?>>
 
 	<div class="m-ad-region m-ad-region-leaderboard">
-		<div class="g g-12up gi12">
+		<div class="o-wrapper">
 			<?php do_action( 'acm_tag', 'Top' ); ?>
 			<?php do_action( 'acm_tag', 'TopRight' ); ?>
 		</div>
