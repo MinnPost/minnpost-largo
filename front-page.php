@@ -14,7 +14,7 @@
 
 get_header(); ?>
 		
-	<div id="primary" class="o-homepage-listing">
+	<div id="primary" class="m-layout-primary o-homepage-listing">
 		<main id="main" class="site-main m-homepage-zones" role="main">
 
 			<section class="m-zone m-zone-homepage-top">
@@ -33,7 +33,7 @@ get_header(); ?>
 
 		</main><!-- #main -->
 
-		<aside id="content-sidebar" class="o-content-sidebar">
+		<aside id="content-sidebar" class="o-content-sidebar" role="complementary">
 			<?php dynamic_sidebar( 'sidebar-2' ); ?>
 		</aside>
 
