@@ -154,7 +154,6 @@
 @media screen and (min-width: $nav-breaks) {
 	#navigation-ext {
 		width: 55%;
-		float: right;
 		text-align: right;
 		height: auto;
 		line-height: normal;
@@ -169,6 +168,6 @@
 
 @media screen and (min-width: $max-width-page) {
 	#navigation-ext {
-		width: 65%;
+		width: 66%;
 	}
 }
