@@ -13,6 +13,14 @@
 ?>
 
 <aside id="secondary" class="o-site-sidebar" role="complementary">
-	 site sidebar here
+	 <div class="m-ad-region m-ad-region-sidebar">
+		<?php do_action( 'acm_tag', 'Right1' ); ?>
+	</div>
 	<?php dynamic_sidebar( 'sidebar-1' ); ?>
+	<div class="m-ad-region m-ad-region-sidebar">
+		<?php do_action( 'acm_tag', 'Middle' ); ?>
+	</div>
+	<div class="m-ad-region m-ad-region-sidebar">
+		<?php do_action( 'acm_tag', 'BottomRight' ); ?>
+	</div>
 </aside><!-- #secondary -->
