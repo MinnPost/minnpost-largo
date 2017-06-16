@@ -153,7 +153,7 @@
 
 @media screen and (min-width: $nav-breaks) {
 	#navigation-ext {
-		width: 55%;
+		width: 55%; // maybe can use auto here
 		text-align: right;
 		height: 71px;
 		line-height: normal;
@@ -168,6 +168,6 @@
 
 @media screen and (min-width: $max-width-page) {
 	#navigation-ext {
-		width: 66%;
+		width: auto;
 	}
 }
