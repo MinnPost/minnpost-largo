@@ -36,7 +36,7 @@ const paths = {
 	'images': [ 'assets/img/*', '!assets/img/*.svg' ],
 	'php': [ './*.php', './**/*.php' ],
 	'sass': 'sass/**/*.scss',
-	'concat_scripts': 'assets/js/concat/*.js',
+	'concat_scripts': 'assets/js/src/*.js',
 	'scripts': [ 'assets/js/*.js', '!assets/js/*.min.js', '!assets/js/customizer.js' ],
 	'sprites': 'assets/img/sprites/*.png'
 };
@@ -240,7 +240,7 @@ gulp.task( 'concat', () =>
 		} ) )
 
 		// Concatenate partials into a single script.
-		.pipe( concat( 'project.js' ) )
+		.pipe( concat( 'minnpost.js' ) )
 
 		// Append the sourcemap to project.js.
 		.pipe( sourcemaps.write() )
