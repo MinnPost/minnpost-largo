@@ -14,7 +14,7 @@
 
 get_header(); ?>
 
-	<div id="primary" class="gi-9 g g-12up">
+	<div id="primary">
 		<main id="main" class="site-main" role="main">
 
 		<?php

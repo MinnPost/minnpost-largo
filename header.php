@@ -96,4 +96,4 @@
 
 	</header><!-- #masthead -->
 
-	<div class="o-wrapper">
+	<div id="content" class="o-wrapper o-wrapper-content">

@@ -14,7 +14,7 @@
 
 get_header(); ?>
 		
-	<div id="primary" class="gi-10 g g-16up o-homepage-listing">
+	<div id="primary" class="o-homepage-listing">
 		<main id="main" class="site-main m-homepage-zones" role="main">
 
 			<section class="m-zone m-zone-homepage-top">
