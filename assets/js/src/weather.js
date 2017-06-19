@@ -32,7 +32,7 @@ function minnpostWeather() {
     client_secret: 'gS3Bmj4vuhA9ZvLPaLLtiMdUbg6wcsiokHTMIYoS'
   };
   
-  /*if (document.location.hostname === 'stage.minnpost.com') {
+  if (document.location.hostname === 'stage.minnpost.com') {
     api = {
       client_id: 'fGr6zBenMa6pU6ahS3RVm',
     client_secret: 'IWdo9yudrvvKgGwzLsioVpdytiU6lLxfY2mjwd3R'
@@ -42,7 +42,7 @@ function minnpostWeather() {
       client_id: 'fGr6zBenMa6pU6ahS3RVm',
       client_secret: 'IWdo9yudrvvKgGwzLsioVpdytiU6lLxfY2mjwd3R'
     };
-  }*/
+  }
 
   var request = '//api.aerisapi.com/observations/?p=:auto';
   request += '&client_id=' + api.client_id + '&client_secret=' + api.client_secret;
