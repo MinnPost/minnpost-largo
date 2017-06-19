@@ -37,6 +37,7 @@
 			</div><!-- .a-site-branding -->
 
 			<nav id="navigation-ext" class="m-secondary-navigation" role="navigation">
+				<div class="a-minnpost-weather" style="display:none"></div>
 				<?php wp_nav_menu(
 					array(
 						'theme_location' => 'minnpost_network',
