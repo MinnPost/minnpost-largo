@@ -30,8 +30,11 @@ if ( ! function_exists( 'minnpost_wp_nav_menu_objects_sub_menu' ) ) :
 
 	// filter_hook function to react on sub_menu flag
 	function minnpost_wp_nav_menu_objects_sub_menu( $sorted_menu_items, $args ) {
+
 		if ( isset( $args->sub_menu ) ) {
-			$root_id = 0;
+			if ( is_home() ) {
+				$root_id = 0;
+			}
 
 			// find the current menu item
 			foreach ( $sorted_menu_items as $menu_item ) {
@@ -41,42 +44,17 @@ if ( ! function_exists( 'minnpost_wp_nav_menu_objects_sub_menu' ) ) :
 					$root_id = $menu_item->ID;
 				}
 
-
 				if ( $menu_item->current ) {
 					// set the root id based on whether the current menu item has a parent or not
 					$root_id = ( $menu_item->menu_item_parent ) ? $menu_item->menu_item_parent : $menu_item->ID;
-					//error_log('yes. value is ' . $root_id);
 					break;
-				}/* else {
-					error_log('no. value is ' . $root_id);
-				}*/
-
-				/*
-				* probably don't need this one since we have no sub nav on individual stories
-				if ( 'category' === $menu_item->object && in_category( $menu_item->object_id ) ) {
-					$root_id = $menu_item->ID;
-					$prev_root_id = $menu_item->menu_item_parent;
 				}
-				*/
-
 			}
 
-			// find the top level parent
-			/*if ( ! isset( $args->direct_parent ) ) {
-				$prev_root_id = $root_id;
-				while ( 0 !== (int) $prev_root_id ) {
-					foreach ( $sorted_menu_items as $menu_item ) {
-						if ( $menu_item->ID === $prev_root_id ) {
-							$prev_root_id = $menu_item->menu_item_parent;
-							// don't set the root_id to 0 if we've reached the top of the menu
-							if ( 0 !== (int) $prev_root_id ) {
-								$root_id = $menu_item->menu_item_parent;
-							}
-							break;
-						}
-					}
-				}
-			}*/
+			// fix places that are not part of any category
+			if ( ! isset( $root_id ) ) {
+				return;
+			}
 
 			$menu_item_parents = array();
 			foreach ( $sorted_menu_items as $key => $item ) {

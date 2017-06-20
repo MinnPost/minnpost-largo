@@ -35,7 +35,6 @@
 			<div class="a-site-branding">
 				<a class="a-logo" rel="home" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php bloginfo( 'name' ); ?></a>
 			</div><!-- .a-site-branding -->
-
 			<nav id="navigation-ext" class="m-secondary-navigation" role="navigation">
 				<div class="a-minnpost-weather" style="display:none"></div>
 				<?php wp_nav_menu(
@@ -48,9 +47,7 @@
 						'walker' => new Minnpost_Walker_Nav_Menu,
 					)
 				); ?>
-
 				<?php get_search_form(); ?>
-			
 				<?php wp_nav_menu(
 					array(
 						'theme_location' => 'secondary_links',
@@ -62,7 +59,6 @@
 				); ?>
 			</nav><!-- #navigation-ext -->
 		</div>
-
 		<div class="o-wrapper o-wrapper-site-navigation">
 			<nav id="navigation-primary" class="m-main-navigation" role="navigation">
 				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'minnpost-largo' ); ?></button>
@@ -76,25 +72,28 @@
 					)
 				); ?>
 			</nav><!-- #site-navigation -->
-
-			<nav id="navigation-featured" class="m-featured-navigation" role="navigation">
-				<?php if ( ! is_singular() ) : ?>
+			<?php
+				$featured_menu = wp_nav_menu(
+					array(
+						'theme_location' => 'primary_links',
+						'menu_id' => 'featured-links',
+						'depth' => 2,
+						'container' => false,
+						'walker' => new Minnpost_Walker_Nav_Menu,
+						'item_classes' => 'values',
+						'sub_menu' => true,
+						'echo' => false,
+				        'fallback_cb' => '__return_false'
+					)
+				);
+			?>
+			<?php if ( ! empty ( $featured_menu ) ) { ?>
+			    <nav id="navigation-featured" class="m-featured-navigation" role="navigation">
 					<span class="a-nav-label">Featured:</span>
-					<?php wp_nav_menu(
-						array(
-							'theme_location' => 'primary_links',
-							'menu_id' => 'featured-links',
-							'depth' => 2,
-							'container' => false,
-							'walker' => new Minnpost_Walker_Nav_Menu,
-							'item_classes' => 'values',
-							'sub_menu' => true,
-						)
-					); ?>
-				<?php endif; ?>
-			</nav><!-- #featured-navigation -->
+					<?php echo $featured_menu; ?>
+				</nav><!-- #featured-navigation -->
+			<?php } ?>
 		</div>
-
 	</header><!-- #masthead -->
 
 	<div id="content" class="o-wrapper o-wrapper-content">
