@@ -1,0 +1,15 @@
+{
+    "name": "minnpost-largo",
+    "description": "MinnPost Largo theme",
+    "type": "wordpress-theme",
+    "authors": [
+        {
+            "name": "MinnPost",
+            "email": "code@minnpost.com"
+        }
+    ],
+    "require": {
+        "brain/cortex": "~1.0.0"
+    },
+    "minimum-stability": "dev"
+}
