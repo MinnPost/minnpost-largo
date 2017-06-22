@@ -9,6 +9,11 @@ function enqueue_parent_styles() {
 }*/
 
 /**
+ * Composer Libraries
+ */
+require get_stylesheet_directory() . '/vendor/autoload.php';
+
+/**
  * Menu functionality
  */
 require get_stylesheet_directory() . '/inc/menus.php';
