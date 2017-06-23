@@ -1,0 +1,22 @@
+.o-site-sidebar section {
+	margin-bottom: 15px;
+	border: 1px solid $color__gray-lightest;
+	padding: 15px;
+	background: $color__minnpost-white;
+	&.minnpost-spills-widget .a-widget-title {
+		background: $color__minnpost-red;
+		font-size: 123.1%;
+		text-transform: uppercase;
+		font-family: $font__headings;
+		font-weight: normal;
+		a {
+			display: inline-block;
+			color: $color__white;
+			padding: 10px 16px 5px 16px;
+		}
+	}
+	.m-widget-contents {
+		margin: 0;
+		background: $color__white;
+	}
+}
