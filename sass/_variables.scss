@@ -5,8 +5,8 @@ $_color-base-blue: rgb(0,132,168); // 0084a8
 $palettes: (
     grey: (
         base:  $_color-base-gray,
-        light: lighten($_color-base-gray, 10%),
-        dark: darken($_color-base-gray, 10%)
+        light: lighten($_color-base-gray, 10%), // 949494
+        dark: darken($_color-base-gray, 10%) // 616161
     ),
     red: (
         base:  $_color-base-red,
@@ -48,6 +48,7 @@ $color__gray-light: #ababab;
 $color__gray-med: palette(gray);
 $color__gray-dark: #404040;
 $color__gray-darkest: #282828;
+$color__gray-meta: #555556;
 
 // Membership levels
 $color__minnpost-bronze: #cd7f32;
