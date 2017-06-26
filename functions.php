@@ -19,6 +19,11 @@ require get_stylesheet_directory() . '/vendor/autoload.php';
 require get_stylesheet_directory() . '/inc/menus.php';
 
 /**
+ * Custom content types
+ */
+require get_stylesheet_directory() . '/inc/custom-types.php';
+
+/**
  * Custom fields for this theme.
  */
 require get_stylesheet_directory() . '/inc/custom-fields.php';
@@ -36,7 +41,7 @@ require get_stylesheet_directory() . '/inc/template-tags.php';
 /**
  * Custom functions that act independently of the theme templates.
  */
-//require get_stylesheet_directory() . '/inc/extras.php';
+require get_stylesheet_directory() . '/inc/extras.php';
 
 /**
  * Custom sidebars
