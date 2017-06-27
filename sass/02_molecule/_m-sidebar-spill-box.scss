@@ -1,10 +1,10 @@
 .o-site-sidebar section {
 	margin-bottom: 20px;
-	border: 1px solid $color__gray-lightest;
-	padding: 15px;
-	background: $color__minnpost-white;
+	outline: 1px solid $color__gray-lightest;
+	//padding: 15px;
+	border: 15px solid $color__minnpost-white;
+	background: $color__white;
 	&.m-minnpost-spills-widget .a-widget-title {
-		background: $color__white;
 		margin: 0;
 		padding: 20px;
 		padding-bottom: 0;
@@ -19,7 +19,6 @@
 	.m-widget-contents {
 		padding: 0 20px;
 		padding-bottom: 10px;
-		background: $color__white;
 	}
 	.m-post-spill {
 		margin: 0.75em 0;
