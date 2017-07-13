@@ -2,12 +2,101 @@
 /**
  * Create custom fields
  *
- * Currently this uses the Carbon Fields plugin
+ * Currently this uses the CMB2 plugin
  *
- * @link https://github.com/htmlburger/carbon-fields
+ * @link https://github.com/WebDevStudios/CMB2
  *
  * @package MinnPost Largo
  */
+
+/**
+ * Newsletter fields
+ *
+ * @return array
+ */
+
+
+/*function jb_pre_get_posts( WP_Query $wp_query ) {
+	if ( in_array( $wp_query->get( 'post_type' ), array( 'newsletter', 'post' ) ) ) {
+		$wp_query->set( 'update_post_meta_cache', false );
+	}
+}
+
+// Only do this for admin
+if ( is_admin() ) {
+	add_action( 'pre_get_posts', 'jb_pre_get_posts' );
+}
+*/
+
+add_action( 'cmb2_init', 'cmb2_newsletter_posts' );
+function cmb2_newsletter_posts() {
+
+	$recent_newsletter_args = array(
+	    'post_type' =>'newsletter',
+	    'posts_per_page' => 1
+	);
+	$most_recent_newsletter = wp_get_recent_posts( $recent_newsletter_args, OBJECT );
+	$most_recent_newsletter_modified = $most_recent_newsletter[0]->post_modified;
+	$newsletter_post_args = array(
+		'posts_per_page' => -1, 
+		'post_type' => 'post',
+		'orderby' => 'modified',
+	    'order' => 'DESC',
+	    'date_query' => array(
+			array(
+				'column' => 'post_modified',
+				'after'  => $most_recent_newsletter_modified,
+			),
+		),
+	);
+
+	$newsletter_top_posts = new_cmb2_box( array(
+		'id'           => '_mp_newsletter_top_posts',
+		'title'        => __( 'Top Stories', 'cmb2' ),
+		'object_types' => array( 'newsletter' ), // Post type
+		'context'      => 'normal',
+		'priority'     => 'high',
+		'show_names'   => false, // Show field names on the left
+	) );
+	$newsletter_top_posts->add_field( array(
+		'name'    => __( 'Top Stories', 'cmb2' ),
+		'desc'    => __( 'Drag posts from the left column to the right column to attach them to this page.<br />You may rearrange the order of the posts in the right column by dragging and dropping.', 'cmb2' ),
+		'id'      => '_mp_newsletter_top_posts',
+		'type'    => 'custom_attached_posts',
+		'options' => array(
+			'show_thumbnails' => false, // Show thumbnails on the left
+			'filter_boxes'    => true, // Show a text box for filtering the results
+			'query_args'      => $newsletter_post_args,
+		),
+	) );
+
+	$newsletter_more_posts = new_cmb2_box( array(
+		'id'           => '_mp_newsletter_more_posts',
+		'title'        => __( 'More Stories', 'cmb2' ),
+		'object_types' => array( 'newsletter' ), // Post type
+		'context'      => 'normal',
+		'priority'     => 'high',
+		'show_names'   => false, // Show field names on the left
+	) );
+	$newsletter_more_posts->add_field( array(
+		'name'    => __( 'More Stories', 'cmb2' ),
+		'desc'    => __( 'Drag posts from the left column to the right column to attach them to this page.<br />You may rearrange the order of the posts in the right column by dragging and dropping.', 'cmb2' ),
+		'id'      => '_mp_newsletter_more_posts',
+		'type'    => 'custom_attached_posts',
+		'options' => array(
+			'show_thumbnails' => false, // Show thumbnails on the left
+			'filter_boxes'    => true, // Show a text box for filtering the results
+			'query_args'      => $newsletter_post_args,
+		),
+	) );
+
+}
+
+
+
+
+
+
 
 
 /**
