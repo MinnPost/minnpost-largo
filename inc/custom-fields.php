@@ -37,7 +37,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 	add_action( 'cmb2_init', 'cmb2_newsletter_fields' );
 	function cmb2_newsletter_fields() {
 
-		$post_type = 'newsletter';
+		$object_type = 'newsletter';
 		$prefix = '_mp_newsletter_';
 
 		/**
@@ -46,7 +46,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 		$newsletter_setup = new_cmb2_box( array(
 			'id'            => $prefix . 'setup',
 			'title'         => 'Setup',
-			'object_types'  => array( $post_type ),
+			'object_types'  => array( $object_type ),
 			'context'       => 'after_title',
 			'priority'      => 'high',
 		) );
@@ -74,13 +74,13 @@ if ( function_exists( 'create_newsletter' ) ) :
 		 * For posts on newsletters
 		 */
 		$recent_newsletter_args = array(
-		    'post_type' => $post_type,
-		    'posts_per_page' => 1
+		    'post_type' => $object_type,
+		    'posts_per_page' => 1,
 		);
 		$most_recent_newsletter = wp_get_recent_posts( $recent_newsletter_args, OBJECT );
 		$most_recent_newsletter_modified = $most_recent_newsletter[0]->post_modified;
 		$newsletter_post_args = array(
-			'posts_per_page' => -1, 
+			'posts_per_page' => -1,
 			'post_type' => 'post',
 			'orderby' => 'modified',
 		    'order' => 'DESC',
@@ -94,7 +94,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 		$newsletter_top_posts = new_cmb2_box( array(
 			'id'           => $prefix . 'top_posts',
 			'title'        => __( 'Top Stories', 'cmb2' ),
-			'object_types' => array( $post_type ), // Post type
+			'object_types' => array( $object_type ), // Post type
 			'context'      => 'normal',
 			'priority'     => 'high',
 			'show_names'   => false, // Show field names on the left
@@ -119,7 +119,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 		$newsletter_more_posts = new_cmb2_box( array(
 			'id'           => $prefix . 'more_posts',
 			'title'        => __( 'More Stories', 'cmb2' ),
-			'object_types' => array( $post_type ), // Post type
+			'object_types' => array( $object_type ), // Post type
 			'context'      => 'normal',
 			'priority'     => 'high',
 			'show_names'   => false, // Show field names on the left
@@ -139,69 +139,108 @@ if ( function_exists( 'create_newsletter' ) ) :
 endif;
 
 
+// CMB2 custom fields for posts
+add_action( 'cmb2_init', 'cmb2_post_fields' );
+function cmb2_post_fields() {
+
+	$object_type = 'post';
+
+	/**
+	 * Image settings
+	 */
+	$post_setup = new_cmb2_box( array(
+		'id'            => 'image_settings',
+		'title'         => 'Image Settings',
+		'object_types'  => array( $object_type ),
+		'context'       => 'after_title',
+		'priority'      => 'high',
+	) );
+	$post_setup->add_field( array(
+		'name'       => 'Homepage Image Size',
+		'id'         => '_mp_image_settings_homepage_image_size',
+		'type'       => 'select',
+		'show_option_none' => true,
+		'desc'       => 'Select an option',
+		'default'    => 'large',
+		'options'           => array(
+			'medium' 	    => __( 'Medium', 'cmb2' ),
+			'none'    => __( 'Do not display image', 'cmb2' ),
+			'large' => __( 'Large', 'cmb2' ),
+		),
+	) );
+
+	/**
+	 * Subtitle settings
+	 */
+	$post_setup = new_cmb2_box( array(
+		'id'            => 'subtitle_settings',
+		'title'         => 'Subtitle Settings',
+		'object_types'  => array( $object_type ),
+		'context'       => 'after_title',
+		'priority'      => 'high',
+	) );
+	$post_setup->add_field( array(
+		'name'       => 'Deck',
+		'id'         => '_mp_subtitle_settings_deck',
+		'type'       => 'text',
+	) );
+	$post_setup->add_field( array(
+		'name'       => 'Byline',
+		'id'         => '_mp_subtitle_settings_byline',
+		'type'       => 'text',
+	) );
+
+}
 
 
+// CMB2 custom fields for categories
+add_action( 'cmb2_init', 'cmb2_category_fields' );
+function cmb2_category_fields() {
 
+	$object_type = 'category';
 
-
-/**
- * Define methods to use
- */
-use Carbon_Fields\Container;
-use Carbon_Fields\Field;
-
-
-/**
- * Post properties
- *
- * @uses show_on_post_type()
- * @uses add_fields()
- * @uses Field::make()
- */
-Container::make( 'post_meta', 'Image Settings' )->show_on_post_type( 'post' )->add_fields(
-	array(
-		Field::make( 'select', '_mp_image_settings_homepage_image_size', 'Homepage Image Size' )->add_options(
-			array(
-		    	'' => '- None -',
-		    	'medium' => 'Medium',
-		    	'none' => 'Do not display image',
-		    	'large' => 'Large',
-			)
-		)->set_default_value( 'large' ),
-	)
-);
-Container::make( 'post_meta', 'Subtitle Settings' )->show_on_post_type( 'post' )->add_fields(
-	array(
-		Field::make( 'text', '_mp_subtitle_settings_deck', 'Deck' ),
-		Field::make( 'text', '_mp_subtitle_settings_byline', 'Byline' ),
-	)
-);
-
-
-
-
-/**
- * Category properties
- *
- * @uses show_on_taxonomy()
- * @uses add_fields()
- * @uses Field::make()
- */
-Container::make( 'term_meta', 'Category Properties' )->show_on_taxonomy( 'category' )->add_fields(
-	array(
-		Field::make( 'rich_text', '_mp_category_excerpt', 'Excerpt' ),
-		Field::make( 'rich_text', '_mp_category_sponsorship', 'Sponsorship' ),
-		Field::make( 'image', '_mp_category_thumbnail_id', 'Category Thumbnail' ),
-		Field::make( 'image', '_mp_category_main_image_id', 'Category Main Image' ),
-		Field::make( 'rich_text', '_mp_category_body', 'Body' ),
-	)
-);
+	/**
+	 * Subtitle settings
+	 */
+	$category_setup = new_cmb2_box( array(
+		'id'            => 'category_properties',
+		'title'         => 'Subtitle Settings',
+		'object_types'  => array( $object_type ),
+		'taxonomies'    => array( 'category' ),
+		'new_term_section' => true, // will display in add category section
+	) );
+	$category_setup->add_field( array(
+		'name'       => 'Excerpt',
+		'id'         => '_mp_category_excerpt',
+		'type'       => 'wysiwyg',
+	) );
+	$category_setup->add_field( array(
+		'name'       => 'Sponsorship',
+		'id'         => '_mp_category_sponsorship',
+		'type'       => 'wysiwyg',
+	) );
+	$category_setup->add_field( array(
+		'name'       => 'Category Thumbnail',
+		'id'         => '_mp_category_thumbnail_id',
+		'type'       => 'file',
+	) );
+	$category_setup->add_field( array(
+		'name'       => 'Category Main Image',
+		'id'         => '_mp_category_main_image_id',
+		'type'       => 'file',
+	) );
+	$category_setup->add_field( array(
+		'name'       => 'Body',
+		'id'         => '_mp_category_body',
+		'type'       => 'wysiwyg',
+	) );
+}
 
 if ( ! function_exists( 'remove_default_category_description' ) ) :
-	add_action('admin_head', 'remove_default_category_description');
+	add_action( 'admin_head', 'remove_default_category_description' );
 	function remove_default_category_description() {
 	    global $current_screen;
-	    if ( $current_screen->id == 'edit-category' ) { ?>
+	    if ( 'edit-category' === $current_screen->id ) { ?>
 			<script>
 			jQuery(function($) {
 	        	$('textarea#description, textarea#tag-description').closest('tr.form-field, div.form-field').remove();
