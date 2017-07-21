@@ -202,7 +202,7 @@ function cmb2_post_fields() {
 add_action( 'cmb2_init', 'cmb2_category_fields' );
 function cmb2_category_fields() {
 
-	$object_type = 'category';
+	$object_type = 'term';
 
 	/**
 	 * Subtitle settings
