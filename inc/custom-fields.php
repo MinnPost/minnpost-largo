@@ -9,6 +9,7 @@
  * @package MinnPost Largo
  */
 
+// cmb2_init is the hook that works on rest api; cmb2_admin_init does not; there doesn't seem to be any difference in how often the hooks run though
 
 /**
  * Newsletter fields
@@ -74,8 +75,12 @@ if ( function_exists( 'create_newsletter' ) ) :
 		 * For posts on newsletters
 		 */
 		$recent_newsletter_args = array(
-		    'post_type' => $object_type,
 		    'posts_per_page' => 1,
+		    'numberposts' => 1,
+			'orderby' => 'modified',
+			'order' => 'DESC',
+			'post_type' => $object_type,
+			'post_status' => 'publish',
 		);
 		$most_recent_newsletter = wp_get_recent_posts( $recent_newsletter_args, OBJECT );
 		$most_recent_newsletter_modified = $most_recent_newsletter[0]->post_modified;
