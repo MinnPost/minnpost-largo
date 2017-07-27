@@ -7,6 +7,65 @@
  * @package MinnPost Largo
  */
 
+if ( ! function_exists( 'minnpost_post_image' ) ) :
+	/**
+	 * Outputs story image, whether detail or various kinds of thumbnail, depending on where it is called
+	 */
+	function minnpost_post_image( $size = 'detail' ) {
+
+		$image_url = get_post_meta( get_the_ID(), '_mp_image_settings_main_image', true );
+		$image_id = get_post_meta( get_the_ID(), '_mp_image_settings_main_image_id', true );
+		if ( post_password_required() || is_attachment() || ( ! $image_id && ! $image_url ) ) {
+			return;
+		}
+
+		$caption = wp_get_attachment_caption( $image_id );
+		$credit = get_media_credit_html( $image_id );
+
+		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
+			$image = wp_get_attachment_image( $image_id, $size );
+		} else {
+			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
+		}
+
+		if ( is_singular() ) : ?>
+			<figure class="post-image post-image-<?php echo $size; ?>">
+				<?php echo $image; ?>
+				<?php if ( '' !== $caption || '' !== $credit ) { ?>
+				<figcaption>
+					<?php if ( '' !== $credit ) { ?>
+					<div class="credit"><?php echo $credit; ?></div>
+					<div class="caption"><?php echo $caption; ?></div>
+					<?php } ?>
+				</figcaption>
+				<?php } ?>
+			</figure><!-- .post-image -->
+		<?php else : ?>
+			<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true">
+				<?php
+				if ( is_home() ) :
+					$size = esc_html( get_post_meta( get_the_ID(), '_mp_image_settings_homepage_image_size', true ) );
+					the_post_thumbnail(
+						$size,
+						array(
+							'alt' => the_title_attribute( 'echo=0' ),
+						)
+					);
+				else :
+					the_post_thumbnail(
+						$size,
+						array(
+							'alt' => the_title_attribute( 'echo=0' ),
+						)
+					);
+				endif;
+				?>
+			</a>
+		<?php endif; // End is_singular()
+	}
+endif;
+
 if ( ! function_exists( 'minnpost_posted_on' ) ) :
 	/**
 	 * Prints HTML with meta information for the current post-date/time and author.
@@ -107,47 +166,3 @@ if ( ! function_exists( 'minnpost_edit_link' ) ) :
 		);
 	}
 endif;
-
-
-/**
- * Returns true if a blog has more than 1 category.
- *
- * @return bool
- */
-function minnpost_categorized_blog() {
-	if ( false === ( $all_the_cool_cats = get_transient( 'minnpost_categories' ) ) ) {
-		// Create an array of all the categories that are attached to posts.
-		$all_the_cool_cats = get_categories( array(
-			'fields'     => 'ids',
-			'hide_empty' => 1,
-			// We only need to know if there is more than one category.
-			'number'     => 2,
-		) );
-
-		// Count the number of categories that are attached to the posts.
-		$all_the_cool_cats = count( $all_the_cool_cats );
-
-		set_transient( 'minnpost_categories', $all_the_cool_cats );
-	}
-
-	if ( $all_the_cool_cats > 1 ) {
-		// This blog has more than 1 category so minnpost_categorized_blog should return true.
-		return true;
-	} else {
-		// This blog has only 1 category so minnpost_categorized_blog should return false.
-		return false;
-	}
-}
-
-/**
- * Flush out the transients used in minnpost_categorized_blog.
- */
-function minnpost_category_transient_flusher() {
-	if ( defined( 'DOING_AUTOSAVE' ) && DOING_AUTOSAVE ) {
-		return;
-	}
-	// Like, beat it. Dig?
-	delete_transient( 'minnpost_categories' );
-}
-add_action( 'edit_category', 'minnpost_category_transient_flusher' );
-add_action( 'save_post',     'minnpost_category_transient_flusher' );

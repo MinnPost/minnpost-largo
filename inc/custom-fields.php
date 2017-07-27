@@ -173,6 +173,23 @@ function cmb2_post_fields() {
 			'large' => __( 'Large', 'cmb2' ),
 		),
 	) );
+	$post_setup->add_field( array(
+		'name'    => 'Main Image',
+		'desc'    => 'Upload an image or enter an URL.',
+		'id'      => '_mp_image_settings_main_image',
+		'type'    => 'file',
+		'preview_size' => array( 130, 85 ),
+		'options' => array(
+			//'url' => false, // Hide the text input for the url
+		),
+		'text'    => array(
+			//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
+		),
+		// query_args are passed to wp.media's library query.
+		'query_args' => array(
+			'type' => 'image',
+		),
+	) );
 
 	/**
 	 * Subtitle settings

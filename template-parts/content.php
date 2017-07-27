@@ -11,6 +11,8 @@
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post' ); ?>>
 
+	<?php minnpost_post_image(); ?>
+
 	<header class="m-entry-header">
 		<?php
 		if ( is_single() ) :
