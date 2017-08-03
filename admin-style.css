@@ -1,0 +1,3 @@
+#commentstatusdiv label[for="ping_status"], #commentstatusdiv .inside br {
+	display: none;
+}
