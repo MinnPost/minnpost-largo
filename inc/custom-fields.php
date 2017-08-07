@@ -48,8 +48,8 @@ if ( function_exists( 'create_newsletter' ) ) :
 			'id'            => $prefix . 'setup',
 			'title'         => 'Setup',
 			'object_types'  => array( $object_type ),
-			'context'       => 'after_title',
-			'priority'      => 'high',
+			//'context'       => 'after_title',
+			//'priority'      => 'high',
 		) );
 		$newsletter_setup->add_field( array(
 			'name'       => 'Newsletter Type',
@@ -216,47 +216,49 @@ function cmb2_post_fields() {
 
 
 // CMB2 custom fields for categories
-add_action( 'cmb2_init', 'cmb2_category_fields' );
-function cmb2_category_fields() {
+if ( ! function_exists( 'cmb2_category_fields' ) ) :
+	add_action( 'cmb2_init', 'cmb2_category_fields' );
+	function cmb2_category_fields() {
 
-	$object_type = 'term';
+		$object_type = 'term';
 
-	/**
-	 * Subtitle settings
-	 */
-	$category_setup = new_cmb2_box( array(
-		'id'            => 'category_properties',
-		'title'         => 'Subtitle Settings',
-		'object_types'  => array( $object_type ),
-		'taxonomies'    => array( 'category' ),
-		'new_term_section' => true, // will display in add category section
-	) );
-	$category_setup->add_field( array(
-		'name'       => 'Excerpt',
-		'id'         => '_mp_category_excerpt',
-		'type'       => 'wysiwyg',
-	) );
-	$category_setup->add_field( array(
-		'name'       => 'Sponsorship',
-		'id'         => '_mp_category_sponsorship',
-		'type'       => 'wysiwyg',
-	) );
-	$category_setup->add_field( array(
-		'name'       => 'Category Thumbnail',
-		'id'         => '_mp_category_thumbnail_id',
-		'type'       => 'file',
-	) );
-	$category_setup->add_field( array(
-		'name'       => 'Category Main Image',
-		'id'         => '_mp_category_main_image_id',
-		'type'       => 'file',
-	) );
-	$category_setup->add_field( array(
-		'name'       => 'Body',
-		'id'         => '_mp_category_body',
-		'type'       => 'wysiwyg',
-	) );
-}
+		/**
+		 * Subtitle settings
+		 */
+		$category_setup = new_cmb2_box( array(
+			'id'            => 'category_properties',
+			'title'         => 'Subtitle Settings',
+			'object_types'  => array( $object_type ),
+			'taxonomies'    => array( 'category' ),
+			'new_term_section' => true, // will display in add category section
+		) );
+		$category_setup->add_field( array(
+			'name'       => 'Excerpt',
+			'id'         => '_mp_category_excerpt',
+			'type'       => 'wysiwyg',
+		) );
+		$category_setup->add_field( array(
+			'name'       => 'Sponsorship',
+			'id'         => '_mp_category_sponsorship',
+			'type'       => 'wysiwyg',
+		) );
+		$category_setup->add_field( array(
+			'name'       => 'Category Thumbnail',
+			'id'         => '_mp_category_thumbnail_id',
+			'type'       => 'file',
+		) );
+		$category_setup->add_field( array(
+			'name'       => 'Category Main Image',
+			'id'         => '_mp_category_main_image_id',
+			'type'       => 'file',
+		) );
+		$category_setup->add_field( array(
+			'name'       => 'Body',
+			'id'         => '_mp_category_body',
+			'type'       => 'wysiwyg',
+		) );
+	}
+endif;
 
 if ( ! function_exists( 'remove_default_category_description' ) ) :
 	add_action( 'admin_head', 'remove_default_category_description' );
