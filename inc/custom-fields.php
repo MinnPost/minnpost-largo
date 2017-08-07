@@ -271,3 +271,48 @@ if ( ! function_exists( 'remove_default_category_description' ) ) :
 		<?php }
 	}
 endif;
+
+
+// CMB2 custom fields for custom authors
+
+// remove fields
+if ( ! function_exists( 'remove_author_fields' ) ) :
+	// override the parent theme's support for featured images because we are using cmb2 for that, at least for now
+	add_action( 'add_meta_boxes' , 'remove_author_fields', 19 );
+	function remove_author_fields() {
+		remove_meta_box( 'coauthors-manage-guest-author-bio' , 'guest-author', 'normal' );
+	}
+endif;
+
+// add fields
+if ( ! function_exists( 'cmb2_author_fields' ) ) :
+	add_action( 'cmb2_init', 'cmb2_author_fields', 9 );
+	function cmb2_author_fields() {
+		$object_type = 'guest-author';
+		/**
+		 * Image Settings
+		 */
+		$author_setup = new_cmb2_box( array(
+			'id'            => $object_type . '_image_settings',
+			'title'         => 'Page Info',
+			'object_types'  => array( $object_type ),
+			'context'       => 'normal',
+			'priority'      => 'low',
+		) );
+		$author_setup->add_field( array(
+			'name'       => 'Photo',
+			'id'         => '_mp_author_photo_id',
+			'type'       => 'file',
+		) );
+		$author_setup->add_field( array(
+			'name'       => 'Excerpt',
+			'id'         => '_mp_author_excerpt',
+			'type'       => 'wysiwyg',
+		) );
+		$author_setup->add_field( array(
+			'name'       => 'Bio',
+			'id'         => '_mp_author_bio',
+			'type'       => 'wysiwyg',
+		) );
+	}
+endif;
