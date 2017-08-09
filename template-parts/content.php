@@ -38,7 +38,7 @@
 	<aside class="m-author-info">
 		<h3 class="a-author-title">About the author:</h3>
 		<?php
-		$coauthors = get_coauthors( the_ID() );
+		$coauthors = get_coauthors( get_the_ID() );
 		foreach ( $coauthors as $coauthor ) :
 			$author_id = $coauthor->ID;
 			minnpost_author_image( $author_id, 'thumbnail' );
