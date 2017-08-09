@@ -9,12 +9,29 @@
 
 if ( ! function_exists( 'minnpost_post_image' ) ) :
 	/**
-	 * Outputs story image, whether detail or various kinds of thumbnail, depending on where it is called
+	 * Outputs story image, whether large or various kinds of thumbnail, depending on where it is called
 	 */
-	function minnpost_post_image( $size = 'detail' ) {
+	function minnpost_post_image( $size = 'thumbnail' ) {
 
-		$image_url = get_post_meta( get_the_ID(), '_mp_image_settings_main_image', true );
-		$image_id = get_post_meta( get_the_ID(), '_mp_image_settings_main_image_id', true );
+		// large is the story detail image. this is a built in size in wordpress
+		// home has its own size field
+		if ( is_home() ) {
+			$size = esc_html( get_post_meta( get_the_ID(), '_mp_post_homepage_image_size', true ) );
+		} elseif ( is_single() ) {
+			$size = 'large';
+		}
+
+		if ( 'large' === $size ) {
+			$image_url = get_post_meta( get_the_ID(), '_mp_post_main_image', true );
+			$image_id = get_post_meta( get_the_ID(), '_mp_post_main_image_id', true );
+		} elseif ( 'thumbnail' !== $size ) {
+			$image_url = get_post_meta( get_the_ID(), '_mp_post_thumbnail_image_' . $size, true );
+			$image_id = get_post_meta( get_the_ID(), '_mp_post_main_image_id', true );
+		} else {
+			$image_url = get_post_meta( get_the_ID(), '_mp_post_thumbnail_image', true );
+			$image_id = get_post_meta( get_the_ID(), '_mp_post_thumbnail_image_id', true );
+		}
+
 		if ( post_password_required() || is_attachment() || ( ! $image_id && ! $image_url ) ) {
 			return;
 		}
@@ -23,6 +40,7 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 		$credit = get_media_credit_html( $image_id );
 
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
+			// todo: test this display because so far we just have external urls
 			$image = wp_get_attachment_image( $image_id, $size );
 		} else {
 			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
@@ -35,31 +53,20 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 				<?php if ( '' !== $caption || '' !== $credit ) { ?>
 				<figcaption>
 					<?php if ( '' !== $credit ) { ?>
-					<div class="credit"><?php echo $credit; ?></div>
-					<div class="caption"><?php echo $caption; ?></div>
+						<div class="credit"><?php echo $credit; ?></div>
+						<div class="caption"><?php echo $caption; ?></div>
 					<?php } ?>
 				</figcaption>
 				<?php } ?>
 			</figure><!-- .post-image -->
+		<?php elseif ( is_archive() ) : ?>
+			<figure class="post-image post-image-<?php echo $size; ?>">
+				<?php echo $image; ?>
+			</figure><!-- .post-image -->
 		<?php else : ?>
 			<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true">
 				<?php
-				if ( is_home() ) :
-					$size = esc_html( get_post_meta( get_the_ID(), '_mp_image_settings_homepage_image_size', true ) );
-					the_post_thumbnail(
-						$size,
-						array(
-							'alt' => the_title_attribute( 'echo=0' ),
-						)
-					);
-				else :
-					the_post_thumbnail(
-						$size,
-						array(
-							'alt' => the_title_attribute( 'echo=0' ),
-						)
-					);
-				endif;
+				echo $image;
 				?>
 			</a>
 		<?php endif; // End is_singular()
@@ -107,6 +114,58 @@ if ( ! function_exists( 'minnpost_posted_by' ) ) :
 				the_author_posts_link();
 			endif;
 		endif;
+	}
+endif;
+
+if ( ! function_exists( 'minnpost_author_image' ) ) :
+	/**
+	 * Outputs author image, large or thumbnail
+	 */
+	function minnpost_author_image( $author_id = '', $size = '' ) {
+
+		// in drupal there was only one author image size
+
+		if ( '' !== $size ) {
+			$size = '_' . $size;
+		}
+
+		if ( '' === $author_id ) {
+			$author_id = get_the_author_meta( 'ID' );
+		}
+
+		$image_url = get_post_meta( $author_id, '_mp_author_image' . $size, true );
+		$image_id = get_post_meta( $author_id, '_mp_author_image_id', true );
+
+		if ( post_password_required() || is_attachment() || ( ! $image_id && ! $image_url ) ) {
+			return;
+		}
+
+		$caption = wp_get_attachment_caption( $image_id );
+		$credit = get_media_credit_html( $image_id );
+
+		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
+			// todo: test this display because so far we just have external urls
+			$image = wp_get_attachment_image( $image_id, $size );
+		} else {
+			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
+		}
+
+		if ( is_singular() ) : ?>
+			<figure class="author-image author-image-<?php echo $size; ?>">
+				<?php echo $image; ?>
+			</figure><!-- .author-image -->
+		<?php elseif ( is_archive() ) : ?>
+			<figure class="author-image author-image-<?php echo $size; ?>">
+				<?php echo $image; ?>
+			</figure><!-- .author-image -->
+		<?php else : ?>
+			<a class="author-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true">
+				<?php
+				echo $image;
+				?>
+			</a>
+		<?php endif; // End is_singular()
 	}
 endif;
 

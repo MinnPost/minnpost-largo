@@ -31,22 +31,21 @@
 
 	</header><!-- .m-entry-header -->
 
-	<div class="entry-content">
-		<?php
-			the_content( sprintf(
-				/* translators: %s: Name of current post. */
-				wp_kses( __( 'Continue reading %s <span class="meta-nav">&rarr;</span>', 'largo' ), array( 'span' => array( 'class' => array() ) ) ),
-				the_title( '<span class="screen-reader-text">"', '"</span>', false )
-			) );
-
-			wp_link_pages( array(
-				'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'largo' ),
-				'after'  => '</div>',
-			) );
-		?>
+	<div class="m-entry-content">
+		<?php the_content(); ?>
 	</div><!-- .entry-content -->
 
-	<footer class="entry-footer">
-		<?php largo_entry_footer(); ?>
-	</footer><!-- .entry-footer -->
+	<aside class="m-author-info">
+		<h3 class="a-author-title">About the author:</h3>
+		<?php
+		$coauthors = get_coauthors( the_ID() );
+		foreach ( $coauthors as $coauthor ) :
+			$author_id = $coauthor->ID;
+			minnpost_author_image( $author_id, 'thumbnail' );
+			$text = get_post_meta( $author_id, '_mp_author_excerpt', true );
+			echo $text;
+		endforeach;
+		?>
+	</aside>
+
 </article><!-- #post-## -->

@@ -145,74 +145,110 @@ endif;
 
 
 // CMB2 custom fields for posts
-add_action( 'cmb2_init', 'cmb2_post_fields' );
-function cmb2_post_fields() {
 
-	$object_type = 'post';
+// removing fields
+if ( ! function_exists( 'remove_featured_images_from_child_theme' ) ) :
+	// override the parent theme's support for featured images because we are using cmb2 for that, at least for now
+	add_action( 'after_setup_theme', 'remove_featured_images_from_child_theme', 11 );
+	function remove_featured_images_from_child_theme() {
+		remove_theme_support( 'post-thumbnails' );
+		//add_theme_support( 'post-thumbnails', array( 'post' ) );
+	}
+endif;
 
-	/**
-	 * Image settings
-	 */
-	$post_setup = new_cmb2_box( array(
-		'id'            => 'image_settings',
-		'title'         => 'Image Settings',
-		'object_types'  => array( $object_type ),
-		'context'       => 'after_title',
-		'priority'      => 'high',
-	) );
-	$post_setup->add_field( array(
-		'name'       => 'Homepage Image Size',
-		'id'         => '_mp_image_settings_homepage_image_size',
-		'type'       => 'select',
-		'show_option_none' => true,
-		'desc'       => 'Select an option',
-		'default'    => 'large',
-		'options'           => array(
-			'medium' 	    => __( 'Medium', 'cmb2' ),
-			'none'    => __( 'Do not display image', 'cmb2' ),
-			'large' => __( 'Large', 'cmb2' ),
-		),
-	) );
-	$post_setup->add_field( array(
-		'name'    => 'Main Image',
-		'desc'    => 'Upload an image or enter an URL.',
-		'id'      => '_mp_image_settings_main_image',
-		'type'    => 'file',
-		'preview_size' => array( 130, 85 ),
-		'options' => array(
-			//'url' => false, // Hide the text input for the url
-		),
-		'text'    => array(
-			//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
-		),
-		// query_args are passed to wp.media's library query.
-		'query_args' => array(
-			'type' => 'image',
-		),
-	) );
+// add fields
+if ( ! function_exists( 'cmb2_post_fields' ) ) :
+	add_action( 'cmb2_init', 'cmb2_post_fields' );
+	function cmb2_post_fields() {
 
-	/**
-	 * Subtitle settings
-	 */
-	$post_setup = new_cmb2_box( array(
-		'id'            => 'subtitle_settings',
-		'title'         => 'Subtitle Settings',
-		'object_types'  => array( $object_type ),
-		'context'       => 'after_title',
-		'priority'      => 'high',
-	) );
-	$post_setup->add_field( array(
-		'name'       => 'Deck',
-		'id'         => '_mp_subtitle_settings_deck',
-		'type'       => 'text',
-	) );
-	$post_setup->add_field( array(
-		'name'       => 'Byline',
-		'id'         => '_mp_subtitle_settings_byline',
-		'type'       => 'text',
-	) );
+		$object_type = 'post';
 
-}
+		/**
+		 * Image settings
+		 */
+		$post_setup = new_cmb2_box( array(
+			'id'            => $object_type . '_image_settings',
+			'title'         => 'Image Settings',
+			'object_types'  => array( $object_type ),
+			'context'       => 'normal',
+			'priority'      => 'high',
+		) );
+		$post_setup->add_field( array(
+			'name'    => 'Thumbnail Image',
+			'desc'    => 'Upload an image or enter an URL.',
+			'id'      => '_mp_post_thumbnail_image',
+			'type'    => 'file',
+			'options' => array(
+				//'url' => false, // Hide the text input for the url
+			),
+			'text'    => array(
+				//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
+			),
+			// query_args are passed to wp.media's library query.
+			'query_args' => array(
+				'type' => 'image',
+			),
+		) );
+		$post_setup->add_field( array(
+			'name'       => 'Homepage Image Size',
+			'id'         => '_mp_post_homepage_image_size',
+			'type'       => 'select',
+			'show_option_none' => true,
+			'desc'       => 'Select an option',
+			'default'    => 'feature-large',
+			'options'           => array(
+				'feature-medium' 	    => __( 'Medium', 'cmb2' ),
+				'none'    => __( 'Do not display image', 'cmb2' ),
+				'feature-large' => __( 'Large', 'cmb2' ),
+			),
+		) );
+		$post_setup->add_field( array(
+			'name'    => 'Main Image',
+			'desc'    => 'Upload an image or enter an URL.',
+			'id'      => '_mp_post_main_image',
+			'type'    => 'file',
+			'preview_size' => array( 130, 85 ),
+			'options' => array(
+				//'url' => false, // Hide the text input for the url
+			),
+			'text'    => array(
+				//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
+			),
+			// query_args are passed to wp.media's library query.
+			'query_args' => array(
+				'type' => 'image',
+			),
+		) );
+
+		/**
+		 * Subtitle settings
+		 */
+		$post_setup = new_cmb2_box( array(
+			'id'            => 'subtitle_settings',
+			'title'         => 'Subtitle Settings',
+			'object_types'  => array( $object_type ),
+			'context'       => 'after_title',
+			'priority'      => 'high',
+		) );
+		$post_setup->add_field( array(
+			'name'       => 'Deck',
+			'id'         => '_mp_subtitle_settings_deck',
+			'type'       => 'text',
+		) );
+		$post_setup->add_field( array(
+			'name'       => 'Byline',
+			'id'         => '_mp_subtitle_settings_byline',
+			'type'       => 'text',
+		) );
+
+	}
+
+	add_image_size( 'post-feature', 190, 9999 );
+	add_image_size( 'post-feature-large', 400, 400 );
+	add_image_size( 'post-feature-medium', 190, 125, true );
+	add_image_size( 'post-newsletter-thumb', 80, 60, true );
+
+endif;
 
 
 // CMB2 custom fields for categories
@@ -244,12 +280,12 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 		) );
 		$category_setup->add_field( array(
 			'name'       => 'Category Thumbnail',
-			'id'         => '_mp_category_thumbnail_id',
+			'id'         => '_mp_category_thumbnail_image',
 			'type'       => 'file',
 		) );
 		$category_setup->add_field( array(
 			'name'       => 'Category Main Image',
-			'id'         => '_mp_category_main_image_id',
+			'id'         => '_mp_category_main_image',
 			'type'       => 'file',
 		) );
 		$category_setup->add_field( array(
@@ -303,7 +339,7 @@ if ( ! function_exists( 'cmb2_author_fields' ) ) :
 		) );
 		$author_setup->add_field( array(
 			'name'       => 'Photo',
-			'id'         => '_mp_author_photo_id',
+			'id'         => '_mp_author_image_id',
 			'type'       => 'file',
 		) );
 		$author_setup->add_field( array(
@@ -317,4 +353,8 @@ if ( ! function_exists( 'cmb2_author_fields' ) ) :
 			'type'       => 'wysiwyg',
 		) );
 	}
+
+	add_image_size( 'author-image', 190, 9999 ); // scale so the width is 190px
+	add_image_size( 'author-thumb', 75, 9999 ); // scale so the width is 75px
+
 endif;
