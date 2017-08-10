@@ -13,7 +13,7 @@ add_filter( 'acm_register_provider_slug', 'minnpost_acm_register_provider_slug' 
 function minnpost_acm_register_provider_slug( $providers ) {
 	$providers->appnexus = array(
 		'provider' => 'Appnexus_Async_ACM_Provider',
-		'table' => 'Appnexus_ACM_WP_List_Table'
+		'table' => 'Appnexus_ACM_WP_List_Table',
 	);
 	return $providers;
 }
@@ -39,16 +39,16 @@ function add_theme_caps() {
 		if ( null !== $roles ) {
 			foreach ( $roles as $role ) {
 				$role = get_role( $role );
-				$role->remove_cap( 'browse_without_ads' ); 
+				$role->remove_cap( 'browse_without_ads' );
 			}
 		}
 	}
 }
 
 add_filter( 'acm_output_html_after_tokens_processed', 'minnpost_no_ad_users', 10, 2 );
-function minnpost_no_ad_users( $output_html, $tag_id = NULL ) {
+function minnpost_no_ad_users( $output_html, $tag_id = null ) {
 
-	if ( $tag_id === 'TopRight' ) {
+	if ( 'TopRight' === $tag_id ) {
 		// get the support nav item if there is not an ad
 		$default_top_right = '';
 		if ( ! current_user_can( 'browse_without_ads' ) ) {
@@ -57,40 +57,40 @@ function minnpost_no_ad_users( $output_html, $tag_id = NULL ) {
 			$placeholder = ' appnexus-ad-placeholder';
 		}
 		$default_top_right .= '<div class="appnexus-ad ad-topright ad-support' . $placeholder . '">';
-			if ( current_user_can( 'browse_without_ads' ) ) {
-				$default_top_right .= '<div class="ad-overlay">AD: ' . $tag_id . '</div>';
-			}
-			if ( current_user_can( 'browse_without_ads' ) || $output_html === '' ) {
-				$default_top_right .= 
-				'<nav id="navigation-support" class="special-navigation" role="navigation">' .
-					'<h2>Support MinnPost</h2>' .
-					wp_nav_menu(
-						array(
-							'theme_location' => 'support_minnpost',
-							'menu_id' => 'support-minnpost',
-							'depth' => 1,
-							'container' => false,
-							'walker' => new Minnpost_Walker_Nav_Menu,
-							'echo' => false
-						)
-					) . 
-				'</nav>';
-			} else {
-				$default_top_right = $output_html;
-			}
-		$default_top_right .= 
+		if ( current_user_can( 'browse_without_ads' ) ) {
+			$default_top_right .= '<div class="ad-overlay">AD: ' . $tag_id . '</div>';
+		}
+		if ( current_user_can( 'browse_without_ads' ) || '' === $output_html ) {
+			$default_top_right .=
+			'<nav id="navigation-support" class="special-navigation" role="navigation">' .
+				'<h2>Support MinnPost</h2>' .
+				wp_nav_menu(
+					array(
+						'theme_location' => 'support_minnpost',
+						'menu_id' => 'support-minnpost',
+						'depth' => 1,
+						'container' => false,
+						'walker' => new Minnpost_Walker_Nav_Menu,
+						'echo' => false,
+					)
+				) .
+			'</nav>';
+		} else {
+			$default_top_right = $output_html;
+		}
+		$default_top_right .=
 		'</div>';
 		//return $output_html;
 		return $default_top_right;
 	}
-//return $output_html;
+	//return $output_html;
 	if ( ! current_user_can( 'browse_without_ads' ) ) {
 		return $output_html;
 	} else {
-		if ( $tag_id === 'appnexus_head' ) {
+		if ( 'appnexus_head' === $tag_id ) {
 			return '';
 		} else {
-			return '<div class="appnexus-ad appnexus-ad-placeholder ad-'. sanitize_title( $tag_id ) . '">AD: ' . $tag_id . '</div>';
+			return '<div class="appnexus-ad appnexus-ad-placeholder ad-' . sanitize_title( $tag_id ) . '">AD: ' . $tag_id . '</div>';
 		}
 	}
 }
