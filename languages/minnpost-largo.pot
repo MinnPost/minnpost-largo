@@ -13,32 +13,88 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: header.php:68
+#: header.php:64
 msgid "Primary Menu"
 msgstr ""
 
-#: inc/template-tags.php:28
+#: inc/custom-types.php:10, inc/custom-types.php:13
+msgid "Newsletter"
+msgstr ""
+
+#: inc/custom-types.php:12, inc/custom-types.php:14, inc/custom-types.php:15
+msgid "Newsletters"
+msgstr ""
+
+#: inc/custom-types.php:16
+msgid "Add New"
+msgstr ""
+
+#: inc/custom-types.php:17
+msgid "Add New Newsletter"
+msgstr ""
+
+#: inc/custom-types.php:18
+msgid "New Newsletter"
+msgstr ""
+
+#: inc/custom-types.php:19
+msgid "Edit Newsletter"
+msgstr ""
+
+#: inc/custom-types.php:20
+msgid "View Newsletter"
+msgstr ""
+
+#: inc/custom-types.php:21
+msgid "All Newsletters"
+msgstr ""
+
+#: inc/custom-types.php:22
+msgid "Search Newsletters"
+msgstr ""
+
+#: inc/custom-types.php:23
+msgid "Parent Newsletters:"
+msgstr ""
+
+#: inc/custom-types.php:24
+msgid "No newsletters found."
+msgstr ""
+
+#: inc/custom-types.php:25
+msgid "No newsletters found in Trash."
+msgstr ""
+
+#: inc/custom-types.php:44, inc/custom-types.php:48
+msgid "Tests"
+msgstr ""
+
+#: inc/custom-types.php:45
+msgid "Test"
+msgstr ""
+
+#: inc/template-tags.php:94
 msgctxt "post date"
 msgid "%s"
 msgstr ""
 
-#: inc/template-tags.php:66, inc/template-tags.php:72
+#: inc/template-tags.php:180, inc/template-tags.php:186
 msgid ", "
 msgstr ""
 
-#: inc/template-tags.php:68
+#: inc/template-tags.php:182
 msgid "Posted in %1$s"
 msgstr ""
 
-#: inc/template-tags.php:74
+#: inc/template-tags.php:188
 msgid "Tagged %1$s"
 msgstr ""
 
 #. translators: %s: post title
-#: inc/template-tags.php:81
+#: inc/template-tags.php:195
 msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
-#: inc/template-tags.php:88, inc/template-tags.php:106
+#: inc/template-tags.php:202, inc/template-tags.php:220
 msgid "Edit %s"
 msgstr ""
