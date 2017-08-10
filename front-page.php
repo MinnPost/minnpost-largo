@@ -21,7 +21,39 @@ get_header(); ?>
 				}
 				if ( $the_query->have_posts() ) :
 					while ( $the_query->have_posts() ) : $the_query->the_post();
-						get_template_part( 'template-parts/content', 'featured' ); // content-featured
+						get_template_part( 'template-parts/content', 'top' ); // content-top
+					endwhile;
+				else : // I'm not sure it's possible to have no posts when this page is shown
+					get_template_part( 'template-parts/content', 'none' );
+				endif; ?>
+			</section>
+
+			<section class="m-zone m-zone-homepage-middle">
+				<?php
+				if ( function_exists( 'z_get_zone' ) ) {
+					$the_query = z_get_zone_query( 'homepage-middle' );
+				}
+				if ( $the_query->have_posts() ) :
+					while ( $the_query->have_posts() ) : $the_query->the_post();
+						get_template_part( 'template-parts/content', 'middle' ); // content-middle
+					endwhile;
+				else : // I'm not sure it's possible to have no posts when this page is shown
+					get_template_part( 'template-parts/content', 'none' );
+				endif; ?>
+			</section>
+
+			<div class="m-ad-region m-ad-region-home">
+				<?php do_action( 'acm_tag', 'Middle3' ); ?>
+			</div>
+
+			<section class="m-zone m-zone-homepage-bottom">
+				<?php
+				if ( function_exists( 'z_get_zone' ) ) {
+					$the_query = z_get_zone_query( 'homepage-bottom' );
+				}
+				if ( $the_query->have_posts() ) :
+					while ( $the_query->have_posts() ) : $the_query->the_post();
+						get_template_part( 'template-parts/content', 'excerpt' ); // content-excerpt
 					endwhile;
 				else : // I'm not sure it's possible to have no posts when this page is shown
 					get_template_part( 'template-parts/content', 'none' );

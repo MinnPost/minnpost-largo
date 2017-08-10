@@ -15,8 +15,10 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 
 		// large is the story detail image. this is a built in size in wordpress
 		// home has its own size field
-		if ( is_home() ) {
+		if ( is_home() && 'feature' === $size ) {
 			$size = esc_html( get_post_meta( get_the_ID(), '_mp_post_homepage_image_size', true ) );
+		} elseif ( is_home() && 'thumbnail' === $size ) {
+			$size = 'thumbnail';
 		} elseif ( is_single() ) {
 			$size = 'large';
 		}
@@ -48,7 +50,7 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 		}
 
 		if ( is_singular() ) : ?>
-			<figure class="post-image post-image-<?php echo $size; ?>">
+			<figure class="m-post-image m-post-image-<?php echo $size; ?>">
 				<?php echo $image; ?>
 				<?php if ( '' !== $caption || '' !== $credit ) { ?>
 				<figcaption>
@@ -60,11 +62,11 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 				<?php } ?>
 			</figure><!-- .post-image -->
 		<?php elseif ( is_archive() ) : ?>
-			<figure class="post-image post-image-<?php echo $size; ?>">
+			<figure class="m-post-image m-post-image-<?php echo $size; ?>">
 				<?php echo $image; ?>
 			</figure><!-- .post-image -->
 		<?php else : ?>
-			<a class="post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true">
+			<a class="m-post-image m-post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true">
 				<?php
 				echo $image;
 				?>
@@ -244,6 +246,26 @@ if ( ! function_exists( 'minnpost_category_breadcrumb' ) ) :
 		$category_link = get_category_link( $category );
 		$category_name = $category->name;
 		echo '<div class="a-breadcrumb"><a href="' . $category_link . '">' . $category_name . '</a></div>';
+	}
+endif;
+
+if ( ! function_exists( 'minnpost_get_category_name' ) ) :
+	function minnpost_get_category_name( $post_id = '' ) {
+
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
+
+		$category_permalink = get_post_meta( $post_id , '_category_permalink', true );
+		if ( null !== $category_permalink ) {
+			$cat_id = $category_permalink['category'];
+			$category = get_category( $cat_id );
+		} else {
+			$categories = get_the_category();
+			$category = $categories[0];
+		}
+		$category_name = $category->name;
+		return $category_name;
 	}
 endif;
 

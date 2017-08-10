@@ -73,28 +73,28 @@ msgstr ""
 msgid "Test"
 msgstr ""
 
-#: inc/template-tags.php:94
+#: inc/template-tags.php:96
 msgctxt "post date"
 msgid "%s"
 msgstr ""
 
-#: inc/template-tags.php:180, inc/template-tags.php:186
+#: inc/template-tags.php:182, inc/template-tags.php:188
 msgid ", "
 msgstr ""
 
-#: inc/template-tags.php:182
+#: inc/template-tags.php:184
 msgid "Posted in %1$s"
 msgstr ""
 
-#: inc/template-tags.php:188
+#: inc/template-tags.php:190
 msgid "Tagged %1$s"
 msgstr ""
 
 #. translators: %s: post title
-#: inc/template-tags.php:195
+#: inc/template-tags.php:197
 msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
-#: inc/template-tags.php:202, inc/template-tags.php:220
+#: inc/template-tags.php:204, inc/template-tags.php:222
 msgid "Edit %s"
 msgstr ""

@@ -2,8 +2,19 @@ main.m-homepage-zones {
 	margin-top: 0.5em;
 }
 
-.m-zone-homepage-top {
-	padding-bottom: 20px;
+main.m-homepage-zones .m-zone {
+	//padding-bottom: 20px;
 	margin-bottom: 20px;
 	border-bottom: 1px solid $color__gray-lightest;
+}
+
+.m-zone-homepage-middle {
+	display: flex;
+	justify-content: space-between;
+	flex-flow: row wrap;
+}
+
+.m-zone-homepage-middle article {
+	width: 45%;
+	margin-bottom: 20px;
 }

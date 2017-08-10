@@ -1,6 +1,6 @@
 <?php
 /**
- * Template part for displaying posts
+ * Template part for displaying posts at the middle of the homepage
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
@@ -11,10 +11,12 @@
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post' ); ?>>
 
-	<?php minnpost_post_image( 'feature' ); ?>
+	<p class="a-post-category a-zone-item-category"><?php echo minnpost_get_category_name(); ?></p>
+
+	<?php minnpost_post_image( 'feature_middle' ); ?>
 
 	<header class="m-entry-header">
-		<?php the_title( '<h3 class="a-entry-title a-entry-title-largeimage"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
+		<?php the_title( '<h3 class="a-entry-title a-entry-title-feature-middle"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
 
 		<?php if ( 'post' === get_post_type() ) : ?>
 
@@ -25,10 +27,5 @@
 		<?php endif; ?>
 
 	</header><!-- .m-entry-header -->
-
-	<div class="m-entry-excerpt">
-		<?php the_excerpt(); ?>
-	</div><!-- .m-entry-excerpt -->
-
 
 </article><!-- #post-## -->
