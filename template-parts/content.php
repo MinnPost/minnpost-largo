@@ -11,6 +11,9 @@
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post' ); ?>>
 
+	<?php minnpost_category_breadcrumb(); ?>
+	<?php minnpost_category_sponsorship(); ?>
+
 	<?php minnpost_post_image(); ?>
 
 	<header class="m-entry-header">
