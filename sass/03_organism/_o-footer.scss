@@ -1,8 +1,22 @@
 .o-footer {
-	font-family: $font__sans;
-	word-wrap: break-word;
-	border-top: 1px solid $color__gray-lightest;
-	margin-top: 20px;
-	padding-top: 10px;
-	grid-gap: 0;
+	.o-wrapper-footer-hat {
+		display: flex;
+		justify-content: space-between;
+		flex-flow: row;
+		padding-bottom: 20px;
+		section {
+			width: 30.7692307692308%;
+			border: 1px solid $color__gray-lightest;
+			outline: 15px solid $color__minnpost-white;
+			background: $color__white;
+			padding: 15px;
+		}
+	}
+	.o-wrapper-site-footer {
+		font-family: $font__sans;
+		word-wrap: break-word;
+		border-top: 1px solid $color__gray-lightest;
+		margin-top: 20px;
+		padding-top: 10px;
+	}
 }
