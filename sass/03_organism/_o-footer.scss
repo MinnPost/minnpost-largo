@@ -11,6 +11,23 @@
 			background: $color__white;
 			padding: 15px;
 		}
+		&.o-footer-hat-two {
+			section {
+				flex: 1;
+				width: auto;
+				margin-right: 30px;
+				&.m-footer-donors {
+					flex: 3;
+					margin: 0;
+					ul.donors {
+						list-style: none;
+						columns: 2 auto;
+						margin: 0;
+						padding: 0;
+					}
+				}
+			}
+		}
 	}
 	.o-footer-links {
 		font-family: $font__sans;
