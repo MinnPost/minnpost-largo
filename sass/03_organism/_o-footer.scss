@@ -1,18 +1,18 @@
 .o-footer {
-	.o-wrapper-footer-hat {
+	.o-footer-hat {
 		display: flex;
 		justify-content: space-between;
 		flex-flow: row;
-		padding-bottom: 20px;
+		padding: 0 30px 20px 15px;
 		section {
-			width: 30.7692307692308%;
+			width: 29.0322580645161%;
 			border: 1px solid $color__gray-lightest;
 			outline: 15px solid $color__minnpost-white;
 			background: $color__white;
 			padding: 15px;
 		}
 	}
-	.o-wrapper-site-footer {
+	.o-footer-links {
 		font-family: $font__sans;
 		word-wrap: break-word;
 		border-top: 1px solid $color__gray-lightest;
