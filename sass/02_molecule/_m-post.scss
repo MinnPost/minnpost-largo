@@ -1,3 +1,6 @@
 .m-post {
 	
 }
+.m-archive-excerpt .m-post {
+	@include clearfix;
+}

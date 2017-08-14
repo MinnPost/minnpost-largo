@@ -14,7 +14,7 @@ get_header(); ?>
 	<div id="primary" class="m-layout-primary o-homepage-listing">
 		<main id="main" class="site-main m-homepage-zones" role="main">
 
-			<section class="m-zone m-zone-homepage-top">
+			<section class="m-zone m-zone-homepage-top m-archive m-archive-top">
 				<?php
 				if ( function_exists( 'z_get_zone' ) ) {
 					$the_query = z_get_zone_query( 'homepage-top' );
@@ -28,7 +28,7 @@ get_header(); ?>
 				endif; ?>
 			</section>
 
-			<section class="m-zone m-zone-homepage-middle">
+			<section class="m-zone m-zone-homepage-middle m-archive m-archive-middle">
 				<?php
 				if ( function_exists( 'z_get_zone' ) ) {
 					$the_query = z_get_zone_query( 'homepage-middle' );
@@ -46,7 +46,7 @@ get_header(); ?>
 				<?php do_action( 'acm_tag', 'Middle3' ); ?>
 			</div>
 
-			<section class="m-zone m-zone-homepage-bottom">
+			<section class="m-zone m-zone-homepage-bottom m-archive m-archive-excerpt">
 				<?php
 				if ( function_exists( 'z_get_zone' ) ) {
 					$the_query = z_get_zone_query( 'homepage-bottom' );

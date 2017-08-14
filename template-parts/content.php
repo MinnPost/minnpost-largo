@@ -38,15 +38,13 @@
 		<?php the_content(); ?>
 	</div><!-- .entry-content -->
 
-	<aside class="m-author-info">
-		<h3 class="a-author-title">About the author:</h3>
+	<aside class="m-author-info m-author-info-excerpt">
+		<h3 class="a-about-author">About the author:</h3>
 		<?php
 		$coauthors = get_coauthors( get_the_ID() );
 		foreach ( $coauthors as $coauthor ) :
 			$author_id = $coauthor->ID;
-			minnpost_author_image( $author_id, 'thumbnail' );
-			$text = get_post_meta( $author_id, '_mp_author_excerpt', true );
-			echo $text;
+			minnpost_author_figure( $author_id, 'thumbnail', true, true );
 		endforeach;
 		?>
 	</aside>

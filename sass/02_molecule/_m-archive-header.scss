@@ -1,5 +1,13 @@
 .m-archive-header {
 	font-family: $font__sans;
+	.a-archive-title {
+		font-family: $font__headings;
+		font-size: 338.5%;
+		line-height: 0.9em;
+		font-weight: normal;
+		font-style: normal;
+		font-variant: normal;
+	}
 	.m-archive-meta {
 		font-size: 76.9%;
 		text-transform: uppercase;

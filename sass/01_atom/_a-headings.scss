@@ -43,6 +43,22 @@ h6, .h6 {
 	font-size: 123.1%;
 	text-transform: none;
 }
+.a-author-title, .a-about-author {
+	font-size: 123.1%;
+}
+.a-about-author {
+	text-transform: uppercase;
+	font-family: $font__headings;
+	font-weight: normal;
+	font-style: normal;
+	font-variant: normal;
+	margin-top: 20px;
+}
+.a-author-title {
+	text-transform: none;
+    margin: 0;
+    font-weight: bold;
+}
 
 .a-entry-title {
 	font-size: 123.1%;
