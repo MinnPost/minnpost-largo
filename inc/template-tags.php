@@ -289,3 +289,97 @@ if ( ! function_exists( 'minnpost_category_sponsorship' ) ) :
 		}
 	}
 endif;
+
+// fix the archive title so it isn't awful
+add_filter( 'get_the_archive_title', function ( $title ) {
+	if ( is_category() ) {
+		$title = single_cat_title( '', false );
+	} elseif ( is_tag() ) {
+		$title = single_tag_title( '', false );
+	} elseif ( is_author() ) {
+		$title = '<span class="vcard">' . get_the_author() . '</span>' ;
+	}
+	return $title;
+});
+
+if ( ! function_exists( 'numeric_post_nav' ) ) :
+	function numeric_post_nav() {
+		
+		// if this is a singular item and we accidentally left it on there, get out
+	    if ( is_singular() ) { 
+	        return;
+	    }
+
+	    global $wp_query;
+	    
+	    // only continue if there is more than one page
+	    if ( $wp_query->max_num_pages <= 1 ) {
+	        return;
+	    }
+
+	    $paged = get_query_var( 'paged' ) ? absint( get_query_var( 'paged' ) ) : 1;
+	    $max = intval( $wp_query->max_num_pages );
+	    
+	    // current page
+	    if ( $paged >= 1 ) {
+	        $links[] = $paged;
+	    }
+	    
+	    // pages around the current page
+	    if ( $paged >= 3 ) {
+	        $links[] = $paged - 1;
+	        $links[] = $paged - 2;
+	    }
+	    if ( ( $paged + 2 ) <= $max ) {
+	        $links[] = $paged + 2;
+	        $links[] = $paged + 1;
+	    }
+
+	    echo '<div class="m-pagination"><ul>' . "\n";
+
+	    	// link to page 1
+		    if ( ! in_array( 1, $links ) ) {
+		        printf( '<li><a href="%s">%s</a></li>' . "\n", esc_url( get_pagenum_link( 1 ) ), '&Lt; First' );
+		        
+		    }
+	    
+		    // "previous" link
+		    if ( get_previous_posts_link() ) {
+		        printf( '<li>%s</li>' . "\n", get_previous_posts_link( '&lt; Previous' ) );
+
+		        // elipses
+		        if ( ! in_array( 2, $links ) ) {
+		            echo '<li>&hellip;</li>';
+		        }
+
+		    }
+
+		    // each line item. don't link the current one because that's silly.
+		    sort( $links );
+		    foreach ( (array) $links as $link ) {
+		    	if ( $paged === $link ) {
+		    		printf( '<li class="current">%s</li>' . "\n", $link );
+		    	} else {
+		    		printf( '<li><a href="%s">%s</a></li>' . "\n", esc_url( get_pagenum_link( $link ) ), $link );	
+		    	}
+		    }
+
+		    // elipses
+		    if ( ! in_array( $max - 1, $links ) ) {
+	            echo '<li>&hellip;</li>' . "\n";
+	        }
+
+		    // "next" link
+		    if ( get_next_posts_link() ) {
+		        printf( '<li>%s</li>' . "\n", get_next_posts_link( 'Next &gt;' ) );
+		    }
+
+		    // "last" link
+		    if ( ! in_array( $max, $links ) ) {
+		        printf( '<li><a href="%s">%s</a></li>' . "\n", esc_url( get_pagenum_link( $max ) ), 'Last &Gt;' );
+		    }
+
+	    echo '</ul></div>' . "\n";
+
+	}
+endif;
