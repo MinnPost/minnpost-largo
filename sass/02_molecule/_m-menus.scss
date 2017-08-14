@@ -1,4 +1,4 @@
-.m-secondary-navigation, .m-featured-navigation {
+.m-secondary-navigation, .m-featured-navigation, .m-pagination {
 	ul {
 		list-style: none;
 		display: flex; 
@@ -138,6 +138,26 @@
 }
 
 // still going to need a menu for login stuff at some point
+
+.m-pagination {
+	max-width: 100%;
+	background: $color__minnpost-white;
+	padding: 5px;
+	margin-bottom: 0.75em;
+	ul {
+		justify-content: center;
+		text-align: center;
+		font-size: 76.9%;
+		text-transform: uppercase;
+		font-family: $font__sans;
+	}
+	li {
+		padding: 0.5em;
+		&.current {
+			font-weight: bold;
+		}
+	}
+}
 
 .o-footer .m-secondary-navigation {
 	//grid-column: col-start / span 12;
