@@ -119,28 +119,36 @@ if ( ! function_exists( 'minnpost_posted_by' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'minnpost_author_image' ) ) :
+if ( ! function_exists( 'minnpost_author_figure' ) ) :
 	/**
-	 * Outputs author image, large or thumbnail
+	 * Outputs author image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
 	 */
-	function minnpost_author_image( $author_id = '', $size = '' ) {
+	function minnpost_author_figure( $author_id = '', $size = 'photo', $include_text = true, $include_name = false ) {
 
 		// in drupal there was only one author image size
-
-		if ( '' !== $size ) {
-			$size = '_' . $size;
-		}
-
 		if ( '' === $author_id ) {
 			$author_id = get_the_author_meta( 'ID' );
 		}
 
-		$image_url = get_post_meta( $author_id, '_mp_author_image' . $size, true );
+		$image_url = get_post_meta( $author_id, '_mp_author_image', true );
+		if ( 'photo' !== $size ) {
+			$image_url = get_post_meta( $author_id, '_mp_author_image_' . $size, true );
+		}
 		$image_id = get_post_meta( $author_id, '_mp_author_image_id', true );
+
+		$text = '';
+		if ( 'photo' === $size ) { // full text
+			$text = get_post_meta( $author_id, '_mp_author_bio', true );
+		} else { // excerpt
+			$text = get_post_meta( $author_id, '_mp_author_excerpt', true );
+		}
 
 		if ( post_password_required() || is_attachment() || ( ! $image_id && ! $image_url ) ) {
 			return;
 		}
+
+		$name = '';
+		$name = get_post_meta( $author_id, 'cap-display_name', true );
 
 		$caption = wp_get_attachment_caption( $image_id );
 		$credit = get_media_credit_html( $image_id );
@@ -153,20 +161,18 @@ if ( ! function_exists( 'minnpost_author_image' ) ) :
 			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
 		}
 
-		if ( is_singular() ) : ?>
-			<figure class="author-image author-image-<?php echo $size; ?>">
+		if ( is_singular() || is_archive() ) : ?>
+			<figure class="a-author-figure a-author-figure-<?php echo $size; ?>">
 				<?php echo $image; ?>
-			</figure><!-- .author-image -->
-		<?php elseif ( is_archive() ) : ?>
-			<figure class="author-image author-image-<?php echo $size; ?>">
-				<?php echo $image; ?>
-			</figure><!-- .author-image -->
-		<?php else : ?>
-			<a class="author-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true">
-				<?php
-				echo $image;
-				?>
-			</a>
+				<?php if ( true === $include_text && '' !== $text ) : ?>
+					<figcaption>
+						<?php if ( true === $include_name && '' !== $name ) : ?>
+							<h3 class="a-author-title"><a href="<?php echo get_author_posts_url( $author_id, sanitize_title( $name ) ); ?>"><?php echo $name; ?></a></h3>
+						<?php endif; ?>
+						<?php echo $text; ?>
+					</figcaption>
+				<?php endif; ?>
+			</figure><!-- .author-figure -->
 		<?php endif; // End is_singular()
 	}
 endif;
