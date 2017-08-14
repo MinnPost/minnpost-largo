@@ -302,8 +302,8 @@ add_filter( 'get_the_archive_title', function ( $title ) {
 	return $title;
 });
 
-if ( ! function_exists( 'numeric_post_nav' ) ) :
-	function numeric_post_nav() {
+if ( ! function_exists( 'numeric_pagination' ) ) :
+	function numeric_pagination() {
 		
 		// if this is a singular item and we accidentally left it on there, get out
 	    if ( is_singular() ) { 

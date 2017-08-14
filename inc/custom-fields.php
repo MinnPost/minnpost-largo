@@ -156,7 +156,7 @@ if ( ! function_exists( 'remove_featured_images_from_child_theme' ) ) :
 	}
 endif;
 
-// add fields
+// add fields to posts
 if ( ! function_exists( 'cmb2_post_fields' ) ) :
 	add_action( 'cmb2_init', 'cmb2_post_fields' );
 	function cmb2_post_fields() {
@@ -322,7 +322,7 @@ if ( ! function_exists( 'remove_author_fields' ) ) :
 	}
 endif;
 
-// add fields
+// add fields to authors
 if ( ! function_exists( 'cmb2_author_fields' ) ) :
 	add_action( 'cmb2_init', 'cmb2_author_fields', 9 );
 	function cmb2_author_fields() {

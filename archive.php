@@ -17,7 +17,7 @@ get_header(); ?>
 
 			<header class="m-archive-header">
 				<?php
-					single_term_title( '<h1 class="a-archive-title">', '</h1>' );
+					the_archive_title( '<h1 class="a-archive-title">', '</h1>' );
 					the_archive_description( '<div class="archive-description">', '</div>' );
 				?>
 			</header><!-- .m-archive-header -->
@@ -67,12 +67,10 @@ get_header(); ?>
 
 			endwhile;
 
-			the_posts_navigation();
+			numeric_pagination();
 
 		else :
-
 			get_template_part( 'template-parts/content', 'none' );
-
 		endif; ?>
 
 		</main><!-- #main -->
