@@ -43,6 +43,32 @@ get_header(); ?>
 			<?php endif; ?>
 
 			<?php if ( is_category() ) : ?>
+				<section class="m-archive m-archive-top m-category-top">
+					<?php
+					while ( have_posts() ) : the_post();
+						if ( 3 > $wp_the_query->current_post ) :
+							get_template_part( 'template-parts/content', 'top' );
+						endif;
+					endwhile;
+					?>
+				</section>
+				<section class="m-archive m-archive-excerpt">
+					<?php
+					while ( have_posts() ) : the_post();
+						if ( 3 < $wp_the_query->current_post ) :
+							get_template_part( 'template-parts/content', 'excerpt' );
+						endif;
+					endwhile;
+					?>
+				</section>
+			<?php else : ?>
+				<section class="m-archive m-archive-excerpt">
+					<?php
+					while ( have_posts() ) : the_post();
+						get_template_part( 'template-parts/content', 'excerpt' );
+					endwhile;
+					?>
+				</section>
 			<?php endif; ?>
 			<?php
 			numeric_pagination();

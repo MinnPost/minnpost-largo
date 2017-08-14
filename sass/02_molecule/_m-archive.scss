@@ -1,0 +1,11 @@
+.m-archive {
+//	margin-bottom: 20px;
+//	border-bottom: 1px solid $color__gray-lightest;
+}
+
+.m-archive-top article, .m-archive-excerpt article {
+	//padding-bottom: 20px;
+	border-bottom: 1px solid $color__gray-lightest;
+	margin-bottom: 20px;
+	clear: both;
+}

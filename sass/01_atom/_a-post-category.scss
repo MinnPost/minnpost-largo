@@ -4,4 +4,7 @@
 	text-transform: uppercase;
 	font-family: $font__sans;
 	line-height: 1.3em;
+	&.a-zone-item-category {
+		margin: 0;
+	}
 }

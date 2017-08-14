@@ -43,6 +43,15 @@ h6, .h6 {
 	font-size: 123.1%;
 	text-transform: none;
 }
+.a-archive-subtitle {
+	font-size: 123.1%;
+	text-transform: uppercase;
+	font-family: $font__headings;
+	font-weight: normal;
+	font-style: normal;
+	font-variant: normal;
+	margin-bottom: 12px;
+}
 .a-author-title, .a-about-author {
 	font-size: 123.1%;
 }
@@ -68,4 +77,12 @@ h6, .h6 {
 	font-size: 138.5%;
 	font-weight: bold;
 	line-height: 1.15em;
+}
+.m-category-top .a-entry-title-largeimage {
+	font-size: 215.4%;
+	line-height: 1.15em;
+	font-family: $font__headings;
+	font-weight: normal;
+	font-style: normal;
+	font-variant: normal;
 }
