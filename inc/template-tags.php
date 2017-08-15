@@ -326,20 +326,21 @@ if ( ! function_exists( 'minnpost_get_category_name' ) ) :
 endif;
 
 if ( ! function_exists( 'minnpost_category_sponsorship' ) ) :
-	function minnpost_category_sponsorship( $post_id = '' ) {
+	function minnpost_category_sponsorship( $post_id = '', $category_id = '' ) {
 
-		if ( '' === $post_id ) {
-			$post_id = get_the_ID();
+		if ( '' === $category_id ) {
+			if ( '' === $post_id ) {
+				$post_id = get_the_ID();
+			}
+			$category_permalink = get_post_meta( $post_id , '_category_permalink', true );
+			if ( null !== $category_permalink ) {
+				$category_id = $category_permalink['category'];
+			} else {
+				$categories = get_the_category();
+				$category_id = $categories[0]->cat_id;
+			}
 		}
-
-		$category_permalink = get_post_meta( $post_id , '_category_permalink', true );
-		if ( null !== $category_permalink ) {
-			$cat_id = $category_permalink['category'];
-		} else {
-			$categories = get_the_category();
-			$cat_id = $categories[0]->cat_id;
-		}
-		$sponsorship = get_term_meta( $cat_id, '_mp_category_sponsorship', true );
+		$sponsorship = get_term_meta( $category_id, '_mp_category_sponsorship', true );
 		if ( '' !== $sponsorship ) {
 			echo '<div class="a-sponsorship">' . $sponsorship . '</div>';
 		}

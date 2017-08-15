@@ -27,8 +27,7 @@ get_header(); ?>
 					<?php
 					$category_id = $wp_query->get_queried_object_id();
 					// category meta
-					$sponsorship_text = get_term_meta( $category_id, '_mp_category_sponsorship', true );
-					echo '<div class="a-sponsorship">' . $sponsorship_text . '</div>';
+					minnpost_category_sponsorship( '', $category_id );
 					minnpost_term_figure( $category_id );
 					?>
 					<ul class="a-archive-links a-category-links">
