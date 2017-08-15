@@ -53,11 +53,19 @@ get_header(); ?>
 				<h2 class="a-archive-subtitle">Articles by this author:</h2>
 			<?php endif; ?>
 
+			<?php
+			if ( '' === get_term_meta( $category_id, '_mp_category_body', true ) ) :
+				$featured_num = 3;
+			else :
+				$featured_num = 1;
+			endif;
+			?>
+
 			<?php if ( is_category() ) : ?>
 				<section class="m-archive m-archive-top m-category-top">
 					<?php
 					while ( have_posts() ) : the_post();
-						if ( 3 > $wp_the_query->current_post ) :
+						if ( $featured_num > $wp_the_query->current_post ) :
 							get_template_part( 'template-parts/content', 'top' );
 						endif;
 					endwhile;
@@ -66,7 +74,7 @@ get_header(); ?>
 				<section class="m-archive m-archive-excerpt">
 					<?php
 					while ( have_posts() ) : the_post();
-						if ( 3 < $wp_the_query->current_post ) :
+						if ( $featured_num <= $wp_the_query->current_post ) :
 							get_template_part( 'template-parts/content', 'excerpt' );
 						endif;
 					endwhile;
