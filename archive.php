@@ -53,11 +53,14 @@ get_header(); ?>
 				<h2 class="a-archive-subtitle">Articles by this author:</h2>
 			<?php endif; ?>
 
-			<?php
-			if ( '' === get_term_meta( $category_id, '_mp_category_body', true ) ) :
+			<?php if ( is_category() ) :
+				if ( '' === get_term_meta( $category_id, '_mp_category_body', true ) ) :
+					$featured_num = 3;
+				else :
+					$featured_num = 1;
+				endif;
+			elseif ( is_author() ) :
 				$featured_num = 3;
-			else :
-				$featured_num = 1;
 			endif;
 			?>
 
