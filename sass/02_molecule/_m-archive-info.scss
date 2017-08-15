@@ -1,0 +1,28 @@
+.m-archive-info {
+	.a-archive-figure {
+		@include clearfix;
+		padding-bottom: 40px;
+		margin-bottom: -16px;
+		background: $color__minnpost-white;
+		img {
+			margin: 10px 20px 10px 10px;
+			float: left;
+		}
+		figcaption {
+			padding: 10px;
+			font-size: 1.23em;
+			line-height: 1.5em;
+		}
+	}
+	&.m-category-info {
+		padding-bottom: 30px;
+		margin-bottom: 20px;
+		border-bottom: 1px solid $color__gray-lightest;
+		.a-category-figure {
+			margin-bottom: -22px;
+		}
+	}
+	&.m-author-info {
+		margin-bottom: 25px;
+	}
+}

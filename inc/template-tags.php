@@ -61,10 +61,6 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 				</figcaption>
 				<?php } ?>
 			</figure><!-- .post-image -->
-		<?php elseif ( is_archive() ) : ?>
-			<figure class="m-post-image m-post-image-<?php echo $size; ?>">
-				<?php echo $image; ?>
-			</figure><!-- .post-image -->
 		<?php else : ?>
 			<a class="m-post-image m-post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true">
 				<?php
@@ -162,7 +158,7 @@ if ( ! function_exists( 'minnpost_author_figure' ) ) :
 		}
 
 		if ( is_singular() || is_archive() ) : ?>
-			<figure class="a-author-figure a-author-figure-<?php echo $size; ?>">
+			<figure class="a-archive-figure a-author-figure a-author-figure-<?php echo $size; ?>">
 				<?php echo $image; ?>
 				<?php if ( true === $include_text && '' !== $text ) : ?>
 					<figcaption>
@@ -173,6 +169,60 @@ if ( ! function_exists( 'minnpost_author_figure' ) ) :
 					</figcaption>
 				<?php endif; ?>
 			</figure><!-- .author-figure -->
+		<?php endif; // End is_singular()
+	}
+endif;
+
+if ( ! function_exists( 'minnpost_term_figure' ) ) :
+	/**
+	 * Outputs term image, large or thumbnail, with/without the description or excerpt, all inside a <figure>
+	 */
+	function minnpost_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false ) {
+
+		$image_url = get_term_meta( $category_id, '_mp_category_main_image', true );
+		if ( 'feature' !== $size ) {
+			$image_url = get_term_meta( $category_id, '_mp_category_' . $size . '_image', true );
+			$image_id = get_term_meta( $category_id, '_mp_category_' . $size . '_image_id', true );
+		}
+		$image_id = get_term_meta( $category_id, '_mp_category_main_image_id', true );
+
+		$text = '';
+		if ( 'feature' === $size ) { // full text
+			$text = get_term_meta( $category_id, '_mp_category_body', true );
+		} else { // excerpt
+			$text = get_term_meta( $category_id, '_mp_category_excerpt', true );
+		}
+
+		if ( post_password_required() || is_attachment() || ( ! $image_id && ! $image_url ) ) {
+			return;
+		}
+
+		$name = '';
+		$name = get_cat_name( $category_id );
+
+		$caption = wp_get_attachment_caption( $image_id );
+		$credit = get_media_credit_html( $image_id );
+
+		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
+			// todo: test this display because so far we just have external urls
+			$image = wp_get_attachment_image( $image_id, $size );
+		} else {
+			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
+		}
+
+		if ( is_singular() || is_archive() ) : ?>
+			<figure class="a-archive-figure a-category-figure a-category-figure-<?php echo $size; ?>">
+				<?php echo $image; ?>
+				<?php if ( true === $include_text && '' !== $text ) : ?>
+					<figcaption>
+						<?php if ( true === $include_name && '' !== $name ) : ?>
+							<h3 class="a-category-title"><a href="<?php echo get_category_link( $category_id ); ?>"><?php echo $name; ?></a></h3>
+						<?php endif; ?>
+						<?php echo $text; ?>
+					</figcaption>
+				<?php endif; ?>
+			</figure><!-- .category-figure -->
 		<?php endif; // End is_singular()
 	}
 endif;

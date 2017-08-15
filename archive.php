@@ -23,6 +23,18 @@ get_header(); ?>
 			</header><!-- .m-archive-header -->
 
 			<?php if ( is_category() ) : ?>
+				<aside class="m-archive-info m-category-info m-category-full-info">
+					<?php
+					$category_id = $wp_query->get_queried_object_id();
+					// category meta
+					$sponsorship_text = get_term_meta( $category_id, '_mp_category_sponsorship', true );
+					echo '<div class="a-sponsorship">' . $sponsorship_text . '</div>';
+					minnpost_term_figure( $category_id );
+					?>
+					<ul class="a-archive-links a-category-links">
+						<li class="a-rss-link"><a href="<?php echo get_category_feed_link( $category_id ); ?>">Subscribe with RSS</a></li>
+					</ul>
+				</aside>
 			<?php elseif ( is_author() ) : ?>
 				<aside class="m-archive-info m-author-info m-author-full-info">
 					<?php
@@ -78,6 +90,7 @@ get_header(); ?>
 		endif; ?>
 
 		</main><!-- #main -->
+
 	</div><!-- #primary -->
 
 <?php
