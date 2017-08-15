@@ -12,6 +12,10 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 			$category = $category->cat_ID;
 		} else {
 			$category = $categories[0];
+			if ( ! is_integer( $category ) ) {
+				$category = get_category_by_slug( 'glean' );
+				$category = $category->cat_ID;
+			}
 		}
 		if ( $title ) {
 			$before_title = str_replace('widget-title', 'a-widget-title', $before_title);
