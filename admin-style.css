@@ -1,3 +1,18 @@
+/* we never want pings */
 #commentstatusdiv label[for="ping_status"], #commentstatusdiv .inside br {
 	display: none;
+}
+
+/* featured columns fixes */
+.cmb2-id--mp-category-featured-columns .cmb-td p {
+	display: none;
+}
+.cmb2-id--mp-category-featured-columns .cmb-td {
+	min-height: 42px;
+	max-height: 200px;
+	overflow: auto;
+	padding: 0 .9em;
+	border: 1px solid #ddd;
+	background-color: #fdfdfd;
+	margin: 20px 0;
 }

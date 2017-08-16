@@ -1,18 +1,27 @@
 .o-content-sidebar section {
 	margin-bottom: 15px;
-	.a-widget-title {
-
-	}
-	&.the-glean .a-widget-title {
-		background: $color__minnpost-red;
+	border: 1px solid $color__gray-lightest;
+	background: $color__minnpost-white;
+	padding: 15px;
+	.a-widget-title, .a-sidebar-box-title {
 		font-size: 123.1%;
 		text-transform: uppercase;
 		font-family: $font__headings;
 		font-weight: normal;
-		a {
-			display: inline-block;
-			color: $color__white;
-			padding: 10px 16px 5px 16px;
+		margin-bottom: 0.75em;
+	}
+	&.the-glean {
+		border: 0;
+		background: $color__white;
+		padding: 0;
+		.a-widget-title {
+			background: $color__minnpost-red;
+			margin-bottom: 0;
+			a {
+				display: inline-block;
+				color: $color__white;
+				padding: 10px 16px 5px 16px;
+			}
 		}
 	}
 	.m-post-glean {

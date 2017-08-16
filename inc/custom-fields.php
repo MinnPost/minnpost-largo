@@ -263,7 +263,7 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 		 */
 		$category_setup = new_cmb2_box( array(
 			'id'            => 'category_properties',
-			'title'         => 'Subtitle Settings',
+			'title'         => 'Category Settings',
 			'object_types'  => array( $object_type ),
 			'taxonomies'    => array( 'category' ),
 			'new_term_section' => true, // will display in add category section
@@ -293,6 +293,27 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 			'id'         => '_mp_category_body',
 			'type'       => 'wysiwyg',
 		) );
+
+	    $options = array();
+	    if ( is_admin() && isset( $_GET['taxonomy'] ) && 'category' === sanitize_key( $_GET['taxonomy'] ) ) {
+
+			$category_id = absint( $_GET['tag_ID'] );
+			$categories = get_terms( array(
+				'taxonomy' => 'category',
+			    'hide_empty' => false,
+			) );
+			foreach( $categories as $category ) {
+				if ( $category_id !== $category->term_id ) {
+					$options[ $category->term_id ] = $category->name;
+				}
+			}
+			$category_setup->add_field( array(
+				'name'       => 'Featured Columns',
+				'id'         => '_mp_category_featured_columns',
+				'type'       => 'multicheck',
+				'options' => $options,
+			) );
+		}
 	}
 endif;
 

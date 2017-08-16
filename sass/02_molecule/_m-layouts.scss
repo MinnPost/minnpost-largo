@@ -10,4 +10,5 @@
 
 main {
 	position: relative;
+	@include clearfix;
 }
