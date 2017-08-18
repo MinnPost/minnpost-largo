@@ -295,9 +295,13 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 		) );
 
 	    $options = array();
-	    if ( is_admin() && isset( $_GET['taxonomy'] ) && 'category' === sanitize_key( $_GET['taxonomy'] ) ) {
+	    if ( is_admin() && ( isset( $_GET['taxonomy'] ) && 'category' === sanitize_key( $_GET['taxonomy'] ) && isset( $_GET['tag_ID'] ) ) || isset( $_POST['tag_ID'] ) && 'category' === sanitize_key( $_POST['taxonomy'] ) ) {
 
-			$category_id = absint( $_GET['tag_ID'] );
+	    	if ( isset( $_GET['tag_ID'] ) ) :
+				$category_id = absint( $_GET['tag_ID'] );
+			elseif ( isset( $_POST['tag_ID'] ) ) :
+				$category_id = absint( $_POST['tag_ID'] );
+			endif;
 			$categories = get_terms( array(
 				'taxonomy' => 'category',
 			    'hide_empty' => false,
@@ -313,8 +317,12 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 				'type'       => 'multicheck',
 				'options' => $options,
 			) );
+
 		}
 	}
+
+	add_image_size( 'category-featured-column', 50, 9999 ); // scale so the width is 50px
+
 endif;
 
 if ( ! function_exists( 'remove_default_category_description' ) ) :
