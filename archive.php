@@ -101,7 +101,12 @@ get_header(); ?>
 								<h2 class="a-sidebar-box-title">Featured Columns</h2>
 								<ul>
 									<?php foreach ( $featured_columns as $key => $value ) : ?>
-										<li><?php echo get_cat_name( $value ); ?></li>
+										<li>
+											<a href="<?php echo get_category_link( $value ); ?>">
+												<?php echo get_cat_name( $value ); ?>
+												<?php minnpost_term_figure( $value, 'featured_column', false, false ); ?>
+											</a>
+										</li>
 									<?php endforeach; ?>
 								</ul>
 							</section>
