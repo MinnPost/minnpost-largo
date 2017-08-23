@@ -12,6 +12,7 @@ if ( ! function_exists( 'minnpost_menus' ) ) :
 			array(
 				'footer_primary' => __( 'Footer Primary' ), // main footer. about, advertise, member benefits, etc
 				'footer_secondary' => __( 'Footer Secondary' ), // bottom of footer. careers, etc
+				'featured_columns' => __( 'Featured Columns' ), // featured columns on homepage, category pages
 				'minnpost_network' => __( 'Network Menu' ), // social networks, rss
 				'support_minnpost' => __( 'Support Menu' ), // the support box next to the top banner ad
 				'secondary_links' => __( 'Secondary' ), // that weird nav next to logo with columns, weather, events, support
