@@ -70,6 +70,12 @@ if ( function_exists( 'create_newsletter' ) ) :
 			'type'       => 'text',
 			'desc'       => 'This is visible before users open the email in some email clients. If there\'s no value, we won\'t use it. Limited to 50 characters.',
 		) );
+		$newsletter_setup->add_field( array(
+			'name'       => 'Show Department for Top Stories?',
+			'id'         => $prefix . 'show_department_for_top_stories',
+			'type'       => 'checkbox',
+			'desc'       => '',
+		) );
 
 		/**
 		 * For posts on newsletters
