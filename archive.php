@@ -103,8 +103,8 @@ get_header(); ?>
 									<?php foreach ( $featured_columns as $key => $value ) : ?>
 										<li>
 											<a href="<?php echo get_category_link( $value ); ?>">
-												<?php echo get_cat_name( $value ); ?>
 												<?php minnpost_term_figure( $value, 'featured_column', false, false ); ?>
+												<h3 class="a-featured-title"><?php echo get_cat_name( $value ); ?></h3>
 											</a>
 										</li>
 									<?php endforeach; ?>

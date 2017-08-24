@@ -51,7 +51,7 @@ require get_stylesheet_directory() . '/inc/sidebars.php';
 /**
  * Widgets
  */
-require get_stylesheet_directory() . '/inc/widget-filter.php';
+require get_stylesheet_directory() . '/inc/widgets/widget-filter.php';
 require get_stylesheet_directory() . '/inc/widgets/glean.php';
 
 /**
