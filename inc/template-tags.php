@@ -178,7 +178,16 @@ if ( ! function_exists( 'minnpost_term_figure' ) ) :
 	 * Outputs term image, large or thumbnail, with/without the description or excerpt, all inside a <figure>
 	 */
 	function minnpost_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false ) {
+		$output = minnpost_get_term_figure( $category_id, $size, $include_text, $include_name );
+		echo $output;
+	}
+endif;
 
+if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
+	/**
+	 * Returns term image, large or thumbnail, with/without the description or excerpt, all inside a <figure>
+	 */
+	function minnpost_get_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false ) {
 		$image_url = get_term_meta( $category_id, '_mp_category_main_image', true );
 		if ( 'feature' !== $size ) {
 			$image_url = get_term_meta( $category_id, '_mp_category_' . $size . '_image', true );
@@ -211,19 +220,21 @@ if ( ! function_exists( 'minnpost_term_figure' ) ) :
 			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
 		}
 
-		if ( is_singular() || is_archive() ) : ?>
-			<figure class="a-archive-figure a-category-figure a-category-figure-<?php echo $size; ?>">
-				<?php echo $image; ?>
-				<?php if ( true === $include_text && '' !== $text ) : ?>
-					<figcaption>
-						<?php if ( true === $include_name && '' !== $name ) : ?>
-							<h3 class="a-category-title"><a href="<?php echo get_category_link( $category_id ); ?>"><?php echo $name; ?></a></h3>
-						<?php endif; ?>
-						<?php echo $text; ?>
-					</figcaption>
-				<?php endif; ?>
-			</figure><!-- .category-figure -->
-		<?php endif; // End is_singular()
+		if ( is_singular() || is_archive() || is_home() ) {
+			$output = '';
+			$output .= '<figure class="a-archive-figure a-category-figure a-category-figure-' . $size . '">';
+				$output .= $image;
+				if ( true === $include_text && '' !== $text ) {
+					$output .= '<figcaption>';
+						if ( true === $include_name && '' !== $name ) {
+							$output .= '<h3 class="a-category-title"><a href="' . get_category_link( $category_id ) . '">' . $name . '</a></h3>';
+						}
+						$output .= $text;
+					$output .= '</figcaption>';
+				}
+			$output .= '</figure><!-- .category-figure -->';
+			return $output;
+		} // End is_singular()
 	}
 endif;
 

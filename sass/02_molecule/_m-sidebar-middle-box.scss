@@ -1,7 +1,6 @@
 .o-content-sidebar section {
 	margin-bottom: 15px;
 	border: 1px solid $color__gray-lightest;
-	background: $color__minnpost-white;
 	padding: 15px;
 	.a-widget-title, .a-sidebar-box-title {
 		font-size: 123.1%;
@@ -9,6 +8,14 @@
 		font-family: $font__headings;
 		font-weight: normal;
 		margin-bottom: 0.75em;
+	}
+	ul {
+		margin: 0;
+		list-style: none;
+		padding: 0;
+		li {
+			margin-bottom: 0.75em;
+		}
 	}
 	&.the-glean {
 		border: 0;
@@ -23,6 +30,9 @@
 				padding: 10px 16px 5px 16px;
 			}
 		}
+	}
+	&.m-featured-columns, &.widget_nav_menu {
+		background: $color__minnpost-white;
 	}
 	.m-post-glean {
 		padding: 5px 15px 15px 15px;
