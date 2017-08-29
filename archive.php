@@ -51,6 +51,13 @@ get_header(); ?>
 					</ul>
 				</aside>
 				<h2 class="a-archive-subtitle">Articles by this author:</h2>
+			<?php elseif ( is_tag() ) : ?>
+				<aside class="m-archive-info m-category-info m-category-full-info">
+					<?php $tag_id = $wp_query->get_queried_object_id(); ?>
+					<ul class="a-archive-links a-tag-links">
+						<li class="a-rss-link"><a href="<?php echo get_tag_feed_link( $tag_id ); ?>">Subscribe with RSS</a></li>
+					</ul>
+				</aside>
 			<?php endif; ?>
 
 			<?php if ( is_category() ) :
