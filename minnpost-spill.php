@@ -1,6 +1,6 @@
 <?php
 /**
- * The template for displaying archive pages
+ * The template for displaying spill url pages
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
@@ -17,29 +17,28 @@ get_header(); ?>
 			<header class="m-archive-header">
 				<?php
 					the_archive_title( '<h1 class="a-archive-title">', '</h1>' );
+					the_archive_description( '<div class="archive-description">', '</div>' );
 				?>
 			</header><!-- .m-archive-header -->
 
+			<aside class="m-archive-info m-category-info m-category-full-info">
+			</aside>
+
+			<section class="m-archive m-archive-excerpt">
+				<?php
+				while ( have_posts() ) : the_post();
+					get_template_part( 'template-parts/content', 'excerpt' );
+				endwhile;
+				?>
+			</section>
 			<?php
-			/* Start the Loop */
-			while ( have_posts() ) : the_post();
-
-				/*
-				 * Include the Post-Format-specific template for the content.
-				 * If you want to override this in a child theme, then include a file
-				 * called content-___.php (where ___ is the Post Format name) and that will be used instead.
-				 */
-				get_template_part( 'template-parts/content', get_post_format() );
-
-			endwhile;
-
 			numeric_pagination();
 
 		else :
-
 			get_template_part( 'template-parts/content', 'none' );
-
 		endif; ?>
+
+		</main><!-- #main -->
 
 		</main><!-- #main -->
 	</div><!-- #primary -->
