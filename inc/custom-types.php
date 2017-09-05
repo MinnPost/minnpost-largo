@@ -34,6 +34,7 @@ if ( ! function_exists( 'create_newsletter' ) ) :
 	    	)
 		);
 	}
+
 endif;
 
 
