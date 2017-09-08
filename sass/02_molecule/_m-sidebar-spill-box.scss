@@ -3,11 +3,27 @@
 	outline: 1px solid $color__gray-lightest;
 	border: 15px solid $color__minnpost-white;
 	background: $color__white;
-	&.m-minnpost-spills-widget .a-widget-title {
-		margin: 0;
+	.a-widget-title {
+		font-size: 123.1%;
+		text-transform: none;
+		font-family: $font__sans;
+		font-weight: bold;
 		padding: 20px;
 		padding-bottom: 0;
-		font-size: 123.1%;
+		margin: 0;
+		a {
+			color: $color__minnpost-black;
+		}
+	}
+	&.m-widget-custom-html {
+		.m-widget-contents {
+			padding-bottom: 0;
+		}
+		> p:last-child {
+			padding: 0 20px 10px 20px;
+		}
+	}
+	&.m-minnpost-spills-widget .a-widget-title {
 		text-transform: uppercase;
 		font-family: $font__headings;
 		font-weight: normal;
@@ -18,6 +34,11 @@
 	.m-widget-contents {
 		padding: 0 20px;
 		padding-bottom: 10px;
+		&.m-custom-html-widget {
+			.image {
+				margin-bottom: 0.75em;
+			}
+		}
 	}
 	.m-post-spill {
 		margin: 0.75em 0;

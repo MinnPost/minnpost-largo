@@ -58,7 +58,7 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 					<?php endif; ?>
 				<?php $i++; endwhile; ?>
 				<!-- end of the loop -->
-				<p class="a-glean-more"><a href="<?php echo esc_url( get_category_link( $category ) ); ?>">More</a></p>
+				<p class="a-more a-glean-more"><a href="<?php echo esc_url( get_category_link( $category ) ); ?>">More</a></p>
 
 				<?php wp_reset_postdata(); ?>
 			</article>

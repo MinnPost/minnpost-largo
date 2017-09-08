@@ -23,4 +23,19 @@ a {
 		color: $color__black;
 	}
 
+	&.a-more {
+		font-family: $font__sans;
+		&:after {
+			content: ' ▸'
+		}
+	}
+
+}
+
+// sometimes it can be the link container instead
+p.a-more {
+	font-family: $font__sans;
+	a:after {
+		content: ' ▸'
+	}
 }

@@ -2,6 +2,9 @@
 	margin-bottom: 15px;
 	border: 1px solid $color__gray-lightest;
 	padding: 15px;
+	&.m-widget-custom-html {
+		padding: 20px;
+	}
 	.a-widget-title, .a-sidebar-box-title {
 		font-size: 123.1%;
 		text-transform: uppercase;
