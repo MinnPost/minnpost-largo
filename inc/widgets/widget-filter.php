@@ -36,15 +36,6 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 			$html = str_replace( '</div></section>', '</div>' . $move . '</section>', $html );
 		}
 		
-		/*$section = $doc->getElementsByTagName( 'div' );
-		$html .= '<section class="m-widget m-custom-html-widget"><h3 class="a-widget-title">' . $title . '</h3><div class="m-widget-contents">';
-		$children = $section->item(0)->childNodes;
-		foreach ( $children as $child ) {
-			//error_log('attributes are ' . print_r($child->attributes, true));
-			$html .= $child->ownerDocument->saveXML( $child );
-		}*/
-
-		//$html .= '</div>' . $move . '</section>';
 		return $html;
 	}
 	
