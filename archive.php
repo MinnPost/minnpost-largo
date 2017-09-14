@@ -61,6 +61,7 @@ get_header(); ?>
 			<?php endif; ?>
 
 			<?php if ( is_category() ) :
+				$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 				if ( '' === get_term_meta( $category_id, '_mp_category_body', true ) ) :
 					$featured_num = 3;
 				else :
@@ -71,7 +72,7 @@ get_header(); ?>
 			endif;
 			?>
 
-			<?php if ( is_category() ) : ?>
+			<?php if ( is_category() && 1 === $paged ) : ?>
 				<section class="m-archive m-archive-top m-category-top">
 					<?php
 					while ( have_posts() ) : the_post();
