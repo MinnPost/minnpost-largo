@@ -52,3 +52,13 @@
 		</head>
 		<body style="background: #ffffff; Margin: 0; min-width: 100%; padding: 0" bgcolor="#ffffff">
 
+		<?php
+		$preview_text = get_term_meta( get_the_ID(), '_mp_newsletter_preview_text', true );
+		if ( '' !== $preview_text ) {
+		?>
+		<!-- limit to 50 characters; only display if there is a value -->
+		<span style="display: none !important; font-size: 0; color: #fff;"> <!-- gmail only takes display none if it has !important; outlook still doesn't care -->
+			<?php echo $preview_text; ?>
+		</span>
+		<?php
+		}

@@ -465,3 +465,41 @@ if ( ! function_exists( 'numeric_pagination' ) ) :
 
 	}
 endif;
+
+if ( ! function_exists( 'minnpost_newsletter_logo' ) ) :
+	function minnpost_newsletter_logo( $newsletter_id = '' ) {
+
+		$logo = '';
+
+		$newsletter_type = get_post_meta( $newsletter_id, '_mp_newsletter_type', true );
+
+		if ( '' !== $newsletter_type ) {
+
+			switch ( $newsletter_type ) {
+				case 'book_club':
+					$filename = 'newsletter-logo-book-club.png';
+					break;
+				case 'daily':
+					$filename = 'newsletter-logo-daily.png';
+					break;
+				case 'dc_memo':
+					$filename = 'dc-memo-header-520x50.png';
+					break;
+				case 'greater_mn':
+					$filename = 'newsletter-logo-mn-week.png';
+					break;
+				case 'sunday_review':
+					$filename = 'newsletter-logo-sunday-review.png';
+					break;
+				default:
+					$filename = 'newsletter-logo-daily.png';
+					break;
+			}
+
+			$logo = get_stylesheet_directory_uri() . '/assets/img/' . $filename;
+
+		}
+
+		echo $logo;
+	}
+endif;
