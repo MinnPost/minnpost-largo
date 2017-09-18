@@ -4,7 +4,7 @@
 if ( ! function_exists( 'create_newsletter' ) ) :
 	add_action( 'init', 'create_newsletter' );
 	function create_newsletter() {
-	    register_post_type(
+		register_post_type(
 			'newsletter',
 			array(
 				'label' => __( 'Newsletter', 'minnpost-largo' ),
@@ -31,7 +31,7 @@ if ( ! function_exists( 'create_newsletter' ) ) :
 					'title',
 					'editor',
 				),
-	    	)
+			)
 		);
 	}
 
