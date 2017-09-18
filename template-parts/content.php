@@ -14,7 +14,11 @@
 	<?php minnpost_category_breadcrumb(); ?>
 	<?php minnpost_category_sponsorship(); ?>
 
-	<?php minnpost_post_image(); ?>
+	<?php
+	if ( ! is_singular() ) {
+		minnpost_post_image();
+	}
+	?>
 
 	<header class="m-entry-header">
 		<?php
@@ -24,7 +28,8 @@
 			the_title( '<h3 class="a-entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
 		endif;
 
-		if ( 'post' === get_post_type() ) : ?>
+		if ( 'post' === get_post_type() ) :
+		?>
 
 		<div class="m-entry-meta">
 			By <?php minnpost_posted_by(); ?> | <?php minnpost_posted_on(); ?> <?php minnpost_edit_link(); ?>
@@ -33,6 +38,12 @@
 		<?php endif; ?>
 
 	</header><!-- .m-entry-header -->
+
+	<?php
+	if ( is_singular() ) {
+		minnpost_post_image();
+	}
+	?>
 
 	<div class="m-entry-content">
 		<?php the_content(); ?>
