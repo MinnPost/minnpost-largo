@@ -127,5 +127,17 @@
 					<![endif]-->
 				</td> <!-- end .two-column.header -->
 			</tr> <!-- end row -->
+			<tr>
+				<td class="one-column footer" style="border-collapse: collapse; Margin: 0; padding: 0">
+					<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
+						<tr>
+							<td class="inner contents" style="border-collapse: collapse; Margin: 0; padding: 0; width: 100%">
+								<?php dynamic_sidebar( 'sidebar-3' ); ?>
+							</td>
+						</tr>
+					</table>
+				</td> <!-- end .one-column.footer -->
+			</tr> <!-- end row -->
+
 		</div>
 	</center>
