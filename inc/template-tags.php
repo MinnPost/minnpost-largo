@@ -11,7 +11,7 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 	/**
 	 * Outputs story image, whether large or various kinds of thumbnail, depending on where it is called
 	 */
-	function minnpost_post_image( $size = 'thumbnail' ) {
+	function minnpost_post_image( $size = 'thumbnail', $attributes = array() ) {
 
 		// large is the story detail image. this is a built in size in wordpress
 		// home has its own size field
@@ -19,7 +19,7 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 			$size = esc_html( get_post_meta( get_the_ID(), '_mp_post_homepage_image_size', true ) );
 		} elseif ( is_home() && 'thumbnail' === $size ) {
 			$size = 'thumbnail';
-		} elseif ( is_single() ) {
+		} elseif ( is_single() && ! is_singular( 'newsletter' ) ) {
 			$size = 'large';
 		}
 
@@ -47,9 +47,31 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 		} else {
 			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
 			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
+			if ( is_singular( 'newsletter' ) ) {
+				$image = '<img src="' . $image_url . '" alt="' . $alt . '"';
+				if ( isset( $attributes['title'] ) ) {
+					$image .= ' title="' . $attributes['title'] . '"';
+				}
+				if ( isset( $attributes['style'] ) ) {
+					$image .= ' style="' . $attributes['style'] . '"';
+				}
+				if ( isset( $attributes['class'] ) ) {
+					$image .= ' class="' . $attributes['class'] . '"';
+				}
+				if ( isset( $attributes['align'] ) ) {
+					$image .= ' align="' . $attributes['align'] . '"';
+				}
+				if ( isset( $attributes['width'] ) ) {
+					$image .= ' width="' . $attributes['width'] . '"';
+				}
+				if ( isset( $attributes['height'] ) ) {
+					$image .= ' height="' . $attributes['height'] . '"';
+				}
+				$image .= '>';
+			}
 		}
 
-		if ( is_singular() ) : ?>
+		if ( is_singular() && ! is_singular( 'newsletter' ) ) : ?>
 			<figure class="m-post-image m-post-image-<?php echo $size; ?>">
 				<?php echo $image; ?>
 				<?php if ( '' !== $caption || '' !== $credit ) { ?>
@@ -61,6 +83,8 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 				</figcaption>
 				<?php } ?>
 			</figure><!-- .post-image -->
+		<?php elseif ( is_singular( 'newsletter' ) ) : ?>
+			<?php echo $image; ?>
 		<?php else : ?>
 			<a class="m-post-image m-post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true">
 				<?php
