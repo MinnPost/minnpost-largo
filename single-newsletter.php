@@ -9,6 +9,7 @@
 
 get_header( 'newsletter' );
 	while ( have_posts() ) : the_post();
-		get_template_part( 'template-parts/content-newsletter', get_post_format() );
+		$newsletter_type = get_post_meta( get_the_ID(), '_mp_newsletter_type', true );
+		get_template_part( 'template-parts/content-newsletter', $newsletter_type );
 	endwhile; // End of the loop.
 get_footer( 'newsletter' );
