@@ -127,6 +127,50 @@
 					<![endif]-->
 				</td> <!-- end .two-column.header -->
 			</tr> <!-- end row -->
+
+			<?php
+			$body = get_the_content();
+			if ( '' !== $body ) {
+			?>
+			<tr>
+				<td class="one-column content promo" style="border-collapse: collapse; margin: 0; padding: 0">
+				<!--[if (gte mso 9)|(IE)]>
+					<table cellpadding="0" cellspacing="0" width="100%">
+						<tr>
+							<td width="100%" valign="bottom">
+				<![endif]-->
+					<div class="column promo" style="margin-bottom: 0; margin-top: 18px">
+						<?php echo $body; ?>
+					</div>
+					<!--[if (gte mso 9)|(IE)]>
+							</td>
+						</tr>
+					</table>
+					<![endif]-->
+				</td> <!-- end .one-column.promo -->
+			</tr> <!-- end row -->
+			<?php
+			}
+			$stories = get_post_meta( get_the_ID(), '_mp_newsletter_top_posts', true );
+			$top_query = new WP_Query(
+				array(
+					'post__in' => $stories,
+				)
+			);
+
+			if ( $top_query->have_posts() ) {
+				set_query_var( 'found_posts', $top_query->found_posts );
+				while ( $top_query->have_posts() ) {
+					$top_query->the_post();
+					set_query_var( 'current_post', $top_query->current_post );
+					$newsletter_type = get_post_meta( $top_query->post->ID, '_mp_newsletter_type', true );
+					get_template_part( 'template-parts/post-newsletter', $newsletter_type );
+				}
+				wp_reset_postdata();
+			}
+			?>
+
+
 			<tr>
 				<td class="one-column footer" style="border-collapse: collapse; Margin: 0; padding: 0">
 					<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
