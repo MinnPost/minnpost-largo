@@ -139,6 +139,23 @@ if ( ! function_exists( 'minnpost_posted_by' ) ) :
 	}
 endif;
 
+if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
+	/**
+	 * Integrate Co-Authors Plus
+	 */
+	function minnpost_get_posted_by() {
+		if ( ! empty( esc_html( get_post_meta( get_the_ID(), '_mp_subtitle_settings_byline', true ) ) ) ) :
+			return esc_html( get_post_meta( get_the_ID(), '_mp_subtitle_settings_byline', true ) );
+		else :
+			if ( function_exists( 'coauthors_posts_links' ) ) :
+				return coauthors_posts_links( ',', ',', null, null, false );
+			else :
+				return get_the_author_link();
+			endif;
+		endif;
+	}
+endif;
+
 if ( ! function_exists( 'minnpost_author_figure' ) ) :
 	/**
 	 * Outputs author image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
@@ -525,5 +542,70 @@ if ( ! function_exists( 'minnpost_newsletter_logo' ) ) :
 		}
 
 		echo $logo;
+	}
+endif;
+
+if ( ! function_exists( 'minnpost_newsletter_arrange' ) ) :
+	function minnpost_newsletter_arrange( $content, $news_right_top, $type = '' ) {
+		$promo_dom = new DomDocument;
+		$promo_dom->loadHTML( '<?xml encoding="utf-8" ?>' . $content );
+		$imgs = $promo_dom->getElementsByTagName( 'img' );
+		foreach ( $imgs as $img ) {
+			$img->setAttribute( 'style', 'border: 0 none; display: block; height: auto; line-height: 100%; Margin-left: auto; Margin-right: auto; outline: none; text-decoration: none; max-width: 100%;' );
+		}
+		$promo_xpath = new DOMXpath( $promo_dom );
+		$promo_div = $promo_xpath->query( "//div[contains(concat(' ', @class, ' '), ' image ')]/div" );
+
+		$dom = new DomDocument;
+		$dom->loadHTML( '<?xml encoding="utf-8" ?>' . $content );
+		$xpath = new DOMXpath( $dom );
+		$divs = $xpath->query( "//div[contains(concat(' ', @class, ' '), ' story ')]" );
+
+		$ad_dom = new DomDocument;
+		$ad_dom->loadHTML( '<?xml encoding="utf-8" ?>' . $news_right_top );
+		$ad_xpath = new DOMXpath( $ad_dom );
+		$ad_divs = $ad_xpath->query( "//div[contains(concat(' ', @class, ' '), ' block ')]/div/div/p" );
+
+		$contents = array();
+		$bottom = '';
+		foreach ( $divs as $key => $value ) {
+			$class = $value->getAttribute( 'class' );
+			$style = $value->getAttribute( 'style' );
+			if ( 0 === $key || 1 === $key ) {
+				$contents[] = '<div class="' . $class . '" style="' . $style . '">' . minnpost_dom_innerhtml( $value ) . '</div>';
+			} else {
+				$bottom .= '<div class="' . $class . '">' . minnpost_dom_innerhtml( $value ) . '</div>';
+			}
+		}
+
+		$promo = array();
+		foreach ( $promo_div as $key => $value ) {
+			$href = $value->getAttribute( 'href' );
+			$target = $value->getAttribute( 'target' );
+			$promo[] = '<div class="image">' . minnpost_dom_innerhtml( $value ) . '</div>';
+		}
+
+		$ads = array();
+		if ( 'dc_memo' !== $type ) {
+			foreach ( $ad_divs as $key => $value ) {
+				$style = $value->getAttribute( 'style' );
+				$ads[] = '<p style="Margin: 0 0 10px; padding: 0">' . minnpost_dom_innerhtml( $value ) . '</p>';
+			}
+		} else {
+			foreach ( $ad_divs as $key => $value ) {
+				$style = $value->getAttribute( 'style' );
+				$ads[] = '<p style="Margin: 0 0 10px; padding: 0">' . minnpost_dom_innerhtml( $value ) . '</p>';
+			}
+		}
+
+		$data = array(
+			'stories' => $contents,
+			'ads' => $ads,
+			'bottom' => $bottom,
+		);
+		if ( ! empty( $promo ) ) {
+			$data['promo'] = $promo[0];
+		}
+		return $data;
 	}
 endif;
