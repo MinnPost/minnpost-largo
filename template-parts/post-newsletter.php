@@ -100,7 +100,11 @@
 						<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
 							<tr>
 								<td style="border-collapse: collapse; Margin: 0; padding: 0">
-									<?php //print $body['ads']["$key"]; ?>
+									<?php
+									if ( isset( $newsletter_ads[ "$current_post" ] ) && ! empty( $newsletter_ads[ "$current_post" ] ) ) {
+										echo $newsletter_ads[ "$current_post" ];
+									}
+									?>
 								</td>
 							</tr>
 						</table>

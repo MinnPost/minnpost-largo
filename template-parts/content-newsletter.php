@@ -158,19 +158,45 @@
 				)
 			);
 
+			$newsletter_type = get_post_meta( get_the_ID(), '_mp_newsletter_type', true );
+			ob_start();
+			dynamic_sidebar( 'sidebar-1' );
+			$sidebar = ob_get_contents();
+			ob_end_clean();
+
+			$ad_dom = new DomDocument;
+			$ad_dom->loadHTML( '<?xml encoding="utf-8" ?>' . $sidebar );
+			$ad_xpath = new DOMXpath( $ad_dom );
+			$ad_divs = $ad_xpath->query( "//div[contains(concat(' ', @class, ' '), ' m-widget ')]/div/p" );
+
+			$ads = array();
+			if ( 'dc_memo' !== $newsletter_type ) {
+				foreach ( $ad_divs as $key => $value ) {
+					$style = $value->getAttribute( 'style' );
+					//error_log( 'value is ' . print_r( $value, true ) );
+					$ads[] = '<p style="Margin: 0 0 10px; padding: 0">' . minnpost_dom_innerhtml( $value ) . '</p>';
+				}
+			} else {
+				foreach ( $ad_divs as $key => $value ) {
+					$style = $value->getAttribute( 'style' );
+					$ads[] = '<p style="Margin: 0 0 10px; padding: 0">' . minnpost_dom_innerhtml( $value ) . '</p>';
+				}
+			}
+
+			set_query_var( 'newsletter_ads', $ads );
+
 			if ( $top_query->have_posts() ) {
 				set_query_var( 'found_posts', $top_query->found_posts );
 				set_query_var( 'show_top_departments', get_post_meta( get_the_ID(), '_mp_newsletter_show_department_for_top_stories', true ) );
+
 				while ( $top_query->have_posts() ) {
 					$top_query->the_post();
 					set_query_var( 'current_post', $top_query->current_post );
-					$newsletter_type = get_post_meta( $top_query->post->ID, '_mp_newsletter_type', true );
 					get_template_part( 'template-parts/post-newsletter', $newsletter_type );
 				}
 				wp_reset_postdata();
 			}
 			?>
-
 
 			<tr>
 				<td class="one-column footer" style="border-collapse: collapse; Margin: 0; padding: 0">

@@ -37,3 +37,16 @@ if ( ! function_exists( 'minnpost_post_thumbnail_sizes_attr' ) ) :
 		return $attr;
 	}
 endif;
+
+if ( ! function_exists( 'minnpost_dom_innerhtml' ) ) :
+	function minnpost_dom_innerhtml( $element ) {
+		$inner_html = '';
+		$children = $element->childNodes;
+		foreach ( $children as $child ) {
+			$tmp_dom = new DOMDocument();
+			$tmp_dom->appendChild( $tmp_dom->importNode( $child, true ) );
+			$inner_html .= trim( $tmp_dom->saveHTML() );
+		}
+		return $inner_html;
+	}
+endif;
