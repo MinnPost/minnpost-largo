@@ -152,5 +152,41 @@
 					<![endif]-->
 				</td> <!-- end .one-column.header -->
 			</tr> <!-- end row -->
+
+			<?php
+			$body = get_the_content();
+			if ( '' !== $body ) :
+			?>
+			<tr>
+				<td class="one-column content promo" style="border-collapse: collapse; margin: 0; padding: 0">
+				<!--[if (gte mso 9)|(IE)]>
+					<table cellpadding="0" cellspacing="0" width="100%">
+						<tr>
+							<td width="100%" valign="bottom">
+				<![endif]-->
+					<div class="column promo" style="margin-bottom: 0; margin-top: 18px">
+						<?php echo $body; ?>
+					</div>
+					<!--[if (gte mso 9)|(IE)]>
+							</td>
+						</tr>
+					</table>
+					<![endif]-->
+				</td> <!-- end .one-column.promo -->
+			</tr> <!-- end row -->
+			<?php endif; ?>
+
+			<tr>
+				<td class="one-column footer" style="border-collapse: collapse; Margin: 0; padding: 0">
+					<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
+						<tr>
+							<td class="inner contents" style="border-collapse: collapse; Margin: 0; padding: 0; width: 100%">
+								<?php dynamic_sidebar( 'sidebar-3' ); ?>
+							</td>
+						</tr>
+					</table>
+				</td> <!-- end .one-column.footer -->
+			</tr> <!-- end row -->
+
 	</div>
 </center>
