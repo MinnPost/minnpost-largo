@@ -131,9 +131,9 @@ if ( ! function_exists( 'minnpost_posted_by' ) ) :
 			printf( esc_html( get_post_meta( get_the_ID(), '_mp_subtitle_settings_byline', true ) ) );
 		else :
 			if ( function_exists( 'coauthors_posts_links' ) ) :
-				printf( coauthors_posts_links( ',', ',', null, null, false ) );
+				printf( 'By ' . coauthors_posts_links( ',', ',', null, null, false ) );
 			else :
-				the_author_posts_link();
+				printf( 'By <a href="' . get_the_author_posts_url( get_the_author_meta( 'ID' ) ) . '">' . the_author() . '</a>' );
 			endif;
 		endif;
 	}
@@ -148,9 +148,9 @@ if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
 			return esc_html( get_post_meta( get_the_ID(), '_mp_subtitle_settings_byline', true ) );
 		else :
 			if ( function_exists( 'coauthors_posts_links' ) ) :
-				return coauthors_posts_links( ',', ',', null, null, false );
+				return 'By ' . coauthors_posts_links( ',', ',', null, null, false );
 			else :
-				return get_the_author_link();
+				return 'By <a href="' . get_the_author_posts_url( get_the_author_meta( 'ID' ) ) . '">' . the_author() . '</a>';
 			endif;
 		endif;
 	}

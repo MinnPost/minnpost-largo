@@ -19,7 +19,7 @@
 		<?php if ( 'post' === get_post_type() ) : ?>
 
 		<div class="m-entry-meta">
-			By <?php minnpost_posted_by(); ?> | <?php minnpost_posted_on(); ?> <?php minnpost_edit_link(); ?>
+			<?php minnpost_posted_by(); ?> | <?php minnpost_posted_on(); ?> <?php minnpost_edit_link(); ?>
 		</div>
 
 		<?php endif; ?>

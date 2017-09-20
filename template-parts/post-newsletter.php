@@ -58,7 +58,7 @@
 									)
 								);
 								?>
-								<h5 style="color: #1A1818; display: block; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 10px; font-weight: bold; line-height: 100%; Margin: 0 0 5px; text-align: left; text-transform: uppercase" align="left">By <?php echo preg_replace( '/(<a\b[^><]*)>/i', '$1 style="color: #1A1818; text-decoration: none;">', preg_replace( '/\s*title\s*=\s*(["\']).*?\1/', '', minnpost_get_posted_by() ) ); ?>
+								<h5 style="color: #1A1818; display: block; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 10px; font-weight: bold; line-height: 100%; Margin: 0 0 5px; text-align: left; text-transform: uppercase" align="left"><?php echo preg_replace( '/(<a\b[^><]*)>/i', '$1 style="color: #1A1818; text-decoration: none;">', preg_replace( '/\s*title\s*=\s*(["\']).*?\1/', '', minnpost_get_posted_by() ) ); ?>
 								</h5>
 								<div>
 									<p style="font-family: Georgia, 'Times New Roman', Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 10px; padding: 0">
