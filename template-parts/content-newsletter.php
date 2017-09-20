@@ -151,14 +151,38 @@
 			</tr> <!-- end row -->
 			<?php
 			}
-			$stories = get_post_meta( get_the_ID(), '_mp_newsletter_top_posts', true );
+			$top_offset = 2;
+			$top_stories = get_post_meta( get_the_ID(), '_mp_newsletter_top_posts', true );
 			$top_query = new WP_Query(
 				array(
-					'post__in' => $stories,
+					'post__in' => $top_stories,
+					'posts_per_page' => $top_offset,
+					'orderby' => 'post__in',
 				)
 			);
 
+			$second_query = new WP_Query(
+				array(
+					'post__in' => $top_stories,
+					'paged' => 1,
+					'offset' => $top_offset,
+					'orderby' => 'post__in',
+				)
+			);
+			// the total does not stop at posts_per_page
+			set_query_var( 'found_posts', $top_query->found_posts );
+
 			$newsletter_type = get_post_meta( get_the_ID(), '_mp_newsletter_type', true );
+
+			$more_stories = get_post_meta( get_the_ID(), '_mp_newsletter_more_posts', true );
+			$more_query = new WP_Query(
+				array(
+					'post__in' => $more_stories,
+					'posts_per_page' => -1,
+					'orderby' => 'post__in',
+				)
+			);
+
 			ob_start();
 			dynamic_sidebar( 'sidebar-1' );
 			$sidebar = ob_get_contents();
@@ -173,7 +197,6 @@
 			if ( 'dc_memo' !== $newsletter_type ) {
 				foreach ( $ad_divs as $key => $value ) {
 					$style = $value->getAttribute( 'style' );
-					//error_log( 'value is ' . print_r( $value, true ) );
 					$ads[] = '<p style="Margin: 0 0 10px; padding: 0">' . minnpost_dom_innerhtml( $value ) . '</p>';
 				}
 			} else {
@@ -186,17 +209,92 @@
 			set_query_var( 'newsletter_ads', $ads );
 
 			if ( $top_query->have_posts() ) {
-				set_query_var( 'found_posts', $top_query->found_posts );
 				set_query_var( 'show_top_departments', get_post_meta( get_the_ID(), '_mp_newsletter_show_department_for_top_stories', true ) );
 
 				while ( $top_query->have_posts() ) {
 					$top_query->the_post();
 					set_query_var( 'current_post', $top_query->current_post );
+					set_query_var( 'is_top_story', true );
 					get_template_part( 'template-parts/post-newsletter', $newsletter_type );
 				}
 				wp_reset_postdata();
 			}
+
 			?>
+
+			<tr>
+				<td class="two-column content supp" style="border-bottom-color: #cccccf; border-bottom-style: solid; border-bottom-width: 2px; border-collapse: collapse; font-size: 0; Margin: 0 0 18px; padding: 0; text-align: center" align="center">
+				<!--[if (gte mso 9)|(IE)]>
+					<table cellpadding="0" cellspacing="0" width="100%">
+						<tr>
+							<td width="280" valign="top">
+				<![endif]-->
+					<div class="column stories" style="display: inline-block; Margin-right: 20px; max-width: 280px; vertical-align: top; width: 100%">
+						<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
+							<tr>
+								<td class="inner" style="border-collapse: collapse; Margin: 0; padding: 0">
+									<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
+										<tr>
+											<td class="text" style="border-collapse: collapse; Margin: 0; padding: 10px 0 0">
+												<?php
+												if ( $second_query->have_posts() ) {
+													while ( $second_query->have_posts() ) {
+														$second_query->the_post();
+														set_query_var( 'current_post', $second_query->current_post + $top_offset );
+														set_query_var( 'is_top_story', false );
+														get_template_part( 'template-parts/post-newsletter', $newsletter_type );
+													}
+													wp_reset_postdata();
+												}
+												?>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</div> <!-- end .stories -->
+					<!--[if (gte mso 9)|(IE)]>
+					</td><td width="20">&nbsp;</td><td width="50%" valign="top">
+					<![endif]-->
+					<div class="column more" style="display: inline-block; Margin-right: 0; max-width: 300px; vertical-align: top; width: 100%">
+						<?php if ( $more_query->have_posts() ) : ?>
+							<table cellpadding="0" cellspacing="0" class="more" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
+								<tr>
+									<td class="inner" style="background: #f0f0f5; border: 1px solid #cccccf; border-collapse: collapse; Margin: 0; max-width: 100%; padding: 15px; width: 100%" bgcolor="#f0f0f5">
+										<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
+											<tr>
+												<td class="text" style="background: #ffffff; border-collapse: collapse; Margin: 0; padding: 15px 15px 5px" bgcolor="#ffffff">
+													<div class="inner">
+														<h2 style="color: #801019; display: block; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; font-weight: bold; line-height: 1; Margin: 0 0 10px; text-align: left; text-transform: uppercase;" align="left">More Stories</h2>
+														<?php while ( $more_query->have_posts() ) : ?>
+															<?php
+															$more_query->the_post();
+															set_query_var( 'current_post', $second_query->current_post + $top_offset );
+															set_query_var( 'is_top_story', false );
+															?>
+															<h4 style="color: #555556; display: block; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 10px; font-weight: normal; line-height: 100%; Margin: 0 0 5px; text-align: left; text-transform: uppercase" align="left"><?php echo minnpost_get_category_name(); ?></h4>
+															<h3 style="color: #1a1818; display: block; font-family: Georgia, 'Times New Roman]', Times, serif; font-size: 13px; font-weight: normal; line-height: 100%; Margin: 0 0 15px; padding: 0; text-align: left" align="left"><a href="<?php echo esc_url( get_permalink() ); ?>" style="color: #1A1818; text-decoration: none"><?php echo get_the_title(); ?></a></h3>
+														<?php
+														endwhile;
+														wp_reset_postdata();
+														?>
+													</div> <!-- end .inner -->
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						<?php endif; ?>
+					</div>
+					<!--[if (gte mso 9)|(IE)]>
+						</td>
+					</tr>
+				</table>
+					<![endif]-->
+				</td> <!-- end .two-column.content.supp -->
+			</tr> <!-- end row -->
 
 			<tr>
 				<td class="one-column footer" style="border-collapse: collapse; Margin: 0; padding: 0">

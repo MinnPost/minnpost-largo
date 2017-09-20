@@ -6,7 +6,24 @@
  *
  * @package MinnPost Largo
  */
-?>
+
+if ( ( $current_post + 1 ) === (int) $found_posts ) {
+	$label = ' story-last';
+} elseif ( ( $current_post + 1 ) == 1 ) {
+	$label = ' story-first';
+} else {
+	$label = '';
+}
+
+if ( ' story-first' === $label ) {
+	$end_styles = ' Margin-top: 18px;';
+} elseif ( ' story-last' === $label ) {
+	$end_styles = ' border-bottom: none;padding-bottom: 18px;Margin-bottom: 0;';
+} else {
+	$end_styles = '';
+}
+
+if ( $is_top_story ) : ?>
 <tr>
 	<td class="two-column content story" style="border-collapse: collapse; font-size: 0; Margin: 0; padding: 0; text-align: center" align="center">
 		<!--[if (gte mso 9)|(IE)]>
@@ -14,25 +31,7 @@
 				<tr>
 					<td width="280" valign="middle">
 		<![endif]-->
-
-		<?php
-		if ( ( $current_post + 1 ) === (int) $found_posts ) {
-			$label = ' story-last';
-		} elseif ( ( $current_post + 1 ) == 1 ) {
-			$label = ' story-first';
-		} else {
-			$label = '';
-		}
-
-		if ( ' story-first' === $label ) {
-			$end_styles = ' Margin-top: 18px;';
-		} elseif ( ' story-last' === $label ) {
-			$end_styles = ' border-bottom: none;padding-bottom: 18px;Margin-bottom: 0;';
-		} else {
-			$end_styles = '';
-		}
-		?>
-
+<?php endif; ?>
 		<div class="story story-<?php echo $current_post + 1; ?><?php echo $label; ?>" style="display: inline-block; Margin-right: 20px; max-width: 280px; vertical-align: middle; width: 100%;">
 			<div class="story-inner" style="border-bottom-color: #cccccf; border-bottom-style: solid; border-bottom-width: 2px; Margin-bottom: 18px; padding-bottom: 18px;<?php echo $end_styles; ?>">
 				<?php if ( 'on' === $show_top_departments ): ?>
@@ -88,7 +87,7 @@
 				</table>
 			</div>
 		</div>
-
+<?php if ( $is_top_story ) : ?>
 		<!-- end .story -->
 		<!--[if (gte mso 9)|(IE)]>
 			</td><td width="20">&nbsp;</td><td width="50%" valign="middle">
@@ -119,3 +118,4 @@
 		<![endif]-->
 	</td> <!-- end .two-column.content.story -->
 </tr> <!-- end row -->
+<?php endif; ?>
