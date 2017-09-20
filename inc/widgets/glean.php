@@ -18,7 +18,7 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 			}
 		}
 		if ( $title ) {
-			$before_title = str_replace('widget-title', 'a-widget-title', $before_title);
+			$before_title = str_replace( 'widget-title', 'a-widget-title', $before_title );
 			echo $before_title . '<a href="' . esc_url( get_category_link( $category ) ) . '">' . $title . '</a>' . $after_title;
 		}
 
@@ -36,7 +36,7 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 			<article id="<?php the_ID(); ?>" class="m-post m-post-glean">
 				<!-- the loop -->
 				<?php $i = 0; while ( $the_query->have_posts() ) : $the_query->the_post(); ?>
-					<?php if ( $i === 0 ) : ?>
+					<?php if ( 0 === $i ) : ?>
 						<header class="m-entry-header">
 							<?php the_title( '<h3 class="a-entry-title a-spill-entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
 
@@ -53,7 +53,7 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 						<div class="m-entry-excerpt">
 							<?php the_excerpt(); ?>
 						</div><!-- .m-entry-excerpt -->
-					<?php else: ?>
+					<?php else : ?>
 						<p><a href="<?php the_permalink(); ?>">Read <?php the_date('l A'); ?> edition</a></p>
 					<?php endif; ?>
 				<?php $i++; endwhile; ?>
