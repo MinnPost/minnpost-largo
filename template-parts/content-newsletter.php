@@ -92,7 +92,7 @@
 										<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
 										<tr>
 											<td style="border-collapse: collapse; font-size: 0; line-height: 0px; Margin: 0; max-height: 90px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; vertical-align: bottom" valign="bottom">
-												<a href="<?php echo esc_url( home_url( '/' ) ); ?>" style="color: #1A1818; text-decoration: none">
+												<a href="<?php echo esc_url( get_permalink() ); ?>" style="color: #1A1818; text-decoration: none">
 													<img src="<?php minnpost_newsletter_logo( get_the_ID() ); ?>" alt="<?php bloginfo( 'name' ); ?>" width="390" height="90" align="left" style="border: 0 none; display: block; height: auto; line-height: 100%; Margin: 0; max-height: 90px; max-width: 390px; outline: none; padding: 0; text-decoration: none; vertical-align: bottom; width: 100%" />
 												</a>
 											</td>
@@ -160,6 +160,7 @@
 
 			if ( $top_query->have_posts() ) {
 				set_query_var( 'found_posts', $top_query->found_posts );
+				set_query_var( 'show_top_departments', get_post_meta( get_the_ID(), '_mp_newsletter_show_department_for_top_stories', true ) );
 				while ( $top_query->have_posts() ) {
 					$top_query->the_post();
 					set_query_var( 'current_post', $top_query->current_post );
