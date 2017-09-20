@@ -68,245 +68,245 @@
 			border-bottom: 2px solid #cccccf !important; padding-bottom: 18px !important; Margin-bottom: 18px !important;
 		}
 	}
-	</style>
+</style>
 
-	<center class="wrapper" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; table-layout: fixed; width: 100%">
-		<div class="webkit">
-			<!--[if (gte mso 9)|(IE)]>
-				<table cellpadding="0" cellspacing="0" width="600" align="center">
-					<tr>
-						<td>
-			<![endif]-->
-			<table cellpadding="0" cellspacing="0" class="outer" align="center" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0 auto; max-width: 600px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; width: 100%">
+<center class="wrapper" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; table-layout: fixed; width: 100%">
+	<div class="webkit">
+		<!--[if (gte mso 9)|(IE)]>
+			<table cellpadding="0" cellspacing="0" width="600" align="center">
 				<tr>
-					<td class="two-column header" style="border-bottom-color: #000; border-bottom-style: solid; border-bottom-width: 10px; border-collapse: collapse; font-size: 0; Margin: 0; padding: 0; text-align: center" align="center">
-						<!--[if (gte mso 9)|(IE)]>
-							<table cellpadding="0" cellspacing="0" width="100%">
-								<tr>
-									<td width="50%" valign="bottom">
-						<![endif]-->
-						<div class="column logo" style="display: inline-block; Margin-right: 0; max-width: 390px; vertical-align: bottom; width: 100%">
-							<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
-								<tr>
-									<td class="inner" style="border-collapse: collapse; font-size: 0; line-height: 0px; Margin: 0; max-height: 90px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; vertical-align: bottom" valign="bottom">
-										<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
-										<tr>
-											<td style="border-collapse: collapse; font-size: 0; line-height: 0px; Margin: 0; max-height: 90px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; vertical-align: bottom" valign="bottom">
-												<a href="<?php echo esc_url( get_permalink() ); ?>" style="color: #1A1818; text-decoration: none">
-													<img src="<?php minnpost_newsletter_logo( get_the_ID() ); ?>" alt="<?php bloginfo( 'name' ); ?>" width="390" height="90" align="left" style="border: 0 none; display: block; height: auto; line-height: 100%; Margin: 0; max-height: 90px; max-width: 390px; outline: none; padding: 0; text-decoration: none; vertical-align: bottom; width: 100%" />
-												</a>
-											</td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-						</table>
-					</div>
+					<td>
+		<![endif]-->
+		<table cellpadding="0" cellspacing="0" class="outer" align="center" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0 auto; max-width: 600px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; width: 100%">
+			<tr>
+				<td class="two-column header" style="border-bottom-color: #000; border-bottom-style: solid; border-bottom-width: 10px; border-collapse: collapse; font-size: 0; Margin: 0; padding: 0; text-align: center" align="center">
 					<!--[if (gte mso 9)|(IE)]>
-						</td><td width="50%" valign="bottom">
+						<table cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+								<td width="50%" valign="bottom">
 					<![endif]-->
-					<div class="column date" style="display: inline-block; Margin-right: 0; max-width: 210px; vertical-align: bottom; width: 100%">
+					<div class="column logo" style="display: inline-block; Margin-right: 0; max-width: 390px; vertical-align: bottom; width: 100%">
 						<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
 							<tr>
-								<td class="inner" style="border-collapse: collapse; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; font-weight: bold; line-height: 100%; Margin: 0; max-height: 90px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 10px 0 5px; text-align: right; vertical-align: bottom; width: 100%" align="right" valign="bottom">
+								<td class="inner" style="border-collapse: collapse; font-size: 0; line-height: 0px; Margin: 0; max-height: 90px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; vertical-align: bottom" valign="bottom">
 									<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
-										<tr>
-											<td class="text" style="border-collapse: collapse; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; font-weight: bold; line-height: 100%; Margin: 0; max-height: 90px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 10px 0 5px; text-align: right; vertical-align: bottom; width: 100%" align="right" valign="bottom">
-												<?php minnpost_posted_on(); ?>
-											</td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-						</table>
-					</div>
-					<!--[if (gte mso 9)|(IE)]>
-								</td>
-							</tr>
-						</table>
-					<![endif]-->
-				</td> <!-- end .two-column.header -->
-			</tr> <!-- end row -->
-
-			<?php
-			$body = get_the_content();
-			if ( '' !== $body ) {
-			?>
-			<tr>
-				<td class="one-column content promo" style="border-collapse: collapse; margin: 0; padding: 0">
-				<!--[if (gte mso 9)|(IE)]>
-					<table cellpadding="0" cellspacing="0" width="100%">
-						<tr>
-							<td width="100%" valign="bottom">
-				<![endif]-->
-					<div class="column promo" style="margin-bottom: 0; margin-top: 18px">
-						<?php echo $body; ?>
-					</div>
-					<!--[if (gte mso 9)|(IE)]>
+									<tr>
+										<td style="border-collapse: collapse; font-size: 0; line-height: 0px; Margin: 0; max-height: 90px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; vertical-align: bottom" valign="bottom">
+											<a href="<?php echo esc_url( get_permalink() ); ?>" style="color: #1A1818; text-decoration: none">
+												<img src="<?php minnpost_newsletter_logo( get_the_ID() ); ?>" alt="<?php bloginfo( 'name' ); ?>" width="390" height="90" align="left" style="border: 0 none; display: block; height: auto; line-height: 100%; Margin: 0; max-height: 90px; max-width: 390px; outline: none; padding: 0; text-decoration: none; vertical-align: bottom; width: 100%" />
+											</a>
+										</td>
+									</tr>
+								</table>
 							</td>
 						</tr>
 					</table>
-					<![endif]-->
-				</td> <!-- end .one-column.promo -->
-			</tr> <!-- end row -->
-			<?php
-			}
-			$top_offset = 2;
-			$top_stories = get_post_meta( get_the_ID(), '_mp_newsletter_top_posts', true );
-			$top_query = new WP_Query(
-				array(
-					'post__in' => $top_stories,
-					'posts_per_page' => $top_offset,
-					'orderby' => 'post__in',
-				)
-			);
-
-			$second_query = new WP_Query(
-				array(
-					'post__in' => $top_stories,
-					'paged' => 1,
-					'offset' => $top_offset,
-					'orderby' => 'post__in',
-				)
-			);
-			// the total does not stop at posts_per_page
-			set_query_var( 'found_posts', $top_query->found_posts );
-
-			$newsletter_type = get_post_meta( get_the_ID(), '_mp_newsletter_type', true );
-
-			$more_stories = get_post_meta( get_the_ID(), '_mp_newsletter_more_posts', true );
-			$more_query = new WP_Query(
-				array(
-					'post__in' => $more_stories,
-					'posts_per_page' => -1,
-					'orderby' => 'post__in',
-				)
-			);
-
-			ob_start();
-			dynamic_sidebar( 'sidebar-1' );
-			$sidebar = ob_get_contents();
-			ob_end_clean();
-
-			$ad_dom = new DomDocument;
-			$ad_dom->loadHTML( '<?xml encoding="utf-8" ?>' . $sidebar );
-			$ad_xpath = new DOMXpath( $ad_dom );
-			$ad_divs = $ad_xpath->query( "//div[contains(concat(' ', @class, ' '), ' m-widget ')]/div/p" );
-
-			$ads = array();
-			if ( 'dc_memo' !== $newsletter_type ) {
-				foreach ( $ad_divs as $key => $value ) {
-					$style = $value->getAttribute( 'style' );
-					$ads[] = '<p style="Margin: 0 0 10px; padding: 0">' . minnpost_dom_innerhtml( $value ) . '</p>';
-				}
-			} else {
-				foreach ( $ad_divs as $key => $value ) {
-					$style = $value->getAttribute( 'style' );
-					$ads[] = '<p style="Margin: 0 0 10px; padding: 0">' . minnpost_dom_innerhtml( $value ) . '</p>';
-				}
-			}
-
-			set_query_var( 'newsletter_ads', $ads );
-
-			if ( $top_query->have_posts() ) {
-				set_query_var( 'show_top_departments', get_post_meta( get_the_ID(), '_mp_newsletter_show_department_for_top_stories', true ) );
-
-				while ( $top_query->have_posts() ) {
-					$top_query->the_post();
-					set_query_var( 'current_post', $top_query->current_post );
-					set_query_var( 'is_top_story', true );
-					get_template_part( 'template-parts/post-newsletter', $newsletter_type );
-				}
-				wp_reset_postdata();
-			}
-
-			?>
-
-			<tr>
-				<td class="two-column content supp" style="border-bottom-color: #cccccf; border-bottom-style: solid; border-bottom-width: 2px; border-collapse: collapse; font-size: 0; Margin: 0 0 18px; padding: 0; text-align: center" align="center">
+				</div>
 				<!--[if (gte mso 9)|(IE)]>
-					<table cellpadding="0" cellspacing="0" width="100%">
-						<tr>
-							<td width="280" valign="top">
+					</td><td width="50%" valign="bottom">
 				<![endif]-->
-					<div class="column stories" style="display: inline-block; Margin-right: 20px; max-width: 280px; vertical-align: top; width: 100%">
-						<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
-							<tr>
-								<td class="inner" style="border-collapse: collapse; Margin: 0; padding: 0">
-									<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
-										<tr>
-											<td class="text" style="border-collapse: collapse; Margin: 0; padding: 10px 0 0">
-												<?php
-												if ( $second_query->have_posts() ) {
-													while ( $second_query->have_posts() ) {
-														$second_query->the_post();
-														set_query_var( 'current_post', $second_query->current_post + $top_offset );
-														set_query_var( 'is_top_story', false );
-														get_template_part( 'template-parts/post-newsletter', $newsletter_type );
-													}
-													wp_reset_postdata();
-												}
-												?>
-											</td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-						</table>
-					</div> <!-- end .stories -->
-					<!--[if (gte mso 9)|(IE)]>
-					</td><td width="20">&nbsp;</td><td width="50%" valign="top">
-					<![endif]-->
-					<div class="column more" style="display: inline-block; Margin-right: 0; max-width: 300px; vertical-align: top; width: 100%">
-						<?php if ( $more_query->have_posts() ) : ?>
-							<table cellpadding="0" cellspacing="0" class="more" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
-								<tr>
-									<td class="inner" style="background: #f0f0f5; border: 1px solid #cccccf; border-collapse: collapse; Margin: 0; max-width: 100%; padding: 15px; width: 100%" bgcolor="#f0f0f5">
-										<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
-											<tr>
-												<td class="text" style="background: #ffffff; border-collapse: collapse; Margin: 0; padding: 15px 15px 5px" bgcolor="#ffffff">
-													<div class="inner">
-														<h2 style="color: #801019; display: block; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; font-weight: bold; line-height: 1; Margin: 0 0 10px; text-align: left; text-transform: uppercase;" align="left">More Stories</h2>
-														<?php while ( $more_query->have_posts() ) : ?>
-															<?php
-															$more_query->the_post();
-															set_query_var( 'current_post', $second_query->current_post + $top_offset );
-															set_query_var( 'is_top_story', false );
-															?>
-															<h4 style="color: #555556; display: block; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 10px; font-weight: normal; line-height: 100%; Margin: 0 0 5px; text-align: left; text-transform: uppercase" align="left"><?php echo minnpost_get_category_name(); ?></h4>
-															<h3 style="color: #1a1818; display: block; font-family: Georgia, 'Times New Roman]', Times, serif; font-size: 13px; font-weight: normal; line-height: 100%; Margin: 0 0 15px; padding: 0; text-align: left" align="left"><a href="<?php echo esc_url( get_permalink() ); ?>" style="color: #1A1818; text-decoration: none"><?php echo get_the_title(); ?></a></h3>
-														<?php
-														endwhile;
-														wp_reset_postdata();
-														?>
-													</div> <!-- end .inner -->
-												</td>
-											</tr>
-										</table>
-									</td>
-								</tr>
-							</table>
-						<?php endif; ?>
-					</div>
-					<!--[if (gte mso 9)|(IE)]>
+				<div class="column date" style="display: inline-block; Margin-right: 0; max-width: 210px; vertical-align: bottom; width: 100%">
+					<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
+						<tr>
+							<td class="inner" style="border-collapse: collapse; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; font-weight: bold; line-height: 100%; Margin: 0; max-height: 90px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 10px 0 5px; text-align: right; vertical-align: bottom; width: 100%" align="right" valign="bottom">
+								<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
+									<tr>
+										<td class="text" style="border-collapse: collapse; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; font-weight: bold; line-height: 100%; Margin: 0; max-height: 90px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 10px 0 5px; text-align: right; vertical-align: bottom; width: 100%" align="right" valign="bottom">
+											<?php minnpost_posted_on(); ?>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</div>
+				<!--[if (gte mso 9)|(IE)]>
+							</td>
+						</tr>
+					</table>
+				<![endif]-->
+			</td> <!-- end .two-column.header -->
+		</tr> <!-- end row -->
+
+		<?php
+		$body = get_the_content();
+		if ( '' !== $body ) {
+		?>
+		<tr>
+			<td class="one-column content promo" style="border-collapse: collapse; margin: 0; padding: 0">
+			<!--[if (gte mso 9)|(IE)]>
+				<table cellpadding="0" cellspacing="0" width="100%">
+					<tr>
+						<td width="100%" valign="bottom">
+			<![endif]-->
+				<div class="column promo" style="margin-bottom: 0; margin-top: 18px">
+					<?php echo $body; ?>
+				</div>
+				<!--[if (gte mso 9)|(IE)]>
 						</td>
 					</tr>
 				</table>
-					<![endif]-->
-				</td> <!-- end .two-column.content.supp -->
-			</tr> <!-- end row -->
+				<![endif]-->
+			</td> <!-- end .one-column.promo -->
+		</tr> <!-- end row -->
+		<?php
+		}
+		$top_offset = 2;
+		$top_stories = get_post_meta( get_the_ID(), '_mp_newsletter_top_posts', true );
+		$top_query = new WP_Query(
+			array(
+				'post__in' => $top_stories,
+				'posts_per_page' => $top_offset,
+				'orderby' => 'post__in',
+			)
+		);
 
-			<tr>
-				<td class="one-column footer" style="border-collapse: collapse; Margin: 0; padding: 0">
+		$second_query = new WP_Query(
+			array(
+				'post__in' => $top_stories,
+				'paged' => 1,
+				'offset' => $top_offset,
+				'orderby' => 'post__in',
+			)
+		);
+		// the total does not stop at posts_per_page
+		set_query_var( 'found_posts', $top_query->found_posts );
+
+		$newsletter_type = get_post_meta( get_the_ID(), '_mp_newsletter_type', true );
+
+		$more_stories = get_post_meta( get_the_ID(), '_mp_newsletter_more_posts', true );
+		$more_query = new WP_Query(
+			array(
+				'post__in' => $more_stories,
+				'posts_per_page' => -1,
+				'orderby' => 'post__in',
+			)
+		);
+
+		ob_start();
+		dynamic_sidebar( 'sidebar-1' );
+		$sidebar = ob_get_contents();
+		ob_end_clean();
+
+		$ad_dom = new DomDocument;
+		$ad_dom->loadHTML( '<?xml encoding="utf-8" ?>' . $sidebar );
+		$ad_xpath = new DOMXpath( $ad_dom );
+		$ad_divs = $ad_xpath->query( "//div[contains(concat(' ', @class, ' '), ' m-widget ')]/div/p" );
+
+		$ads = array();
+		if ( 'dc_memo' !== $newsletter_type ) {
+			foreach ( $ad_divs as $key => $value ) {
+				$style = $value->getAttribute( 'style' );
+				$ads[] = '<p style="Margin: 0 0 10px; padding: 0">' . minnpost_dom_innerhtml( $value ) . '</p>';
+			}
+		} else {
+			foreach ( $ad_divs as $key => $value ) {
+				$style = $value->getAttribute( 'style' );
+				$ads[] = '<p style="Margin: 0 0 10px; padding: 0">' . minnpost_dom_innerhtml( $value ) . '</p>';
+			}
+		}
+
+		set_query_var( 'newsletter_ads', $ads );
+
+		if ( $top_query->have_posts() ) {
+			set_query_var( 'show_top_departments', get_post_meta( get_the_ID(), '_mp_newsletter_show_department_for_top_stories', true ) );
+
+			while ( $top_query->have_posts() ) {
+				$top_query->the_post();
+				set_query_var( 'current_post', $top_query->current_post );
+				set_query_var( 'is_top_story', true );
+				get_template_part( 'template-parts/post-newsletter', $newsletter_type );
+			}
+			wp_reset_postdata();
+		}
+
+		?>
+
+		<tr>
+			<td class="two-column content supp" style="border-bottom-color: #cccccf; border-bottom-style: solid; border-bottom-width: 2px; border-collapse: collapse; font-size: 0; Margin: 0 0 18px; padding: 0; text-align: center" align="center">
+			<!--[if (gte mso 9)|(IE)]>
+				<table cellpadding="0" cellspacing="0" width="100%">
+					<tr>
+						<td width="280" valign="top">
+			<![endif]-->
+				<div class="column stories" style="display: inline-block; Margin-right: 20px; max-width: 280px; vertical-align: top; width: 100%">
 					<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
 						<tr>
-							<td class="inner contents" style="border-collapse: collapse; Margin: 0; padding: 0; width: 100%">
-								<?php dynamic_sidebar( 'sidebar-3' ); ?>
+							<td class="inner" style="border-collapse: collapse; Margin: 0; padding: 0">
+								<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
+									<tr>
+										<td class="text" style="border-collapse: collapse; Margin: 0; padding: 10px 0 0">
+											<?php
+											if ( $second_query->have_posts() ) {
+												while ( $second_query->have_posts() ) {
+													$second_query->the_post();
+													set_query_var( 'current_post', $second_query->current_post + $top_offset );
+													set_query_var( 'is_top_story', false );
+													get_template_part( 'template-parts/post-newsletter', $newsletter_type );
+												}
+												wp_reset_postdata();
+											}
+											?>
+										</td>
+									</tr>
+								</table>
 							</td>
 						</tr>
 					</table>
-				</td> <!-- end .one-column.footer -->
-			</tr> <!-- end row -->
+				</div> <!-- end .stories -->
+				<!--[if (gte mso 9)|(IE)]>
+				</td><td width="20">&nbsp;</td><td width="50%" valign="top">
+				<![endif]-->
+				<div class="column more" style="display: inline-block; Margin-right: 0; max-width: 300px; vertical-align: top; width: 100%">
+					<?php if ( $more_query->have_posts() ) : ?>
+						<table cellpadding="0" cellspacing="0" class="more" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
+							<tr>
+								<td class="inner" style="background: #f0f0f5; border: 1px solid #cccccf; border-collapse: collapse; Margin: 0; max-width: 100%; padding: 15px; width: 100%" bgcolor="#f0f0f5">
+									<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
+										<tr>
+											<td class="text" style="background: #ffffff; border-collapse: collapse; Margin: 0; padding: 15px 15px 5px" bgcolor="#ffffff">
+												<div class="inner">
+													<h2 style="color: #801019; display: block; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; font-weight: bold; line-height: 1; Margin: 0 0 10px; text-align: left; text-transform: uppercase;" align="left">More Stories</h2>
+													<?php while ( $more_query->have_posts() ) : ?>
+														<?php
+														$more_query->the_post();
+														set_query_var( 'current_post', $second_query->current_post + $top_offset );
+														set_query_var( 'is_top_story', false );
+														?>
+														<h4 style="color: #555556; display: block; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 10px; font-weight: normal; line-height: 100%; Margin: 0 0 5px; text-align: left; text-transform: uppercase" align="left"><?php echo minnpost_get_category_name(); ?></h4>
+														<h3 style="color: #1a1818; display: block; font-family: Georgia, 'Times New Roman]', Times, serif; font-size: 13px; font-weight: normal; line-height: 100%; Margin: 0 0 15px; padding: 0; text-align: left" align="left"><a href="<?php echo esc_url( get_permalink() ); ?>" style="color: #1A1818; text-decoration: none"><?php echo get_the_title(); ?></a></h3>
+													<?php
+													endwhile;
+													wp_reset_postdata();
+													?>
+												</div> <!-- end .inner -->
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					<?php endif; ?>
+				</div>
+				<!--[if (gte mso 9)|(IE)]>
+					</td>
+				</tr>
+			</table>
+				<![endif]-->
+			</td> <!-- end .two-column.content.supp -->
+		</tr> <!-- end row -->
 
-		</div>
-	</center>
+		<tr>
+			<td class="one-column footer" style="border-collapse: collapse; Margin: 0; padding: 0">
+				<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
+					<tr>
+						<td class="inner contents" style="border-collapse: collapse; Margin: 0; padding: 0; width: 100%">
+							<?php dynamic_sidebar( 'sidebar-3' ); ?>
+						</td>
+					</tr>
+				</table>
+			</td> <!-- end .one-column.footer -->
+		</tr> <!-- end row -->
+
+	</div>
+</center>
