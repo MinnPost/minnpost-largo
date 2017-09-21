@@ -156,24 +156,42 @@
 			<?php
 			$body = get_the_content();
 			if ( '' !== $body ) :
+				$body = str_replace( '<a href="', '<a style="color: #801019; text-decoration: none;" href="', $body );
+				$body = str_replace( ' dir="ltr"', '', $body );
+				$body = str_replace( '<p class="intro">', '<p>', $body );
+				$body = preg_replace( '/<p>/', '<p class="intro" style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 17.6px; line-height: 24.9444px; margin: 0 0 15px; padding: 15px 0 0;">', $body, 1 );
+				$body = str_replace( '<p>', '<p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', $body );
+				$body = str_replace( '<h2>', '<h2 style="color: #801019; margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $body );
+				$body = str_replace( '<h3>', '<h3 style="color: #801019; margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $body );
+				$body = str_replace( '<blockquote><p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', '<blockquote style="border-left-width: 2px; border-left-color: #cccccf; border-left-style: solid; margin: 10px 10px 15px; padding: 0 10px;"><p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; color: #6a6161; margin: 0 0 15px; padding: 0;">', $body );
 			?>
-			<tr>
-				<td class="one-column content promo" style="border-collapse: collapse; margin: 0; padding: 0">
-				<!--[if (gte mso 9)|(IE)]>
-					<table cellpadding="0" cellspacing="0" width="100%">
-						<tr>
-							<td width="100%" valign="bottom">
-				<![endif]-->
-					<div class="column promo" style="margin-bottom: 0; margin-top: 18px">
-						<?php echo $body; ?>
-					</div>
+				<tr>
+					<td class="one-column content story" style="border-collapse: collapse; Margin: 0; padding: 0;">
 					<!--[if (gte mso 9)|(IE)]>
-							</td>
-						</tr>
-					</table>
+						<table cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+								<td width="100%" valign="bottom">
 					<![endif]-->
-				</td> <!-- end .one-column.promo -->
-			</tr> <!-- end row -->
+						<div class="column story story-first">
+							<div class="story-inner" style="border-bottom-width: 2px; border-bottom-color: #cccccf; border-bottom-style: solid; Margin-bottom: 18px;">
+								<table cellpadding="0" cellspacing="0" class="bodyTable forwardTable" style="border-spacing: 0; Margin: 0; padding: 0; font-family: Helvetica, Arial, Geneva, sans-serif; color: #1A1818; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; text-align: left;">
+									<tr>
+										<td valign="top" style="border-collapse: collapse; Margin: 0; padding: 0;">
+											<div>
+												<?php echo $body; ?>
+											</div>
+										</td>
+									</tr>
+								</table>
+							</div>
+						</div>
+						<!--[if (gte mso 9)|(IE)]>
+								</td>
+							</tr>
+						</table>
+						<![endif]-->
+					</td> <!-- end .one-column.story -->
+				</tr> <!-- end row -->
 			<?php endif; ?>
 
 			<tr>
