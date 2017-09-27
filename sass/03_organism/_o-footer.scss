@@ -10,6 +10,33 @@
 			outline: 15px solid $color__minnpost-white;
 			background: $color__white;
 			padding: 15px;
+			font-size: 92.3%;
+			font-family: $font__sans;
+			&.m-footer-sponsors {
+				font-size: 100%;
+				.a-widget-title {
+					padding-top: 0;
+				}
+			}
+			.a-widget-title {
+				color: $color__minnpost-red;
+				font-size: 123.1%;
+				text-transform: none;
+				font-family: $font__sans;
+				font-weight: normal;
+				font-style: normal;
+				font-variant: normal;
+				margin-bottom: 0.75em;
+				padding-top: 1px;
+			}
+			ul {
+				margin: 0;
+				padding: 0;
+				list-style: none;
+				li {
+					margin-bottom: 0.5em;
+				}
+			}
 		}
 		&.o-footer-hat-two {
 			section {

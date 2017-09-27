@@ -18,15 +18,10 @@
 		<div class="o-wrapper o-wrapper-site-footer">
 
 			<aside class="o-footer-hat">
-				<section class="m-footer-box m-footer-sponsors">
-					<h2 class="a-footer-title">Thanks to our major sponsors</h2>
+				<section class="m-widget m-widget-text m-widget-custom-html m-footer-sponsors">
+					<h3 class="a-widget-title">Thanks to our major sponsors</h3>
 				</section>
-				<section class="m-footer-box m-footer-staff">
-					<h2 class="a-footer-title">MinnPost Staff</h2>
-				</section>
-				<section class="m-footer-box m-footer-donors">
-					<h2 class="a-footer-title">Thanks to our generous donors</h2>
-				</section>
+				<?php dynamic_sidebar( 'sidebar-3' ); ?>
 			</aside>
 
 			<!--
@@ -45,8 +40,6 @@
 				</section>
 			</aside>
 			-->
-
-			<?php dynamic_sidebar( 'sidebar-3' ); ?>
 
 			<aside class="o-footer-links">
 				<nav id="footer-primary" class="m-secondary-navigation" role="navigation">
