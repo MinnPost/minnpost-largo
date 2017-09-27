@@ -85,4 +85,16 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 
 }
 
+add_filter( 'widget_display_callback', 'minnpost_widget_display_callback', 10, 3 );
+function minnpost_widget_display_callback( $instance, $widget, $args ) {
+	global $post;
+	// if this is a newsletter, only show newsletter widgets
+	if ( 'newsletter' === $post->post_type ) {
+		$class = array_column( $instance, 'class' );
+		if ( addslashes( 'is_singular("newsletter")' ) !== $class[0]['logic'] && 'is_singular("newsletter")' !== $class[0]['logic'] ) {
+			return false;
+		}
+	}
+	return $instance;
+}
 
