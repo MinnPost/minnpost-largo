@@ -46,6 +46,8 @@
 			</aside>
 			-->
 
+			<?php dynamic_sidebar( 'sidebar-3' ); ?>
+
 			<aside class="o-footer-links">
 				<nav id="footer-primary" class="m-secondary-navigation" role="navigation">
 					<?php wp_nav_menu(
@@ -70,8 +72,6 @@
 						)
 					); ?>
 				</nav><!-- #footer-secondary -->
-		
-				<?php dynamic_sidebar( 'sidebar-3' ); ?>
 
 			</aside>
 
