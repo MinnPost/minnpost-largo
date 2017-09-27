@@ -12,7 +12,7 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 	$widget_output = str_replace( '<div class="textwidget custom-html-widget">', '<div class="m-widget-contents m-textwidget m-custom-html-widget">', $widget_output );
 	$widget_output = str_replace( ' class="widget_text widget widget_custom_html">', ' class="m-widget m-widget-text m-widget-custom-html">', $widget_output );
 
-	// target a specific widget
+	// target custom html widget
 	if ( false !== strpos( $widget_output, 'm-widget m-widget-text m-widget-custom-html' ) && 'custom_html' == $widget_type ) {
 		$html = '';
 		$doc = new DOMDocument();
@@ -39,7 +39,13 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 		return $html;
 	}
 
-	// target a specific widget
+	// target minnpost spill
+	if ( false !== strpos( $widget_output, 'm-widget m-minnpost-spills-widget' ) && 'minnpostspills_widget' == $widget_type ) {
+		$widget_output = str_replace( '<div id="minnpostspills_widget-', '<section id="minnpostspills_widget-', $widget_output );
+		$widget_output = str_replace( '</div></div>', '</div></section>', $widget_output );
+	}
+
+	// target featured columns widget
 	if ( false !== strpos( $widget_output, 'menu-menu-featured-columns-container' ) && 'nav_menu' == $widget_type ) {
 		$html = '';
 		$doc = new DOMDocument();
