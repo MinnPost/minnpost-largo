@@ -175,13 +175,15 @@
 		$newsletter_type = get_post_meta( get_the_ID(), '_mp_newsletter_type', true );
 
 		$more_stories = get_post_meta( get_the_ID(), '_mp_newsletter_more_posts', true );
-		$more_query = new WP_Query(
-			array(
-				'post__in' => $more_stories,
-				'posts_per_page' => -1,
-				'orderby' => 'post__in',
-			)
-		);
+		if ( '' !== $more_stories ) {
+			$more_query = new WP_Query(
+				array(
+					'post__in' => $more_stories,
+					'posts_per_page' => -1,
+					'orderby' => 'post__in',
+				)
+			);
+		}
 
 		ob_start();
 		dynamic_sidebar( 'sidebar-1' );
