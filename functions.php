@@ -29,6 +29,11 @@ require get_stylesheet_directory() . '/inc/custom-types.php';
 require get_stylesheet_directory() . '/inc/custom-fields.php';
 
 /**
+ * Custom shortcodes for this theme.
+ */
+require get_stylesheet_directory() . '/inc/custom-shortcodes.php';
+
+/**
  * Implement the Custom Header feature.
  */
 //require get_stylesheet_directory() . '/inc/custom-header.php';
