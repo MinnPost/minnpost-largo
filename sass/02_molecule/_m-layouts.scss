@@ -2,6 +2,9 @@
 	max-width: 640px;
 	display: flex;
 }
+body.post .m-layout-primary, body.page .m-layout-primary {
+	flex: 0 0 100%;
+}
 
 .o-site-sidebar {
     width: 300px;
@@ -11,4 +14,7 @@
 main {
 	position: relative;
 	@include clearfix;
+}
+body.post main, body.page main {
+	flex: 0 0 100%;
 }

@@ -9,6 +9,9 @@
 	}
 }
 
+body.post .o-wrapper-content, body.page .o-wrapper-content {
+	flex: 0 0 100%;
+}
 // media queries for wrapper
 @media screen and (min-width: $max-width-page) {
 	.o-wrapper {
