@@ -69,6 +69,13 @@ h6, .h6 {
     font-weight: bold;
 }
 
+.a-featured-title {
+	font-size: 123.1%;
+	text-transform: none;
+	font-family: $font__sans;
+	font-weight: bold;
+}
+
 .a-entry-title {
 	font-size: 123.1%;
 	text-transform: none;
@@ -85,4 +92,15 @@ h6, .h6 {
 	font-weight: normal;
 	font-style: normal;
 	font-variant: normal;
+}
+
+.m-post .a-entry-title, .m-page .a-entry-title {
+	font-family: $font__headings;
+	font-weight: normal;
+	font-style: normal;
+	font-variant: normal;
+	margin: 0;
+	font-size: 338.5%;
+	line-height: 0.9em;
+	color: $color__minnpost-black;
 }
