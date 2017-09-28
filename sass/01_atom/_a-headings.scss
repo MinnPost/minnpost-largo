@@ -94,7 +94,7 @@ h6, .h6 {
 	font-variant: normal;
 }
 
-.m-post .a-entry-title, .m-page .a-entry-title {
+body.post .a-entry-title, body.page .a-entry-title {
 	font-family: $font__headings;
 	font-weight: normal;
 	font-style: normal;
