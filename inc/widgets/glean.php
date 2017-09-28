@@ -6,7 +6,7 @@
  */
 
 if ( ! function_exists( 'minnpost_largo_glean' ) ) :
-	function minnpost_largo_glean( $before_title, $title, $after_title, $categories, $terms ) {
+	function minnpost_largo_glean( $before_title, $title, $after_title, $content, $categories, $terms ) {
 		if ( ! isset( $categories[0] ) ) {
 			$category = get_category_by_slug( 'glean' );
 			$category = $category->cat_ID;
@@ -20,6 +20,9 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 		if ( $title ) {
 			$before_title = str_replace( 'widget-title', 'a-widget-title', $before_title );
 			echo $before_title . '<a href="' . esc_url( get_category_link( $category ) ) . '">' . $title . '</a>' . $after_title;
+		}
+		if ( '' !== $content ) {
+			echo $content;
 		}
 
 		$the_query = new WP_Query(
