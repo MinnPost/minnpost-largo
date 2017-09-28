@@ -8,6 +8,7 @@
 
 add_filter( 'widget_output', 'minnpost_widget_output_filter', 10, 4 );
 function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id, $sidebar_id ) {
+	$widget_output = str_replace( '<h2 class="widgettitle"', '<h2 class="a-widget-title"', $widget_output );
 	$widget_output = str_replace( '<h3 class="widget-title"', '<h3 class="a-widget-title"', $widget_output );
 	$widget_output = str_replace( '<div class="textwidget custom-html-widget">', '<div class="m-widget-contents m-textwidget m-custom-html-widget">', $widget_output );
 	$widget_output = str_replace( ' class="widget_text widget widget_custom_html">', ' class="m-widget m-widget-text m-widget-custom-html">', $widget_output );
@@ -47,6 +48,7 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 	if ( false !== strpos( $widget_output, 'm-widget m-minnpost-spills-widget' ) && 'minnpostspills_widget' == $widget_type ) {
 		$widget_output = str_replace( '<div id="minnpostspills_widget-', '<section id="minnpostspills_widget-', $widget_output );
 		$widget_output = str_replace( '</div></div>', '</div></section>', $widget_output );
+		$widget_output = str_replace( '<div class="m-widget m-minnpost-spills-widget ', '<section class="m-widget m-minnpost-spills-widget ', $widget_output );
 	}
 
 	// target featured columns widget

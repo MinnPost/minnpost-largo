@@ -18,12 +18,18 @@ if ( ! function_exists( 'widget_instance' ) ) :
 			$atts
 		);
 
-		if ( '' !== $args['id'] && false !== strpos( $args['id'], 'minnpostspills_widget' ) ) {
-			$id = str_replace( 'minnpostspills_widget-', '', $args['id'] );
-			$spills = get_option( 'widget_minnpostspills_widget', '' );
+		$spill_type = 'MinnpostSpills_Widget';
+
+		if ( '' !== $args['id'] && false !== strpos( $args['id'], strtolower( $spill_type ) ) ) {
+			$id = str_replace( strtolower( $spill_type ) . '-', '', $args['id'] );
+			$spills = get_option( 'widget_' . strtolower( $spill_type ), '' );
 			if ( array_key_exists( $id, $spills ) ) {
 				$args = $spills[ $id ];
-				return the_widget( 'MinnpostSpills_Widget', $args );
+				ob_start();
+				the_widget( $spill_type, $args );
+				$widget_output = ob_get_contents();
+				ob_end_clean();
+				echo apply_filters( 'widget_output', $widget_output, strtolower( $spill_type ), $id, $id );
 			}
 		}
 
