@@ -99,7 +99,7 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 		$widget_output = str_replace( '<div id="popular-widget-', '<section id="popular-widget-', $widget_output );
 		$widget_output = str_replace( '</div><!--.pop-layout-v--></div>', '</div></section>', $widget_output );
 		$widget_output = str_replace( '<a href="#commented" rel="nofollow">Most Commented</a>', '<h3 class="a-widget-title"><a href="#commented" rel="nofollow">Most Commented</a></h3>', $widget_output );
-		$widget_output = str_replace( '<div class="pop-inside-4 pop-inside">', '<div class="m-widget-contents">', $widget_output );
+		$widget_output = str_replace( '<div class="pop-inside-', '<div class="m-widget-contents pop-inside-', $widget_output );
 	}
 
 	return $widget_output;
