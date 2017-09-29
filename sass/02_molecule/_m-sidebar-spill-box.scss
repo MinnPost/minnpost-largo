@@ -23,7 +23,7 @@
 			padding: 0 20px 10px 20px;
 		}
 	}
-	&.m-minnpost-spills-widget .a-widget-title {
+	&.m-minnpost-spills-widget .a-widget-title, &.m-widget-popular-widget .a-widget-title {
 		text-transform: uppercase;
 		font-family: $font__headings;
 		font-weight: normal;
@@ -37,6 +37,25 @@
 		&.m-custom-html-widget {
 			.image {
 				margin-bottom: 0.75em;
+			}
+		}
+	}
+	&.m-widget-popular-widget {
+		ul {
+			margin: 0;
+			padding: 0;
+			list-style: none;
+		}
+		li {
+			margin: 0.75em 0;
+			a {
+				color: $color__minnpost-black;
+			}
+			span.pop-title {
+				display: block;
+			}
+			span.pop-count {
+				font-style: italic;
 			}
 		}
 	}
