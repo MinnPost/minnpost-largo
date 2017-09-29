@@ -35,3 +35,21 @@ if ( ! function_exists( 'widget_instance' ) ) :
 
 	}
 endif;
+
+// add newsletter embed shortcode
+if ( ! function_exists( 'newsletter_embed' ) ) :
+	add_shortcode( 'newsletter_embed', 'newsletter_embed' );
+	function newsletter_embed( $atts ) {
+		$args = shortcode_atts(
+			array(
+				'newsletter' => '',
+			),
+			$atts
+		);
+
+		if ( '' !== $args['newsletter'] ) {
+			return 'newsletter is ' . $args['newsletter'];
+		}
+
+	}
+endif;
