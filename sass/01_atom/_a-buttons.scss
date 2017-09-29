@@ -1,0 +1,13 @@
+input[type="submit"], button[type="submit"] {
+	padding: 0.25em;
+	font-size: 1.5em;
+	font-weight: normal;
+	background: $color__minnpost-red;
+	color: $color__white;
+	font-family: $font__headings;
+	border: 0;
+	display: inline-block;
+	margin-right: 0.5em;
+	cursor: pointer;
+	line-height: 23px;
+}

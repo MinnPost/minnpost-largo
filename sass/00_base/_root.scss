@@ -43,3 +43,15 @@ img {
 figure {
 	margin: 1em 0; /* Extra wide images within figure tags don't overflow the content area. */
 }
+
+label {
+	line-height: 1.5em;
+	display: inline-block;
+}
+
+input, select, textarea {
+	max-width: 100%; // sometimes there'll be more specific sizes, but we should never go over 100% here
+	font-family: $font__sans;
+	font-size: 99%;
+	line-height: normal;
+}

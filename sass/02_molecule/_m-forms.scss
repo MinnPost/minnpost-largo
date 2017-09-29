@@ -24,3 +24,22 @@
 		top: 3px;
 	}
 }
+
+.m-widget.m-form-newsletter-shortcode {
+	font-size: 95%;
+	width: 95%;
+	margin: 1em auto 20px auto;
+	input {
+		width: 90%;
+	}
+	input#mce-LNAME {
+		margin-bottom: 0.5em;
+	}
+}
+
+.m-widget#custom_html-25 { // stupid that we can't get a more useful id here
+	padding: 0;
+}
+.m-form-container {
+	padding: 0 0.5em;
+}
