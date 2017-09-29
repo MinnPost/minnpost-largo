@@ -65,14 +65,9 @@ require get_stylesheet_directory() . '/inc/widgets/glean.php';
 require get_stylesheet_directory() . '/inc/custom-ad-providers.php';
 
 /**
- * JavaScript
+ * JavaScript and CSS
  */
-require get_stylesheet_directory() . '/inc/custom-scripts.php';
-
-/**
- * Admin only css
- */
-require get_stylesheet_directory() . '/inc/custom-admin-css.php';
+require get_stylesheet_directory() . '/inc/custom-scripts-and-styles.php';
 
 
 /**
