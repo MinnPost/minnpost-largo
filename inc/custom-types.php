@@ -1,4 +1,10 @@
 <?php
+/**
+ * Create custom content types
+ *
+ *
+ * @package MinnPost Largo
+ */
 
 // register custom post type 'newsletter'
 if ( ! function_exists( 'create_newsletter' ) ) :

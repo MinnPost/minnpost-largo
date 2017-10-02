@@ -66,6 +66,13 @@
 					); ?>
 				</nav><!-- #footer-secondary -->
 
+				<?php
+				$footer_message = get_option( 'site_footer_message', '' );
+				if ( '' !== $footer_message ) :
+				?>
+					<p class="a-footer-message"><?php echo $footer_message; ?></p>
+				<?php endif; ?>
+
 			</aside>
 
 		</div>

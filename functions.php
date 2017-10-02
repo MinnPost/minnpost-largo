@@ -14,6 +14,11 @@ function enqueue_parent_styles() {
 require get_stylesheet_directory() . '/vendor/autoload.php';
 
 /**
+ * Custom settings
+ */
+require get_stylesheet_directory() . '/inc/custom-settings.php';
+
+/**
  * Menu functionality
  */
 require get_stylesheet_directory() . '/inc/menus.php';
