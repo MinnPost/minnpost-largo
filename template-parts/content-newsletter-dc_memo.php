@@ -200,6 +200,12 @@
 						<tr>
 							<td class="inner contents" style="border-collapse: collapse; Margin: 0; padding: 0; width: 100%">
 								<?php dynamic_sidebar( 'sidebar-3' ); ?>
+								<?php
+								$footer_message = get_option( 'site_footer_message', '' );
+								if ( '' !== $footer_message ) :
+								?>
+									<p class="address" style="font-size: 12px; Margin: 10px 0 15px; padding: 0; text-align: center;" align="center"><?php echo $footer_message; ?></p>
+								<?php endif; ?>
 							</td>
 						</tr>
 					</table>
