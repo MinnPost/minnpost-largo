@@ -13,88 +13,89 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: header.php:64
+#: header.php:68
 msgid "Primary Menu"
 msgstr ""
 
-#: inc/custom-types.php:10, inc/custom-types.php:13
+#: inc/custom-types.php:16, inc/custom-types.php:19
 msgid "Newsletter"
 msgstr ""
 
-#: inc/custom-types.php:12, inc/custom-types.php:14, inc/custom-types.php:15
+#: inc/custom-types.php:18, inc/custom-types.php:20, inc/custom-types.php:21
 msgid "Newsletters"
 msgstr ""
 
-#: inc/custom-types.php:16
+#: inc/custom-types.php:22
 msgid "Add New"
 msgstr ""
 
-#: inc/custom-types.php:17
+#: inc/custom-types.php:23
 msgid "Add New Newsletter"
 msgstr ""
 
-#: inc/custom-types.php:18
+#: inc/custom-types.php:24
 msgid "New Newsletter"
 msgstr ""
 
-#: inc/custom-types.php:19
+#: inc/custom-types.php:25
 msgid "Edit Newsletter"
 msgstr ""
 
-#: inc/custom-types.php:20
+#: inc/custom-types.php:26
 msgid "View Newsletter"
 msgstr ""
 
-#: inc/custom-types.php:21
+#: inc/custom-types.php:27
 msgid "All Newsletters"
 msgstr ""
 
-#: inc/custom-types.php:22
+#: inc/custom-types.php:28
 msgid "Search Newsletters"
 msgstr ""
 
-#: inc/custom-types.php:23
+#: inc/custom-types.php:29
 msgid "Parent Newsletters:"
 msgstr ""
 
-#: inc/custom-types.php:24
+#: inc/custom-types.php:30
 msgid "No newsletters found."
 msgstr ""
 
-#: inc/custom-types.php:25
+#: inc/custom-types.php:31
 msgid "No newsletters found in Trash."
 msgstr ""
 
-#: inc/custom-types.php:44, inc/custom-types.php:48
+#: inc/custom-types.php:51, inc/custom-types.php:55
 msgid "Tests"
 msgstr ""
 
-#: inc/custom-types.php:45
+#: inc/custom-types.php:52
 msgid "Test"
 msgstr ""
 
-#: inc/template-tags.php:96
+#: inc/template-tags.php:116
 msgctxt "post date"
 msgid "%s"
 msgstr ""
 
-#: inc/template-tags.php:182, inc/template-tags.php:188
+#. translators: used between list items, there is a space after the comma
+#: inc/template-tags.php:290, inc/template-tags.php:296
 msgid ", "
 msgstr ""
 
-#: inc/template-tags.php:184
+#: inc/template-tags.php:292
 msgid "Posted in %1$s"
 msgstr ""
 
-#: inc/template-tags.php:190
+#: inc/template-tags.php:298
 msgid "Tagged %1$s"
 msgstr ""
 
 #. translators: %s: post title
-#: inc/template-tags.php:197
+#: inc/template-tags.php:308
 msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
-#: inc/template-tags.php:204, inc/template-tags.php:222
+#: inc/template-tags.php:324, inc/template-tags.php:342
 msgid "Edit %s"
 msgstr ""
