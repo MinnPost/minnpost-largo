@@ -13,6 +13,47 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 	 */
 	function minnpost_post_image( $size = 'thumbnail', $attributes = array() ) {
 
+		$image_data = get_minnpost_post_image( $size, $attributes );
+		$image_id = $image_data['image_id'];
+		$image_url = $image_data['image_url'];
+		$image = $image_data['markup'];
+
+		if ( post_password_required() || is_attachment() || ( ! $image_id && ! $image_url ) ) {
+			return;
+		}
+
+		$caption = wp_get_attachment_caption( $image_id );
+		$credit = get_media_credit_html( $image_id );
+
+		if ( is_singular() && ! is_singular( 'newsletter' ) ) : ?>
+			<figure class="m-post-image m-post-image-<?php echo $size; ?>">
+				<?php echo $image; ?>
+				<?php if ( '' !== $caption || '' !== $credit ) { ?>
+				<figcaption>
+					<?php if ( '' !== $credit ) { ?>
+						<div class="credit"><?php echo $credit; ?></div>
+						<div class="caption"><?php echo $caption; ?></div>
+					<?php } ?>
+				</figcaption>
+				<?php } ?>
+			</figure><!-- .post-image -->
+		<?php elseif ( is_singular( 'newsletter' ) ) : ?>
+			<?php echo $image; ?>
+		<?php else : ?>
+			<a class="m-post-image m-post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true">
+				<?php
+				echo $image;
+				?>
+			</a>
+		<?php endif; // End is_singular()
+	}
+endif;
+
+if ( ! function_exists( 'get_minnpost_post_image' ) ) :
+	/**
+	 * Returns story image, whether large or various kinds of thumbnail, depending on where it is called
+	 */
+	function get_minnpost_post_image( $size = 'thumbnail', $attributes = array() ) {
 		// large is the story detail image. this is a built in size in wordpress
 		// home has its own size field
 		if ( is_home() && 'feature' === $size ) {
@@ -33,13 +74,6 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 			$image_url = get_post_meta( get_the_ID(), '_mp_post_thumbnail_image', true );
 			$image_id = get_post_meta( get_the_ID(), '_mp_post_thumbnail_image_id', true );
 		}
-
-		if ( post_password_required() || is_attachment() || ( ! $image_id && ! $image_url ) ) {
-			return;
-		}
-
-		$caption = wp_get_attachment_caption( $image_id );
-		$credit = get_media_credit_html( $image_id );
 
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
 			// todo: test this display because so far we just have external urls
@@ -71,27 +105,16 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 			}
 		}
 
-		if ( is_singular() && ! is_singular( 'newsletter' ) ) : ?>
-			<figure class="m-post-image m-post-image-<?php echo $size; ?>">
-				<?php echo $image; ?>
-				<?php if ( '' !== $caption || '' !== $credit ) { ?>
-				<figcaption>
-					<?php if ( '' !== $credit ) { ?>
-						<div class="credit"><?php echo $credit; ?></div>
-						<div class="caption"><?php echo $caption; ?></div>
-					<?php } ?>
-				</figcaption>
-				<?php } ?>
-			</figure><!-- .post-image -->
-		<?php elseif ( is_singular( 'newsletter' ) ) : ?>
-			<?php echo $image; ?>
-		<?php else : ?>
-			<a class="m-post-image m-post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true">
-				<?php
-				echo $image;
-				?>
-			</a>
-		<?php endif; // End is_singular()
+		if ( post_password_required() || is_attachment() || ( ! $image_id && ! $image_url ) ) {
+			return;
+		}
+
+		$image_data = array(
+			'image_id' => $image_id,
+			'image_url' => $image_url,
+			'markup' => $image,
+		);
+		return $image_data;
 	}
 endif;
 
