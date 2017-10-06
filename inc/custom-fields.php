@@ -58,8 +58,8 @@ if ( function_exists( 'create_newsletter' ) ) :
 			'desc'       => 'Select an option',
 			'default'    => 'daily',
 			'options'           => array(
-				'daily' 	    => __( 'Daily', 'cmb2' ),
-				'greater_mn'    => __( 'Greater MN', 'cmb2' ),
+				'daily' => __( 'Daily', 'cmb2' ),
+				'greater_mn' => __( 'Greater MN', 'cmb2' ),
 				'sunday_review' => __( 'Sunday Review', 'cmb2' ),
 				'dc_memo'    => __( 'D.C. Memo', 'cmb2' ),
 			),
@@ -81,21 +81,25 @@ if ( function_exists( 'create_newsletter' ) ) :
 		 * For posts on newsletters
 		 */
 		$recent_newsletter_args = array(
-		    'posts_per_page' => 1,
-		    'numberposts' => 1,
+			'posts_per_page' => 1,
+			'numberposts' => 1,
 			'orderby' => 'modified',
 			'order' => 'DESC',
 			'post_type' => $object_type,
 			'post_status' => 'publish',
 		);
 		$most_recent_newsletter = wp_get_recent_posts( $recent_newsletter_args, OBJECT );
-		$most_recent_newsletter_modified = $most_recent_newsletter[0]->post_modified;
+		if ( is_object( $most_recent_newsletter[0] ) ) {
+			$most_recent_newsletter_modified = $most_recent_newsletter[0]->post_modified;
+		} else {
+			$most_recent_newsletter_modified = strtotime( time() );
+		}
 		$newsletter_post_args = array(
 			'posts_per_page' => -1,
 			'post_type' => 'post',
 			'orderby' => 'modified',
-		    'order' => 'DESC',
-		    'date_query' => array(
+			'order' => 'DESC',
+			'date_query' => array(
 				array(
 					'column' => 'post_modified',
 					'after'  => $most_recent_newsletter_modified,
@@ -203,8 +207,8 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'desc'       => 'Select an option',
 			'default'    => 'feature-large',
 			'options'           => array(
-				'feature-medium' 	    => __( 'Medium', 'cmb2' ),
-				'none'    => __( 'Do not display image', 'cmb2' ),
+				'feature-medium' => __( 'Medium', 'cmb2' ),
+				'none' => __( 'Do not display image', 'cmb2' ),
 				'feature-large' => __( 'Large', 'cmb2' ),
 			),
 		) );
@@ -300,19 +304,19 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 			'type'       => 'wysiwyg',
 		) );
 
-	    $options = array();
-	    if ( is_admin() && ( isset( $_GET['taxonomy'] ) && 'category' === sanitize_key( $_GET['taxonomy'] ) && isset( $_GET['tag_ID'] ) ) || isset( $_POST['tag_ID'] ) && 'category' === sanitize_key( $_POST['taxonomy'] ) ) {
+		$options = array();
+		if ( is_admin() && ( isset( $_GET['taxonomy'] ) && 'category' === sanitize_key( $_GET['taxonomy'] ) && isset( $_GET['tag_ID'] ) ) || isset( $_POST['tag_ID'] ) && 'category' === sanitize_key( $_POST['taxonomy'] ) ) {
 
-	    	if ( isset( $_GET['tag_ID'] ) ) :
+			if ( isset( $_GET['tag_ID'] ) ) :
 				$category_id = absint( $_GET['tag_ID'] );
 			elseif ( isset( $_POST['tag_ID'] ) ) :
 				$category_id = absint( $_POST['tag_ID'] );
 			endif;
 			$categories = get_terms( array(
 				'taxonomy' => 'category',
-			    'hide_empty' => false,
+				'hide_empty' => false,
 			) );
-			foreach( $categories as $category ) {
+			foreach ( $categories as $category ) {
 				if ( $category_id !== $category->term_id ) {
 					$options[ $category->term_id ] = $category->name;
 				}
@@ -334,14 +338,15 @@ endif;
 if ( ! function_exists( 'remove_default_category_description' ) ) :
 	add_action( 'admin_head', 'remove_default_category_description' );
 	function remove_default_category_description() {
-	    global $current_screen;
-	    if ( 'edit-category' === $current_screen->id ) { ?>
+		global $current_screen;
+		if ( 'edit-category' === $current_screen->id ) { ?>
 			<script>
 			jQuery(function($) {
-	        	$('textarea#description, textarea#tag-description').closest('tr.form-field, div.form-field').remove();
+				$('textarea#description, textarea#tag-description').closest('tr.form-field, div.form-field').remove();
 			});
 			</script>
-		<?php }
+		<?php
+		}
 	}
 endif;
 
