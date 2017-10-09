@@ -150,7 +150,8 @@ function minnpost_recent_stories_widget( $query ) {
 
 if ( ! function_exists( 'get_the_image' ) ) :
 	function get_the_image( $args ) {
-		$image_data = get_minnpost_post_image( 'author_teaser' );
+		$attributes = array( 'location' => 'sidebar' );
+		$image_data = get_minnpost_post_image( 'author_teaser', $attributes );
 		$image_id = $image_data['image_id'];
 		$image_url = $image_data['image_url'];
 		$markup = $image_data['markup'];
