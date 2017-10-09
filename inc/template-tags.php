@@ -60,7 +60,7 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 			$size = esc_html( get_post_meta( get_the_ID(), '_mp_post_homepage_image_size', true ) );
 		} elseif ( is_home() && 'thumbnail' === $size ) {
 			$size = 'thumbnail';
-		} elseif ( is_single() && ! is_singular( 'newsletter' ) ) {
+		} elseif ( is_single() && ! is_singular( 'newsletter' ) && ( ! isset( $attributes['location'] ) || 'sidebar' !== $attributes['location'] ) ) {
 			$size = 'large';
 		}
 
