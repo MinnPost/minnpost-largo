@@ -81,3 +81,45 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 
 	}
 endif;
+
+// add column list shortcode
+if ( ! function_exists( 'column_list' ) ) :
+	add_shortcode( 'column_list', 'column_list' );
+	function column_list( $atts ) {
+
+		$args = shortcode_atts(
+			array(
+				'term_ids' => '',
+			),
+			$atts
+		);
+
+		$output = '';
+		if ( '' !== $args['term_ids'] ) {
+			$output .= '<ol class="m-columns m-columns-summary">';
+			$term_ids = explode( ',', $args['term_ids'] );
+			foreach ( $term_ids as $term_id ) {
+				$term = get_term_by( 'id', $term_id, 'category' );
+				$output .= '<li>' . $term->name . '</li>';
+			}
+			$output .= '</ol>';
+		}
+
+		/*$spill_type = 'MinnpostSpills_Widget';
+
+		if ( '' !== $args['term_ids'] && false !== strpos( $args['term_ids'], strtolower( $spill_type ) ) ) {
+			$id = str_replace( strtolower( $spill_type ) . '-', '', $args['id'] );
+			$spills = get_option( 'widget_' . strtolower( $spill_type ), '' );
+			if ( array_key_exists( $id, $spills ) ) {
+				$args = $spills[ $id ];
+				ob_start();
+				the_widget( $spill_type, $args );
+				$widget_output = ob_get_contents();
+				ob_end_clean();
+				echo apply_filters( 'widget_output', $widget_output, strtolower( $spill_type ), $id, $id );
+			}
+		}*/
+		return $output;
+
+	}
+endif;

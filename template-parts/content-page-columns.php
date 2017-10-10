@@ -22,13 +22,8 @@
 
 	</header><!-- .m-entry-header -->
 
-	<div class="a-page-info">
-		<?php the_content(); ?>
-	</div>
-
-
 	<div class="m-entry-content">
-		there is a column list that needs to be here
+		<?php the_content(); ?>
 	</div><!-- .entry-content -->
 
 </article><!-- #page-## -->
