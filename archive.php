@@ -15,6 +15,18 @@ get_header(); ?>
 		<?php
 		if ( have_posts() ) : ?>
 
+			<?php
+			if ( is_category() ) {
+				$category_id = $wp_query->get_queried_object_id();
+				$figure = minnpost_get_term_figure( $category_id );
+				if ( '' === $figure ) {
+					echo '<div class="m-category-info">';
+					minnpost_category_sponsorship( '', $category_id );
+					echo '</div>';
+				}
+			}
+			?>
+
 			<header class="m-archive-header">
 				<?php
 					the_archive_title( '<h1 class="a-archive-title">', '</h1>' );
@@ -25,11 +37,14 @@ get_header(); ?>
 			<?php if ( is_category() ) : ?>
 				<aside class="m-archive-info m-category-info m-category-full-info">
 					<?php
-					$category_id = $wp_query->get_queried_object_id();
 					// category meta
-					minnpost_category_sponsorship( '', $category_id );
-					$figure = minnpost_get_term_figure( $category_id );
-					echo $figure;
+					if ( '' !== $figure ) {
+						minnpost_category_sponsorship( '', $category_id );
+						echo $figure;
+					} else {
+						$text = minnpost_get_term_text( $category_id );
+						echo '<div class="a-description">' . $text . '</div>';
+					}
 					?>
 					<ul class="a-archive-links a-category-links">
 						<li class="a-rss-link"><a href="<?php echo get_category_feed_link( $category_id ); ?>">Subscribe with RSS</a></li>

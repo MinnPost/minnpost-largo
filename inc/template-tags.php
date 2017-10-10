@@ -259,19 +259,14 @@ if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
 		}
 		$image_id = get_term_meta( $category_id, '_mp_category_main_image_id', true );
 
-		$text = '';
-		if ( 'feature' === $size ) { // full text
-			$text = get_term_meta( $category_id, '_mp_category_body', true );
-		} else { // excerpt
-			$text = get_term_meta( $category_id, '_mp_category_excerpt', true );
-		}
+		$text = minnpost_get_term_text( $category_id );
 
 		if ( post_password_required() || is_attachment() || ( ! $image_id && ! $image_url ) ) {
 			return '';
 		}
 
 		$name = '';
-		$name = get_cat_name( $category_id );
+		$name = get_cat_name( $category_id, $size );
 
 		$caption = wp_get_attachment_caption( $image_id );
 		$credit = get_media_credit_html( $image_id );
@@ -299,6 +294,21 @@ if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
 			$output .= '</figure><!-- .category-figure -->';
 			return $output;
 		} // End is_singular()
+	}
+endif;
+
+if ( ! function_exists( 'minnpost_get_term_text' ) ) :
+	/**
+	 * Returns term description or excerpt, by itself
+	 */
+	function minnpost_get_term_text( $category_id = '', $size = 'feature' ) {
+		$text = '';
+		if ( 'feature' === $size ) { // full text
+			$text = get_term_meta( $category_id, '_mp_category_body', true );
+		} else { // excerpt
+			$text = get_term_meta( $category_id, '_mp_category_excerpt', true );
+		}
+		return $text;
 	}
 endif;
 
