@@ -22,7 +22,7 @@
 			background: url(assets/img/icons/twitter.png) no-repeat;
 			background-size: 13px 13px;
 		}
-		&.a-bio-link a {
+		&.a-bio-link a, &.a-internal-link a {
 			background: url(assets/img/icons/internal.png) no-repeat;
 			background-size: 13px 13px;
 		}

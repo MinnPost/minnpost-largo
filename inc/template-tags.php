@@ -267,7 +267,7 @@ if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
 		}
 
 		if ( post_password_required() || is_attachment() || ( ! $image_id && ! $image_url ) ) {
-			return;
+			return '';
 		}
 
 		$name = '';
@@ -299,6 +299,29 @@ if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
 			$output .= '</figure><!-- .category-figure -->';
 			return $output;
 		} // End is_singular()
+	}
+endif;
+
+if ( ! function_exists( 'minnpost_term_extra_links' ) ) : 
+	/* returns any additional links for the term archive page */
+	function minnpost_term_extra_links( $category_id = '' ) {
+		$link = get_term_meta( $category_id, '_mp_category_excerpt_links', true );
+		if ( ! empty( $link ) ) {
+			if ( 'Author bio' === $link['text'] ) {
+				$class = ' class="a-bio-link"';
+				$url_prefix = get_bloginfo( 'url' ) . '/';
+			} elseif ( 'Follow on Twitter' === $link['text'] ) {
+				$class = ' class="a-twitter-link"';
+				$url_prefix = '';
+			} elseif ( false !== strpos( $link['url'], 'mailto' ) ) {
+				$class = ' class="a-email-link"';
+				$url_prefix = get_bloginfo( 'url' ) . '/';
+			} else {
+				$class = '';
+				$url_prefix = '';
+			}
+			echo '<li' . $class . '><a href="' . $url_prefix . $link['url'] . '">' . $link['text'] . '</a></li>';
+		}
 	}
 endif;
 

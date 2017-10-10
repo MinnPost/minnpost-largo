@@ -28,10 +28,12 @@ get_header(); ?>
 					$category_id = $wp_query->get_queried_object_id();
 					// category meta
 					minnpost_category_sponsorship( '', $category_id );
-					minnpost_term_figure( $category_id );
+					$figure = minnpost_get_term_figure( $category_id );
+					echo $figure;
 					?>
 					<ul class="a-archive-links a-category-links">
 						<li class="a-rss-link"><a href="<?php echo get_category_feed_link( $category_id ); ?>">Subscribe with RSS</a></li>
+						<?php minnpost_term_extra_links( $category_id ); ?>
 					</ul>
 				</aside>
 			<?php elseif ( is_author() ) : ?>
@@ -62,7 +64,7 @@ get_header(); ?>
 
 			<?php if ( is_category() ) :
 				$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-				if ( '' === get_term_meta( $category_id, '_mp_category_body', true ) ) :
+				if ( '' === get_term_meta( $category_id, '_mp_category_body', true ) || '' === $figure ) :
 					$featured_num = 3;
 				else :
 					$featured_num = 1;
