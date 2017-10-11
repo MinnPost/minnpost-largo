@@ -19,6 +19,9 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 	if ( false !== strpos( $widget_output, 'm-widget m-widget-text m-widget-custom-html' ) && 'custom_html' == $widget_type ) {
 
 		$widget_output = str_replace( '<div id="custom_html-', '<section id="custom_html-', $widget_output );
+		if ( false !== strpos( $widget_output, 'm-form-newsletter-shortcode-dc' ) ) {
+			$widget_output = str_replace( 'class="m-widget m-widget-text m-widget-custom-html"', 'class="m-widget m-widget-text m-widget-custom-html m-widget-form-dc"', $widget_output );
+		}
 		$widget_output = str_replace( '</div></div>', '</div></section>', $widget_output );
 
 		$html = '';
