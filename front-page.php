@@ -18,7 +18,8 @@ get_header(); ?>
 				$the_query = z_get_zone_query( 'homepage-top' );
 			}
 			if ( $the_query->have_posts() ) : ?>
-				<section class="m-zone m-zone-homepage-top m-archive m-archive-top">
+				<?php $post_count = $the_query->post_count; ?>
+				<section class="m-zone m-zone-homepage-top m-archive m-archive-top m-archive-has-<?php echo $post_count; ?>-post">
 					<?php
 					while ( $the_query->have_posts() ) : $the_query->the_post();
 						get_template_part( 'template-parts/content', 'top' ); // content-top

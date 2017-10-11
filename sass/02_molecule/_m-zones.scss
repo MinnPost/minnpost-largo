@@ -4,6 +4,10 @@ main.m-homepage-zones {
 		//padding-bottom: 20px;
 		margin-bottom: 20px;
 		border-bottom: 1px solid $color__gray-lightest;
+		&.m-zone-homepage-top { // no margin or border because the article already has it
+			border-bottom: 0;
+			margin-bottom: 0;
+		}
 		&.m-zone-homepage-middle {
 			display: flex;
 			justify-content: space-between;
@@ -16,10 +20,6 @@ main.m-homepage-zones {
 		&.m-zone-homepage-middle article {
 			width: 45%;
 			margin-bottom: 20px;
-		}
-		.m-post-image {
-			float: none;
-			margin: 0;
 		}
 	}
 }
