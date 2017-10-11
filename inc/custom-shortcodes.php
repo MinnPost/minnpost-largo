@@ -100,7 +100,9 @@ if ( ! function_exists( 'column_list' ) ) :
 			$term_ids = explode( ',', $args['term_ids'] );
 			foreach ( $term_ids as $term_id ) {
 				$term = get_term_by( 'id', $term_id, 'category' );
-				$output .= '<li>' . $term->name . '</li>';
+				$output .= '<li>';
+				$output .= minnpost_get_term_figure( $term_id, 'thumbnail', true, true, 'figure' );
+				$output .= '</li>';
 			}
 			$output .= '</ol>';
 		}

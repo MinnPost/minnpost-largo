@@ -241,8 +241,8 @@ if ( ! function_exists( 'minnpost_term_figure' ) ) :
 	/**
 	 * Outputs term image, large or thumbnail, with/without the description or excerpt, all inside a <figure>
 	 */
-	function minnpost_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false ) {
-		$output = minnpost_get_term_figure( $category_id, $size, $include_text, $include_name );
+	function minnpost_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false, $link_on = 'title' ) {
+		$output = minnpost_get_term_figure( $category_id, $size, $include_text, $include_name, $link_on );
 		echo $output;
 	}
 endif;
@@ -251,7 +251,7 @@ if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
 	/**
 	 * Returns term image, large or thumbnail, with/without the description or excerpt, all inside a <figure>
 	 */
-	function minnpost_get_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false ) {
+	function minnpost_get_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false, $link_on = 'title' ) {
 		$image_url = get_term_meta( $category_id, '_mp_category_main_image', true );
 		if ( 'feature' !== $size ) {
 			$image_url = get_term_meta( $category_id, '_mp_category_' . $size . '_image', true );
@@ -282,14 +282,26 @@ if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
 		if ( is_singular() || is_archive() || is_home() ) {
 			$output = '';
 			$output .= '<figure class="a-archive-figure a-category-figure a-category-figure-' . $size . '">';
+				if ( 'figure' === $link_on ) {
+					$output .= '<a href="' . get_category_link( $category_id ) . '">';
+				}
 				$output .= $image;
 				if ( true === $include_text && '' !== $text ) {
 					$output .= '<figcaption>';
 						if ( true === $include_name && '' !== $name ) {
-							$output .= '<h3 class="a-category-title"><a href="' . get_category_link( $category_id ) . '">' . $name . '</a></h3>';
+							$output .= '<h3 class="a-category-title">';
+							if ( 'title' === $link_on ) {
+								$output .= '<a href="' . get_category_link( $category_id ) . '">' . $name . '</a>';
+							} else {
+								$output .= $name;
+							}
+							$output .= '</h3>';
 						}
 						$output .= $text;
 					$output .= '</figcaption>';
+				}
+				if ( 'figure' === $link_on ) {
+					$output .= '</a>';
 				}
 			$output .= '</figure><!-- .category-figure -->';
 			return $output;
@@ -306,7 +318,7 @@ if ( ! function_exists( 'minnpost_get_term_text' ) ) :
 		if ( 'feature' === $size ) { // full text
 			$text = get_term_meta( $category_id, '_mp_category_body', true );
 		} else { // excerpt
-			$text = get_term_meta( $category_id, '_mp_category_excerpt', true );
+			$text = '<p>' . strip_tags( get_term_meta( $category_id, '_mp_category_excerpt', true ) ) . '</p>';
 		}
 		return $text;
 	}

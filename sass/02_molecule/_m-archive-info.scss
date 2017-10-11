@@ -1,12 +1,44 @@
+.a-archive-figure {
+	@include clearfix;
+	a, a:hover, a:focus, a:active {
+		text-decoration: none;
+		color: $color__base-font-color;
+		cursor: text;
+	}
+	img {
+		margin: 0 20px 20px 0;
+		float: left;
+	}
+	figcaption {
+		line-height: 1.3em;
+	}
+	a h3, a img {
+		color: $color__action-color;
+		cursor: pointer;
+	}
+	a:visited h3 {
+		color: $color__action-color;
+	}
+	a:active h3,
+	a:focus h3,
+	a:hover h3 {
+		color: $color__action-color;
+		text-decoration: underline;
+	}
+}
+.m-category-info {
+	padding-bottom: 30px;
+	margin-bottom: 20px;
+	border-bottom: 1px solid $color__gray-lightest;
+}
+
 .m-archive-info {
 	.a-archive-figure {
-		@include clearfix;
 		padding-bottom: 40px;
 		margin-bottom: -16px;
 		background: $color__minnpost-white;
 		img {
 			margin: 10px 20px 10px 10px;
-			float: left;
 		}
 		figcaption {
 			padding: 10px;
