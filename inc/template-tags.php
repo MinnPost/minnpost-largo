@@ -259,7 +259,7 @@ if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
 		}
 		$image_id = get_term_meta( $category_id, '_mp_category_main_image_id', true );
 
-		$text = minnpost_get_term_text( $category_id );
+		$text = minnpost_get_term_text( $category_id, $size );
 
 		if ( post_password_required() || is_attachment() || ( ! $image_id && ! $image_url ) ) {
 			return '';
