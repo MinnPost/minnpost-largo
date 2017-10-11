@@ -282,27 +282,27 @@ if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
 		if ( is_singular() || is_archive() || is_home() ) {
 			$output = '';
 			$output .= '<figure class="a-archive-figure a-category-figure a-category-figure-' . $size . '">';
-				if ( 'figure' === $link_on ) {
-					$output .= '<a href="' . get_category_link( $category_id ) . '">';
+			if ( 'figure' === $link_on ) {
+				$output .= '<a href="' . get_category_link( $category_id ) . '">';
+			}
+			$output .= $image;
+			if ( true === $include_text && '' !== $text ) {
+				$output .= '<figcaption>';
+				if ( true === $include_name && '' !== $name ) {
+					$output .= '<h3 class="a-category-title">';
+					if ( 'title' === $link_on ) {
+						$output .= '<a href="' . get_category_link( $category_id ) . '">' . $name . '</a>';
+					} else {
+						$output .= $name;
+					}
+					$output .= '</h3>';
 				}
-				$output .= $image;
-				if ( true === $include_text && '' !== $text ) {
-					$output .= '<figcaption>';
-						if ( true === $include_name && '' !== $name ) {
-							$output .= '<h3 class="a-category-title">';
-							if ( 'title' === $link_on ) {
-								$output .= '<a href="' . get_category_link( $category_id ) . '">' . $name . '</a>';
-							} else {
-								$output .= $name;
-							}
-							$output .= '</h3>';
-						}
-						$output .= $text;
-					$output .= '</figcaption>';
-				}
-				if ( 'figure' === $link_on ) {
-					$output .= '</a>';
-				}
+				$output .= $text;
+				$output .= '</figcaption>';
+			}
+			if ( 'figure' === $link_on ) {
+				$output .= '</a>';
+			}
 			$output .= '</figure><!-- .category-figure -->';
 			return $output;
 		} // End is_singular()

@@ -3,7 +3,6 @@
 	a, a:hover, a:focus, a:active {
 		text-decoration: none;
 		color: $color__base-font-color;
-		cursor: text;
 	}
 	img {
 		margin: 0 20px 20px 0;
@@ -14,7 +13,6 @@
 	}
 	a h3, a img {
 		color: $color__action-color;
-		cursor: pointer;
 	}
 	a:visited h3 {
 		color: $color__action-color;
