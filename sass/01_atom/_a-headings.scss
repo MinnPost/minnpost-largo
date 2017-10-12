@@ -105,9 +105,13 @@ body.post .a-entry-title, body.page .a-entry-title {
 	color: $color__minnpost-black;
 }
 
+.m-entry-content h4, .m-entry-content .h4 {
+	font-size: 138.5%;
+	line-height: 1.15em;
+}
+
 .m-entry-content h5, .m-entry-content .h5 {
 	font-size: 92.3%;
-	font-weight: bold;
 	text-transform: uppercase;
 	line-height: 1.4em;
 }
