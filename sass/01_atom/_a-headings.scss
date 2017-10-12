@@ -4,7 +4,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 	font-size: 100%;
 	margin: 0;
 	padding: 0;
-	/*a {
+	a {
 		color: inherit;
 		&:visited,
 		&:active,
@@ -13,7 +13,7 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 		&.active {
 			color: inherit;
 		}
-	}*/
+	}
 }
 
 h1, .h1, h2, .h2, h3, .h3 {
@@ -103,6 +103,24 @@ body.post .a-entry-title, body.page .a-entry-title {
 	font-size: 338.5%;
 	line-height: 0.9em;
 	color: $color__minnpost-black;
+}
+
+.m-entry-content h1, .m-entry-content .h1,
+.m-entry-content h2, .m-entry-content .h2,
+.m-entry-content h3, .m-entry-content .h3,
+.m-entry-content h4, .m-entry-content .h4,
+.m-entry-content h5, .m-entry-content .h5,
+.m-entry-content h6, .m-entry-content .h6 {
+	a {
+		color: $color__action-color;
+		&:visited,
+		&:active,
+		&:focus,
+		&:hover,
+		&.active {
+			color: $color__action-color;
+		}
+	}
 }
 
 .m-entry-content h4, .m-entry-content .h4 {
