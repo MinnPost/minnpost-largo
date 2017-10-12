@@ -22,7 +22,7 @@
 
 	</header><!-- .m-entry-header -->
 
-	<div class="m-entry-content">
+	<div class="m-entry-content m-entry-content-custom">
 		<?php the_content(); ?>
 	</div><!-- .entry-content -->
 
