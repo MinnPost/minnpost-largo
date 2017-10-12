@@ -186,6 +186,16 @@ if ( ! function_exists( 'minnpost_author_figure' ) ) :
 	 * Outputs author image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
 	 */
 	function minnpost_author_figure( $author_id = '', $size = 'photo', $include_text = true, $include_name = false ) {
+		$output = minnpost_get_author_figure( $author_id, $size, $include_text, $include_name );
+		echo $output;
+	}
+endif;
+
+if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
+	/**
+	 * Returns author image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
+	 */
+	function minnpost_get_author_figure( $author_id = '', $size = 'photo', $include_text = true, $include_name = false ) {
 
 		// in drupal there was only one author image size
 		if ( '' === $author_id ) {
@@ -223,19 +233,21 @@ if ( ! function_exists( 'minnpost_author_figure' ) ) :
 			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
 		}
 
-		if ( is_singular() || is_archive() ) : ?>
-			<figure class="a-archive-figure a-author-figure a-author-figure-<?php echo $size; ?>">
-				<?php echo $image; ?>
-				<?php if ( true === $include_text && '' !== $text ) : ?>
-					<figcaption>
-						<?php if ( true === $include_name && '' !== $name ) : ?>
-							<h3 class="a-author-title"><a href="<?php echo get_author_posts_url( $author_id, sanitize_title( $name ) ); ?>"><?php echo $name; ?></a></h3>
-						<?php endif; ?>
-						<?php echo $text; ?>
-					</figcaption>
-				<?php endif; ?>
-			</figure><!-- .author-figure -->
-		<?php endif; // End is_singular()
+		if ( is_singular() || is_archive() ) {
+			$output = '';
+			$output .= '<figure class="a-archive-figure a-author-figure a-author-figure-' . $size . '">';
+			$output .= $image;
+			if ( true === $include_text && '' !== $text ) {
+				$output .= '<figcaption>';
+				if ( true === $include_name && '' !== $name ) {
+					$output .= '<h3 class="a-author-title"><a href="' . get_author_posts_url( $author_id, sanitize_title( $name ) ) . '">' . $name . '</a></h3>';
+				}
+				$output .= $text;
+				$output .= '</figcaption>';
+			}
+			$output .= '</figure><!-- .author-figure -->';
+			return $output;
+		}; // End is_singular()
 	}
 endif;
 

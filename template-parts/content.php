@@ -51,15 +51,26 @@
 		<?php the_content(); ?>
 	</div><!-- .entry-content -->
 
+	<?php
+	$coauthors = get_coauthors( get_the_ID() );
+	$author_info = '';
+	foreach ( $coauthors as $coauthor ) {
+		$author_id = $coauthor->ID;
+		$author_info .= minnpost_get_author_figure( $author_id, 'thumbnail', true, true );
+	}
+	if ( '' !== $author_info ) {
+	?>
 	<aside class="m-author-info m-author-info-excerpt">
 		<h3 class="a-about-author">About the author:</h3>
 		<?php
-		$coauthors = get_coauthors( get_the_ID() );
 		foreach ( $coauthors as $coauthor ) :
 			$author_id = $coauthor->ID;
 			minnpost_author_figure( $author_id, 'thumbnail', true, true );
 		endforeach;
 		?>
 	</aside>
+	<?php
+	}
+	?>
 
 </article><!-- #post-## -->

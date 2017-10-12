@@ -7,10 +7,21 @@
 			float: left;
 		}
 		figcaption {
+			@include clearfix;
 			padding: 10px;
 			p {
 				font-size: 1.23em;
 				line-height: 1.3em;
+				a {
+					color: $color__action-color;
+					&:active,
+					&:focus,
+					&:hover {
+						//color: darken($color__action-color, 15%);
+						color: $color__action-color;
+						text-decoration: underline;
+					}
+				}
 			}
 		}
 	}
