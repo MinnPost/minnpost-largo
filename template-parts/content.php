@@ -11,7 +11,9 @@
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post' ); ?>>
 
-	<?php minnpost_category_breadcrumb(); ?>
+	<div class="m-post-classification">
+		<?php minnpost_category_breadcrumb(); ?>
+	</div>
 	<?php minnpost_category_sponsorship(); ?>
 
 	<?php
