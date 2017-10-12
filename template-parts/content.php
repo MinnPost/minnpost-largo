@@ -22,7 +22,7 @@
 	}
 	?>
 
-	<header class="m-entry-header">
+	<header class="m-entry-header<?php if ( is_singular() ) { ?> m-entry-header-singular<?php } ?><?php if ( is_single() ) { ?> m-entry-header-single<?php } ?>">
 		<?php
 		if ( is_single() ) :
 			the_title( '<h1 class="a-entry-title">', '</h1>' );

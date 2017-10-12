@@ -11,7 +11,7 @@
 
 <article id="page-<?php the_ID(); ?>" <?php post_class( 'm-page' ); ?>>
 
-	<header class="m-entry-header">
+	<header class="m-entry-header<?php if ( is_singular() ) { ?> m-entry-header-singular<?php } ?>">
 		<?php
 		if ( is_singular() ) :
 			the_title( '<h1 class="a-entry-title">', '</h1>' );

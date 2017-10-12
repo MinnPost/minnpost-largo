@@ -80,14 +80,6 @@ h6, .h6 {
 	font-size: 123.1%;
 	text-transform: none;
 }
-h1.a-entry-title {
-	font-family: $font__headings;
-	font-weight: normal;
-	font-style: normal;
-	font-variant: normal;
-	font-size: 338.5%;
-	line-height: 0.9em;
-}
 .a-entry-title-largeimage {
 	font-size: 138.5%;
 	font-weight: bold;
@@ -102,7 +94,7 @@ h1.a-entry-title {
 	font-variant: normal;
 }
 
-body.post .a-entry-title, body.page .a-entry-title {
+.m-entry-header-singular .a-entry-title {
 	font-family: $font__headings;
 	font-weight: normal;
 	font-style: normal;
@@ -111,6 +103,10 @@ body.post .a-entry-title, body.page .a-entry-title {
 	font-size: 338.5%;
 	line-height: 0.9em;
 	color: $color__minnpost-black;
+}
+
+.m-entry-header-single .a-entry-title {
+	margin-bottom: 15px;
 }
 
 .m-entry-content h1, .m-entry-content .h1,
