@@ -57,3 +57,18 @@ if ( ! function_exists( 'keep_me_logged_in_for_1_year' ) ) :
 		return 31556926; // 1 year in seconds
 	}
 endif;
+
+if ( ! function_exists( 'disable_autoformatting_old_content' ) ) :
+	add_action( 'wp', 'disable_autoformatting_old_content' );
+	function disable_autoformatting_old_content() {
+		$migrated_date = get_option( 'wp_migrate_timestamp', time() );
+		$post_date = get_the_date( 'U' );
+		if ( $migrated_date > $post_date ) {
+			$remove_filter = true;
+		}
+		if ( false === $remove_filter ) {
+			return;
+		}
+		remove_filter( 'the_content', 'wpautop' );
+	}
+endif;
