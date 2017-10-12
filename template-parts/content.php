@@ -43,7 +43,7 @@
 
 	<?php
 	if ( is_singular() ) {
-		minnpost_post_image();
+		minnpost_post_image( 'large' );
 	}
 	?>
 

@@ -1,0 +1,15 @@
+.a-media-meta {
+	display: block;
+	margin-bottom: 0;
+	margin-top: 0;
+	font-family: $font__sans;
+	&.a-media-credit {
+		font-size: 62.5%;
+		line-height: 1.3em;
+		text-align: right;
+	}
+	&.a-media-caption {
+		font-size: 75%;
+		line-height: 1.3em;
+	}
+}

@@ -31,8 +31,10 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 				<?php if ( '' !== $caption || '' !== $credit ) { ?>
 				<figcaption>
 					<?php if ( '' !== $credit ) { ?>
-						<div class="credit"><?php echo $credit; ?></div>
-						<div class="caption"><?php echo $caption; ?></div>
+						<div class="a-media-meta a-media-credit"><?php echo $credit; ?></div>
+					<?php } ?>
+					<?php if ( '' !== $caption ) { ?>
+						<div class="a-media-meta a-media-caption"><?php echo $caption; ?></div>
 					<?php } ?>
 				</figcaption>
 				<?php } ?>
