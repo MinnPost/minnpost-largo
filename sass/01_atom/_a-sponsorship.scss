@@ -1,4 +1,4 @@
-.m-category-info .a-sponsorship {
+.m-category-info .a-sponsorship, .m-post .a-sponsorship {
 	color: $color__gray-meta;
 	font-size: 107.7%;
 	margin: 20px 0 25px 0;
@@ -6,5 +6,11 @@
 	p {
 		font-size: 107.7%;
 		font-style: italic;
+	}
+}
+.m-post .a-sponsorship {
+	padding-bottom: 0;
+	p {
+		font-size: 100%;
 	}
 }
