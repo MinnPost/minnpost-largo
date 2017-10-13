@@ -415,7 +415,7 @@ endif;
 
 if ( ! function_exists( 'minnpost_edit_link' ) ) :
 	/**
-	 * Prints HTML with meta information for the categories, tags and comments.
+	 * Prints HTML for edit link to users with that permission
 	 */
 	function minnpost_edit_link() {
 		edit_post_link(
@@ -427,6 +427,23 @@ if ( ! function_exists( 'minnpost_edit_link' ) ) :
 			'<span class="edit-link">',
 			'</span>'
 		);
+	}
+endif;
+
+if ( ! function_exists( 'minnpost_post_sidebar' ) ) :
+	/**
+	 * Prints HTML for post sidebar
+	 */
+	function minnpost_post_sidebar( $post_id = '' ) {
+
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
+
+		$sidebar = get_post_meta( $post_id , '_mp_post_sidebar', true );
+		if ( null !== $sidebar ) {
+			echo $sidebar;
+		}
 	}
 endif;
 

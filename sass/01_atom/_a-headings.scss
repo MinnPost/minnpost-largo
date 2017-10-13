@@ -112,12 +112,12 @@ h6, .h6 {
 	margin-bottom: 15px;
 }
 
-.m-entry-content h1, .m-entry-content .h1,
-.m-entry-content h2, .m-entry-content .h2,
-.m-entry-content h3, .m-entry-content .h3,
-.m-entry-content h4, .m-entry-content .h4,
-.m-entry-content h5, .m-entry-content .h5,
-.m-entry-content h6, .m-entry-content .h6 {
+.m-entry-content h1, .m-entry-content .h1, .m-post-sidebar h1, .m-post-sidebar .h1,
+.m-entry-content h2, .m-entry-content .h2, .m-post-sidebar h2, .m-post-sidebar .h2,
+.m-entry-content h3, .m-entry-content .h3, .m-post-sidebar h3, .m-post-sidebar .h3,
+.m-entry-content h4, .m-entry-content .h4, .m-post-sidebar h4, .m-post-sidebar .h4,
+.m-entry-content h5, .m-entry-content .h5, .m-post-sidebar h5, .m-post-sidebar .h5,
+.m-entry-content h6, .m-entry-content .h6, .m-post-sidebar h6, .m-post-sidebar .h6 {
 	a {
 		color: $color__action-color;
 		&:visited,
