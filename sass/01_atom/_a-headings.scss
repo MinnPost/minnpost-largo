@@ -52,10 +52,10 @@ h6, .h6 {
 	font-variant: normal;
 	margin-bottom: 12px;
 }
-.a-author-title, .a-about-author {
+.a-author-title, .a-about-author, .a-comments-title {
 	font-size: 123.1%;
 }
-.a-about-author {
+.a-about-author, .a-comments-title {
 	text-transform: uppercase;
 	font-family: $font__headings;
 	font-weight: normal;
@@ -67,6 +67,9 @@ h6, .h6 {
 	text-transform: none;
     margin: 0;
     font-weight: bold;
+}
+.a-comments-title {
+	margin-bottom: 0.75em;
 }
 
 .a-featured-title {
