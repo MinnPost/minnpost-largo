@@ -493,7 +493,7 @@ if ( ! function_exists( 'minnpost_category_sponsorship' ) ) :
 			}
 		}
 		$sponsorship = get_term_meta( $category_id, '_mp_category_sponsorship', true );
-		if ( '' !== $sponsorship ) {
+		if ( ! empty( $sponsorship ) ) {
 			echo '<div class="a-sponsorship">' . $sponsorship . '</div>';
 		}
 	}
