@@ -166,6 +166,21 @@ if ( ! function_exists( 'remove_featured_images_from_child_theme' ) ) :
 	}
 endif;
 
+if ( ! function_exists( 'show_hidden_meta_boxes' ) ) :
+	add_filter( 'default_hidden_meta_boxes', 'show_hidden_meta_boxes', 10, 2 );
+	function show_hidden_meta_boxes( $hidden, $screen ) {
+		if ( 'post' == $screen->base ) {
+			foreach ( $hidden as $key => $value ) {
+				if ( 'postexcerpt' == $value ) {
+					unset( $hidden[ $key ] );
+					break;
+				}
+			}
+		}
+		return $hidden;
+	}
+endif;
+
 // add fields to posts
 if ( ! function_exists( 'cmb2_post_fields' ) ) :
 	add_action( 'cmb2_init', 'cmb2_post_fields' );
