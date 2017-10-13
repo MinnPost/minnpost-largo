@@ -25,4 +25,12 @@
 			}
 		}
 	}
+	&.m-author-info-single .a-author-figure {
+		border: 1px solid $color__gray-lightest;
+		margin-top: 10px;
+		figcaption {
+			margin-bottom: 25px;
+			padding-bottom: 20px;
+		}
+	}
 }
