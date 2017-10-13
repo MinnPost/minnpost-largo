@@ -31,7 +31,16 @@
 
 	</header><!-- .m-entry-header -->
 
-	<div class="m-entry-content">
+	<?php
+	global $post;
+	$post_slug = $post->post_name;
+	$custom_class = '';
+	if ( 'columns' === $post_slug || 'news-region' === $post_slug ) {
+		$custom_class = ' m-entry-content-custom';
+	}
+	?>
+
+	<div class="m-entry-content<?php echo $custom_class; ?>">
 		<?php the_content(); ?>
 	</div><!-- .entry-content -->
 
