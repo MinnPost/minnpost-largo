@@ -266,6 +266,20 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'type'       => 'text',
 		) );
 
+		$post_setup = new_cmb2_box( array(
+			'id'            => $object_type . '_supplemental_content',
+			'title'         => 'Supplemental Content',
+			'object_types'  => array( $object_type ),
+			'context'       => 'normal',
+			'priority'      => 'low',
+		) );
+		$post_setup->add_field( array(
+			'name'    => 'Sidebar Content',
+			'desc'    => 'Content for the right sidebar',
+			'id'      => '_mp_post_sidebar',
+			'type'    => 'wysiwyg',
+		) );
+
 	}
 
 	add_image_size( 'post-feature', 190, 9999 );
@@ -273,6 +287,30 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 	add_image_size( 'post-feature-medium', 190, 125, true );
 	add_image_size( 'post-newsletter-thumb', 80, 60, true );
 
+endif;
+
+
+// add fields to pages
+if ( ! function_exists( 'cmb2_page_fields' ) ) :
+	add_action( 'cmb2_init', 'cmb2_page_fields' );
+	function cmb2_page_fields() {
+
+		$object_type = 'page';
+
+		$page_setup = new_cmb2_box( array(
+			'id'            => $object_type . '_supplemental_content',
+			'title'         => 'Supplemental Content',
+			'object_types'  => array( $object_type ),
+			'context'       => 'normal',
+			'priority'      => 'low',
+		) );
+		$page_setup->add_field( array(
+			'name'    => 'Sidebar Content',
+			'desc'    => 'Content for the right sidebar',
+			'id'      => '_mp_post_sidebar',
+			'type'    => 'wysiwyg',
+		) );
+	}
 endif;
 
 
