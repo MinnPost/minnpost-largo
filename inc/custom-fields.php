@@ -267,15 +267,21 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		) );
 
 		$post_setup = new_cmb2_box( array(
-			'id'            => $object_type . '_supplemental_content',
-			'title'         => 'Supplemental Content',
+			'id'            => $object_type . '_sidebar_options',
+			'title'         => 'Sidebar Options',
 			'object_types'  => array( $object_type ),
 			'context'       => 'normal',
 			'priority'      => 'low',
 		) );
 		$post_setup->add_field( array(
-			'name'    => 'Sidebar Content',
-			'desc'    => 'Content for the right sidebar',
+			'name'       => 'Remove whole right sidebar from this post?',
+			'id'         => '_mp_remove_right_sidebar',
+			'type'       => 'checkbox',
+			'desc'       => '',
+		) );
+		$post_setup->add_field( array(
+			'name'    => 'Sidebar Content Box',
+			'desc'    => 'Content for a single right sidebar box',
 			'id'      => '_mp_post_sidebar',
 			'type'    => 'wysiwyg',
 		) );
@@ -298,15 +304,21 @@ if ( ! function_exists( 'cmb2_page_fields' ) ) :
 		$object_type = 'page';
 
 		$page_setup = new_cmb2_box( array(
-			'id'            => $object_type . '_supplemental_content',
-			'title'         => 'Supplemental Content',
+			'id'            => $object_type . '_sidebar_options',
+			'title'         => 'Sidebar Options',
 			'object_types'  => array( $object_type ),
 			'context'       => 'normal',
 			'priority'      => 'low',
 		) );
 		$page_setup->add_field( array(
-			'name'    => 'Sidebar Content',
-			'desc'    => 'Content for the right sidebar',
+			'name'       => 'Remove whole right sidebar from this post?',
+			'id'         => '_mp_remove_right_sidebar',
+			'type'       => 'checkbox',
+			'desc'       => '',
+		) );
+		$page_setup->add_field( array(
+			'name'    => 'Sidebar Content Box',
+			'desc'    => 'Content for a single right sidebar box',
 			'id'      => '_mp_post_sidebar',
 			'type'    => 'wysiwyg',
 		) );

@@ -102,4 +102,13 @@
 		</div>
 	</header><!-- #masthead -->
 
-	<div id="content" class="o-wrapper o-wrapper-content">
+	<?php
+	$full_class = '';
+	if ( is_singular() ) {
+		$remove_sidebar = get_post_meta( get_the_ID() , '_mp_remove_right_sidebar', true );
+		if ( isset( $remove_sidebar ) && 'on' === $remove_sidebar ) {
+			$full_class = ' o-wrapper-content-full';
+		}
+	}
+	?>
+	<div id="content" class="o-wrapper o-wrapper-content<?php echo $full_class; ?>">

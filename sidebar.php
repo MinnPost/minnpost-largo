@@ -7,9 +7,10 @@
  * @package MinnPost Largo
  */
 
-/*if ( ! is_active_sidebar( 'sidebar-1' ) ) {
+$remove_sidebar = get_post_meta( get_the_ID() , '_mp_remove_right_sidebar', true );
+if ( isset( $remove_sidebar ) && 'on' === $remove_sidebar ) {
 	return;
-}*/
+}
 ?>
 
 <aside id="secondary" class="o-site-sidebar" role="complementary">
