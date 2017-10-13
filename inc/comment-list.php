@@ -8,7 +8,7 @@ function minnpost_largo_comment( $comment, $args, $depth ) {
 			<?php
 			if ( $comment->user_id ) {
 				$user = get_userdata( $comment->user_id );
-				$comment_name = $user->display_name;
+				$comment_name = $user->first_name . ' ' . $user->last_name;
 			} else {
 				$comment_name = comment_author( $comment->comment_ID );
 			}
@@ -24,18 +24,32 @@ function minnpost_largo_comment( $comment, $args, $depth ) {
 
 		<?php comment_text(); ?>
 		
-		<div class="reply">
-			<?php
-			comment_reply_link(
-				array_merge(
-					$args,
-					array(
-						'depth' => $depth,
-						'max_depth' => $args['max_depth'],
+		<div class="a-comment-links">
+			<div class="a-comment-link a-comment-link-reply">
+				<?php
+				comment_reply_link(
+					array_merge(
+						$args,
+						array(
+							'depth' => $depth,
+							'max_depth' => $args['max_depth'],
+						)
 					)
-				)
-			);
+				);
+				?>
+			</div>
+			<?php
+			if ( '0' === $comment->comment_approved ) {
+				$text = __( 'Approve', 'minnpost-largo' );
+			} else {
+				$text = __( 'Unapprove', 'minnpost-largo' );
+			}
+			approve_comment_link( $text, '<div class="a-comment-link a-comment-link-approve">', '</div>' );
 			?>
+			<?php spam_comment_link( __( 'Spam', 'minnpost-largo' ), '<div class="a-comment-link a-comment-link-spam">', '</div>' ); ?>
+			<?php edit_comment_link( __( 'Edit', 'minnpost-largo' ), '<div class="a-comment-link a-comment-link-edit">', '</div>' ); ?>
+			<?php trash_comment_link( __( 'Trash', 'minnpost-largo' ), '<div class="a-comment-link a-comment-link-trash">', '</div>' ); ?>
+			
 		</div>
 <?php
 }
