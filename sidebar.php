@@ -30,9 +30,7 @@ if ( isset( $remove_sidebar ) && 'on' === $remove_sidebar ) {
 		?>
 	<?php endif; ?>
 	<?php if ( is_singular() ) : ?>
-		<section id="post-sidebar" class="m-post-sidebar">
-			<?php minnpost_post_sidebar(); ?>
-		</section>
+		<?php minnpost_post_sidebar(); ?>
 	<?php endif; ?>
 	<?php dynamic_sidebar( 'sidebar-1' ); ?>
 	<?php if ( ! is_single() ) : ?>

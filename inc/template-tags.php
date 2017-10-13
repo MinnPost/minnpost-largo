@@ -441,8 +441,8 @@ if ( ! function_exists( 'minnpost_post_sidebar' ) ) :
 		}
 
 		$sidebar = get_post_meta( $post_id , '_mp_post_sidebar', true );
-		if ( null !== $sidebar ) {
-			echo $sidebar;
+		if ( null !== $sidebar && '' !== $sidebar ) {
+			echo '<section id="post-sidebar" class="m-post-sidebar">' . $sidebar . '</section>';
 		}
 	}
 endif;
