@@ -3,7 +3,7 @@
 function minnpost_largo_comment( $comment, $args, $depth ) {
 	$GLOBALS['comment'] = $comment;
 	?>  
-	<li <?php comment_class( 'o-comment' ); ?> id="o-comment-<?php comment_ID(); ?>">
+	<article <?php comment_class( 'o-comment' ); ?> id="o-comment-<?php comment_ID(); ?>">
 		<div class="m-comment-meta">
 			<?php
 			if ( $comment->user_id ) {
@@ -51,5 +51,6 @@ function minnpost_largo_comment( $comment, $args, $depth ) {
 			<?php trash_comment_link( __( 'Trash', 'minnpost-largo' ), '<div class="a-comment-link a-comment-link-trash">', '</div>' ); ?>
 			
 		</div>
+	</article>
 <?php
 }

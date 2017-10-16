@@ -26,16 +26,12 @@ if ( post_password_required() ) {
 
 	<?php
 	if ( have_comments() ) :
-	?>
-		<ol class="comment-list">
-			<?php
-				wp_list_comments( array(
-					'callback' => 'minnpost_largo_comment',
-					'type' => 'comment',
-				) );
-			?>
-		</ol><!-- .comment-list -->
-	<?php
+		wp_list_comments(
+			array(
+				'callback' => 'minnpost_largo_comment',
+				'type' => 'comment',
+			)
+		);
 	endif; // Check for have_comments().
 
 	// If comments are closed and there are comments, let's leave a little note, shall we?
