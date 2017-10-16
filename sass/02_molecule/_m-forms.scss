@@ -1,9 +1,11 @@
 .m-secondary-navigation .search-form {
-	//grid-column: col-end / span 4;
 	width: 117px;
 	height: 29px;
 	border: 2px solid #cdcdd0;
-	position: relative;
+	z-index: 1;
+	position: absolute;
+	top: 8px;
+	right: 8px;
 	input[type="text"], input[type="search"] {
 		height: 25px;
 		padding: 1px 2px 3px 2px;
@@ -42,4 +44,18 @@
 }
 .m-form-container {
 	padding: 0 0.5em;
+}
+
+// media queries for forms
+@media screen and (min-width: $more-than-logo-screen) {
+	.m-secondary-navigation .search-form {
+		//top: 12px;
+	}
+}
+@media screen and (min-width: $nav-breaks) {
+	.m-secondary-navigation .search-form {
+		position: relative;
+		top: auto;
+		left: auto;
+	}
 }

@@ -1,4 +1,5 @@
 .m-secondary-navigation, .m-featured-navigation, .m-pagination {
+	position: relative;
 	ul {
 		list-style: none;
 		display: flex; 
@@ -17,6 +18,7 @@
 }
 
 #minnpost-network {
+	display: none;
 	margin: 2px 30px 21px 0;
 	a {
 		@include hide-text;
@@ -52,8 +54,12 @@
 }
 
 #secondary-links {
+	display: flex;
+	justify-content: flex-end;
 	flex-basis: 100%;
-	margin-top: -1px;
+	margin-top: 48px;
+	margin-bottom: 0;
+	position: absolute;
 	li:not(:last-child) {
 		padding-right: 15px;
 	}
@@ -73,18 +79,44 @@
 	-moz-font-feature-settings: "calt" 0,"dlig" 0,"ss01" 0,"liga" 0;
 	background: $color__minnpost-black;
 	padding-top: 5px;
+	margin-bottom: 30px; // this is for the secondary nav to be visible
 	button {
-		display: none;
+		display: inline-block;
+		-webkit-appearance: none;
+		margin: 7px 0 11px 0;
+		border: 0;
+		color: $color__white;
+		background: transparent;
+		&:hover, &:focus {
+			background: $color__minnpost-white;
+			color: $color__minnpost-black;
+		}
+		&:after {
+		    content: " \25BC";
+		}
 	}
 	ul {
 		list-style: none;
-		display: flex; 
+		display: none;
 		justify-content: flex-start;
 		margin: 7px 0 0 0;
 		padding: 0;
 	}
+	&.toggled {
+		button {
+			&:after {
+				content: " \25B2";
+			}
+		}
+		ul {
+			display: block;
+			columns: 2;
+		}
+	}
 	li {
 		text-transform: uppercase;
+		flex-shrink: 0;
+    	flex: 0 0 auto;
 		&:last-child, &:nth-last-child(2) {
 			text-transform: none;
 		}
@@ -108,7 +140,7 @@
 }
 
 .m-featured-navigation {
-	display: flex;
+	display: none;
 	justify-content: flex-start;
 	line-height: normal;
 	padding: 8px;
@@ -175,6 +207,25 @@
 	}
 }
 
+// media queries for menus
+@media screen and (min-width: $more-than-logo-screen) {
+	#secondary-links {
+		margin-top: -22px;
+		position: relative;
+	}
+}
+@media screen and (min-width: $medium-screen) {
+	.m-featured-navigation {
+		display: flex;
+	}
+	.m-main-navigation {
+		margin-bottom: 0;
+		&.toggled ul {
+			display: block;
+			columns: 3;
+		}
+	}
+}
 @media screen and (min-width: $nav-breaks) {
 	#navigation-ext {
 		width: 55%; // maybe can use auto here
@@ -183,10 +234,21 @@
 		line-height: normal;
 		flex-flow: row wrap;
 		justify-content: flex-end;
+		position: relative;
+	}
+	#minnpost-network {
+		display: flex;
 	}
 	#secondary-links {
-		justify-content: flex-end;
-		margin-bottom: 11px;
+		margin-top: -1px;
+	}
+	.m-main-navigation {
+		button {
+			display: none;
+		}
+		ul, &.toggled ul {
+			display: flex;
+		}
 	}
 }
 
