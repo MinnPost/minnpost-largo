@@ -13,8 +13,32 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: header.php:68
+#: comments.php:40
+msgid "Comments are closed."
+msgstr ""
+
+#: header.php:67
 msgid "Primary Menu"
+msgstr ""
+
+#: inc/comment-list.php:43
+msgid "Approve"
+msgstr ""
+
+#: inc/comment-list.php:45
+msgid "Unapprove"
+msgstr ""
+
+#: inc/comment-list.php:49
+msgid "Spam"
+msgstr ""
+
+#: inc/comment-list.php:50
+msgid "Edit"
+msgstr ""
+
+#: inc/comment-list.php:51
+msgid "Trash"
 msgstr ""
 
 #: inc/custom-types.php:16, inc/custom-types.php:19
@@ -73,29 +97,29 @@ msgstr ""
 msgid "Test"
 msgstr ""
 
-#: inc/template-tags.php:116
+#: inc/template-tags.php:141
 msgctxt "post date"
 msgid "%s"
 msgstr ""
 
 #. translators: used between list items, there is a space after the comma
-#: inc/template-tags.php:290, inc/template-tags.php:296
+#: inc/template-tags.php:372, inc/template-tags.php:378
 msgid ", "
 msgstr ""
 
-#: inc/template-tags.php:292
+#: inc/template-tags.php:374
 msgid "Posted in %1$s"
 msgstr ""
 
-#: inc/template-tags.php:298
+#: inc/template-tags.php:380
 msgid "Tagged %1$s"
 msgstr ""
 
 #. translators: %s: post title
-#: inc/template-tags.php:308
+#: inc/template-tags.php:390
 msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
-#: inc/template-tags.php:324, inc/template-tags.php:342
+#: inc/template-tags.php:406, inc/template-tags.php:424, template-parts/content-page.php:24
 msgid "Edit %s"
 msgstr ""
