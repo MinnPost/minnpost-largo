@@ -14,5 +14,8 @@
 		width: 330px;
 		text-align: left;
 	}
+	.o-wrapper {
+		@include clearfix;
+	}
 }
 
