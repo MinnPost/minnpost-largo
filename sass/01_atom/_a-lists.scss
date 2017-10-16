@@ -1,5 +1,5 @@
 ul, ol {
-	margin: 0 0 1.5em 3em;
+	margin: 0 0 $base-line-height-em 3em;
 }
 
 ul {
@@ -13,7 +13,7 @@ ol {
 li > ul,
 li > ol {
 	margin-bottom: 0;
-	margin-left: 1.5em;
+	margin-left: $base-line-height-em;
 }
 
 dt {
@@ -21,7 +21,7 @@ dt {
 }
 
 dd {
-	margin: 0 1.5em 1.5em;
+	margin: 0 $base-line-height-em 1.5em;
 }
 
 .m-entry-content ul, .m-entry-content ol, .m-entry-content dl {
@@ -29,7 +29,7 @@ dd {
 }
 
 .m-entry-content ul, .m-entry-content ol {
-	padding-left: 1.5em;
+	padding-left: $base-line-height-em;
 	margin-left: 0;
 	li {
 		list-style: disc outside;

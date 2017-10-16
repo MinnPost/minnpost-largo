@@ -199,7 +199,7 @@
 		li {
 			margin-right: 20px;
 			font-weight: bold;
-			line-height: 1.5em;
+			line-height: $base-line-height-em;
 			&.active a {
 				color: $color__minnpost-black;
 			}

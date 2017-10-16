@@ -1,6 +1,6 @@
 input[type="submit"], button[type="submit"] {
 	padding: 0.25em;
-	font-size: 1.5em;
+	font-size: $base-line-height-em;
 	font-weight: normal;
 	background: $color__minnpost-red;
 	color: $color__white;
