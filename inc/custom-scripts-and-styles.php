@@ -8,7 +8,7 @@
 if ( ! function_exists( 'minnpost_largo_load_custom_scripts' ) ) :
 	add_action( 'wp_enqueue_scripts', 'minnpost_largo_load_custom_scripts' );
 	function minnpost_largo_load_custom_scripts() {
-		wp_enqueue_script( 'minnpost', '/wp-content/themes/minnpost-largo/assets/js/minnpost.min.js', 'jquery', '1.0', true );
+		wp_enqueue_script( 'minnpost', get_stylesheet_directory_uri() . '/assets/js/minnpost.min.js', 'jquery', '1.0', true );
 	}
 endif;
 
@@ -26,10 +26,12 @@ endif;
 if ( ! function_exists( 'minnpost_largo_remove_scripts_styles' ) && ! function_exists( 'minnpost_largo_remove_styles' ) ) :
 	add_action( 'wp_print_scripts', 'minnpost_largo_remove_scripts', 10 );
 	function minnpost_largo_remove_scripts() {
+		wp_dequeue_script( 'largo-navigation' );
 		wp_dequeue_script( 'popular-widget' );
 	}
 	add_action( 'wp_print_styles', 'minnpost_largo_remove_styles', 10 );
 	function minnpost_largo_remove_styles() {
+		//wp_dequeue_style( 'largo-style' );
 		wp_dequeue_style( 'popular-widget' );
 	}
 endif;
