@@ -9,11 +9,6 @@ body.post .m-layout-primary, body.page .m-layout-primary {
 	flex: 0 0 100%;
 }
 
-.o-site-sidebar {
-    width: 300px;
-    margin-left: auto;
-}
-
 main {
 	position: relative;
 	@include clearfix;
