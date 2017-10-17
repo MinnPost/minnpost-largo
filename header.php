@@ -33,7 +33,12 @@
 				<?php do_action( 'acm_tag', 'TopLeft' ); ?>
 			</div>
 			<div class="a-site-branding">
-				<a class="a-logo" rel="home" href="<?php echo esc_url( home_url( '/' ) ); ?>"><?php bloginfo( 'name' ); ?></a>
+				<a class="a-logo a-logo-svg" rel="home" href="<?php echo esc_url( home_url( '/' ) ); ?>">
+					<picture>
+						<source type="image/svg+xml" srcset="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/minnpost-logo.svg">
+						<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/logo.png" alt="<?php bloginfo( 'name' ); ?>">
+					</picture>
+				</a>
 			</div><!-- .a-site-branding -->
 			<nav id="navigation-ext" class="m-secondary-navigation" role="navigation">
 				<?php
