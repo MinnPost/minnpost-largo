@@ -13,6 +13,13 @@
 		border: 0;
 		width: 112.5px;
 	}
+	input[type="search"] {
+		-webkit-appearance: none;
+		border-radius: 0;
+	}
+	::-webkit-search-decoration {
+		display:none;
+	}
 	input[type="submit"] {
 		border: 0;
 		width: 15px;
