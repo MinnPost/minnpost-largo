@@ -70,7 +70,6 @@
 
 .m-main-navigation {
 	font-size: 123.1%;
-	letter-spacing: 1px;
 	font-family: $font__headings;
 	font-weight: normal;
 	font-style: normal;
@@ -101,6 +100,8 @@
 		justify-content: flex-start;
 		margin: 7px 0 0 0;
 		padding: 0;
+		flex-grow: none;
+		flex-wrap: nowrap;
 	}
 	&.toggled {
 		button {
@@ -128,7 +129,7 @@
 		}
 	}
 	li a {
-		padding: 8px;
+		padding: 6px;
 		color: $color__white;
 		text-decoration: none;
 		display: inline-block;
@@ -214,6 +215,7 @@
 		position: relative;
 	}
 }
+
 @media screen and (min-width: $medium-screen) {
 	.m-featured-navigation {
 		display: flex;
@@ -226,9 +228,10 @@
 		}
 	}
 }
+
 @media screen and (min-width: $nav-breaks) {
 	#navigation-ext {
-		width: 55%; // maybe can use auto here
+		width: auto; // maybe can use auto here
 		text-align: right;
 		height: 71px;
 		line-height: normal;
@@ -238,6 +241,7 @@
 	}
 	#minnpost-network {
 		display: flex;
+		margin: 2px 29px 10px 0
 	}
 	#secondary-links {
 		margin-top: -1px;
@@ -248,6 +252,25 @@
 		}
 		ul, &.toggled ul {
 			display: flex;
+			li a {
+				padding: 8px;
+			}
+		}
+	}
+}
+
+@media screen and (min-width: $nav-breaks) and (max-width: $nav-wrap-screen) {
+	.m-main-navigation {
+		ul, &.toggled ul {
+			flex-grow: 2;
+			flex-wrap: wrap;
+			li:nth-last-child(2) {
+				order: inherit;
+				margin-left: auto;
+			}
+			li a {
+				padding: 8px 4px;
+			}
 		}
 	}
 }
@@ -255,5 +278,16 @@
 @media screen and (min-width: $max-width-page) {
 	#navigation-ext {
 		width: auto;
+	}
+	#minnpost-network {
+		margin: 2px 30px 8px 0;
+	}
+	.m-main-navigation {
+		letter-spacing: 1px;
+		ul {
+			li a {
+				padding: 8px;
+			}
+		}
 	}
 }
