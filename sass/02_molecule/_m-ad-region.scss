@@ -4,7 +4,7 @@
 	}
 	&.m-ad-region-topleft {
 		position: absolute;
-		top: 0;
+		top: 10px;
 		left: 0;
 		max-width: 500px;
 		height: 22px;
@@ -15,10 +15,29 @@
 	.o-wrapper {
 		@include clearfix;
 		margin: 0;
+		width: inherit;
+		max-width: none;
 	}
 }
 
 // media queries for ad regions
+
+@media screen and (min-width: $small-screen) {
+	.m-ad-region {
+		&.m-ad-region-topleft {
+			top: 6px;
+		}
+	}
+}
+
+@media screen and (min-width: $medim-margins-too-small) {
+	.m-ad-region {
+		&.m-ad-region-topleft {
+			top: -4px;
+		}
+	}
+}
+
 @media screen and (min-width: 728px) {
 	.m-ad-region {
 		&.m-ad-region-leaderboard {
@@ -28,11 +47,18 @@
 	}
 }
 
+@media screen and (min-width: $nav-breaks) {
+	.m-ad-region {
+		&.m-ad-region-topleft {
+			top: 0;
+		}
+	}
+}
+
 @media screen and (min-width: $max-width-page) {
 	.m-ad-region {
 		.o-wrapper {
-			margin-left: auto;
-			margin-right: auto;
+			@include outer-container($max-width-page);
 		}
 	}
 }

@@ -28,7 +28,7 @@
 }
 
 .ad-topleft {
-	display: none;
+	//display: none;
 	height: 22px;
 	text-align: left;
 	&.appnexus-ad-placeholder {
@@ -105,9 +105,10 @@ main .ad-middle {
 }
 
 // media queries for ad regions
+
 @media screen and (min-width: $small-screen) {
 	.ad-topleft {
-		display: block;
+		//display: block;
 	}
 }
 @media screen and (min-width: 728px) {

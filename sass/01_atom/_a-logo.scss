@@ -1,8 +1,10 @@
 .a-site-branding {
 	font-size: 300%;
-	//padding-top: 26px; // this is causing the big gap there
 	margin-bottom: -6px; // maybe
-	max-width: 380px;
+	max-width: 380px; // this doesn't seem to be accurate
+	max-width: 330px;
+	margin-top: -4px;
+	padding-top: 10px;
 }
 a {
 	display: block;
@@ -10,24 +12,41 @@ a {
 .a-logo-svg {
 	width: 102%;
 	height: 46px;
-	margin-top: 25px;
 	display: block;
+	padding: 25px 0 52px 0;
 }
 
 // media queries for logo
+
+@media screen and (min-width: $more-than-logo-screen) {
+	.a-site-branding {
+		padding-top: 6px;
+	}
+}
+
 @media screen and (min-width: $small-screen) {
 	.a-site-branding {
 		max-width: 100%;
 		width: 330px;
-	}
-	.a-logo-svg {
+		margin-top: 0
 	}
 }
+
+@media screen and (min-width: $medim-margins-too-small) {
+	.a-site-branding {
+		padding-top: 0;
+	}
+	.a-logo-svg {
+		padding: 21px 0 52px 0;
+	}
+}
+
 @media screen and (min-width: $nav-breaks) {
 	.a-site-branding {
-		width: 330px;
 		float: left;
 	}
 	.a-logo-svg {
+		padding: 26px 0 0 0;
 	}
 }
+

@@ -106,7 +106,9 @@ $base-line-height-em: 1.5em;
 
 
 // site structure
-
+$max-width-medium: 680px;
+$medim-margins-too-small: 700px;
+$max-width-medium-plus-margins: 720px;
 $max-width-page: 975px;
 
 $grid-gap: 10px;
@@ -129,3 +131,5 @@ $size__site-sidebar: 25%;
 $min-width-full-nav: 37.5em;
 
 
+// spacing
+$standard-page-margin: 1.538461538461538em; // 20px

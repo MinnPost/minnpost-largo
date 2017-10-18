@@ -1,7 +1,7 @@
 .o-wrapper {
 	max-width: 100%;
-	margin-left: 1.538461538461538em; // 20px
-	margin-right: 1.538461538461538em; // 20px
+	margin-left: $standard-page-margin / 2;
+	margin-right: $standard-page-margin / 2;
 	position: relative;
 	&.o-wrapper-content {
 		display: flex;
@@ -13,7 +13,16 @@
 body.post .o-wrapper-content, body.page .o-wrapper-content {
 	flex: 0 0 100%;
 }
+
 // media queries for wrapper
+@media screen and (min-width: $more-than-logo-screen) {
+	.o-wrapper {
+		margin-left: $standard-page-margin;
+		margin-right: $standard-page-margin;
+	}
+}
+
+
 @media screen and (min-width: $medium-screen) and (max-width: $nav-breaks) {
 	.o-wrapper {
 		max-width: $max-width-medium;
@@ -22,7 +31,16 @@ body.post .o-wrapper-content, body.page .o-wrapper-content {
 
 @media screen and (min-width: $max-width-medium-plus-margins) {
 	.o-wrapper {
+		margin-left: auto;
+		margin-right: auto;
+	}
+}
+
+@media screen and (min-width: $nav-breaks) {
+	.o-wrapper {
 		max-width: inherit;
+		margin-left: $standard-page-margin;
+		margin-right: $standard-page-margin;
 	}
 }
 
