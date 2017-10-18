@@ -1,7 +1,16 @@
-.o-content-sidebar {
-	margin-top: 0.5em;
+
+
+
+// media queries for sidebars
+@media screen and (min-width: $more-than-logo-screen) {
+	.o-content-sidebar {
+		margin-top: 0.5em; // this might be universally good but i am not sure yet
+	}
 }
-.o-site-sidebar {
-    width: 300px;
-    margin-left: auto;
+
+@media screen and (min-width: $max-width-page) {
+	.o-site-sidebar {
+	    width: 300px;
+	    margin-left: auto;
+	}
 }

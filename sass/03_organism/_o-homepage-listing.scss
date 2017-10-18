@@ -1,5 +1,29 @@
 .o-homepage-listing {
 	main {
+		//width: 65%;
+	}
+	.o-content-sidebar {
+		//margin-left: 35px;
+		//width: 35%;
+	}
+}
+
+// media queries for homepage items
+
+@media screen and (min-width: $more-than-logo-screen) {
+	.o-homepage-listing {
+		main {
+			width: 65%;
+		}
+		.o-content-sidebar {
+			margin-left: 35px;
+			width: 35%;
+		}
+	}
+}
+
+@media screen and (min-width: $max-width-page) {
+	main {
 		width: 400px;
 	}
 	.o-content-sidebar {

@@ -1,7 +1,3 @@
-.m-layout-primary {
-	max-width: 640px;
-	display: flex;
-}
 .o-wrapper-content-full .m-layout-primary {
 	@include outer-container($max-width-page);
 }
@@ -15,4 +11,18 @@ main {
 }
 body.post main, body.page main {
 	flex: 0 0 100%;
+}
+
+// media queries for layouts
+
+@media screen and (min-width: $more-than-logo-screen) {
+	.m-layout-primary {
+		display: flex;
+	}
+}
+
+@media screen and (min-width: $max-width-page) {
+	.m-layout-primary {
+		max-width: 640px;
+	}
 }
