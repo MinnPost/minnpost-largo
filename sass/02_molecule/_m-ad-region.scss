@@ -1,7 +1,5 @@
 .m-ad-region {
 	&.m-ad-region-leaderboard {
-		background: $color__gray-lightest;
-		padding: 10px 0;
 		text-align: center;
 	}
 	&.m-ad-region-topleft {
@@ -16,6 +14,25 @@
 	}
 	.o-wrapper {
 		@include clearfix;
+		margin: 0;
 	}
 }
 
+// media queries for ad regions
+@media screen and (min-width: 728px) {
+	.m-ad-region {
+		&.m-ad-region-leaderboard {
+			background: $color__gray-lightest;
+			padding: 10px 0;
+		}
+	}
+}
+
+@media screen and (min-width: $max-width-page) {
+	.m-ad-region {
+		.o-wrapper {
+			margin-left: auto;
+			margin-right: auto;
+		}
+	}
+}
