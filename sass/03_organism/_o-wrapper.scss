@@ -1,7 +1,7 @@
 .o-wrapper {
 	max-width: 100%;
-	margin-left: 1.25em;
-	margin-right: 1.25em;
+	margin-left: 1.538461538461538em; // 20px
+	margin-right: 1.538461538461538em; // 20px
 	position: relative;
 	&.o-wrapper-content {
 		display: flex;
@@ -13,10 +13,18 @@ body.post .o-wrapper-content, body.page .o-wrapper-content {
 	flex: 0 0 100%;
 }
 // media queries for wrapper
-@media screen and (min-width: $nav-breaks) {
-	margin-left: auto;
-	margin-right: auto;
+@media screen and (min-width: $medium-screen) and (max-width: $nav-breaks) {
+	.o-wrapper {
+		max-width: $max-width-medium;
+	}
 }
+
+@media screen and (min-width: $max-width-medium-plus-margins) {
+	.o-wrapper {
+		max-width: inherit;
+	}
+}
+
 @media screen and (min-width: $max-width-page) {
 	.o-wrapper {
 		@include outer-container($max-width-page);
