@@ -5,6 +5,7 @@
 	position: relative;
 	&.o-wrapper-content {
 		display: flex;
+		flex-direction: column;
 		margin-bottom: 40px;
 	}
 }
@@ -28,5 +29,8 @@ body.post .o-wrapper-content, body.page .o-wrapper-content {
 @media screen and (min-width: $max-width-page) {
 	.o-wrapper {
 		@include outer-container($max-width-page);
+	}
+	.o-wrapper.o-wrapper-content {
+		flex-direction: row;
 	}
 }
