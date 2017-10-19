@@ -5,16 +5,17 @@
 	max-width: 330px;
 	margin-top: -4px;
 	padding-top: 10px;
+	a {
+		display: block;
+	}
+	.a-logo-svg {
+		width: 102%;
+		height: 46px;
+		display: block;
+		padding: 25px 0 52px 0;
+	}
 }
-a {
-	display: block;
-}
-.a-logo-svg {
-	width: 102%;
-	height: 46px;
-	display: block;
-	padding: 25px 0 52px 0;
-}
+// when the left ad is invisible we need to change all this. ugh.
 
 // media queries for logo
 
