@@ -1,6 +1,7 @@
 .m-ad-region {
 	&.m-ad-region-leaderboard {
 		text-align: center;
+		background: $color__gray-lightest;
 	}
 	&.m-ad-region-topleft {
 		position: absolute;
@@ -26,6 +27,7 @@
 	.m-ad-region {
 		&.m-ad-region-topleft {
 			top: 6px;
+			top: -3px;
 		}
 	}
 }
@@ -41,7 +43,6 @@
 @media screen and (min-width: 728px) {
 	.m-ad-region {
 		&.m-ad-region-leaderboard {
-			background: $color__gray-lightest;
 			padding: 10px 0;
 		}
 	}
