@@ -69,7 +69,7 @@
 		</div>
 		<div class="o-wrapper o-wrapper-site-navigation">
 			<nav id="navigation-primary" class="m-main-navigation" role="navigation">
-				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Primary Menu', 'minnpost-largo' ); ?></button>
+				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Sections', 'minnpost-largo' ); ?></button>
 				<?php
 				wp_nav_menu(
 					array(

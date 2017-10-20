@@ -1,53 +1,48 @@
 .a-site-branding {
-	font-size: 300%;
-	margin-bottom: -6px; // maybe
-	max-width: 380px; // this doesn't seem to be accurate
 	max-width: 330px;
-	margin-top: -4px;
-	padding-top: 10px;
-	a {
-		display: block;
-	}
+	position: relative;
+	height: $header-height-smaller-screen;
 	.a-logo-svg {
 		width: 102%;
-		height: 46px;
+		height: 43px;
 		display: block;
-		padding: 25px 0 52px 0;
+		position: absolute;
+		bottom: 0;
 	}
 }
 // when the left ad is invisible we need to change all this. ugh.
 
 // media queries for logo
 
-@media screen and (min-width: $more-than-logo-screen) {
-	.a-site-branding {
-		padding-top: 6px;
-	}
-}
-
 @media screen and (min-width: $small-screen) {
 	.a-site-branding {
-		max-width: 100%;
 		width: 330px;
-		margin-top: 0
+		height: $header-height-small-screen;
+		.a-logo-svg {
+			height: 45px;
+		}
 	}
 }
 
-@media screen and (min-width: $medim-margins-too-small) {
+@media screen and (min-width: $medium-screen) {
 	.a-site-branding {
-		padding-top: 0;
+		height: $header-height-before-nav-breaks;
 	}
-	.a-logo-svg {
-		padding: 21px 0 52px 0;
+}
+
+@media screen and (min-width: $max-width-medium-plus-margins) {
+	.a-site-branding {
+		height: $header-height-before-nav-breaks;
 	}
 }
 
 @media screen and (min-width: $nav-breaks) {
 	.a-site-branding {
 		float: left;
-	}
-	.a-logo-svg {
-		padding: 26px 0 0 0;
+		height: $header-height-after-nav-breaks;
+		.a-logo-svg {
+			height: 46px;
+		}
 	}
 }
 

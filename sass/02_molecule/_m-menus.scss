@@ -78,14 +78,23 @@
 	-moz-font-feature-settings: "calt" 0,"dlig" 0,"ss01" 0,"liga" 0;
 	background: $color__minnpost-black;
 	padding-top: 5px;
+	min-height: 44px;
 	margin-bottom: 30px; // this is for the secondary nav to be visible
 	button {
 		display: inline-block;
 		-webkit-appearance: none;
-		margin: 9px 0 14px 0;
 		border: 0;
+		margin: 9px 0 0 6px;
+		text-indent: 6px;
+		padding: 0;
+		line-height: normal;
+		cursor: pointer;
+		font: inherit;
 		color: $color__white;
 		background: transparent;
+		text-transform: uppercase;
+		overflow: visible;
+		-moz-user-select: text;
 		&:hover, &:focus {
 			background: $color__minnpost-white;
 			color: $color__minnpost-black;
@@ -209,9 +218,9 @@
 }
 
 // media queries for menus
-@media screen and (min-width: $more-than-logo-screen) {
+@media screen and (min-width: 560px) {
 	#secondary-links {
-		margin-top: -22px;
+		margin-top: -21px;
 		position: relative;
 	}
 }
@@ -233,7 +242,7 @@
 	#navigation-ext {
 		width: auto; // maybe can use auto here
 		text-align: right;
-		height: 71px;
+		height: $header-height-after-nav-breaks;
 		line-height: normal;
 		flex-flow: row wrap;
 		justify-content: flex-end;
