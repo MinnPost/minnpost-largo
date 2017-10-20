@@ -129,12 +129,14 @@ $nav-wrap-screen: 900px;
 $medium-screen-up: new-breakpoint(min-width $medium-screen 4);
 $large-screen-up: new-breakpoint(min-width $large-screen 8);
 
-
-$size__site-main: 100%;
-$size__site-sidebar: 25%;
-
-$min-width-full-nav: 37.5em;
+// site region sizes
+$size__main-small-screen: 65%;
+$size__main-large-screen: 400px;
+$size__site-sidebar: 300px;
+$size__content-sidebar-small-screen: 35%;
+$size__content-sidebar-large-screen: 205px;
 
 
 // spacing
 $standard-page-margin: 1.538461538461538em; // 20px
+$content-sidebar-margin: 35px;

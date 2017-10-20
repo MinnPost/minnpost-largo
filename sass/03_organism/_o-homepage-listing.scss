@@ -13,21 +13,20 @@
 @media screen and (min-width: $more-than-logo-screen) {
 	.o-homepage-listing {
 		main {
-			width: 65%;
+			width: $size__main-small-screen;
 		}
 		.o-content-sidebar {
-			margin-left: 35px;
-			width: 35%;
+			margin-left: $content-sidebar-margin;
+			width: $size__content-sidebar-small-screen;
 		}
 	}
 }
 
 @media screen and (min-width: $max-width-page) {
 	main {
-		width: 400px;
+		width: $size__main-large-screen;
 	}
 	.o-content-sidebar {
-		margin-left: 35px;
-		width: 205px;
+		width: $size__content-sidebar-large-screen;
 	}
 }

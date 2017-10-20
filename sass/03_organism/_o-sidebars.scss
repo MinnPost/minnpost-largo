@@ -10,7 +10,7 @@
 
 @media screen and (min-width: $max-width-page) {
 	.o-site-sidebar {
-	    width: 300px;
+	    width: $size__site-sidebar;
 	    margin-left: auto;
 	}
 }
