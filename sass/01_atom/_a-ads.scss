@@ -27,17 +27,6 @@
 	width: 100%;
 }
 
-.ad-topleft {
-	//display: none;
-	height: 22px;
-	text-align: left;
-	&.appnexus-ad-placeholder {
-		text-align: left;
-		line-height: 1.3;
-		padding: 0;
-	}
-}
-
 .ad-topright {
 	display: none;
 	height: auto;
@@ -104,13 +93,8 @@ main .ad-middle {
 	}
 }
 
-// media queries for ad regions
+// media queries for ads
 
-@media screen and (min-width: $small-screen) {
-	.ad-topleft {
-		//display: block;
-	}
-}
 @media screen and (min-width: 728px) {
 	.appnexus-ad {
 		img, div, p, iframe {

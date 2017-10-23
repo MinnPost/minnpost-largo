@@ -29,9 +29,6 @@
 
 	<header id="masthead" class="o-header" role="banner">
 		<div class="o-wrapper o-wrapper-site-header">
-			<div class="m-ad-region m-ad-region-topleft">
-				<?php do_action( 'acm_tag', 'TopLeft' ); ?>
-			</div>
 			<div class="a-site-branding">
 				<a class="a-logo a-logo-svg" rel="home" href="<?php echo esc_url( home_url( '/' ) ); ?>">
 					<picture>
