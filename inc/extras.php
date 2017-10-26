@@ -272,3 +272,13 @@ if ( ! function_exists( 'disable_autoformatting_old_content' ) ) :
 		remove_filter( 'the_content', 'wpautop' );
 	}
 endif;
+
+if ( ! function_exists( 'remove_tagline' ) ) :
+	add_filter( 'document_title_parts', 'remove_tagline' );
+	function remove_tagline( $title ) {
+		if ( isset( $title['tagline'] ) ) {
+			unset( $title['tagline'] );
+		}
+		return $title;
+	}
+endif;
