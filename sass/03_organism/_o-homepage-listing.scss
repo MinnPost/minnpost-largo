@@ -23,10 +23,12 @@
 }
 
 @media screen and (min-width: $max-width-page) {
-	main {
-		width: $size__main-large-screen;
-	}
-	.o-content-sidebar {
-		width: $size__content-sidebar-large-screen;
+	.o-homepage-listing {
+		main {
+			width: $size__main-large-screen;
+		}
+		.o-content-sidebar {
+			width: $size__content-sidebar-large-screen;
+		}
 	}
 }
