@@ -1,10 +1,7 @@
 .o-content-sidebar section {
 	margin-bottom: 15px;
 	border: 1px solid $color__gray-lightest;
-	padding: 15px;
-	&.m-widget-custom-html {
-		padding: 20px;
-	}
+	padding: 10px;
 	.a-widget-title, .a-sidebar-box-title {
 		font-size: 123.1%;
 		text-transform: uppercase;
@@ -35,7 +32,7 @@
 		}
 	}
 	.m-post-glean {
-		padding: 5px 15px 15px 15px;
+		padding: 10px;
 		border: 1px solid $color__gray-lightest;
 		border-top: 0;
 		.m-entry-excerpt {
@@ -49,6 +46,20 @@
 			a:after {
 				content: ' ▸'
 			}
+		}
+	}
+}
+
+// media queries for sidebar middle boxes
+
+@media screen and (min-width: $max-width-page) {
+	.o-content-sidebar section {
+		padding: 15px;
+		&.m-widget-custom-html {
+			padding: 20px;
+		}
+		.m-post-glean {
+			padding: 5px 15px 15px 15px;
 		}
 	}
 }

@@ -1,23 +1,55 @@
-.o-homepage-listing {
-	main {
-		//width: 65%;
-	}
-	.o-content-sidebar {
-		//margin-left: 35px;
-		//width: 35%;
+// smallest screens just display as linear
+
+// media queries for homepage listing
+
+@media screen and (min-width: $more-than-logo-screen) {
+	.o-homepage-listing {
+		main {
+			width: $size__main-smaller-screen;
+		}
+		.o-content-sidebar {
+			padding-left: $standard-page-margin;
+			margin-left: 0;
+			width: $size__main-smaller-screen;
+		}
 	}
 }
 
-// media queries for homepage items
-
-@media screen and (min-width: $more-than-logo-screen) {
+@media screen and (min-width: $medium-screen) {
 	.o-homepage-listing {
 		main {
 			width: $size__main-small-screen;
 		}
 		.o-content-sidebar {
-			margin-left: $content-sidebar-padding;
+			padding-left: $standard-page-margin;
+			margin-left: 0;
+			width: $size__content-sidebar-medium-screen;
+		}
+	}
+}
+
+@media screen and (min-width: $medim-margins-too-small) {
+	.o-homepage-listing {
+		main {
+			width: $size__main-large-screen;
+		}
+		.o-content-sidebar {
+			margin-left: 0;
+			padding-left: $content-sidebar-padding;
 			width: $size__content-sidebar-small-screen;
+		}
+	}
+}
+
+@media screen and (min-width: $nav-breaks) {
+	.o-homepage-listing {
+		main {
+			width: $size__main-small-screen;
+		}
+		.o-content-sidebar {
+			margin-left: 0;
+			padding-left: $content-sidebar-padding;
+			width: $size__content-sidebar-medium-screen;
 		}
 	}
 }
@@ -28,6 +60,8 @@
 			width: $size__main-large-screen;
 		}
 		.o-content-sidebar {
+			padding-left: 0;
+			margin-left: $content-sidebar-padding;
 			width: $size__content-sidebar-large-screen;
 		}
 	}
