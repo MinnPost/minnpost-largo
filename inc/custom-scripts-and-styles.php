@@ -8,7 +8,8 @@
 if ( ! function_exists( 'minnpost_largo_load_custom_scripts' ) ) :
 	add_action( 'wp_enqueue_scripts', 'minnpost_largo_load_custom_scripts' );
 	function minnpost_largo_load_custom_scripts() {
-		wp_enqueue_script( 'minnpost', get_stylesheet_directory_uri() . '/assets/js/minnpost.min.js', 'jquery', '1.0', true );
+		wp_enqueue_script( 'modernizr', get_stylesheet_directory_uri() . '/assets/js/modernizr-custom.js', array(), '1.0', true );
+		wp_enqueue_script( 'minnpost', get_stylesheet_directory_uri() . '/assets/js/minnpost.min.js', array( 'jquery', 'modernizr' ), '1.0', true );
 	}
 endif;
 
@@ -23,7 +24,7 @@ if ( ! function_exists( 'load_custom_wp_admin_style' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'minnpost_largo_remove_scripts_styles' ) && ! function_exists( 'minnpost_largo_remove_styles' ) ) :
+if ( ! function_exists( 'minnpost_largo_remove_scripts' ) && ! function_exists( 'minnpost_largo_remove_styles' ) ) :
 	add_action( 'wp_print_scripts', 'minnpost_largo_remove_scripts', 10 );
 	function minnpost_largo_remove_scripts() {
 		wp_dequeue_script( 'largo-navigation' );
