@@ -282,3 +282,14 @@ if ( ! function_exists( 'remove_tagline' ) ) :
 		return $title;
 	}
 endif;
+
+if ( ! function_exists( 'minnpost_document_title_separator' ) ) :
+	add_filter( 'document_title_separator', 'minnpost_document_title_separator' );
+	function minnpost_document_title_separator( $sep ) {
+
+	    $sep = '|';
+
+	    return $sep;
+
+	}
+endif;
