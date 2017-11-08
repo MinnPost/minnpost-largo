@@ -496,7 +496,13 @@ endif;
 
 if ( ! function_exists( 'minnpost_category_sponsorship' ) ) :
 	function minnpost_category_sponsorship( $post_id = '', $category_id = '' ) {
+		$sponsorship = minnpost_get_category_sponsorship( $post_id, $category_id );
+		echo $sponsorship;
+	}
+endif;
 
+if ( ! function_exists( 'minnpost_get_category_sponsorship' ) ) :
+	function minnpost_get_category_sponsorship( $post_id = '', $category_id = '' ) {
 		if ( '' === $category_id ) {
 			if ( '' === $post_id ) {
 				$post_id = get_the_ID();
@@ -511,7 +517,9 @@ if ( ! function_exists( 'minnpost_category_sponsorship' ) ) :
 		}
 		$sponsorship = get_term_meta( $category_id, '_mp_category_sponsorship', true );
 		if ( ! empty( $sponsorship ) ) {
-			echo '<div class="a-sponsorship">' . $sponsorship . '</div>';
+			return '<div class="a-sponsorship">' . $sponsorship . '</div>';
+		} else {
+			return '';
 		}
 	}
 endif;

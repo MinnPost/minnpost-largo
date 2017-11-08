@@ -20,9 +20,12 @@ get_header(); ?>
 				$category_id = $wp_query->get_queried_object_id();
 				$figure = minnpost_get_term_figure( $category_id );
 				if ( '' === $figure ) {
-					echo '<div class="m-category-info">';
-					minnpost_category_sponsorship( '', $category_id );
-					echo '</div>';
+					$sponsorship = minnpost_get_category_sponsorship( $category_id );
+					if ( '' !== $sponsorship ) {
+						echo '<div class="m-category-info">';
+							echo $sponsorship;
+						echo '</div>';
+					}
 				}
 			}
 			?>
@@ -39,11 +42,16 @@ get_header(); ?>
 					<?php
 					// category meta
 					if ( '' !== $figure ) {
-						minnpost_category_sponsorship( '', $category_id );
+						$sponsorship = minnpost_get_category_sponsorship( $category_id );
+						if ( '' !== $sponsorship ) {
+							echo $sponsorship;
+						}
 						echo $figure;
 					} else {
 						$text = minnpost_get_term_text( $category_id );
-						echo '<div class="a-description">' . $text . '</div>';
+						if ( '' !== $text ) {
+							echo '<div class="a-description">' . $text . '</div>';
+						}
 					}
 					?>
 					<ul class="a-archive-links a-category-links">

@@ -266,7 +266,7 @@ if ( ! function_exists( 'disable_autoformatting_old_content' ) ) :
 		if ( $migrated_date > $post_date ) {
 			$remove_filter = true;
 		}
-		if ( false === $remove_filter ) {
+		if ( ! isset( $remove_filter ) || false === $remove_filter ) {
 			return;
 		}
 		remove_filter( 'the_content', 'wpautop' );
