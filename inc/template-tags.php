@@ -489,7 +489,12 @@ if ( ! function_exists( 'minnpost_get_category_name' ) ) :
 			$categories = get_the_category();
 			$category = $categories[0];
 		}
-		$category_name = $category->name;
+		if ( isset( $category->name ) ) {
+			$category_name = $category->name;
+		} else {
+			$category_name = ''; // there is no category
+		}
+
 		return $category_name;
 	}
 endif;
