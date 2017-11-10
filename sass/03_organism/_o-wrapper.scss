@@ -42,6 +42,9 @@ body.post .o-wrapper-content, body.page .o-wrapper-content {
 		margin-left: $standard-page-margin;
 		margin-right: $standard-page-margin;
 	}
+	.archive .o-wrapper.o-wrapper-content {
+		flex-direction: row;
+	}
 }
 
 @media screen and (min-width: $max-width-page) {

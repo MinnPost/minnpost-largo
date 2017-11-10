@@ -23,6 +23,6 @@ body.post main, body.page main {
 
 @media screen and (min-width: $max-width-page) {
 	.m-layout-primary {
-		max-width: 640px;
+		max-width: $medium-screen;
 	}
 }

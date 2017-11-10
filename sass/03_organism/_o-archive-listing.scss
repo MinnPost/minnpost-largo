@@ -1,4 +1,7 @@
 .o-archive-listing {
+	&.m-layout-primary {
+		max-width: $size__archive-medium-screen;
+	}
 	.m-archive-excerpt-with-sidebar {
 		width: 400px;
 		float: left;
@@ -6,5 +9,22 @@
 	.o-content-sidebar {
 		float: right;
 		width: 205px;
+	}
+}
+
+// media queries for archive listing
+
+@media screen and (min-width: $nav-breaks) {
+	.archive .o-site-sidebar {
+	    width: $size__site-sidebar;
+	    margin-left: auto;
+	}
+}
+
+@media screen and (min-width: $max-width-page) {
+	.o-archive-listing {
+		&.m-layout-primary {
+			max-width: $medium-screen;
+		}
 	}
 }
