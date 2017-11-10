@@ -463,3 +463,25 @@ if ( ! function_exists( 'cmb2_author_fields' ) ) :
 	add_image_size( 'author-thumb', 75, 9999 ); // scale so the width is 75px
 
 endif;
+
+// add fields to users
+if ( ! function_exists( 'cmb2_user_fields' ) ) :
+	add_action( 'cmb2_init', 'cmb2_user_fields' );
+	function cmb2_user_fields() {
+
+		$object_type = 'user';
+		$user_setup = new_cmb2_box( array(
+			'id'            => $object_type . '_image_settings',
+			'title'         => 'User Info',
+			'object_types'  => array( $object_type ),
+			'context'       => 'normal',
+			'priority'      => 'low',
+		) );
+		$user_setup->add_field( array(
+			'name'       => 'Zip Code',
+			'id'         => '_zip_code',
+			'type'       => 'text',
+			'desc'       => '',
+		) );
+	}
+endif;
