@@ -1,14 +1,14 @@
 .o-archive-listing {
 	&.m-layout-primary {
-		max-width: $size__archive-medium-screen;
+		//max-width: $size__archive-medium-screen;
 	}
 	.m-archive-excerpt-with-sidebar {
-		width: 400px;
+		width: $size__main-large-screen;
 		float: left;
 	}
 	.o-content-sidebar {
 		float: right;
-		width: 205px;
+		width: $size__content-sidebar-large-screen;
 	}
 }
 
@@ -17,7 +17,23 @@
 @media screen and (min-width: $nav-breaks) {
 	.archive .o-site-sidebar {
 	    width: $size__site-sidebar;
+	    min-width: $size__site-sidebar;
 	    margin-left: auto;
+	}
+	.o-archive-listing {
+		&.m-layout-primary {
+			max-width: none;
+			margin-right: 15px;
+		}
+		.m-archive-excerpt-with-sidebar {
+			width: $size__main-small-screen;
+		}
+		.o-content-sidebar {
+			float: right;
+			width: $size__content-sidebar-medium-screen;
+			margin-left: 0;
+			padding-left: $archive-content-sidebar-padding;
+		}
 	}
 }
 

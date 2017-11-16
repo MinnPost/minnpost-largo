@@ -35,7 +35,7 @@
 		}
 		.o-content-sidebar {
 			margin-left: 0;
-			padding-left: $content-sidebar-padding;
+			padding-left: $home-content-sidebar-padding;
 			width: $size__content-sidebar-small-screen;
 		}
 	}
@@ -48,7 +48,7 @@
 		}
 		.o-content-sidebar {
 			margin-left: 0;
-			padding-left: $content-sidebar-padding;
+			padding-left: $home-content-sidebar-padding;
 			width: $size__content-sidebar-medium-screen;
 		}
 	}
@@ -61,7 +61,7 @@
 		}
 		.o-content-sidebar {
 			padding-left: 0;
-			margin-left: $content-sidebar-padding;
+			margin-left: $home-content-sidebar-padding;
 			width: $size__content-sidebar-large-screen;
 		}
 	}
