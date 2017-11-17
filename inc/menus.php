@@ -37,8 +37,8 @@ if ( ! function_exists( 'minnpost_wp_nav_menu_objects_sub_menu' ) ) :
 			// find the current menu item
 			foreach ( $sorted_menu_items as $menu_item ) {
 
-				$found_top_parent_ID = false;
-				if ( ($menu_item->menu_item_parent == 0 && $menu_item->current_item_ancestor == 1) || ($menu_item->menu_item_parent == 0 && $menu_item->current == 1) ) {
+				$found_top_parent_id = false;
+				if ( ( 0 === $menu_item->menu_item_parent && 1 === $menu_item->current_item_ancestor ) || ( 0 === $menu_item->menu_item_parent && 1 === $menu_item->current ) ) {
 					$root_id = $menu_item->ID;
 				}
 
@@ -70,7 +70,7 @@ if ( ! function_exists( 'minnpost_wp_nav_menu_objects_sub_menu' ) ) :
 				// init menu_item_parents
 				if ( (int) $root_id === (int) $item->ID ) {
 					$menu_item_parents[] = $item->ID;
-				} else if ( (int) $root_id === (int) $item->menu_item_parent) {
+				} elseif ( (int) $root_id === (int) $item->menu_item_parent ) {
 					$menu_item_parents[] = $item->menu_item_parent;
 					break;
 				}
