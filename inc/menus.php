@@ -33,9 +33,6 @@ if ( ! function_exists( 'minnpost_wp_nav_menu_objects_sub_menu' ) ) :
 	function minnpost_wp_nav_menu_objects_sub_menu( $sorted_menu_items, $args ) {
 
 		if ( isset( $args->sub_menu ) ) {
-			if ( is_home() ) {
-				$root_id = 0;
-			}
 
 			// find the current menu item
 			foreach ( $sorted_menu_items as $menu_item ) {
@@ -50,6 +47,16 @@ if ( ! function_exists( 'minnpost_wp_nav_menu_objects_sub_menu' ) ) :
 					$root_id = ( $menu_item->menu_item_parent ) ? $menu_item->menu_item_parent : $menu_item->ID;
 					break;
 				}
+			}
+
+			if ( is_home() ) {
+				$root_id = 0;
+				$menu = wp_get_nav_menu_items( $args->menu->name, array(
+					'posts_per_page' => -1,
+					'meta_key' => '_menu_item_menu_item_parent',
+					'meta_value' => $root_id,
+				));
+				$root_id = $menu[0]->ID;
 			}
 
 			// fix places that are not part of any category
