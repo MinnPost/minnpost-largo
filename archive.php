@@ -111,14 +111,13 @@ get_header(); ?>
 				$featured_columns = get_term_meta( $category_id, '_mp_category_featured_columns', true );
 				// getting rid of the icymi box
 				// then we do need to allow for widgets to be here but that's it
-
-				if ( '' !== $featured_columns || is_active_sidebar( 'sidebar-2' ) ) :
-					$class = ' m-archive-excerpt-with-sidebar';
-				else :
-					$class = '';
-				endif;
 				?>
-				<section class="m-archive m-archive-excerpt<?php echo $class; ?>">
+				
+				<?php if ( '' !== $featured_columns || is_active_sidebar( 'sidebar-2' ) ) : ?>
+				<div class="m-archive-has-sidebar">
+				<?php endif; ?>
+
+				<section class="m-archive m-archive-excerpt">
 					<?php
 					while ( have_posts() ) : the_post();
 						if ( $featured_num <= $wp_the_query->current_post ) :
@@ -147,6 +146,11 @@ get_header(); ?>
 						<?php dynamic_sidebar( 'sidebar-2' ); ?>
 					</aside>
 				<?php endif; ?>
+
+				<?php if ( '' !== $featured_columns || is_active_sidebar( 'sidebar-2' ) ) : ?>
+				</div>
+				<?php endif; ?>
+
 			<?php else : ?>
 				<section class="m-archive m-archive-excerpt">
 					<?php
