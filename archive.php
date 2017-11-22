@@ -86,16 +86,8 @@ get_header(); ?>
 			<?php endif; ?>
 
 			<?php
-			if ( is_category() ) :
-				$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-				if ( '' === get_term_meta( $category_id, '_mp_category_body', true ) || '' === $figure ) :
-					$featured_num = 3;
-				else :
-					$featured_num = 1;
-				endif;
-			elseif ( is_author() ) :
-				$featured_num = 3;
-			endif;
+			$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+			$featured_num = get_query_var( 'featured_num' );
 			?>
 
 			<?php if ( is_category() && 1 === $paged ) : ?>
@@ -109,8 +101,7 @@ get_header(); ?>
 					?>
 				</section>
 				<?php
-				$featured_columns = get_term_meta( $category_id, '_mp_category_featured_columns', true );
-				set_query_var( 'featured_columns', $featured_columns );
+				$featured_columns = get_query_var( 'featured_columns' );
 				// getting rid of the icymi box
 				// then we do need to allow for widgets to be here but that's it
 				?>

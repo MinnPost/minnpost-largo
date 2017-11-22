@@ -59,6 +59,11 @@ require get_stylesheet_directory() . '/inc/extras.php';
 require get_stylesheet_directory() . '/inc/sidebars.php';
 
 /**
+ * Custom Queries
+ */
+require get_stylesheet_directory() . '/inc/custom-queries.php';
+
+/**
  * Comment list
  */
 require get_stylesheet_directory() . '/inc/comment-list.php';
