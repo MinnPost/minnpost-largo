@@ -55,7 +55,7 @@
 				overflow: hidden;
 				background: $color__minnpost-red url('assets/img/support.png') no-repeat 14px 10px;
 				margin: 0 0 1px 0;
-				padding: 10px 0 8px 0;
+				padding: $standard-page-margin / 2 0 8px 0;
 			}
 			ul, li {
 				margin: 0;
@@ -77,19 +77,22 @@
 }
 
 main .ad-middle {
-	margin: 20px 0;
+	margin: $standard-page-margin 0;
 	width: 300px;
 	height: 250px;
 }
 
 .ad-middle3 {
-	margin-bottom: 20px;
+	margin-bottom: $standard-page-margin;
 }
 
 .o-site-sidebar .appnexus-ad {
 	&.appnexus-ad-placeholder {
-		margin-bottom: 20px;
+		margin-bottom: $standard-page-margin;
 		text-align: center;
+	}
+	img {
+		margin-bottom: $standard-page-margin;
 	}
 }
 
@@ -111,7 +114,7 @@ main .ad-middle {
 	}
 	main .ad-middle {
 		float: left;
-	    margin-right: 20px;
+	    margin-right: $standard-page-margin;
 	    clear: left;
 	}
 }

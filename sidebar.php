@@ -20,8 +20,9 @@ if ( isset( $remove_sidebar ) && 'on' === $remove_sidebar ) {
 	<?php if ( is_archive() || is_single() ) : ?>
 		<?php
 		$i = 1;
-		while ( $i <= 10 ) : ?>
-			<div class="m-ad-region m-ad-region-sidebar">
+		while ( $i <= 10 ) :
+		?>
+			<div class="m-ad-region m-ad-region-sidebar m-ad-region-x<?php echo str_pad( $i, 2, '0', STR_PAD_LEFT ); ?>">
 				<?php do_action( 'acm_tag', 'X' . str_pad( $i, 2, '0', STR_PAD_LEFT ) ); ?>
 			</div>
 		<?php
