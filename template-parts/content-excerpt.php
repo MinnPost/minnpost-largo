@@ -13,7 +13,9 @@
 
 	<?php minnpost_post_image( 'thumbnail' ); ?>
 
-	<p class="a-post-category a-zone-item-category"><?php echo minnpost_get_category_name(); ?></p>
+	<?php if ( '' !== $featured_columns ) : ?>
+		<p class="a-post-category a-zone-item-category"><?php echo minnpost_get_category_name(); ?></p>
+	<?php endif; ?>
 
 	<header class="m-entry-header">
 		<?php the_title( '<h3 class="a-entry-title a-entry-title-excerpt"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>

@@ -109,6 +109,7 @@ get_header(); ?>
 				</section>
 				<?php
 				$featured_columns = get_term_meta( $category_id, '_mp_category_featured_columns', true );
+				set_query_var( 'featured_columns', $featured_columns );
 				// getting rid of the icymi box
 				// then we do need to allow for widgets to be here but that's it
 				?>
