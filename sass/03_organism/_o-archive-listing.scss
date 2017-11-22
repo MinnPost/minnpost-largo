@@ -1,8 +1,14 @@
 // smallest screens just display as linear
 
+.m-archive-has-sidebar {
+	display: flex;
+	flex-wrap: wrap;
+	flex-direction: column;
+}
+
 @media screen and (min-width: $more-than-logo-screen) {
 	.m-archive-has-sidebar {
-		display: flex;
+		flex-direction: row;
 		.m-archive-excerpt {
 			width: $size__main-small-screen;
 		}
@@ -36,57 +42,41 @@
 }
 
 @media screen and (min-width: $medim-margins-too-small) {
-	/*.archive .o-site-sidebar {
+	.o-archive-listing {
+		&.m-layout-primary {
+			display: block;
+			width: auto;
+			margin-right: $archive-content-sidebar-padding;
+		}
+	}
+	.archive .o-site-sidebar {
 	    width: $size__site-sidebar;
 	    min-width: $size__site-sidebar;
 	    margin-left: auto;
 	}
-	.o-archive-listing {
-		&.m-layout-primary {
-			width: $size__main-large-screen;
-			margin-right: $archive-content-sidebar-padding;
-		}
-		main {
-			display: flex;
-			flex-direction: column;
-			.m-pagination {
-				order: 1;
-			}
-		}
-		.m-archive-excerpt-with-sidebar {
+	.m-archive-has-sidebar {
+		display: flex;
+		flex-direction: column;
+		.m-archive-excerpt {
 			width: auto;
-			float: none;
 		}
 		.o-content-sidebar {
-			margin-left: 0;
-			padding-left: 0;
-			width: $size__content-sidebar-small-screen;
-			order: 2;
+			width: auto;
 		}
-	}*/
+	}
 }
 
 @media screen and (min-width: $nav-breaks) {
-	/*.o-archive-listing {
-		&.m-layout-primary {
-			max-width: none;
+	.m-archive-has-sidebar {
+		flex-direction: row;
+		.m-archive-excerpt {
 			width: $size__main-small-screen;
-			margin-right: 15px;
-		}
-		main {
-			display: block;
-		}
-		.m-archive-excerpt-with-sidebar {
-			width: $size__main-small-screen;
-			float: left;
 		}
 		.o-content-sidebar {
-			margin-left: 0;
-			padding-left: $home-content-sidebar-padding;
 			width: $size__content-sidebar-medium-screen;
-			float: right;
+			padding-left: $archive-content-sidebar-padding;
 		}
-	}*/
+	}
 }
 
 @media screen and (min-width: $max-width-page) {

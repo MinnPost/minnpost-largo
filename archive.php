@@ -125,6 +125,7 @@ get_header(); ?>
 						endif;
 					endwhile;
 					?>
+					<?php numeric_pagination(); ?>
 				</section>
 				<?php if ( '' !== $featured_columns || is_active_sidebar( 'sidebar-2' ) ) : ?>
 					<aside id="content-sidebar" class="o-content-sidebar" role="complementary">
@@ -158,11 +159,11 @@ get_header(); ?>
 						get_template_part( 'template-parts/content', 'excerpt' );
 					endwhile;
 					?>
+					<?php numeric_pagination(); ?>
 				</section>
 			<?php endif; ?>
-			<?php
-			numeric_pagination();
 
+		<?php
 		else :
 			get_template_part( 'template-parts/content', 'none' );
 		endif; ?>
