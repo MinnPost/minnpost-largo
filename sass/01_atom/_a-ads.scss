@@ -87,11 +87,12 @@ main .ad-middle {
 }
 
 .o-site-sidebar .appnexus-ad {
+	@include clearfix;
 	&.appnexus-ad-placeholder {
 		margin-bottom: $standard-page-margin;
 		text-align: center;
 	}
-	img {
+	img, iframe, object {
 		margin-bottom: $standard-page-margin;
 	}
 }
