@@ -23,7 +23,7 @@ if ( isset( $remove_sidebar ) && 'on' === $remove_sidebar ) {
 		while ( $i <= 10 ) :
 		?>
 			<div class="m-ad-region m-ad-region-sidebar m-ad-region-x<?php echo str_pad( $i, 2, '0', STR_PAD_LEFT ); ?>">
-				<?php do_action( 'acm_tag', 'X' . str_pad( $i, 2, '0', STR_PAD_LEFT ) ); ?>
+				<?php do_action( 'acm_tag', 'x' . str_pad( $i, 2, '0', STR_PAD_LEFT ) ); ?>
 			</div>
 		<?php
 		$i++;
