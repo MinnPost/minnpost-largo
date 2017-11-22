@@ -10,22 +10,11 @@
 	.m-archive-has-sidebar {
 		flex-direction: row;
 		.m-archive-excerpt {
-			width: $size__main-small-screen;
+			width: $size__main-smaller-screen;
 		}
 		.o-content-sidebar {
-			width: $size__content-sidebar-medium-screen;
+			width: $size__main-smaller-screen;
 			padding-left: $archive-content-sidebar-padding;
-		}
-	}
-}
-
-@media screen and (min-width: $size__archive-medium-screen) {
-	.m-archive-has-sidebar {
-		.m-archive-excerpt {
-			width: $size__main-smaller-screen;
-		}
-		.o-content-sidebar {
-			width: $size__main-smaller-screen;
 		}
 	}
 }
