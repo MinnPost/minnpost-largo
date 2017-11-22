@@ -20,7 +20,7 @@ get_header(); ?>
 				$category_id = $wp_query->get_queried_object_id();
 				$figure = minnpost_get_term_figure( $category_id );
 				if ( '' === $figure ) {
-					$sponsorship = minnpost_get_category_sponsorship( $category_id );
+					$sponsorship = minnpost_get_category_sponsorship( '', $category_id );
 					if ( '' !== $sponsorship ) {
 						echo '<div class="m-category-info">';
 							echo $sponsorship;
@@ -41,11 +41,11 @@ get_header(); ?>
 				<aside class="m-archive-info m-category-info m-category-full-info">
 					<?php
 					// category meta
+					$sponsorship = minnpost_get_category_sponsorship( '', $category_id );
+					if ( '' !== $sponsorship ) {
+						echo $sponsorship;
+					}
 					if ( '' !== $figure ) {
-						$sponsorship = minnpost_get_category_sponsorship( $category_id );
-						if ( '' !== $sponsorship ) {
-							echo $sponsorship;
-						}
 						echo $figure;
 					} else {
 						$text = minnpost_get_term_text( $category_id );
@@ -85,7 +85,8 @@ get_header(); ?>
 				</aside>
 			<?php endif; ?>
 
-			<?php if ( is_category() ) :
+			<?php
+			if ( is_category() ) :
 				$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 				if ( '' === get_term_meta( $category_id, '_mp_category_body', true ) || '' === $figure ) :
 					$featured_num = 3;
