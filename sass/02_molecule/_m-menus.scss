@@ -186,7 +186,7 @@
 	width: 100%;
 	background: $color__minnpost-white;
 	padding: 5px;
-	margin-bottom: 0.75em;
+	margin-bottom: 1.5em;
 	ul {
 		justify-content: center;
 		text-align: center;
@@ -235,6 +235,12 @@
 			display: block;
 			columns: 3;
 		}
+	}
+}
+
+@media screen and (min-width: $medim-margins-too-small) {
+	.m-pagination {
+		margin-bottom: 0.75em;
 	}
 }
 
