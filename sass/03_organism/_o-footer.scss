@@ -5,6 +5,7 @@
 		flex-flow: row;
 		padding: 0 30px 20px 15px;
 		section {
+			display: none;
 			width: 29.0322580645161%;
 			border: 1px solid $color__gray-lightest;
 			outline: 15px solid $color__minnpost-white;
@@ -67,5 +68,15 @@
 		font-size: 92.3%;
 		text-align: center;
 		margin-bottom: 20px;
+	}
+}
+
+@media screen and (min-width: $medim-margins-too-small) {
+	.o-footer {
+			.o-footer-hat {
+			section {
+				display: block;
+			}
+		}
 	}
 }
