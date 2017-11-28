@@ -17,8 +17,7 @@ get_header(); ?>
 	<div id="primary" class="m-layout-primary">
 		<main id="main" class="site-main" role="main">
 
-		<?php
-		if ( have_posts() ) : ?>
+		<?php if ( have_posts() ) : ?>
 
 			<header class="m-archive-header">
 				<?php
@@ -42,7 +41,8 @@ get_header(); ?>
 
 		else :
 			get_template_part( 'template-parts/content', 'none' );
-		endif; ?>
+		endif;
+		?>
 
 		</main><!-- #main -->
 

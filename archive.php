@@ -12,8 +12,7 @@ get_header(); ?>
 	<div id="primary" class="m-layout-primary o-archive-listing">
 		<main id="main" class="site-main" role="main">
 
-		<?php
-		if ( have_posts() ) : ?>
+		<?php if ( have_posts() ) : ?>
 
 			<?php
 			if ( is_category() ) {
@@ -159,7 +158,8 @@ get_header(); ?>
 		<?php
 		else :
 			get_template_part( 'template-parts/content', 'none' );
-		endif; ?>
+		endif;
+		?>
 
 		</main><!-- #main -->
 
