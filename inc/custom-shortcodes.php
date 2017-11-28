@@ -48,35 +48,83 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 		);
 
 		if ( '' !== $args['newsletter'] ) {
-			return '<div class="m-widget m-widget-form m-form m-form-newsletter-shortcode m-form-newsletter-shortcode-' . $args['newsletter'] . '">
-		      <img src="' . get_stylesheet_directory_uri() . '/assets/img/dcmemologo-transparent.png" alt="MinnPost D.C. Memo">
-		      <div class="m-form-container">
-		        <p>For a one-stop source of the most informative, insightful and entertaining coverage coming out of Washington, subscribe to MinnPost&apos;s D.C. Memo.</p>
-		        <!-- Begin MailChimp Signup Form -->
-		        <form action="//minnpost.us1.list-manage.com/subscribe/post?u=97f7a4b7244e73cbb7fd521b2&amp;id=3631302e9c" class="validate" id="mc-embedded-subscribe-form" method="post" name="mc-embedded-subscribe-form" target="_blank">
-		          <input id="mce-EMAILTYPE-0" name="EMAILTYPE" value="html" type="hidden" />
-		          <p><small><span class="a-form-required">*</span> indicates required</small></p>
-		          <div class="a-mailchimp-message"></div>
-		          <div class="m-field-group m-form-item">
-		            <label for="mce-EMAIL">Email Address <span class="a-form-required">*</span></label>
-		            <input class="required email" id="mce-EMAIL" name="EMAIL" size="60" value="" type="email" required />
-		          </div>
-		          <div class="m-field-group m-form-item">
-		            <label for="mce-FNAME">First Name <span class="a-form-required">*</span></label>
-		            <input class="required" id="mce-FNAME" name="FNAME" size="60" value="" type="text" required />
-		          </div>
-		          <div class="m-field-group m-form-item">
-		            <label for="mce-LNAME">Last Name <span class="a-form-required">*</span></label>
-		            <input class="required" id="mce-LNAME" name="LNAME" size="60" value="" type="text" required />
-		          </div>
-		          <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-		          <div style="position: absolute; left: -5000px;"><input name="b_97f7a4b7244e73cbb7fd521b2_3631302e9c" tabindex="-1" value="" type="text" /></div>
-		          <div class="clear">
-		          <button type="submit" name="subscribe" id="mc-embedded-dc-subscribe" class="a-button a-button-next a-button-choose">Subscribe</button>
-		          </div>
-		        </form>
-		      </div>
-		    </div>';
+			if ( 'dc' === $args['newsletter'] ) {
+				return '<div class="m-widget m-widget-form m-form m-form-newsletter-shortcode m-form-newsletter-shortcode-' . $args['newsletter'] . '">
+			      <img src="' . get_stylesheet_directory_uri() . '/assets/img/dcmemologo-transparent.png" alt="MinnPost D.C. Memo">
+			      <div class="m-form-container">
+			        <p>For a one-stop source of the most informative, insightful and entertaining coverage coming out of Washington, subscribe to MinnPost&apos;s D.C. Memo.</p>
+			        <!-- Begin MailChimp Signup Form -->
+			        <form action="//minnpost.us1.list-manage.com/subscribe/post?u=97f7a4b7244e73cbb7fd521b2&amp;id=3631302e9c" class="validate" id="mc-embedded-subscribe-form" method="post" name="mc-embedded-subscribe-form" target="_blank">
+			          <input id="mce-EMAILTYPE-0" name="EMAILTYPE" value="html" type="hidden" />
+			          <p><small><span class="a-form-required">*</span> indicates required</small></p>
+			          <div class="a-mailchimp-message"></div>
+			          <div class="m-field-group m-form-item">
+			            <label for="mce-EMAIL">Email Address <span class="a-form-required">*</span></label>
+			            <input class="required email" id="mce-EMAIL" name="EMAIL" size="60" value="" type="email" required />
+			          </div>
+			          <div class="m-field-group m-form-item">
+			            <label for="mce-FNAME">First Name <span class="a-form-required">*</span></label>
+			            <input class="required" id="mce-FNAME" name="FNAME" size="60" value="" type="text" required />
+			          </div>
+			          <div class="m-field-group m-form-item">
+			            <label for="mce-LNAME">Last Name <span class="a-form-required">*</span></label>
+			            <input class="required" id="mce-LNAME" name="LNAME" size="60" value="" type="text" required />
+			          </div>
+			          <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+			          <div style="position: absolute; left: -5000px;"><input name="b_97f7a4b7244e73cbb7fd521b2_3631302e9c" tabindex="-1" value="" type="text" /></div>
+			          <div class="clear">
+			          <button type="submit" name="subscribe" id="mc-embedded-dc-subscribe" class="a-button a-button-next a-button-choose">Subscribe</button>
+			          </div>
+			        </form>
+			      </div>
+			    </div>';
+			} elseif ( 'default' === $args['newsletter'] ) {
+				return '<div class="m-form m-form-in-body m-form-newsletter-shortcode m-form-newsletter-shortcode-' . $args['newsletter'] . '">
+					<h2 class="a-form-title">Get MinnPost\'s top stories in your inbox</h2>
+					<!-- Begin MailChimp Signup Form -->
+			        <form action="//minnpost.us1.list-manage.com/subscribe/post?u=97f7a4b7244e73cbb7fd521b2&amp;id=3631302e9c" class="validate" id="mc-embedded-subscribe-form" method="post" name="mc-embedded-subscribe-form" target="_blank">
+			        	<input id="mce-EMAILTYPE-0" name="EMAILTYPE" value="html" type="hidden" />
+			        	<p><small><span class="a-form-required">*</span> indicates required</small></p>
+
+			        	<div class="a-mailchimp-message"></div>
+			          
+						<div class="m-field-group m-form-item">
+						    <label>First Name</label>
+						    <input name="FNAME" required="" type="text">
+						</div>
+						<div class="m-field-group m-form-item">
+						    <label>Last Name</label>
+						    <input name="LNAME" required="" type="text">
+						</div>
+						<div class="m-field-group m-form-item">
+							<label>Email address: </label>
+							<input type="email" name="EMAIL" type="email" required />
+						</div>
+						<div class="m-field-group m-form-item">
+						    <label>
+						        <input name="INTERESTS[f88ee8cb3b][]" value="04471b1571" checked="true"
+						        type="checkbox"> <span>Daily newsletter</span>
+						    </label>
+						    <label>
+						        <input name="INTERESTS[f88ee8cb3b][]" value="94fc1bd7c9" checked="true"
+						        type="checkbox"> <span>Sunday review</span>
+						    </label>
+						    <label>
+						        <input name="INTERESTS[f88ee8cb3b][]" value="ce6fd734b6"
+						        type="checkbox"> <span>Greater Minnesota newsletter</span>
+						    </label>
+						    <label>
+						        <input name="INTERESTS[f88ee8cb3b][]" value="d89249e207"
+						        type="checkbox"> <span>D.C. Memo</span>
+						    </label>
+						</div>
+
+						<!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+						<div style="position: absolute; left: -5000px;"><input name="b_97f7a4b7244e73cbb7fd521b2_3631302e9c" tabindex="-1" value="" type="text" /></div>
+						<button type="submit" name="subscribe" id="mc-embedded-dc-subscribe" class="a-button a-button-next a-button-choose">Subscribe Now</button>
+					</form>
+				</div>';
+			}
 		}
 
 	}
