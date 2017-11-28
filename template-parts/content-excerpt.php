@@ -15,7 +15,7 @@
 
 	<?php $is_spill = get_query_var( 'is_spill', false ); ?>
 
-	<?php if ( is_home() || true === $is_spill || ( is_archive() && isset( $featured_columns ) && '' !== $featured_columns ) ) : ?>
+	<?php if ( is_home() || true === $is_spill || is_tag() || is_author() || ( is_category() && isset( $featured_columns ) && '' !== $featured_columns ) ) : ?>
 		<p class="a-post-category a-zone-item-category"><?php echo minnpost_get_category_name(); ?></p>
 	<?php endif; ?>
 
