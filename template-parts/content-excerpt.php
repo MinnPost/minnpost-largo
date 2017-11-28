@@ -13,7 +13,7 @@
 
 	<?php minnpost_post_image( 'thumbnail' ); ?>
 
-	<?php if ( '' !== $featured_columns ) : ?>
+	<?php if ( is_home() || ( is_archive() && isset( $featured_columns ) && '' !== $featured_columns ) ) : ?>
 		<p class="a-post-category a-zone-item-category"><?php echo minnpost_get_category_name(); ?></p>
 	<?php endif; ?>
 
