@@ -51,6 +51,8 @@
 		<?php the_content(); ?>
 	</div><!-- .m-entry-content -->
 
+	<?php echo do_shortcode( '[newsletter_embed newsletter="default"]' ); ?>
+
 	<?php
 	$tags = get_the_tag_list( '<aside class="a-related-tags"><h4>Related Tags:</h4><ul><li>', '</li><li>', '</li></ul></aside>' );
 	echo $tags;
