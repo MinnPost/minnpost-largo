@@ -8,22 +8,14 @@
  */
 get_header(); ?>
 
-	<div id="primary" class="m-layout-primary">
+	<div id="primary" class="m-layout-primary o-archive-listing o-archive-listing-spill">
 		<main id="main" class="site-main" role="main">
 
-		<?php
-		if ( have_posts() ) :
-		?>
+		<?php if ( have_posts() ) : ?>
 
-			<header class="m-archive-header">
-				<?php
-					the_archive_title( '<h1 class="a-archive-title">', '</h1>' );
-					the_archive_description( '<div class="archive-description">', '</div>' );
-				?>
+			<header class="m-archive-header m-archive-header-spill">
+				<?php the_archive_title( '<h1 class="a-archive-title">', '</h1>' ); ?>
 			</header><!-- .m-archive-header -->
-
-			<aside class="m-archive-info m-category-info m-category-full-info">
-			</aside>
 
 			<section class="m-archive m-archive-excerpt">
 				<?php
@@ -42,7 +34,6 @@ get_header(); ?>
 
 		</main><!-- #main -->
 
-		</main><!-- #main -->
 	</div><!-- #primary -->
 
 <?php
