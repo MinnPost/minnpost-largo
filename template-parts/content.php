@@ -49,7 +49,12 @@
 
 	<div class="m-entry-content">
 		<?php the_content(); ?>
-	</div><!-- .entry-content -->
+	</div><!-- .m-entry-content -->
+
+	<?php
+	$tags = get_the_tag_list( '<aside class="a-related-tags"><h4>Related Tags:</h4><ul><li>', '</li><li>', '</li></ul></aside>' );
+	echo $tags;
+	?>
 
 	<?php
 	$coauthors = get_coauthors( get_the_ID() );
@@ -68,7 +73,7 @@
 			minnpost_author_figure( $author_id, 'thumbnail', true, true );
 		endforeach;
 		?>
-	</aside>
+	</aside><!-- .m-author-info -->
 	<?php
 	}
 	?>
