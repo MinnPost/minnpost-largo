@@ -4,7 +4,7 @@
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
- * @package Largo
+ * @package MinnPost Largo
  */
 
 get_header(); ?>
