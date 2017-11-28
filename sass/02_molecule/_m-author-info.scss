@@ -1,4 +1,5 @@
 .m-author-info {
+	padding-top: 2px;
 	.a-author-figure {
 		@include clearfix;
 		background: $color__minnpost-white;
@@ -10,8 +11,6 @@
 			@include clearfix;
 			padding: 10px;
 			p {
-				font-size: 1.23em;
-				line-height: 1.3em;
 				a {
 					color: $color__action-color;
 					&:active,
