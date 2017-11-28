@@ -20,14 +20,22 @@ if ( ! function_exists( 'custom_archive_query_vars' ) ) :
 				}
 			} elseif ( is_author() ) {
 				$featured_num = 3;
+			} else {
+				$featured_num = 0;
 			}
 			$query->set( 'featured_num', $featured_num );
-			$featured_columns = get_term_meta( $category_id, '_mp_category_featured_columns', true );
-			$query->set( 'featured_columns', $featured_columns );
-			if ( '' !== $featured_columns ) {
-				$query->set( 'posts_per_page', 10 + $featured_num );
+			if ( isset( $category_id ) ) {
+				$featured_columns = get_term_meta( $category_id, '_mp_category_featured_columns', true );
 			} else {
-				$query->set( 'posts_per_page', 20 );
+				$featured_columns = '';
+			}
+			$query->set( 'featured_columns', $featured_columns );
+			if ( is_category() ) {
+				if ( '' !== $featured_columns ) {
+					$query->set( 'posts_per_page', 10 + $featured_num );
+				} else {
+					$query->set( 'posts_per_page', 20 );
+				}
 			}
 		}
 		return $query;
