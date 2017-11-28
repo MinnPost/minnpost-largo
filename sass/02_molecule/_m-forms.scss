@@ -53,6 +53,16 @@
 	padding: 0 0.5em;
 }
 
+.m-form-in-body {
+	margin-bottom: 1em;
+	padding: 1em 3em;
+	font-family: $font__sans;
+	font-size: 1.25em;
+	color: $color__form-text;
+	border: 1px solid $color__gray-lightest;
+	position: relative;
+}
+
 // media queries for forms
 @media screen and (min-width: $more-than-logo-screen) {
 	.m-secondary-navigation .search-form {
