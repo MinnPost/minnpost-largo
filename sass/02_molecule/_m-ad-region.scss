@@ -11,6 +11,10 @@
 	}
 }
 
+.m-ad-region:empty {
+   display: none;
+}
+
 // media queries for ad regions
 
 @media screen and (min-width: 728px) {

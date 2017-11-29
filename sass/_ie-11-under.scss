@@ -1,4 +1,4 @@
-@-media only screen and (-ms-high-contrast:active), (-ms-high-contrast:none) {
+@media only screen and (-ms-high-contrast:active), (-ms-high-contrast:none) {
 	.a-site-branding {
 		.a-logo-svg {
 			z-index: 1;
@@ -6,6 +6,23 @@
 				display: block;
 				margin-top: 1px;
 			}
+		}
+	}
+}
+
+@media only screen and (-ms-high-contrast:active), (-ms-high-contrast:none) and (min-width: $nav-breaks) {
+	.o-archive-listing {
+		&.m-layout-primary {
+			max-width: $medium-screen;
+			overflow-x: hidden;
+		}
+	}
+}
+
+@media only screen and (-ms-high-contrast:active), (-ms-high-contrast:none) and (max-width: $medim-margins-too-small) {
+	.o-archive-listing {
+		&.m-layout-primary {
+			display: block;
 		}
 	}
 }
