@@ -76,7 +76,18 @@
 	}
 }
 
-main .ad-middle {
+main .ad-middle,
+main .ad-x100,
+main .ad-x101,
+main .ad-x102,
+main .ad-x103,
+main .ad-x104,
+main .ad-x105,
+main .ad-x106,
+main .ad-x107,
+main .ad-x108,
+main .ad-x109,
+main .ad-x110 {
 	margin: $standard-page-margin 0;
 	width: 300px;
 	height: 250px;
@@ -113,7 +124,18 @@ main .ad-middle {
 	.ad-support {
 		float: right;
 	}
-	main .ad-middle {
+	main .ad-middle,
+	main .ad-x100,
+	main .ad-x101,
+	main .ad-x102,
+	main .ad-x103,
+	main .ad-x104,
+	main .ad-x105,
+	main .ad-x106,
+	main .ad-x107,
+	main .ad-x108,
+	main .ad-x109,
+	main .ad-x110 {
 		float: left;
 	    margin-right: $standard-page-margin;
 	    clear: left;
