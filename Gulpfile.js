@@ -100,7 +100,7 @@ gulp.task( 'postcss', [ 'clean:styles' ], () =>
 			// Parse with PostCSS plugins.
 			.pipe( postcss( [
 				autoprefixer( {
-					'browsers': [ 'last 2 version' ]
+					'browsers': [ 'last 3 version' ]
 				} ),
 				mqpacker( {
 					'sort': true
