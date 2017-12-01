@@ -203,9 +203,9 @@
 }
 
 .o-footer .m-secondary-navigation {
-	//grid-column: col-start / span 12;
 	ul {
 		justify-content: center;
+		flex-wrap: wrap;
 		li {
 			margin-right: 20px;
 			font-weight: bold;
