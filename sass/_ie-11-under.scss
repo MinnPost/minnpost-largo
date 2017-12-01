@@ -1,3 +1,4 @@
+// all sizes for ie 11 and 10
 @media only screen and (-ms-high-contrast:active), (-ms-high-contrast:none) {
 	.a-site-branding {
 		.a-logo-svg {
@@ -10,6 +11,7 @@
 	}
 }
 
+// size media queries for ie 11 and 10
 @media only screen and (-ms-high-contrast:active), (-ms-high-contrast:none) and (min-width: $nav-breaks) {
 	.o-archive-listing {
 		&.m-layout-primary {
