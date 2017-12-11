@@ -74,13 +74,10 @@ function minnpost_no_ad_users( $output_html, $tag_id = null ) {
 						'echo' => false,
 					)
 				) .
-			'</nav>';
+			'</nav></div>';
 		} else {
 			$default_top_right = $output_html;
 		}
-		$default_top_right .=
-		'</div>';
-		//return $output_html;
 		return $default_top_right;
 	}
 	//return $output_html;
