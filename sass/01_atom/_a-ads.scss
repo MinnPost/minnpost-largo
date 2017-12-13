@@ -21,6 +21,11 @@
 		max-width: 100%;
   		height: auto;
 	}
+	iframe {
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
 }
 
 .ad-top {
@@ -136,9 +141,8 @@ main .ad-x110 {
 	main .ad-x108,
 	main .ad-x109,
 	main .ad-x110 {
-		float: left;
-	    margin-right: $standard-page-margin;
-	    clear: left;
+		clear: both;
+	    margin: 10px auto;
 	}
 }
 
