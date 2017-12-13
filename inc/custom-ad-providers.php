@@ -18,6 +18,13 @@ function minnpost_acm_register_provider_slug( $providers ) {
 	return $providers;
 }
 
+add_filter( 'acm_whitelisted_conditionals', 'minnpost_acm_whitelisted_conditionals' );
+function minnpost_acm_whitelisted_conditionals( $conditionals ) {
+	$conditionals[] = 'minnpost_is_post_type';
+	$conditionals[] = 'is_post_type_archive';
+	return $conditionals;
+}
+
 add_action( 'load-themes.php', 'add_theme_caps' );
 function add_theme_caps() {
 	global $pagenow;
@@ -45,8 +52,8 @@ function add_theme_caps() {
 	}
 }
 
-add_filter( 'acm_output_html_after_tokens_processed', 'minnpost_no_ad_users', 10, 2 );
-function minnpost_no_ad_users( $output_html, $tag_id = null ) {
+add_filter( 'acm_output_html_after_tokens_processed', 'acm_no_ad_users', 10, 2 );
+function acm_no_ad_users( $output_html, $tag_id = null ) {
 
 	if ( 'TopRight' === $tag_id ) {
 		// get the support nav item if there is not an ad
