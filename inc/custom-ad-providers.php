@@ -18,6 +18,13 @@ function minnpost_acm_register_provider_slug( $providers ) {
 	return $providers;
 }
 
+add_filter( 'acm_whitelisted_conditionals', 'minnpost_acm_whitelisted_conditionals' );
+function minnpost_acm_whitelisted_conditionals( $conditionals ) {
+	$conditionals[] = 'minnpost_is_post_type';
+	$conditionals[] = 'is_post_type_archive';
+	return $conditionals;
+}
+
 add_action( 'load-themes.php', 'add_theme_caps' );
 function add_theme_caps() {
 	global $pagenow;
