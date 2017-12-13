@@ -9,7 +9,8 @@ if ( ! function_exists( 'minnpost_largo_load_custom_scripts' ) ) :
 	add_action( 'wp_enqueue_scripts', 'minnpost_largo_load_custom_scripts' );
 	function minnpost_largo_load_custom_scripts() {
 		wp_enqueue_script( 'modernizr', get_stylesheet_directory_uri() . '/assets/js/modernizr-custom.js', array(), '1.0', true );
-		wp_enqueue_script( 'minnpost', get_stylesheet_directory_uri() . '/assets/js/minnpost.min.js', array( 'jquery', 'modernizr' ), '1.0', true );
+		wp_enqueue_script( 'jquery-lazy', 'https://cdn.jsdelivr.net/gh/eisbehr-/jquery.lazy@1.7.7/jquery.lazy.min.js', array( 'jquery' ), '1.0', false );
+		wp_enqueue_script( 'minnpost', get_stylesheet_directory_uri() . '/assets/js/minnpost.js', array( 'jquery', 'modernizr' ), '1.0', false );
 	}
 endif;
 
