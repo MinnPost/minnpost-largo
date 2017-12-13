@@ -45,8 +45,8 @@ function add_theme_caps() {
 	}
 }
 
-add_filter( 'acm_output_html_after_tokens_processed', 'minnpost_no_ad_users', 10, 2 );
-function minnpost_no_ad_users( $output_html, $tag_id = null ) {
+add_filter( 'acm_output_html_after_tokens_processed', 'acm_no_ad_users', 10, 2 );
+function acm_no_ad_users( $output_html, $tag_id = null ) {
 
 	if ( 'TopRight' === $tag_id ) {
 		// get the support nav item if there is not an ad
