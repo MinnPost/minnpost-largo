@@ -12,7 +12,7 @@
 add_filter( 'acm_register_provider_slug', 'minnpost_acm_register_provider_slug' );
 function minnpost_acm_register_provider_slug( $providers ) {
 	$providers->appnexus = array(
-		'provider' => 'Appnexus_Async_ACM_Provider',
+		'provider' => 'Appnexus_ACM_Provider',
 		'table' => 'Appnexus_ACM_WP_List_Table',
 	);
 	return $providers;
