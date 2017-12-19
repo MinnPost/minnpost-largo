@@ -22,6 +22,8 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 			return;
 		}
 
+		$image = apply_filters( 'easy_lazy_loader_html', $image );
+
 		$caption = wp_get_attachment_caption( $image_id );
 		$credit = get_media_credit_html( $image_id );
 
@@ -110,6 +112,8 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 		if ( post_password_required() || is_attachment() || ( ! $image_id && ! $image_url ) ) {
 			return;
 		}
+
+		$image = apply_filters( 'easy_lazy_loader_html', $image );
 
 		$image_data = array(
 			'image_id' => $image_id,
@@ -233,6 +237,8 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
 		}
 
+		$image = apply_filters( 'easy_lazy_loader_html', $image );
+
 		if ( is_singular() || is_archive() ) {
 			$output = '';
 			$output .= '<figure class="a-archive-figure a-author-figure a-author-figure-' . $size . '">';
@@ -292,6 +298,8 @@ if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
 			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
 			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
 		}
+
+		$image = apply_filters( 'easy_lazy_loader_html', $image );
 
 		if ( is_singular() || is_archive() || is_home() ) {
 			$output = '';
