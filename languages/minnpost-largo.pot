@@ -17,8 +17,8 @@ msgstr ""
 msgid "Comments are closed."
 msgstr ""
 
-#: header.php:67
-msgid "Primary Menu"
+#: header.php:69
+msgid "Sections"
 msgstr ""
 
 #: inc/comment-list.php:43
@@ -97,29 +97,29 @@ msgstr ""
 msgid "Test"
 msgstr ""
 
-#: inc/template-tags.php:141
+#: inc/template-tags.php:152
 msgctxt "post date"
 msgid "%s"
 msgstr ""
 
 #. translators: used between list items, there is a space after the comma
-#: inc/template-tags.php:372, inc/template-tags.php:378
+#: inc/template-tags.php:387, inc/template-tags.php:393
 msgid ", "
 msgstr ""
 
-#: inc/template-tags.php:374
+#: inc/template-tags.php:389
 msgid "Posted in %1$s"
 msgstr ""
 
-#: inc/template-tags.php:380
+#: inc/template-tags.php:395
 msgid "Tagged %1$s"
 msgstr ""
 
 #. translators: %s: post title
-#: inc/template-tags.php:390
+#: inc/template-tags.php:405
 msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
-#: inc/template-tags.php:406, inc/template-tags.php:424, template-parts/content-page.php:24
+#: inc/template-tags.php:421, inc/template-tags.php:439
 msgid "Edit %s"
 msgstr ""
