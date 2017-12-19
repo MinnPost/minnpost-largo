@@ -456,8 +456,13 @@ if ( ! function_exists( 'minnpost_category_breadcrumb' ) ) :
 
 		$category_permalink = get_post_meta( $post_id , '_category_permalink', true );
 		if ( null !== $category_permalink && '' !== $category_permalink ) {
-			$cat_id = $category_permalink['category'];
-			$category = get_category( $cat_id );
+			if ( isset( $category_permalink['category'] ) && '' !== $category_permalink['category'] ) {
+				$cat_id = $category_permalink['category'];
+				$category = get_category( $cat_id );
+			} else {
+				$categories = get_the_category();
+				$category = $categories[0];
+			}
 		} else {
 			$categories = get_the_category();
 			$category = $categories[0];
