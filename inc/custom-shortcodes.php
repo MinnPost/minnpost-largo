@@ -50,7 +50,7 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 		if ( '' !== $args['newsletter'] ) {
 			if ( 'dc' === $args['newsletter'] ) {
 				return '<div class="m-widget m-widget-form m-form m-form-newsletter-shortcode m-form-newsletter-shortcode-' . $args['newsletter'] . '">
-			      <img src="' . get_stylesheet_directory_uri() . '/assets/img/dcmemologo-transparent.png" alt="MinnPost D.C. Memo">
+			      <img src="' . get_theme_file_uri() . '/assets/img/dcmemologo-transparent.png" alt="MinnPost D.C. Memo">
 			      <div class="m-form-container">
 			        <p>For a one-stop source of the most informative, insightful and entertaining coverage coming out of Washington, subscribe to MinnPost&apos;s D.C. Memo.</p>
 			        <!-- Begin MailChimp Signup Form -->
@@ -84,23 +84,22 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 					<!-- Begin MailChimp Signup Form -->
 			        <form action="//minnpost.us1.list-manage.com/subscribe/post?u=97f7a4b7244e73cbb7fd521b2&amp;id=3631302e9c" class="validate" id="mc-embedded-subscribe-form" method="post" name="mc-embedded-subscribe-form" target="_blank">
 			        	<input id="mce-EMAILTYPE-0" name="EMAILTYPE" value="html" type="hidden" />
-			        	<p><small><span class="a-form-required">*</span> indicates required</small></p>
 
 			        	<div class="a-mailchimp-message"></div>
 			          
-						<div class="m-field-group m-form-item">
+						<div class="m-field-group m-form-item m-form-item-first-name">
 						    <label>First Name</label>
 						    <input name="FNAME" required="" type="text">
 						</div>
-						<div class="m-field-group m-form-item">
+						<div class="m-field-group m-form-item m-form-item-last-name">
 						    <label>Last Name</label>
 						    <input name="LNAME" required="" type="text">
 						</div>
-						<div class="m-field-group m-form-item">
+						<div class="m-field-group m-form-item m-form-item-email">
 							<label>Email address: </label>
 							<input type="email" name="EMAIL" type="email" required />
 						</div>
-						<div class="m-field-group m-form-item">
+						<div class="m-field-group m-form-item m-form-item-list-choices">
 						    <label>
 						        <input name="INTERESTS[f88ee8cb3b][]" value="04471b1571" checked="true"
 						        type="checkbox"> <span>Daily newsletter</span>
@@ -124,11 +123,66 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 						<button type="submit" name="subscribe" id="mc-embedded-dc-subscribe" class="a-button a-button-next a-button-choose">Subscribe Now</button>
 					</form>
 				</div>';
+			} elseif ( 'full' === $args['newsletter'] ) {
+				$url = str_replace( 'https', 'http', get_rest_url( null, '/form-processor-mc/v1/lists/3631302e9c/interest-categories' ) );
+
+				//error_log( 'result is ' . print_r( $api_result, true ) );
+				$form = '';
+
+				$form .= '
+				<form id="minnpost-form-' . $args['newsletter'] . '" action="" accept-charset="UTF-8" method="post">
+					<fieldset>
+						<div class="m-field-group m-form-item m-form-item-email">
+							<label>Email address: </label>
+							<input type="email" name="EMAIL" type="email" required />
+						</div>
+						<div class="m-field-group m-form-item m-form-item-first-name">
+						    <label>First Name</label>
+						    <input name="FNAME" required="" type="text">
+						</div>
+						<div class="m-field-group m-form-item m-form-item-last-name">
+						    <label>Last Name</label>
+						    <input name="LNAME" required="" type="text">
+						</div>';
+				$groups = json_decode( wp_remote_get( $url )['body'] );
+				foreach ( $groups->categories as $group ) {
+					$id = $group->id;
+					$title = $group->title;
+					$form .= '
+						<div class="m-field-group m-form-checkboxes m-form-newsletters">
+							<h3>' . $title . ':</h3>
+						</div>
+					';
+					//<div class="m-field-group m-form-checkboxes m-form-newsletters">
+					//	<h3>Subscribe to these regular newsletters:</h3>
+					//	<label>
+					//		<input name="interests[]" value="" type="checkbox">
+					//		Daily Newsletter
+					//	</label>
+					//</div>
+					//<div class="m-field-group m-form-checkboxes m-form-periodic">
+					//	<h3>Occasional MinnPost emails:</h3>
+					//	<label>
+					//		<input name="interests[]" value="" type="checkbox">
+					//		Events &amp; member benefits
+					//	</label>
+					//</div>
+				}
+				$form .= '</fieldset>
+				</form>
+				';
+
+				return $form;
 			}
 		}
 
 	}
 endif;
+
+function minnpost_interest_groups( $call, $params ) {
+	$result = 'foo';
+	return $result;
+}
 
 // add column list shortcode
 if ( ! function_exists( 'column_list' ) ) :
