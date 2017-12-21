@@ -662,7 +662,7 @@ if ( ! function_exists( 'minnpost_newsletter_logo' ) ) :
 					break;
 			}
 
-			$logo = get_stylesheet_directory_uri() . '/assets/img/' . $filename;
+			$logo = get_theme_file_uri() . '/assets/img/' . $filename;
 
 		}
 
