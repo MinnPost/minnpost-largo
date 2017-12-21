@@ -36,3 +36,16 @@
 .clearfix {
 	@include clearfix;
 }
+
+// responsive iframes by ratio
+@mixin generateRatios($width, $height, $prefix: "ratio-") {
+  $class-name: $prefix + $width + "x" + $height;
+ 
+  .#{$class-name} {
+    padding-bottom: ratio($width, $height);
+  }
+  // Output example: .ratio-16x9 {}
+}
+// used like this
+//@include generateRatios(16,9); // 16x9
+//@include generateRatios(4,3);  // 4x3

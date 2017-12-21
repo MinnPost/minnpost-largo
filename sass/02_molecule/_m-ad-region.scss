@@ -17,7 +17,7 @@
 
 // media queries for ad regions
 
-@media screen and (min-width: 728px) {
+@media screen and (min-width: $ad-top-width) {
 	.m-ad-region {
 		&.m-ad-region-leaderboard {
 			padding: 10px 0;

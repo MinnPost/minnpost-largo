@@ -2,6 +2,8 @@
 	position: relative;
 	font-size: 13px;
 	line-height: normal;
+	width: auto;
+	height: auto;
 	&.appnexus-ad-placeholder {
 		text-align: center;
 		background-color: $color__black;
@@ -26,6 +28,9 @@
 		height: 100%;
 		overflow: hidden;
 		border: 0;
+		margin: 0;
+		padding: 0;
+		display: block;
 	}
 }
 
@@ -36,14 +41,17 @@
 .ad-topright {
 	display: none;
 	height: auto;
-	max-width: 228px;
+	max-width: $ad-top-right-width;
 	float: right;
+	iframe {
+		height: $ad-top-right-iframe-height;
+	}
 	.ad-overlay {
 		top: 0;
 		right: 0;
 	}
 	&.ad-support {
-		height: 90px;
+		height: $ad-top-right-iframe-height;
 		text-align: center;
 		background: $color__minnpost-black;
 		color: $color__white;
@@ -52,7 +60,7 @@
 		}
 		nav {
 			background: $color__minnpost-black;
-			width: 228px;
+			width: $ad-top-right-width;
 			text-align: left;
 			font-family: $font__sans;
 			h2 {
@@ -95,8 +103,8 @@ main .ad-x108,
 main .ad-x109,
 main .ad-x110 {
 	margin: $standard-page-margin 0;
-	width: 300px;
-	height: 250px;
+	//width: $ad-embed-width;
+	//height: $ad-embed-height;
 }
 
 .ad-middle3 {
@@ -116,7 +124,7 @@ main .ad-x110 {
 
 // media queries for ads
 
-@media screen and (min-width: 728px) {
+@media screen and (min-width: $ad-top-width) {
 	.appnexus-ad {
 		/*img, div, p, iframe {
 			max-width: none;
@@ -124,7 +132,8 @@ main .ad-x110 {
 		}*/
 	}
 	.ad-top {
-		width: 728px;
+		width: $ad-top-width;
+		height: $ad-top-height;
 		margin: 0 auto;
 	}
 	.ad-support {

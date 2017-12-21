@@ -10,3 +10,16 @@
         //color: palette(purple, light);
     //}
 //}
+
+/**
+ * Ratios
+ * Returns the ratio for specified dimensions.
+ */
+@function ratio($width, $height) {
+  @return percentage( $height / $width);
+}
+
+// used this way
+//iframe {
+	//padding-bottom: ratio(728,90);
+//}
