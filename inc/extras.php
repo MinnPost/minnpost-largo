@@ -302,3 +302,15 @@ if ( ! function_exists( 'minnpost_remove_head_hooks' ) ) :
 	}
 	minnpost_remove_head_hooks();
 endif;
+
+if ( ! function_exists( 'get_current_url' ) ) :
+	function get_current_url() {
+		if ( is_page() || is_single() ) {
+			$current_url = wp_get_canonical_url();
+		} else {
+			global $wp;
+			$current_url = home_url( add_query_arg( array(), $wp->request ) );
+		}
+		return $current_url;
+	}
+endif;
