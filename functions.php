@@ -49,6 +49,11 @@ require get_stylesheet_directory() . '/inc/custom-shortcodes.php';
 require get_stylesheet_directory() . '/inc/template-tags.php';
 
 /**
+ * Meta tags for the theme
+ */
+require get_stylesheet_directory() . '/inc/meta.php';
+
+/**
  * Custom functions that act independently of the theme templates.
  */
 require get_stylesheet_directory() . '/inc/extras.php';

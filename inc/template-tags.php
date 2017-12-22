@@ -206,11 +206,10 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 			$author_id = get_the_author_meta( 'ID' );
 		}
 
-		$image_url = get_post_meta( $author_id, '_mp_author_image', true );
-		if ( 'photo' !== $size ) {
-			$image_url = get_post_meta( $author_id, '_mp_author_image_' . $size, true );
-		}
-		$image_id = get_post_meta( $author_id, '_mp_author_image_id', true );
+		$image_data = minnpost_get_author_image( $author_id, $size );
+		$image_id = $image_data['image_id'];
+		$image_url = $image_data['image_url'];
+		$image = $image_data['markup'];
 
 		$text = '';
 		if ( 'photo' === $size ) { // full text
@@ -228,16 +227,6 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 
 		$caption = wp_get_attachment_caption( $image_id );
 		$credit = get_media_credit_html( $image_id );
-
-		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
-			// todo: test this display because so far we just have external urls
-			$image = wp_get_attachment_image( $image_id, $size );
-		} else {
-			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
-			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
-		}
-
-		$image = apply_filters( 'easy_lazy_loader_html', $image );
 
 		if ( is_singular() || is_archive() ) {
 			$output = '';
@@ -257,6 +246,42 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 	}
 endif;
 
+if ( ! function_exists( 'minnpost_get_author_image' ) ) :
+	/**
+	 * Returns author image, large or thumbnail, to put inside the figure
+	 */
+	function minnpost_get_author_image( $author_id = '', $size = 'photo' ) {
+
+		$image_url = get_post_meta( $author_id, '_mp_author_image', true );
+		if ( 'photo' !== $size ) {
+			$image_url = get_post_meta( $author_id, '_mp_author_image_' . $size, true );
+		}
+		$image_id = get_post_meta( $author_id, '_mp_author_image_id', true );
+
+		if ( post_password_required() || is_attachment() || ( ! $image_id && ! $image_url ) ) {
+			return '';
+		}
+
+		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
+			// todo: test this display because so far we just have external urls
+			$image = wp_get_attachment_image( $image_id, $size );
+		} else {
+			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
+		}
+
+		$image = apply_filters( 'easy_lazy_loader_html', $image );
+
+		$image_data = array(
+			'image_id' => $image_id,
+			'image_url' => $image_url,
+			'markup' => $image,
+		);
+		return $image_data;
+
+	}
+endif;
+
 if ( ! function_exists( 'minnpost_term_figure' ) ) :
 	/**
 	 * Outputs term image, large or thumbnail, with/without the description or excerpt, all inside a <figure>
@@ -272,12 +297,11 @@ if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
 	 * Returns term image, large or thumbnail, with/without the description or excerpt, all inside a <figure>
 	 */
 	function minnpost_get_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false, $link_on = 'title' ) {
-		$image_url = get_term_meta( $category_id, '_mp_category_main_image', true );
-		if ( 'feature' !== $size ) {
-			$image_url = get_term_meta( $category_id, '_mp_category_' . $size . '_image', true );
-			$image_id = get_term_meta( $category_id, '_mp_category_' . $size . '_image_id', true );
-		}
-		$image_id = get_term_meta( $category_id, '_mp_category_main_image_id', true );
+
+		$image_data = minnpost_get_term_image( $category_id, $size );
+		$image_id = $image_data['image_id'];
+		$image_url = $image_data['image_url'];
+		$image = $image_data['markup'];
 
 		$text = minnpost_get_term_text( $category_id, $size );
 
@@ -290,16 +314,6 @@ if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
 
 		$caption = wp_get_attachment_caption( $image_id );
 		$credit = get_media_credit_html( $image_id );
-
-		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
-			// todo: test this display because so far we just have external urls
-			$image = wp_get_attachment_image( $image_id, $size );
-		} else {
-			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
-			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
-		}
-
-		$image = apply_filters( 'easy_lazy_loader_html', $image );
 
 		if ( is_singular() || is_archive() || is_home() ) {
 			$output = '';
@@ -328,6 +342,43 @@ if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
 			$output .= '</figure><!-- .category-figure -->';
 			return $output;
 		} // End is_singular()
+	}
+endif;
+
+if ( ! function_exists( 'minnpost_get_term_image' ) ) :
+	/**
+	 * Returns term image, large or thumbnail, to put inside the figure
+	 */
+	function minnpost_get_term_image( $category_id = '', $size = 'feature' ) {
+		$image_url = get_term_meta( $category_id, '_mp_category_main_image', true );
+		if ( 'feature' !== $size ) {
+			$image_url = get_term_meta( $category_id, '_mp_category_' . $size . '_image', true );
+			$image_id = get_term_meta( $category_id, '_mp_category_' . $size . '_image_id', true );
+		}
+
+		$image_id = get_term_meta( $category_id, '_mp_category_main_image_id', true );
+
+		if ( post_password_required() || is_attachment() || ( ! $image_id && ! $image_url ) ) {
+			return '';
+		}
+
+		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
+			// todo: test this display because so far we just have external urls
+			$image = wp_get_attachment_image( $image_id, $size );
+		} else {
+			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
+		}
+
+		$image = apply_filters( 'easy_lazy_loader_html', $image );
+
+		$image_data = array(
+			'image_id' => $image_id,
+			'image_url' => $image_url,
+			'markup' => $image,
+		);
+		return $image_data;
+
 	}
 endif;
 
