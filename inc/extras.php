@@ -294,7 +294,12 @@ endif;
 if ( ! function_exists( 'minnpost_remove_head_hooks' ) ) :
 	function minnpost_remove_head_hooks() {
 		add_filter( 'feed_links_show_comments_feed', '__return_false' );
+		add_filter( 'the_generator', '__return_false' );
 		remove_action( 'wp_head','feed_links_extra', 3 );
+		remove_action( 'wp_head', 'wlwmanifest_link' );
+		remove_action( 'wp_head', 'wp_generator' );
+		remove_action( 'wp_head', 'wp_shortlink_wp_head' );
+		remove_action( 'wp_head', 'adjacent_posts_rel_link_wp_head', 10 );
 		remove_action( 'wp_head', 'print_emoji_detection_script', 7 );
 		remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
 		remove_action( 'wp_print_styles', 'print_emoji_styles' );
