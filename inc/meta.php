@@ -40,15 +40,15 @@ if ( ! function_exists( 'minnpost_largo_get_description' ) ) :
 			$excerpt = get_option( 'site_blurb' ) ? stripslashes( get_option( 'site_blurb' ) ) : '';
 		} elseif ( is_category() ) {
 			$id = get_query_var( 'cat' );
-			$excerpt = strip_tags( minnpost_get_term_text( $id ) );
+			$excerpt = minnpost_get_term_text( $id );
 		} elseif ( is_author() ) {
 			$author = get_queried_object();
     		$id = $author->ID;
-			$excerpt = strip_tags( get_post_meta( $id, '_mp_author_excerpt', true ) );
+			$excerpt = get_post_meta( $id, '_mp_author_excerpt', true );
 		} else {
 			$excerpt = '';
 		}
-		return $excerpt;
+		return strip_tags( $excerpt );
 	}
 endif;
 
