@@ -9,15 +9,6 @@
  * @package MinnPost Largo
  */
 
-add_filter( 'acm_register_provider_slug', 'minnpost_acm_register_provider_slug' );
-function minnpost_acm_register_provider_slug( $providers ) {
-	$providers->appnexus = array(
-		'provider' => 'Appnexus_ACM_Provider',
-		'table' => 'Appnexus_ACM_WP_List_Table',
-	);
-	return $providers;
-}
-
 add_filter( 'acm_whitelisted_conditionals', 'minnpost_acm_whitelisted_conditionals' );
 function minnpost_acm_whitelisted_conditionals( $conditionals ) {
 	$conditionals[] = 'minnpost_is_post_type';
