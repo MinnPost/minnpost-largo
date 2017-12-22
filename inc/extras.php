@@ -304,6 +304,7 @@ if ( ! function_exists( 'minnpost_remove_head_hooks' ) ) :
 		remove_action( 'admin_print_scripts', 'print_emoji_detection_script' );
 		remove_action( 'wp_print_styles', 'print_emoji_styles' );
 		remove_action( 'admin_print_styles', 'print_emoji_styles' );
+		remove_action( 'wp_head', 'largo_customizer_css', 1 );
 	}
 	minnpost_remove_head_hooks();
 endif;
@@ -319,3 +320,14 @@ if ( ! function_exists( 'get_current_url' ) ) :
 		return $current_url;
 	}
 endif;
+
+add_filter('wp_headers', function( $headers, $wp_query ) {
+	if ( array_key_exists( 'X-Pingback', $headers ) ) {
+		unset( $headers['X-Pingback'] );
+	}
+	return $headers;
+}, 11, 2 );
+
+add_action( 'wp', function() {
+	remove_action( 'wp_head', 'rsd_link' );
+}, 11 );
