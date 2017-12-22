@@ -29,7 +29,7 @@ get_header(); ?>
 			}
 			?>
 
-			<header class="m-archive-header">
+			<header class="m-archive-header<?php if ( is_year() || is_month() || is_day() ) { echo ' m-archive-header-time'; } ?>">
 				<?php
 					the_archive_title( '<h1 class="a-archive-title">', '</h1>' );
 					the_archive_description( '<div class="archive-description">', '</div>' );

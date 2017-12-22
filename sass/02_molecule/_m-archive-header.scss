@@ -15,7 +15,7 @@
 		line-height: 1.3em;
 		margin: .25em 0;
 	}
-	&.m-archive-header-spill {
+	&.m-archive-header-spill, &.m-archive-header-time {
 		margin-bottom: $standard-page-margin;
 	}
 }
