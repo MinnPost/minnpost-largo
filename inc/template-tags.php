@@ -14,11 +14,13 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 	function minnpost_post_image( $size = 'thumbnail', $attributes = array() ) {
 
 		$image_data = get_minnpost_post_image( $size, $attributes );
-		$image_id = $image_data['image_id'];
-		$image_url = $image_data['image_url'];
-		$image = $image_data['markup'];
+		if ( '' !== $image_data ) {
+			$image_id = $image_data['image_id'];
+			$image_url = $image_data['image_url'];
+			$image = $image_data['markup'];
+		}
 
-		if ( post_password_required() || is_attachment() || ( ! $image_id && ! $image_url ) ) {
+		if ( post_password_required() || is_attachment() || ( ! isset( $image_id ) && ! isset( $image_url ) ) ) {
 			return;
 		}
 
@@ -207,9 +209,11 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 		}
 
 		$image_data = minnpost_get_author_image( $author_id, $size );
-		$image_id = $image_data['image_id'];
-		$image_url = $image_data['image_url'];
-		$image = $image_data['markup'];
+		if ( '' !== $image_data ) {
+			$image_id = $image_data['image_id'];
+			$image_url = $image_data['image_url'];
+			$image = $image_data['markup'];
+		}
 
 		$text = '';
 		if ( 'photo' === $size ) { // full text
@@ -218,7 +222,7 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 			$text = get_post_meta( $author_id, '_mp_author_excerpt', true );
 		}
 
-		if ( post_password_required() || is_attachment() || ( ! $image_id && ! $image_url ) ) {
+		if ( post_password_required() || is_attachment() || ( ! isset( $image_id ) && ! isset( $image_url ) ) ) {
 			return;
 		}
 
@@ -299,13 +303,15 @@ if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
 	function minnpost_get_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false, $link_on = 'title' ) {
 
 		$image_data = minnpost_get_term_image( $category_id, $size );
-		$image_id = $image_data['image_id'];
-		$image_url = $image_data['image_url'];
-		$image = $image_data['markup'];
+		if ( '' !== $image_data ) {
+			$image_id = $image_data['image_id'];
+			$image_url = $image_data['image_url'];
+			$image = $image_data['markup'];
+		}
 
 		$text = minnpost_get_term_text( $category_id, $size );
 
-		if ( post_password_required() || is_attachment() || ( ! $image_id && ! $image_url ) ) {
+		if ( post_password_required() || is_attachment() || ( ! isset( $image_id ) && ! isset( $image_url ) ) ) {
 			return '';
 		}
 
