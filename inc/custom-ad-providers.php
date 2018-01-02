@@ -94,6 +94,6 @@ add_filter( 'acm_display_ad_codes_without_conditionals', '__return_true' );
 
 add_filter( 'acm_ad_code_count', 'minnpost_acm_ad_count' );
 function minnpost_acm_ad_count( $adcount ) {
-	$adcount = 110;
+	$adcount = 200;
 	return $adcount;
 }
