@@ -485,3 +485,64 @@ if ( ! function_exists( 'cmb2_user_fields' ) ) :
 		) );
 	}
 endif;
+
+// add fields to sponsors
+if ( ! function_exists( 'cmb2_sponsor_fields' ) ) :
+	add_action( 'cmb2_init', 'cmb2_sponsor_fields' );
+	function cmb2_sponsor_fields() {
+
+		$object_type = 'cr3ativsponsor';
+
+		$sponsor_info = new_cmb2_box( array(
+			'id'            => 'cr3ativsponsor_box',
+			'title'         => 'Sponsor Information',
+			'object_types'  => array( $object_type ),
+			'context'       => 'normal',
+			'priority'      => 'high',
+		) );
+		$sponsor_info->add_field( array(
+			'name'       => 'Company URL',
+			'id'         => 'cr3ativ_sponsorurl',
+			'type'       => 'text',
+		) );
+		$sponsor_info->add_field( array(
+			'name'       => 'Display Text',
+			'id'         => 'cr3ativ_sponsortext',
+			'type'       => 'text',
+		) );
+
+		/**
+		 * Image settings
+		 */
+		$sponsor_image = new_cmb2_box( array(
+			'id'            => $object_type . '_image_settings',
+			'title'         => 'Image Settings',
+			'object_types'  => array( $object_type ),
+			'context'       => 'normal',
+			'priority'      => 'high',
+		) );
+		$sponsor_image->add_field( array(
+			'name'    => 'Thumbnail Image',
+			'desc'    => 'Upload an image or enter an URL.',
+			'id'      => '_mp_post_thumbnail_image',
+			'type'    => 'file',
+			'options' => array(
+				//'url' => false, // Hide the text input for the url
+			),
+			'text'    => array(
+				//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
+			),
+			// query_args are passed to wp.media's library query.
+			'query_args' => array(
+				'type' => 'image',
+			),
+		) );
+
+	}
+
+	add_action( 'init', 'remove_custom_post_comment' );
+	function remove_custom_post_comment() {
+		remove_post_type_support( 'cr3ativsponsor', 'comments' );
+	}
+
+endif;
