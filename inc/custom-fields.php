@@ -546,4 +546,15 @@ if ( ! function_exists( 'cmb2_sponsor_fields' ) ) :
 		remove_post_type_support( 'cr3ativsponsor', 'trackbacks' );
 	}
 
+	add_filter( 'manage_edit-cr3ativsponsor_columns', 'minnpost_edit_sponsor_columns' );
+	function minnpost_edit_sponsor_columns( $columns ) {
+		$columns = array(
+			'cb' => '<input type="checkbox" />',
+			'title' => __( 'Sponsor Name', 'cr3at_sponsor' ),
+			'sponsor_website' => __( 'Sponsor Website', 'cr3at_sponsor' ),
+			'sponsor_level' => __( 'Sponsor Level' , 'cr3at_sponsor' ),
+		);
+		return $columns;
+	}
+
 endif;
