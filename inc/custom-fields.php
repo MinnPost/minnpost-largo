@@ -540,9 +540,10 @@ if ( ! function_exists( 'cmb2_sponsor_fields' ) ) :
 
 	}
 
-	add_action( 'init', 'remove_custom_post_comment' );
+	add_action( 'init', 'remove_custom_post_comment', 100 );
 	function remove_custom_post_comment() {
 		remove_post_type_support( 'cr3ativsponsor', 'comments' );
+		remove_post_type_support( 'cr3ativsponsor', 'trackbacks' );
 	}
 
 endif;
