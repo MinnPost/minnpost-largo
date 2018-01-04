@@ -211,3 +211,109 @@ if ( ! function_exists( 'column_list' ) ) :
 		return $output;
 	}
 endif;
+
+// add column list shortcode
+if ( ! function_exists( 'mp_sponsors' ) ) :
+	add_shortcode( 'mp_sponsors', 'mp_sponsors' );
+	function mp_sponsors( $atts, $content ) {
+		extract(
+			shortcode_atts(
+				array(
+					'columns' => '4',
+					'image' => 'yes',
+					'title' => 'yes',
+					'link'  => 'yes',
+					'bio' => 'yes',
+					'show' => '',
+					'orderby' => '',
+					'order' => '',
+					'category' => '',
+				),
+				$atts
+			)
+		);
+
+		global $post;
+
+		if ( '' === $category ) {
+			$category = 'all';
+		}
+		if ( '' === $orderby ) {
+			$orderby = 'rand';
+		}
+		if ( '' === $order ) {
+			$order = 'asc';
+		}
+		if ( 'all' !== $category ) {
+			$args = array(
+				'post_type' => 'cr3ativsponsor',
+				'posts_per_page' => $show,
+				'order' => $order,
+				'orderby' => $orderby,
+				'tax_query' => array(
+					array(
+						'taxonomy' => 'cr3ativsponsor_level',
+						'field' => 'slug',
+						'terms' => array( $category ),
+					),
+				),
+			);
+		} else {
+			$args = array(
+				'post_type' => 'cr3ativsponsor',
+				'order' => $order,
+				'orderby' => $orderby,
+				'posts_per_page' => $show,
+			);
+		}
+		query_posts( $args );
+		$output = '';
+		$temp_title = '';
+		$temp_link = '';
+		$temp_excerpt = '';
+		$temp_image = '';
+
+		$output .= '<div class="cr3_sponsorwrapper">';
+		if ( have_posts( $args ) ) :
+			while ( have_posts() ) :
+				the_post();
+				$temp_title = get_the_title( $post->ID );
+				$temp_sponsorurl = get_post_meta( $post->ID, 'cr3ativ_sponsorurl', true );
+				$temp_excerpt = get_the_content( $post->ID );
+				$temp_image = get_the_post_thumbnail( $post->ID, 'full' );
+				if ( '1' === $columns ) {
+					$output .= '<div class="ones-column">';
+				} elseif ( '2' === $columns ) {
+					$output .= '<div class="twos-column">';
+				} elseif ( '3' === $columns ) {
+					$output .= '<div class="threes-column">';
+				} else {
+					$output .= '<div class="fours-column">';
+				}
+				if ( 'yes' === $image ) {
+					if ( 'yes' === $link ) {
+						$output .= '<a href="' . $temp_sponsorurl . '" target="_blank"><div class="cr3_sponsor_image">' . $temp_image . '</div></a>';
+					} else {
+						$output .= '<div class="cr3_sponsor_image">' . $temp_image . '</div>';
+					}
+				}
+				if ( 'yes' === $title ) {
+					if ( 'yes' === $link ) {
+						$output .= '<h2 class="cr3_sponsorname"><a href="' . $temp_sponsorurl . '" target="_blank">' . $temp_title . '</a></h2>';
+					} else {
+						$output .= '<h2 class="cr3_sponsorname">' . $temp_title . '</h2>';
+					}
+				}
+				if ( 'yes' === $bio ) {
+					$output .= '<p>' . $temp_excerpt . '</p>';
+				}
+				$output .= '</div>';
+			endwhile;
+		endif;
+		$output .= '</div>';
+		wp_reset_query();
+		return $output;
+	}
+
+endif;
+
