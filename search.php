@@ -30,10 +30,11 @@ get_header(); ?>
 				} else {
 					$to = $wp_query->found_posts;
 				}
+
 				if ( $from === $to ) {
-					$from_to = $from;
+					$from_to = number_format_i18n( $from );
 				} else {
-					$from_to = $from . ' - ' . $to;
+					$from_to = number_format_i18n( $from ) . ' - ' . number_format_i18n( $to );
 				}
 
 				echo sprintf( 'Showing results %1$s of %2$s for <strong>%3$s</strong>',
