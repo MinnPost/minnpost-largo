@@ -552,11 +552,13 @@ if ( ! function_exists( 'minnpost_get_category_name' ) ) :
 				$cat_id = $category_permalink['category'];
 			} else {
 				$cat_id = $category_permalink;
-				echo 'cat id is ' . $cat_id;
 			}
 			$category = get_category( $cat_id );
 		} else {
 			$categories = get_the_category();
+			if ( empty( $categories ) ) {
+				return '';
+			}
 			$category = $categories[0];
 		}
 		if ( isset( $category->name ) ) {
