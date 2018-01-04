@@ -331,3 +331,18 @@ add_filter('wp_headers', function( $headers, $wp_query ) {
 add_action( 'wp', function() {
 	remove_action( 'wp_head', 'rsd_link' );
 }, 11 );
+
+if ( ! function_exists( 'highlight_search_results' ) ) :
+	function highlight_search_results( $text ) {
+		if ( is_search() ) {
+			$sr = get_query_var( 's' );
+			$highlighted = preg_filter( '/' . preg_quote( $sr ) . '/i', '<span class="a-search-highlight">$0</span>', $text );
+			if ( ! empty( $highlighted ) ) {
+				$text = $highlighted;
+			}
+		}
+		return $text;
+	}
+	add_filter( 'the_excerpt', 'highlight_search_results' );
+	add_filter( 'the_title', 'highlight_search_results' );
+endif;

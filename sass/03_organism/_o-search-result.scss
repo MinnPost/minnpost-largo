@@ -1,0 +1,24 @@
+// smallest screens just display as linear
+
+@media screen and (min-width: $medim-margins-too-small) {
+	.o-search-result {
+		&.m-layout-primary {
+			display: block;
+			width: auto;
+			margin-right: $archive-content-sidebar-padding;
+		}
+	}
+	.search-results .o-site-sidebar {
+	    width: $size__site-sidebar;
+	    min-width: $size__site-sidebar;
+	    margin-left: auto;
+	}
+}
+
+@media screen and (min-width: $max-width-page) {
+	.o-search-result {
+		&.m-layout-primary {
+			max-width: $medium-screen;
+		}
+	}
+}
