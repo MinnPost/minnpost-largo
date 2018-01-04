@@ -22,6 +22,10 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 		if ( false !== strpos( $widget_output, 'm-form-newsletter-shortcode-dc' ) ) {
 			$widget_output = str_replace( 'class="m-widget m-widget-text m-widget-custom-html"', 'class="m-widget m-widget-text m-widget-custom-html m-widget-form-dc"', $widget_output );
 		}
+		// sponsor list
+		if ( false !== strpos( $widget_output, 'a-sponsor-list' ) ) {
+			$widget_output = str_replace( 'class="m-widget m-widget-text m-widget-custom-html"', 'class="m-widget m-widget-text m-widget-custom-html m-widget-sponsor-list"', $widget_output );
+		}
 		$widget_output = str_replace( '</div></div>', '</div></section>', $widget_output );
 
 		$html = '';

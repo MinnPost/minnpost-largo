@@ -273,44 +273,53 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 		$temp_excerpt = '';
 		$temp_image = '';
 
-		$output .= '<div class="cr3_sponsorwrapper">';
+		if ( '1' === $columns ) {
+			$columns_class = 'columns-one';
+		} elseif ( '2' === $columns ) {
+			$columns_class = 'columns-two';
+		} elseif ( '3' === $columns ) {
+			$columns_class = 'columns-three';
+		} else {
+			$columns_class = 'columns-four';
+		}
+
+		$output .= '<ul class="a-sponsor-list a-sponsor-list-' . $columns_class . '">';
 		if ( have_posts( $args ) ) :
 			while ( have_posts() ) :
 				the_post();
 				$temp_title = get_the_title( $post->ID );
 				$temp_sponsorurl = get_post_meta( $post->ID, 'cr3ativ_sponsorurl', true );
-				$temp_excerpt = get_the_content( $post->ID );
-				$temp_image = get_the_post_thumbnail( $post->ID, 'full' );
-				if ( '1' === $columns ) {
-					$output .= '<div class="ones-column">';
-				} elseif ( '2' === $columns ) {
-					$output .= '<div class="twos-column">';
-				} elseif ( '3' === $columns ) {
-					$output .= '<div class="threes-column">';
-				} else {
-					$output .= '<div class="fours-column">';
-				}
-				if ( 'yes' === $image ) {
-					if ( 'yes' === $link ) {
-						$output .= '<a href="' . $temp_sponsorurl . '" target="_blank"><div class="cr3_sponsor_image">' . $temp_image . '</div></a>';
-					} else {
-						$output .= '<div class="cr3_sponsor_image">' . $temp_image . '</div>';
-					}
+				$temp_excerpt = get_post_meta( $post->ID, 'cr3ativ_sponsortext', true );
+				$image_data = get_minnpost_post_image();
+				$temp_image = $image_data['markup'];
+				$output .= '<li class="a-sponsor">';
+
+				if ( 'yes' === $link ) {
+					$output .= '<a href="' . $temp_sponsorurl . '">';
 				}
 				if ( 'yes' === $title ) {
-					if ( 'yes' === $link ) {
-						$output .= '<h2 class="cr3_sponsorname"><a href="' . $temp_sponsorurl . '" target="_blank">' . $temp_title . '</a></h2>';
-					} else {
-						$output .= '<h2 class="cr3_sponsorname">' . $temp_title . '</h2>';
+					$output .= '<h2 class="cr3_sponsorname">' . $temp_title . '</h2>';
+				}
+				if ( 'yes' === $image ) {
+					$output .= '<figure>';
+					if ( 'yes' === $bio ) {
+						$output .= '<figcaption>' . $temp_excerpt . '</figcaption>';
+					}
+					$output .= $temp_image;
+					$output .= '</figure>';
+				} else {
+					if ( 'yes' === $bio ) {
+						$output .= '<p>' . $temp_excerpt . '</p>';
 					}
 				}
-				if ( 'yes' === $bio ) {
-					$output .= '<p>' . $temp_excerpt . '</p>';
+
+				if ( 'yes' === $link ) {
+					$output .= '</a>';
 				}
-				$output .= '</div>';
+				$output .= '</li>';
 			endwhile;
 		endif;
-		$output .= '</div>';
+		$output .= '</ul>';
 		wp_reset_query();
 		return $output;
 	}

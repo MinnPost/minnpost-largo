@@ -39,5 +39,6 @@ if ( ! function_exists( 'minnpost_largo_remove_scripts' ) && ! function_exists( 
 		wp_dequeue_style( 'minnpost-donation-progress-widget' );
 		wp_enqueue_style( 'minnpost-style', get_theme_file_uri() . '/style.min.css', array(), filemtime(get_template_directory() . '/style.min.css'), false );
 		wp_dequeue_style( 'popular-widget' );
+		wp_dequeue_style( 'creativ_sponsor' );
 	}
 endif;
