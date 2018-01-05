@@ -103,8 +103,10 @@ main .ad-x108,
 main .ad-x109,
 main .ad-x110 {
 	margin: $standard-page-margin 0;
-	//width: $ad-embed-width;
-	//height: $ad-embed-height;
+	&.appnexus-ad-placeholder {
+		width: $ad-embed-width;
+		height: $ad-embed-height;
+	}
 }
 
 .ad-middle3 {
