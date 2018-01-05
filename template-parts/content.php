@@ -9,7 +9,15 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post' ); ?>>
+<?php
+if ( false === (bool) get_post_meta( get_the_ID(), '_mp_post_old_post_new_layout', false ) && get_the_date( 'U' ) < strtotime( '2012-02-14' ) ) {
+	$old_layout_class = ' m-post-old';
+} else {
+	$old_layout_class = '';
+}
+?>
+
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post' . $old_layout_class ); ?>>
 
 	<div class="m-post-classification">
 		<?php minnpost_category_breadcrumb(); ?>
@@ -54,13 +62,42 @@
 	<?php echo do_shortcode( '[newsletter_embed newsletter="default"]' ); ?>
 
 	<?php
-	$tags = get_the_tag_list( '<aside class="a-related-tags"><h4>Related Tags:</h4><ul><li>', '</li><li>', '</li></ul></aside>' );
-	echo $tags;
+	//minnpost_related_multimedia();
+	//minnpost_related_content();
 	?>
 
 	<?php
 	$tags = get_the_tag_list( '<aside class="a-related-tags"><h4>Related Tags:</h4><ul><li>', '</li><li>', '</li></ul></aside>' );
 	echo $tags;
+	?>
+
+	<?php
+	$coauthors = get_coauthors( get_the_ID() );
+	$author_info = '';
+	foreach ( $coauthors as $coauthor ) {
+		$author_id = $coauthor->ID;
+		$author_info .= minnpost_get_author_figure( $author_id, 'thumbnail', true, true );
+	}
+	if ( '' !== $author_info ) {
+	?>
+	<aside class="m-author-info m-author-info-excerpt<?php if ( is_singular() ) { ?> m-author-info-singular<?php } ?><?php if ( is_single() ) { ?> m-author-info-single<?php } ?>">
+		<h3 class="a-about-author">About the author:</h3>
+		<?php
+		foreach ( $coauthors as $coauthor ) :
+			$author_id = $coauthor->ID;
+			minnpost_author_figure( $author_id, 'thumbnail', true, true );
+		endforeach;
+		?>
+	</aside><!-- .m-author-info -->
+	<?php
+	}
+	?>
+
+	<?php
+	// If comments are open or we have at least one comment, load up the comment template.
+	if ( comments_open() || get_comments_number() ) :
+		comments_template();
+	endif;
 	?>
 
 </article><!-- #post-## -->
