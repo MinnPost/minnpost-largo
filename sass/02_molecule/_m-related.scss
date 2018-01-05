@@ -1,0 +1,35 @@
+.m-related {
+	padding-top: 2px;
+	.a-related-list {
+		@include clearfix;
+		background: $color__minnpost-white;
+		border: 1px solid $color__gray-lightest;
+		margin: 0 0 $standard-page-margin 0;
+		padding: $archive-content-sidebar-padding;
+		list-style: none;
+		li {
+		    margin-bottom: $standard-page-margin;
+		    border-bottom: 1px solid $color__black;
+		    @include clearfix;
+			&:last-child {
+				margin-bottom: 0;
+				border-bottom: 0;
+			}
+			.m-post-image {
+				float: left;
+				margin: 0;
+				a, a:hover, a:focus, a:active {
+					text-decoration: none;
+					color: $color__base-font-color;
+				}
+				img {
+					margin: 0 $standard-page-margin 0 0;
+					max-width: 130px; // for older items without proper thumbnails
+					&:last-child {
+						margin-bottom: $standard-page-margin;
+					}
+				}
+			}
+		}
+	}
+}
