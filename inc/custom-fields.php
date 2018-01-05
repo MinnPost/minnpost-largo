@@ -614,3 +614,94 @@ if ( ! function_exists( 'cmb2_sponsor_fields' ) ) :
 	}
 
 endif;
+
+// add fields to events
+if ( ! function_exists( 'cmb2_event_fields' ) ) :
+	add_action( 'cmb2_init', 'cmb2_event_fields' );
+	function cmb2_event_fields() {
+
+		$object_type = 'tribe_events';
+
+		/**
+		 * Image settings
+		 */
+		$image_settings = new_cmb2_box( array(
+			'id'            => $object_type . '_image_settings',
+			'title'         => 'Image Settings',
+			'object_types'  => array( $object_type ),
+			'context'       => 'normal',
+			'priority'      => 'high',
+		) );
+		$image_settings->add_field( array(
+			'name'    => 'Thumbnail Image',
+			'desc'    => 'Upload an image or enter an URL.',
+			'id'      => '_mp_post_thumbnail_image',
+			'type'    => 'file',
+			'options' => array(
+				//'url' => false, // Hide the text input for the url
+			),
+			'text'    => array(
+				//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
+			),
+			// query_args are passed to wp.media's library query.
+			'query_args' => array(
+				'type' => 'image',
+			),
+		) );
+		$image_settings->add_field( array(
+			'name'       => 'Homepage Image Size',
+			'id'         => '_mp_post_homepage_image_size',
+			'type'       => 'select',
+			'show_option_none' => true,
+			'desc'       => 'Select an option',
+			'default'    => 'feature-large',
+			'options'           => array(
+				'feature-medium' => __( 'Medium', 'cmb2' ),
+				'none' => __( 'Do not display image', 'cmb2' ),
+				'feature-large' => __( 'Large', 'cmb2' ),
+			),
+		) );
+		$image_settings->add_field( array(
+			'name'    => 'Main Image',
+			'desc'    => 'Upload an image or enter an URL.',
+			'id'      => '_mp_post_main_image',
+			'type'    => 'file',
+			'preview_size' => array( 130, 85 ),
+			'options' => array(
+				//'url' => false, // Hide the text input for the url
+			),
+			'text'    => array(
+				//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
+			),
+			// query_args are passed to wp.media's library query.
+			'query_args' => array(
+				'type' => 'image',
+			),
+		) );
+
+		/**
+		 * Sidebar settings
+		 */
+		$sidebar_settings = new_cmb2_box( array(
+			'id'            => $object_type . '_sidebar_options',
+			'title'         => 'Sidebar Options',
+			'object_types'  => array( $object_type ),
+			'context'       => 'normal',
+			'priority'      => 'low',
+		) );
+		$sidebar_settings->add_field( array(
+			'name'       => 'Remove whole right sidebar from this post?',
+			'id'         => '_mp_remove_right_sidebar',
+			'type'       => 'checkbox',
+			'desc'       => '',
+		) );
+		$sidebar_settings->add_field( array(
+			'name'    => 'Sidebar Content Box',
+			'desc'    => 'Content for a single right sidebar box',
+			'id'      => '_mp_post_sidebar',
+			'type'    => 'wysiwyg',
+		) );
+
+	}
+
+endif;
