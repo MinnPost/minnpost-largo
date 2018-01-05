@@ -6,6 +6,7 @@
 		img {
 			margin: 10px 20px 10px 10px;
 			float: left;
+			max-width: 190px;
 		}
 		figcaption {
 			@include clearfix;
@@ -27,6 +28,9 @@
 	&.m-author-info-single .a-author-figure {
 		border: 1px solid $color__gray-lightest;
 		margin-top: 10px;
+		img {
+			max-width: 75px; // in case the author has an image but not a thumbnail
+		}
 		figcaption {
 			margin-bottom: 25px;
 			padding-bottom: 20px;

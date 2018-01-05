@@ -219,7 +219,7 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 		if ( 'photo' === $size ) { // full text
 			$text = get_post_meta( $author_id, '_mp_author_bio', true );
 		} else { // excerpt
-			$text = get_post_meta( $author_id, '_mp_author_excerpt', true );
+			$text = wpautop( get_post_meta( $author_id, '_mp_author_excerpt', true ) );
 		}
 
 		if ( post_password_required() || is_attachment() || ( ! isset( $image_id ) && ! isset( $image_url ) ) ) {
@@ -261,6 +261,11 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 			$image_url = get_post_meta( $author_id, '_mp_author_image_' . $size, true );
 		}
 		$image_id = get_post_meta( $author_id, '_mp_author_image_id', true );
+
+		// some authors have an image, but it does not have a thumbnail
+		if ( '' !== $image_id && '' === $image_url && 'thumbnail' === $size ) {
+			$image_url = get_post_meta( $author_id, '_mp_author_image', true );
+		}
 
 		if ( post_password_required() || is_attachment() || ( ! $image_id && ! $image_url ) ) {
 			return '';
