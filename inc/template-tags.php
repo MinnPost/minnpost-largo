@@ -11,9 +11,11 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 	/**
 	 * Outputs story image, whether large or various kinds of thumbnail, depending on where it is called
 	 */
-	function minnpost_post_image( $size = 'thumbnail', $attributes = array() ) {
-
-		$image_data = get_minnpost_post_image( $size, $attributes );
+	function minnpost_post_image( $size = 'thumbnail', $attributes = array(), $id = '' ) {
+		if ( '' === $id ) {
+			$id = get_the_ID();
+		}
+		$image_data = get_minnpost_post_image( $size, $attributes, $id );
 		if ( '' !== $image_data ) {
 			$image_id = $image_data['image_id'];
 			$image_url = $image_data['image_url'];
@@ -46,7 +48,7 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 		<?php elseif ( is_singular( 'newsletter' ) ) : ?>
 			<?php echo $image; ?>
 		<?php else : ?>
-			<a class="m-post-image m-post-thumbnail" href="<?php the_permalink(); ?>" aria-hidden="true">
+			<a class="m-post-image m-post-thumbnail" href="<?php the_permalink( $id ); ?>" aria-hidden="true">
 				<?php
 				echo $image;
 				?>
@@ -59,11 +61,14 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 	/**
 	 * Returns story image, whether large or various kinds of thumbnail, depending on where it is called
 	 */
-	function get_minnpost_post_image( $size = 'thumbnail', $attributes = array() ) {
+	function get_minnpost_post_image( $size = 'thumbnail', $attributes = array(), $id = '' ) {
+		if ( '' === $id ) {
+			$id = get_the_ID();
+		}
 		// large is the story detail image. this is a built in size in wordpress
 		// home has its own size field
 		if ( is_home() && 'feature' === $size ) {
-			$size = esc_html( get_post_meta( get_the_ID(), '_mp_post_homepage_image_size', true ) );
+			$size = esc_html( get_post_meta( $id, '_mp_post_homepage_image_size', true ) );
 		} elseif ( is_home() && 'thumbnail' === $size ) {
 			$size = 'thumbnail';
 		} elseif ( is_single() && ! is_singular( 'newsletter' ) && ( ! isset( $attributes['location'] ) || 'sidebar' !== $attributes['location'] ) ) {
@@ -71,14 +76,14 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 		}
 
 		if ( 'large' === $size ) {
-			$image_url = get_post_meta( get_the_ID(), '_mp_post_main_image', true );
-			$image_id = get_post_meta( get_the_ID(), '_mp_post_main_image_id', true );
+			$image_url = get_post_meta( $id, '_mp_post_main_image', true );
+			$image_id = get_post_meta( $id, '_mp_post_main_image_id', true );
 		} elseif ( 'thumbnail' !== $size ) {
-			$image_url = get_post_meta( get_the_ID(), '_mp_post_thumbnail_image_' . $size, true );
-			$image_id = get_post_meta( get_the_ID(), '_mp_post_main_image_id', true );
+			$image_url = get_post_meta( $id, '_mp_post_thumbnail_image_' . $size, true );
+			$image_id = get_post_meta( $id, '_mp_post_main_image_id', true );
 		} else {
-			$image_url = get_post_meta( get_the_ID(), '_mp_post_thumbnail_image', true );
-			$image_id = get_post_meta( get_the_ID(), '_mp_post_thumbnail_image_id', true );
+			$image_url = get_post_meta( $id, '_mp_post_thumbnail_image', true );
+			$image_id = get_post_meta( $id, '_mp_post_thumbnail_image_id', true );
 		}
 
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
@@ -130,17 +135,20 @@ if ( ! function_exists( 'minnpost_posted_on' ) ) :
 	/**
 	 * Prints HTML with meta information for the current post-date/time and author.
 	 */
-	function minnpost_posted_on() {
+	function minnpost_posted_on( $id = '' ) {
+		if ( '' === $id ) {
+			$id = get_the_ID();
+		}
 		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
 		/*if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
 			$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
 		}*/
 
 		$time_string = sprintf( $time_string,
-			esc_attr( get_the_date( 'c' ) ),
-			esc_html( get_the_date() ),
-			esc_attr( get_the_modified_date( 'c' ) ),
-			esc_html( get_the_modified_date() )
+			esc_attr( get_the_date( 'c' ), $id ),
+			esc_html( get_the_date( '', $id ) ),
+			esc_attr( get_the_modified_date( 'c', $id ) ),
+			esc_html( get_the_modified_date( '', $id ) )
 		);
 
 		$posted_on = sprintf(
@@ -157,14 +165,17 @@ if ( ! function_exists( 'minnpost_posted_by' ) ) :
 	/**
 	 * Integrate Co-Authors Plus
 	 */
-	function minnpost_posted_by() {
-		if ( ! empty( esc_html( get_post_meta( get_the_ID(), '_mp_subtitle_settings_byline', true ) ) ) ) :
-			printf( esc_html( get_post_meta( get_the_ID(), '_mp_subtitle_settings_byline', true ) ) );
+	function minnpost_posted_by( $id = '' ) {
+		if ( '' === $id ) {
+			$id = get_the_ID();
+		}
+		if ( ! empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) ) ) :
+			printf( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) );
 		else :
 			if ( function_exists( 'coauthors_posts_links' ) ) :
 				printf( 'By ' . coauthors_posts_links( ',', ',', null, null, false ) );
 			else :
-				printf( 'By <a href="' . get_the_author_posts_url( get_the_author_meta( 'ID' ) ) . '">' . the_author() . '</a>' );
+				printf( 'By <a href="' . get_the_author_posts_url( get_the_author_meta( 'ID' ) ) . '">' . the_author( $id ) . '</a>' );
 			endif;
 		endif;
 	}
@@ -174,14 +185,17 @@ if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
 	/**
 	 * Integrate Co-Authors Plus
 	 */
-	function minnpost_get_posted_by() {
-		if ( ! empty( esc_html( get_post_meta( get_the_ID(), '_mp_subtitle_settings_byline', true ) ) ) ) :
-			return esc_html( get_post_meta( get_the_ID(), '_mp_subtitle_settings_byline', true ) );
+	function minnpost_get_posted_by( $id = '' ) {
+		if ( '' === $id ) {
+			$id = get_the_ID();
+		}
+		if ( ! empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) ) ) :
+			return esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) );
 		else :
 			if ( function_exists( 'coauthors_posts_links' ) ) :
 				return 'By ' . coauthors_posts_links( ',', ',', null, null, false );
 			else :
-				return 'By <a href="' . get_the_author_posts_url( get_the_author_meta( 'ID' ) ) . '">' . the_author() . '</a>';
+				return 'By <a href="' . get_the_author_posts_url( get_the_author_meta( 'ID' ) ) . '">' . the_author( $id ) . '</a>';
 			endif;
 		endif;
 	}
@@ -487,7 +501,10 @@ if ( ! function_exists( 'minnpost_edit_link' ) ) :
 	/**
 	 * Prints HTML for edit link to users with that permission
 	 */
-	function minnpost_edit_link() {
+	function minnpost_edit_link( $id = '' ) {
+		if ( '' === $id ) {
+			$id = get_the_ID();
+		}
 		edit_post_link(
 			sprintf(
 				/* translators: %s: Name of current post */
@@ -495,7 +512,8 @@ if ( ! function_exists( 'minnpost_edit_link' ) ) :
 				the_title( '<span class="screen-reader-text">"', '"</span>', false )
 			),
 			'<span class="edit-link">',
-			'</span>'
+			'</span>',
+			$id
 		);
 	}
 endif;
