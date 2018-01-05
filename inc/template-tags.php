@@ -31,7 +31,7 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 		$caption = wp_get_attachment_caption( $image_id );
 		$credit = get_media_credit_html( $image_id );
 
-		if ( is_singular() && ! is_singular( 'newsletter' ) ) : ?>
+		if ( is_singular() && ! is_singular( 'newsletter' ) && ( ! isset( $attributes['location'] ) || 'related' !== $attributes['location'] ) ) : ?>
 			<figure class="m-post-image m-post-image-<?php echo $size; ?>">
 				<?php echo $image; ?>
 				<?php if ( '' !== $caption || '' !== $credit ) { ?>
@@ -71,8 +71,10 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 			$size = esc_html( get_post_meta( $id, '_mp_post_homepage_image_size', true ) );
 		} elseif ( is_home() && 'thumbnail' === $size ) {
 			$size = 'thumbnail';
-		} elseif ( is_single() && ! is_singular( 'newsletter' ) && ( ! isset( $attributes['location'] ) || 'sidebar' !== $attributes['location'] ) ) {
+		} elseif ( is_single() && ! is_singular( 'newsletter' ) && ( ! isset( $attributes['location'] ) || ( 'sidebar' !== $attributes['location'] && 'related' !== $attributes['location'] ) ) ) {
 			$size = 'large';
+		} else {
+			$size = $size;
 		}
 
 		if ( 'large' === $size ) {
