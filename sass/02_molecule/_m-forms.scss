@@ -63,6 +63,13 @@
 	position: relative;
 }
 
+// gravity forms styles
+.gform_confirmation_wrapper {
+	margin: 16px 0; // these are the same as the form wrapper
+	max-width: 100%;
+}
+
+
 // media queries for forms
 @media screen and (min-width: $more-than-logo-screen) {
 	.m-secondary-navigation .search-form {
