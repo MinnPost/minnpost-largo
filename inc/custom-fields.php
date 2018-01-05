@@ -191,14 +191,14 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		/**
 		 * Image settings
 		 */
-		$post_setup = new_cmb2_box( array(
+		$image_settings = new_cmb2_box( array(
 			'id'            => $object_type . '_image_settings',
 			'title'         => 'Image Settings',
 			'object_types'  => array( $object_type ),
 			'context'       => 'normal',
 			'priority'      => 'high',
 		) );
-		$post_setup->add_field( array(
+		$image_settings->add_field( array(
 			'name'    => 'Thumbnail Image',
 			'desc'    => 'Upload an image or enter an URL.',
 			'id'      => '_mp_post_thumbnail_image',
@@ -214,7 +214,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'type' => 'image',
 			),
 		) );
-		$post_setup->add_field( array(
+		$image_settings->add_field( array(
 			'name'       => 'Homepage Image Size',
 			'id'         => '_mp_post_homepage_image_size',
 			'type'       => 'select',
@@ -227,7 +227,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'feature-large' => __( 'Large', 'cmb2' ),
 			),
 		) );
-		$post_setup->add_field( array(
+		$image_settings->add_field( array(
 			'name'    => 'Main Image',
 			'desc'    => 'Upload an image or enter an URL.',
 			'id'      => '_mp_post_main_image',
@@ -248,38 +248,41 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		/**
 		 * Subtitle settings
 		 */
-		$post_setup = new_cmb2_box( array(
+		$subtitle_settings = new_cmb2_box( array(
 			'id'            => 'subtitle_settings',
 			'title'         => 'Subtitle Settings',
 			'object_types'  => array( $object_type ),
 			'context'       => 'after_title',
 			'priority'      => 'high',
 		) );
-		$post_setup->add_field( array(
+		$subtitle_settings->add_field( array(
 			'name'       => 'Deck',
 			'id'         => '_mp_subtitle_settings_deck',
 			'type'       => 'text',
 		) );
-		$post_setup->add_field( array(
+		$subtitle_settings->add_field( array(
 			'name'       => 'Byline',
 			'id'         => '_mp_subtitle_settings_byline',
 			'type'       => 'text',
 		) );
 
-		$post_setup = new_cmb2_box( array(
+		/**
+		 * Sidebar settings
+		 */
+		$sidebar_settings = new_cmb2_box( array(
 			'id'            => $object_type . '_sidebar_options',
 			'title'         => 'Sidebar Options',
 			'object_types'  => array( $object_type ),
 			'context'       => 'normal',
 			'priority'      => 'low',
 		) );
-		$post_setup->add_field( array(
+		$sidebar_settings->add_field( array(
 			'name'       => 'Remove whole right sidebar from this post?',
 			'id'         => '_mp_remove_right_sidebar',
 			'type'       => 'checkbox',
 			'desc'       => '',
 		) );
-		$post_setup->add_field( array(
+		$sidebar_settings->add_field( array(
 			'name'    => 'Sidebar Content Box',
 			'desc'    => 'Content for a single right sidebar box',
 			'id'      => '_mp_post_sidebar',
