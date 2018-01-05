@@ -41,6 +41,14 @@ if ( false === (bool) get_post_meta( get_the_ID(), '_mp_post_old_post_new_layout
 		if ( 'post' === get_post_type() ) :
 		?>
 
+		<div class="m-entry-share m-entry-share-top">
+			<?php
+			if ( function_exists( 'sharing_display' ) ) {
+				sharing_display( '', true );
+			}
+			?>
+		</div>
+
 		<div class="m-entry-meta">
 			<?php minnpost_posted_by(); ?> | <?php minnpost_posted_on(); ?> <?php minnpost_edit_link(); ?>
 		</div>
@@ -58,6 +66,14 @@ if ( false === (bool) get_post_meta( get_the_ID(), '_mp_post_old_post_new_layout
 	<div class="m-entry-content">
 		<?php the_content(); ?>
 	</div><!-- .m-entry-content -->
+
+	<div class="m-entry-share m-entry-share-bottom">
+		<?php
+		if ( function_exists( 'sharing_display' ) ) {
+			sharing_display( '', true );
+		}
+		?>
+	</div>
 
 	<?php echo do_shortcode( '[newsletter_embed newsletter="default"]' ); ?>
 

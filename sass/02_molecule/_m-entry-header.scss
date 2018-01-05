@@ -5,7 +5,15 @@
 		text-transform: uppercase;
 		font-weight: bold;
 		line-height: 1.3em;
-		margin: .25em 0;
+		margin: 0.25em 0;
+	}
+}
+.m-entry-header-single {
+	.m-entry-meta {
+		margin-bottom: 1em;
+	}
+	.m-entry-share {
+		float: right;
 	}
 }
 .m-entry-header-singular {

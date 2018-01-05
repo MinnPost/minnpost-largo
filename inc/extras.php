@@ -346,3 +346,22 @@ if ( ! function_exists( 'highlight_search_results' ) ) :
 	add_filter( 'the_excerpt', 'highlight_search_results' );
 	add_filter( 'the_title', 'highlight_search_results' );
 endif;
+
+// jetpack stuff
+if ( ! function_exists( 'share_email_allowed' ) ) :
+	add_filter( 'sharing_services_email', 'share_email_allowed' );
+	function share_email_allowed() {
+		return true;
+	}
+endif;
+
+if ( ! function_exists( 'jptweak_remove_share' ) ) :
+	add_action( 'loop_start', 'jptweak_remove_share' );
+	function jptweak_remove_share() {
+		remove_filter( 'the_content', 'sharing_display', 19 );
+		remove_filter( 'the_excerpt', 'sharing_display', 19 );
+		if ( class_exists( 'Jetpack_Likes' ) ) {
+			remove_filter( 'the_content', array( Jetpack_Likes::init(), 'post_likes' ), 30, 1 );
+		}
+	}
+endif;
