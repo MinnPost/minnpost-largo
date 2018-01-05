@@ -203,6 +203,52 @@ if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
 	}
 endif;
 
+if ( ! function_exists( 'minnpost_related' ) ) :
+	/**
+	 * Prints related content items
+	 */
+	function minnpost_related( $type = 'content' ) {
+		if ( ! empty( esc_html( get_post_meta( get_the_ID(), '_mp_related_' . $type, true ) ) ) ) :
+		?>
+		<aside class="m-related m-related-<?php echo $type; ?>">
+			<h3 class="a-related-title a-related-title-<?php echo $type; ?>">Related <?php echo ucfirst( $type ); ?>:</h3>
+			<ul class="a-related-list a-related-list-<?php echo $type; ?>">
+				<?php
+				$ids = explode( ',', esc_html( get_post_meta( get_the_ID(), '_mp_related_' . $type, true ) ) );
+				foreach ( $ids as $id ) :
+					//$post = get_post( $id, ARRAY_A );
+				?>
+					<li>
+						<?php
+							minnpost_post_image(
+								'thumbnail',
+								array(
+									'location' => 'related',
+								),
+								$id
+							);
+						?>
+						<p class="a-post-category a-zone-item-category"><?php echo minnpost_get_category_name( $id ); ?></p>
+						<header class="m-entry-header">
+							<h3 class="a-entry-title"><a href="<?php echo get_permalink( $id ); ?>"><?php echo get_the_title( $id ); ?></a></h3>
+							<?php if ( 'post' === get_post_type( $id ) ) : ?>
+								<div class="m-entry-meta">
+									<?php minnpost_posted_by( $id ); ?> | <?php minnpost_posted_on( $id ); ?> <?php minnpost_edit_link( $id ); ?>
+								</div>
+								<?php endif; ?>
+						</header>
+						<div class="m-entry-excerpt"><?php echo wpautop( get_the_excerpt( $id ) ); ?></div>
+					</li>
+				<?php
+				endforeach;
+				?>
+			</ul>
+		</aside>
+		<?php
+	endif;
+	}
+endif;
+
 if ( ! function_exists( 'minnpost_author_figure' ) ) :
 	/**
 	 * Outputs author image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
