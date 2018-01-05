@@ -289,6 +289,41 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'type'    => 'wysiwyg',
 		) );
 
+		/**
+		 * Related content settings
+		 */
+		$related_settings = new_cmb2_box( array(
+			'id'            => $object_type . '_related_content_options',
+			'title'         => 'Related Content Options',
+			'object_types'  => array( $object_type ),
+			'context'       => 'normal',
+			'priority'      => 'low',
+		) );
+		$related_settings->add_field( array(
+			'name'       => 'Show related content?',
+			'id'         => '_mp_show_related_content',
+			'type'       => 'checkbox',
+			'desc'       => '',
+		) );
+		$related_settings->add_field( array(
+			'name'       => 'Related Multimedia',
+			'id'         => '_mp_related_multimedia',
+			'type'    => 'custom_attached_posts',
+			'options' => array(
+				'show_thumbnails' => false, // Show thumbnails on the left
+				'filter_boxes'    => true, // Show a text box for filtering the results
+				'query_args'      => array(
+					'posts_per_page' => 10,
+					'post_type'      => 'post',
+				), // override the get_posts args
+			),
+			'attributes' => array(
+				'required'            => false,
+				'data-conditional-id' => '_mp_show_related_content',
+				'data-conditional-value' => 'on',
+			),
+		) );
+
 	}
 
 	add_image_size( 'post-feature', 190, 9999 );
