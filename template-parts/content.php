@@ -62,8 +62,8 @@ if ( false === (bool) get_post_meta( get_the_ID(), '_mp_post_old_post_new_layout
 	<?php echo do_shortcode( '[newsletter_embed newsletter="default"]' ); ?>
 
 	<?php
-	//minnpost_related_multimedia();
-	//minnpost_related_content();
+	minnpost_related( 'multimedia' );
+	minnpost_related( 'content' );
 	?>
 
 	<?php
