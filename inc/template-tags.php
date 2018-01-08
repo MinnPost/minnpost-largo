@@ -552,6 +552,9 @@ if ( ! function_exists( 'minnpost_edit_link' ) ) :
 	function minnpost_edit_link( $id = '' ) {
 		if ( '' === $id ) {
 			$id = get_the_ID();
+			if ( 0 === $id ) {
+				return;
+			}
 		}
 		edit_post_link(
 			sprintf(
