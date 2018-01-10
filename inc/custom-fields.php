@@ -534,8 +534,32 @@ if ( ! function_exists( 'cmb2_user_fields' ) ) :
 			'priority'      => 'low',
 		) );
 		$user_setup->add_field( array(
+			'name'       => 'Street Address',
+			'id'         => '_street_address',
+			'type'       => 'text',
+			'desc'       => '',
+		) );
+		$user_setup->add_field( array(
+			'name'       => 'City',
+			'id'         => '_city',
+			'type'       => 'text',
+			'desc'       => '',
+		) );
+		$user_setup->add_field( array(
+			'name'       => 'State',
+			'id'         => '_state',
+			'type'       => 'text',
+			'desc'       => '',
+		) );
+		$user_setup->add_field( array(
 			'name'       => 'Zip Code',
 			'id'         => '_zip_code',
+			'type'       => 'text',
+			'desc'       => '',
+		) );
+		$user_setup->add_field( array(
+			'name'       => 'Country',
+			'id'         => '_country',
 			'type'       => 'text',
 			'desc'       => '',
 		) );
