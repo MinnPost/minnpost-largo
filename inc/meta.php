@@ -23,13 +23,13 @@ if ( ! function_exists( 'minnpost_largo_get_title' ) ) :
 			$title = get_the_archive_title();
 		} elseif ( is_author() ) {
 			$author = get_queried_object();
-    		$id = $author->ID;
-    		$title = get_the_title( $id );
+			$id = $author->ID;
+			$title = get_the_title( $id );
 		} else {
 			$title = '';
 		}
 		return $title;
-    }
+	}
 endif;
 
 if ( ! function_exists( 'minnpost_largo_get_description' ) ) :
@@ -43,7 +43,7 @@ if ( ! function_exists( 'minnpost_largo_get_description' ) ) :
 			$excerpt = minnpost_get_term_text( $id );
 		} elseif ( is_author() ) {
 			$author = get_queried_object();
-    		$id = $author->ID;
+			$id = $author->ID;
 			$excerpt = get_post_meta( $id, '_mp_author_excerpt', true );
 		} else {
 			$excerpt = '';
@@ -68,7 +68,7 @@ if ( ! function_exists( 'minnpost_largo_get_og_image' ) ) :
 			}
 		} elseif ( is_author() ) {
 			$author = get_queried_object();
-    		$id = $author->ID;
+			$id = $author->ID;
 			$image_data = minnpost_get_author_image( $id, 'photo' );
 			if ( '' !== $image_data ) {
 				$image_url = $image_data['image_url'];
@@ -80,7 +80,7 @@ endif;
 
 
 if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
-	add_action('wp_head', 'minnpost_largo_add_meta_tags');
+	add_action( 'wp_head', 'minnpost_largo_add_meta_tags' );
 	function minnpost_largo_add_meta_tags() {
 	?>
 		<meta property="og:site_name" content="<?php echo get_bloginfo( 'name' ); ?>">
