@@ -24,6 +24,11 @@ require get_stylesheet_directory() . '/inc/custom-settings.php';
 require get_stylesheet_directory() . '/inc/menus.php';
 
 /**
+ * User account functionality
+ */
+require get_stylesheet_directory() . '/inc/user-accounts.php';
+
+/**
  * Custom content types
  */
 require get_stylesheet_directory() . '/inc/custom-types.php';
