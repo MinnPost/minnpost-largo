@@ -63,6 +63,14 @@
 	position: relative;
 }
 
+.m-form-standalone {
+	fieldset {
+		border: 0;
+		margin: 0;
+		padding: 0;
+	}
+}
+
 // gravity forms styles
 .gform_confirmation_wrapper {
 	margin: 16px 0; // these are the same as the form wrapper
