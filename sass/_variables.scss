@@ -2,6 +2,7 @@
 $_color-base-gray: rgb(122,122,122); // 7a7a7a
 $_color-base-red: rgb(128,16,25); // 801018
 $_color-base-blue: rgb(0,132,168); // 0084a8
+$_color-base-yellow: rgb(251, 211, 65); // FBD341
 $palettes: (
     grey: (
         base:  $_color-base-gray,
@@ -58,6 +59,7 @@ $color__minnpost-platinum: #e5e4e2;
 
 // more colors
 $color__minnpost-green: #469B61;
+$color__minnpost-yellow: #FBD341; // 251, 211, 65
 $color__minnpost-red-error: #c00; // probably?
 $color__minnpost-red-required: #c00;
 
