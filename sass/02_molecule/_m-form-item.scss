@@ -4,7 +4,7 @@
 
 .m-form-standalone .m-form-item {
 	margin-bottom: 1.25em;
-	label, input, select, textarea, span {
+	label, input:not([type=checkbox]):not([type=radio]), select, textarea, span {
 		display: block;
 	}
 	span.a-form-item-required {
@@ -14,7 +14,7 @@
 		margin-bottom: 0.375em;
 		line-height: 1.5em;
 	}
-	input, select, textarea {
+	input:not([type=checkbox]):not([type=radio]), select, textarea {
 		padding: 0.5em;
 		-webkit-appearance: none;
 		-webkit-border-radius: 0;
@@ -22,6 +22,9 @@
 		width: 100%;
 		max-width: 100%;
 		margin-bottom: 0.375em;
+	}
+	input[type="checkbox"], input[type="radio"] {
+		display: inline-block;
 	}
 	p, span {
 		margin-bottom: 0.375em;
