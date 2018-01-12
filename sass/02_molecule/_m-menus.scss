@@ -149,11 +149,16 @@
 	}
 }
 
+#navigation-featured-login {
+	display: flex;
+	padding: 8px;
+	background: $color__minnpost-white;
+}
+
 .m-featured-navigation {
 	display: none;
 	justify-content: flex-start;
 	line-height: normal;
-	padding: 8px;
 	background: $color__minnpost-white;
 	.a-nav-label {
 		text-transform: uppercase;
@@ -179,7 +184,10 @@
 	}
 }
 
-// still going to need a menu for login stuff at some point
+#navigation-login {
+	margin-left: auto;
+	float: right;
+}
 
 .m-pagination {
 	max-width: 100%;

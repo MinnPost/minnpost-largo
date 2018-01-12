@@ -93,13 +93,37 @@
 						'fallback_cb' => '__return_false',
 					)
 				);
+				$login_menu = wp_nav_menu(
+					array(
+						'theme_location' => 'login',
+						'menu_id' => 'login-menu',
+						'depth' => 1,
+						'container' => false,
+						'walker' => new Minnpost_Walker_Nav_Menu,
+						'item_classes' => 'values',
+						'sub_menu' => true,
+						'echo' => false,
+						'fallback_cb' => '__return_false',
+					)
+				);
 			?>
-			<?php if ( ! empty( $featured_menu ) ) { ?>
-			<nav id="navigation-featured" class="m-featured-navigation" role="navigation">
-				<span class="a-nav-label">Featured:</span>
-				<?php echo $featured_menu; ?>
-			</nav><!-- #featured-navigation -->
-			<?php } ?>
+			<?php if ( ! empty( $featured_menu ) || ! empty( $login_menu ) ) : ?>
+				<div id="navigation-featured-login">
+					<?php if ( ! empty( $featured_menu ) ) : ?>
+					<nav id="navigation-featured" class="m-featured-navigation" role="navigation">
+						<span class="a-nav-label">Featured:</span>
+						<?php echo $featured_menu; ?>
+					</nav><!-- #navigation-featured -->
+					<?php endif; ?>
+
+					<?php if ( ! empty( $login_menu ) ) : ?>
+					<nav id="navigation-login" class="m-secondary-navigation" role="navigation">
+						<?php echo $login_menu; ?>
+					</nav><!-- #navigation-login -->
+					<?php endif; ?>
+				</div>
+			<?php endif; ?>
+
 		</div>
 	</header><!-- #masthead -->
 
