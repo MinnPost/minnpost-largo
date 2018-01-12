@@ -1,0 +1,8 @@
+.m-form-message {
+	padding: 1em;
+	margin-bottom: 1.25em;
+	&.m-form-message-error {
+		background: rgba_color($_color-base-red, 0.2);
+		color: $color__gray-dark;
+	}
+}

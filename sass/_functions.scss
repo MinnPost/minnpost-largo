@@ -11,6 +11,11 @@
     //}
 //}
 
+// rgba function
+@function rgba_color($base, $alpha) {
+	@return rgba($base, $alpha);
+}
+
 /**
  * Ratios
  * Returns the ratio for specified dimensions.
