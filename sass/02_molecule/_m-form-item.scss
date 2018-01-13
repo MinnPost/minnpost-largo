@@ -4,6 +4,8 @@
 
 .m-form-standalone .m-form-item {
 	margin-bottom: 1.25em;
+	width: 100%;
+	max-width: 100%;
 	label, input:not([type=checkbox]):not([type=radio]), select, textarea, span {
 		display: block;
 	}
@@ -19,9 +21,8 @@
 		-webkit-appearance: none;
 		-webkit-border-radius: 0;
 		border: 1px solid $color__border-input;
-		width: 100%;
-		max-width: 100%;
 		margin-bottom: 0.375em;
+		width: 100%;
 	}
 	input[type="checkbox"], input[type="radio"] {
 		display: inline-block;
@@ -37,8 +38,6 @@
 // media queries
 @media screen and (min-width: $medium-screen) {
 	.m-form-standalone .m-form-item {
-		input, select, textarea {
-			max-width: 65%;
-		}
+		max-width: 65%;
 	}
 }
