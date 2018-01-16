@@ -18,11 +18,13 @@
 	}
 	input:not([type=checkbox]):not([type=radio]), select, textarea {
 		padding: 0.5em;
-		-webkit-appearance: none;
-		-webkit-border-radius: 0;
 		border: 1px solid $color__border-input;
 		margin-bottom: 0.375em;
 		width: 100%;
+	}
+	input:not([type=checkbox]):not([type=radio]), textarea {
+		-webkit-appearance: none;
+		-webkit-border-radius: 0;
 	}
 	input[type="checkbox"], input[type="radio"] {
 		display: inline-block;
