@@ -59,6 +59,11 @@ require get_stylesheet_directory() . '/inc/template-tags.php';
 require get_stylesheet_directory() . '/inc/meta.php';
 
 /**
+ * Custom functions for emails the site sends.
+ */
+require get_stylesheet_directory() . '/inc/site-emails.php';
+
+/**
  * Custom functions that act independently of the theme templates.
  */
 require get_stylesheet_directory() . '/inc/extras.php';
