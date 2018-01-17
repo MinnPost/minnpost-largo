@@ -149,7 +149,7 @@
 	}
 }
 
-#navigation-featured-login {
+#navigation-featured-accounts {
 	display: flex;
 	padding: 8px;
 	background: $color__minnpost-white;
@@ -184,9 +184,14 @@
 	}
 }
 
-#navigation-login {
+#navigation-user-account {
 	margin-left: auto;
 	float: right;
+	li + li::before {
+		content: "|";
+		color: $color__minnpost-black;
+		padding: 0 1em;
+	}
 }
 
 .m-pagination {
