@@ -93,10 +93,10 @@
 						'fallback_cb' => '__return_false',
 					)
 				);
-				$user_account_menu = wp_nav_menu(
+				$user_account_access_menu = wp_nav_menu(
 					array(
-						'theme_location' => 'user_account',
-						'menu_id' => 'user-account',
+						'theme_location' => 'user_account_access',
+						'menu_id' => 'user-account-access',
 						'depth' => 1,
 						'container' => false,
 						'walker' => new Minnpost_Walker_Nav_Menu,
@@ -105,7 +105,7 @@
 				);
 			?>
 			<?php if ( ! empty( $featured_menu ) || ! empty( $user_account_menu ) ) : ?>
-				<div id="navigation-featured-accounts">
+				<div id="navigation-featured-account-access">
 					<?php if ( ! empty( $featured_menu ) ) : ?>
 					<nav id="navigation-featured" class="m-featured-navigation" role="navigation">
 						<span class="a-nav-label">Featured:</span>
@@ -113,10 +113,10 @@
 					</nav><!-- #navigation-featured -->
 					<?php endif; ?>
 
-					<?php if ( ! empty( $user_account_menu ) ) : ?>
-					<nav id="navigation-user-account" class="m-secondary-navigation" role="navigation">
-						<?php echo $user_account_menu; ?>
-					</nav><!-- #navigation-user-account -->
+					<?php if ( ! empty( $user_account_access_menu ) ) : ?>
+					<nav id="navigation-user-account-access" class="m-secondary-navigation" role="navigation">
+						<?php echo $user_account_access_menu; ?>
+					</nav><!-- #navigation-user-account-access -->
 					<?php endif; ?>
 				</div>
 			<?php endif; ?>

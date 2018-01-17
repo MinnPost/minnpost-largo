@@ -17,7 +17,7 @@ if ( ! function_exists( 'minnpost_menus' ) ) :
 				'support_minnpost' => __( 'Support Menu' ), // the support box next to the top banner ad
 				'secondary_links' => __( 'Secondary' ), // that weird nav next to logo with columns, weather, events, support
 				'primary_links' => __( 'Primary' ), // main nav below logo
-				'user_account' => __( 'User Account Menu' ), // menu where users log in/register/log out
+				'user_account_access' => __( 'User Account Access Menu' ), // menu where users log in/register/log out
 			)
 		);
 		unregister_nav_menu( 'menu-1' );
