@@ -104,7 +104,7 @@
 					)
 				);
 			?>
-			<?php if ( ! empty( $featured_menu ) || ! empty( $user_account_menu ) ) : ?>
+			<?php if ( ! empty( $featured_menu ) || ! empty( $user_account_access_menu ) ) : ?>
 				<div id="navigation-featured-account-access">
 					<?php if ( ! empty( $featured_menu ) ) : ?>
 					<nav id="navigation-featured" class="m-featured-navigation" role="navigation">
