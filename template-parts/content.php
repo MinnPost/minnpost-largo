@@ -9,15 +9,7 @@
 
 ?>
 
-<?php
-if ( false === (bool) get_post_meta( get_the_ID(), '_mp_post_old_post_new_layout', false ) && get_the_date( 'U' ) < strtotime( '2012-02-14' ) ) {
-	$old_layout_class = ' m-post-old';
-} else {
-	$old_layout_class = '';
-}
-?>
-
-<article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post' . $old_layout_class ); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post' ); ?>>
 
 	<div class="m-post-classification">
 		<?php minnpost_category_breadcrumb(); ?>
