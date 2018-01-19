@@ -135,6 +135,10 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 		$url = '';
 		if ( ! empty( $item->url ) ) {
 			$url = $item->url;
+			$length = strlen( $url );
+			if ( substr( wp_logout_url(), 0, $length ) === $url ) {
+				$url = wp_logout_url();
+			}
 		}
 
 		if ( isset( $args->item_classes ) && 'values' === $args->item_classes ) {
