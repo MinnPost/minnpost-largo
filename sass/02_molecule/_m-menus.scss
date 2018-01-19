@@ -66,6 +66,9 @@
 	a {
 		font-weight: bold;
 	}
+	li.active a {
+		color: $color__minnpost-black;
+	}
 }
 
 .m-main-navigation {
@@ -191,6 +194,9 @@
 		content: "|";
 		color: $color__minnpost-black;
 		padding: 0 1em;
+	}
+	li.active a {
+		color: $color__minnpost-black;
 	}
 }
 
