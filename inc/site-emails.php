@@ -27,3 +27,12 @@ endif;
 add_filter( 'wp_mail_content_type', function() {
 	return 'text/html';
 } );
+
+// change subject for retrieve password email
+if ( ! function_exists( 'minnpost_largo_retrieve_password_subject_filter' ) ) :
+	add_filter ( 'retrieve_password_title', 'minnpost_largo_retrieve_password_subject_filter', 10, 3 );
+	function minnpost_largo_retrieve_password_subject_filter( $title, $user_login, $user_data ) {
+		$title = 'Reset your MinnPost password';
+		return $title;
+	}
+endif;
