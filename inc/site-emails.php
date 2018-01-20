@@ -28,6 +28,15 @@ add_filter( 'wp_mail_content_type', function() {
 	return 'text/html';
 } );
 
+// change any desired attributes for the new user email notification
+if ( ! function_exists( 'minnpost_largo_new_user_email_attributes' ) ) :
+	add_filter( 'user_account_management_new_user_email_attributes', 'minnpost_largo_new_user_email_attributes', 10, 1 );
+	function minnpost_largo_new_user_email_attributes( $new_user_email_attributes ) {
+		$new_user_email_attributes['subject'] = 'Welcome to MinnPost';
+		return $new_user_email_attributes;
+	}
+endif;
+
 // change subject for retrieve password email
 if ( ! function_exists( 'minnpost_largo_retrieve_password_subject_filter' ) ) :
 	add_filter ( 'retrieve_password_title', 'minnpost_largo_retrieve_password_subject_filter', 10, 3 );
