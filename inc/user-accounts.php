@@ -55,3 +55,38 @@ if ( ! function_exists( 'lost_password_form_action' ) ) :
 		return $lost_password_form_action;
 	}
 endif;
+
+// Create the query var so that WP catches the custom /user/id url
+if ( ! function_exists( 'minnpost_largo_user_rewrite' ) ) :
+	add_filter( 'query_vars', 'minnpost_largo_user_rewrite' );
+	function minnpost_largo_user_rewrite( $vars ) {
+		$vars[] = 'users';
+		return $vars;
+	}
+endif;
+
+// Create the rewrites
+if ( ! function_exists( 'minnpost_largo_user_rewrite_rule' ) ) :
+	add_action( 'init', 'minnpost_largo_user_rewrite_rule' );
+	function minnpost_largo_user_rewrite_rule() {
+		add_rewrite_tag( '%users%', '([^&]+)' );
+		add_rewrite_rule(
+			'^users/([^/]*)/?',
+			'index.php?users=$matches[1]',
+			'top'
+		);
+	}
+endif;
+
+// Catch the URL and redirect it to a template file
+if ( ! function_exists( 'minnpost_largo_user_rewrite_catch' ) ) :
+	add_action( 'template_include', 'minnpost_largo_user_rewrite_catch' );
+	function minnpost_largo_user_rewrite_catch( $original_template ) {
+		global $wp_query;
+		if ( array_key_exists( 'users', $wp_query->query_vars ) ) {
+			return get_theme_file_path() . '/user-profile.php';
+		} else {
+			return $original_template;
+		}
+	}
+endif;
