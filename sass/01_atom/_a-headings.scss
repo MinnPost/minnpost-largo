@@ -82,7 +82,7 @@ h6, .h6 {
 	font-weight: bold;
 }
 
-.a-entry-title {
+.a-entry-title, .a-user-title {
 	font-size: 123.1%;
 	text-transform: none;
 	color: $color__minnpost-black;
@@ -101,7 +101,7 @@ h6, .h6 {
 	font-variant: normal;
 }
 
-.m-entry-header-singular .a-entry-title {
+.m-entry-header-singular .a-entry-title, .m-user-profile .a-user-title {
 	font-family: $font__headings;
 	font-weight: normal;
 	font-style: normal;

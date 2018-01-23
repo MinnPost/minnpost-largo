@@ -24,15 +24,12 @@ get_header(); ?>
 		?>
 
 		<?php if ( ! empty( $user_query->get_results() ) ) : ?>
-
-			<section class="m-user m-user-profile">
-				<?php
-				foreach ( $user_query->get_results() as $user ) :
-					set_query_var( 'user', $user );
-					get_template_part( 'template-parts/user', 'profile' );
-				endforeach;
-				?>
-			</section>
+			<?php
+			foreach ( $user_query->get_results() as $user ) :
+				set_query_var( 'user', $user );
+				get_template_part( 'template-parts/user', 'profile' );
+			endforeach;
+			?>
 		<?php
 		else :
 			get_template_part( 'template-parts/user', 'none' );
