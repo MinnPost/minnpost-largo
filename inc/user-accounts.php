@@ -84,6 +84,8 @@ if ( ! function_exists( 'minnpost_largo_user_rewrite_catch' ) ) :
 	function minnpost_largo_user_rewrite_catch( $original_template ) {
 		global $wp_query;
 		if ( array_key_exists( 'users', $wp_query->query_vars ) ) {
+			$wp_query->is_home = false;
+			$wp_query->is_singular = true;
 			return get_theme_file_path() . '/user-profile.php';
 		} else {
 			return $original_template;
