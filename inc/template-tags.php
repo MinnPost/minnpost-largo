@@ -875,7 +875,7 @@ if ( ! function_exists( 'minnpost_user_title_parts' ) ) :
 			$user_id = get_query_var( 'users' );
 			$user = get_userdata( $user_id );
 			$title['title'] = $user->first_name . ' ' . $user->last_name;
-			return $title;
 		}
+		return $title;
 	}
 endif;
