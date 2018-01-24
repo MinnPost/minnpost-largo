@@ -140,6 +140,12 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 			if ( substr( wp_logout_url(), 0, $length ) === $url ) {
 				$url = wp_logout_url();
 			}
+			if ( site_url( '/users/userid' ) === $url ) {
+				$url = site_url( '/users/' . get_current_user_id() . '/' );
+				if ( rtrim( get_current_url(), '/' ) . '/' === $url ) {
+					$active_class = ' class="active"';
+				}
+			}
 		}
 
 		if ( isset( $args->item_classes ) && 'values' === $args->item_classes ) {
