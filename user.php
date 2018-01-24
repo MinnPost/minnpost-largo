@@ -1,6 +1,6 @@
 <?php
 /**
- * The template for displaying user profiles
+ * The template for displaying user account pages
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
@@ -8,9 +8,8 @@
  */
 get_header(); ?>
 
-	<div id="primary" class="m-layout-primary o-user-profile">
+	<div id="primary" class="m-layout-primary o-user">
 		<main id="main" class="site-main" role="main">
-
 			<?php
 				$user_account_management_menu = wp_nav_menu(
 					array(
@@ -34,28 +33,9 @@ get_header(); ?>
 			<?php endif; ?>
 
 			<?php
-
-			$query_var = $wp_query->query_vars['users'];
-			$args = array(
-				'include' => array( $query_var ),
-			);
-
-			// The Query
-			$user_query = new WP_User_Query( $args );
-
-			?>
-
-			<?php if ( ! empty( $user_query->get_results() ) ) : ?>
-				<?php
-				foreach ( $user_query->get_results() as $user ) :
-					set_query_var( 'user', $user );
-					get_template_part( 'template-parts/user', 'profile' );
-				endforeach;
-				?>
-			<?php
-			else :
-				get_template_part( 'template-parts/user', 'none' );
-			endif;
+			while ( have_posts() ) : the_post();
+				get_template_part( 'template-parts/content', 'page' );
+			endwhile; // End of the loop.
 			?>
 
 		</main><!-- #main -->

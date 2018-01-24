@@ -56,6 +56,33 @@ if ( ! function_exists( 'lost_password_form_action' ) ) :
 	}
 endif;
 
+if ( ! function_exists( 'minnpost_largo_user_child_template' ) ) :
+	add_filter( 'page_template', 'minnpost_largo_user_child_template', 10, 1 );
+	function minnpost_largo_user_child_template( $template ) {
+		global $post;
+
+		if ( $post->post_parent ) {
+			// get top level parent page
+			//$parent = get_post( reset( array_reverse( get_post_ancestors( $post->ID ) ) ) );
+			// or ...
+			// when you need closest parent post instead
+			$parent = get_post( $post->post_parent );
+
+			$child_template = locate_template(
+				[
+					$parent->post_name . '-' . $post->post_name . '.php',
+					$parent->post_name . '-' . $post->ID . '.php',
+					$parent->post_name . '.php',
+				]
+			);
+			if ( $child_template ) {
+				return $child_template;
+			}
+		}
+		return $template;
+	}
+endif;
+
 // Create the query var so that WP catches the custom /user/id url
 if ( ! function_exists( 'minnpost_largo_user_rewrite' ) ) :
 	add_filter( 'query_vars', 'minnpost_largo_user_rewrite' );
