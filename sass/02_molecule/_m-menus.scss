@@ -200,6 +200,29 @@
 	}
 }
 
+#navigation-user-account-management {
+	ul {
+		display: flex;
+		background: $color__gray-sub-menu;
+		justify-content: flex-start;
+		margin: 1em -0.75em;
+		li {
+			line-height: 3em;
+			margin: 0 0.75em;
+			a {
+				background: transparent;
+			    font-weight: normal;
+			    height: 3em;
+			    padding: 0 0 0 8px;
+			    vertical-align: middle;
+			}
+			&.active a {
+				font-weight: bold;
+			}
+		}
+	}
+}
+
 .m-pagination {
 	max-width: 100%;
 	width: 100%;

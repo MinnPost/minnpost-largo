@@ -25,7 +25,7 @@ get_header(); ?>
 			<?php if ( ! empty( $user_account_management_menu ) ) : ?>
 				<div id="navigation-account-management">
 					<?php if ( ! empty( $user_account_management_menu ) ) : ?>
-					<nav id="navigation-user-account-access" class="m-secondary-navigation" role="navigation">
+					<nav id="navigation-user-account-management" class="m-secondary-navigation" role="navigation">
 						<?php echo $user_account_management_menu; ?>
 					</nav><!-- #navigation-user-account-management -->
 					<?php endif; ?>
