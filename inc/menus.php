@@ -178,3 +178,82 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 		$output .= '</li>';
 	}
 }
+
+// show admin bar only for admins and editors
+if ( ! current_user_can( 'edit_posts' ) ) {
+	add_filter( 'show_admin_bar', '__return_false' );
+}
+
+// change links/menus in the admin bar
+if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
+	add_action( 'wp_before_admin_bar_render', 'minnpost_largo_admin_bar_render' );
+	function minnpost_largo_admin_bar_render() {
+		global $wp_admin_bar;
+		// remove security from non admins
+		if ( ! current_user_can( 'manage_options' ) ) {
+			$wp_admin_bar->remove_menu( 'itsec_admin_bar_menu' );
+		}
+
+		global $wp_query;
+
+		// edit/view user stuff
+		if ( isset( $_REQUEST['user_id'] ) ) {
+			$user_id = esc_attr( $_REQUEST['user_id'] );
+		} elseif ( array_key_exists( 'users', $wp_query->query_vars ) ) {
+			$user_id = $wp_query->query_vars['users'];
+		} else {
+			$user_id = get_current_user_id();
+		}
+		if ( ! current_user_can( 'edit_user', $user_id ) ) {
+			$wp_admin_bar->remove_menu( 'vaa' );
+		} else {
+			global $post;
+			$page = get_page_by_path( 'user' );
+			$user_parent_id = $page->ID;
+
+			if ( array_key_exists( 'users', $wp_query->query_vars ) ) {
+				$wp_admin_bar->remove_menu( 'edit' );
+				if ( current_user_can( 'edit_user', $user_id ) && $edit_user_link = get_edit_user_link( $user_id ) ) {
+					$wp_admin_bar->add_menu( array(
+						'id'    => 'edit',
+						'title' => __( 'Edit User' ),
+						'href'  => $edit_user_link,
+					) );
+				}
+			}
+
+			if ( isset( $post ) && ( $post->post_parent === $user_parent_id || $post->ID === $user_parent_id )
+				&& current_user_can( 'edit_user', $user_id )
+				&& $edit_user_link = get_edit_user_link( $user_id ) ) {
+				$wp_admin_bar->add_menu( array(
+					'id'    => 'edit',
+					'title' => __( 'Edit User' ),
+					'href'  => $edit_user_link,
+				) );
+			}
+			if ( is_admin() ) {
+				$current_screen = get_current_screen();
+				if ( 'user-edit' === $current_screen->base && isset( $user_id )
+					&& ( $user_object = get_userdata( $user_id ) )
+					&& $user_object->exists()
+					&& $view_link = site_url( '/users/' . $user_id . '/' ) )
+				{
+					$wp_admin_bar->add_menu( array(
+						'id'    => 'view',
+						'title' => __( 'View User' ),
+						'href'  => $view_link,
+					) );
+				}
+			}
+		}
+		$wp_admin_bar->remove_menu( 'customize' );
+		$wp_admin_bar->remove_menu( 'tribe-events' );
+
+		/*if ( is_a( $current_object, 'WP_User' )
+			&& current_user_can( 'edit_user', $current_object->ID )
+			&& $edit_user_link = get_edit_user_link( $current_object->ID ) )
+		{
+		}*/
+
+	}
+endif;

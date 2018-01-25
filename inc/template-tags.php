@@ -910,7 +910,7 @@ if ( ! function_exists( 'get_minnpost_account_management_menu' ) ) :
 			$account_management = User_Account_Management::get_instance();
 			$can_access = $account_management->check_user_permissions( $user_id );
 		} else {
-			if ( get_current_user_id() === $user_id || current_user_can( 'edit_users' ) ) {
+			if ( get_current_user_id() === $user_id || current_user_can( 'edit_user', $user_id ) ) {
 				$can_access = true;
 			}
 		}
