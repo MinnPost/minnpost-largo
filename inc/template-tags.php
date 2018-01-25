@@ -902,10 +902,20 @@ if ( ! function_exists( 'minnpost_account_management_menu' ) ) :
 endif;
 
 if ( ! function_exists( 'get_minnpost_account_management_menu' ) ) :
+
 	function get_minnpost_account_management_menu( $user_id = '' ) {
 		$menu = '';
+		$can_access = false;
+		if ( class_exists( 'User_Account_Management' ) ) {
+			$account_management = User_Account_Management::get_instance();
+			$can_access = $account_management->check_user_permissions( $user_id );
+		} else {
+			if ( get_current_user_id() === $user_id || current_user_can( 'edit_users' ) ) {
+				$can_access = true;
+			}
+		}
 		// if we are on the current user, or if this user can edit users
-		if ( get_current_user_id() === $user_id || current_user_can( 'edit_users' ) ) {
+		if ( true === $can_access ) {
 			$menu = wp_nav_menu(
 				array(
 					'theme_location' => 'user_account_management',
