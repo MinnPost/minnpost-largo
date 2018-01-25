@@ -326,3 +326,77 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 
 endif;
 
+if ( ! function_exists( 'minnpost_account_preferences_form' ) ) :
+	add_shortcode( 'custom-account-preferences-form', 'minnpost_account_preferences_form' );
+	/**
+	 * A shortcode for rendering the form used to change a logged in user's preferences
+	 *
+	 * @param  array   $attributes  Shortcode attributes.
+	 * @param  string  $content     The text content for shortcode.
+	 *
+	 * @return string  The shortcode output
+	 */
+	function minnpost_account_preferences_form( $attributes, $content = null ) {
+
+		if ( ! is_array( $attributes ) ) {
+			$attributes = array();
+		}
+
+		$user_id = get_query_var( 'users', '' );
+		if ( isset( $_GET['user_id'] ) ) {
+			$user_id = esc_attr( $_GET['user_id'] );
+		} else {
+			$user_id = get_current_user_id();
+		}
+
+		$can_access = false;
+		if ( class_exists( 'User_Account_Management' ) ) {
+			$account_management = User_Account_Management::get_instance();
+			$can_access = $account_management->check_user_permissions( $user_id );
+		} else {
+			return;
+		}
+		// if we are on the current user, or if this user can edit users
+		if ( false === $can_access ) {
+			return __( 'You do not have permission to access this page.', 'minnpost-largo' );
+		}
+
+		// this functionality is mostly from https://pippinsplugins.com/change-password-form-short-code/
+		// we should use it for this page as well, unless and until it becomes insufficient
+
+		$attributes['current_url'] = get_current_url();
+		$attributes['redirect'] = $attributes['current_url'];
+
+		if ( ! is_user_logged_in() ) {
+			return __( 'You are not signed in.', 'user-account-management' );
+		} else {
+			//$attributes['login'] = rawurldecode( $_REQUEST['login'] );
+			// Error messages
+			$errors = array();
+			if ( isset( $_REQUEST['errors'] ) ) {
+				$error_codes = explode( ',', $_REQUEST['errors'] );
+
+				foreach ( $error_codes as $code ) {
+					$errors[] = $this->get_error_message( $code );
+				}
+			}
+			$attributes['errors'] = $errors;
+			if ( isset( $user_id ) && '' !== $user_id ) {
+				$attributes['user'] = get_userdata( $user_id );
+			} else {
+				$attributes['user'] = wp_get_current_user();
+			}
+			$attributes['user_meta'] = get_user_meta( $attributes['user']->ID );
+
+			return $account_management->get_template_html( 'account-preferences-form', 'front-end', $attributes );
+
+		}
+	}
+endif;
+
+if ( ! function_exists( 'minnpost_account_info' ) ) :
+	add_shortcode( 'account-info', 'minnpost_account_info' );
+	function minnpost_account_info( $attributes, $content ) {
+		echo 'what';
+	}
+endif;
