@@ -879,3 +879,44 @@ if ( ! function_exists( 'minnpost_user_title_parts' ) ) :
 		return $title;
 	}
 endif;
+
+if ( ! function_exists( 'minnpost_account_management_menu' ) ) :
+	function minnpost_account_management_menu() {
+		$user_id = get_query_var( 'users', '' );
+		if ( isset( $_GET['user_id'] ) ) {
+			$user_id = esc_attr( $_GET['user_id'] );
+		}
+		$menu = get_minnpost_account_management_menu( $user_id );
+		?>
+		<?php if ( ! empty( $menu ) ) : ?>
+		<div id="navigation-account-management">
+			<?php if ( ! empty( $menu ) ) : ?>
+			<nav id="navigation-user-account-management" class="m-secondary-navigation" role="navigation">
+				<?php echo $menu; ?>
+			</nav><!-- #navigation-user-account-management -->
+			<?php endif; ?>
+		</div>
+		<?php endif; ?>
+		<?php
+	}
+endif;
+
+if ( ! function_exists( 'get_minnpost_account_management_menu' ) ) :
+	function get_minnpost_account_management_menu( $user_id = '' ) {
+		$menu = '';
+		// if we are on the current user, or if this user can edit users
+		if ( get_current_user_id() === $user_id || current_user_can( 'edit_users' ) ) {
+			$menu = wp_nav_menu(
+				array(
+					'theme_location' => 'user_account_management',
+					'menu_id' => 'user-account-management',
+					'depth' => 1,
+					'container' => false,
+					'walker' => new Minnpost_Walker_Nav_Menu( $user_id ),
+					'echo' => false,
+				)
+			);
+		}
+		return $menu;
+	}
+endif;

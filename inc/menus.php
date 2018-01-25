@@ -96,6 +96,13 @@ if ( ! function_exists( 'minnpost_wp_nav_menu_objects_sub_menu' ) ) :
 endif;
 
 class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
+
+	private $user_id;
+
+	public function __construct( $user_id = '' ) {
+		$this->user_id = $user_id;
+	}
+
 	public function start_lvl( &$output, $depth = 0, $args = array() ) {
 		$output .= '<ul>';
 	}
@@ -141,10 +148,18 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 				$url = wp_logout_url();
 			}
 			if ( site_url( '/users/userid' ) === $url ) {
-				$url = site_url( '/users/' . get_current_user_id() . '/' );
+				if ( '' !== $this->user_id && get_current_user_id() !== $this->user_id ) {
+					$user_id = $this->user_id;
+				} else {
+					$user_id = get_current_user_id();
+				}
+				$url = site_url( '/users/' . $user_id . '/' );
 				if ( rtrim( get_current_url(), '/' ) . '/' === $url ) {
 					$active_class = ' class="active"';
 				}
+			}
+			if ( strpos( $url, '/user/' ) && '' !== $this->user_id && get_current_user_id() !== $this->user_id ) {
+				$url = $url . '?user_id=' . $this->user_id;
 			}
 		}
 
