@@ -526,42 +526,90 @@ if ( ! function_exists( 'cmb2_user_fields' ) ) :
 	function cmb2_user_fields() {
 
 		$object_type = 'user';
-		$user_setup = new_cmb2_box( array(
-			'id'            => $object_type . '_image_settings',
-			'title'         => 'User Info',
+		$user_address = new_cmb2_box( array(
+			'id'            => $object_type . '_address',
+			'title'         => 'Address Info',
 			'object_types'  => array( $object_type ),
 			'context'       => 'normal',
 			'priority'      => 'low',
 		) );
-		$user_setup->add_field( array(
+		$user_address->add_field( array(
 			'name'       => 'Street Address',
 			'id'         => '_street_address',
 			'type'       => 'text',
 			'desc'       => '',
 		) );
-		$user_setup->add_field( array(
+		$user_address->add_field( array(
 			'name'       => 'City',
 			'id'         => '_city',
 			'type'       => 'text',
 			'desc'       => '',
 		) );
-		$user_setup->add_field( array(
+		$user_address->add_field( array(
 			'name'       => 'State',
 			'id'         => '_state',
 			'type'       => 'text',
 			'desc'       => '',
 		) );
-		$user_setup->add_field( array(
+		$user_address->add_field( array(
 			'name'       => 'Zip Code',
 			'id'         => '_zip_code',
 			'type'       => 'text',
 			'desc'       => '',
 		) );
-		$user_setup->add_field( array(
+		$user_address->add_field( array(
 			'name'       => 'Country',
 			'id'         => '_country',
 			'type'       => 'text',
 			'desc'       => '',
+		) );
+
+		$user_preferences = new_cmb2_box( array(
+			'id'            => $object_type . '_reading_preferences',
+			'title'         => 'Reading Preferences',
+			'object_types'  => array( $object_type ),
+			'context'       => 'normal',
+			'priority'      => 'low',
+		) );
+		$user_preferences->add_field( array(
+			'name'    => 'Reading preferences:',
+			'desc'    => '',
+			'id'      => '_reading_topics',
+			'type'    => 'multicheck',
+			'options' => array(
+				'Arts & Culture' => 'Arts & Culture',
+				'Business' => 'Business',
+				'Education' => 'Education',
+				'Environment' => 'Environment',
+				'Greater Minnesota news' => 'Greater Minnesota news',
+				'Health' => 'Health',
+				'MinnPost announcements' => 'MinnPost announcements',
+				'Opinion/Commentary' => 'Opinion/Commentary',
+				'Politics & Policy' => 'Politics & Policy',
+				'Sports' => 'Sports',
+			),
+		) );
+		$user_preferences->add_field( array(
+			'name'    => 'Subscribe to these regular newsletters:',
+			'desc'    => '',
+			'id'      => '_newsletters',
+			'type'    => 'multicheck',
+			'options' => array(
+				'Daily Newsletter' => 'Daily newsletter',
+				'Sunday review' => 'Sunday review',
+				'Greater Minnesota newsletter' => 'Greater Minnesota newsletter',
+				'D.C. Memo' => 'D.C. Memo',
+			),
+		) );
+		$user_preferences->add_field( array(
+			'name'    => 'Occasional MinnPost emails:',
+			'desc'    => '',
+			'id'      => '_occasional_emails',
+			'type'    => 'multicheck',
+			'options' => array(
+				'Events & member benefits' => 'Events & member benefits',
+				'Opportunities to give input/feedback' => 'Opportunities to give input/feedback',
+			),
 		) );
 	}
 endif;
