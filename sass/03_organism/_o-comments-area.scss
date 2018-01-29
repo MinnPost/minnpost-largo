@@ -1,0 +1,14 @@
+.o-comments-area ol {
+	list-style: none;
+	margin: 0 0 $standard-page-margin 0;
+	padding: 0;
+	outline: 1px solid $color__gray-lightest;
+	border: $archive-content-sidebar-padding solid $color__minnpost-white;
+	background: $color__white;
+	li {
+		padding: $standard-page-margin;
+		padding-bottom: $standard-page-margin / 2;
+		background: $color__white;
+		margin: 0 0 $standard-page-margin 0;
+	}
+}
