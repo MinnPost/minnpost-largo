@@ -32,12 +32,13 @@ if ( ! function_exists( 'minnpost_largo_remove_scripts' ) && ! function_exists( 
 	}
 	add_action( 'wp_print_styles', 'minnpost_largo_remove_styles', 10 );
 	function minnpost_largo_remove_styles() {
+		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
 		wp_dequeue_style( 'largo-style' );
 		wp_dequeue_style( 'media-credit' );
 		wp_dequeue_style( 'widgetopts-styles' );
 		wp_dequeue_style( 'minnpost-nimbus' );
 		wp_dequeue_style( 'minnpost-donation-progress-widget' );
-		wp_enqueue_style( 'minnpost-style', get_theme_file_uri() . '/style.min.css', array(), filemtime(get_template_directory() . '/style.min.css'), false );
+		wp_enqueue_style( 'minnpost-style', get_theme_file_uri() . '/style' . $suffix . '.css', array(), filemtime(get_template_directory() . '/style.min.css'), false );
 		wp_dequeue_style( 'popular-widget' );
 		wp_dequeue_style( 'creativ_sponsor' );
 	}
