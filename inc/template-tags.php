@@ -556,6 +556,10 @@ if ( ! function_exists( 'minnpost_edit_link' ) ) :
 				return;
 			}
 		}
+		$user = wp_get_current_user();
+		if ( 0 === $user->ID || in_array( 'comment_moderator', (array) $user->roles ) ) {
+			return;
+		}
 		edit_post_link(
 			sprintf(
 				/* translators: %s: Name of current post */
