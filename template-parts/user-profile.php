@@ -13,8 +13,12 @@
 	<p class="registered-since">On MinnPost since <?php echo date( 'm/d/y', strtotime( $user->user_registered ) ); ?></p>
 
 	<?php
-	$comments = get_comments( 'user_id=' . $user->ID );
-	if ( 1 >= count( $comments ) ) {
+	$args = array(
+		'user_id' => $user->ID,
+		'status' => 'approve',
+	);
+	$comments = get_comments( $args );
+	if ( $comments ) {
 	?>
 	<section class="o-comments-area o-comments-area-user">
 		<h3 class="a-comments-title">Recent Comments</h3>
@@ -26,13 +30,11 @@
 					$post_link = get_the_permalink( $post_id );
 					$post_title = get_the_title( $post_id );
 					?>
-					<p>Posted on <?php echo $comment->comment_date; ?> in response to <a href="<?php echo $post_link; ?>"><?php echo $post_title; ?></a></p>
+					<div class="m-comment-meta">Posted on <?php comment_date( 'm/d/y \a\t g:i a' ); ?> in response to <a href="<?php echo $post_link; ?>"><?php echo $post_title; ?></a></div>
 					<?php echo $comment->comment_content; ?>
 				</li>
-			<?php
-			endforeach;
-			}
-			?>
+			<?php endforeach; ?>
 		</ol>
 	</section>
+	<?php } ?>
 </article>
