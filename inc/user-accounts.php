@@ -121,3 +121,15 @@ if ( ! function_exists( 'minnpost_largo_user_rewrite_catch' ) ) :
 		}
 	}
 endif;
+
+// prevent comment moderators from doing things with posts
+if ( ! function_exists( 'restrict_comment_moderators' ) ) :
+	add_action( 'admin_init', 'restrict_comment_moderators', 1 );
+	function restrict_comment_moderators() {
+		global $pagenow;
+		$user = wp_get_current_user();
+		if ( ( 'post.php' === $pagenow || 'post-new.php' === $pagenow ) && in_array( 'comment_moderator', (array) $user->roles ) ) {
+			wp_die( __( 'You are not allowed to access this part of the site', 'minnpost-largo' ) );
+		}
+	}
+endif;
