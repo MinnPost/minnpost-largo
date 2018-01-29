@@ -179,8 +179,8 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 	}
 }
 
-// show admin bar only for admins and editors
-if ( ! current_user_can( 'edit_posts' ) ) {
+// show admin bar only for users with see_admin_bar capability
+if ( ! current_user_can( 'see_admin_bar' ) ) {
 	add_filter( 'show_admin_bar', '__return_false' );
 }
 
