@@ -17,18 +17,22 @@
 	if ( 1 >= count( $comments ) ) {
 	?>
 	<section class="o-comments-area o-comments-area-user">
-		<h2>Recent Comments</h2>
-		<?php foreach ( $comments as $comment ) : ?>
+		<h3 class="a-comments-title">Recent Comments</h3>
+		<ol>
+			<?php foreach ( $comments as $comment ) : ?>
+				<li>
+					<?php
+					$post_id = $comment->comment_post_ID;
+					$post_link = get_the_permalink( $post_id );
+					$post_title = get_the_title( $post_id );
+					?>
+					<p>Posted on <?php echo $comment->comment_date; ?> in response to <a href="<?php echo $post_link; ?>"><?php echo $post_title; ?></a></p>
+					<?php echo $comment->comment_content; ?>
+				</li>
 			<?php
-			$post_id = $comment->comment_post_ID;
-			$post_link = get_the_permalink( $post_id );
-			$post_title = get_the_title( $post_id );
+			endforeach;
+			}
 			?>
-			<p>Posted on <?php echo $comment->comment_date; ?> in response to <a href="<?php echo $post_link; ?>"><?php echo $post_title; ?></a></p>
-			<?php echo $comment->comment_content; ?>
-		<?php
-		endforeach;
-		}
-		?>
+		</ol>
 	</section>
 </article>
