@@ -20,21 +20,25 @@ if ( post_password_required() ) {
 }
 ?>
 
-<section id="comments" class="o-comments-area">
+<section id="comments" class="o-comments-area o-comments-area-post">
 
 	<h3 class="a-comments-title">Comments<?php if ( have_comments() ) { $count = wp_count_comments( get_the_ID() ); echo ' (' . $count->approved . ')'; } ?></h3>
 
-	<?php
-	if ( have_comments() ) :
-		wp_list_comments(
-			array(
-				'callback' => 'minnpost_largo_comment',
-				'type' => 'comment',
-			)
-		);
-	endif; // Check for have_comments().
+	<?php if ( have_comments() ) : ?>
+		<ol>
+			<?php
+			wp_list_comments(
+				array(
+					'callback' => 'minnpost_largo_comment',
+					'type' => 'comment',
+				)
+			);
+			?>
+		</ol>
+	<?php endif; ?>
 
-	// If comments are closed and there are comments, let's leave a little note, shall we?
+	<?php
+	// If comments are closed and there are comments, let's leave a little note
 	if ( ! comments_open() && get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) :
 	?>
 		<p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'minnpost-largo' ); ?></p>

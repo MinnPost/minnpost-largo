@@ -78,7 +78,7 @@
 		<h3 class="a-comments-title">Recent Comments</h3>
 		<ol>
 			<?php foreach ( $comments as $comment ) : ?>
-				<li>
+				<li class="o-comment" id="o-comment-<?php comment_ID(); ?>">
 					<?php
 					$post_id = $comment->comment_post_ID;
 					$post_link = get_the_permalink( $post_id );
