@@ -13,11 +13,65 @@
 	<p class="registered-since">On MinnPost since <?php echo date( 'm/d/y', strtotime( $user->user_registered ) ); ?></p>
 
 	<?php
-	$args = array(
+	# The comment functions use the query var 'cpage', so we'll ensure that's set
+	$page = intval( get_query_var( 'page' ) );
+	if ( 0 === $page ) {
+		$page = 1;
+	}
+	$comments_per_page = 10;
+	$params = array(
 		'user_id' => $user->ID,
 		'status' => 'approve',
+		'number' => $comments_per_page,
+		'offset' => $page * $comments_per_page,
 	);
-	$comments = get_comments( $args );
+	$comments = get_comments( $params );
+	$total_comments = get_comments(
+		array_merge(
+			$params,
+			array(
+				'count' => true,
+				'offset' => 0,
+				'number' => 0,
+			)
+		)
+	);
+	$pages = ceil( $total_comments / $comments_per_page );
+	$args = array(
+		'total'     => $pages,
+		'current'   => $page,
+		'format' => '?page=%#%',
+		'prev_text' => '&lt; Previous',
+		'next_text' => 'Next &gt;',
+		'type' => 'list',
+		'end_size' => 3,
+		'prev_next' => true,
+	);
+	$pagination = paginate_links( $args );
+	if ( 1 !== $page || $pages !== $page ) {
+		$doc = new DOMDocument();
+		$doc->loadHTML( $pagination );
+		if ( 1 !== $page ) {
+			$ul = $doc->getElementsByTagName( 'ul' )->item( 0 );
+			$node = $ul->childNodes->item( 0 );
+			$li = $doc->createElement( 'li' );
+			$a = $doc->createElement( 'a', '&Lt; First' );
+			$a->setAttribute( 'href', get_current_url() );
+			$li->appendChild( $a );
+			$ul->insertBefore( $li, $node );
+		}
+		if ( $pages !== $page ) {
+			$ul = $doc->getElementsByTagName( 'ul' )->item( 0 );
+			$length = $ul->childNodes->length;
+			$node = $ul->childNodes->item( $length );
+			$li = $doc->createElement( 'li' );
+			$a = $doc->createElement( 'a', 'Last &Gt;' );
+			$a->setAttribute( 'href', get_current_url() . '?page=' . $pages );
+			$li->appendChild( $a );
+			$ul->insertBefore( $li, $node );
+		}
+		$pagination = $doc->saveHTML();
+	}
 	if ( $comments ) {
 	?>
 	<section class="o-comments-area o-comments-area-user">
@@ -31,10 +85,13 @@
 					$post_title = get_the_title( $post_id );
 					?>
 					<div class="m-comment-meta">Posted on <?php comment_date( 'm/d/y \a\t g:i a' ); ?> in response to <a href="<?php echo $post_link; ?>"><?php echo $post_title; ?></a></div>
-					<?php echo $comment->comment_content; ?>
+					<?php echo wpautop( $comment->comment_content ); ?>
 				</li>
 			<?php endforeach; ?>
 		</ol>
+		<div class="m-pagination">
+			<?php echo $pagination; ?>
+		</div>
 	</section>
 	<?php } ?>
 </article>

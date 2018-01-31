@@ -238,7 +238,7 @@
 	}
 	li {
 		padding: 0.5em;
-		&.current {
+		&.current, span.current {
 			font-weight: bold;
 		}
 	}

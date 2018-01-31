@@ -4,7 +4,8 @@
 	padding: 0;
 	outline: 1px solid $color__gray-lightest;
 	border: $archive-content-sidebar-padding solid $color__minnpost-white;
-	background: $color__white;
+	background: $color__minnpost-white;
+	overflow-x: hidden;
 	li {
 		padding: $standard-page-margin;
 		padding-bottom: $standard-page-margin / 2;
