@@ -8,6 +8,7 @@ body.post .m-layout-primary, body.page .m-layout-primary {
 main {
 	position: relative;
 	@include clearfix;
+	max-width: 100%;
 }
 body.post main, body.page main {
 	flex: 0 0 100%;
