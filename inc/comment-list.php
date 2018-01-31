@@ -13,7 +13,7 @@ function minnpost_largo_comment( $comment, $args, $depth ) {
 				$comment_name = comment_author( $comment->comment_ID );
 			}
 			?>
-			 Submitted by <?php echo $comment_name; ?> on <a class="a-comment-permalink" href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ); ?>"><?php printf( __( '%1$s - %2$s' ), get_comment_date(), get_comment_time() ); ?></a>. 
+			 Submitted by <?php echo get_user_name_or_profile_link( $comment ); ?> on <a class="a-comment-permalink" href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ); ?>"><?php printf( __( '%1$s - %2$s' ), get_comment_date(), get_comment_time() ); ?></a>. 
 		</div>
 
 		<?php

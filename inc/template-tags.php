@@ -934,3 +934,27 @@ if ( ! function_exists( 'get_minnpost_account_management_menu' ) ) :
 		return $menu;
 	}
 endif;
+
+if ( ! function_exists( 'get_user_name_or_profile_link' ) ) :
+	function get_user_name_or_profile_link( $comment ) {
+
+		if ( $comment->user_id ) {
+			$user = get_userdata( $comment->user_id );
+			$comment_name = $user->first_name . ' ' . $user->last_name;
+		} else {
+			$comment_name = comment_author( $comment->comment_ID );
+		}
+
+		$user = wp_get_current_user();
+		// we have a comment user id, and there is a logged in user right now
+		if ( $comment->user_id && 0 !== $user->ID ) {
+			return sprintf(
+				'<a href="%1$s">%2$s</a>',
+				site_url( '/users/' . $comment->user_id . '/' ),
+				$comment_name
+			);
+		} else {
+			return $comment_name;
+		}
+	}
+endif;
