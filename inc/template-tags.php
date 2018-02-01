@@ -878,7 +878,7 @@ if ( ! function_exists( 'minnpost_user_title_parts' ) ) :
 		if ( get_query_var( 'users' ) ) {
 			$user_id = get_query_var( 'users' );
 			$user = get_userdata( $user_id );
-			$title['title'] = $user->first_name . ' ' . $user->last_name;
+			$title['title'] = $user->display_name;
 		}
 		return $title;
 	}
@@ -940,7 +940,7 @@ if ( ! function_exists( 'get_user_name_or_profile_link' ) ) :
 
 		if ( $comment->user_id ) {
 			$user = get_userdata( $comment->user_id );
-			$comment_name = $user->first_name . ' ' . $user->last_name;
+			$comment_name = $user->display_name;
 		} else {
 			$comment_name = comment_author( $comment->comment_ID );
 		}

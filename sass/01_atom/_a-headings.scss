@@ -52,10 +52,10 @@ h6, .h6 {
 	font-variant: normal;
 	margin-bottom: 12px;
 }
-.a-author-title, .a-about-author, .a-related-title, .a-comments-title {
+.a-author-title, .a-about-author, .a-related-title, .a-comments-title, .a-comment-reply-title {
 	font-size: 123.1%;
 }
-.a-about-author, .a-related-title, .a-comments-title {
+.a-about-author, .a-related-title, .a-comments-title, .a-comment-reply-title {
 	text-transform: uppercase;
 	font-family: $font__headings;
 	font-weight: normal;
@@ -71,8 +71,43 @@ h6, .h6 {
 .a-related-title {
 	margin-bottom: 0.75em;
 }
-.a-comments-title {
+.a-comments-title, .a-comment-reply-title {
 	margin-bottom: 0.75em;
+}
+.a-comment-reply-title {
+	a {
+		color: $color__action-color;
+		&:visited,
+		&:active,
+		&:focus,
+		&:hover,
+		&.active {
+			color: $color__action-color;
+		}
+	}
+	small a {
+		background: $color__background-button;
+		padding: 1px 8px 0 5px;
+		font-size: 12px;
+		color: #777;
+		font-family: $font__headings;
+		font-weight: normal;
+		font-style: normal;
+		font-variant: normal;
+		border: 1px solid $color__gray-sub-menu;
+		display: inline-block;
+		line-height: 1.75em;
+		box-shadow: 0 1px 0 rgba(0, 0, 0, .08);
+		&:visited,
+		&:active,
+		&:focus,
+		&:hover,
+		&.active {
+			color: #777;
+			border: 1px solid $color__gray-light;
+			text-decoration: none;
+		}
+	}
 }
 
 .a-featured-title {

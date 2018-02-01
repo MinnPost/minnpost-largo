@@ -8,7 +8,7 @@ function minnpost_largo_comment( $comment, $args, $depth ) {
 			<?php
 			if ( $comment->user_id ) {
 				$user = get_userdata( $comment->user_id );
-				$comment_name = $user->first_name . ' ' . $user->last_name;
+				$comment_name = $user->display_name;
 			} else {
 				$comment_name = comment_author( $comment->comment_ID );
 			}
