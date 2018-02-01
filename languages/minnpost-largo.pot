@@ -1,4 +1,4 @@
-# Copyright (C) 2017 minnpost-largo
+# Copyright (C) 2018 minnpost-largo
 # This file is distributed under the same license as the minnpost-largo package.
 msgid ""
 msgstr ""
@@ -13,7 +13,7 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: comments.php:40
+#: comments.php:69
 msgid "Comments are closed."
 msgstr ""
 
@@ -21,24 +21,52 @@ msgstr ""
 msgid "Sections"
 msgstr ""
 
-#: inc/comment-list.php:43
-msgid "Approve"
+#: search.php:18
+msgid "Search Results"
 msgstr ""
 
-#: inc/comment-list.php:45
-msgid "Unapprove"
+#: inc/comment-list.php:28
+msgid "Your comment is awaiting moderation."
 msgstr ""
 
 #: inc/comment-list.php:49
-msgid "Spam"
-msgstr ""
-
-#: inc/comment-list.php:50
-msgid "Edit"
+msgid "Approve"
 msgstr ""
 
 #: inc/comment-list.php:51
+msgid "Unapprove"
+msgstr ""
+
+#: inc/comment-list.php:55
+msgid "Spam"
+msgstr ""
+
+#: inc/comment-list.php:56
+msgid "Edit"
+msgstr ""
+
+#: inc/comment-list.php:57
 msgid "Trash"
+msgstr ""
+
+#: inc/custom-settings.php:17
+msgid "Default Image URL"
+msgstr ""
+
+#: inc/custom-settings.php:20
+msgid "Site Footer Message"
+msgstr ""
+
+#: inc/custom-settings.php:23
+msgid "Email Sending Address"
+msgstr ""
+
+#: inc/custom-settings.php:26
+msgid "Email Sending Name"
+msgstr ""
+
+#: inc/custom-shortcodes.php:361
+msgid "You do not have permission to access this page."
 msgstr ""
 
 #: inc/custom-types.php:16, inc/custom-types.php:19
@@ -89,37 +117,37 @@ msgstr ""
 msgid "No newsletters found in Trash."
 msgstr ""
 
-#: inc/custom-types.php:51, inc/custom-types.php:55
-msgid "Tests"
-msgstr ""
-
-#: inc/custom-types.php:52
-msgid "Test"
-msgstr ""
-
-#: inc/template-tags.php:152
+#: inc/template-tags.php:157
 msgctxt "post date"
 msgid "%s"
 msgstr ""
 
 #. translators: used between list items, there is a space after the comma
-#: inc/template-tags.php:387, inc/template-tags.php:393
+#: inc/template-tags.php:504, inc/template-tags.php:510
 msgid ", "
 msgstr ""
 
-#: inc/template-tags.php:389
+#: inc/template-tags.php:506
 msgid "Posted in %1$s"
 msgstr ""
 
-#: inc/template-tags.php:395
+#: inc/template-tags.php:512
 msgid "Tagged %1$s"
 msgstr ""
 
 #. translators: %s: post title
-#: inc/template-tags.php:405
+#: inc/template-tags.php:522
 msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
-#: inc/template-tags.php:421, inc/template-tags.php:439
+#: inc/template-tags.php:538, inc/template-tags.php:566
 msgid "Edit %s"
+msgstr ""
+
+#: inc/user-accounts.php:132
+msgid "You are not allowed to access this part of the site"
+msgstr ""
+
+#: user-account-management-templates/front-end/account-preferences-form.php:28
+msgid "Your preferences were successfully updated."
 msgstr ""

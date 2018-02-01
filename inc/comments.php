@@ -5,6 +5,18 @@
  * @package MinnPost Largo
  */
 
+if ( ! function_exists( 'user_can_moderate' ) ) :
+	function user_can_moderate() {
+		$can_moderate = false;
+		$user = wp_get_current_user();
+		if ( in_array( 'comment_moderator', (array) $user->roles ) ) {
+			$can_moderate = true;
+		}
+		return $can_moderate;
+	}
+endif;
+
+
 if ( ! function_exists( 'minnpost_remove_comment_support' ) ) :
 	function minnpost_remove_comment_support() {
 		remove_post_type_support( 'page', 'comments' );
@@ -21,13 +33,17 @@ if ( ! function_exists( 'get_approve_comment_link' ) ) :
 	function get_approve_comment_link( $comment_id = 0 ) {
 		$comment = get_comment( $comment_id );
 
-		if ( !current_user_can( 'edit_comment', $comment->comment_ID ) )
+		if ( ! current_user_can( 'edit_comment', $comment->comment_ID ) ) {
 			return;
+		}
 
+		// make approve/unapprove links work without approval
+		$nonce_action = 'approve-comment_' . $comment->comment_ID;
+		$nonce = wp_create_nonce( $nonce_action );
 		if ( '0' === $comment->comment_approved ) {
-			$location = admin_url( 'comment.php?action=approvecomment&amp;c=' ) . $comment->comment_ID;
+			$location = admin_url( 'comment.php?action=approvecomment&amp;c=' ) . $comment->comment_ID . '&_wpnonce=' . esc_attr( $nonce );
 		} else {
-			$location = admin_url( 'comment.php?action=unapprovecomment&amp;c=' ) . $comment->comment_ID;
+			$location = admin_url( 'comment.php?action=unapprovecomment&amp;c=' ) . $comment->comment_ID . '&_wpnonce=' . esc_attr( $nonce );
 		}
 
 		/**
@@ -86,10 +102,14 @@ if ( ! function_exists( 'get_spam_comment_link' ) ) :
 	function get_spam_comment_link( $comment_id = 0 ) {
 		$comment = get_comment( $comment_id );
 
-		if ( !current_user_can( 'edit_comment', $comment->comment_ID ) )
+		if ( ! current_user_can( 'edit_comment', $comment->comment_ID ) ) {
 			return;
+		}
 
-		$location = admin_url('comment.php?action=cdc&dt=spam&amp;c=') . $comment->comment_ID;
+		// make spam link work
+		$nonce_action = 'delete-comment_' . $comment->comment_ID;
+		$nonce = wp_create_nonce( $nonce_action );
+		$location = admin_url( 'comment.php?action=cdc&dt=spam&amp;c=' ) . $comment->comment_ID . '&_wpnonce=' . esc_attr( $nonce );
 
 		/**
 		 * Filters the comment spam link.
@@ -144,10 +164,14 @@ if ( ! function_exists( 'get_trash_comment_link' ) ) :
 	function get_trash_comment_link( $comment_id = 0 ) {
 		$comment = get_comment( $comment_id );
 
-		if ( !current_user_can( 'edit_comment', $comment->comment_ID ) )
+		if ( ! current_user_can( 'edit_comment', $comment->comment_ID ) ) {
 			return;
+		}
 
-		$location = admin_url('comment.php?action=cdc&amp;c=') . $comment->comment_ID;
+		// make trash link work
+		$nonce_action = 'delete-comment_' . $comment->comment_ID;
+		$nonce = wp_create_nonce( $nonce_action );
+		$location = admin_url( 'comment.php?action=cdc&amp;c=' ) . $comment->comment_ID . '&_wpnonce=' . esc_attr( $nonce );
 
 		/**
 		 * Filters the comment trash link.
@@ -200,8 +224,8 @@ endif;
 if ( ! function_exists( 'get_comment_status_by_access' ) ) :
 	function get_comment_status_by_access() {
 		$status = 'approve';
-		$user = wp_get_current_user();
-		if ( in_array( 'comment_moderator', (array) $user->roles ) ) {
+		$can_moderate = user_can_moderate();
+		if ( true === $can_moderate ) {
 			$status = 'all';
 		}
 		return $status;
