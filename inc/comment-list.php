@@ -2,8 +2,14 @@
 
 function minnpost_largo_comment( $comment, $args, $depth ) {
 	$GLOBALS['comment'] = $comment;
+	$class = array( 'o-comment' );
+	$status = wp_get_comment_status( $comment->comment_ID );
+	$class[] = $status;
+	if ( 'approved' !== $status ) {
+		$class[] = 'unpublished';
+	}
 	?>
-	<li <?php comment_class( 'o-comment' ); ?> id="o-comment-<?php comment_ID(); ?>">
+	<li <?php comment_class( $class ); ?> id="o-comment-<?php comment_ID(); ?>">
 		<div class="m-comment-meta">
 			<?php
 			if ( $comment->user_id ) {
@@ -15,11 +21,8 @@ function minnpost_largo_comment( $comment, $args, $depth ) {
 			?>
 			 Submitted by <?php echo get_user_name_or_profile_link( $comment ); ?> on <a class="a-comment-permalink" href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ); ?>"><?php printf( __( '%1$s - %2$s' ), get_comment_date(), get_comment_time() ); ?></a>. 
 		</div>
-
-		<?php
-		if ( '0' === $comment->comment_approved ) :
-		?>
-		<em><php _e( 'Your comment is awaiting moderation.' ) ?></em><br />
+		<?php if ( intval( get_current_user_id() ) === intval( $comment->user_id ) ) : ?>
+			<p class="a-moderation-notice a-moderation-notice-pending"><?php echo __( 'Your comment is awaiting moderation.', 'minnpost-largo' ); ?></p>
 		<?php endif; ?>
 
 		<?php comment_text(); ?>
