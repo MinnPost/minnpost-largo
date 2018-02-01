@@ -27,10 +27,30 @@ if ( post_password_required() ) {
 	<?php if ( have_comments() ) : ?>
 		<ol>
 			<?php
+			$params = array(
+				'post_id' => get_the_ID(),
+				'status' => 'all',
+				'type' => array( 'comment' ),
+			);
+			$comments_query = new WP_Comment_Query;
+			$comments = $comments_query->query( $params );
+
 			wp_list_comments(
 				array(
 					'callback' => 'minnpost_largo_comment',
 					'type' => 'comment',
+				)
+			);
+
+			$count_approved_comments = get_comments(
+				array_merge(
+					$params,
+					array(
+						'count' => true,
+						'post_id' => get_the_ID(),
+						'status' => 'approve',
+						'type' => array( 'comment' ),
+					)
 				)
 			);
 			?>
