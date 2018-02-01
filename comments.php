@@ -22,49 +22,57 @@ if ( post_password_required() ) {
 
 <section id="comments" class="o-comments-area o-comments-area-post">
 
-	<h3 class="a-comments-title">Comments<?php if ( have_comments() ) { $count = wp_count_comments( get_the_ID() ); echo ' (' . $count->approved . ')'; } ?></h3>
-
-	<?php if ( have_comments() ) : ?>
-		<ol>
-			<?php
-			$params = array(
+	<?php
+	$params = array(
+		'post_id' => get_the_ID(),
+		'status' => function_exists( 'get_comment_status_by_access' ) ? get_comment_status_by_access() : 'approve',
+		'type' => array( 'comment' ),
+	);
+	$count_approved_comments = get_comments(
+		array_merge(
+			$params,
+			array(
+				'count' => true,
 				'post_id' => get_the_ID(),
-				'status' => 'all',
+				'status' => 'approve',
 				'type' => array( 'comment' ),
-			);
-			$comments_query = new WP_Comment_Query;
-			$comments = $comments_query->query( $params );
+			)
+		)
+	);
+	?>
+	<?php if ( 0 < $count_approved_comments ) : ?>
+		<h3 class="a-comments-title">Comments (<?php echo $count_approved_comments; ?>)</h3>
 
-			wp_list_comments(
-				array(
-					'callback' => 'minnpost_largo_comment',
-					'type' => 'comment',
-				)
-			);
+		<?php if ( have_comments() ) : ?>
+			<ol>
+				<?php
+				$comments_query = new WP_Comment_Query;
+				$comments = $comments_query->query( $params );
 
-			$count_approved_comments = get_comments(
-				array_merge(
-					$params,
+				wp_list_comments(
 					array(
-						'count' => true,
-						'post_id' => get_the_ID(),
-						'status' => 'approve',
-						'type' => array( 'comment' ),
+						'callback' => 'minnpost_largo_comment',
+						'type' => 'comment',
 					)
-				)
-			);
-			?>
-		</ol>
+				);
+				?>
+			</ol>
+		<?php endif; ?>
+
+		<?php
+		// If comments are closed and there are comments, let's leave a little note
+		if ( ! comments_open() && get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) :
+		?>
+			<p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'minnpost-largo' ); ?></p>
+		<?php
+		endif;
+		?>
+
+	<?php else : ?>
+		<h3 class="a-comments-title">No comments yet</h3>
 	<?php endif; ?>
 
 	<?php
-	// If comments are closed and there are comments, let's leave a little note
-	if ( ! comments_open() && get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) :
-	?>
-		<p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'minnpost-largo' ); ?></p>
-	<?php
-	endif;
-
 	$logged_in_as = '<p class="a-form-instructions">' . sprintf(
 		/* translators: 1: edit user link, 2: accessibility text, 3: user name */
 		__( 'You are commenting as <a href="%1$s" aria-label="%2$s">%3$s</a>.' ),

@@ -196,3 +196,14 @@ if ( ! function_exists( 'trash_comment_link' ) ) :
 		echo $before . apply_filters( 'trash_comment_link', $link, $comment->comment_ID, $text ) . $after;
 	}
 endif;
+
+if ( ! function_exists( 'get_comment_status_by_access' ) ) :
+	function get_comment_status_by_access() {
+		$status = 'approve';
+		$user = wp_get_current_user();
+		if ( in_array( 'comment_moderator', (array) $user->roles ) ) {
+			$status = 'all';
+		}
+		return $status;
+	}
+endif;
