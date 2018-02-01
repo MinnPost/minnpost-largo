@@ -4,9 +4,12 @@ function minnpost_largo_comment( $comment, $args, $depth ) {
 	$GLOBALS['comment'] = $comment;
 	$class = array( 'o-comment' );
 	$status = wp_get_comment_status( $comment->comment_ID );
-	$class[] = $status;
+	$class[] = 'o-comment-' . $status;
 	if ( 'approved' !== $status ) {
-		$class[] = 'unpublished';
+		$class[] = 'o-comment-unpublished';
+	}
+	if ( intval( get_current_user_id() ) === intval( $comment->user_id ) ) {
+		$class[] = 'o-comment-by-current-user';
 	}
 	?>
 	<li <?php comment_class( $class ); ?> id="o-comment-<?php comment_ID(); ?>">

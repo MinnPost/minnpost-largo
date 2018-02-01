@@ -11,6 +11,12 @@
 		padding-bottom: $standard-page-margin / 2;
 		background: $color__white;
 		margin: 0 0 $standard-page-margin 0;
+		&.o-comment-unpublished {
+			background: $comment-background-unpublished;
+		}
+		&.o-comment-by-current-user {
+			background: $color__white;
+		}
 	}
 	ul.children {
 		list-style: none;
