@@ -97,7 +97,7 @@
 					array(
 						'theme_location' => 'user_account_access',
 						'menu_id' => 'user-account-access',
-						'depth' => 1,
+						'depth' => 2,
 						'container' => false,
 						'walker' => new Minnpost_Walker_Nav_Menu,
 						'echo' => false,
