@@ -106,6 +106,6 @@ require get_stylesheet_directory() . '/inc/custom-scripts-and-styles.php';
 
 
 /**
- * Load Jetpack compatibility file.
+ * Jetpack related methods
  */
-//require get_stylesheet_directory() . '/inc/jetpack.php';
+require get_stylesheet_directory() . '/inc/jetpack.php';
