@@ -397,6 +397,41 @@ endif;
 if ( ! function_exists( 'minnpost_account_info' ) ) :
 	add_shortcode( 'account-info', 'minnpost_account_info' );
 	function minnpost_account_info( $attributes, $content ) {
-		echo 'what';
+
+		if ( ! is_array( $attributes ) ) {
+			$attributes = array();
+		}
+
+		$user_id = get_query_var( 'users', '' );
+		if ( isset( $_GET['user_id'] ) ) {
+			$user_id = esc_attr( $_GET['user_id'] );
+		} else {
+			$user_id = get_current_user_id();
+		}
+
+		$can_access = false;
+		if ( class_exists( 'User_Account_Management' ) ) {
+			$account_management = User_Account_Management::get_instance();
+			$can_access = $account_management->check_user_permissions( $user_id );
+		} else {
+			return;
+		}
+		// if we are on the current user, or if this user can edit users
+		if ( false === $can_access ) {
+			return __( 'You do not have permission to access this page.', 'minnpost-largo' );
+		}
+
+		$member_level = get_user_meta( $user_id, 'member_level', true );
+		if ( '' !== $member_level ) {
+			$attributes['member_level_name'] = $member_level;
+			$attributes['member_level_value'] = sanitize_title( $member_level );
+			if ( 'Non-member' !== $member_level ) {
+				$attributes['member_level_value'] = strtolower( substr( $member_level, 9 ) );
+			}
+		} else {
+			$attributes['member_level_name'] = 'Non-member';
+			$attributes['member_level_value'] = 'non-member';
+		}
+		return $account_management->get_template_html( 'account-info', 'front-end', $attributes );
 	}
 endif;
