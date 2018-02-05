@@ -93,16 +93,8 @@
 						'fallback_cb' => '__return_false',
 					)
 				);
-				$user_account_access_menu = wp_nav_menu(
-					array(
-						'theme_location' => 'user_account_access',
-						'menu_id' => 'user-account-access',
-						'depth' => 2,
-						'container' => false,
-						'walker' => new Minnpost_Walker_Nav_Menu,
-						'echo' => false,
-					)
-				);
+
+				$user_account_access_menu = get_minnpost_account_access_menu();
 			?>
 			<?php if ( ! empty( $featured_menu ) || ! empty( $user_account_access_menu ) ) : ?>
 				<div id="navigation-featured-account-access">

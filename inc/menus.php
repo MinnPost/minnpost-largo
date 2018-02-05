@@ -149,6 +149,8 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 				$user_id = get_current_user_id();
 			}
 			$user_id = (int) $user_id;
+			$account_parent_item = get_page_by_title( 'Welcome', 'OBJECT', 'nav_menu_item' );
+			$account_parent_id = $account_parent_item->ID;
 
 			$url = $item->url;
 			$length = strlen( $url );
@@ -165,7 +167,7 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 					$active_class = ' class="active"';
 				}
 			}
-			if ( strpos( $url, '/user/' ) && '' !== $user_id && get_current_user_id() !== $user_id ) {
+			if ( ( $account_parent_id !== (int) $item->menu_item_parent && $account_parent_id !== (int) $item->ID ) && strpos( $url, '/user/' ) && '' !== $user_id && get_current_user_id() !== $user_id ) {
 				$url = $url . '?user_id=' . $user_id;
 			}
 

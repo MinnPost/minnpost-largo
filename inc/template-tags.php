@@ -893,13 +893,11 @@ if ( ! function_exists( 'minnpost_account_management_menu' ) ) :
 		$menu = get_minnpost_account_management_menu( $user_id );
 		?>
 		<?php if ( ! empty( $menu ) ) : ?>
-		<div id="navigation-account-management">
-			<?php if ( ! empty( $menu ) ) : ?>
-			<nav id="navigation-user-account-management" class="m-secondary-navigation" role="navigation">
-				<?php echo $menu; ?>
-			</nav><!-- #navigation-user-account-management -->
-			<?php endif; ?>
-		</div>
+			<div id="navigation-account-management">
+				<nav id="navigation-user-account-management" class="m-secondary-navigation" role="navigation">
+					<?php echo $menu; ?>
+				</nav><!-- #navigation-user-account-management -->
+			</div>
 		<?php endif; ?>
 		<?php
 	}
@@ -925,6 +923,61 @@ if ( ! function_exists( 'get_minnpost_account_management_menu' ) ) :
 					'theme_location' => 'user_account_management',
 					'menu_id' => 'user-account-management',
 					'depth' => 1,
+					'container' => false,
+					'walker' => new Minnpost_Walker_Nav_Menu( $user_id ),
+					'echo' => false,
+				)
+			);
+		}
+		return $menu;
+	}
+endif;
+
+if ( ! function_exists( 'minnpost_account_access_menu' ) ) :
+	function minnpost_account_access_menu() {
+		$user_id = get_query_var( 'users', '' );
+		if ( isset( $_GET['user_id'] ) ) {
+			$user_id = esc_attr( $_GET['user_id'] );
+		}
+		$menu = get_minnpost_account_access_menu();
+		?>
+		<?php if ( ! empty( $menu ) ) : ?>
+			<nav id="navigation-user-account-access" class="m-secondary-navigation" role="navigation">
+				<?php echo $menu; ?>
+			</nav><!-- #navigation-user-account-access -->
+		<?php endif; ?>
+		<?php
+	}
+endif;
+
+if ( ! function_exists( 'get_minnpost_account_access_menu' ) ) :
+
+	function get_minnpost_account_access_menu( $user_id = '' ) {
+
+		if ( '' === $user_id ) {
+			$user_id = get_query_var( 'users', '' );
+			if ( isset( $_GET['user_id'] ) ) {
+				$user_id = esc_attr( $_GET['user_id'] );
+			}
+		}
+
+		$menu = '';
+		$can_access = false;
+		if ( class_exists( 'User_Account_Management' ) ) {
+			$account_management = User_Account_Management::get_instance();
+			$can_access = $account_management->check_user_permissions( $user_id );
+		} else {
+			if ( get_current_user_id() === $user_id || current_user_can( 'edit_user', $user_id ) ) {
+				$can_access = true;
+			}
+		}
+		// if we are on the current user, or if this user can edit users
+		if ( true === $can_access ) {
+			$menu = wp_nav_menu(
+				array(
+					'theme_location' => 'user_account_access',
+					'menu_id' => 'user-account-access',
+					'depth' => 2,
 					'container' => false,
 					'walker' => new Minnpost_Walker_Nav_Menu( $user_id ),
 					'echo' => false,
