@@ -433,15 +433,28 @@ if ( ! function_exists( 'minnpost_account_info' ) ) :
 			$attributes['member_level_value'] = 'non-member';
 		}
 
-		$attributes['reading_topics'] = '';
-		if ( isset( $attributes['user_meta']['_reading_topics'] ) ) {
-			if ( is_array( maybe_unserialize( $attributes['user_meta']['_reading_topics'][0] ) && ! empty( maybe_unserialize( $attributes['user_meta']['_reading_topics'][0] ) ) ) ) {
-				$attributes['reading_topics'] = maybe_unserialize( $attributes['user_meta']['_reading_topics'][0] );
-			}
-		}
-
 		$attributes['user'] = get_userdata( $user_id );
 		$attributes['user_meta'] = get_user_meta( $user_id );
+
+		$attributes['reading_topics'] = array();
+		if ( isset( $attributes['user_meta']['_reading_topics'] ) ) {
+			if ( is_array( maybe_unserialize( $attributes['user_meta']['_reading_topics'][0] ) ) ) {
+				$topics = maybe_unserialize( $attributes['user_meta']['_reading_topics'][0] );
+				foreach ( $topics as $topic ) {
+					$term = get_term_by( 'slug', sanitize_title( $topic ), 'category' );
+					if ( false !== $term ) {
+						$cat_id = $term->term_id;
+						$attributes['reading_topics'][ $cat_id ] = $topic;
+					}
+				}
+				$attributes['topics_query'] = new WP_Query(
+					array(
+						'category__in' => array_keys( $attributes['reading_topics'] ),
+					)
+				);
+
+			}
+		}
 
 		return $account_management->get_template_html( 'account-info', 'front-end', $attributes );
 	}

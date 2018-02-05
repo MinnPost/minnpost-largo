@@ -152,3 +152,28 @@ if ( ! function_exists( 'highlight_search_results' ) ) :
 	add_filter( 'the_excerpt', 'highlight_search_results' );
 	add_filter( 'the_title', 'highlight_search_results' );
 endif;
+
+if ( ! function_exists( 'minnpost_lastvisit_set_cookie' ) ) :
+	add_action( 'init', 'minnpost_lastvisit_set_cookie' );
+	function minnpost_lastvisit_set_cookie() {
+		if ( is_admin() ) {
+			return;
+		}
+		$current = current_time( 'timestamp', 1 );
+		setcookie( 'lastvisit', $current, time() + 60 + 60 * 24 * 7, COOKIEPATH, COOKIE_DOMAIN );
+	}
+endif;
+
+if ( ! function_exists( 'is_post_new' ) ) :
+	function is_post_new( $id ) {
+		// if no cookie then return false
+		if ( ! isset( $_COOKIE['lastvisit'] ) || '' === $_COOKIE['lastvisit'] ) {
+			return false;
+		}
+		$lastvisit = $_COOKIE['lastvisit'];
+		$publish_date = get_post_time( 'U', true, $id );
+		if ( $publish_date > $lastvisit ) {
+			return true;
+		}
+	}
+endif;

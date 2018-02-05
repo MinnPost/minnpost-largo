@@ -578,7 +578,7 @@ if ( ! function_exists( 'cmb2_user_fields' ) ) :
 			'type'    => 'multicheck',
 			'options' => array(
 				'Arts & Culture' => 'Arts & Culture',
-				'Business' => 'Business',
+				'Economy' => 'Economy',
 				'Education' => 'Education',
 				'Environment' => 'Environment',
 				'Greater Minnesota news' => 'Greater Minnesota news',

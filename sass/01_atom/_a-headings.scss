@@ -147,6 +147,14 @@ h6, .h6 {
 	color: $color__minnpost-black;
 }
 
+.m-interest-posts .a-entry-title {
+	font-family: $font__headings;
+	font-weight: normal;
+	font-style: normal;
+	font-variant: normal;
+	line-height: 0.9em;
+}
+
 .m-entry-header-single .a-entry-title {
 	margin-bottom: 15px;
 }
