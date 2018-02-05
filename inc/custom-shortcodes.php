@@ -432,6 +432,17 @@ if ( ! function_exists( 'minnpost_account_info' ) ) :
 			$attributes['member_level_name'] = 'Non-member';
 			$attributes['member_level_value'] = 'non-member';
 		}
+
+		$attributes['reading_topics'] = '';
+		if ( isset( $attributes['user_meta']['_reading_topics'] ) ) {
+			if ( is_array( maybe_unserialize( $attributes['user_meta']['_reading_topics'][0] ) && ! empty( maybe_unserialize( $attributes['user_meta']['_reading_topics'][0] ) ) ) ) {
+				$attributes['reading_topics'] = maybe_unserialize( $attributes['user_meta']['_reading_topics'][0] );
+			}
+		}
+
+		$attributes['user'] = get_userdata( $user_id );
+		$attributes['user_meta'] = get_user_meta( $user_id );
+
 		return $account_management->get_template_html( 'account-info', 'front-end', $attributes );
 	}
 endif;

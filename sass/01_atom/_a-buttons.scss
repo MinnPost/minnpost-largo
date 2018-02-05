@@ -1,4 +1,4 @@
-input[type="submit"], button[type="submit"] {
+input[type="submit"], button[type="submit"], a.a-button:link, a.a-button:visited {
 	padding: 0.25em;
 	font-size: $base-line-height-em;
 	font-weight: normal;
@@ -10,4 +10,9 @@ input[type="submit"], button[type="submit"] {
 	margin-right: 0.5em;
 	cursor: pointer;
 	line-height: 23px;
+	&:hover, &:focus, &:active {
+		background: palette(red, dark);
+		color: $color__white;
+		text-decoration: none;
+	}
 }

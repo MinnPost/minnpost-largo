@@ -3,8 +3,20 @@
 	padding: 1em;
 	position: relative;
 	margin: 0 0 1.5em 0;
+	&.m-member-info-platinum {
+		background: $color__minnpost-platinum;
+	}
+	&.m-member-info-gold {
+		background: $color__minnpost-gold;
+	}
+	&.m-member-info-silver {
+		background: $color__minnpost-silver;
+	}
+	&.m-member-info-bronze {
+		background: $color__minnpost-bronze;
+	}
 	dt.a-member-level, dd.a-member-level {
-		display: inline;
+		display: inline-block;
 	}
 	dt.a-member-level {
 		marin: 0 0 0.2em 0;

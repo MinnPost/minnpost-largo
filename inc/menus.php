@@ -142,6 +142,14 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 
 		$url = '';
 		if ( ! empty( $item->url ) ) {
+
+			if ( '' !== $this->user_id && get_current_user_id() !== $this->user_id ) {
+				$user_id = $this->user_id;
+			} else {
+				$user_id = get_current_user_id();
+			}
+			$user_id = (int) $user_id;
+
 			$url = $item->url;
 			$length = strlen( $url );
 			if ( home_url( '/' ) !== $url && substr( wp_logout_url(), 0, $length ) === $url ) {
@@ -152,18 +160,21 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 				$item->title = '<span class="name">Welcome, ' . $user->first_name . '</span><span class="a-user-initial">' . $user->first_name[0] . '</span><span class="a-arrow-down"></span>';
 			}
 			if ( site_url( '/users/userid' ) === $url ) {
-				if ( '' !== $this->user_id && get_current_user_id() !== $this->user_id ) {
-					$user_id = $this->user_id;
-				} else {
-					$user_id = get_current_user_id();
-				}
 				$url = site_url( '/users/' . $user_id . '/' );
 				if ( rtrim( get_current_url(), '/' ) . '/' === $url ) {
 					$active_class = ' class="active"';
 				}
 			}
-			if ( strpos( $url, '/user/' ) && '' !== $this->user_id && get_current_user_id() !== $this->user_id ) {
-				$url = $url . '?user_id=' . $this->user_id;
+			if ( strpos( $url, '/user/' ) && '' !== $user_id && get_current_user_id() !== $user_id ) {
+				$url = $url . '?user_id=' . $user_id;
+			}
+
+			if ( strpos( $url, '/user' ) && '' !== $user_id && get_current_user_id() !== $user_id ) {
+				$active_class = '';
+			}
+			if ( 'Your MinnPost' === $item->title && '' !== $user_id && get_current_user_id() !== $user_id ) {
+				$user = wp_get_current_user();
+				$item->title = $user->first_name . "'s MinnPost";
 			}
 		}
 
