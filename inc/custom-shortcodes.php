@@ -456,6 +456,26 @@ if ( ! function_exists( 'minnpost_account_info' ) ) :
 			}
 		}
 
+		$attributes['newsletters'] = array();
+		if ( isset( $attributes['user_meta']['_newsletters'] ) ) {
+			if ( is_array( maybe_unserialize( $attributes['user_meta']['_newsletters'][0] ) ) ) {
+				$newsletters = maybe_unserialize( $attributes['user_meta']['_newsletters'][0] );
+				foreach ( $newsletters as $newsletter ) {
+					$attributes['newsletters'][] = $newsletter;
+				}
+			}
+		}
+
+		$attributes['occasional_emails'] = array();
+		if ( isset( $attributes['user_meta']['_occasional_emails'] ) ) {
+			if ( is_array( maybe_unserialize( $attributes['user_meta']['_occasional_emails'][0] ) ) ) {
+				$emails = maybe_unserialize( $attributes['user_meta']['_occasional_emails'][0] );
+				foreach ( $emails as $email ) {
+					$attributes['occasional_emails'][] = $email;
+				}
+			}
+		}
+
 		return $account_management->get_template_html( 'account-info', 'front-end', $attributes );
 	}
 endif;

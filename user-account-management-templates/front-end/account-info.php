@@ -32,4 +32,16 @@
 
 <section class="o-user-section o-communication-preferences">
 	<h2 class="a-user-section-title">Communication preferences</h2>
+	<?php if ( ! empty( $attributes['newsletters'] ) || ! empty( $attributes['occasional_emails'] ) ) : ?>
+		<p>These are the MinnPost email messages that you currently receive. You can <a href="/user/preferences/">edit your preferences</a> to change them.</p>
+		<dl class="a-user-emails">
+			<dt>Newsletter subscriptions</dt>
+			<dd><?php echo implode( ', ', array_values( $attributes['newsletters'] ) ); ?></dd>
+			<dt>Occasional messages</dt>
+			<dd><?php echo implode( ', ', array_values( $attributes['occasional_emails'] ) ); ?></dd>
+		</dl>
+		<p class="a-edit-preferences"><a href="/user/preferences/">Edit your preferences</a></p>
+	<?php else : ?>
+		<p>You are not subscribed to any MinnPost emails. You can <a href="/user/preferences/">edit your preferences</a>.</p>
+	<?php endif; ?>
 </section>
