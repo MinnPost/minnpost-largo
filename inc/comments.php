@@ -231,3 +231,10 @@ if ( ! function_exists( 'get_comment_status_by_access' ) ) :
 		return $status;
 	}
 endif;
+
+if ( ! function_exists( 'remove_schedule_delete' ) ) :
+	function remove_schedule_delete() {
+		remove_action( 'wp_scheduled_delete', 'wp_scheduled_delete' );
+	}
+	add_action( 'init', 'remove_schedule_delete' );
+endif;
