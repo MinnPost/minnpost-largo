@@ -589,28 +589,26 @@ if ( ! function_exists( 'cmb2_user_fields' ) ) :
 				'Sports' => 'Sports',
 			),
 		) );
-		$user_preferences->add_field( array(
-			'name'    => 'Subscribe to these regular newsletters:',
-			'desc'    => '',
-			'id'      => '_newsletters',
-			'type'    => 'multicheck',
-			'options' => array(
-				'Daily Newsletter' => 'Daily newsletter',
-				'Sunday review' => 'Sunday review',
-				'Greater Minnesota newsletter' => 'Greater Minnesota newsletter',
-				'D.C. Memo' => 'D.C. Memo',
-			),
-		) );
-		$user_preferences->add_field( array(
-			'name'    => 'Occasional MinnPost emails:',
-			'desc'    => '',
-			'id'      => '_occasional_emails',
-			'type'    => 'multicheck',
-			'options' => array(
-				'Events & member benefits' => 'Events & member benefits',
-				'Opportunities to give input/feedback' => 'Opportunities to give input/feedback',
-			),
-		) );
+
+		// mailchimp fields
+		if ( ! class_exists( 'Form_Processor_MailChimp' ) ) {
+			require_once( TEMPLATEPATH . 'plugins/form-processor-mailchimp/form-processor-mailchimp.php' );
+		}
+		$form_processor = Form_Processor_MailChimp::get_instance();
+		$front_end = $form_processor->front_end;
+
+		$categories = $front_end->generate_interest_options( '3631302e9c', 'f88ee8cb3b', array( '_newsletters', '_occasional_emails' ), 'name' );
+
+		foreach ( $categories as $key => $category ) {
+			$options = $category['interests'];
+			$user_preferences->add_field( array(
+				'name'    => $category['title'],
+				'desc'    => '',
+				'id'      => $key,
+				'type'    => 'multicheck',
+				'options' => $options,
+			) );
+		}
 	}
 endif;
 
