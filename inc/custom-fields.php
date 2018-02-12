@@ -591,24 +591,89 @@ if ( ! function_exists( 'cmb2_user_fields' ) ) :
 		) );
 
 		// mailchimp fields
+		$user_preferences->add_field( array(
+			'name'    => 'Subscribe to these regular newsletters:',
+			'desc'    => '',
+			'id'      => '_newsletters',
+			'type'    => 'multicheck',
+			'options_cb' => 'get_mailchimp_newsletter_options',
+			'default_cb' => 'get_mailchimp_user_values',
+		) );
+		$user_preferences->add_field( array(
+			'name'    => 'Occasional MinnPost emails:',
+			'desc'    => '',
+			'id'      => '_occasional_emails',
+			'type'    => 'multicheck',
+			'options_cb' => 'get_mailchimp_occasional_email_options',
+			'default_cb' => 'get_mailchimp_user_values',
+		) );
+	}
+endif;
+
+
+if ( ! function_exists( 'get_mailchimp_user_values' ) ) :
+	function get_mailchimp_user_values( $field_args, $field ) {
+		// figure out if we have a current user and use their settings as the default selections
+		// problem: if the user has a setting for this field, this default callback won't be called
+		// solution: we should just never save this field. the mailchimp plugin's cache settings will keep from overloading the api
+		$user_id = get_query_var( 'users', '' );
+		if ( isset( $_GET['user_id'] ) ) {
+			$user_id = esc_attr( $_GET['user_id'] );
+		} else {
+			$user_id = get_current_user_id();
+		}
+
+		if ( '' !== $user_id ) {
+			$user = get_userdata( $user_id );
+			$email = $user->user_email;
+
+			if ( ! class_exists( 'Form_Processor_MailChimp' ) ) {
+				require_once( TEMPLATEPATH . 'plugins/form-processor-mailchimp/form-processor-mailchimp.php' );
+			}
+			$form_processor = Form_Processor_MailChimp::get_instance();
+			$front_end = $form_processor->front_end;
+			$user_info = $front_end->get_user_info( '3631302e9c', $email );
+			$user_interests = $user_info['interests'];
+
+			$checked = array();
+			foreach ( $user_interests as $key => $interest ) {
+				if ( 1 === absint( $interest ) ) {
+					$checked[] = $key;
+				}
+			}
+			return $checked;
+		}
+	}
+endif;
+
+if ( ! function_exists( 'get_mailchimp_newsletter_options' ) ) :
+	function get_mailchimp_newsletter_options( $field ) {
+		// mailchimp fields
+		$options = get_mailchimp_field_options( '_newsletters', 'f88ee8cb3b' );
+		return $options;
+	}
+endif;
+
+if ( ! function_exists( 'get_mailchimp_occasional_email_options' ) ) :
+	function get_mailchimp_occasional_email_options( $field ) {
+		// mailchimp fields
+		$options = get_mailchimp_field_options( '_occasional_emails', '93f0b57b1b' );
+		return $options;
+	}
+endif;
+
+if ( ! function_exists( 'get_mailchimp_field_options' ) ) :
+	function get_mailchimp_field_options( $key, $category_id ) {
 		if ( ! class_exists( 'Form_Processor_MailChimp' ) ) {
 			require_once( TEMPLATEPATH . 'plugins/form-processor-mailchimp/form-processor-mailchimp.php' );
 		}
 		$form_processor = Form_Processor_MailChimp::get_instance();
 		$front_end = $form_processor->front_end;
-
-		$categories = $front_end->generate_interest_options( '3631302e9c', 'f88ee8cb3b', array( '_newsletters', '_occasional_emails' ), 'name' );
-
+		$categories = $front_end->generate_interest_options( '3631302e9c', $category_id, $key );
 		foreach ( $categories as $key => $category ) {
-			$options = $category['interests'];
-			$user_preferences->add_field( array(
-				'name'    => $category['title'],
-				'desc'    => '',
-				'id'      => $key,
-				'type'    => 'multicheck',
-				'options' => $options,
-			) );
+			$options = isset( $category['interests'] ) ? $category['interests'] : $category;
 		}
+		return $options;
 	}
 endif;
 

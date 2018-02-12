@@ -371,6 +371,10 @@ if ( ! function_exists( 'minnpost_account_preferences_form' ) ) :
 			return __( 'You are not signed in.', 'user-account-management' );
 		} else {
 			//$attributes['login'] = rawurldecode( $_REQUEST['login'] );
+
+			// translators: instructions on top of the form
+			$attributes['instructions'] = sprintf( '<p class="a-form-instructions">' . esc_html__( 'If you have set up reading or email preferences, you can update them below.', 'minnpost-largo' ) . '</p>' );
+
 			// Error messages
 			$errors = array();
 			if ( isset( $_REQUEST['errors'] ) ) {

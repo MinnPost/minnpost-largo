@@ -1,8 +1,12 @@
 <form id="account-preferences-form" action="<?php echo $attributes['current_url']; ?>" method="post" class="m-form m-form-standalone m-form-user m-form-account-preferences">
 
-	<input type="hidden" name="user_account_management_action" value="account-preferences-update"/>
-	<input type="hidden" name="user_account_management_redirect" value="<?php echo $attributes['redirect']; ?>"/>
-	<input type="hidden" name="user_account_management_account_preferences_nonce" value="<?php echo wp_create_nonce( 'uam-account-preferences-nonce' ); ?>"/>
+	<input type="hidden" name="user_account_management_action" value="account-preferences-update">
+	<input type="hidden" name="user_account_management_redirect" value="<?php echo $attributes['redirect']; ?>">
+	<input type="hidden" name="user_account_management_account_preferences_nonce" value="<?php echo wp_create_nonce( 'uam-account-preferences-nonce' ); ?>">
+	<input type="hidden" name="user_account_management_account_preferences_nonce" value="<?php echo wp_create_nonce( 'uam-account-preferences-nonce' ); ?>">
+	<input type="hidden" name="email" value="<?php echo $attributes['user']->user_email; ?>">
+	<input type="hidden" name="first_name" value="<?php echo $attributes['user']->first_name; ?>">
+	<input type="hidden" name="last_name" value="<?php echo $attributes['user']->last_name; ?>">
 
 	<?php if ( ! empty( $attributes['instructions'] ) ) : ?>
 	<?php echo $attributes['instructions']; ?>
@@ -30,7 +34,7 @@
 		</div>
 	<?php endif; ?>
 
-	<fieldset>
+	<fieldset class="m-user-preferences">
 		<?php
 		$args = array(
 			'save_button' => esc_html__( 'Save Changes', 'cmb2' ),
