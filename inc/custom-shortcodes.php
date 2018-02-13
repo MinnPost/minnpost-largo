@@ -379,7 +379,7 @@ if ( ! function_exists( 'minnpost_account_preferences_form' ) ) :
 				$error_codes = explode( ',', $_REQUEST['errors'] );
 
 				foreach ( $error_codes as $code ) {
-					$errors[] = $this->get_error_message( $code );
+					$errors[] = $account_management->get_error_message( $code );
 				}
 			}
 			$attributes['errors'] = $errors;
