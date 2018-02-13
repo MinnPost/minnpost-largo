@@ -612,7 +612,7 @@ endif;
 
 
 if ( ! function_exists( 'get_mailchimp_user_values' ) ) :
-	function get_mailchimp_user_values( $field_args, $field ) {
+	function get_mailchimp_user_values( $field_args = array(), $field = array(), $reset = false ) {
 		// figure out if we have a current user and use their settings as the default selections
 		// problem: if the user has a setting for this field, this default callback won't be called
 		// solution: we should just never save this field. the mailchimp plugin's cache settings will keep from overloading the api
@@ -647,7 +647,7 @@ if ( ! function_exists( 'get_mailchimp_user_values' ) ) :
 endif;
 
 if ( ! function_exists( 'get_mailchimp_newsletter_options' ) ) :
-	function get_mailchimp_newsletter_options( $field ) {
+	function get_mailchimp_newsletter_options( $field = array() ) {
 		// mailchimp fields
 		$options = get_mailchimp_field_options( '_newsletters', 'f88ee8cb3b' );
 		return $options;
@@ -655,7 +655,7 @@ if ( ! function_exists( 'get_mailchimp_newsletter_options' ) ) :
 endif;
 
 if ( ! function_exists( 'get_mailchimp_occasional_email_options' ) ) :
-	function get_mailchimp_occasional_email_options( $field ) {
+	function get_mailchimp_occasional_email_options( $field = array() ) {
 		// mailchimp fields
 		$options = get_mailchimp_field_options( '_occasional_emails', '93f0b57b1b' );
 		return $options;
