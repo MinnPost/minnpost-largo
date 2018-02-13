@@ -1,9 +1,8 @@
-<form id="account-preferences-form" action="<?php echo $attributes['current_url']; ?>" method="post" class="m-form m-form-standalone m-form-user m-form-account-preferences">
+<form id="account-preferences-form" action="<?php echo site_url( '/user/account-settings' ); ?>" method="post" class="m-form m-form-standalone m-form-user m-form-account-preferences">
 
-	<input type="hidden" name="user_account_management_action" value="account-preferences-update">
+	<input type="hidden" name="user_account_management_action" value="account-settings-update">
 	<input type="hidden" name="user_account_management_redirect" value="<?php echo $attributes['redirect']; ?>">
-	<input type="hidden" name="user_account_management_account_preferences_nonce" value="<?php echo wp_create_nonce( 'uam-account-preferences-nonce' ); ?>">
-	<input type="hidden" name="user_account_management_account_preferences_nonce" value="<?php echo wp_create_nonce( 'uam-account-preferences-nonce' ); ?>">
+	<input type="hidden" name="user_account_management_account_settings_nonce" value="<?php echo wp_create_nonce( 'uam-account-settings-nonce' ); ?>">
 	<input type="hidden" name="email" value="<?php echo $attributes['user']->user_email; ?>">
 	<input type="hidden" name="first_name" value="<?php echo $attributes['user']->first_name; ?>">
 	<input type="hidden" name="last_name" value="<?php echo $attributes['user']->last_name; ?>">
@@ -26,7 +25,7 @@
 		</div>
 	<?php endif; ?>
 
-	<?php if ( ! empty( $_GET['account-preferences-update'] ) && 'true' === esc_attr( $_GET['account-preferences-update'] ) ) : ?>
+	<?php if ( ! empty( $_GET['account-settings-update'] ) && 'true' === esc_attr( $_GET['account-settings-update'] ) ) : ?>
 		<div class="m-form-message m-form-message-info">
 			<p class="login-info">
 				<?php _e( 'Your preferences were successfully updated.', 'minnpost-largo' ); ?>
