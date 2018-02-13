@@ -125,8 +125,6 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 				</div>';
 			} elseif ( 'full' === $args['newsletter'] ) {
 				$url = str_replace( 'https', 'http', get_rest_url( null, '/form-processor-mc/v1/lists/3631302e9c/interest-categories' ) );
-
-				//error_log( 'result is ' . print_r( $api_result, true ) );
 				$form = '';
 
 				$form .= '
