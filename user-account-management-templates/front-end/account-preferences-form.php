@@ -34,13 +34,34 @@
 	<?php endif; ?>
 
 	<fieldset class="m-user-preferences">
+		<?php if ( ! empty( $attributes['reading_topics'] ) ) : ?>
+			<div class="m-form-item m-form-reading-preferences m-form-change-reading-preferences">
+				<label<?php _e( 'Reading Preferences:', 'minnpost-largo' ); ?></label>
+				<div class="checkboxes">
+					<?php
+					$n = 1;
+					$user_topics = array_values( $attributes['user_reading_topics'] );
+					?>
+					<?php foreach ( $attributes['reading_topics'] as $topic ) : ?>
+						<?php
+						$checked = '';
+						if ( in_array( $topic, $user_topics ) ) {
+							$checked = ' checked';
+						}
+						?>
+						<label><input id="_reading_topics<?php echo $n; ?>" name="_reading_topics[]" value="<?php echo $topic; ?>" type="checkbox"<?php echo $checked; ?>> <?php echo $topic; ?></label>
+						<?php $n++; ?>
+					<?php endforeach; ?>
+				</div>
+			</div>
+		<?php endif; ?>
+
 		<?php
-		$args = array(
-			'save_button' => esc_html__( 'Save Changes', 'cmb2' ),
-			'cmb_styles'  => false,
-			'enqueue_js'  => false,
-		);
-		echo cmb2_get_metabox_form( 'user_reading_preferences', $attributes['user']->ID, $args );
 		?>
 	</fieldset>
+
+	<div class="m-form-actions">
+		<input type="submit" name="submit" id="change-button" value="<?php _e( 'Save Changes', 'user-account-management' ); ?>" class="btn btn-submit btn-account-settings">
+	</div>
+
 </form>
