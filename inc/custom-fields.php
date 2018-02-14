@@ -615,34 +615,13 @@ if ( ! function_exists( 'get_mailchimp_user_values' ) ) :
 	function get_mailchimp_user_values( $field_args = array(), $field = array(), $reset = false ) {
 		// figure out if we have a current user and use their settings as the default selections
 		// problem: if the user has a setting for this field, this default callback won't be called
-		// solution: we should just never save this field. the mailchimp plugin's cache settings will keep from overloading the api
-		$user_id = get_query_var( 'users', '' );
-		if ( isset( $_GET['user_id'] ) ) {
-			$user_id = esc_attr( $_GET['user_id'] );
-		} else {
-			$user_id = get_current_user_id();
+		// solution: we just never save this field. the mailchimp plugin's cache settings help keep from overloading the api
+		if ( ! class_exists( 'Minnpost_Form_Processor_MailChimp' ) ) {
+			require_once( TEMPLATEPATH . 'plugins/minnpost-form-processor-mailchimp/minnpost-form-processor-mailchimp.php' );
 		}
-
-		if ( '' !== $user_id ) {
-			$user = get_userdata( $user_id );
-			$email = $user->user_email;
-
-			if ( ! class_exists( 'Form_Processor_MailChimp' ) ) {
-				require_once( TEMPLATEPATH . 'plugins/form-processor-mailchimp/form-processor-mailchimp.php' );
-			}
-			$form_processor = Form_Processor_MailChimp::get_instance();
-			$front_end = $form_processor->front_end;
-			$user_info = $front_end->get_user_info( '3631302e9c', $email );
-			$user_interests = $user_info['interests'];
-
-			$checked = array();
-			foreach ( $user_interests as $key => $interest ) {
-				if ( 1 === absint( $interest ) ) {
-					$checked[] = $key;
-				}
-			}
-			return $checked;
-		}
+		$minnpost_form_processor = Minnpost_Form_Processor_MailChimp::get_instance();
+		$values = $minnpost_form_processor->get_mailchimp_user_values( $reset );
+		return $values;
 	}
 endif;
 
