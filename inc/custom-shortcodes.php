@@ -390,6 +390,29 @@ if ( ! function_exists( 'minnpost_account_preferences_form' ) ) :
 			}
 			$attributes['user_meta'] = get_user_meta( $attributes['user']->ID );
 
+			$attributes['reading_topics'] = array(
+				'Arts & Culture' => 'Arts & Culture',
+				'Economy' => 'Economy',
+				'Education' => 'Education',
+				'Environment' => 'Environment',
+				'Greater Minnesota news' => 'Greater Minnesota news',
+				'Health' => 'Health',
+				'MinnPost announcements' => 'MinnPost announcements',
+				'Opinion/Commentary' => 'Opinion/Commentary',
+				'Politics & Policy' => 'Politics & Policy',
+				'Sports' => 'Sports',
+			);
+
+			$attributes['user_reading_topics'] = array();
+			if ( isset( $attributes['user_meta']['_reading_topics'] ) ) {
+				if ( is_array( maybe_unserialize( $attributes['user_meta']['_reading_topics'][0] ) ) ) {
+					$topics = maybe_unserialize( $attributes['user_meta']['_reading_topics'][0] );
+					foreach ( $topics as $topic ) {
+						$attributes['user_reading_topics'][] = $topic;
+					}
+				}
+			}
+
 			return $account_management->get_template_html( 'account-preferences-form', 'front-end', $attributes );
 
 		}
@@ -455,26 +478,6 @@ if ( ! function_exists( 'minnpost_account_info' ) ) :
 					)
 				);
 
-			}
-		}
-
-		$attributes['newsletters'] = array();
-		if ( isset( $attributes['user_meta']['_newsletters'] ) ) {
-			if ( is_array( maybe_unserialize( $attributes['user_meta']['_newsletters'][0] ) ) ) {
-				$newsletters = maybe_unserialize( $attributes['user_meta']['_newsletters'][0] );
-				foreach ( $newsletters as $newsletter ) {
-					$attributes['newsletters'][] = $newsletter;
-				}
-			}
-		}
-
-		$attributes['occasional_emails'] = array();
-		if ( isset( $attributes['user_meta']['_occasional_emails'] ) ) {
-			if ( is_array( maybe_unserialize( $attributes['user_meta']['_occasional_emails'][0] ) ) ) {
-				$emails = maybe_unserialize( $attributes['user_meta']['_occasional_emails'][0] );
-				foreach ( $emails as $email ) {
-					$attributes['occasional_emails'][] = $email;
-				}
 			}
 		}
 
