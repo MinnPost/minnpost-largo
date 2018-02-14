@@ -39,7 +39,7 @@
 				<label><?php _e( 'Reading Preferences:', 'minnpost-largo' ); ?></label>
 				<div class="checkboxes">
 					<?php
-					$n = 1;
+					$topic_index = 1;
 					$user_topics = array_values( $attributes['user_reading_topics'] );
 					?>
 					<?php foreach ( $attributes['reading_topics'] as $topic ) : ?>
@@ -49,15 +49,51 @@
 							$checked = ' checked';
 						}
 						?>
-						<label><input id="_reading_topics<?php echo $n; ?>" name="_reading_topics[]" value="<?php echo $topic; ?>" type="checkbox"<?php echo $checked; ?>> <?php echo $topic; ?></label>
-						<?php $n++; ?>
+						<label><input id="_reading_topics<?php echo $topic_index; ?>" name="_reading_topics[]" value="<?php echo $topic; ?>" type="checkbox"<?php echo $checked; ?>> <?php echo $topic; ?></label>
+						<?php $topic_index++; ?>
 					<?php endforeach; ?>
 				</div>
 			</div>
 		<?php endif; ?>
 
 		<?php
+		$user_emails = get_mailchimp_user_values( array(), array(), true );
+		$newsletters = get_mailchimp_newsletter_options();
+		$occasional_emails = get_mailchimp_occasional_email_options();
+		$user_emails = array_values( $user_emails );
+		$newsletter_index = 1;
+		$occasional_email_index = 1;
 		?>
+		<div class="m-form-item m-form-email-options m-form-change-email-options">
+			<label>Subscribe to these regular newsletters:</label>
+			<div class="checkboxes">
+				<?php foreach ( $newsletters as $key => $value ) : ?>
+					<?php
+					$checked = '';
+					if ( in_array( $key, $user_emails ) ) {
+						$checked = ' checked';
+					}
+					?>
+					<label><input id="_newsletters<?php echo $newsletter_index; ?>" name="_newsletters[]" value="<?php echo $key; ?>" type="checkbox"<?php echo $checked; ?>> <?php echo $value; ?></label>
+					<?php $newsletter_index++; ?>
+				<?php endforeach; ?>
+			</div>
+		</div>
+		<div class="m-form-item m-form-item-email-option">
+			<label>Occasional MinnPost emails:</label>
+			<div class="checkboxes">
+				<?php foreach ( $occasional_emails as $key => $value ) : ?>
+					<?php
+					$checked = '';
+					if ( in_array( $key, $user_emails ) ) {
+						$checked = ' checked';
+					}
+					?>
+					<label><input id="_occasional_emails<?php echo $occasional_email_index; ?>" name="_occasional_emails[]" value="<?php echo $key; ?>" type="checkbox"<?php echo $checked; ?>> <?php echo $value; ?></label>
+					<?php $occasional_email_index++; ?>
+				<?php endforeach; ?>
+			</div>
+		</div>
 	</fieldset>
 
 	<div class="m-form-actions">
