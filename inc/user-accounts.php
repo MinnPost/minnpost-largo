@@ -141,13 +141,6 @@ if ( ! function_exists( 'add_to_user_data' ) ) :
 		if ( isset( $posted['_reading_topics'] ) && ! empty( $posted['_reading_topics'] ) ) {
 			$user_data['_reading_topics'] = $posted['_reading_topics'];
 		}
-		// mailchimp fields
-		if ( isset( $posted['_newsletters'] ) ) {
-			$user_data['_newsletters'] = $posted['_newsletters'];
-		}
-		if ( isset( $posted['_occasional_emails'] ) ) {
-			$user_data['_occasional_emails'] = $posted['_occasional_emails'];
-		}
 		return $user_data;
 	}
 endif;
@@ -160,4 +153,3 @@ if ( ! function_exists( 'save_minnpost_user_data' ) ) :
 		}
 	}
 endif;
-
