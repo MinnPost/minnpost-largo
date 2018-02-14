@@ -628,7 +628,11 @@ endif;
 if ( ! function_exists( 'get_mailchimp_newsletter_options' ) ) :
 	function get_mailchimp_newsletter_options( $field = array() ) {
 		// mailchimp fields
-		$options = get_mailchimp_field_options( '_newsletters', 'f88ee8cb3b' );
+		if ( ! class_exists( 'Minnpost_Form_Processor_MailChimp' ) ) {
+			require_once( TEMPLATEPATH . 'plugins/minnpost-form-processor-mailchimp/minnpost-form-processor-mailchimp.php' );
+		}
+		$minnpost_form = Minnpost_Form_Processor_MailChimp::get_instance();
+		$options = $minnpost_form->get_mailchimp_field_options( '_newsletters', 'f88ee8cb3b' );
 		return $options;
 	}
 endif;
@@ -636,22 +640,11 @@ endif;
 if ( ! function_exists( 'get_mailchimp_occasional_email_options' ) ) :
 	function get_mailchimp_occasional_email_options( $field = array() ) {
 		// mailchimp fields
-		$options = get_mailchimp_field_options( '_occasional_emails', '93f0b57b1b' );
-		return $options;
-	}
-endif;
-
-if ( ! function_exists( 'get_mailchimp_field_options' ) ) :
-	function get_mailchimp_field_options( $key, $category_id ) {
-		if ( ! class_exists( 'Form_Processor_MailChimp' ) ) {
-			require_once( TEMPLATEPATH . 'plugins/form-processor-mailchimp/form-processor-mailchimp.php' );
+		if ( ! class_exists( 'Minnpost_Form_Processor_MailChimp' ) ) {
+			require_once( TEMPLATEPATH . 'plugins/minnpost-form-processor-mailchimp/minnpost-form-processor-mailchimp.php' );
 		}
-		$form_processor = Form_Processor_MailChimp::get_instance();
-		$front_end = $form_processor->front_end;
-		$categories = $front_end->generate_interest_options( '3631302e9c', $category_id, $key );
-		foreach ( $categories as $key => $category ) {
-			$options = isset( $category['interests'] ) ? $category['interests'] : $category;
-		}
+		$minnpost_form = Minnpost_Form_Processor_MailChimp::get_instance();
+		$options = $minnpost_form->get_mailchimp_field_options( '_occasional_emails', '93f0b57b1b' );
 		return $options;
 	}
 endif;
