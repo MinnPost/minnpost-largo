@@ -36,7 +36,7 @@
 	<fieldset class="m-user-preferences">
 		<?php if ( ! empty( $attributes['reading_topics'] ) ) : ?>
 			<div class="m-form-item m-form-reading-preferences m-form-change-reading-preferences">
-				<label<?php _e( 'Reading Preferences:', 'minnpost-largo' ); ?></label>
+				<label><?php _e( 'Reading Preferences:', 'minnpost-largo' ); ?></label>
 				<div class="checkboxes">
 					<?php
 					$n = 1;
