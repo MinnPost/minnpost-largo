@@ -7,6 +7,14 @@
 	<input type="hidden" name="first_name" value="<?php echo $attributes['user']->first_name; ?>">
 	<input type="hidden" name="last_name" value="<?php echo $attributes['user']->last_name; ?>">
 
+	<?php $user_info = get_mailchimp_user_values( array(), array(), true ); ?>
+	<?php if ( isset( $user_info['id'] ) ) : ?>
+		<input type="hidden" name="mailchimp_user_id" value="<?php echo esc_attr( $user_info['id'] ); ?>">
+	<?php endif; ?>
+	<?php if ( isset( $user_info['status'] ) ) : ?>
+		<input type="hidden" name="mailchimp_user_status" value="<?php echo esc_attr( $user_info['status'] ); ?>">
+	<?php endif; ?>
+
 	<?php if ( ! empty( $attributes['instructions'] ) ) : ?>
 	<?php echo $attributes['instructions']; ?>
 	<?php endif; ?>
@@ -57,10 +65,9 @@
 		<?php endif; ?>
 
 		<?php
-		$user_emails = get_mailchimp_user_values( array(), array(), true );
 		$newsletters = get_mailchimp_newsletter_options();
 		$occasional_emails = get_mailchimp_occasional_email_options();
-		$user_emails = array_values( $user_emails );
+		$user_emails = isset( $user_info['checked'] ) ? array_values( $user_info['checked'] ) : array();
 		$newsletter_index = 1;
 		$occasional_email_index = 1;
 		?>
