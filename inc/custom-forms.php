@@ -33,11 +33,14 @@ if ( ! function_exists( 'minnpost_email_subscribe_form_process' ) ) :
 
 		$user_data = array(
 			'_mailchimp_user_id' => $id,
-			'_mailchimp_user_status' => $status,
 			'user_email' => $email,
 			'first_name' => $first_name,
 			'last_name' => $last_name,
 		);
+
+		if ( '' !== $status ) {
+			$user_data['_mailchimp_user_status'] = $status;
+		}
 
 		if ( ! empty( $newsletters_available ) ) {
 			$user_data['newsletters_available'] = $newsletters_available;
