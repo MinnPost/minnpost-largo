@@ -46,38 +46,44 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 			),
 			$atts
 		);
-
+		$user_id = get_current_user_id();
+		$mailchimp_id_field = '';
+		if ( 0 !== $user_id ) {
+			$mailchimp_user_id = get_user_meta( $user_id, '_mailchimp_user_id', true );
+			if ( '' !== $mailchimp_user_id ) {
+				$mailchimp_id_field = '<input type="hidden" name="_mailchimp_user_id" value="' . $mailchimp_user_id . '">';
+			}
+		}
 		if ( '' !== $args['newsletter'] ) {
 			if ( 'dc' === $args['newsletter'] ) {
 				return '<div class="m-widget m-widget-form m-form m-form-newsletter-shortcode m-form-newsletter-shortcode-' . $args['newsletter'] . '">
-			      <img src="' . get_theme_file_uri() . '/assets/img/dcmemologo-transparent.png" alt="MinnPost D.C. Memo">
-			      <div class="m-form-container">
-			        <p>For a one-stop source of the most informative, insightful and entertaining coverage coming out of Washington, subscribe to MinnPost&apos;s D.C. Memo.</p>
-			        <!-- Begin MailChimp Signup Form -->
-			        <form action="//minnpost.us1.list-manage.com/subscribe/post?u=97f7a4b7244e73cbb7fd521b2&amp;id=3631302e9c" class="validate" id="mc-embedded-subscribe-form" method="post" name="mc-embedded-subscribe-form" target="_blank">
-			          <input id="mce-EMAILTYPE-0" name="EMAILTYPE" value="html" type="hidden" />
-			          <p><small><span class="a-form-required">*</span> indicates required</small></p>
-			          <div class="a-mailchimp-message"></div>
-			          <div class="m-field-group m-form-item">
-			            <label for="mce-EMAIL">Email Address <span class="a-form-required">*</span></label>
-			            <input class="required email" id="mce-EMAIL" name="EMAIL" size="60" value="" type="email" required />
-			          </div>
-			          <div class="m-field-group m-form-item">
-			            <label for="mce-FNAME">First Name <span class="a-form-required">*</span></label>
-			            <input class="required" id="mce-FNAME" name="FNAME" size="60" value="" type="text" required />
-			          </div>
-			          <div class="m-field-group m-form-item">
-			            <label for="mce-LNAME">Last Name <span class="a-form-required">*</span></label>
-			            <input class="required" id="mce-LNAME" name="LNAME" size="60" value="" type="text" required />
-			          </div>
-			          <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-			          <div style="position: absolute; left: -5000px;"><input name="b_97f7a4b7244e73cbb7fd521b2_3631302e9c" tabindex="-1" value="" type="text" /></div>
-			          <div class="clear">
-			          <button type="submit" name="subscribe" id="mc-embedded-dc-subscribe" class="a-button a-button-next a-button-choose">Subscribe</button>
-			          </div>
-			        </form>
-			      </div>
-			    </div>';
+				<img src="' . get_theme_file_uri() . '/assets/img/dcmemologo-transparent.png" alt="MinnPost D.C. Memo">
+				<div class="m-form-container">
+					<p>For a one-stop source of the most informative, insightful and entertaining coverage coming out of Washington, subscribe to MinnPost&apos;s D.C. Memo.</p>
+					<form action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" method="post">
+						<input type="hidden" name="action" value="newsletter_widget">
+						<input type="hidden" name="newsletters_available[]" value="d89249e207">
+						<input type="hidden" name="_newsletters[]" value="d89249e207">
+						<p><small><span class="a-form-required">*</span> indicates required</small></p>
+						<div class="a-newsletter-result"></div>
+						<div class="m-field-group m-form-item">
+							<label for="dc_user_email">Email Address <span class="a-form-required">*</span></label>
+							<input class="required email" id="dc_user_email" name="user_email" value="" type="email" required />
+							</div>
+							<div class="m-field-group m-form-item">
+								<label for="dc_first_name">First Name <span class="a-form-required">*</span></label>
+								<input class="required" id="dc_first_name" name="first_name" size="60" value="" type="text" required />
+							</div>
+							<div class="m-field-group m-form-item">
+								<label for="dc_last_name">Last Name <span class="a-form-required">*</span></label>
+								<input class="required" id="dc_last_name" name="last_name" size="60" value="" type="text" required />
+							</div>
+							<div class="clear">
+								<button type="submit" name="subscribe" id="mc-embedded-dc-subscribe" class="a-button a-button-next a-button-choose">Subscribe</button>
+							</div>
+						</form>
+					</div>
+				</div>';
 			} elseif ( 'default' === $args['newsletter'] ) {
 				return '<div class="m-form m-form-in-body m-form-newsletter-shortcode m-form-newsletter-shortcode-' . $args['newsletter'] . '">
 					<h2 class="a-form-title">Get MinnPost\'s top stories in your inbox</h2>
