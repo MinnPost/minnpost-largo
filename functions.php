@@ -39,6 +39,11 @@ require get_stylesheet_directory() . '/inc/custom-types.php';
 require get_stylesheet_directory() . '/inc/custom-fields.php';
 
 /**
+ * Custom forms for this theme.
+ */
+require get_stylesheet_directory() . '/inc/custom-forms.php';
+
+/**
  * Custom shortcodes for this theme.
  */
 require get_stylesheet_directory() . '/inc/custom-shortcodes.php';
