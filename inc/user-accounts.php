@@ -148,7 +148,7 @@ endif;
 if ( ! function_exists( 'save_minnpost_user_data' ) ) :
 	add_action( 'user_account_management_post_user_data_save', 'save_minnpost_user_data', 10, 2 );
 	function save_minnpost_user_data( $user_data, $existing_user_data ) {
-		if ( '' !== $user_data['_reading_topics'] ) {
+		if ( isset( $user_data['_reading_topics'] ) && '' !== $user_data['_reading_topics'] ) {
 			update_user_meta( $user_data['ID'], '_reading_topics', $user_data['_reading_topics'] );
 		}
 	}
