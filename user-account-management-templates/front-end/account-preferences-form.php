@@ -9,7 +9,7 @@
 
 	<?php $user_info = get_mailchimp_user_values( array(), array(), true ); ?>
 	<?php if ( isset( $user_info['id'] ) ) : ?>
-		<input type="hidden" name="mailchimp_user_id" value="<?php echo esc_attr( $user_info['id'] ); ?>">
+		<input type="hidden" name="_mailchimp_user_id" value="<?php echo esc_attr( $user_info['id'] ); ?>">
 	<?php endif; ?>
 	<?php if ( isset( $user_info['status'] ) ) : ?>
 		<input type="hidden" name="mailchimp_user_status" value="<?php echo esc_attr( $user_info['status'] ); ?>">
