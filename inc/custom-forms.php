@@ -65,6 +65,26 @@ if ( ! function_exists( 'minnpost_email_subscribe_form_process' ) ) :
 		$minnpost_form = Minnpost_Form_Processor_MailChimp::get_instance();
 		$result = $minnpost_form->save_user_mailchimp_list_settings( $user_data );
 
+		if ( isset( $result['id'] ) ) {
+			if ( 'PUT' === $result['method'] ) {
+				$user_status = 'existing';
+			} elseif ( 'POST' === $result['method'] ) {
+				$user_status = 'new';
+				if ( 'pending' === $result['status'] ) {
+					$user_status = 'pending';
+				}
+			}
+			if ( isset( $_GET['redirect_url'] ) && '' !== $_GET['redirect_url'] ) {
+				$redirect_url = wp_validate_redirect( $_GET['redirect_url'] );
+			} elseif ( isset( $_POST['redirect_url'] ) && '' !== $_POST['redirect_url'] ) {
+				$redirect_url = wp_validate_redirect( $_POST['redirect_url'] );
+			} else {
+				$redirect_url = site_url();
+			}
+			$redirect_url = add_query_arg( 'subscribe-message', 'success-' . $user_status, $redirect_url );
+			wp_redirect( $redirect_url );
+		}
+
 		/*$params['body'] = array(
 			'email_address' => $email,
 			'status' => $status,

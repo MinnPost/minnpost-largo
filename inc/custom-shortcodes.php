@@ -55,7 +55,7 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 				case 'success-new':
 					$message = __( 'We have added you to the MinnPost mailing list.', 'minnpost-largo' );
 					break;
-				case 'sucess-pending':
+				case 'success-pending':
 					$message = __( 'We have added you to the MinnPost mailing list. You will need to click the confirmation link in the email we sent to begin receiving messages.', 'minnpost-largo' );
 					break;
 				default:
@@ -66,13 +66,13 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 		}
 		if ( '' !== $args['newsletter'] ) {
 			if ( 'dc' === $args['newsletter'] ) {
-				return '<div class="m-widget m-widget-form m-form m-form-newsletter-shortcode m-form-newsletter-shortcode-' . $args['newsletter'] . '">
+				return '<div class="m-widget m-widget-form m-form m-form-newsletter-shortcode m-form-newsletter-shortcode-' . $args['newsletter'] . '" id="form-newsletter-shortcode-' . $args['newsletter'] . '">
 				<img src="' . get_theme_file_uri() . '/assets/img/dcmemologo-transparent.png" alt="MinnPost D.C. Memo">
 				<div class="m-form-container">
 					<p>For a one-stop source of the most informative, insightful and entertaining coverage coming out of Washington, subscribe to MinnPost&apos;s D.C. Memo.</p>
 					<form action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" method="post">
 						<input type="hidden" name="action" value="newsletter_widget">
-						<input type="hidden" name="redirect_url" value="' . get_current_url() . '">
+						<input type="hidden" name="redirect_url" value="' . get_current_url() . '#form-newsletter-shortcode-' . $args['newsletter'] . '">
 						<input type="hidden" name="newsletters_available[]" value="d89249e207">
 						<input type="hidden" name="_newsletters[]" value="d89249e207">
 						<p><small><span class="a-form-required">*</span> indicates required</small></p>
