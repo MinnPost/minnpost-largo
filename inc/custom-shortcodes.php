@@ -46,13 +46,23 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 			),
 			$atts
 		);
-		$user_id = get_current_user_id();
-		$mailchimp_id_field = '';
-		if ( 0 !== $user_id ) {
-			$mailchimp_user_id = get_user_meta( $user_id, '_mailchimp_user_id', true );
-			if ( '' !== $mailchimp_user_id ) {
-				$mailchimp_id_field = '<input type="hidden" name="_mailchimp_user_id" value="' . $mailchimp_user_id . '">';
+		$message = '';
+		if ( isset( $_GET['subscribe-message'] ) ) {
+			switch ( $_GET['subscribe-message'] ) {
+				case 'success-existing':
+					$message = __( 'Thanks for updating your email preferences. They will go into effect immediately.', 'minnpost-largo' );
+					break;
+				case 'success-new':
+					$message = __( 'We have added you to the MinnPost mailing list.', 'minnpost-largo' );
+					break;
+				case 'sucess-pending':
+					$message = __( 'We have added you to the MinnPost mailing list. You will need to click the confirmation link in the email we sent to begin receiving messages.', 'minnpost-largo' );
+					break;
+				default:
+					$message = '';
+					break;
 			}
+			$message = '<div class="m-form-message m-form-message-info">' . $message . '</div>';
 		}
 		if ( '' !== $args['newsletter'] ) {
 			if ( 'dc' === $args['newsletter'] ) {
@@ -62,10 +72,11 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 					<p>For a one-stop source of the most informative, insightful and entertaining coverage coming out of Washington, subscribe to MinnPost&apos;s D.C. Memo.</p>
 					<form action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" method="post">
 						<input type="hidden" name="action" value="newsletter_widget">
+						<input type="hidden" name="redirect_url" value="' . get_current_url() . '">
 						<input type="hidden" name="newsletters_available[]" value="d89249e207">
 						<input type="hidden" name="_newsletters[]" value="d89249e207">
 						<p><small><span class="a-form-required">*</span> indicates required</small></p>
-						<div class="a-newsletter-result"></div>
+						' . $message . '
 						<div class="m-field-group m-form-item">
 							<label for="dc_user_email">Email Address <span class="a-form-required">*</span></label>
 							<input class="required email" id="dc_user_email" name="user_email" value="" type="email" required />
