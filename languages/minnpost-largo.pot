@@ -49,6 +49,14 @@ msgstr ""
 msgid "Trash"
 msgstr ""
 
+#: inc/custom-forms.php:134
+msgid "Invalid nonce specified"
+msgstr ""
+
+#: inc/custom-forms.php:135
+msgid "Error"
+msgstr ""
+
 #: inc/custom-settings.php:17
 msgid "Default Image URL"
 msgstr ""
@@ -65,7 +73,19 @@ msgstr ""
 msgid "Email Sending Name"
 msgstr ""
 
-#: inc/custom-shortcodes.php:361
+#: inc/custom-shortcodes.php:53
+msgid "Thanks for updating your email preferences. They will go into effect immediately."
+msgstr ""
+
+#: inc/custom-shortcodes.php:56
+msgid "We have added you to the MinnPost mailing list."
+msgstr ""
+
+#: inc/custom-shortcodes.php:59
+msgid "We have added you to the MinnPost mailing list. You will need to click the confirmation link in the email we sent to begin receiving messages."
+msgstr ""
+
+#: inc/custom-shortcodes.php:374
 msgid "You do not have permission to access this page."
 msgstr ""
 
@@ -148,6 +168,10 @@ msgstr ""
 msgid "You are not allowed to access this part of the site"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-preferences-form.php:28
+#: user-account-management-templates/front-end/account-preferences-form.php:39
 msgid "Your preferences were successfully updated."
+msgstr ""
+
+#: user-account-management-templates/front-end/account-preferences-form.php:47
+msgid "Reading Preferences:"
 msgstr ""

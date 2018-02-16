@@ -64,6 +64,8 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 			}
 			$message = '<div class="m-form-message m-form-message-info">' . $message . '</div>';
 		}
+		// Generate a custom nonce value.
+		$newsletter_nonce = wp_create_nonce( 'mp_newsletter_form_nonce' );
 		if ( '' !== $args['newsletter'] ) {
 			if ( 'dc' === $args['newsletter'] ) {
 				return '<div class="m-widget m-widget-form m-form m-form-newsletter-shortcode m-form-newsletter-shortcode-' . $args['newsletter'] . '" id="form-newsletter-shortcode-' . $args['newsletter'] . '">
@@ -72,23 +74,26 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 					<p>For a one-stop source of the most informative, insightful and entertaining coverage coming out of Washington, subscribe to MinnPost&apos;s D.C. Memo.</p>
 					<form action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" method="post">
 						<input type="hidden" name="action" value="newsletter_widget">
+						<input type="hidden" name="mp_newsletter_form_nonce" value="' . $newsletter_nonce . '">
 						<input type="hidden" name="redirect_url" value="' . get_current_url() . '#form-newsletter-shortcode-' . $args['newsletter'] . '">
 						<input type="hidden" name="newsletters_available[]" value="d89249e207">
 						<input type="hidden" name="_newsletters[]" value="d89249e207">
-						<p><small><span class="a-form-required">*</span> indicates required</small></p>
 						' . $message . '
-						<div class="m-field-group m-form-item">
-							<label for="dc_user_email">Email Address <span class="a-form-required">*</span></label>
-							<input class="required email" id="dc_user_email" name="user_email" value="" type="email" required />
-							</div>
+						<fieldset>
+							<p><small><span class="a-form-required">*</span> indicates required</small></p>
 							<div class="m-field-group m-form-item">
-								<label for="dc_first_name">First Name <span class="a-form-required">*</span></label>
-								<input class="required" id="dc_first_name" name="first_name" size="60" value="" type="text" required />
-							</div>
-							<div class="m-field-group m-form-item">
-								<label for="dc_last_name">Last Name <span class="a-form-required">*</span></label>
-								<input class="required" id="dc_last_name" name="last_name" size="60" value="" type="text" required />
-							</div>
+								<label for="dc_user_email">Email Address <span class="a-form-required">*</span></label>
+								<input class="required email" id="dc_user_email" name="user_email" value="" type="email" required />
+								</div>
+								<div class="m-field-group m-form-item">
+									<label for="dc_first_name">First Name <span class="a-form-required">*</span></label>
+									<input class="required" id="dc_first_name" name="first_name" size="60" value="" type="text" required />
+								</div>
+								<div class="m-field-group m-form-item">
+									<label for="dc_last_name">Last Name <span class="a-form-required">*</span></label>
+									<input class="required" id="dc_last_name" name="last_name" size="60" value="" type="text" required />
+								</div>
+							</fieldset>
 							<div class="clear">
 								<button type="submit" name="subscribe" id="mc-embedded-dc-subscribe" class="a-button a-button-next a-button-choose">Subscribe</button>
 							</div>

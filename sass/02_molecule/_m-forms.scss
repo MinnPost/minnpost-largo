@@ -38,6 +38,11 @@
 	font-size: 95%;
 	width: 95%;
 	margin: 1em auto 20px auto;
+	fieldset {
+		margin: 0;
+		padding: 0;
+		border: 0;
+	}
 	input {
 		width: 90%;
 	}
