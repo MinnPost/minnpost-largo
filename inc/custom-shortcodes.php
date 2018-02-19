@@ -73,7 +73,7 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 				<div class="m-form-container">
 					<p>For a one-stop source of the most informative, insightful and entertaining coverage coming out of Washington, subscribe to MinnPost&apos;s D.C. Memo.</p>
 					<form action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" method="post">
-						<input type="hidden" name="action" value="newsletter_widget">
+						<input type="hidden" name="action" value="newsletter_shortcode">
 						<input type="hidden" name="mp_newsletter_form_nonce" value="' . $newsletter_nonce . '">
 						<input type="hidden" name="redirect_url" value="' . get_current_url() . '#form-newsletter-shortcode-' . $args['newsletter'] . '">
 						<input type="hidden" name="newsletters_available[]" value="d89249e207">

@@ -11,10 +11,10 @@
 
 // subscribe user to newsletter
 if ( ! function_exists( 'minnpost_email_subscribe_form_process' ) ) :
-	add_action( 'admin_post_nopriv_newsletter_widget', 'minnpost_email_subscribe_form_process' );
-	add_action( 'admin_post_newsletter_widget', 'minnpost_email_subscribe_form_process' );
-	add_action( 'wp_ajax_nopriv_newsletter_widget', 'minnpost_email_subscribe_form_process' );
-	add_action( 'wp_ajax_newsletter_widget', 'minnpost_email_subscribe_form_process' );
+	add_action( 'admin_post_nopriv_newsletter_shortcode', 'minnpost_email_subscribe_form_process' );
+	add_action( 'admin_post_newsletter_shortcode', 'minnpost_email_subscribe_form_process' );
+	add_action( 'wp_ajax_nopriv_newsletter_shortcode', 'minnpost_email_subscribe_form_process' );
+	add_action( 'wp_ajax_newsletter_shortcode', 'minnpost_email_subscribe_form_process' );
 	function minnpost_email_subscribe_form_process() {
 
 		if ( isset( $_POST['mp_newsletter_form_nonce'] ) && wp_verify_nonce( $_POST['mp_newsletter_form_nonce'], 'mp_newsletter_form_nonce' ) ) {
