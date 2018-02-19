@@ -49,11 +49,11 @@ msgstr ""
 msgid "Trash"
 msgstr ""
 
-#: inc/custom-forms.php:134
+#: inc/custom-forms.php:149
 msgid "Invalid nonce specified"
 msgstr ""
 
-#: inc/custom-forms.php:135
+#: inc/custom-forms.php:150
 msgid "Error"
 msgstr ""
 
@@ -85,7 +85,7 @@ msgstr ""
 msgid "We have added you to the MinnPost mailing list. You will need to click the confirmation link in the email we sent to begin receiving messages."
 msgstr ""
 
-#: inc/custom-shortcodes.php:374
+#: inc/custom-shortcodes.php:378
 msgid "You do not have permission to access this page."
 msgstr ""
 

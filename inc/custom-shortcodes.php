@@ -72,7 +72,7 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 				<img src="' . get_theme_file_uri() . '/assets/img/dcmemologo-transparent.png" alt="MinnPost D.C. Memo">
 				<div class="m-form-container">
 					<p>For a one-stop source of the most informative, insightful and entertaining coverage coming out of Washington, subscribe to MinnPost&apos;s D.C. Memo.</p>
-					<form action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" method="post">
+					<form action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" method="post" class="m-form-newsletter">
 						<input type="hidden" name="action" value="newsletter_shortcode">
 						<input type="hidden" name="mp_newsletter_form_nonce" value="' . $newsletter_nonce . '">
 						<input type="hidden" name="redirect_url" value="' . get_current_url() . '#form-newsletter-shortcode-' . $args['newsletter'] . '">
@@ -101,9 +101,9 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 				</div>
 			</div>';
 			} elseif ( 'default' === $args['newsletter'] ) {
-				return '<div class="m-form m-form-in-body m-form-newsletter-shortcode m-form-newsletter-shortcode-' . $args['newsletter'] . '">
+				return '<div class="m-form m-form-in-body m-form-newsletter-shortcode m-form-newsletter-shortcode-' . $args['newsletter'] . '" id="form-newsletter-shortcode-' . $args['newsletter'] . '">
 					<h2 class="a-form-title">Get MinnPost\'s top stories in your inbox</h2>
-			        <form action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" method="post">
+			        <form action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" method="post" class="m-form-newsletter">
 			        	<input type="hidden" name="action" value="newsletter_shortcode">
 						<input type="hidden" name="mp_newsletter_form_nonce" value="' . $newsletter_nonce . '">
 						<input type="hidden" name="redirect_url" value="' . get_current_url() . '#form-newsletter-shortcode-' . $args['newsletter'] . '">
