@@ -213,6 +213,12 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 					</form>
 				</div>';
 				return $form;
+			} elseif ( 'full-dc' === $args['newsletter'] ) {
+				set_query_var( 'newsletter', 'full-dc' );
+				set_query_var( 'newsletter_nonce', $newsletter_nonce );
+				set_query_var( 'redirect_url', get_current_url() );
+				set_query_var( 'message', $message );
+				get_template_part( 'inc/forms/newsletter', 'full-dc' );
 			}
 		}
 
