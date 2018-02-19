@@ -11,6 +11,17 @@
 
 <article id="page-<?php the_ID(); ?>" <?php post_class( 'm-page' ); ?>>
 
+	<?php
+	global $post;
+	$post_slug = $post->post_name;
+	$custom_class = '';
+	if ( 'columns' === $post_slug || 'news-region' === $post_slug ) {
+		$custom_class = ' m-entry-content-custom';
+	}
+	$remove_title_from_display = get_post_meta( get_the_ID() , '_mp_remove_title_from_display', true );
+	if ( ! isset( $remove_title_from_display ) || 'on' !== $remove_title_from_display ) {
+	?>
+
 	<header class="m-entry-header<?php if ( is_singular() || is_404() ) { ?> m-entry-header-singular<?php } ?>">
 		<?php
 		if ( is_singular() || is_404() ) :
@@ -20,17 +31,9 @@
 		endif;
 		minnpost_edit_link();
 		?>
+	</header><!-- .m-entry-header -->	
+	<?php } ?>
 
-	</header><!-- .m-entry-header -->
-
-	<?php
-	global $post;
-	$post_slug = $post->post_name;
-	$custom_class = '';
-	if ( 'columns' === $post_slug || 'news-region' === $post_slug ) {
-		$custom_class = ' m-entry-content-custom';
-	}
-	?>
 
 	<div class="m-entry-content<?php echo $custom_class; ?>">
 		<?php the_content(); ?>

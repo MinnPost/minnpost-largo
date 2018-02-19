@@ -359,20 +359,37 @@ if ( ! function_exists( 'cmb2_page_fields' ) ) :
 
 		$object_type = 'page';
 
-		$page_setup = new_cmb2_box( array(
+		/**
+		 * Page settings
+		 */
+		$page_settings = new_cmb2_box( array(
+			'id'            => 'page_settings',
+			'title'         => 'Page Settings',
+			'object_types'  => array( $object_type ),
+			'context'       => 'normal',
+			'priority'      => 'low',
+		) );
+		$page_settings->add_field( array(
+			'name'       => 'Remove title from display?',
+			'id'         => '_mp_remove_title_from_display',
+			'type'       => 'checkbox',
+			'desc'       => '',
+		) );
+
+		$page_sidebar = new_cmb2_box( array(
 			'id'            => $object_type . '_sidebar_options',
 			'title'         => 'Sidebar Options',
 			'object_types'  => array( $object_type ),
 			'context'       => 'normal',
 			'priority'      => 'low',
 		) );
-		$page_setup->add_field( array(
+		$page_sidebar->add_field( array(
 			'name'       => 'Remove whole right sidebar from this post?',
 			'id'         => '_mp_remove_right_sidebar',
 			'type'       => 'checkbox',
 			'desc'       => '',
 		) );
-		$page_setup->add_field( array(
+		$page_sidebar->add_field( array(
 			'name'    => 'Sidebar Content Box',
 			'desc'    => 'Content for a single right sidebar box',
 			'id'      => '_mp_post_sidebar',
