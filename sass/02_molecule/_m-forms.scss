@@ -34,15 +34,49 @@
 	}
 }
 
-.m-widget.m-form-newsletter-shortcode {
-	font-size: 95%;
-	width: 95%;
-	margin: 1em auto 20px auto;
+.m-form-newsletter-shortcode {
 	fieldset {
 		margin: 0;
 		padding: 0;
 		border: 0;
 	}
+	h2.a-form-title {
+		color: $color__minnpost-black;
+		text-align: center;
+		margin-bottom: 0.75em;
+	}
+	&.m-form-newsletter-shortcode-default {
+		fieldset {
+			display: flex;
+			flex-flow: wrap;
+			max-width: 360px;
+			justify-content: space-between;
+			div.m-form-item {
+				label {
+					display: block;
+				}
+				&.m-form-item-email {
+					width: 100%;
+					input {
+						width: 100%;
+					}
+				}
+				&.m-form-item-interests {
+					width: 100%;
+					display: flex;
+					flex-wrap: wrap;
+					justify-content: space-between;
+				}
+			}
+		}
+	}
+}
+
+// forms in sidebar widgets
+.m-widget.m-form-newsletter-shortcode {
+	font-size: 95%;
+	width: 95%;
+	margin: 1em auto 20px auto;
 	input {
 		width: 90%;
 	}

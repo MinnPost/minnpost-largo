@@ -84,65 +84,69 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 							<div class="m-field-group m-form-item">
 								<label for="dc_user_email">Email Address <span class="a-form-required">*</span></label>
 								<input class="required email" id="dc_user_email" name="user_email" value="" type="email" required />
-								</div>
-								<div class="m-field-group m-form-item">
-									<label for="dc_first_name">First Name <span class="a-form-required">*</span></label>
-									<input class="required" id="dc_first_name" name="first_name" size="60" value="" type="text" required />
-								</div>
-								<div class="m-field-group m-form-item">
-									<label for="dc_last_name">Last Name <span class="a-form-required">*</span></label>
-									<input class="required" id="dc_last_name" name="last_name" size="60" value="" type="text" required />
-								</div>
-							</fieldset>
-							<div class="clear">
-								<button type="submit" name="subscribe" id="mc-embedded-dc-subscribe" class="a-button a-button-next a-button-choose">Subscribe</button>
 							</div>
-						</form>
-					</div>
-				</div>';
+							<div class="m-field-group m-form-item">
+								<label for="dc_first_name">First Name <span class="a-form-required">*</span></label>
+								<input class="required" id="dc_first_name" name="first_name" size="60" value="" type="text" required />
+							</div>
+							<div class="m-field-group m-form-item">
+								<label for="dc_last_name">Last Name <span class="a-form-required">*</span></label>
+								<input class="required" id="dc_last_name" name="last_name" size="60" value="" type="text" required />
+							</div>
+						</fieldset>
+						<div class="clear">
+							<button type="submit" name="subscribe" id="mc-embedded-dc-subscribe" class="a-button a-button-next a-button-choose">Subscribe</button>
+						</div>
+					</form>
+				</div>
+			</div>';
 			} elseif ( 'default' === $args['newsletter'] ) {
 				return '<div class="m-form m-form-in-body m-form-newsletter-shortcode m-form-newsletter-shortcode-' . $args['newsletter'] . '">
 					<h2 class="a-form-title">Get MinnPost\'s top stories in your inbox</h2>
-					<!-- Begin MailChimp Signup Form -->
-			        <form action="//minnpost.us1.list-manage.com/subscribe/post?u=97f7a4b7244e73cbb7fd521b2&amp;id=3631302e9c" class="validate" id="mc-embedded-subscribe-form" method="post" name="mc-embedded-subscribe-form" target="_blank">
-			        	<input id="mce-EMAILTYPE-0" name="EMAILTYPE" value="html" type="hidden" />
-
-			        	<div class="a-mailchimp-message"></div>
-			          
-						<div class="m-field-group m-form-item m-form-item-first-name">
-						    <label>First Name</label>
-						    <input name="FNAME" required="" type="text">
+			        <form action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" method="post">
+			        	<input type="hidden" name="action" value="newsletter_shortcode">
+						<input type="hidden" name="mp_newsletter_form_nonce" value="' . $newsletter_nonce . '">
+						<input type="hidden" name="redirect_url" value="' . get_current_url() . '#form-newsletter-shortcode-' . $args['newsletter'] . '">
+						<input type="hidden" name="newsletters_available[]" value="04471b1571">
+						<input type="hidden" name="newsletters_available[]" value="94fc1bd7c9">
+						<input type="hidden" name="newsletters_available[]" value="ce6fd734b6">
+						<input type="hidden" name="newsletters_available[]" value="d89249e207">
+						' . $message . '
+						<fieldset>
+							<div class="m-field-group m-form-item m-form-item-first-name">
+								<label for="newsletter_first_name">First Name <span class="a-form-required">*</span></label>
+								<input id="newsletter_first_name" name="first_name" value="" type="text" required>
+							</div>
+							<div class="m-field-group m-form-item m-form-item-last-name">
+								<label for="newsletter_last_name">Last Name <span class="a-form-required">*</span></label>
+								<input id="newsletter_last_name" name="last_name" value="" type="text" required>
+							</div>
+							<div class="m-field-group m-form-item m-form-item-email">
+								<label for="newsletter_user_email">Email Address <span class="a-form-required">*</span></label>
+								<input id="newsletter_user_email" name="user_email" value="" type="email" required>
+							</div>
+							<div class="m-field-group m-form-item m-form-item-interests m-form-checkboxes">
+								<label>
+							        <input name="_newsletters[]" value="04471b1571" checked="true"
+							        type="checkbox"> <span>Daily newsletter</span>
+							    </label>
+							    <label>
+							        <input name="_newsletters[]" value="94fc1bd7c9" checked="true"
+							        type="checkbox"> <span>Sunday review</span>
+							    </label>
+							    <label>
+							        <input name="_newsletters[]" value="ce6fd734b6"
+							        type="checkbox"> <span>Greater Minnesota newsletter</span>
+							    </label>
+							    <label>
+							        <input name="_newsletters[]" value="d89249e207"
+							        type="checkbox"> <span>D.C. Memo</span>
+							    </label>
+							</div>
+						</fieldset>
+						<div class="clear">
+							<button type="submit" name="subscribe" id="mc-embedded-dc-subscribe" class="a-button a-button-next a-button-choose">Subscribe Now</button>
 						</div>
-						<div class="m-field-group m-form-item m-form-item-last-name">
-						    <label>Last Name</label>
-						    <input name="LNAME" required="" type="text">
-						</div>
-						<div class="m-field-group m-form-item m-form-item-email">
-							<label>Email address: </label>
-							<input type="email" name="EMAIL" type="email" required />
-						</div>
-						<div class="m-field-group m-form-item m-form-item-list-choices">
-						    <label>
-						        <input name="INTERESTS[f88ee8cb3b][]" value="04471b1571" checked="true"
-						        type="checkbox"> <span>Daily newsletter</span>
-						    </label>
-						    <label>
-						        <input name="INTERESTS[f88ee8cb3b][]" value="94fc1bd7c9" checked="true"
-						        type="checkbox"> <span>Sunday review</span>
-						    </label>
-						    <label>
-						        <input name="INTERESTS[f88ee8cb3b][]" value="ce6fd734b6"
-						        type="checkbox"> <span>Greater Minnesota newsletter</span>
-						    </label>
-						    <label>
-						        <input name="INTERESTS[f88ee8cb3b][]" value="d89249e207"
-						        type="checkbox"> <span>D.C. Memo</span>
-						    </label>
-						</div>
-
-						<!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
-						<div style="position: absolute; left: -5000px;"><input name="b_97f7a4b7244e73cbb7fd521b2_3631302e9c" tabindex="-1" value="" type="text" /></div>
-						<button type="submit" name="subscribe" id="mc-embedded-dc-subscribe" class="a-button a-button-next a-button-choose">Subscribe Now</button>
 					</form>
 				</div>';
 			} elseif ( 'full' === $args['newsletter'] ) {
