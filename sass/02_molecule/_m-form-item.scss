@@ -35,11 +35,16 @@
 	input:last-child, select:last-child, textarea:last-child, p:last-child, span:last-child {
 		margin-bottom: 0;
 	}
+	&.m-form-checkboxes {
+		span {
+			display: inline-block;
+		}
+	}
 }
 
 // media queries
 @media screen and (min-width: $medium-screen) {
 	.m-form-standalone .m-form-item {
-		max-width: 65%;
+		max-width: 70%;
 	}
 }

@@ -80,17 +80,17 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 						<input type="hidden" name="_newsletters[]" value="d89249e207">
 						' . $message . '
 						<fieldset>
-							<p><small><span class="a-form-required">*</span> indicates required</small></p>
+							<p><small><span class="a-form-item-required">*</span> indicates required</small></p>
 							<div class="m-field-group m-form-item">
-								<label for="dc_user_email">Email Address <span class="a-form-required">*</span></label>
+								<label for="dc_user_email">Email Address: <span class="a-form-item-required">*</span></label>
 								<input class="required email" id="dc_user_email" name="user_email" value="" type="email" required />
 							</div>
 							<div class="m-field-group m-form-item">
-								<label for="dc_first_name">First Name <span class="a-form-required">*</span></label>
+								<label for="dc_first_name">First Name: <span class="a-form-item-required">*</span></label>
 								<input class="required" id="dc_first_name" name="first_name" size="60" value="" type="text" required />
 							</div>
 							<div class="m-field-group m-form-item">
-								<label for="dc_last_name">Last Name <span class="a-form-required">*</span></label>
+								<label for="dc_last_name">Last Name: <span class="a-form-item-required">*</span></label>
 								<input class="required" id="dc_last_name" name="last_name" size="60" value="" type="text" required />
 							</div>
 						</fieldset>
@@ -114,15 +114,15 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 						' . $message . '
 						<fieldset>
 							<div class="m-field-group m-form-item m-form-item-first-name">
-								<label for="newsletter_first_name">First Name <span class="a-form-required">*</span></label>
+								<label for="newsletter_first_name">First Name: <span class="a-form-item-required">*</span></label>
 								<input id="newsletter_first_name" name="first_name" value="" type="text" required>
 							</div>
 							<div class="m-field-group m-form-item m-form-item-last-name">
-								<label for="newsletter_last_name">Last Name <span class="a-form-required">*</span></label>
+								<label for="newsletter_last_name">Last Name: <span class="a-form-item-required">*</span></label>
 								<input id="newsletter_last_name" name="last_name" value="" type="text" required>
 							</div>
 							<div class="m-field-group m-form-item m-form-item-email">
-								<label for="newsletter_user_email">Email Address <span class="a-form-required">*</span></label>
+								<label for="newsletter_user_email">Email Address: <span class="a-form-item-required">*</span></label>
 								<input id="newsletter_user_email" name="user_email" value="" type="email" required>
 							</div>
 							<div class="m-field-group m-form-item m-form-item-interests m-form-checkboxes">
@@ -140,7 +140,7 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 							    </label>
 							    <label>
 							        <input name="_newsletters[]" value="d89249e207"
-							        type="checkbox"> <span>D.C. Memo</span>
+							        type="checkbox" checked="true"> <span>D.C. Memo</span>
 							    </label>
 							</div>
 						</fieldset>
@@ -150,52 +150,68 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 					</form>
 				</div>';
 			} elseif ( 'full' === $args['newsletter'] ) {
-				$url = str_replace( 'https', 'http', get_rest_url( null, '/form-processor-mc/v1/lists/3631302e9c/interest-categories' ) );
 				$form = '';
-
 				$form .= '
-				<form id="minnpost-form-' . $args['newsletter'] . '" action="" accept-charset="UTF-8" method="post">
-					<fieldset>
-						<div class="m-field-group m-form-item m-form-item-email">
-							<label>Email address: </label>
-							<input type="email" name="EMAIL" type="email" required />
+				<div class="m-form m-form-standalone m-form-newsletter-shortcode m-form-newsletter-default" id="form-newsletter-shortcode-' . $args['newsletter'] . '">
+					<p><img src="' . get_theme_file_uri() . '/assets/img/mp-in-your-inbox.png" alt="MinnPost in your inbox"></p>
+					<form id="form-newsletter-default" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" method="post" class="m-form-newsletter">
+						<input type="hidden" name="action" value="newsletter_shortcode">
+						<input type="hidden" name="mp_newsletter_form_nonce" value="' . $newsletter_nonce . '">
+						<input type="hidden" name="redirect_url" value="' . get_current_url() . '">
+						<p>Subscribe to MinnPost&apos;s email newsletters.</p>
+						' . $message . '
+						<fieldset class="m-user-preferences">
+							<p><small><span class="a-form-item-required">*</span> indicates required</small></p>
+							<div class="m-field-group m-form-item m-form-item-email">
+								<label for="newsletter_user_email">Email Address: <span class="a-form-item-required">*</span></label>
+								<input id="newsletter_user_email" name="user_email" value="" type="email" required>
+							</div>
+							<div class="m-field-group m-form-item m-form-item-first-name">
+								<label for="newsletter_first_name">First Name: <span class="a-form-item-required">*</span></label>
+								<input id="newsletter_first_name" name="first_name" value="" type="text" required>
+							</div>
+							<div class="m-field-group m-form-item m-form-item-last-name">
+								<label for="newsletter_last_name">Last Name: <span class="a-form-item-required">*</span></label>
+								<input id="newsletter_last_name" name="last_name" value="" type="text" required>
+							</div>
+							<div class="m-form-item m-form-email-options m-form-change-email-options">
+								<label>Subscribe to these regular newsletters:</label>
+								<div class="m-field-group m-form-item m-form-item-interests m-form-checkboxes">
+									<label>
+								        <input name="_newsletters[]" value="04471b1571" checked="true"
+								        type="checkbox"> <span>Daily newsletter</span>
+								    </label>
+								    <label>
+								        <input name="_newsletters[]" value="94fc1bd7c9" checked="true"
+								        type="checkbox"> <span>Sunday review</span>
+								    </label>
+								    <label>
+								        <input name="_newsletters[]" value="ce6fd734b6"
+								        type="checkbox"> <span>Greater Minnesota newsletter</span>
+								    </label>
+								    <label>
+								        <input name="_newsletters[]" value="d89249e207"
+								        type="checkbox" checked="true"> <span>D.C. Memo</span>
+								    </label>
+								</div>
+							</div>
+							<div class="m-form-item m-form-email-options m-form-change-email-options">
+								<label>Occasional MinnPost emails:</label>
+								<div class="m-field-group m-form-item m-form-item-interests m-form-checkboxes">
+									<label>
+								        <input name="_occasional_emails[]" value="68449d845c" type="checkbox" checked="true"> <span>Events &amp; member benefits</span>
+								    </label>
+								    <label>
+								        <input name="_occasional_emails[]" value="958bdb5d3c" type="checkbox"> <span>Opportunities to give input/feedback</span>
+								    </label>
+								</div>
+							</div>
+						</fieldset>
+						<div class="m-form-actions">
+							<button type="submit" name="subscribe" id="mp-full-subscribe" class="a-button a-button-next a-button-choose">Subscribe</button>
 						</div>
-						<div class="m-field-group m-form-item m-form-item-first-name">
-						    <label>First Name</label>
-						    <input name="FNAME" required="" type="text">
-						</div>
-						<div class="m-field-group m-form-item m-form-item-last-name">
-						    <label>Last Name</label>
-						    <input name="LNAME" required="" type="text">
-						</div>';
-				$groups = json_decode( wp_remote_get( $url )['body'] );
-				foreach ( $groups->categories as $group ) {
-					$id = $group->id;
-					$title = $group->title;
-					$form .= '
-						<div class="m-field-group m-form-checkboxes m-form-newsletters">
-							<h3>' . $title . ':</h3>
-						</div>
-					';
-					//<div class="m-field-group m-form-checkboxes m-form-newsletters">
-					//	<h3>Subscribe to these regular newsletters:</h3>
-					//	<label>
-					//		<input name="interests[]" value="" type="checkbox">
-					//		Daily Newsletter
-					//	</label>
-					//</div>
-					//<div class="m-field-group m-form-checkboxes m-form-periodic">
-					//	<h3>Occasional MinnPost emails:</h3>
-					//	<label>
-					//		<input name="interests[]" value="" type="checkbox">
-					//		Events &amp; member benefits
-					//	</label>
-					//</div>
-				}
-				$form .= '</fieldset>
-				</form>
-				';
-
+					</form>
+				</div>';
 				return $form;
 			}
 		}
