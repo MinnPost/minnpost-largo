@@ -68,151 +68,27 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 		$newsletter_nonce = wp_create_nonce( 'mp_newsletter_form_nonce' );
 		if ( '' !== $args['newsletter'] ) {
 			if ( 'dc' === $args['newsletter'] ) {
-				return '<div class="m-widget m-widget-form m-form m-form-newsletter-shortcode m-form-newsletter-shortcode-' . $args['newsletter'] . '" id="form-newsletter-shortcode-' . $args['newsletter'] . '">
-				<img src="' . get_theme_file_uri() . '/assets/img/dcmemologo-transparent.png" alt="MinnPost D.C. Memo">
-				<div class="m-form-container">
-					<p>For a one-stop source of the most informative, insightful and entertaining coverage coming out of Washington, subscribe to MinnPost&apos;s D.C. Memo.</p>
-					<form action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" method="post" class="m-form-newsletter">
-						<input type="hidden" name="action" value="newsletter_shortcode">
-						<input type="hidden" name="mp_newsletter_form_nonce" value="' . $newsletter_nonce . '">
-						<input type="hidden" name="redirect_url" value="' . get_current_url() . '#form-newsletter-shortcode-' . $args['newsletter'] . '">
-						<input type="hidden" name="newsletters_available[]" value="d89249e207">
-						<input type="hidden" name="_newsletters[]" value="d89249e207">
-						' . $message . '
-						<fieldset>
-							<p><small><span class="a-form-item-required">*</span> indicates required</small></p>
-							<div class="m-field-group m-form-item">
-								<label for="dc_user_email">Email Address: <span class="a-form-item-required">*</span></label>
-								<input class="required email" id="dc_user_email" name="user_email" value="" type="email" required />
-							</div>
-							<div class="m-field-group m-form-item">
-								<label for="dc_first_name">First Name: <span class="a-form-item-required">*</span></label>
-								<input class="required" id="dc_first_name" name="first_name" size="60" value="" type="text" required />
-							</div>
-							<div class="m-field-group m-form-item">
-								<label for="dc_last_name">Last Name: <span class="a-form-item-required">*</span></label>
-								<input class="required" id="dc_last_name" name="last_name" size="60" value="" type="text" required />
-							</div>
-						</fieldset>
-						<div class="clear">
-							<button type="submit" name="subscribe" id="mc-embedded-dc-subscribe" class="a-button a-button-next a-button-choose">Subscribe</button>
-						</div>
-					</form>
-				</div>
-			</div>';
+				set_query_var( 'newsletter', 'dc' );
+				set_query_var( 'newsletter_nonce', $newsletter_nonce );
+				set_query_var( 'redirect_url', get_current_url() . '#form-newsletter-shortcode-' . $args['newsletter'] );
+				set_query_var( 'message', $message );
+				ob_start();
+				$file = get_template_part( 'inc/forms/newsletter', 'shortcode-dc' );
+				$html = ob_get_contents();
+				ob_end_clean();
+				return $html;
 			} elseif ( 'default' === $args['newsletter'] ) {
-				return '<div class="m-form m-form-in-body m-form-newsletter-shortcode m-form-newsletter-shortcode-' . $args['newsletter'] . '" id="form-newsletter-shortcode-' . $args['newsletter'] . '">
-					<h2 class="a-form-title">Get MinnPost\'s top stories in your inbox</h2>
-			        <form action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" method="post" class="m-form-newsletter">
-			        	<input type="hidden" name="action" value="newsletter_shortcode">
-						<input type="hidden" name="mp_newsletter_form_nonce" value="' . $newsletter_nonce . '">
-						<input type="hidden" name="redirect_url" value="' . get_current_url() . '#form-newsletter-shortcode-' . $args['newsletter'] . '">
-						<input type="hidden" name="newsletters_available[]" value="04471b1571">
-						<input type="hidden" name="newsletters_available[]" value="94fc1bd7c9">
-						<input type="hidden" name="newsletters_available[]" value="ce6fd734b6">
-						<input type="hidden" name="newsletters_available[]" value="d89249e207">
-						' . $message . '
-						<fieldset>
-							<div class="m-field-group m-form-item m-form-item-first-name">
-								<label for="newsletter_first_name">First Name: <span class="a-form-item-required">*</span></label>
-								<input id="newsletter_first_name" name="first_name" value="" type="text" required>
-							</div>
-							<div class="m-field-group m-form-item m-form-item-last-name">
-								<label for="newsletter_last_name">Last Name: <span class="a-form-item-required">*</span></label>
-								<input id="newsletter_last_name" name="last_name" value="" type="text" required>
-							</div>
-							<div class="m-field-group m-form-item m-form-item-email">
-								<label for="newsletter_user_email">Email Address: <span class="a-form-item-required">*</span></label>
-								<input id="newsletter_user_email" name="user_email" value="" type="email" required>
-							</div>
-							<div class="m-field-group m-form-item m-form-item-interests m-form-checkboxes">
-								<label>
-							        <input name="_newsletters[]" value="04471b1571" checked="true"
-							        type="checkbox"> <span>Daily newsletter</span>
-							    </label>
-							    <label>
-							        <input name="_newsletters[]" value="94fc1bd7c9" checked="true"
-							        type="checkbox"> <span>Sunday review</span>
-							    </label>
-							    <label>
-							        <input name="_newsletters[]" value="ce6fd734b6"
-							        type="checkbox"> <span>Greater Minnesota newsletter</span>
-							    </label>
-							    <label>
-							        <input name="_newsletters[]" value="d89249e207"
-							        type="checkbox" checked="true"> <span>D.C. Memo</span>
-							    </label>
-							</div>
-						</fieldset>
-						<div class="clear">
-							<button type="submit" name="subscribe" id="mc-embedded-dc-subscribe" class="a-button a-button-next a-button-choose">Subscribe Now</button>
-						</div>
-					</form>
-				</div>';
+				set_query_var( 'newsletter', 'default' );
+				set_query_var( 'newsletter_nonce', $newsletter_nonce );
+				set_query_var( 'redirect_url', get_current_url() );
+				set_query_var( 'message', $message );
+				get_template_part( 'inc/forms/newsletter', 'shortcode' );
 			} elseif ( 'full' === $args['newsletter'] ) {
-				$form = '';
-				$form .= '
-				<div class="m-form m-form-standalone m-form-newsletter-shortcode m-form-newsletter-default" id="form-newsletter-shortcode-' . $args['newsletter'] . '">
-					<p><img src="' . get_theme_file_uri() . '/assets/img/mp-in-your-inbox.png" alt="MinnPost in your inbox"></p>
-					<form id="form-newsletter-default" action="' . esc_url( admin_url( 'admin-post.php' ) ) . '" method="post" class="m-form-newsletter">
-						<input type="hidden" name="action" value="newsletter_shortcode">
-						<input type="hidden" name="mp_newsletter_form_nonce" value="' . $newsletter_nonce . '">
-						<input type="hidden" name="redirect_url" value="' . get_current_url() . '">
-						<p>Subscribe to MinnPost&apos;s email newsletters.</p>
-						' . $message . '
-						<fieldset class="m-user-preferences">
-							<p><small><span class="a-form-item-required">*</span> indicates required</small></p>
-							<div class="m-field-group m-form-item m-form-item-email">
-								<label for="newsletter_user_email">Email Address: <span class="a-form-item-required">*</span></label>
-								<input id="newsletter_user_email" name="user_email" value="" type="email" required>
-							</div>
-							<div class="m-field-group m-form-item m-form-item-first-name">
-								<label for="newsletter_first_name">First Name: <span class="a-form-item-required">*</span></label>
-								<input id="newsletter_first_name" name="first_name" value="" type="text" required>
-							</div>
-							<div class="m-field-group m-form-item m-form-item-last-name">
-								<label for="newsletter_last_name">Last Name: <span class="a-form-item-required">*</span></label>
-								<input id="newsletter_last_name" name="last_name" value="" type="text" required>
-							</div>
-							<div class="m-form-item m-form-email-options m-form-change-email-options">
-								<label>Subscribe to these regular newsletters:</label>
-								<div class="m-field-group m-form-item m-form-item-interests m-form-checkboxes">
-									<label>
-								        <input name="_newsletters[]" value="04471b1571" checked="true"
-								        type="checkbox"> <span>Daily newsletter</span>
-								    </label>
-								    <label>
-								        <input name="_newsletters[]" value="94fc1bd7c9" checked="true"
-								        type="checkbox"> <span>Sunday review</span>
-								    </label>
-								    <label>
-								        <input name="_newsletters[]" value="ce6fd734b6"
-								        type="checkbox"> <span>Greater Minnesota newsletter</span>
-								    </label>
-								    <label>
-								        <input name="_newsletters[]" value="d89249e207"
-								        type="checkbox" checked="true"> <span>D.C. Memo</span>
-								    </label>
-								</div>
-							</div>
-							<div class="m-form-item m-form-email-options m-form-change-email-options">
-								<label>Occasional MinnPost emails:</label>
-								<div class="m-field-group m-form-item m-form-item-interests m-form-checkboxes">
-									<label>
-								        <input name="_occasional_emails[]" value="68449d845c" type="checkbox" checked="true"> <span>Events &amp; member benefits</span>
-								    </label>
-								    <label>
-								        <input name="_occasional_emails[]" value="958bdb5d3c" type="checkbox"> <span>Opportunities to give input/feedback</span>
-								    </label>
-								</div>
-							</div>
-						</fieldset>
-						<div class="m-form-actions">
-							<button type="submit" name="subscribe" id="mp-full-subscribe" class="a-button a-button-next a-button-choose">Subscribe</button>
-						</div>
-					</form>
-				</div>';
-				return $form;
+				set_query_var( 'newsletter', 'full' );
+				set_query_var( 'newsletter_nonce', $newsletter_nonce );
+				set_query_var( 'redirect_url', get_current_url() );
+				set_query_var( 'message', $message );
+				get_template_part( 'inc/forms/newsletter', 'full' );
 			} elseif ( 'full-dc' === $args['newsletter'] ) {
 				set_query_var( 'newsletter', 'full-dc' );
 				set_query_var( 'newsletter_nonce', $newsletter_nonce );
@@ -312,7 +188,9 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 				'posts_per_page' => $show,
 			);
 		}
-		query_posts( $args );
+
+		$sponsors = new WP_Query( $args );
+
 		$output = '';
 		$temp_title = '';
 		$temp_link = '';
@@ -330,9 +208,9 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 		}
 
 		$output .= '<ul class="a-sponsor-list a-sponsor-list-' . $columns_class . '">';
-		if ( have_posts( $args ) ) :
-			while ( have_posts() ) :
-				the_post();
+		if ( $sponsors->have_posts( $args ) ) :
+			while ( $sponsors->have_posts() ) :
+				$sponsors->the_post();
 				$temp_title = get_the_title( $post->ID );
 				$temp_sponsorurl = get_post_meta( $post->ID, 'cr3ativ_sponsorurl', true );
 				$temp_excerpt = get_post_meta( $post->ID, 'cr3ativ_sponsortext', true );
@@ -366,7 +244,6 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 			endwhile;
 		endif;
 		$output .= '</ul>';
-		wp_reset_query();
 		return $output;
 	}
 
