@@ -175,7 +175,7 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 				$active_class = '';
 			}
 			if ( 'Your MinnPost' === $item->title && '' !== $user_id && get_current_user_id() !== $user_id ) {
-				$user = wp_get_current_user();
+				$user = get_userdata( $user_id );
 				$item->title = $user->first_name . "'s MinnPost";
 			}
 		}
