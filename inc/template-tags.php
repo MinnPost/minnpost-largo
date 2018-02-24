@@ -935,10 +935,7 @@ endif;
 
 if ( ! function_exists( 'minnpost_account_access_menu' ) ) :
 	function minnpost_account_access_menu() {
-		$user_id = get_query_var( 'users', '' );
-		if ( isset( $_GET['user_id'] ) ) {
-			$user_id = esc_attr( $_GET['user_id'] );
-		}
+		$user_id = get_current_user_id();
 		$menu = get_minnpost_account_access_menu();
 		?>
 		<?php if ( ! empty( $menu ) ) : ?>
@@ -955,10 +952,7 @@ if ( ! function_exists( 'get_minnpost_account_access_menu' ) ) :
 	function get_minnpost_account_access_menu( $user_id = '' ) {
 
 		if ( '' === $user_id ) {
-			$user_id = get_query_var( 'users', '' );
-			if ( isset( $_GET['user_id'] ) ) {
-				$user_id = esc_attr( $_GET['user_id'] );
-			}
+			$user_id = get_current_user_id();
 		}
 
 		$menu = '';
