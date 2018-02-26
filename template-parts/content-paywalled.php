@@ -13,6 +13,9 @@
 
 	<div class="m-post-classification">
 		<?php minnpost_category_breadcrumb(); ?>
+		<div class="a-minnpost-plus">
+			<img src="<?php echo get_theme_file_uri() . '/assets/img/MinnPostPlusLogo.png'; ?>" alt="MinnPostPlus">
+		</div>
 	</div>
 	<?php minnpost_category_sponsorship(); ?>
 
