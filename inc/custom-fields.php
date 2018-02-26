@@ -267,6 +267,25 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		) );
 
 		/**
+		 * Membership content settings
+		 */
+		$member_content_settings = new_cmb2_box( array(
+			'id'            => $object_type . '_sidebar_options',
+			'title'         => 'Member Content Settings',
+			'object_types'  => array( $object_type ),
+			'context'       => 'normal',
+			'priority'      => 'low',
+		) );
+		$member_content_settings->add_field( array(
+			'name'       => 'Content access level',
+			'id'         => '_access_level',
+			'type'       => 'select',
+			'show_option_none' => true,
+			'desc'       => 'Select an option if this content is only available to members',
+			'default'    => '',
+			'options' => get_member_levels(),
+		) );
+		/**
 		 * Sidebar settings
 		 */
 		$sidebar_settings = new_cmb2_box( array(
