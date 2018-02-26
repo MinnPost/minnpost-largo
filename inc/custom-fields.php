@@ -646,6 +646,29 @@ if ( ! function_exists( 'cmb2_user_fields' ) ) :
 endif;
 
 
+if ( ! function_exists( 'get_member_levels' ) ) :
+	function get_member_levels( $field_args = array(), $field = array(), $reset = false ) {
+		// figure out if we have a current user and use their settings as the default selections
+		// problem: if the user has a setting for this field, this default callback won't be called
+		// solution: we just never save this field. the mailchimp plugin's cache settings help keep from overloading the api
+		$values = array();
+		if ( ! class_exists( 'Blocked_Content_Template' ) ) {
+			require_once( TEMPLATEPATH . 'plugins/blocked-content-template/blocked-content-template.php' );
+		}
+		$blocked_content = Blocked_Content_Template::get_instance();
+		$member_values = $blocked_content->member_levels;
+		foreach ( $member_values as $key => $value ) {
+			if ( 'registered' !== $key && 'members' !== $key ) {
+				$values[ $key ] = ucwords( $value ) . ' Members';
+			} else {
+				$values[ $key ] = ucwords( $value );
+			}
+		}
+		return $values;
+	}
+endif;
+
+
 if ( ! function_exists( 'get_mailchimp_user_values' ) ) :
 	function get_mailchimp_user_values( $field_args = array(), $field = array(), $reset = false ) {
 		// figure out if we have a current user and use their settings as the default selections
