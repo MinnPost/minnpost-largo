@@ -279,8 +279,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		$member_content_settings->add_field( array(
 			'name'       => 'Content access level',
 			'id'         => '_access_level',
-			'type'       => 'select',
-			'show_option_none' => true,
+			'type'       => 'multicheck',
 			'desc'       => 'Select an option if this content is only available to members',
 			'default'    => '',
 			'options' => get_member_levels(),
