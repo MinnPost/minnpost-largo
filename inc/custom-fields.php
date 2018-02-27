@@ -285,6 +285,21 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'default'    => '',
 			'options' => get_member_levels(),
 		) );
+		$member_content_settings->add_field( array(
+			'name'       => 'MinnPost+ icon style',
+			'id'         => '_mp_plus_icon_style',
+			'type'       => 'select',
+			'desc'       => 'Which MP+ icon to overlay on the thumbnails',
+			'show_option_none' => true,
+			'default'    => '',
+			'options' => array(
+				'mp_plus_blackonwhite' => __( 'Black on White', 'minnpost-largo' ),
+				'mp_plus_whiteonblack' => __( 'White on Black', 'minnpost-largo' ),
+				'mp_plus_whiteonred' => __( 'White on Red', 'minnpost-largo' ),
+				'mp_plus_whiteontransparent' => __( 'White on Transparent', 'minnpost-largo' ),
+			),
+		) );
+
 		/**
 		 * Sidebar settings
 		 */
