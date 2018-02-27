@@ -277,10 +277,11 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'priority'      => 'low',
 		) );
 		$member_content_settings->add_field( array(
-			'name'       => 'Content access level',
+			'name'       => 'Lowest access level',
 			'id'         => '_access_level',
-			'type'       => 'multicheck',
-			'desc'       => 'Select an option if this content is only available to members',
+			'type'       => 'select',
+			'desc'       => 'If this content is restricted, select the lowest level that can access it.',
+			'show_option_none' => true,
 			'default'    => '',
 			'options' => get_member_levels(),
 		) );
