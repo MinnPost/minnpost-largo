@@ -208,13 +208,16 @@ if ( ! function_exists( 'minnpost_related' ) ) :
 	 * Prints related content items
 	 */
 	function minnpost_related( $type = 'content' ) {
-		if ( ! empty( esc_html( get_post_meta( get_the_ID(), '_mp_related_' . $type, true ) ) ) ) :
+		if ( ! empty( get_post_meta( get_the_ID(), '_mp_related_' . $type, true ) ) ) :
 		?>
 		<aside class="m-related m-related-<?php echo $type; ?>">
 			<h3 class="a-related-title a-related-title-<?php echo $type; ?>">Related <?php echo ucfirst( $type ); ?>:</h3>
 			<ul class="a-related-list a-related-list-<?php echo $type; ?>">
 				<?php
-				$ids = explode( ',', esc_html( get_post_meta( get_the_ID(), '_mp_related_' . $type, true ) ) );
+				$ids = get_post_meta( get_the_ID(), '_mp_related_' . $type, true );
+				if ( ! is_array( $ids ) ) {
+					$ids = explode( ',', esc_html( $ids ) );
+				}
 				foreach ( $ids as $id ) :
 					//$post = get_post( $id, ARRAY_A );
 				?>
