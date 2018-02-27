@@ -682,6 +682,20 @@ if ( ! function_exists( 'minnpost_get_category_sponsorship' ) ) :
 	}
 endif;
 
+if ( ! function_exists( 'minnpost_plus_icon' ) ) :
+	function minnpost_plus_icon( $post_id = '' ) {
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
+		$access_level = get_post_meta( $post_id, '_access_level', true );
+		if ( '' !== $access_level ) {
+			echo '<div class="a-minnpost-plus">
+				<img src="' . get_theme_file_uri() . '/assets/img/MinnPostPlusLogo.png' . '" alt="MinnPostPlus">
+			</div>';
+		}
+	}
+endif;
+
 // fix the archive title so it isn't awful
 add_filter( 'get_the_archive_title', function ( $title ) {
 	if ( is_category() ) {

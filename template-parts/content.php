@@ -13,6 +13,7 @@
 
 	<div class="m-post-classification">
 		<?php minnpost_category_breadcrumb(); ?>
+		<?php minnpost_plus_icon(); ?>
 	</div>
 	<?php minnpost_category_sponsorship(); ?>
 
