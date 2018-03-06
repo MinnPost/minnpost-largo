@@ -159,7 +159,11 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 			}
 			if ( site_url( '/user/' ) === $url && 'Welcome' === $item->title ) {
 				$user = wp_get_current_user();
-				$item->title = '<span class="name">Welcome, ' . $user->first_name . '</span><span class="a-user-initial">' . $user->first_name[0] . '</span><span class="a-arrow-down"></span>';
+				if ( isset( $user->first_name ) && '' !== $user->first_name ) {
+					$item->title = '<span class="name">Welcome, ' . $user->first_name . '</span><span class="a-user-initial">' . $user->first_name[0] . '</span><span class="a-arrow-down"></span>';
+				} else {
+					$item->title = '<span class="name">Welcome, ' . $user->display_name . '</span><span class="a-user-initial">' . $user->display_name[0] . '</span><span class="a-arrow-down"></span>';
+				}
 			}
 			if ( site_url( '/users/userid' ) === $url ) {
 				$url = site_url( '/users/' . $user_id . '/' );
