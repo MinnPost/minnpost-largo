@@ -152,12 +152,13 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 			$account_parent_item = get_page_by_title( 'Welcome', 'OBJECT', 'nav_menu_item' );
 			$account_parent_id = $account_parent_item->ID;
 
-			$url = $item->url;
+			$url = rtrim( $item->url, '/' );
 			$length = strlen( $url );
 			if ( home_url( '/' ) !== $url && substr( wp_logout_url(), 0, $length ) === $url ) {
 				$url = wp_logout_url();
 			}
-			if ( site_url( '/user/' ) === $url && 'Welcome' === $item->title ) {
+			error_log( 'url is ' . $item->url );
+			if ( rtrim( site_url( '/user/' ), '/' ) === $url && 'Welcome' === $item->title ) {
 				$user = wp_get_current_user();
 				if ( isset( $user->first_name ) && '' !== $user->first_name ) {
 					$item->title = '<span class="name">Welcome, ' . $user->first_name . '</span><span class="a-user-initial">' . $user->first_name[0] . '</span><span class="a-arrow-down"></span>';
