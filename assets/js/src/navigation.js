@@ -106,9 +106,7 @@
 } )();
 
 // user account navigation can be a dropdown
-var $ = window.jQuery;
-
-$(document).ready(function() {
+jQuery( document ).ready( function( $ ) {
 	// hide menu
 	if ($('#user-account-access ul').length > 0 ) {
 		$('#user-account-access > li a').on( 'click', function(event) {
