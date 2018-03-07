@@ -13,6 +13,14 @@ if ( ! function_exists( 'minnpost_largo_load_custom_scripts' ) ) :
 	}
 endif;
 
+// make sure theme uses the title tag
+if ( ! function_exists( 'minnpost_largo_title_tag' ) ) :
+	add_action( 'after_setup_theme', 'minnpost_largo_title_tag' );
+	function minnpost_largo_title_tag() {
+		add_theme_support( 'title-tag' );
+	}
+endif;
+
 if ( ! function_exists( 'minnpost_largo_get_title' ) ) :
 	function minnpost_largo_get_title() {
 		if ( is_page() || is_single() ) {
