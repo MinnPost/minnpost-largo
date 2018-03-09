@@ -230,7 +230,7 @@ if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
 		} else {
 			global $post;
 			$page = get_page_by_path( 'user' );
-			$user_parent_id = $page->ID;
+			$user_parent_id = is_object( $page ) ? $page->ID : '';
 
 			if ( array_key_exists( 'users', $wp_query->query_vars ) ) {
 				$wp_admin_bar->remove_menu( 'edit' );
