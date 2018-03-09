@@ -49,6 +49,22 @@ msgstr ""
 msgid "Trash"
 msgstr ""
 
+#: inc/custom-fields.php:296
+msgid "Black on White"
+msgstr ""
+
+#: inc/custom-fields.php:297
+msgid "White on Black"
+msgstr ""
+
+#: inc/custom-fields.php:298
+msgid "White on Red"
+msgstr ""
+
+#: inc/custom-fields.php:299
+msgid "White on Transparent"
+msgstr ""
+
 #: inc/custom-forms.php:149
 msgid "Invalid nonce specified"
 msgstr ""
@@ -85,7 +101,7 @@ msgstr ""
 msgid "We have added you to the MinnPost mailing list. You will need to click the confirmation link in the email we sent to begin receiving messages."
 msgstr ""
 
-#: inc/custom-shortcodes.php:378
+#: inc/custom-shortcodes.php:276
 msgid "You do not have permission to access this page."
 msgstr ""
 
@@ -143,24 +159,24 @@ msgid "%s"
 msgstr ""
 
 #. translators: used between list items, there is a space after the comma
-#: inc/template-tags.php:504, inc/template-tags.php:510
+#: inc/template-tags.php:507, inc/template-tags.php:513
 msgid ", "
 msgstr ""
 
-#: inc/template-tags.php:506
+#: inc/template-tags.php:509
 msgid "Posted in %1$s"
 msgstr ""
 
-#: inc/template-tags.php:512
+#: inc/template-tags.php:515
 msgid "Tagged %1$s"
 msgstr ""
 
 #. translators: %s: post title
-#: inc/template-tags.php:522
+#: inc/template-tags.php:525
 msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
-#: inc/template-tags.php:538, inc/template-tags.php:566
+#: inc/template-tags.php:541, inc/template-tags.php:569
 msgid "Edit %s"
 msgstr ""
 
