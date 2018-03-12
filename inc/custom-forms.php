@@ -1,16 +1,20 @@
 <?php
 /**
- * Create custom form methods
- *
- * Currently this uses the CMB2 plugin
- *
- * @link https://github.com/WebDevStudios/CMB2
+ * Create custom form methods for processing form submissions.
+ * This mainly handles subscribing users to newsletters.
  *
  * @package MinnPost Largo
  */
 
-// subscribe user to newsletter
+/**
+* Subscribe a user to MinnPost emails.
+* This depends on the MinnPost Form Processor for MailChimp, and the Form Processor for MailChimp, plugins.
+*
+*/
 if ( ! function_exists( 'minnpost_email_subscribe_form_process' ) ) :
+	// all of these hooks use the same method
+	// basically they allow it to work whether the user is on the front end or on the admin
+	// and also whether the form is submitted with a page refresh or via ajax
 	add_action( 'admin_post_nopriv_newsletter_shortcode', 'minnpost_email_subscribe_form_process' );
 	add_action( 'admin_post_newsletter_shortcode', 'minnpost_email_subscribe_form_process' );
 	add_action( 'wp_ajax_nopriv_newsletter_shortcode', 'minnpost_email_subscribe_form_process' );
@@ -20,13 +24,13 @@ if ( ! function_exists( 'minnpost_email_subscribe_form_process' ) ) :
 		if ( isset( $_POST['mp_newsletter_form_nonce'] ) && wp_verify_nonce( $_POST['mp_newsletter_form_nonce'], 'mp_newsletter_form_nonce' ) ) {
 
 			// sanitize form data
-			$id = isset( $_POST['_mailchimp_user_id'] ) ? esc_attr( $_POST['_mailchimp_user_id'] ) : '';
-			$status = isset( $_POST['_mailchimp_user_status'] ) ? esc_attr( $_POST['_mailchimp_user_status'] ) : '';
-			$email = isset( $_POST['user_email'] ) ? sanitize_email( $_POST['user_email'] ) : '';
-			$first_name = isset( $_POST['first_name'] ) ? sanitize_text_field( $_POST['first_name'] ) : '';
-			$last_name = isset( $_POST['last_name'] ) ? sanitize_text_field( $_POST['last_name'] ) : '';
-			$newsletters = isset( $_POST['_newsletters'] ) ? (array) $_POST['_newsletters'] : array();
-			$newsletters = array_map( 'esc_attr', $newsletters );
+			$id                = isset( $_POST['_mailchimp_user_id'] ) ? esc_attr( $_POST['_mailchimp_user_id'] ) : '';
+			$status            = isset( $_POST['_mailchimp_user_status'] ) ? esc_attr( $_POST['_mailchimp_user_status'] ) : '';
+			$email             = isset( $_POST['user_email'] ) ? sanitize_email( $_POST['user_email'] ) : '';
+			$first_name        = isset( $_POST['first_name'] ) ? sanitize_text_field( $_POST['first_name'] ) : '';
+			$last_name         = isset( $_POST['last_name'] ) ? sanitize_text_field( $_POST['last_name'] ) : '';
+			$newsletters       = isset( $_POST['_newsletters'] ) ? (array) $_POST['_newsletters'] : array();
+			$newsletters       = array_map( 'esc_attr', $newsletters );
 			$occasional_emails = isset( $_POST['_occasional_emails'] ) ? (array) $_POST['_occasional_emails'] : array();
 			$occasional_emails = array_map( 'esc_attr', $occasional_emails );
 
@@ -38,9 +42,9 @@ if ( ! function_exists( 'minnpost_email_subscribe_form_process' ) ) :
 
 			$user_data = array(
 				'_mailchimp_user_id' => $id,
-				'user_email' => $email,
-				'first_name' => $first_name,
-				'last_name' => $last_name,
+				'user_email'         => $email,
+				'first_name'         => $first_name,
+				'last_name'          => $last_name,
 			);
 
 			if ( '' !== $status ) {
@@ -50,7 +54,6 @@ if ( ! function_exists( 'minnpost_email_subscribe_form_process' ) ) :
 			if ( ! empty( $newsletters_available ) ) {
 				$user_data['newsletters_available'] = $newsletters_available;
 			}
-
 			if ( ! empty( $occasional_emails_available ) ) {
 				$user_data['occasional_emails_available'] = $occasional_emails_available;
 			}
@@ -58,7 +61,6 @@ if ( ! function_exists( 'minnpost_email_subscribe_form_process' ) ) :
 			if ( ! empty( $newsletters ) ) {
 				$user_data['_newsletters'] = $newsletters;
 			}
-
 			if ( ! empty( $newsletters ) ) {
 				$user_data['_occasional_emails'] = $occasional_emails;
 			}
@@ -68,7 +70,7 @@ if ( ! function_exists( 'minnpost_email_subscribe_form_process' ) ) :
 				require_once( TEMPLATEPATH . 'plugins/minnpost-form-processor-mailchimp/minnpost-form-processor-mailchimp.php' );
 			}
 			$minnpost_form = Minnpost_Form_Processor_MailChimp::get_instance();
-			$result = $minnpost_form->save_user_mailchimp_list_settings( $user_data );
+			$result        = $minnpost_form->save_user_mailchimp_list_settings( $user_data );
 
 			if ( isset( $result['id'] ) ) {
 				if ( 'PUT' === $result['method'] ) {
@@ -82,7 +84,7 @@ if ( ! function_exists( 'minnpost_email_subscribe_form_process' ) ) :
 				if ( isset( $_POST['ajaxrequest'] ) && 'true' === $_POST['ajaxrequest'] ) {
 					wp_send_json_success(
 						array(
-							'id' => $result['id'],
+							'id'          => $result['id'],
 							'user_status' => $user_status,
 						)
 					);
@@ -149,7 +151,7 @@ if ( ! function_exists( 'minnpost_email_subscribe_form_process' ) ) :
 					__( 'Invalid nonce specified', 'minnpost-largo' ),
 					__( 'Error', 'minnpost-largo' ),
 					array(
-						'response' => 403,
+						'response'  => 403,
 						'back_link' => $redirect_url,
 					)
 				);
