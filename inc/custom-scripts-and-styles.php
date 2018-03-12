@@ -5,7 +5,11 @@
  * @package MinnPost Largo
  */
 
-// all adding/removing of theme's front-end css should go here
+/**
+* Handle adding and removing of front end CSS in this theme
+* This also handles whether the CSS should be served as minified based on SCRIPT_DEBUG value
+*
+*/
 if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
 	add_action( 'wp_print_styles', 'minnpost_largo_add_remove_styles', 10 );
 	function minnpost_largo_add_remove_styles() {
@@ -23,7 +27,11 @@ if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
 	}
 endif;
 
-// all adding/removing of theme's front-end scripts should go here
+/**
+* Handle adding and removing of front end JavaScript in this theme
+* This also handles whether the JavaScript should be served as minified based on SCRIPT_DEBUG value
+*
+*/
 if ( ! function_exists( 'minnpost_largo_add_remove_scripts' ) ) :
 	add_action( 'wp_enqueue_scripts', 'minnpost_largo_add_remove_scripts' );
 	function minnpost_largo_add_remove_scripts() {
@@ -42,7 +50,10 @@ if ( ! function_exists( 'minnpost_largo_add_remove_scripts' ) ) :
 	}
 endif;
 
-// all adding/removing of theme's admin scripts should go here
+/**
+* Handle adding and removing of admin JavaScript in this theme
+*
+*/
 if ( ! function_exists( 'load_custom_wp_admin_style' ) ) :
 	add_action( 'admin_enqueue_scripts', 'load_custom_wp_admin_style' );
 	function load_custom_wp_admin_style( $hook ) {
