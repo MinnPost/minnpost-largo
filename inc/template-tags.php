@@ -7,6 +7,14 @@
  * @package MinnPost Largo
  */
 
+/**
+* Output story image based on where it should go
+*
+* @param string $size
+* @param array $attributes
+* @param int $id
+*
+*/
 if ( ! function_exists( 'minnpost_post_image' ) ) :
 	/**
 	 * Outputs story image, whether large or various kinds of thumbnail, depending on where it is called
@@ -17,9 +25,9 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 		}
 		$image_data = get_minnpost_post_image( $size, $attributes, $id );
 		if ( '' !== $image_data ) {
-			$image_id = $image_data['image_id'];
+			$image_id  = $image_data['image_id'];
 			$image_url = $image_data['image_url'];
-			$image = $image_data['markup'];
+			$image     = $image_data['markup'];
 		}
 
 		if ( post_password_required() || is_attachment() || ( ! isset( $image_id ) && ! isset( $image_url ) ) ) {
@@ -29,7 +37,7 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 		$image = apply_filters( 'easy_lazy_loader_html', $image );
 
 		$caption = wp_get_attachment_caption( $image_id );
-		$credit = get_media_credit_html( $image_id, false ); // don't show the uploader by default
+		$credit  = get_media_credit_html( $image_id, false ); // don't show the uploader by default
 
 		if ( is_singular() && ! is_singular( 'newsletter' ) && ( ! isset( $attributes['location'] ) || 'related' !== $attributes['location'] ) ) : ?>
 			<figure class="m-post-image m-post-image-<?php echo $size; ?>">
@@ -53,10 +61,21 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 				echo $image;
 				?>
 			</a>
-		<?php endif; // End is_singular()
+		<?php
+		endif; // End is_singular()
 	}
 endif;
 
+/**
+* Get the story image based on where it should go
+*
+* @param string $size
+* @param array $attributes
+* @param int $id
+*
+* @return array $image_data
+*
+*/
 if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 	/**
 	 * Returns story image, whether large or various kinds of thumbnail, depending on where it is called
@@ -65,7 +84,7 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
-		// large is the story detail image. this is a built in size in wordpress
+		// large is the story detail image. this is a built in size in WP
 		// home has its own size field
 		if ( is_home() && 'feature' === $size ) {
 			$size = esc_html( get_post_meta( $id, '_mp_post_homepage_image_size', true ) );
@@ -79,20 +98,20 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 
 		if ( 'large' === $size ) {
 			$image_url = get_post_meta( $id, '_mp_post_main_image', true );
-			$image_id = get_post_meta( $id, '_mp_post_main_image_id', true );
+			$image_id  = get_post_meta( $id, '_mp_post_main_image_id', true );
 		} elseif ( 'thumbnail' !== $size ) {
 			$image_url = get_post_meta( $id, '_mp_post_thumbnail_image_' . $size, true );
-			$image_id = get_post_meta( $id, '_mp_post_main_image_id', true );
+			$image_id  = get_post_meta( $id, '_mp_post_main_image_id', true );
 		} else {
 			$image_url = get_post_meta( $id, '_mp_post_thumbnail_image', true );
-			$image_id = get_post_meta( $id, '_mp_post_thumbnail_image_id', true );
+			$image_id  = get_post_meta( $id, '_mp_post_thumbnail_image_id', true );
 		}
 
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
 			// todo: test this display because so far we just have external urls
 			$image = wp_get_attachment_image( $image_id, $size );
 		} else {
-			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+			$alt   = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
 			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
 			if ( is_singular( 'newsletter' ) ) {
 				$image = '<img src="' . $image_url . '" alt="' . $alt . '"';
@@ -125,14 +144,20 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 		$image = apply_filters( 'easy_lazy_loader_html', $image );
 
 		$image_data = array(
-			'image_id' => $image_id,
+			'image_id'  => $image_id,
 			'image_url' => $image_url,
-			'markup' => $image,
+			'markup'    => $image,
 		);
 		return $image_data;
 	}
 endif;
 
+/**
+* Output when the article was posted
+*
+* @param int $id
+*
+*/
 if ( ! function_exists( 'minnpost_posted_on' ) ) :
 	/**
 	 * Prints HTML with meta information for the current post-date/time and author.
@@ -142,10 +167,6 @@ if ( ! function_exists( 'minnpost_posted_on' ) ) :
 			$id = get_the_ID();
 		}
 		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
-		/*if ( get_the_time( 'U' ) !== get_the_modified_time( 'U' ) ) {
-			$time_string = '<time class="entry-date published" datetime="%1$s">%2$s</time><time class="updated" datetime="%3$s">%4$s</time>';
-		}*/
-
 		$time_string = sprintf( $time_string,
 			esc_attr( get_the_date( 'c' ), $id ),
 			esc_html( get_the_date( '', $id ) ),
@@ -154,6 +175,7 @@ if ( ! function_exists( 'minnpost_posted_on' ) ) :
 		);
 
 		$posted_on = sprintf(
+			// translators: the placeholder is the time string, which can be translated
 			esc_html_x( '%s', 'post date', 'minnpost-largo' ),
 			$time_string
 		);
@@ -163,10 +185,14 @@ if ( ! function_exists( 'minnpost_posted_on' ) ) :
 	}
 endif;
 
+/**
+* Output the author/authors who posted the article
+* This depends on the Co-Authors Plus plugin
+*
+* @param int $id
+*
+*/
 if ( ! function_exists( 'minnpost_posted_by' ) ) :
-	/**
-	 * Integrate Co-Authors Plus
-	 */
 	function minnpost_posted_by( $id = '' ) {
 		if ( '' === $id ) {
 			$id = get_the_ID();
@@ -183,10 +209,15 @@ if ( ! function_exists( 'minnpost_posted_by' ) ) :
 	}
 endif;
 
+/**
+* Get who posted the article
+* This depends on the Co-Authors Plus plugin
+*
+* @param int $id
+* @return string
+*
+*/
 if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
-	/**
-	 * Integrate Co-Authors Plus
-	 */
 	function minnpost_get_posted_by( $id = '' ) {
 		if ( '' === $id ) {
 			$id = get_the_ID();
@@ -203,10 +234,13 @@ if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
 	}
 endif;
 
+/**
+* Output the related stories for a post
+*
+* @param string $type
+*
+*/
 if ( ! function_exists( 'minnpost_related' ) ) :
-	/**
-	 * Prints related content items
-	 */
 	function minnpost_related( $type = 'content' ) {
 		if ( ! empty( get_post_meta( get_the_ID(), '_mp_related_' . $type, true ) ) ) :
 		?>
@@ -252,16 +286,33 @@ if ( ! function_exists( 'minnpost_related' ) ) :
 	}
 endif;
 
+/**
+* Outputs author image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
+*
+* @param int $author_id
+* @param string $size
+* @param bool $include_text
+* @param bool $include_name
+*
+*/
 if ( ! function_exists( 'minnpost_author_figure' ) ) :
-	/**
-	 * Outputs author image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
-	 */
 	function minnpost_author_figure( $author_id = '', $size = 'photo', $include_text = true, $include_name = false ) {
 		$output = minnpost_get_author_figure( $author_id, $size, $include_text, $include_name );
 		echo $output;
 	}
 endif;
 
+/**
+* Get author image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
+*
+* @param int $author_id
+* @param string $size
+* @param bool $include_text
+* @param bool $include_name
+*
+* @return string $output
+*
+*/
 if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 	/**
 	 * Returns author image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
@@ -275,9 +326,9 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 
 		$image_data = minnpost_get_author_image( $author_id, $size );
 		if ( '' !== $image_data ) {
-			$image_id = $image_data['image_id'];
+			$image_id  = $image_data['image_id'];
 			$image_url = $image_data['image_url'];
-			$image = $image_data['markup'];
+			$image     = $image_data['markup'];
 		}
 
 		$text = '';
@@ -295,10 +346,10 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 		$name = get_post_meta( $author_id, 'cap-display_name', true );
 
 		$caption = wp_get_attachment_caption( $image_id );
-		$credit = get_media_credit_html( $image_id );
+		$credit  = get_media_credit_html( $image_id );
 
 		if ( is_singular() || is_archive() ) {
-			$output = '';
+			$output  = '';
 			$output .= '<figure class="a-archive-figure a-author-figure a-author-figure-' . $size . '">';
 			$output .= $image;
 			if ( true === $include_text && '' !== $text ) {
@@ -311,14 +362,20 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 			}
 			$output .= '</figure><!-- .author-figure -->';
 			return $output;
-		}; // End is_singular()
+		}; // End is_singular() || is_archive
 	}
 endif;
 
+/**
+* Returns author image, large or thumbnail, to put inside the figure
+*
+* @param int $author_id
+* @param string $size
+*
+* @return array $image_data
+*
+*/
 if ( ! function_exists( 'minnpost_get_author_image' ) ) :
-	/**
-	 * Returns author image, large or thumbnail, to put inside the figure
-	 */
 	function minnpost_get_author_image( $author_id = '', $size = 'photo' ) {
 
 		$image_url = get_post_meta( $author_id, '_mp_author_image', true );
@@ -340,43 +397,58 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 			// todo: test this display because so far we just have external urls
 			$image = wp_get_attachment_image( $image_id, $size );
 		} else {
-			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+			$alt   = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
 			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
 		}
 
 		$image = apply_filters( 'easy_lazy_loader_html', $image );
 
 		$image_data = array(
-			'image_id' => $image_id,
+			'image_id'  => $image_id,
 			'image_url' => $image_url,
-			'markup' => $image,
+			'markup'    => $image,
 		);
 		return $image_data;
 
 	}
 endif;
 
+/**
+* Outputs term image, large or thumbnail, with/without the description or excerpt, all inside a <figure>
+*
+* @param int $category_id
+* @param string $size
+* @param string $include_text
+* @param string $include_name
+* @param string $link_on
+*
+*/
 if ( ! function_exists( 'minnpost_term_figure' ) ) :
-	/**
-	 * Outputs term image, large or thumbnail, with/without the description or excerpt, all inside a <figure>
-	 */
 	function minnpost_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false, $link_on = 'title' ) {
 		$output = minnpost_get_term_figure( $category_id, $size, $include_text, $include_name, $link_on );
 		echo $output;
 	}
 endif;
 
+/**
+* Returns term image, large or thumbnail, with/without the description or excerpt, all inside a <figure>
+*
+* @param int $category_id
+* @param string $size
+* @param string $include_text
+* @param string $include_name
+* @param string $link_on
+* @return string $output
+*
+*/
 if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
-	/**
-	 * Returns term image, large or thumbnail, with/without the description or excerpt, all inside a <figure>
-	 */
 	function minnpost_get_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false, $link_on = 'title' ) {
 
 		$image_data = minnpost_get_term_image( $category_id, $size );
 		if ( '' !== $image_data ) {
-			$image_id = $image_data['image_id'];
+			$image_id  = $image_data['image_id'];
 			$image_url = $image_data['image_url'];
-			$image = $image_data['markup'];
+			$image     = $image_data['markup'];
 		}
 
 		$text = minnpost_get_term_text( $category_id, $size );
@@ -389,10 +461,10 @@ if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
 		$name = get_cat_name( $category_id, $size );
 
 		$caption = wp_get_attachment_caption( $image_id );
-		$credit = get_media_credit_html( $image_id, false ); // don't show the uploader by default
+		$credit  = get_media_credit_html( $image_id, false ); // don't show the uploader by default
 
 		if ( is_singular() || is_archive() || is_home() ) {
-			$output = '';
+			$output  = '';
 			$output .= '<figure class="a-archive-figure a-category-figure a-category-figure-' . $size . '">';
 			if ( 'figure' === $link_on ) {
 				$output .= '<a href="' . get_category_link( $category_id ) . '">';
@@ -417,19 +489,24 @@ if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
 			}
 			$output .= '</figure><!-- .category-figure -->';
 			return $output;
-		} // End is_singular()
+		} // End is_singular() || is_archive() || is_home()
 	}
 endif;
 
+/**
+* Returns term image, large or thumbnail, to put inside the figure
+*
+* @param int $category_id
+* @param string $size
+* @return array $image_data
+*
+*/
 if ( ! function_exists( 'minnpost_get_term_image' ) ) :
-	/**
-	 * Returns term image, large or thumbnail, to put inside the figure
-	 */
 	function minnpost_get_term_image( $category_id = '', $size = 'feature' ) {
 		$image_url = get_term_meta( $category_id, '_mp_category_main_image', true );
 		if ( 'feature' !== $size ) {
 			$image_url = get_term_meta( $category_id, '_mp_category_' . $size . '_image', true );
-			$image_id = get_term_meta( $category_id, '_mp_category_' . $size . '_image_id', true );
+			$image_id  = get_term_meta( $category_id, '_mp_category_' . $size . '_image_id', true );
 		}
 
 		$image_id = get_term_meta( $category_id, '_mp_category_main_image_id', true );
@@ -442,26 +519,31 @@ if ( ! function_exists( 'minnpost_get_term_image' ) ) :
 			// todo: test this display because so far we just have external urls
 			$image = wp_get_attachment_image( $image_id, $size );
 		} else {
-			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+			$alt   = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
 			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
 		}
 
 		$image = apply_filters( 'easy_lazy_loader_html', $image );
 
 		$image_data = array(
-			'image_id' => $image_id,
+			'image_id'  => $image_id,
 			'image_url' => $image_url,
-			'markup' => $image,
+			'markup'    => $image,
 		);
 		return $image_data;
 
 	}
 endif;
 
+/**
+* Returns term description or excerpt, by itself
+*
+* @param int $category_id
+* @param string $size
+* @return string $text
+*
+*/
 if ( ! function_exists( 'minnpost_get_term_text' ) ) :
-	/**
-	 * Returns term description or excerpt, by itself
-	 */
 	function minnpost_get_term_text( $category_id = '', $size = 'feature' ) {
 		$text = '';
 		if ( 'feature' === $size ) { // full text
@@ -473,22 +555,27 @@ if ( ! function_exists( 'minnpost_get_term_text' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'minnpost_term_extra_links' ) ) : 
-	/* returns any additional links for the term archive page */
+/**
+* Outputs any additional links for the term archive page (rss, twitter, etc.)
+*
+* @param int $category_id
+*
+*/
+if ( ! function_exists( 'minnpost_term_extra_links' ) ) :
 	function minnpost_term_extra_links( $category_id = '' ) {
 		$link = get_term_meta( $category_id, '_mp_category_excerpt_links', true );
 		if ( ! empty( $link ) ) {
 			if ( 'Author bio' === $link['text'] ) {
-				$class = ' class="a-bio-link"';
+				$class      = ' class="a-bio-link"';
 				$url_prefix = get_bloginfo( 'url' ) . '/';
 			} elseif ( 'Follow on Twitter' === $link['text'] ) {
-				$class = ' class="a-twitter-link"';
+				$class      = ' class="a-twitter-link"';
 				$url_prefix = '';
 			} elseif ( false !== strpos( $link['url'], 'mailto' ) ) {
-				$class = ' class="a-email-link"';
+				$class      = ' class="a-email-link"';
 				$url_prefix = get_bloginfo( 'url' ) . '/';
 			} else {
-				$class = '';
+				$class      = '';
 				$url_prefix = '';
 			}
 			echo '<li' . $class . '><a href="' . $url_prefix . $link['url'] . '">' . $link['text'] . '</a></li>';
@@ -496,22 +583,29 @@ if ( ! function_exists( 'minnpost_term_extra_links' ) ) :
 	}
 endif;
 
+/**
+* Outputs HTML for the footer of the post - includes meta information
+*
+* @param int $category_id
+* @param string $size
+* @return string $text
+*
+*/
 if ( ! function_exists( 'minnpost_entry_footer' ) ) :
-	/**
-	 * Prints HTML with meta information for the categories, tags and comments.
-	 */
 	function minnpost_entry_footer() {
 		// Hide category and tag text for pages.
 		if ( 'post' === get_post_type() ) {
 			/* translators: used between list items, there is a space after the comma */
 			$categories_list = get_the_category_list( esc_html__( ', ', 'minnpost-largo' ) );
 			if ( $categories_list && minnpost_categorized_blog() ) {
+				// translators: placeholder is the list of categories
 				printf( '<span class="cat-links">' . esc_html__( 'Posted in %1$s', 'minnpost-largo' ) . '</span>', $categories_list ); // WPCS: XSS OK.
 			}
 
 			/* translators: used between list items, there is a space after the comma */
 			$tags_list = get_the_tag_list( '', esc_html__( ', ', 'minnpost-largo' ) );
 			if ( $tags_list ) {
+				// translators: placeholder is the list of tags
 				printf( '<span class="tags-links">' . esc_html__( 'Tagged %1$s', 'minnpost-largo' ) . '</span>', $tags_list ); // WPCS: XSS OK.
 			}
 		}
@@ -547,11 +641,13 @@ if ( ! function_exists( 'minnpost_entry_footer' ) ) :
 	}
 endif;
 
-
+/**
+* Outputs edit link to users with that permission
+*
+* @param int $id
+*
+*/
 if ( ! function_exists( 'minnpost_edit_link' ) ) :
-	/**
-	 * Prints HTML for edit link to users with that permission
-	 */
 	function minnpost_edit_link( $id = '' ) {
 		if ( '' === $id ) {
 			$id = get_the_ID();
@@ -576,23 +672,32 @@ if ( ! function_exists( 'minnpost_edit_link' ) ) :
 	}
 endif;
 
+/**
+* Outputs HTML for the post sidebar, if it is present
+*
+* @param int $post_id
+*
+*/
 if ( ! function_exists( 'minnpost_post_sidebar' ) ) :
-	/**
-	 * Prints HTML for post sidebar
-	 */
 	function minnpost_post_sidebar( $post_id = '' ) {
 
 		if ( '' === $post_id ) {
 			$post_id = get_the_ID();
 		}
 
-		$sidebar = get_post_meta( $post_id , '_mp_post_sidebar', true );
+		$sidebar = get_post_meta( $post_id, '_mp_post_sidebar', true );
 		if ( null !== $sidebar && '' !== $sidebar ) {
 			echo '<section id="post-sidebar" class="m-post-sidebar">' . $sidebar . '</section>';
 		}
 	}
 endif;
 
+/**
+* Outputs HTML for the category breadcrumb
+*
+* @param int $post_id
+*
+*/
 if ( ! function_exists( 'minnpost_category_breadcrumb' ) ) :
 	function minnpost_category_breadcrumb( $post_id = '' ) {
 
@@ -600,18 +705,18 @@ if ( ! function_exists( 'minnpost_category_breadcrumb' ) ) :
 			$post_id = get_the_ID();
 		}
 
-		$category_permalink = get_post_meta( $post_id , '_category_permalink', true );
+		$category_permalink = get_post_meta( $post_id, '_category_permalink', true );
 		if ( null !== $category_permalink && '' !== $category_permalink ) {
 			if ( isset( $category_permalink['category'] ) && '' !== $category_permalink['category'] ) {
-				$cat_id = $category_permalink['category'];
+				$cat_id   = $category_permalink['category'];
 				$category = get_category( $cat_id );
 			} else {
 				$categories = get_the_category();
-				$category = $categories[0];
+				$category   = $categories[0];
 			}
 		} else {
 			$categories = get_the_category();
-			$category = $categories[0];
+			$category   = $categories[0];
 		}
 		$category_link = get_category_link( $category );
 		$category_name = $category->name;
@@ -619,6 +724,13 @@ if ( ! function_exists( 'minnpost_category_breadcrumb' ) ) :
 	}
 endif;
 
+/**
+* Returns the category name for a post's main category
+*
+* @param int $post_id
+* @return string $category_name
+*
+*/
 if ( ! function_exists( 'minnpost_get_category_name' ) ) :
 	function minnpost_get_category_name( $post_id = '' ) {
 
@@ -626,7 +738,7 @@ if ( ! function_exists( 'minnpost_get_category_name' ) ) :
 			$post_id = get_the_ID();
 		}
 
-		$category_permalink = get_post_meta( $post_id , '_category_permalink', true );
+		$category_permalink = get_post_meta( $post_id, '_category_permalink', true );
 		// we have to check a few conditions to get the category correctly
 		if ( null !== $category_permalink && '' !== $category_permalink ) {
 			if ( is_array( $category_permalink ) ) {
@@ -652,6 +764,13 @@ if ( ! function_exists( 'minnpost_get_category_name' ) ) :
 	}
 endif;
 
+/**
+* Outputs HTML for category sponsorship
+*
+* @param int $post_id
+* @param int $category_id
+*
+*/
 if ( ! function_exists( 'minnpost_category_sponsorship' ) ) :
 	function minnpost_category_sponsorship( $post_id = '', $category_id = '' ) {
 		$sponsorship = minnpost_get_category_sponsorship( $post_id, $category_id );
@@ -659,17 +778,25 @@ if ( ! function_exists( 'minnpost_category_sponsorship' ) ) :
 	}
 endif;
 
+/**
+* Returns the category sponsorship for a post's primary category, if it exists
+*
+* @param int $post_id
+* @param int $category_id
+* @return string
+*
+*/
 if ( ! function_exists( 'minnpost_get_category_sponsorship' ) ) :
 	function minnpost_get_category_sponsorship( $post_id = '', $category_id = '' ) {
 		if ( '' === $category_id ) {
 			if ( '' === $post_id ) {
 				$post_id = get_the_ID();
 			}
-			$category_permalink = get_post_meta( $post_id , '_category_permalink', true );
+			$category_permalink = get_post_meta( $post_id, '_category_permalink', true );
 			if ( null !== $category_permalink && '' !== $category_permalink ) {
 				$category_id = $category_permalink['category'];
 			} else {
-				$categories = get_the_category();
+				$categories  = get_the_category();
 				$category_id = $categories[0]->cat_id;
 			}
 		}
@@ -682,6 +809,12 @@ if ( ! function_exists( 'minnpost_get_category_sponsorship' ) ) :
 	}
 endif;
 
+/**
+* Outputs HTML for MinnPost Plus content
+*
+* @param int $post_id
+*
+*/
 if ( ! function_exists( 'minnpost_plus_icon' ) ) :
 	function minnpost_plus_icon( $post_id = '' ) {
 		if ( '' === $post_id ) {
@@ -696,18 +829,28 @@ if ( ! function_exists( 'minnpost_plus_icon' ) ) :
 	}
 endif;
 
-// fix the archive title so it isn't awful
+/**
+* Fixes the title on archive pages so it isn't awful
+*
+* @param string $title
+* @return string $title
+*
+*/
 add_filter( 'get_the_archive_title', function ( $title ) {
 	if ( is_category() ) {
 		$title = single_cat_title( '', false );
 	} elseif ( is_tag() ) {
 		$title = single_tag_title( '', false );
 	} elseif ( is_author() ) {
-		$title = '<span class="vcard">' . get_the_author() . '</span>' ;
+		$title = '<span class="vcard">' . get_the_author() . '</span>';
 	}
 	return $title;
 });
 
+/**
+* Outputs HTML for numeric pagination on archive pages
+*
+*/
 if ( ! function_exists( 'numeric_pagination' ) ) :
 	function numeric_pagination() {
 		// if this is a singular item and we accidentally left it on there, get out
@@ -723,7 +866,7 @@ if ( ! function_exists( 'numeric_pagination' ) ) :
 		}
 
 		$paged = get_query_var( 'paged' ) ? absint( get_query_var( 'paged' ) ) : 1;
-		$max = intval( $wp_query->max_num_pages );
+		$max   = intval( $wp_query->max_num_pages );
 
 		// current page
 		if ( $paged >= 1 ) {
@@ -786,6 +929,12 @@ if ( ! function_exists( 'numeric_pagination' ) ) :
 	}
 endif;
 
+/**
+* Outputs newsletter logo based on which type of newsletter it is
+*
+* @param int $newsletter_id
+*
+*/
 if ( ! function_exists( 'minnpost_newsletter_logo' ) ) :
 	function minnpost_newsletter_logo( $newsletter_id = '' ) {
 
@@ -824,6 +973,15 @@ if ( ! function_exists( 'minnpost_newsletter_logo' ) ) :
 	}
 endif;
 
+/**
+* Arrange contents for newsletters
+*
+* @param string $content
+* @param string $news_right_top
+* @param string $type
+* @return array $data
+*
+*/
 if ( ! function_exists( 'minnpost_newsletter_arrange' ) ) :
 	function minnpost_newsletter_arrange( $content, $news_right_top, $type = '' ) {
 		$promo_dom = new DomDocument;
@@ -833,20 +991,20 @@ if ( ! function_exists( 'minnpost_newsletter_arrange' ) ) :
 			$img->setAttribute( 'style', 'border: 0 none; display: block; height: auto; line-height: 100%; Margin-left: auto; Margin-right: auto; outline: none; text-decoration: none; max-width: 100%;' );
 		}
 		$promo_xpath = new DOMXpath( $promo_dom );
-		$promo_div = $promo_xpath->query( "//div[contains(concat(' ', @class, ' '), ' image ')]/div" );
+		$promo_div   = $promo_xpath->query( "//div[contains(concat(' ', @class, ' '), ' image ')]/div" );
 
 		$dom = new DomDocument;
 		$dom->loadHTML( '<?xml encoding="utf-8" ?>' . $content );
 		$xpath = new DOMXpath( $dom );
-		$divs = $xpath->query( "//div[contains(concat(' ', @class, ' '), ' story ')]" );
+		$divs  = $xpath->query( "//div[contains(concat(' ', @class, ' '), ' story ')]" );
 
 		$ad_dom = new DomDocument;
 		$ad_dom->loadHTML( '<?xml encoding="utf-8" ?>' . $news_right_top );
 		$ad_xpath = new DOMXpath( $ad_dom );
-		$ad_divs = $ad_xpath->query( "//div[contains(concat(' ', @class, ' '), ' block ')]/div/div/p" );
+		$ad_divs  = $ad_xpath->query( "//div[contains(concat(' ', @class, ' '), ' block ')]/div/div/p" );
 
 		$contents = array();
-		$bottom = '';
+		$bottom   = '';
 		foreach ( $divs as $key => $value ) {
 			$class = $value->getAttribute( 'class' );
 			$style = $value->getAttribute( 'style' );
@@ -859,8 +1017,8 @@ if ( ! function_exists( 'minnpost_newsletter_arrange' ) ) :
 
 		$promo = array();
 		foreach ( $promo_div as $key => $value ) {
-			$href = $value->getAttribute( 'href' );
-			$target = $value->getAttribute( 'target' );
+			$href    = $value->getAttribute( 'href' );
+			$target  = $value->getAttribute( 'target' );
 			$promo[] = '<div class="image">' . minnpost_dom_innerhtml( $value ) . '</div>';
 		}
 
@@ -879,8 +1037,8 @@ if ( ! function_exists( 'minnpost_newsletter_arrange' ) ) :
 
 		$data = array(
 			'stories' => $contents,
-			'ads' => $ads,
-			'bottom' => $bottom,
+			'ads'     => $ads,
+			'bottom'  => $bottom,
 		);
 		if ( ! empty( $promo ) ) {
 			$data['promo'] = $promo[0];
@@ -889,18 +1047,29 @@ if ( ! function_exists( 'minnpost_newsletter_arrange' ) ) :
 	}
 endif;
 
+/**
+* Returns title parts for user profile page
+*
+* @param string $title
+* @return string $title
+*
+*/
 if ( ! function_exists( 'minnpost_user_title_parts' ) ) :
 	add_filter( 'document_title_parts', 'minnpost_user_title_parts' );
 	function minnpost_user_title_parts( $title ) {
 		if ( get_query_var( 'users' ) ) {
-			$user_id = get_query_var( 'users' );
-			$user = get_userdata( $user_id );
+			$user_id        = get_query_var( 'users' );
+			$user           = get_userdata( $user_id );
 			$title['title'] = $user->display_name;
 		}
 		return $title;
 	}
 endif;
 
+/**
+* Outputs the user account management menu
+*
+*/
 if ( ! function_exists( 'minnpost_account_management_menu' ) ) :
 	function minnpost_account_management_menu() {
 		$user_id = get_query_var( 'users', '' );
@@ -920,14 +1089,21 @@ if ( ! function_exists( 'minnpost_account_management_menu' ) ) :
 	}
 endif;
 
+/**
+* Returns the user account management menu for each user
+* This depends on the User Account Management plugin
+*
+* @param int $user_id
+* @return object $menu
+*
+*/
 if ( ! function_exists( 'get_minnpost_account_management_menu' ) ) :
-
 	function get_minnpost_account_management_menu( $user_id = '' ) {
-		$menu = '';
+		$menu       = '';
 		$can_access = false;
 		if ( class_exists( 'User_Account_Management' ) ) {
 			$account_management = User_Account_Management::get_instance();
-			$can_access = $account_management->check_user_permissions( $user_id );
+			$can_access         = $account_management->check_user_permissions( $user_id );
 		} else {
 			if ( get_current_user_id() === $user_id || current_user_can( 'edit_user', $user_id ) ) {
 				$can_access = true;
@@ -938,11 +1114,11 @@ if ( ! function_exists( 'get_minnpost_account_management_menu' ) ) :
 			$menu = wp_nav_menu(
 				array(
 					'theme_location' => 'user_account_management',
-					'menu_id' => 'user-account-management',
-					'depth' => 1,
-					'container' => false,
-					'walker' => new Minnpost_Walker_Nav_Menu( $user_id ),
-					'echo' => false,
+					'menu_id'        => 'user-account-management',
+					'depth'          => 1,
+					'container'      => false,
+					'walker'         => new Minnpost_Walker_Nav_Menu( $user_id ),
+					'echo'           => false,
 				)
 			);
 		}
@@ -950,10 +1126,14 @@ if ( ! function_exists( 'get_minnpost_account_management_menu' ) ) :
 	}
 endif;
 
+/**
+* Outputs the user account access menu
+*
+*/
 if ( ! function_exists( 'minnpost_account_access_menu' ) ) :
 	function minnpost_account_access_menu() {
 		$user_id = get_current_user_id();
-		$menu = get_minnpost_account_access_menu();
+		$menu    = get_minnpost_account_access_menu();
 		?>
 		<?php if ( ! empty( $menu ) ) : ?>
 			<nav id="navigation-user-account-access" class="m-secondary-navigation" role="navigation">
@@ -964,6 +1144,14 @@ if ( ! function_exists( 'minnpost_account_access_menu' ) ) :
 	}
 endif;
 
+/**
+* Returns the user account access menu for each user
+* This depends on the User Account Management plugin
+*
+* @param int $user_id
+* @return object $menu
+*
+*/
 if ( ! function_exists( 'get_minnpost_account_access_menu' ) ) :
 
 	function get_minnpost_account_access_menu( $user_id = '' ) {
@@ -972,11 +1160,11 @@ if ( ! function_exists( 'get_minnpost_account_access_menu' ) ) :
 			$user_id = get_current_user_id();
 		}
 
-		$menu = '';
+		$menu       = '';
 		$can_access = false;
 		if ( class_exists( 'User_Account_Management' ) ) {
 			$account_management = User_Account_Management::get_instance();
-			$can_access = $account_management->check_user_permissions( $user_id );
+			$can_access         = $account_management->check_user_permissions( $user_id );
 		} else {
 			if ( get_current_user_id() === $user_id || current_user_can( 'edit_user', $user_id ) ) {
 				$can_access = true;
@@ -987,11 +1175,11 @@ if ( ! function_exists( 'get_minnpost_account_access_menu' ) ) :
 			$menu = wp_nav_menu(
 				array(
 					'theme_location' => 'user_account_access',
-					'menu_id' => 'user-account-access',
-					'depth' => 2,
-					'container' => false,
-					'walker' => new Minnpost_Walker_Nav_Menu( $user_id ),
-					'echo' => false,
+					'menu_id'        => 'user-account-access',
+					'depth'          => 2,
+					'container'      => false,
+					'walker'         => new Minnpost_Walker_Nav_Menu( $user_id ),
+					'echo'           => false,
 				)
 			);
 		}
@@ -999,11 +1187,18 @@ if ( ! function_exists( 'get_minnpost_account_access_menu' ) ) :
 	}
 endif;
 
+/**
+* Returns a username or profile link to be used on comments
+*
+* @param object $comment
+* @return object $comment
+*
+*/
 if ( ! function_exists( 'get_user_name_or_profile_link' ) ) :
 	function get_user_name_or_profile_link( $comment ) {
 
 		if ( $comment->user_id ) {
-			$user = get_userdata( $comment->user_id );
+			$user         = get_userdata( $comment->user_id );
 			$comment_name = $user->display_name;
 		} else {
 			$comment_name = comment_author( $comment->comment_ID );
