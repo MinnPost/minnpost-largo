@@ -6,7 +6,12 @@
  * @package MinnPost Largo
  */
 
-// add widget instance shortcode
+/**
+* Add widget instance shortcode
+*
+* @param array $atts
+*
+*/
 if ( ! function_exists( 'widget_instance' ) ) :
 	add_shortcode( 'widget_instance', 'widget_instance' );
 	function widget_instance( $atts ) {
@@ -21,7 +26,7 @@ if ( ! function_exists( 'widget_instance' ) ) :
 		$spill_type = 'MinnpostSpills_Widget';
 
 		if ( '' !== $args['id'] && false !== strpos( $args['id'], strtolower( $spill_type ) ) ) {
-			$id = str_replace( strtolower( $spill_type ) . '-', '', $args['id'] );
+			$id     = str_replace( strtolower( $spill_type ) . '-', '', $args['id'] );
 			$spills = get_option( 'widget_' . strtolower( $spill_type ), '' );
 			if ( array_key_exists( $id, $spills ) ) {
 				$args = $spills[ $id ];
@@ -36,11 +41,17 @@ if ( ! function_exists( 'widget_instance' ) ) :
 	}
 endif;
 
-// add newsletter embed shortcode
+/**
+* Add newsletter embed shortcode
+* This allows us to use newsletter form as widgets
+*
+* @param array $atts
+*
+*/
 if ( ! function_exists( 'newsletter_embed' ) ) :
 	add_shortcode( 'newsletter_embed', 'newsletter_embed' );
 	function newsletter_embed( $atts ) {
-		$args = shortcode_atts(
+		$args    = shortcode_atts(
 			array(
 				'newsletter' => '',
 			),
@@ -101,12 +112,13 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 	}
 endif;
 
-function minnpost_interest_groups( $call, $params ) {
-	$result = 'foo';
-	return $result;
-}
-
-// add column list shortcode
+/**
+* Add column list
+* This allows us to display list of categories as shortcode
+*
+* @param array $atts
+*
+*/
 if ( ! function_exists( 'column_list' ) ) :
 	add_shortcode( 'column_list', 'column_list' );
 	function column_list( $atts ) {
@@ -120,10 +132,10 @@ if ( ! function_exists( 'column_list' ) ) :
 
 		$output = '';
 		if ( '' !== $args['term_ids'] ) {
-			$output .= '<ol class="m-columns m-columns-summary">';
+			$output  .= '<ol class="m-columns m-columns-summary">';
 			$term_ids = explode( ',', $args['term_ids'] );
 			foreach ( $term_ids as $term_id ) {
-				$term = get_term_by( 'id', $term_id, 'category' );
+				$term    = get_term_by( 'id', $term_id, 'category' );
 				$output .= '<li>';
 				$output .= minnpost_get_term_figure( $term_id, 'thumbnail', true, true, 'figure' );
 				$output .= '</li>';
@@ -134,21 +146,30 @@ if ( ! function_exists( 'column_list' ) ) :
 	}
 endif;
 
-// add column list shortcode
+/**
+* Sponsor list
+* This is for the sponsor list in the footer
+* This all depends on the cr3ativ sponsor plugin, which is kind of bad but sufficient.
+*
+* @param array $atts
+* @param string $content
+* @return string $output
+*
+*/
 if ( ! function_exists( 'mp_sponsors' ) ) :
 	add_shortcode( 'mp_sponsors', 'mp_sponsors' );
 	function mp_sponsors( $atts, $content ) {
 		extract(
 			shortcode_atts(
 				array(
-					'columns' => '4',
-					'image' => 'yes',
-					'title' => 'yes',
-					'link'  => 'yes',
-					'bio' => 'yes',
-					'show' => '',
-					'orderby' => '',
-					'order' => '',
+					'columns'  => '4',
+					'image'    => 'yes',
+					'title'    => 'yes',
+					'link'     => 'yes',
+					'bio'      => 'yes',
+					'show'     => '',
+					'orderby'  => '',
+					'order'    => '',
 					'category' => '',
 				),
 				$atts
@@ -168,34 +189,34 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 		}
 		if ( 'all' !== $category ) {
 			$args = array(
-				'post_type' => 'cr3ativsponsor',
+				'post_type'      => 'cr3ativsponsor',
 				'posts_per_page' => $show,
-				'order' => $order,
-				'orderby' => $orderby,
-				'tax_query' => array(
+				'order'          => $order,
+				'orderby'        => $orderby,
+				'tax_query'      => array(
 					array(
 						'taxonomy' => 'cr3ativsponsor_level',
-						'field' => 'slug',
-						'terms' => array( $category ),
+						'field'    => 'slug',
+						'terms'    => array( $category ),
 					),
 				),
 			);
 		} else {
 			$args = array(
-				'post_type' => 'cr3ativsponsor',
-				'order' => $order,
-				'orderby' => $orderby,
+				'post_type'      => 'cr3ativsponsor',
+				'order'          => $order,
+				'orderby'        => $orderby,
 				'posts_per_page' => $show,
 			);
 		}
 
 		$sponsors = new WP_Query( $args );
 
-		$output = '';
-		$temp_title = '';
-		$temp_link = '';
+		$output       = '';
+		$temp_title   = '';
+		$temp_link    = '';
 		$temp_excerpt = '';
-		$temp_image = '';
+		$temp_image   = '';
 
 		if ( '1' === $columns ) {
 			$columns_class = 'columns-one';
@@ -211,12 +232,12 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 		if ( $sponsors->have_posts( $args ) ) :
 			while ( $sponsors->have_posts() ) :
 				$sponsors->the_post();
-				$temp_title = get_the_title( $post->ID );
+				$temp_title      = get_the_title( $post->ID );
 				$temp_sponsorurl = get_post_meta( $post->ID, 'cr3ativ_sponsorurl', true );
-				$temp_excerpt = get_post_meta( $post->ID, 'cr3ativ_sponsortext', true );
-				$image_data = get_minnpost_post_image();
-				$temp_image = $image_data['markup'];
-				$output .= '<li class="a-sponsor">';
+				$temp_excerpt    = get_post_meta( $post->ID, 'cr3ativ_sponsortext', true );
+				$image_data      = get_minnpost_post_image();
+				$temp_image      = $image_data['markup'];
+				$output         .= '<li class="a-sponsor">';
 
 				if ( 'yes' === $link ) {
 					$output .= '<a href="' . $temp_sponsorurl . '">';
@@ -249,6 +270,16 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 
 endif;
 
+/**
+* User Account info shortcode
+* This depends on the User Account Management plugin
+* We use this for the main user account page
+*
+* @param array $attributes
+* @param string $content
+* @return string output of get_template_html from account management plugin
+*
+*/
 if ( ! function_exists( 'minnpost_account_info' ) ) :
 	add_shortcode( 'account-info', 'minnpost_account_info' );
 	function minnpost_account_info( $attributes, $content ) {
@@ -267,7 +298,7 @@ if ( ! function_exists( 'minnpost_account_info' ) ) :
 		$can_access = false;
 		if ( class_exists( 'User_Account_Management' ) ) {
 			$account_management = User_Account_Management::get_instance();
-			$can_access = $account_management->check_user_permissions( $user_id );
+			$can_access         = $account_management->check_user_permissions( $user_id );
 		} else {
 			return;
 		}
@@ -278,17 +309,17 @@ if ( ! function_exists( 'minnpost_account_info' ) ) :
 
 		$member_level = get_user_meta( $user_id, 'member_level', true );
 		if ( '' !== $member_level ) {
-			$attributes['member_level_name'] = $member_level;
+			$attributes['member_level_name']  = $member_level;
 			$attributes['member_level_value'] = sanitize_title( $member_level );
 			if ( 'Non-member' !== $member_level ) {
 				$attributes['member_level_value'] = strtolower( substr( $member_level, 9 ) );
 			}
 		} else {
-			$attributes['member_level_name'] = 'Non-member';
+			$attributes['member_level_name']  = 'Non-member';
 			$attributes['member_level_value'] = 'non-member';
 		}
 
-		$attributes['user'] = get_userdata( $user_id );
+		$attributes['user']      = get_userdata( $user_id );
 		$attributes['user_meta'] = get_user_meta( $user_id );
 
 		$attributes['reading_topics'] = array();
@@ -298,7 +329,7 @@ if ( ! function_exists( 'minnpost_account_info' ) ) :
 				foreach ( $topics as $topic ) {
 					$term = get_term_by( 'slug', sanitize_title( $topic ), 'category' );
 					if ( false !== $term ) {
-						$cat_id = $term->term_id;
+						$cat_id                                  = $term->term_id;
 						$attributes['reading_topics'][ $cat_id ] = $topic;
 					}
 				}
