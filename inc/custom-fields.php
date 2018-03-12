@@ -1,9 +1,7 @@
 <?php
 /**
- * Create custom fields
- *
+ * Create custom fields for standard and custom content types.
  * Currently this uses the CMB2 plugin
- *
  * @link https://github.com/WebDevStudios/CMB2
  *
  * @package MinnPost Largo
@@ -12,9 +10,10 @@
 // cmb2_init is the hook that works on rest api; cmb2_admin_init does not; there doesn't seem to be any difference in how often the hooks run though
 
 /**
- * Newsletter fields
- */
-
+* Newsletter fields
+* Even though this is a custom type, it does not currently depend on any plugins aside from CMB2
+*
+*/
 if ( function_exists( 'create_newsletter' ) ) :
 	// speed up the post loading for newsletters a little
 	if ( is_admin() ) {
@@ -34,7 +33,12 @@ if ( function_exists( 'create_newsletter' ) ) :
 		}
 	}
 
-	// CMB2 custom fields for newsletters
+	/**
+	* CMB2 custom fields for newsletters
+	*
+	* @param array $conditionals
+	* @return array $conditionals
+	*/
 	add_action( 'cmb2_init', 'cmb2_newsletter_fields' );
 	function cmb2_newsletter_fields() {
 
@@ -154,11 +158,18 @@ if ( function_exists( 'create_newsletter' ) ) :
 endif;
 
 
-// CMB2 custom fields for posts
+/**
+* Post fields
+*
+*/
 
-// removing fields
+/**
+* Remove featured images from theme
+* We do this because we use the CMB2 file field for post images, instead of the built in featured image
+* This is kind of unfortunate, but it is necessary at least in this design.
+*
+*/
 if ( ! function_exists( 'remove_featured_images_from_child_theme' ) ) :
-	// override the parent theme's support for featured images because we are using cmb2 for that, at least for now
 	add_action( 'after_setup_theme', 'remove_featured_images_from_child_theme', 11 );
 	function remove_featured_images_from_child_theme() {
 		remove_theme_support( 'post-thumbnails' );
@@ -166,6 +177,14 @@ if ( ! function_exists( 'remove_featured_images_from_child_theme' ) ) :
 	}
 endif;
 
+/**
+* Show meta boxes that are hidden by default
+*
+* @param array $hidden
+* @param object screen
+*
+* @return array $hidden
+*/
 if ( ! function_exists( 'show_hidden_meta_boxes' ) ) :
 	add_filter( 'default_hidden_meta_boxes', 'show_hidden_meta_boxes', 10, 2 );
 	function show_hidden_meta_boxes( $hidden, $screen ) {
@@ -181,7 +200,10 @@ if ( ! function_exists( 'show_hidden_meta_boxes' ) ) :
 	}
 endif;
 
-// add fields to posts
+/**
+* Add custom fields to posts
+*
+*/
 if ( ! function_exists( 'cmb2_post_fields' ) ) :
 	add_action( 'cmb2_init', 'cmb2_post_fields' );
 	function cmb2_post_fields() {
@@ -241,7 +263,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			),
 			// query_args are passed to wp.media's library query.
 			'query_args'   => array(
-				'type'     => 'image',
+				'type' => 'image',
 			),
 		) );
 
@@ -268,6 +290,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 
 		/**
 		 * Membership content settings
+		 * This depends on the Blocked Content Template plugin, which is called in get_member_levels()
 		 */
 		$member_content_settings = new_cmb2_box( array(
 			'id'           => $object_type . '_sidebar_options',
@@ -378,6 +401,11 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 
 	}
 
+	/**
+	* Add image sizes for posts.
+	* These are created when an image is uploaded.
+	*
+	*/
 	add_image_size( 'post-feature', 190, 9999 );
 	add_image_size( 'post-feature-large', 400, 400 );
 	add_image_size( 'post-feature-medium', 190, 125, true );
@@ -386,7 +414,10 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 endif;
 
 
-// add fields to pages
+/**
+* Add custom fields to pages
+*
+*/
 if ( ! function_exists( 'cmb2_page_fields' ) ) :
 	add_action( 'cmb2_init', 'cmb2_page_fields' );
 	function cmb2_page_fields() {
@@ -433,7 +464,10 @@ if ( ! function_exists( 'cmb2_page_fields' ) ) :
 endif;
 
 
-// CMB2 custom fields for categories
+/**
+* Add custom fields to categories
+*
+*/
 if ( ! function_exists( 'cmb2_category_fields' ) ) :
 	add_action( 'cmb2_init', 'cmb2_category_fields' );
 	function cmb2_category_fields() {
@@ -441,7 +475,7 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 		$object_type = 'term';
 
 		/**
-		 * Subtitle settings
+		 * Category settings
 		 */
 		$category_setup = new_cmb2_box( array(
 			'id'               => 'category_properties',
@@ -450,6 +484,7 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 			'taxonomies'       => array( 'category' ),
 			'new_term_section' => true, // will display in add category section
 		) );
+		// text fields
 		$category_setup->add_field( array(
 			'name' => 'Excerpt',
 			'id'   => '_mp_category_excerpt',
@@ -460,6 +495,7 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 			'id'   => '_mp_category_sponsorship',
 			'type' => 'wysiwyg',
 		) );
+		// image fields
 		$category_setup->add_field( array(
 			'name' => 'Category Thumbnail',
 			'id'   => '_mp_category_thumbnail_image',
@@ -470,12 +506,14 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 			'id'   => '_mp_category_main_image',
 			'type' => 'file',
 		) );
+		// main body field
 		$category_setup->add_field( array(
 			'name' => 'Body',
 			'id'   => '_mp_category_body',
 			'type' => 'wysiwyg',
 		) );
 
+		// featured columns that appear on categories
 		$options = array();
 		if ( is_admin() && ( isset( $_GET['taxonomy'] ) && 'category' === sanitize_key( $_GET['taxonomy'] ) && isset( $_GET['tag_ID'] ) ) || isset( $_POST['tag_ID'] ) && 'category' === sanitize_key( $_POST['taxonomy'] ) ) {
 
@@ -503,10 +541,16 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 		}
 	}
 
+	// add an image size to be generated when category images are uploaded
 	add_image_size( 'category-featured-column', 50, 9999 ); // scale so the width is 50px
 
 endif;
 
+/**
+* Remove the default description from categories
+* We do this because we have a whole body field for categories; it is a wysiwyg field
+*
+*/
 if ( ! function_exists( 'remove_default_category_description' ) ) :
 	add_action( 'admin_head', 'remove_default_category_description' );
 	function remove_default_category_description() {
@@ -523,9 +567,16 @@ if ( ! function_exists( 'remove_default_category_description' ) ) :
 endif;
 
 
-// CMB2 custom fields for custom authors
+/**
+* Custom Author fields
+*
+*/
 
-// remove fields
+/**
+* Remove guest author bio from custom author
+* This is probably a wysiwyg thing, but I honestly don't remember.
+*
+*/
 if ( ! function_exists( 'remove_author_fields' ) ) :
 	// override the parent theme's support for featured images because we are using cmb2 for that, at least for now
 	add_action( 'add_meta_boxes', 'remove_author_fields', 19 );
@@ -534,13 +585,16 @@ if ( ! function_exists( 'remove_author_fields' ) ) :
 	}
 endif;
 
-// add fields to authors
+/**
+* Add custom fields to authors
+*
+*/
 if ( ! function_exists( 'cmb2_author_fields' ) ) :
 	add_action( 'cmb2_init', 'cmb2_author_fields', 9 );
 	function cmb2_author_fields() {
 		$object_type = 'guest-author';
 		/**
-		 * Image Settings
+		 * Author Settings
 		 */
 		$author_setup = new_cmb2_box( array(
 			'id'           => $object_type . '_image_settings',
@@ -549,16 +603,19 @@ if ( ! function_exists( 'cmb2_author_fields' ) ) :
 			'context'      => 'normal',
 			'priority'     => 'low',
 		) );
+		// image
 		$author_setup->add_field( array(
 			'name' => 'Photo',
 			'id'   => '_mp_author_image_id',
 			'type' => 'file',
 		) );
+		// excerpt
 		$author_setup->add_field( array(
 			'name' => 'Excerpt',
 			'id'   => '_mp_author_excerpt',
 			'type' => 'wysiwyg',
 		) );
+		// full bio
 		$author_setup->add_field( array(
 			'name' => 'Bio',
 			'id'   => '_mp_author_bio',
@@ -566,17 +623,23 @@ if ( ! function_exists( 'cmb2_author_fields' ) ) :
 		) );
 	}
 
+	// add images that will be auto generated when an image is uploaded
 	add_image_size( 'author-image', 190, 9999 ); // scale so the width is 190px
 	add_image_size( 'author-thumb', 75, 9999 ); // scale so the width is 75px
 
 endif;
 
-// add fields to users
+/**
+* Add fields to users
+*
+*/
 if ( ! function_exists( 'cmb2_user_fields' ) ) :
 	add_action( 'cmb2_init', 'cmb2_user_fields' );
 	function cmb2_user_fields() {
 
-		$object_type  = 'user';
+		$object_type = 'user';
+
+		// address fields
 		$user_address = new_cmb2_box( array(
 			'id'           => $object_type . '_address',
 			'title'        => 'Address Info',
@@ -615,6 +678,7 @@ if ( ! function_exists( 'cmb2_user_fields' ) ) :
 			'desc' => '',
 		) );
 
+		// reading preferences
 		$user_preferences = new_cmb2_box( array(
 			'id'           => $object_type . '_reading_preferences',
 			'title'        => 'Reading Preferences',
@@ -641,7 +705,7 @@ if ( ! function_exists( 'cmb2_user_fields' ) ) :
 			),
 		) );
 
-		// mailchimp fields
+		// mailchimp newsletter fields
 		$user_preferences->add_field( array(
 			'name'       => 'Subscribe to these regular newsletters:',
 			'desc'       => '',
@@ -661,12 +725,18 @@ if ( ! function_exists( 'cmb2_user_fields' ) ) :
 	}
 endif;
 
-
+/**
+* Get member levels so we can assign them to content access
+* This depends on the Blocked Content Template plugin
+*
+* @param array $field_args
+* @param array $field
+* @param bool $reset
+*
+* @return array $values
+*/
 if ( ! function_exists( 'get_member_levels' ) ) :
 	function get_member_levels( $field_args = array(), $field = array(), $reset = false ) {
-		// figure out if we have a current user and use their settings as the default selections
-		// problem: if the user has a setting for this field, this default callback won't be called
-		// solution: we just never save this field. the mailchimp plugin's cache settings help keep from overloading the api
 		$values = array();
 		if ( ! class_exists( 'Blocked_Content_Template' ) ) {
 			require_once( TEMPLATEPATH . 'plugins/blocked-content-template/blocked-content-template.php' );
@@ -684,7 +754,17 @@ if ( ! function_exists( 'get_member_levels' ) ) :
 	}
 endif;
 
-
+/**
+* Get user's current values for the MailChimp settings on user profiles.
+* This determines what their subscription status is before they do anything on the website, and keeps it updated if they change their settings elsewhere.
+* This depends on the MinnPost Form Processor for MailChimp, and the Form Processor for MailChimp, plugins.
+*
+* @param array $field_args
+* @param array $field
+* @param bool $reset
+*
+* @return array $values
+*/
 if ( ! function_exists( 'get_mailchimp_user_values' ) ) :
 	function get_mailchimp_user_values( $field_args = array(), $field = array(), $reset = false ) {
 		// figure out if we have a current user and use their settings as the default selections
@@ -699,6 +779,15 @@ if ( ! function_exists( 'get_mailchimp_user_values' ) ) :
 	}
 endif;
 
+/**
+* Get available newsletter options to display on user's profile
+* This determines what they can subscribe to.
+* This depends on the MinnPost Form Processor for MailChimp, and the Form Processor for MailChimp, plugins.
+*
+* @param array $field
+*
+* @return array $options
+*/
 if ( ! function_exists( 'get_mailchimp_newsletter_options' ) ) :
 	function get_mailchimp_newsletter_options( $field = array() ) {
 		// mailchimp fields
@@ -711,6 +800,15 @@ if ( ! function_exists( 'get_mailchimp_newsletter_options' ) ) :
 	}
 endif;
 
+/**
+* Get available "occasional email" options to display on user's profile
+* This determines what they can subscribe to.
+* This depends on the MinnPost Form Processor for MailChimp, and the Form Processor for MailChimp, plugins.
+*
+* @param array $field
+*
+* @return array $options
+*/
 if ( ! function_exists( 'get_mailchimp_occasional_email_options' ) ) :
 	function get_mailchimp_occasional_email_options( $field = array() ) {
 		// mailchimp fields
@@ -723,7 +821,11 @@ if ( ! function_exists( 'get_mailchimp_occasional_email_options' ) ) :
 	}
 endif;
 
-// add fields to sponsors
+/**
+* Add fields to sponsors
+* This all depends on the cr3ativ sponsor plugin, which is kind of bad but sufficient.
+*
+*/
 if ( ! function_exists( 'cmb2_sponsor_fields' ) ) :
 	add_action( 'cmb2_init', 'cmb2_sponsor_fields' );
 	function cmb2_sponsor_fields() {
@@ -737,11 +839,13 @@ if ( ! function_exists( 'cmb2_sponsor_fields' ) ) :
 			'context'      => 'normal',
 			'priority'     => 'high',
 		) );
+		// sponsor company url
 		$sponsor_info->add_field( array(
 			'name' => 'Company URL',
 			'id'   => 'cr3ativ_sponsorurl',
 			'type' => 'text',
 		) );
+		// what to display for the sponsor
 		$sponsor_info->add_field( array(
 			'name' => 'Display Text',
 			'id'   => 'cr3ativ_sponsortext',
@@ -749,7 +853,7 @@ if ( ! function_exists( 'cmb2_sponsor_fields' ) ) :
 		) );
 
 		/**
-		 * Image settings
+		 * Sponsor image settings
 		 */
 		$sponsor_image = new_cmb2_box( array(
 			'id'           => $object_type . '_image_settings',
@@ -758,6 +862,7 @@ if ( ! function_exists( 'cmb2_sponsor_fields' ) ) :
 			'context'      => 'normal',
 			'priority'     => 'high',
 		) );
+		// thumbnail
 		$sponsor_image->add_field( array(
 			'name'       => 'Thumbnail Image',
 			'desc'       => 'Upload an image or enter an URL.',
@@ -777,12 +882,20 @@ if ( ! function_exists( 'cmb2_sponsor_fields' ) ) :
 
 	}
 
+	/**
+	* Remove comments and trackbacks from the sponsor post because that's absurd
+	*
+	*/
 	add_action( 'init', 'remove_custom_post_comment', 100 );
 	function remove_custom_post_comment() {
 		remove_post_type_support( 'cr3ativsponsor', 'comments' );
 		remove_post_type_support( 'cr3ativsponsor', 'trackbacks' );
 	}
 
+	/**
+	* Edit the sponsor list display on the admin
+	*
+	*/
 	add_filter( 'manage_edit-cr3ativsponsor_columns', 'minnpost_edit_sponsor_columns' );
 	function minnpost_edit_sponsor_columns( $columns ) {
 		$columns = array(
@@ -796,7 +909,11 @@ if ( ! function_exists( 'cmb2_sponsor_fields' ) ) :
 
 endif;
 
-// add fields to events
+/**
+* Add fields to events
+* This all depends on the The Events Calendar plugin
+*
+*/
 if ( ! function_exists( 'cmb2_event_fields' ) ) :
 	add_action( 'cmb2_init', 'cmb2_event_fields' );
 	function cmb2_event_fields() {
