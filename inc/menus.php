@@ -132,7 +132,7 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 	* - set the classes we want, mainly for current items
 	* - change the urls for user specific items
 	*
-	* @param string $output
+	* @param string $output - don't ever remove the & because php will complain about the parent class
 	* @param object $item
 	* @param int $depth
 	* @param array $args
@@ -141,7 +141,7 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 	* @return string $output
 	*
 	*/
-	public function start_el( $output, $item, $depth = 0, $args = array(), $id = 0 ) {
+	public function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
 
 		$classes = array();
 		if ( ! empty( $item->classes ) ) {
