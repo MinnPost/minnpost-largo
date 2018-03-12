@@ -5,6 +5,11 @@
  * @package MinnPost Largo
  */
 
+/**
+* Enable sharing stories by email
+*
+* @return bool
+*/
 // sharing by email
 if ( ! function_exists( 'share_email_allowed' ) ) :
 	add_filter( 'sharing_services_email', 'share_email_allowed' );
@@ -13,7 +18,10 @@ if ( ! function_exists( 'share_email_allowed' ) ) :
 	}
 endif;
 
-// where sharing does not go
+/**
+* Remove share links that are automatically added
+*
+*/
 if ( ! function_exists( 'jptweak_remove_share' ) ) :
 	add_action( 'loop_start', 'jptweak_remove_share' );
 	function jptweak_remove_share() {
@@ -25,20 +33,27 @@ if ( ! function_exists( 'jptweak_remove_share' ) ) :
 	}
 endif;
 
+/**
+* Edit markup for sharing
+*
+* @param string $sharing_content
+*
+* @return string $sharing_content
+*/
 if ( ! function_exists( 'share_content' ) ) :
 	add_filter( 'jetpack_sharing_display_markup', 'share_content' );
 	function share_content( $sharing_content ) {
 		if ( ! is_user_logged_in() && ! empty( $sharing_content ) ) {
 			$doc = new DOMDocument();
 			$doc->loadHTML( $sharing_content );
-			$finder = new DomXPath( $doc );
+			$finder    = new DomXPath( $doc );
 			$classname = 'share-email';
-			$elements = $finder->query( "//li[contains(@class, '$classname')]" );
-			$element = $elements->item( 0 );
-			//$element->nodeValue = '<strong>what man</strong>';
+			$elements  = $finder->query( "//li[contains(@class, '$classname')]" );
+			$element   = $elements->item( 0 );
+
 			$item = $doc->createDocumentFragment();
 			$item->appendXML( '<li class="' . $classname . '"><a rel="nofollow" class="sd-button share-icon" href="' . site_url( '/user/login/?source=share_email&amp;redirect_to=https://minnpost-wordpress.test/politics-policy/2017/11/we-ve-learned-how-survive-amid-allegations-women-describe-toxic-culture-minn/' ) . '"><span>Email</span></a></li>' );
-			//$element->appendChild( $frag );
+
 			$element->parentNode->replaceChild( $item, $element );
 
 			$sharing_content = $doc->saveHTML();
@@ -47,6 +62,15 @@ if ( ! function_exists( 'share_content' ) ) :
 	}
 endif;
 
+/**
+* Message for users to log in to share a story by email
+* This requires the User Account Management plugin
+*
+* @param string $message_info
+* @param string $source
+*
+* @return string $message_info
+*/
 if ( ! function_exists( 'share_email_login_form_message_info' ) ) :
 	add_filter( 'user_account_management_login_form_message_info', 'share_email_login_form_message_info', 10, 2 );
 	function share_email_login_form_message_info( $message_info, $source = '' ) {
