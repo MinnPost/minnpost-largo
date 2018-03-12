@@ -14,7 +14,7 @@ if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
 	add_action( 'wp_print_styles', 'minnpost_largo_add_remove_styles', 10 );
 	function minnpost_largo_add_remove_styles() {
 		// add
-		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+		$suffix = ( defined( 'SCRIPT_DEBUG' ) && 'true' === SCRIPT_DEBUG ) ? '' : '.min';
 		wp_enqueue_style( 'minnpost-style', get_theme_file_uri() . '/style' . $suffix . '.css', array(), filemtime( get_theme_file_path() . '/style' . $suffix . '.css' ), false );
 		// remove
 		wp_dequeue_style( 'largo-style' );
@@ -36,7 +36,7 @@ if ( ! function_exists( 'minnpost_largo_add_remove_scripts' ) ) :
 	add_action( 'wp_enqueue_scripts', 'minnpost_largo_add_remove_scripts' );
 	function minnpost_largo_add_remove_scripts() {
 		// add
-		$suffix = ( defined( 'SCRIPT_DEBUG' ) && SCRIPT_DEBUG ) ? '' : '.min';
+		$suffix = ( defined( 'SCRIPT_DEBUG' ) && 'true' === SCRIPT_DEBUG ) ? '' : '.min';
 		wp_enqueue_script( 'modernizr', get_theme_file_uri() . '/assets/js/modernizr-custom' . $suffix . '.js', array(), '1.0', true );
 		wp_enqueue_script( 'minnpost', get_theme_file_uri() . '/assets/js/minnpost' . $suffix . '.js', array( 'jquery', 'modernizr' ), filemtime( get_theme_file_path() . '/assets/js/minnpost' . $suffix . '.js' ), false );
 		// localize
