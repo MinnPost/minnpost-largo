@@ -5,33 +5,44 @@
  * @package MinnPost Largo
  */
 
+/**
+* Create the menus we need
+*
+*/
 if ( ! function_exists( 'minnpost_menus' ) ) :
+	add_action( 'init', 'minnpost_menus' );
 	function minnpost_menus() {
-		// Add Your Menu Locations
 		register_nav_menus(
 			array(
-				'footer_primary' => __( 'Footer Primary' ), // main footer. about, advertise, member benefits, etc
-				'footer_secondary' => __( 'Footer Secondary' ), // bottom of footer. careers, etc
-				'featured_columns' => __( 'Featured Columns' ), // featured columns on homepage, category pages
-				'minnpost_network' => __( 'Network Menu' ), // social networks, rss
-				'support_minnpost' => __( 'Support Menu' ), // the support box next to the top banner ad
-				'secondary_links' => __( 'Secondary' ), // that weird nav next to logo with columns, weather, events, support
-				'primary_links' => __( 'Primary' ), // main nav below logo
-				'user_account_access' => __( 'User Account Access Menu' ), // menu where users log in/register/log out
-				'user_account_management' => __( 'User Account Management Menu' ), // menu where users manage their account info/preferences
+				'footer_primary'          => __( 'Footer Primary', 'minnpost-largo' ), // main footer. about, advertise, member benefits, etc
+				'footer_secondary'        => __( 'Footer Secondary', 'minnpost-largo' ), // bottom of footer. careers, etc
+				'featured_columns'        => __( 'Featured Columns', 'minnpost-largo' ), // featured columns on homepage, category pages
+				'minnpost_network'        => __( 'Network Menu', 'minnpost-largo' ), // social networks, rss
+				'support_minnpost'        => __( 'Support Menu', 'minnpost-largo' ), // the support box next to the top banner ad
+				'secondary_links'         => __( 'Secondary', 'minnpost-largo' ), // that weird nav next to logo with columns, weather, events, support
+				'primary_links'           => __( 'Primary', 'minnpost-largo' ), // main nav below logo
+				'user_account_access'     => __( 'User Account Access Menu', 'minnpost-largo' ), // menu where users log in/register/log out
+				'user_account_management' => __( 'User Account Management Menu', 'minnpost-largo' ), // menu where users manage their account info/preferences
 			)
 		);
-		unregister_nav_menu( 'menu-1' );
+		unregister_nav_menu( 'menu-1' ); // we don't need whatever this is
 	}
-
-	add_action( 'init', 'minnpost_menus' );
-
 endif;
 
+/**
+* Deal with sub menus. This is the featured items we display.
+*
+* @param array $sorted_menu_items
+* @param array $args
+*
+* @return array $sorted_menu_items
+*
+*/
 if ( ! function_exists( 'minnpost_wp_nav_menu_objects_sub_menu' ) ) :
 	// get submenu functionality from https://christianvarga.com/how-to-get-submenu-items-from-a-wordpress-menu-based-on-parent-or-sibling/
 
 	// filter_hook function to react on sub_menu flag
+	add_filter( 'wp_nav_menu_objects', 'minnpost_wp_nav_menu_objects_sub_menu', 10, 2 );
 	function minnpost_wp_nav_menu_objects_sub_menu( $sorted_menu_items, $args ) {
 
 		if ( isset( $args->sub_menu ) ) {
@@ -53,10 +64,10 @@ if ( ! function_exists( 'minnpost_wp_nav_menu_objects_sub_menu' ) ) :
 
 			if ( is_home() ) {
 				$root_id = 0;
-				$menu = wp_get_nav_menu_items( $args->menu->name, array(
+				$menu    = wp_get_nav_menu_items( $args->menu->name, array(
 					'posts_per_page' => -1,
-					'meta_key' => '_menu_item_menu_item_parent',
-					'meta_value' => $root_id,
+					'meta_key'       => '_menu_item_menu_item_parent',
+					'meta_value'     => $root_id,
 				));
 				$root_id = $menu[0]->ID;
 			}
@@ -90,28 +101,47 @@ if ( ! function_exists( 'minnpost_wp_nav_menu_objects_sub_menu' ) ) :
 			return $sorted_menu_items;
 		} // End if().
 	}
-
-	add_filter( 'wp_nav_menu_objects', 'minnpost_wp_nav_menu_objects_sub_menu', 10, 2 );
-
 endif;
 
+/**
+* Nav Menu Walker
+*
+* @param int $user_id
+*
+*/
 class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 
 	private $user_id;
 
+	// we change some menu items based on user id
 	public function __construct( $user_id = '' ) {
 		$this->user_id = $user_id;
 	}
 
+	// start and end menu output with an unordered list
 	public function start_lvl( &$output, $depth = 0, $args = array() ) {
 		$output .= '<ul>';
 	}
-
 	public function end_lvl( &$output, $depth = 0, $args = array() ) {
 		$output .= '</ul>';
 	}
 
-	public function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
+	/**
+	* Start element and change its classes
+	* We use this to:
+	* - set the classes we want, mainly for current items
+	* - change the urls for user specific items
+	*
+	* @param string $output
+	* @param object $item
+	* @param int $depth
+	* @param array $args
+	* @param int $id
+	*
+	* @return string $output
+	*
+	*/
+	public function start_el( $output, $item, $depth = 0, $args = array(), $id = 0 ) {
 
 		$classes = array();
 		if ( ! empty( $item->classes ) ) {
@@ -148,11 +178,11 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 			} else {
 				$user_id = get_current_user_id();
 			}
-			$user_id = (int) $user_id;
+			$user_id             = (int) $user_id;
 			$account_parent_item = get_page_by_title( 'Welcome', 'OBJECT', 'nav_menu_item' );
-			$account_parent_id = $account_parent_item->ID;
+			$account_parent_id   = $account_parent_item->ID;
 
-			$url = rtrim( $item->url, '/' );
+			$url    = rtrim( $item->url, '/' );
 			$length = strlen( $url );
 			if ( home_url( '/' ) !== $url && substr( wp_logout_url(), 0, $length ) === $url ) {
 				$url = wp_logout_url();
@@ -179,7 +209,7 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 				$active_class = '';
 			}
 			if ( 'Your MinnPost' === $item->title && '' !== $user_id && get_current_user_id() !== $user_id ) {
-				$user = get_userdata( $user_id );
+				$user        = get_userdata( $user_id );
 				$item->title = $user->first_name . "'s MinnPost";
 			}
 		}
@@ -195,17 +225,26 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 		$output .= '<li' . $active_class . '><a href="' . $url . '">' . $item->title . '</a></li>';
 	}
 
+	// end item with a </li>
 	public function end_el( &$output, $item, $depth = 0, $args = array() ) {
 		$output .= '</li>';
 	}
 }
 
-// show admin bar only for users with see_admin_bar capability
+/**
+* Show the admin bar only for users with see_admin_bar capability
+* This relies on the Advanced Access Manager plugin and needs to exported and restored
+*
+*/
 if ( ! current_user_can( 'see_admin_bar' ) ) {
 	add_filter( 'show_admin_bar', '__return_false' );
 }
 
-// change links/menus in the admin bar
+/**
+* Change links and menus in the admin bar
+* This relies on user access levels, and a little bit on the Advanced Access Manager plugin
+*
+*/
 if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
 	add_action( 'wp_before_admin_bar_render', 'minnpost_largo_admin_bar_render' );
 	function minnpost_largo_admin_bar_render() {
@@ -229,7 +268,7 @@ if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
 			$wp_admin_bar->remove_menu( 'vaa' );
 		} else {
 			global $post;
-			$page = get_page_by_path( 'user' );
+			$page           = get_page_by_path( 'user' );
 			$user_parent_id = is_object( $page ) ? $page->ID : '';
 
 			if ( array_key_exists( 'users', $wp_query->query_vars ) ) {
@@ -257,8 +296,7 @@ if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
 				if ( 'user-edit' === $current_screen->base && isset( $user_id )
 					&& ( $user_object = get_userdata( $user_id ) )
 					&& $user_object->exists()
-					&& $view_link = site_url( '/users/' . $user_id . '/' ) )
-				{
+					&& $view_link = site_url( '/users/' . $user_id . '/' ) ) {
 					$wp_admin_bar->add_menu( array(
 						'id'    => 'view',
 						'title' => __( 'View User' ),

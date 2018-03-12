@@ -10,7 +10,6 @@
 *
 * @return bool
 */
-// sharing by email
 if ( ! function_exists( 'share_email_allowed' ) ) :
 	add_filter( 'sharing_services_email', 'share_email_allowed' );
 	function share_email_allowed() {
