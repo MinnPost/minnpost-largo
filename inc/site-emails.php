@@ -5,7 +5,14 @@
  * @package MinnPost Largo
  */
 
-// address the messages come from
+/**
+* Address site emails come from
+*
+* @param string $old
+*
+* @return string $email
+*
+*/
 if ( ! function_exists( 'minnpost_largo_mail_from' ) ) :
 	add_filter( 'wp_mail_from', 'minnpost_largo_mail_from' );
 	function minnpost_largo_mail_from( $old ) {
@@ -14,7 +21,14 @@ if ( ! function_exists( 'minnpost_largo_mail_from' ) ) :
 	}
 endif;
 
-// name the messages come from
+/**
+* Sender name site emails come from
+*
+* @param string $old
+*
+* @return string $site_name
+*
+*/
 if ( ! function_exists( 'minnpost_largo_mail_from_name' ) ) :
 	add_filter( 'wp_mail_from_name', 'minnpost_largo_mail_from_name' );
 	function minnpost_largo_mail_from_name( $old ) {
@@ -28,7 +42,14 @@ add_filter( 'wp_mail_content_type', function() {
 	return 'text/html';
 } );
 
-// change any desired attributes for the new user email notification
+/**
+* Change any desired attributes for the new user notification email
+*
+* @param array $new_user_email_attributes
+*
+* @return array $new_user_email_attributes
+*
+*/
 if ( ! function_exists( 'minnpost_largo_new_user_email_attributes' ) ) :
 	add_filter( 'user_account_management_new_user_email_attributes', 'minnpost_largo_new_user_email_attributes', 10, 1 );
 	function minnpost_largo_new_user_email_attributes( $new_user_email_attributes ) {
@@ -37,7 +58,16 @@ if ( ! function_exists( 'minnpost_largo_new_user_email_attributes' ) ) :
 	}
 endif;
 
-// change subject for retrieve password email
+/**
+* Change subject for password reset email
+*
+* @param string $title
+* @param string $user_login
+* @param array $user_data
+*
+* @return string $title
+*
+*/
 if ( ! function_exists( 'minnpost_largo_retrieve_password_subject_filter' ) ) :
 	add_filter( 'retrieve_password_title', 'minnpost_largo_retrieve_password_subject_filter', 10, 3 );
 	function minnpost_largo_retrieve_password_subject_filter( $title, $user_login, $user_data ) {
