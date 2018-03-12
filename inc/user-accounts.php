@@ -1,14 +1,24 @@
 <?php
 /**
  * Methods for user account functionality
+ * Much of this depends on the User Account Management plugin
  *
  * @package MinnPost Largo
  */
 
+/**
+* Return login url for users
+*
+* @param string $login_url
+* @param string $redirect
+* @param bool $force_reauth
+* @return string $login_url
+*
+*/
 if ( ! function_exists( 'login_url' ) ) :
 	add_filter( 'login_url', 'login_url', 10, 3 );
 	function login_url( $login_url, $redirect, $force_reauth ) {
-		$login_url = site_url( '/user/login/' );
+		$login_url    = site_url( '/user/login/' );
 		$register_url = site_url( '/user/register/' );
 
 		if ( '' !== $redirect && get_current_url() !== $login_url && get_current_url() !== $register_url ) {
@@ -18,6 +28,13 @@ if ( ! function_exists( 'login_url' ) ) :
 	}
 endif;
 
+/**
+* Return register url for users
+*
+* @param string $register_url
+* @return string
+*
+*/
 if ( ! function_exists( 'register_url' ) ) :
 	add_filter( 'register_url', 'register_url', 10, 1 );
 	function register_url( $register_url ) {
@@ -25,6 +42,14 @@ if ( ! function_exists( 'register_url' ) ) :
 	}
 endif;
 
+/**
+* Return lost password url for users
+*
+* @param string $lostpassword_url
+* @param string $redirect
+* @return string
+*
+*/
 if ( ! function_exists( 'lostpassword_url' ) ) :
 	add_filter( 'lostpassword_url', 'my_lost_password_page', 10, 2 );
 	function my_lost_password_page( $lostpassword_url, $redirect ) {
@@ -32,6 +57,13 @@ if ( ! function_exists( 'lostpassword_url' ) ) :
 	}
 endif;
 
+/**
+* Return login form action url for users
+*
+* @param string $login_form_action
+* @return string
+*
+*/
 if ( ! function_exists( 'login_form_action' ) ) :
 	add_filter( 'user_account_management_login_form_action', 'login_form_action', 10, 1 );
 	function login_form_action( $login_form_action ) {
@@ -40,6 +72,13 @@ if ( ! function_exists( 'login_form_action' ) ) :
 	}
 endif;
 
+/**
+* Return register form action url for users
+*
+* @param string $register_form_action
+* @return string
+*
+*/
 if ( ! function_exists( 'register_form_action' ) ) :
 	add_filter( 'user_account_management_register_form_action', 'register_form_action', 10, 1 );
 	function register_form_action( $register_form_action ) {
@@ -48,6 +87,13 @@ if ( ! function_exists( 'register_form_action' ) ) :
 	}
 endif;
 
+/**
+* Return lost password form action url for users
+*
+* @param string $lost_password_form_action
+* @return string
+*
+*/
 if ( ! function_exists( 'lost_password_form_action' ) ) :
 	add_filter( 'user_account_management_lost_password_form_action', 'lost_password_form_action', 10, 1 );
 	function lost_password_form_action( $lost_password_form_action ) {
@@ -56,12 +102,19 @@ if ( ! function_exists( 'lost_password_form_action' ) ) :
 	}
 endif;
 
+/**
+* Return theme template for user pages
+*
+* @param string $template
+* @return string $template
+*
+*/
 if ( ! function_exists( 'minnpost_largo_user_child_template' ) ) :
 	add_filter( 'page_template', 'minnpost_largo_user_child_template', 10, 1 );
 	function minnpost_largo_user_child_template( $template ) {
 		global $post;
 		$page = get_page_by_path( 'user' );
-		$id = $page->ID;
+		$id   = $page->ID;
 
 		if ( $post->post_parent === $id || $post->ID === $id ) {
 			// get top level parent page
@@ -85,7 +138,13 @@ if ( ! function_exists( 'minnpost_largo_user_child_template' ) ) :
 	}
 endif;
 
-// Create the query var so that WP catches the custom /user/id url
+/**
+* Create the query var so that WP catches the custom /user/id url
+*
+* @param array $vars
+* @return array $vars
+*
+*/
 if ( ! function_exists( 'minnpost_largo_user_rewrite' ) ) :
 	add_filter( 'query_vars', 'minnpost_largo_user_rewrite' );
 	function minnpost_largo_user_rewrite( $vars ) {
@@ -94,7 +153,13 @@ if ( ! function_exists( 'minnpost_largo_user_rewrite' ) ) :
 	}
 endif;
 
-// Create the rewrites
+/**
+* Create the rewrite rules for those user urls
+*
+* @param array $vars
+* @return array $vars
+*
+*/
 if ( ! function_exists( 'minnpost_largo_user_rewrite_rule' ) ) :
 	add_action( 'init', 'minnpost_largo_user_rewrite_rule' );
 	function minnpost_largo_user_rewrite_rule() {
@@ -107,13 +172,19 @@ if ( ! function_exists( 'minnpost_largo_user_rewrite_rule' ) ) :
 	}
 endif;
 
-// Catch the URL and redirect it to a template file
+/**
+* Catch the user URL and send it to a theme template file
+*
+* @param string $original_template
+* @return string
+*
+*/
 if ( ! function_exists( 'minnpost_largo_user_rewrite_catch' ) ) :
 	add_action( 'template_include', 'minnpost_largo_user_rewrite_catch' );
 	function minnpost_largo_user_rewrite_catch( $original_template ) {
 		global $wp_query;
 		if ( array_key_exists( 'users', $wp_query->query_vars ) ) {
-			$wp_query->is_home = false;
+			$wp_query->is_home     = false;
 			$wp_query->is_singular = true;
 			return get_theme_file_path() . '/user-profile.php';
 		} else {
@@ -122,7 +193,12 @@ if ( ! function_exists( 'minnpost_largo_user_rewrite_catch' ) ) :
 	}
 endif;
 
-// prevent comment moderators from doing things with posts
+/**
+* This stops comment moderators from doing things with posts
+* WordPress would otherwise allow this, but it is not viable for us
+*
+*
+*/
 if ( ! function_exists( 'restrict_comment_moderators' ) ) :
 	add_action( 'admin_init', 'restrict_comment_moderators', 1 );
 	function restrict_comment_moderators() {
@@ -134,6 +210,15 @@ if ( ! function_exists( 'restrict_comment_moderators' ) ) :
 	}
 endif;
 
+/**
+* Add reading topics to user data
+*
+* @param array $user_data
+* @param array $posted
+* @param array $existing_user_data
+* @return array $user_data
+*
+*/
 if ( ! function_exists( 'add_to_user_data' ) ) :
 	add_filter( 'user_account_management_add_to_user_data', 'add_to_user_data', 10, 3 );
 	function add_to_user_data( $user_data, $posted, $existing_user_data ) {
@@ -145,6 +230,13 @@ if ( ! function_exists( 'add_to_user_data' ) ) :
 	}
 endif;
 
+/**
+* Save user data
+*
+* @param array $user_data
+* @param array $existing_user_data
+*
+*/
 if ( ! function_exists( 'save_minnpost_user_data' ) ) :
 	add_action( 'user_account_management_post_user_data_save', 'save_minnpost_user_data', 10, 2 );
 	function save_minnpost_user_data( $user_data, $existing_user_data ) {
