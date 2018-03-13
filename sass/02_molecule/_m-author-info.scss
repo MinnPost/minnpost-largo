@@ -13,12 +13,11 @@
 			padding: 10px;
 			p {
 				a {
-					color: $color__action-color;
+					color: $color__link;
 					&:active,
 					&:focus,
 					&:hover {
-						//color: darken($color__action-color, 15%);
-						color: $color__action-color;
+						color: $color__link;
 						text-decoration: underline;
 					}
 				}

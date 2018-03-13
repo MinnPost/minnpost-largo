@@ -12,15 +12,15 @@
 		line-height: 1.3em;
 	}
 	a h3, a img {
-		color: $color__action-color;
+		color: $color__link;
 	}
 	a:visited h3 {
-		color: $color__action-color;
+		color: $color__link;
 	}
 	a:active h3,
 	a:focus h3,
 	a:hover h3 {
-		color: $color__action-color;
+		color: $color__link;
 		text-decoration: underline;
 	}
 }

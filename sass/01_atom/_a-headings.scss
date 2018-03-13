@@ -76,13 +76,13 @@ h6, .h6 {
 }
 .a-comment-reply-title {
 	a {
-		color: $color__action-color;
+		color: $color__link;
 		&:visited,
 		&:active,
 		&:focus,
 		&:hover,
 		&.active {
-			color: $color__action-color;
+			color: $color__link-hover;
 		}
 	}
 	small a {
@@ -166,13 +166,13 @@ h6, .h6 {
 .m-entry-content h5, .m-entry-content .h5, .m-post-sidebar h5, .m-post-sidebar .h5,
 .m-entry-content h6, .m-entry-content .h6, .m-post-sidebar h6, .m-post-sidebar .h6 {
 	a {
-		color: $color__action-color;
+		color: $color__link;
 		&:visited,
 		&:active,
 		&:focus,
 		&:hover,
 		&.active {
-			color: $color__action-color;
+			color: $color__link-hover;
 		}
 	}
 }

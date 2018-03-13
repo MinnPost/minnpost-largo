@@ -1,16 +1,15 @@
 a {
-	color: $color__action-color;
+	color: $color__link;
 	text-decoration: none;
 
 	&:visited {
-		color: $color__action-color;
+		color: $color__link-visited;
 	}
 
 	&:active,
 	&:focus,
 	&:hover {
-		//color: darken($color__action-color, 15%);
-		color: $color__action-color;
+		color: $color__link-hover;
 		text-decoration: underline;
 	}
 
@@ -20,7 +19,7 @@ a {
 	}
 
 	&.active {
-		color: $color__black;
+		color: $color__link-active;
 	}
 
 	&.a-more {

@@ -26,6 +26,18 @@ $palettes: (
     ),
 );
 
+// Brand colors
+$color__minnpost-red: palette(red);
+$color__minnpost-black: #1a1818;
+$color__minnpost-white: #f0f0f5;
+$color__minnpost-blue: palette(blue);
+
+// more minnpost colors
+$color__minnpost-green: #469B61;
+$color__minnpost-yellow: #FBD341; // 251, 211, 65
+$color__minnpost-red-error: #c00; // probably?
+$color__minnpost-red-required: #c00;
+
 // Color Names
 $color__black: #000;
 $color__white: #fff;
@@ -35,13 +47,8 @@ $color__dark-gray: #333;
 $color__base-background-color: #fff;
 $color__base-font-color: $color__dark-gray;
 $color__heading-font-color: $color__dark-gray;
-$color__action-color: palette(red);
-
-// Brand colors
-$color__minnpost-red: palette(red);
-$color__minnpost-black: #1a1818;
-$color__minnpost-white: #f0f0f5;
-$color__minnpost-blue: #1d70a4;
+$color__action-color: $color__minnpost-red;
+$color__text-main: #404040; // this is not used anywhere, i think
 
 // Grays
 $color__gray-lightest: #cdcdd0;
@@ -58,15 +65,7 @@ $color__minnpost-silver: #c0c0c0;
 $color__minnpost-gold: #ffd700;
 $color__minnpost-platinum: #e5e4e2;
 
-// more colors
-$color__minnpost-green: #469B61;
-$color__minnpost-yellow: #FBD341; // 251, 211, 65
-$color__minnpost-red-error: #c00; // probably?
-$color__minnpost-red-required: #c00;
-
-
-
-
+// background colors
 $color__background-body: #fff;
 $color__background-screen: #f1f1f1;
 $color__background-hr: #ccc;
@@ -74,23 +73,27 @@ $color__background-button: $color__minnpost-white;
 $color__background-pre: #eee;
 $color__background-ins: #fff9c0;
 
-$color__border-light: #c8c8c8;
-
+// form colors
 $color__text-screen: #21759b;
 $color__text-input: #666;
 $color__text-input-focus: #111;
-$color__link: #801019;
-$color__link-visited: purple;
-$color__link-hover: midnightblue;
-$color__text-main: #404040;
+$color__form-text: #504949;
 
+// link colors
+$color__link: $color__minnpost-red;
+$color__link-visited: $color__minnpost-red;
+$color__link-hover: $color__minnpost-red;
+$color__link-active: $color__black;
+
+// border colors
+$color__border-light: #c8c8c8;
 $color__border-button: #ccc #ccc #bbb;
 $color__border-button-hover: #ccc #bbb #aaa;
 $color__border-button-focus: #aaa #bbb #bbb;
 $color__border-input: #ccc;
 $color__border-abbr: #666;
 
-$color__form-text: #504949;
+
 
 
 // type
