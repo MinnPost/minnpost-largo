@@ -15,6 +15,7 @@ $new_minnpost_setting = new Minnpost_General_Setting();
 * Site footer message
 * Email address for site emails
 * Name of sender for site emails
+* Site blurb for default meta description
 *
 */
 class Minnpost_General_Setting {
@@ -32,6 +33,18 @@ class Minnpost_General_Setting {
 	*
 	*/
 	function register_fields() {
+
+		// default site blurb
+		register_setting( 'general', 'site_blurb', 'sanitize_text' );
+		add_settings_field(
+			'site_blurb',
+			'<label for="site_blurb">' . __( 'Site Blurb', 'minnpost-largo' ) . '</label>',
+			array(
+				$this,
+				'site_blurb',
+			),
+			'general'
+		);
 
 		// default image url
 		register_setting( 'general', 'default_image_url', 'esc_attr' );
@@ -84,6 +97,10 @@ class Minnpost_General_Setting {
 	}
 
 	// handle the html for each of the above fields
+	function site_blurb() {
+		$value = get_option( 'site_blurb', '' );
+		echo '<input type="text" id="site_blurb" name="site_blurb" value="' . $value . '" />';
+	}
 	function default_image_html() {
 		$value = get_option( 'default_image_url', '' );
 		echo '<input type="text" id="default_image_url" name="default_image_url" value="' . $value . '" />';

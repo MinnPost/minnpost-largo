@@ -722,6 +722,57 @@ if ( ! function_exists( 'cmb2_user_fields' ) ) :
 			'options_cb' => 'get_mailchimp_occasional_email_options',
 			'default_cb' => 'get_mailchimp_user_values',
 		) );
+
+		$user_donation_info = new_cmb2_box( array(
+			'id'           => $object_type . '_donation_info',
+			'title'        => 'Donation Info',
+			'object_types' => array( $object_type ),
+			'context'      => 'normal',
+			'priority'     => 'low',
+		) );
+		$user_donation_info->add_field( array(
+			'name' => 'Stripe Customer ID',
+			'desc' => '',
+			'id'   => '_stripe_customer_id',
+			'type' => 'text',
+		) );
+		$user_donation_info->add_field( array(
+			'name' => 'Annual Recurring Amount',
+			'desc' => '',
+			'id'   => '_annual_recurring_amount',
+			'type' => 'text',
+		) );
+		$user_donation_info->add_field( array(
+			'name' => 'Coming Year Contributions',
+			'desc' => '',
+			'id'   => '_coming_year_contributions',
+			'type' => 'text',
+		) );
+		$user_donation_info->add_field( array(
+			'name' => 'Prior Year Contributions',
+			'desc' => '',
+			'id'   => '_prior_year_contributions',
+			'type' => 'text',
+		) );
+		$user_donation_info->add_field( array(
+			'name' => 'Sustaining Member',
+			'id'   => '_sustaining_member',
+			'type' => 'checkbox',
+			'desc' => '',
+		) );
+		$user_donation_info->add_field( array(
+			'name' => 'Next Partner Claim Date',
+			'id'   => '_next_partner_claim_date',
+			'type' => 'text_date',
+			'desc' => '',
+		) );
+		$user_donation_info->add_field( array(
+			'name' => 'Exclude from current campaign',
+			'id'   => '_exclude_from_current_campaign',
+			'type' => 'checkbox',
+			'desc' => '',
+		) );
+
 	}
 endif;
 
