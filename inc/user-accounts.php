@@ -196,6 +196,7 @@ endif;
 /**
 * This stops comment moderators from doing things with posts
 * WordPress would otherwise allow this, but it is not viable for us
+* This depends on the Advanced Access Manager plugin
 *
 *
 */
@@ -203,9 +204,13 @@ if ( ! function_exists( 'restrict_comment_moderators' ) ) :
 	add_action( 'admin_init', 'restrict_comment_moderators', 1 );
 	function restrict_comment_moderators() {
 		global $pagenow;
-		$user = wp_get_current_user();
-		if ( ( 'post.php' === $pagenow || 'post-new.php' === $pagenow ) && in_array( 'comment_moderator', (array) $user->roles ) ) {
-			wp_die( __( 'You are not allowed to access this part of the site', 'minnpost-largo' ) );
+		$user          = AAM::getUser();
+		$capabillities = $user->getObject( 'capabilities' );
+		if ( in_array( 'comment_moderator', (array) $user->roles ) ) {
+			$user->roles = array( 'comment_moderator' );
+			if ( ( 'edit.php' === $pagenow || 'post.php' === $pagenow || 'post-new.php' === $pagenow ) ) {
+				wp_die( __( 'You are not allowed to access this part of the site', 'minnpost-largo' ) );
+			}
 		}
 	}
 endif;
