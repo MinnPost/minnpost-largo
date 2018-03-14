@@ -184,7 +184,7 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 
 			$url    = rtrim( $item->url, '/' );
 			$length = strlen( $url );
-			if ( home_url( '/' ) !== $url && substr( wp_logout_url(), 0, $length ) === $url ) {
+			if ( home_url() !== $url && substr( wp_logout_url(), 0, $length ) === $url ) {
 				$url = wp_logout_url();
 			}
 			if ( rtrim( site_url( '/user/' ), '/' ) === $url && 'Welcome' === $item->title ) {
