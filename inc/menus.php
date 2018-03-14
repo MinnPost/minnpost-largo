@@ -233,7 +233,7 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 
 /**
 * Show the admin bar only for users with see_admin_bar capability
-* This relies on the Advanced Access Manager plugin and needs to exported and restored
+* This relies on the Advanced Access Manager plugin which creates this capability and assigns it to roles
 *
 */
 if ( ! current_user_can( 'see_admin_bar' ) ) {
@@ -242,7 +242,7 @@ if ( ! current_user_can( 'see_admin_bar' ) ) {
 
 /**
 * Change links and menus in the admin bar
-* This relies on user access levels, and a little bit on the Advanced Access Manager plugin
+* This relies on user access levels, and a little bit on the Advanced Access Manager plugin (for the comment moderator part)
 *
 */
 if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :

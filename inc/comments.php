@@ -7,7 +7,7 @@
 
 /**
 * Detect whether a user has the capability of moderating comments
-* I think this depends on the AAM plugin; it needs to be exported and backed up and restored.
+* This depends on the Advanced Access Manager plugin, which creates the comment_moderator role and assigns its capabilities
 *
 * @return bool $can_moderate
 */
