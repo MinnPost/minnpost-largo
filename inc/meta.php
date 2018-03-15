@@ -130,3 +130,26 @@ if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 	<?php
 	}
 endif;
+
+if ( ! function_exists( 'remove_dashboard_widgets' ) ) :
+	add_action( 'wp_dashboard_setup', 'remove_dashboard_widgets' );
+	function remove_dashboard_widgets() {
+		global $wp_meta_boxes;
+		$normal               = $wp_meta_boxes['dashboard']['normal']['core'];
+		$allowed_normal_boxes = array( 'dashboard_right_now', 'dashboard_activity' );
+
+		foreach ( $normal as $key => $normal_box ) {
+			if ( ! in_array( $normal_box['id'], $allowed_normal_boxes ) ) {
+				unset( $wp_meta_boxes['dashboard']['normal']['core'][ $key ] );
+			}
+		}
+
+		$side               = $wp_meta_boxes['dashboard']['side']['core'];
+		$allowed_side_boxes = array( 'dashboard_quick_press' );
+		foreach ( $side as $key => $side_box ) {
+			if ( ! in_array( $side_box['id'], $allowed_side_boxes ) ) {
+				unset( $wp_meta_boxes['dashboard']['side']['core'][ $key ] );
+			}
+		}
+	}
+endif;
