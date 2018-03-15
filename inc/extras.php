@@ -269,3 +269,13 @@ if ( ! function_exists( 'is_post_new' ) ) :
 		}
 	}
 endif;
+
+/**
+ * Redirection Plugin Editor access
+ */
+if ( ! function_exists( 'redirection_to_editor' ) ) :
+	add_filter( 'redirection_role', 'redirection_to_editor' );
+	function redirection_to_editor() {
+		return 'edit_pages';
+	}
+endif;
