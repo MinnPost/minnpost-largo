@@ -10,6 +10,17 @@
 	}
 	figcaption {
 		line-height: 1.3em;
+		p {
+			a {
+				color: $color__link;
+				&:active,
+				&:focus,
+				&:hover {
+					color: $color__link;
+					text-decoration: underline;
+				}
+			}
+		}
 	}
 	a h3, a img {
 		color: $color__link;

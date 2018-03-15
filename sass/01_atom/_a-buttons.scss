@@ -25,3 +25,9 @@ input[type="submit"], button[type="submit"], a.a-button:link, a.a-button:visited
 		margin-right: 0;
 	}
 }
+
+// overwrite gravityforms button style
+.gform_wrapper .gform_footer input.button, .gform_wrapper .gform_page_footer input.button, .gform_wrapper .gform_footer input[type=submit], .gform_wrapper .gform_page_footer input[type=submit] {
+	font-size: $base-line-height-em;
+	margin-bottom: 0;
+}
