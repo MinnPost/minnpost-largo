@@ -191,8 +191,10 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 				$user = wp_get_current_user();
 				if ( isset( $user->first_name ) && '' !== $user->first_name ) {
 					$item->title = '<span class="name">Welcome, ' . $user->first_name . '</span><span class="a-user-initial">' . $user->first_name[0] . '</span><span class="a-arrow-down"></span>';
-				} else {
+				} elseif ( isset( $user->display_name ) && '' !== $user->display_name ) {
 					$item->title = '<span class="name">Welcome, ' . $user->display_name . '</span><span class="a-user-initial">' . $user->display_name[0] . '</span><span class="a-arrow-down"></span>';
+				} else {
+					$item->title = '<span class="name">Welcome, ' . $user->user_email . '</span><span class="a-user-initial">' . $user->user_email[0] . '</span><span class="a-arrow-down"></span>';
 				}
 			}
 			if ( site_url( '/users/userid' ) === $url ) {
