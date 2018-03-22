@@ -279,3 +279,18 @@ if ( ! function_exists( 'redirection_to_editor' ) ) :
 		return 'edit_pages';
 	}
 endif;
+
+/**
+ * Change get_option( 'home' ) and any functions that rely on it to use
+ * the value of the WP_HOME constant.
+ *
+ */
+if ( ! function_exists( 'change_get_option_home' ) ) :
+	add_filter( 'pre_option_home', 'change_get_option_home' );
+	function change_get_option_home( $option ) {
+		if ( defined( 'WP_HOME' ) ) {
+			return WP_HOME;
+		}
+		return false;
+	}
+endif;
