@@ -204,7 +204,7 @@ if ( ! function_exists( 'restrict_comment_moderators' ) ) :
 	add_action( 'admin_init', 'restrict_comment_moderators', 1 );
 	function restrict_comment_moderators() {
 		global $pagenow;
-		$user         = AAM::getUser();
+		$user         = class_exists( 'AAM' ) ? AAM::getUser() : wp_get_current_user();
 		$member_roles = array( 'member_bronze', 'member_silver', 'member_gold', 'member_platinum' );
 		$user->roles  = array_diff( (array) $user->roles, $member_roles );
 		if ( in_array( 'comment_moderator', (array) $user->roles ) ) {
