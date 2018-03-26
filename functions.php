@@ -64,6 +64,11 @@ require get_stylesheet_directory() . '/inc/template-tags.php';
 require get_stylesheet_directory() . '/inc/meta.php';
 
 /**
+ * File uploads
+ */
+require get_stylesheet_directory() . '/inc/uploads.php';
+
+/**
  * Custom functions for emails the site sends.
  */
 require get_stylesheet_directory() . '/inc/site-emails.php';
