@@ -12,7 +12,7 @@ function minnpost_largo_comment( $comment, $args, $depth ) {
 		$class[] = 'o-comment-by-current-user';
 	}
 	?>
-	<li <?php comment_class( $class ); ?> id="o-comment-<?php comment_ID(); ?>">
+	<li <?php comment_class( $class ); ?> id="comment-<?php comment_ID(); ?>">
 		<div class="m-comment-meta">
 			<?php
 			if ( $comment->user_id ) {
