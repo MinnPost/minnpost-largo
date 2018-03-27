@@ -224,7 +224,7 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 			}
 		}
 
-		$output .= '<li' . $active_class . '><a href="' . $url . '">' . $item->title . '</a></li>';
+		$output .= '<li' . $active_class . '><a href="' . $url . '">' . $item->title . '</a>';
 	}
 
 	// end item with a </li>
