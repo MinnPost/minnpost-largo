@@ -293,7 +293,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		 * This depends on the Blocked Content Template plugin, which is called in get_member_levels()
 		 */
 		$member_content_settings = new_cmb2_box( array(
-			'id'           => $object_type . '_sidebar_options',
+			'id'           => $object_type . '_member_content_options',
 			'title'        => 'Member Content Settings',
 			'object_types' => array( $object_type ),
 			'context'      => 'normal',
