@@ -19,11 +19,11 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 	/**
 	 * Outputs story image, whether large or various kinds of thumbnail, depending on where it is called
 	 */
-	function minnpost_post_image( $size = 'thumbnail', $attributes = array(), $id = '' ) {
+	function minnpost_post_image( $size = 'thumbnail', $attributes = array(), $id = '', $lazy_load = true ) {
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
-		$image_data = get_minnpost_post_image( $size, $attributes, $id );
+		$image_data = get_minnpost_post_image( $size, $attributes, $id, $lazy_load );
 		if ( '' !== $image_data ) {
 			$image_id  = $image_data['image_id'];
 			$image_url = $image_data['image_url'];
@@ -34,7 +34,9 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 			return;
 		}
 
-		$image = apply_filters( 'easy_lazy_loader_html', $image );
+		if ( true === $lazy_load ) {
+			$image = apply_filters( 'easy_lazy_loader_html', $image );
+		}
 
 		$caption = wp_get_attachment_caption( $image_id );
 		$credit  = get_media_credit_html( $image_id, false ); // don't show the uploader by default
@@ -80,7 +82,7 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 	/**
 	 * Returns story image, whether large or various kinds of thumbnail, depending on where it is called
 	 */
-	function get_minnpost_post_image( $size = 'thumbnail', $attributes = array(), $id = '' ) {
+	function get_minnpost_post_image( $size = 'thumbnail', $attributes = array(), $id = '', $lazy_load = true ) {
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
@@ -141,7 +143,9 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 			return;
 		}
 
-		$image = apply_filters( 'easy_lazy_loader_html', $image );
+		if ( true === $lazy_load ) {
+			$image = apply_filters( 'easy_lazy_loader_html', $image );
+		}
 
 		$image_data = array(
 			'image_id'  => $image_id,
