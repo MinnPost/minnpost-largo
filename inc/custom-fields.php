@@ -559,15 +559,28 @@ endif;
 */
 
 /**
-* Remove guest author bio from custom author
-* This is probably a wysiwyg thing, but I honestly don't remember.
+* Remove guest author bio and comments from custom author
+* Bio is probably a wysiwyg thing, but I honestly don't remember.
 *
 */
 if ( ! function_exists( 'remove_author_fields' ) ) :
-	// override the parent theme's support for featured images because we are using cmb2 for that, at least for now
 	add_action( 'add_meta_boxes', 'remove_author_fields', 19 );
 	function remove_author_fields() {
 		remove_meta_box( 'coauthors-manage-guest-author-bio', 'guest-author', 'normal' );
+		remove_meta_box( 'commentstatusdiv', 'guest-author', 'normal' );
+		remove_meta_box( 'commentsdiv', 'guest-author', 'normal' );
+	}
+endif;
+
+/**
+* Remove comment support from authors
+*
+*/
+if ( ! function_exists( 'minnpost_remove_author_comments' ) ) :
+	add_action( 'init', 'minnpost_remove_author_comments', 100 );
+	function minnpost_remove_author_comments() {
+		remove_post_type_support( 'guest-author', 'comments' );
+		remove_post_type_support( 'guest-author', 'trackbacks' );
 	}
 endif;
 

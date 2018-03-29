@@ -23,6 +23,7 @@ if ( ! function_exists( 'minnpost_image_sizes' ) ) :
 		// images for authors
 		add_image_size( 'author-image', 190, 9999 ); // scale so the width is 190px
 		add_image_size( 'author-thumbnail', 75, 9999 );
+		remove_image_size( 'rpwe-thumbnail' ); // this is from the recent post widget; we don't need it
 	}
 endif;
 

@@ -79,3 +79,13 @@ if ( ! function_exists( 'share_email_login_form_message_info' ) ) :
 		return $message_info;
 	}
 endif;
+
+/**
+* Hide the sharing box from edit pages
+*/
+if ( ! function_exists( 'minnpost_show_sharing_box' ) ) :
+	add_filter( 'sharing_meta_box_show', 'minnpost_show_sharing_box' );
+	function minnpost_show_sharing_box() {
+		return false;
+	}
+endif;
