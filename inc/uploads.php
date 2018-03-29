@@ -17,10 +17,15 @@ if ( ! function_exists( 'minnpost_image_sizes' ) ) :
 		add_image_size( 'post-feature-large', 400, 400 );
 		add_image_size( 'post-feature-medium', 190, 125, true );
 		add_image_size( 'post-newsletter-thumb', 80, 60, true );*/
+		// images for posts
 		add_image_size( 'feature', 190, 9999 );
 		add_image_size( 'feature-large', 400, 400 );
 		add_image_size( 'feature-medium', 190, 125, true );
 		add_image_size( 'newsletter-thumbnail', 80, 60, true );
+		// images for categories
+		add_image_size( 'category-featured-column', 50, 9999 ); // scale so the width is 50px
+		// images for authors
+		add_image_size( 'author-image', 190, 9999 ); // scale so the width is 190px
 		add_image_size( 'author-thumbnail', 75, 9999 );
 	}
 endif;

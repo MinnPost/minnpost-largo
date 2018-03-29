@@ -530,9 +530,6 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 		}
 	}
 
-	// add an image size to be generated when category images are uploaded
-	add_image_size( 'category-featured-column', 50, 9999 ); // scale so the width is 50px
-
 endif;
 
 /**
@@ -611,10 +608,6 @@ if ( ! function_exists( 'cmb2_author_fields' ) ) :
 			'type' => 'wysiwyg',
 		) );
 	}
-
-	// add images that will be auto generated when an image is uploaded
-	add_image_size( 'author-image', 190, 9999 ); // scale so the width is 190px
-	add_image_size( 'author-thumb', 75, 9999 ); // scale so the width is 75px
 
 endif;
 
