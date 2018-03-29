@@ -21,6 +21,7 @@ if ( ! function_exists( 'minnpost_image_sizes' ) ) :
 		add_image_size( 'feature-large', 400, 400 );
 		add_image_size( 'feature-medium', 190, 125, true );
 		add_image_size( 'newsletter-thumb', 80, 60, true );
+		add_image_size( 'author-thumbnail', 75, 9999 );
 	}
 endif;
 

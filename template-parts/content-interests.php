@@ -13,7 +13,7 @@
 
 	<a href="<?php echo esc_url( get_permalink() ); ?>">
 		<?php
-		$image_data = get_minnpost_post_image( 'author_teaser' );
+		$image_data = get_minnpost_post_image( 'author-thumbnail' );
 		$is_new     = ( true === is_post_new( get_the_ID() ) ) ? '<span class="a-new" title="New since you last visited MinnPost">new</span>' : '';
 		?>
 
