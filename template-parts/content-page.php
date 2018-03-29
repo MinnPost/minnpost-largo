@@ -13,12 +13,12 @@
 
 	<?php
 	global $post;
-	$post_slug = $post->post_name;
+	$post_slug    = $post->post_name;
 	$custom_class = '';
 	if ( 'columns' === $post_slug || 'news-region' === $post_slug ) {
 		$custom_class = ' m-entry-content-custom';
 	}
-	$remove_title_from_display = get_post_meta( get_the_ID() , '_mp_remove_title_from_display', true );
+	$remove_title_from_display = get_post_meta( get_the_ID(), '_mp_remove_title_from_display', true );
 	if ( ! isset( $remove_title_from_display ) || 'on' !== $remove_title_from_display ) {
 	?>
 

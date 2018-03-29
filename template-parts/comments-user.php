@@ -14,8 +14,8 @@
 		<?php foreach ( $comments as $comment ) : ?>
 			<li class="o-comment" id="o-comment-<?php comment_ID(); ?>">
 				<?php
-				$post_id = $comment->comment_post_ID;
-				$post_link = get_the_permalink( $post_id );
+				$post_id    = $comment->comment_post_ID;
+				$post_link  = get_the_permalink( $post_id );
 				$post_title = get_the_title( $post_id );
 				?>
 				<div class="m-comment-meta">Posted on <?php comment_date( 'm/d/y \a\t g:i a' ); ?> in response to <a href="<?php echo $post_link; ?>"><?php echo $post_title; ?></a></div>

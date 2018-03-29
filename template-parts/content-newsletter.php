@@ -151,22 +151,22 @@
 		</tr> <!-- end row -->
 		<?php
 		}
-		$top_offset = 2;
+		$top_offset  = 2;
 		$top_stories = get_post_meta( get_the_ID(), '_mp_newsletter_top_posts', true );
-		$top_query = new WP_Query(
+		$top_query   = new WP_Query(
 			array(
-				'post__in' => $top_stories,
+				'post__in'       => $top_stories,
 				'posts_per_page' => $top_offset,
-				'orderby' => 'post__in',
+				'orderby'        => 'post__in',
 			)
 		);
 
 		$second_query = new WP_Query(
 			array(
 				'post__in' => $top_stories,
-				'paged' => 1,
-				'offset' => $top_offset,
-				'orderby' => 'post__in',
+				'paged'    => 1,
+				'offset'   => $top_offset,
+				'orderby'  => 'post__in',
 			)
 		);
 		// the total does not stop at posts_per_page
@@ -178,9 +178,9 @@
 		if ( '' !== $more_stories ) {
 			$more_query = new WP_Query(
 				array(
-					'post__in' => $more_stories,
+					'post__in'       => $more_stories,
 					'posts_per_page' => -1,
-					'orderby' => 'post__in',
+					'orderby'        => 'post__in',
 				)
 			);
 		}
@@ -195,7 +195,7 @@
 		$ad_dom->loadHTML( '<?xml encoding="utf-8" ?>' . $sidebar );
 		libxml_clear_errors();
 		$ad_xpath = new DOMXpath( $ad_dom );
-		$ad_divs = $ad_xpath->query( "//div[contains(concat(' ', @class, ' '), ' m-widget ')]/div/p" );
+		$ad_divs  = $ad_xpath->query( "//div[contains(concat(' ', @class, ' '), ' m-widget ')]/div/p" );
 
 		$ads = array();
 		if ( 'dc_memo' !== $newsletter_type ) {

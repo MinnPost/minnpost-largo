@@ -81,10 +81,10 @@
 	?>
 
 	<?php
-	$coauthors = get_coauthors( get_the_ID() );
+	$coauthors   = get_coauthors( get_the_ID() );
 	$author_info = '';
 	foreach ( $coauthors as $coauthor ) {
-		$author_id = $coauthor->ID;
+		$author_id    = $coauthor->ID;
 		$author_info .= minnpost_get_author_figure( $author_id, 'thumbnail', true, true );
 	}
 	if ( '' !== $author_info ) {

@@ -19,53 +19,53 @@
 		$page = 1;
 	}
 	$comments_per_page = 10;
-	$params = array(
+	$params            = array(
 		'user_id' => $user->ID,
-		'status' => 'approve',
-		'number' => $comments_per_page,
-		'offset' => ( $page - 1 ) * $comments_per_page,
+		'status'  => 'approve',
+		'number'  => $comments_per_page,
+		'offset'  => ( $page - 1 ) * $comments_per_page,
 	);
-	$comments = get_comments( $params );
-	$total_comments = get_comments(
+	$comments          = get_comments( $params );
+	$total_comments    = get_comments(
 		array_merge(
 			$params,
 			array(
-				'count' => true,
+				'count'  => true,
 				'offset' => 0,
 				'number' => 0,
 			)
 		)
 	);
-	$pages = ceil( $total_comments / $comments_per_page );
-	$args = array(
+	$pages             = ceil( $total_comments / $comments_per_page );
+	$args              = array(
 		'total'     => $pages,
 		'current'   => $page,
-		'format' => '?page=%#%',
+		'format'    => '?page=%#%',
 		'prev_text' => '&lt; Previous',
 		'next_text' => 'Next &gt;',
-		'type' => 'list',
-		'end_size' => 3,
+		'type'      => 'list',
+		'end_size'  => 3,
 		'prev_next' => true,
 	);
-	$pagination = paginate_links( $args );
+	$pagination        = paginate_links( $args );
 	if ( ! empty( $pagination ) && ( 1 !== $page || $pages !== $page ) ) {
 		$doc = new DOMDocument();
 		$doc->loadHTML( $pagination );
 		if ( 1 !== $page ) {
-			$ul = $doc->getElementsByTagName( 'ul' )->item( 0 );
+			$ul   = $doc->getElementsByTagName( 'ul' )->item( 0 );
 			$node = $ul->childNodes->item( 0 );
-			$li = $doc->createElement( 'li' );
-			$a = $doc->createElement( 'a', '&Lt; First' );
+			$li   = $doc->createElement( 'li' );
+			$a    = $doc->createElement( 'a', '&Lt; First' );
 			$a->setAttribute( 'href', get_current_url() );
 			$li->appendChild( $a );
 			$ul->insertBefore( $li, $node );
 		}
 		if ( $pages !== $page ) {
-			$ul = $doc->getElementsByTagName( 'ul' )->item( 0 );
+			$ul     = $doc->getElementsByTagName( 'ul' )->item( 0 );
 			$length = $ul->childNodes->length;
-			$node = $ul->childNodes->item( $length );
-			$li = $doc->createElement( 'li' );
-			$a = $doc->createElement( 'a', 'Last &Gt;' );
+			$node   = $ul->childNodes->item( $length );
+			$li     = $doc->createElement( 'li' );
+			$a      = $doc->createElement( 'a', 'Last &Gt;' );
 			$a->setAttribute( 'href', get_current_url() . '?page=' . $pages );
 			$li->appendChild( $a );
 			$ul->insertBefore( $li, $node );
