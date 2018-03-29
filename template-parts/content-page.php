@@ -29,7 +29,6 @@
 		else :
 			the_title( '<h3 class="a-entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
 		endif;
-		minnpost_edit_link();
 		?>
 	</header><!-- .m-entry-header -->	
 	<?php } ?>
