@@ -13,10 +13,6 @@
 if ( ! function_exists( 'minnpost_image_sizes' ) ) :
 	add_action( 'after_setup_theme', 'minnpost_image_sizes' );
 	function minnpost_image_sizes() {
-		/*add_image_size( 'post-feature', 190, 9999 );
-		add_image_size( 'post-feature-large', 400, 400 );
-		add_image_size( 'post-feature-medium', 190, 125, true );
-		add_image_size( 'post-newsletter-thumb', 80, 60, true );*/
 		// images for posts
 		add_image_size( 'feature', 190, 9999 );
 		add_image_size( 'feature-large', 400, 400 );
