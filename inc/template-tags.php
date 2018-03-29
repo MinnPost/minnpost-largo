@@ -108,7 +108,7 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 		}
 
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
-			// todo: test this display because so far we just have external urls
+			// this requires that the custom image sizes in custom-fields.php work correctly
 			$image = wp_get_attachment_image( $image_id, $size );
 		} else {
 			$alt   = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
@@ -822,6 +822,13 @@ if ( ! function_exists( 'minnpost_plus_icon' ) ) :
 		}
 		$access_level = get_post_meta( $post_id, '_access_level', true );
 		if ( '' !== $access_level ) {
+			if ( class_exists( 'Blocked_Content_Template' ) ) {
+				$blocked_content_template = Blocked_Content_Template::get_instance();
+				$minimum_level            = $blocked_content_template->get_minimum_branded_level();
+				if ( $access_level < $minimum_level ) {
+					return;
+				}
+			}
 			echo '<div class="a-minnpost-plus">
 				<img src="' . get_theme_file_uri() . '/assets/img/MinnPostPlusLogo.png' . '" alt="MinnPostPlus">
 			</div>';

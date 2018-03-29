@@ -400,17 +400,6 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		) );
 
 	}
-
-	/**
-	* Add image sizes for posts.
-	* These are created when an image is uploaded.
-	*
-	*/
-	add_image_size( 'post-feature', 190, 9999 );
-	add_image_size( 'post-feature-large', 400, 400 );
-	add_image_size( 'post-feature-medium', 190, 125, true );
-	add_image_size( 'post-newsletter-thumb', 80, 60, true );
-
 endif;
 
 
