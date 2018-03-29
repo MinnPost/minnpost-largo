@@ -39,12 +39,12 @@ get_header(); ?>
 			<?php if ( is_category() ) : ?>
 				<aside class="m-archive-info m-category-info m-category-full-info">
 					<?php
-					// category meta
-					$sponsorship = minnpost_get_category_sponsorship( '', $category_id );
-					if ( '' !== $sponsorship ) {
-						echo $sponsorship;
-					}
 					if ( '' !== $figure ) {
+						// category meta
+						$sponsorship = minnpost_get_category_sponsorship( '', $category_id );
+						if ( '' !== $sponsorship ) {
+							echo $sponsorship;
+						}
 						echo $figure;
 					} else {
 						$text = minnpost_get_term_text( $category_id );
