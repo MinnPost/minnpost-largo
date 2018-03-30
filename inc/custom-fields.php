@@ -225,6 +225,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'desc'       => 'Upload an image or enter an URL.',
 			'id'         => '_mp_post_thumbnail_image',
 			'type'       => 'file',
+			'preview_size' => array( 130, 85 ),
 			'options'    => array(
 				//'url' => false, // Hide the text input for the url
 			),
