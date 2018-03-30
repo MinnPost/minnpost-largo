@@ -11,12 +11,12 @@
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post' ); ?>>
 
-	<?php minnpost_post_image( 'feature_middle' ); ?>
+	<?php minnpost_post_image( 'feature-medium' ); ?>
 
 	<p class="a-post-category a-zone-item-category"><?php echo minnpost_get_category_name(); ?></p>
 
 	<header class="m-entry-header">
-		<?php the_title( '<h3 class="a-entry-title a-entry-title-feature-middle"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
+		<?php the_title( '<h3 class="a-entry-title a-entry-title-feature-medium"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
 
 		<?php if ( 'post' === get_post_type() ) : ?>
 
