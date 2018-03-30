@@ -100,13 +100,27 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 
 		if ( 'large' === $size ) {
 			$image_url = get_post_meta( $id, '_mp_post_main_image', true );
-			$image_id  = get_post_meta( $id, '_mp_post_main_image_id', true );
 		} elseif ( 'thumbnail' !== $size ) {
 			$image_url = get_post_meta( $id, '_mp_post_thumbnail_image_' . $size, true );
-			$image_id  = get_post_meta( $id, '_mp_post_main_image_id', true );
 		} else {
 			$image_url = get_post_meta( $id, '_mp_post_thumbnail_image', true );
-			$image_id  = get_post_meta( $id, '_mp_post_thumbnail_image_id', true );
+		}
+
+		$main_image_id      = get_post_meta( $id, '_mp_post_main_image_id', true );
+		$thumbnail_image_id = get_post_meta( $id, '_mp_post_thumbnail_image_id', true );
+
+		if ( 'large' === $size ) {
+			if ( '' !== $main_image_id ) {
+				$image_id = $main_image_id;
+			} elseif ( '' !== $thumbnail_image_id ) {
+				$image_id = $thumbnail_image_id;
+			}
+		} else {
+			if ( '' !== $thumbnail_image_id ) {
+				$image_id = $thumbnail_image_id;
+			} elseif ( '' !== $main_image_id ) {
+				$image_id = $main_image_id;
+			}
 		}
 
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
