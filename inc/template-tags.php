@@ -123,11 +123,19 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 			}
 		}
 
+		if ( ! isset( $image_id ) ) {
+			$image_id = '';
+		}
+
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
 			// this requires that the custom image sizes in custom-fields.php work correctly
 			$image = wp_get_attachment_image( $image_id, $size );
 		} else {
-			$alt   = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+			if ( '' !== $image_id ) {
+				$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+			} else {
+				$alt = '';
+			}
 			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
 			if ( is_singular( 'newsletter' ) ) {
 				$image = '<img src="' . $image_url . '" alt="' . $alt . '"';
@@ -153,7 +161,7 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 			}
 		}
 
-		if ( post_password_required() || is_attachment() || ( ! $image_id && ! $image_url ) ) {
+		if ( post_password_required() || is_attachment() || ( '' === $image_id && '' === $image_url ) ) {
 			return;
 		}
 
