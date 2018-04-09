@@ -197,7 +197,7 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 					$item->title = '<span class="name">Welcome, ' . $user->user_email . '</span><span class="a-user-initial">' . $user->user_email[0] . '</span><span class="a-arrow-down"></span>';
 				}
 			}
-			if ( site_url( '/users/userid' ) === $url ) {
+			if ( site_url( '/users/userid' ) === $url || '/users/userid' === $url ) {
 				$url = site_url( '/users/' . $user_id . '/' );
 				if ( rtrim( get_current_url(), '/' ) . '/' === $url ) {
 					$active_class = ' class="active"';
