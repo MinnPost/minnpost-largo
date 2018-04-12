@@ -204,7 +204,7 @@ if ( ! function_exists( 'highlight_search_results' ) ) :
 	add_filter( 'the_excerpt', 'highlight_search_results' );
 	add_filter( 'the_title', 'highlight_search_results' );
 	function highlight_search_results( $text ) {
-		if ( is_search() ) {
+		if ( is_search() && ! is_admin() ) {
 			$sr          = get_query_var( 's' );
 			$highlighted = preg_filter( '/' . preg_quote( $sr ) . '/i', '<span class="a-search-highlight">$0</span>', $text );
 			if ( ! empty( $highlighted ) ) {
