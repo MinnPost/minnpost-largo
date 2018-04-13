@@ -85,7 +85,7 @@
 	$author_info = '';
 	foreach ( $coauthors as $coauthor ) {
 		$author_id    = $coauthor->ID;
-		$author_info .= minnpost_get_author_figure( $author_id, 'thumbnail', true, true );
+		$author_info .= minnpost_get_author_figure( $author_id, 'teaser', true, true );
 	}
 	if ( '' !== $author_info ) {
 	?>
@@ -94,7 +94,7 @@
 		<?php
 		foreach ( $coauthors as $coauthor ) :
 			$author_id = $coauthor->ID;
-			minnpost_author_figure( $author_id, 'thumbnail', true, true );
+			minnpost_author_figure( $author_id, 'teaser', true, true );
 		endforeach;
 		?>
 	</aside><!-- .m-author-info -->
