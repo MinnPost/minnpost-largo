@@ -22,16 +22,9 @@
 			}
 		}
 	}
-	a h3, a img {
-		color: $color__link;
-	}
-	a:visited h3 {
-		color: $color__link;
-	}
-	a:active h3,
-	a:focus h3,
-	a:hover h3 {
-		color: $color__link;
+	h3 a:active,
+	h3 a:focus,
+	h3 a:hover {
 		text-decoration: underline;
 	}
 }

@@ -23,12 +23,24 @@
 				}
 			}
 		}
+		a h3, a img {
+			color: $color__link;
+		}
+		a:visited h3 {
+			color: $color__link;
+		}
+		a:active h3,
+		a:focus h3,
+		a:hover h3 {
+			color: $color__link;
+			text-decoration: underline;
+		}
 	}
 	&.m-author-info-single .a-author-figure {
 		border: 1px solid $color__gray-lightest;
 		margin-top: 10px;
 		img {
-			max-width: 75px; // in case the author has an image but not a thumbnail
+			max-width: 75px; // in case the author has an image but not a teaser
 		}
 		figcaption {
 			margin-bottom: 25px;
