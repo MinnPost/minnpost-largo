@@ -99,15 +99,15 @@ class Minnpost_General_Setting {
 	// handle the html for each of the above fields
 	function site_blurb() {
 		$value = get_option( 'site_blurb', '' );
-		echo '<input type="text" id="site_blurb" name="site_blurb" value="' . $value . '" />';
+		echo '<textarea id="site_blurb" name="site_blurb" cols="40" rows="5">' . $value . '</textarea>';
 	}
 	function default_image_html() {
 		$value = get_option( 'default_image_url', '' );
-		echo '<input type="text" id="default_image_url" name="default_image_url" value="' . $value . '" />';
+		echo '<textarea id="default_image_url" name="default_image_url" cols="40" rows="5">' . $value . '</textarea>';
 	}
 	function footer_message_html() {
 		$value = get_option( 'site_footer_message', '' );
-		echo '<input type="text" id="site_footer_message" name="site_footer_message" value="' . $value . '" />';
+		echo '<textarea id="site_footer_message" name="site_footer_message" cols="40" rows="5">' . $value . '</textarea>';
 	}
 	function email_sending_address_html() {
 		$value = get_option( 'site_email_from', '' );
