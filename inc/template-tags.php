@@ -411,12 +411,12 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 		$image_id = get_post_meta( $author_id, '_mp_author_image_id', true );
 
 		// some authors have an image, but they do not have a thumbnail
-		if ( '' !== $image_id && '' === $image_url && 'thumbnail' === $size ) {
+		if ( '' !== $image_id && '' === $image_url && 'author-thumbnail' === $size ) {
 			$image_url = get_post_meta( $author_id, '_mp_author_image', true );
 		}
 
 		// some authors have an image, but they do not have a teaser
-		if ( '' !== $image_id && '' === $image_url && 'teaser' === $size ) {
+		if ( '' !== $image_id && '' === $image_url && 'author-teaser' === $size ) {
 			$image_url = get_post_meta( $author_id, '_mp_author_image', true );
 		}
 
