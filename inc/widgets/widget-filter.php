@@ -6,6 +6,10 @@
  * @package MinnPost Largo
  */
 
+// Enable shortcodes in widgets
+add_filter( 'widget_text', 'shortcode_unautop' );
+add_filter( 'widget_text', 'do_shortcode' );
+
 add_filter( 'widget_output', 'minnpost_widget_output_filter', 10, 4 );
 function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id, $sidebar_id ) {
 	$widget_output = str_replace( '<h2 class="widgettitle"', '<h2 class="a-widget-title"', $widget_output );
