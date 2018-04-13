@@ -621,6 +621,12 @@ if ( ! function_exists( 'cmb2_author_fields' ) ) :
 			'id'   => '_mp_author_bio',
 			'type' => 'wysiwyg',
 		) );
+		$author_setup->add_field( array(
+			'name' => 'Staff Member?',
+			'id'   => '_staff_member',
+			'type' => 'checkbox',
+			'desc' => '',
+		) );
 	}
 
 endif;
