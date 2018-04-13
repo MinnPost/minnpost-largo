@@ -87,7 +87,7 @@ if ( ! function_exists( 'disable_autoformatting_old_content' ) ) :
 	add_action( 'wp', 'disable_autoformatting_old_content' );
 	function disable_autoformatting_old_content() {
 		$migrated_date = get_option( 'wp_migrate_timestamp', time() );
-		$post_date     = get_the_date( 'U' );
+		$post_date     = get_post_modified_time( 'U' );
 		if ( $migrated_date > $post_date ) {
 			$remove_filter = true;
 		}
