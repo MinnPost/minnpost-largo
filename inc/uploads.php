@@ -22,7 +22,8 @@ if ( ! function_exists( 'minnpost_image_sizes' ) ) :
 		add_image_size( 'category-featured-column', 50, 9999 ); // scale so the width is 50px
 		// images for authors
 		add_image_size( 'author-image', 190, 9999 ); // scale so the width is 190px
-		add_image_size( 'author-thumbnail', 75, 9999 );
+		add_image_size( 'author-teaser', 75, 9999 );
+		add_image_size( 'author-thumbnail', 130, 9999 );
 		remove_image_size( 'rpwe-thumbnail' ); // this is from the recent post widget; we don't need it
 	}
 endif;
