@@ -5,6 +5,9 @@ input[type="submit"], button[type="submit"], a.a-button:link, a.a-button:visited
 	background: $color__minnpost-red;
 	color: $color__white;
 	font-family: $font__headings;
+	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
+	font-style: normal;
+	font-variant: normal;
 	border: 0;
 	display: inline-block;
 	margin-right: 0.5em;

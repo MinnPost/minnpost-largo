@@ -17,6 +17,9 @@
 			margin: 0 auto 0.75em auto;
 			text-align: center;
 		}
+		.enter .m-form-item input {
+			font-family: $font__headings;
+		}
 	}
 	&.m-membership-member-level-member_bronze .m-member-level-brief {
 		h2 {
