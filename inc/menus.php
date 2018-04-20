@@ -45,7 +45,16 @@ if ( ! function_exists( 'minnpost_wp_nav_menu_objects_sub_menu' ) ) :
 	add_filter( 'wp_nav_menu_objects', 'minnpost_wp_nav_menu_objects_sub_menu', 10, 2 );
 	function minnpost_wp_nav_menu_objects_sub_menu( $sorted_menu_items, $args ) {
 
+		global $wp_query;
+
 		if ( isset( $args->sub_menu ) ) {
+
+			// we only bother with submenus on:
+			// - home
+			// - category archives
+			if ( is_singular() || ( isset( $wp_query->query['is_membership'] ) && true === $wp_query->query['is_membership'] ) ) {
+				return;
+			}
 
 			// find the current menu item
 			foreach ( $sorted_menu_items as $menu_item ) {
@@ -79,7 +88,6 @@ if ( ! function_exists( 'minnpost_wp_nav_menu_objects_sub_menu' ) ) :
 
 			$menu_item_parents = array();
 			foreach ( $sorted_menu_items as $key => $item ) {
-
 				// init menu_item_parents
 				if ( (int) $root_id === (int) $item->ID ) {
 					$menu_item_parents[] = $item->ID;
@@ -151,7 +159,8 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 		$active_class = '';
 		if ( in_array( 'current-menu-item', $classes ) ) {
 			$active_class = ' class="active"';
-		} elseif ( in_array( 'current-menu-parent', $classes ) ) {
+		} elseif ( in_array( 'current-menu-parent', $classes ) && '/' !== $item->url ) {
+			// checking '/' because home menu should never be a parent menu
 			$active_class = ' class="active-parent"';
 		} elseif ( in_array( 'current-menu-ancestor', $classes ) ) {
 			$active_class = ' class="active-ancestor"';
