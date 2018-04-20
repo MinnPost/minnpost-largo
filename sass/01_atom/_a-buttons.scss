@@ -22,7 +22,7 @@ input[type="submit"], button[type="submit"], a.a-button:link, a.a-button:visited
 		cursor: not-allowed;
 		opacity: 0.5;
 	}
-	&.a-button-choose {
+	&.a-button-flip {
 		background: $color__minnpost-blue;
 		&:hover, &:focus, &:active {
 			background: palette(blue, dark);
