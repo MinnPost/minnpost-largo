@@ -47,6 +47,7 @@ h6, .h6 {
 	font-size: 123.1%;
 	text-transform: uppercase;
 	font-family: $font__headings;
+	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
 	font-weight: normal;
 	font-style: normal;
 	font-variant: normal;
@@ -58,6 +59,7 @@ h6, .h6 {
 .a-about-author, .a-related-title, .a-comments-title, .a-comment-reply-title {
 	text-transform: uppercase;
 	font-family: $font__headings;
+	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
 	font-weight: normal;
 	font-style: normal;
 	font-variant: normal;
@@ -91,6 +93,7 @@ h6, .h6 {
 		font-size: 12px;
 		color: #777;
 		font-family: $font__headings;
+		font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
 		font-weight: normal;
 		font-style: normal;
 		font-variant: normal;
@@ -131,6 +134,7 @@ h6, .h6 {
 	font-size: 215.4%;
 	line-height: 1.15em;
 	font-family: $font__headings;
+	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
 	font-weight: normal;
 	font-style: normal;
 	font-variant: normal;
@@ -138,6 +142,7 @@ h6, .h6 {
 
 .m-entry-header-singular .a-entry-title, .m-user-profile .a-user-title, .a-standalone-title {
 	font-family: $font__headings;
+	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
 	font-weight: normal;
 	font-style: normal;
 	font-variant: normal;
@@ -149,6 +154,7 @@ h6, .h6 {
 
 .m-interest-posts .a-entry-title {
 	font-family: $font__headings;
+	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
 	font-weight: normal;
 	font-style: normal;
 	font-variant: normal;
@@ -190,4 +196,17 @@ h6, .h6 {
 
 h2.a-user-section-title {
 	margin-bottom: 12px;
+}
+
+h3.a-finish-strong {
+	clear: both;
+	font-size: 123.1%;
+	background: $color__gray-sub-menu;
+	padding: 0.5em;
+	margin-bottom: 0.5em;
+	font-family: $font__headings;
+	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
+	font-weight: normal;
+	font-style: normal;
+	font-variant: normal;
 }
