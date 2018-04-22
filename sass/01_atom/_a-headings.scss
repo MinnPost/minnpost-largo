@@ -183,6 +183,16 @@ h6, .h6 {
 	}
 }
 
+.m-entry-content h3, .m-entry-content .h3 {
+	font-size: 215.4%;
+	line-height: 1.15em;
+	font-family: $font__headings;
+	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
+	font-weight: normal;
+	font-style: normal;
+	font-variant: normal;
+}
+
 .m-entry-content h4, .m-entry-content .h4 {
 	font-size: 138.5%;
 	line-height: 1.15em;
