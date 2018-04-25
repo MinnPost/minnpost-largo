@@ -25,39 +25,6 @@ if ( ! function_exists( 'minnpost_acm_whitelisted_conditionals' ) ) :
 endif;
 
 /**
-* Add a theme activation capability for browsing without ads
-*
-*/
-if ( ! function_exists( 'add_theme_caps' ) ) :
-	add_action( 'load-themes.php', 'add_theme_caps' );
-	function add_theme_caps() {
-		global $pagenow;
-
-		$roles = array( 'administrator' );
-
-		if ( 'themes.php' == $pagenow && isset( $_GET['activated'] ) ) {
-			// Theme is activated
-			// add the capability to the roles
-			if ( null !== $roles ) {
-				foreach ( $roles as $role ) {
-					$role = get_role( $role );
-					$role->add_cap( 'browse_without_ads' );
-				}
-			}
-		} else {
-			// Theme is deactivated
-			// Remove the capacity when theme is deactivated
-			if ( null !== $roles ) {
-				foreach ( $roles as $role ) {
-					$role = get_role( $role );
-					$role->remove_cap( 'browse_without_ads' );
-				}
-			}
-		}
-	}
-endif;
-
-/**
 * Placeholders for ads; these are shown to users who have the capability to browse without ads
 *
 * @param string $output_html
