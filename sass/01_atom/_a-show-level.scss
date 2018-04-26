@@ -1,0 +1,19 @@
+/* metal color levels */
+.a-show-level {
+	color: $color__minnpost-black;
+	a {
+		color: inherit;
+	}
+	&.a-show-level-bronze {
+		background: $color__minnpost-bronze;
+	}
+	&.a-show-level-silver {
+		background: $color__minnpost-silver;
+	}
+	&.a-show-level-gold {
+		background: $color__minnpost-gold;
+	}
+	&.a-show-level-platinum {
+		background: $color__minnpost-platinum;
+	}
+}

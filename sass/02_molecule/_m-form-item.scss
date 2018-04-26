@@ -42,6 +42,30 @@
 	}
 }
 
+.m-membership-fast-select {
+	#amount-item #amount {
+		border: 1px solid $color__border-input;
+	}
+	input#amount, select, button, input.a-button {
+		font-family: $font__headings;
+		font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
+		font-weight: normal;
+		font-style: normal;
+		font-variant: normal;
+	}
+	.m-form-radios {
+		label {
+			background: $_color-base-gray;
+			color: $color__white;
+			font-family: $font__serif;
+			border: 0;
+		}
+		input:checked + label {
+			background: $_color-base-blue;
+		}
+	}
+}
+
 // media queries
 @media screen and (min-width: $medium-screen) {
 	.m-form-standalone .m-form-item {
