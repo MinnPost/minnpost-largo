@@ -66,7 +66,7 @@
 	a {
 		font-weight: bold;
 	}
-	li.active a {
+	li.active > a {
 		color: $color__minnpost-black;
 	}
 }
@@ -146,7 +146,7 @@
 		text-decoration: none;
 		display: inline-block;
 	}
-	li a:hover, li a:focus, li a:active, li.active a, li.active-parent a {
+	li a:hover, li a:focus, li a:active, li.active > a, li.active-parent a {
 		background: $color__minnpost-white;
 		color: $color__minnpost-black;
 	}
@@ -196,7 +196,7 @@
 		color: $color__minnpost-black;
 		padding: 0 1em;
 	}
-	li.active a {
+	li.active > a {
 		color: $color__minnpost-black;
 	}
 	li a {
@@ -288,7 +288,7 @@
 			    padding: 0 0 0 8px;
 			    vertical-align: middle;
 			}
-			&.active a {
+			&.active > a {
 				font-weight: bold;
 			}
 		}
@@ -324,7 +324,7 @@
 			margin-right: 20px;
 			font-weight: bold;
 			line-height: $base-line-height-em;
-			&.active a {
+			&.active > a {
 				color: $color__minnpost-black;
 			}
 		}
