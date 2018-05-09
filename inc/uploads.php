@@ -25,6 +25,7 @@ if ( ! function_exists( 'minnpost_image_sizes' ) ) :
 		add_image_size( 'author-teaser', 75, 9999 );
 		add_image_size( 'author-thumbnail', 130, 9999 );
 		remove_image_size( 'rpwe-thumbnail' ); // this is from the recent post widget; we don't need it
+		add_image_size( 'partner-logo', 200, 9999 ); // scale so the width is 200px
 	}
 endif;
 
