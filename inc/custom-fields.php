@@ -780,7 +780,7 @@ endif;
 
 /**
 * Get member levels so we can assign them to content access
-* This depends on the Blocked Content Template plugin
+* This depends on the MinnPost Membership plugin
 *
 * @param array $field_args
 * @param array $field
@@ -791,17 +791,13 @@ endif;
 if ( ! function_exists( 'get_member_levels' ) ) :
 	function get_member_levels( $field_args = array(), $field = array(), $reset = false ) {
 		$values = array();
-		if ( ! class_exists( 'Blocked_Content_Template' ) ) {
-			require_once( TEMPLATEPATH . 'plugins/blocked-content-template/blocked-content-template.php' );
+		if ( ! class_exists( 'MinnPost_Membership' ) ) {
+			require_once( TEMPLATEPATH . 'plugins/minnpost-membership/minnpost-membership.php' );
 		}
-		$blocked_content = Blocked_Content_Template::get_instance();
-		$member_values   = $blocked_content->member_levels;
+		$minnpost_membership = MinnPost_Membership::get_instance();
+		$member_values       = $minnpost_membership->member_levels->get_member_levels();
 		foreach ( $member_values as $key => $value ) {
-			if ( 'registered' !== $key && 'members' !== $key ) {
-				$values[ $key ] = ucwords( $value ) . ' Members';
-			} else {
-				$values[ $key ] = ucwords( $value );
-			}
+			$values[ $key + 1 ] = $value['name'];
 		}
 		return $values;
 	}
