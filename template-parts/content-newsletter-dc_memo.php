@@ -8,6 +8,33 @@
  */
 
 ?>
+<style type="text/css">
+.webkit {
+	max-width: 600px;
+}
+.ExternalClass {
+	width: 100%;
+}
+.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
+	line-height: 100%;
+}
+
+a[x-apple-data-detectors] {
+	color: #801019 !important;
+	text-decoration: none !important;
+	font-size: inherit !important;
+	font-family: inherit !important;
+	font-weight: normal !important;
+	line-height: inherit !important;
+}
+</style>
+
+<!--[if (gte mso 9)|(IE)]>
+<style type="text/css">
+	.header table { font-size:1px; line-height:0; mso-Margin-top-alt:1px; }
+</style>
+<![endif]-->
+
 <style>
 	body {
 		Margin: 0; padding: 0; min-width: 100%; background-color: #ffffff;
@@ -153,6 +180,36 @@
 				</td> <!-- end .one-column.header -->
 			</tr> <!-- end row -->
 
+			<tr>
+				<td class="one-column header" style="border-collapse: collapse; border-bottom-width: 2px; border-bottom-color: #cccccf; border-bottom-style: solid; Margin: 0; padding: 0;">
+			<!--[if (gte mso 9)|(IE)]>
+			<table cellpadding="0" cellspacing="0" width="100%">
+				<tr>
+					<td width="100%" valign="bottom">
+			<![endif]-->
+					<div class="column tagline image" style="width: 100%;">
+						<table cellpadding="0" cellspacing="0" width="100%" style="border-spacing: 0; Margin: 0; padding: 0; font-family: Helvetica, Arial, Geneva, sans-serif; color: #1A1818; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse;">
+							<tr>
+								<td class="inner" style="border-collapse: collapse; Margin: 0; padding: 2px 0; max-height: 50px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, &quot;Times New Roman&quot;, Times, serif; font-style: italic; font-size: 16px;">
+									<table cellpadding="0" cellspacing="0" class="contents" style="border-spacing: 0; Margin: 0; padding: 0; font-family: Helvetica, Arial, Geneva, sans-serif; color: #1A1818; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; width: 100%;">
+										<tr>
+											<td align="center" style="border-collapse: collapse; Margin: 0; padding: 2px 0; max-height: 50px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, &quot;Times New Roman&quot;, Times, serif; font-style: italic; font-size: 16px;">
+												<p style="vertical-align: middle; Margin: 0; padding: 0;">Sponsored by <a href="http://greatriverenergy.com/" style="color: #801019; text-decoration: none;"><img src="https://www.minnpost.com/sites/default/files/imagecache/image_detail/images/image/great-river-energy-small.png" alt="Great River Energy" align="middle" style="height: 24px; line-height: 100%; outline: none; text-decoration: none; vertical-align: top; Margin-left: 4px; Margin-top: -2px; border: 0 none;" /></a></p>
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</div>
+			<!--[if (gte mso 9)|(IE)]>
+					</td>
+				</tr>
+			</table>
+			<![endif]-->
+				</td> <!-- end .one-column.header -->
+			</tr> <!-- end row -->
+
 			<?php
 			$body = get_the_content();
 			if ( '' !== $body ) :
@@ -203,6 +260,17 @@
 										</td>
 									</tr>
 								</table>
+
+								<table cellpadding="0" cellspacing="0" width="100%" class="sponsors" style="border-spacing: 0; Margin: 0 0 18px; padding: 0 0 18px; font-family: Helvetica, Arial, Geneva, sans-serif; color: #1A1818; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse;">
+									<tr>
+										<td class="inner contents" style="border-collapse: collapse; width: 100%; Margin: 0; padding: 0;">
+											<h2 class="sponsored" style="color: #738bc0; Margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-color: #cccccf; border-top-style: solid; border-top-width: 2px; padding-top: 15px;" align="left">D.C. Memo Sponsor</h2>
+											<p style="color: #7a7a7a; font-size: 9px; text-transform: uppercase; Margin: 0 0 5px; padding: 0;" align="center">Presenting sponsor</p>
+											<p class="presenting-sponsor" style="color: #7a7a7a; font-size: 9px; text-transform: uppercase; Margin: 0 0 30px; padding: 0;" align="center"><a href="http://greatriverenergy.com/" style="color: #801019; text-decoration: none;"><img src="https://www.minnpost.com/sites/default/files/imagecache/image_detail/images/image/great-river-energy-logo.png" alt="Great River Energy" align="middle" style="height: auto; line-height: 100%; outline: none; text-decoration: none; display: block; Margin: 0 10px 5px 0; border: 0 none;" /></a></p>
+										</td>
+									</tr>
+								</table>
+
 							</div>
 						</div>
 						<!--[if (gte mso 9)|(IE)]>
