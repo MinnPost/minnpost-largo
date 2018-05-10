@@ -161,6 +161,26 @@
 				$body = str_replace( '<p class="intro">', '<p>', $body );
 				$body = preg_replace( '/<p>/', '<p class="intro" style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 17.6px; line-height: 24.9444px; margin: 0 0 15px; padding: 15px 0 0;">', $body, 1 );
 				$body = str_replace( '<p>', '<p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', $body );
+
+				// inline sponsor before this week's essential reads
+				$body = str_replace(
+					array(
+						'<h2>This week\'s essential reads</h2>',
+						'<h2>This week’s essential reads</h2>',
+					),
+					'<h2 class="sponsored" style="color: #738bc0; Margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-color: #cccccf; border-top-style: solid; border-top-width: 2px; padding-top: 15px;" align="left">D.C. Memo Sponsored by Great River Energy</h2><p class="inline-sponsor" style="font-family: Georgia, &quot;Times New Roman&quot;, Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;" align="center"><a href="http://greatriverenergy.com/" style="color: #801019; text-decoration: none;"><img src="https://www.minnpost.com/sites/default/files/imagecache/image_detail/images/image/great-river-energy-logo.png" alt="Great River Energy" align="center" style="height: 86px; line-height: 100%; outline: none; text-decoration: none; display: block; Margin: 0 10px 5px 0; border: 0 none;" /></a></p><h2>This week’s essential reads</h2>',
+					$body
+				);
+				// inline sponsor before the week's essential reads
+				$body = str_replace(
+					array(
+						'<h2>The week\'s essential reads</h2>',
+						'<h2>The week’s essential reads</h2>',
+					),
+					'<h2 class="sponsored" style="color: #738bc0; Margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-color: #cccccf; border-top-style: solid; border-top-width: 2px; padding-top: 15px;" align="left">D.C. Memo Sponsored by Great River Energy</h2><p class="inline-sponsor" style="font-family: Georgia, &quot;Times New Roman&quot;, Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;" align="center"><a href="http://greatriverenergy.com/" style="color: #801019; text-decoration: none;"><img src="https://www.minnpost.com/sites/default/files/imagecache/image_detail/images/image/great-river-energy-logo.png" alt="Great River Energy" align="center" style="height: 86px; line-height: 100%; outline: none; text-decoration: none; display: block; Margin: 0 10px 5px 0; border: 0 none;" /></a></p><h2>This week’s essential reads</h2>',
+					$body
+				);
+
 				$body = str_replace( '<h2>', '<h2 style="color: #801019; margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $body );
 				$body = str_replace( '<h3>', '<h3 style="color: #801019; margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $body );
 				$body = str_replace( '<blockquote><p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', '<blockquote style="border-left-width: 2px; border-left-color: #cccccf; border-left-style: solid; margin: 10px 10px 15px; padding: 0 10px;"><p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; color: #6a6161; margin: 0 0 15px; padding: 0;">', $body );
