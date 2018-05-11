@@ -1,0 +1,43 @@
+.m-post-paywalled {
+	.m-entry-content-paywalled {
+		padding: 1em;
+	    border: 1px solid $color__gray-light;
+	    width: auto;
+	    background: $color__white;
+	    display: flex;
+	    flex-wrap: wrap;
+	    justify-content: space-between;
+	    h2 {
+	    	width: 100%;
+	    }
+	    section {
+	    	width: 48%;
+	    }
+	    h2, h3 {
+	    	line-height: 1.15em;
+	    	font-family: $font__headings;
+			font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
+			font-weight: normal;
+			font-style: normal;
+			font-variant: normal;
+			margin-bottom: 0.5em;
+	    }
+	    h2 {
+	    	font-size: 300%;
+	    }
+	    h3 {
+	    	font-size: 154%;
+	    }
+	    p {
+	    	font-size: 1.23em;
+	    	line-height: 1.5em;
+	    }
+	    fieldset {
+	    	font-size: 1.23em;
+	    	line-height: 1.5em;
+	    }
+	    small {
+	    	font-size: 74%;
+	    }
+    }
+}
