@@ -15,7 +15,6 @@
 		<?php minnpost_category_breadcrumb(); ?>
 		<?php minnpost_plus_icon(); ?>
 	</div>
-	<?php minnpost_category_sponsorship(); ?>
 
 	<header class="m-entry-header<?php if ( is_singular() ) { ?> m-entry-header-singular<?php } ?><?php if ( is_single() ) { ?> m-entry-header-single<?php } ?>">
 		<?php
@@ -24,16 +23,11 @@
 		else :
 			the_title( '<h3 class="a-entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
 		endif;
-
-		if ( 'post' === get_post_type() ) :
 		?>
-
-		<?php endif; ?>
-
 	</header><!-- .m-entry-header -->
 
 	<div class="m-entry-content">
-		This is the part to tell users they don't have access.
+		<?php echo apply_filters( 'the_content', $minnpost_membership->front_end->get_option_based_on_user_status( $minnpost_membership->option_prefix . 'post_access_blocked_message', $user_state ) ); ?>
 	</div><!-- .m-entry-content -->
 
 </article><!-- #post-## -->
