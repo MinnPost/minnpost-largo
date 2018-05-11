@@ -1,17 +1,18 @@
 .m-post-paywalled {
 	.m-entry-content-paywalled {
 		padding: 1em;
+		margin-bottom: 1em;
 	    border: 1px solid $color__gray-light;
 	    width: auto;
 	    background: $color__white;
 	    display: flex;
 	    flex-wrap: wrap;
 	    justify-content: space-between;
+	    section {
+	    	margin-bottom: 1em;
+	    }
 	    h2 {
 	    	width: 100%;
-	    }
-	    section {
-	    	width: 48%;
 	    }
 	    h2, h3 {
 	    	line-height: 1.15em;
@@ -40,4 +41,23 @@
 	    	font-size: 74%;
 	    }
     }
+}
+
+@media screen and (min-width: $nav-breaks) {
+	.m-post-paywalled {
+		.m-entry-content-paywalled {
+			section {
+				width: 48%;
+				margin-bottom: 0;
+			}
+		}
+	}
+}
+
+@media screen and (min-width: $max-width-page ) {
+	.m-post-paywalled {
+		.m-entry-content-paywalled {
+			margin-bottom: 0;
+		}
+	}
 }
