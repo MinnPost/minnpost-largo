@@ -54,9 +54,9 @@ endif;
 * Handle adding and removing of admin JavaScript in this theme
 *
 */
-if ( ! function_exists( 'load_custom_wp_admin_style' ) ) :
-	add_action( 'admin_enqueue_scripts', 'load_custom_wp_admin_style' );
-	function load_custom_wp_admin_style( $hook ) {
+if ( ! function_exists( 'minnpost_admin_style' ) ) :
+	add_action( 'admin_enqueue_scripts', 'minnpost_admin_style' );
+	function minnpost_admin_style( $hook ) {
 		// Load only on ?page=toplevel_page_zoninator to fix that awful css
 		/*if ( 'toplevel_page_zoninator' !== $hook ) {
 			return;
