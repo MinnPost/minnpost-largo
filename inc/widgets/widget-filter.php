@@ -92,15 +92,18 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 				$first_title = get_the_title();
 			}
 
-			$html .= '
-				<li>
-					<a href="' . get_category_link( $id ) . '">' .
-						minnpost_get_term_figure( $id, 'featured_column', false, false ) .
-						'<h3 class="a-featured-title">' . $name . '</h3>' .
-						'<p>' . $first_title . '</p>' .
-					'</a>
-				</li>
-			';
+			if ( isset( $first_title ) ) {
+
+				$html .= '
+					<li>
+						<a href="' . get_category_link( $id ) . '">' .
+							minnpost_get_term_figure( $id, 'featured_column', false, false ) .
+							'<h3 class="a-featured-title">' . $name . '</h3>' .
+							'<p>' . $first_title . '</p>' .
+						'</a>
+					</li>
+				';
+			}
 		}
 		$html .= '</ul></section>';
 		return $html;
@@ -143,14 +146,14 @@ function minnpost_widget_display_callback( $instance, $widget, $args ) {
 add_filter( 'rpwe_default_query_arguments', 'minnpost_recent_stories_widget', 10, 1 );
 function minnpost_recent_stories_widget( $query ) {
 	global $wpdb;
-	$results = $wpdb->get_results( 'SELECT DISTINCT `post_id` FROM wp_postmeta WHERE meta_key LIKE "_zoninator_order_%"', 'ARRAY_A' );
-	$exclude_ids = array_column( $results, 'post_id' );
+	$results       = $wpdb->get_results( 'SELECT DISTINCT `post_id` FROM wp_postmeta WHERE meta_key LIKE "_zoninator_order_%"', 'ARRAY_A' );
+	$exclude_ids   = array_column( $results, 'post_id' );
 	$exclude_ids[] = get_the_ID();
-	$query = array(
+	$query         = array(
 		'post__not_in' => $exclude_ids,
-		'post_type' => 'post',
-		'orderby' => 'modified',
-		'date_query' => array(
+		'post_type'    => 'post',
+		'orderby'      => 'modified',
+		'date_query'   => array(
 			array(
 				'after' => '7 days ago',
 			),
@@ -163,13 +166,13 @@ if ( ! function_exists( 'get_the_image' ) ) :
 	function get_the_image( $args ) {
 		$attributes = array( 'location' => 'sidebar' );
 		$image_data = get_minnpost_post_image( 'author-thumbnail', $attributes );
-		$image_id = $image_data['image_id'];
-		$image_url = $image_data['image_url'];
-		$markup = $image_data['markup'];
+		$image_id   = $image_data['image_id'];
+		$image_url  = $image_data['image_url'];
+		$markup     = $image_data['markup'];
 
-		$image = '<a class="a-spill-item-thumbnail" href="' . get_the_permalink() . '" aria-hidden="true">' . $markup . '</a>';
+		$image         = '<a class="a-spill-item-thumbnail" href="' . get_the_permalink() . '" aria-hidden="true">' . $markup . '</a>';
 		$category_name = minnpost_get_category_name();
-		$category = '<p class="a-post-category a-spill-item-category">' . $category_name . '</p>';
+		$category      = '<p class="a-post-category a-spill-item-category">' . $category_name . '</p>';
 
 		return $image . $category;
 	}
