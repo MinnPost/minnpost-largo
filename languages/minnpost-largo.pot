@@ -49,145 +49,190 @@ msgstr ""
 msgid "Trash"
 msgstr ""
 
-#: inc/custom-fields.php:296
+#: inc/custom-fields.php:320
 msgid "Black on White"
 msgstr ""
 
-#: inc/custom-fields.php:297
+#: inc/custom-fields.php:321
 msgid "White on Black"
 msgstr ""
 
-#: inc/custom-fields.php:298
+#: inc/custom-fields.php:322
 msgid "White on Red"
 msgstr ""
 
-#: inc/custom-fields.php:299
+#: inc/custom-fields.php:323
 msgid "White on Transparent"
 msgstr ""
 
-#: inc/custom-forms.php:149
+#: inc/custom-forms.php:151
 msgid "Invalid nonce specified"
 msgstr ""
 
-#: inc/custom-forms.php:150
+#: inc/custom-forms.php:152
 msgid "Error"
 msgstr ""
 
-#: inc/custom-settings.php:17
+#: inc/custom-settings.php:41
+msgid "Site Blurb"
+msgstr ""
+
+#: inc/custom-settings.php:53
 msgid "Default Image URL"
 msgstr ""
 
-#: inc/custom-settings.php:20
+#: inc/custom-settings.php:65
 msgid "Site Footer Message"
 msgstr ""
 
-#: inc/custom-settings.php:23
+#: inc/custom-settings.php:77
 msgid "Email Sending Address"
 msgstr ""
 
-#: inc/custom-settings.php:26
+#: inc/custom-settings.php:89
 msgid "Email Sending Name"
 msgstr ""
 
-#: inc/custom-shortcodes.php:53
+#: inc/custom-shortcodes.php:64
 msgid "Thanks for updating your email preferences. They will go into effect immediately."
 msgstr ""
 
-#: inc/custom-shortcodes.php:56
+#: inc/custom-shortcodes.php:67
 msgid "We have added you to the MinnPost mailing list."
 msgstr ""
 
-#: inc/custom-shortcodes.php:59
+#: inc/custom-shortcodes.php:70
 msgid "We have added you to the MinnPost mailing list. You will need to click the confirmation link in the email we sent to begin receiving messages."
 msgstr ""
 
-#: inc/custom-shortcodes.php:276
+#: inc/custom-shortcodes.php:307
 msgid "You do not have permission to access this page."
 msgstr ""
 
-#: inc/custom-types.php:16, inc/custom-types.php:19
+#: inc/custom-types.php:19, inc/custom-types.php:22
 msgid "Newsletter"
 msgstr ""
 
-#: inc/custom-types.php:18, inc/custom-types.php:20, inc/custom-types.php:21
+#: inc/custom-types.php:21, inc/custom-types.php:23, inc/custom-types.php:24
 msgid "Newsletters"
 msgstr ""
 
-#: inc/custom-types.php:22
+#: inc/custom-types.php:25
 msgid "Add New"
 msgstr ""
 
-#: inc/custom-types.php:23
+#: inc/custom-types.php:26
 msgid "Add New Newsletter"
 msgstr ""
 
-#: inc/custom-types.php:24
+#: inc/custom-types.php:27
 msgid "New Newsletter"
 msgstr ""
 
-#: inc/custom-types.php:25
+#: inc/custom-types.php:28
 msgid "Edit Newsletter"
 msgstr ""
 
-#: inc/custom-types.php:26
+#: inc/custom-types.php:29
 msgid "View Newsletter"
 msgstr ""
 
-#: inc/custom-types.php:27
+#: inc/custom-types.php:30
 msgid "All Newsletters"
 msgstr ""
 
-#: inc/custom-types.php:28
+#: inc/custom-types.php:31
 msgid "Search Newsletters"
 msgstr ""
 
-#: inc/custom-types.php:29
+#: inc/custom-types.php:32
 msgid "Parent Newsletters:"
 msgstr ""
 
-#: inc/custom-types.php:30
+#: inc/custom-types.php:33
 msgid "No newsletters found."
 msgstr ""
 
-#: inc/custom-types.php:31
+#: inc/custom-types.php:34
 msgid "No newsletters found in Trash."
 msgstr ""
 
-#: inc/template-tags.php:157
+#: inc/menus.php:17
+msgid "Footer Primary"
+msgstr ""
+
+#: inc/menus.php:18
+msgid "Footer Secondary"
+msgstr ""
+
+#: inc/menus.php:19
+msgid "Featured Columns"
+msgstr ""
+
+#: inc/menus.php:20
+msgid "Network Menu"
+msgstr ""
+
+#: inc/menus.php:21
+msgid "Support Menu"
+msgstr ""
+
+#: inc/menus.php:22
+msgid "Secondary"
+msgstr ""
+
+#: inc/menus.php:23
+msgid "Primary"
+msgstr ""
+
+#: inc/menus.php:24
+msgid "User Account Access Menu"
+msgstr ""
+
+#: inc/menus.php:25
+msgid "User Account Management Menu"
+msgstr ""
+
+#. translators: the placeholder is the time string, which can be translated
+#: inc/template-tags.php:205
 msgctxt "post date"
 msgid "%s"
 msgstr ""
 
 #. translators: used between list items, there is a space after the comma
-#: inc/template-tags.php:507, inc/template-tags.php:513
+#. translators: used between list items, there is a space after the comma
+#: inc/template-tags.php:630, inc/template-tags.php:637
 msgid ", "
 msgstr ""
 
-#: inc/template-tags.php:509
+#. translators: placeholder is the list of categories
+#: inc/template-tags.php:633
 msgid "Posted in %1$s"
 msgstr ""
 
-#: inc/template-tags.php:515
+#. translators: placeholder is the list of tags
+#: inc/template-tags.php:640
 msgid "Tagged %1$s"
 msgstr ""
 
-#. translators: %s: post title
-#: inc/template-tags.php:525
+#: inc/template-tags.php:650
 msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
-#: inc/template-tags.php:541, inc/template-tags.php:569
+#. translators: %s: Name of current post
+#. translators: %s: Name of current post
+#: inc/template-tags.php:666, inc/template-tags.php:696
 msgid "Edit %s"
 msgstr ""
 
-#: inc/user-accounts.php:132
+#: inc/user-accounts.php:212
 msgid "You are not allowed to access this part of the site"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-preferences-form.php:39
+#: user-account-management-templates/front-end/account-preferences-form.php:41
 msgid "Your preferences were successfully updated."
 msgstr ""
 
-#: user-account-management-templates/front-end/account-preferences-form.php:47
+#: user-account-management-templates/front-end/account-preferences-form.php:49
 msgid "Reading Preferences:"
 msgstr ""
