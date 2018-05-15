@@ -51,7 +51,7 @@ if ( ! function_exists( 'share_content' ) ) :
 			$element   = $elements->item( 0 );
 
 			$item = $doc->createDocumentFragment();
-			$item->appendXML( '<li class="' . $classname . '"><a rel="nofollow" class="sd-button share-icon" href="' . site_url( '/user/login/?source=share_email&amp;redirect_to=https://minnpost-wordpress.test/politics-policy/2017/11/we-ve-learned-how-survive-amid-allegations-women-describe-toxic-culture-minn/' ) . '"><span>Email</span></a></li>' );
+			$item->appendXML( '<li class="' . $classname . '"><a rel="nofollow" class="sd-button share-icon" href="' . site_url( '/user/login/?source=share_email&amp;redirect_to=' . get_permalink() ) . '"><span>Email</span></a></li>' );
 
 			$element->parentNode->replaceChild( $item, $element );
 
