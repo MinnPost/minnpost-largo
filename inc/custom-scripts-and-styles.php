@@ -107,7 +107,7 @@ if ( ! function_exists( 'minnpost_google_analytics_dimensions' ) ) :
 			$dimensions['3'] = get_post_type();
 		}
 
-		if ( is_singular() && function_exists( 'minnpost_get_category_name' ) ) {
+		if ( is_single() && function_exists( 'minnpost_get_category_name' ) ) {
 			$post_id         = get_the_ID();
 			$dimensions['4'] = minnpost_get_category_name( $post_id );
 		}
