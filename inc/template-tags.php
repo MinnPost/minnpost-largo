@@ -227,9 +227,16 @@ if ( ! function_exists( 'minnpost_posted_by' ) ) :
 			printf( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) );
 		else :
 			if ( function_exists( 'coauthors_posts_links' ) ) :
-				printf( 'By ' . coauthors_posts_links( ',', ',', null, null, false ) );
+				printf(
+					'By %s ',
+					coauthors_posts_links( ',', ',', null, null, false )
+				);
 			else :
-				printf( 'By <a href="' . get_the_author_posts_url( get_the_author_meta( 'ID' ) ) . '">' . the_author( $id ) . '</a>' );
+				printf(
+					'By <a href="%s">%s</a>',
+					get_the_author_posts_url( get_the_author_meta( 'ID' ) ),
+					the_author( $id )
+				);
 			endif;
 		endif;
 	}
