@@ -848,6 +848,41 @@ if ( ! function_exists( 'minnpost_get_category_sponsorship' ) ) :
 endif;
 
 /**
+* Outputs HTML for deck
+*
+* @param int $post_id
+*
+*/
+if ( ! function_exists( 'minnpost_deck' ) ) :
+	function minnpost_deck( $post_id = '' ) {
+		$deck = minnpost_get_deck( $post_id );
+		echo $deck;
+	}
+endif;
+
+/**
+* Returns the deck, if it exists
+*
+* @param int $post_id
+* @param int $category_id
+* @return string
+*
+*/
+if ( ! function_exists( 'minnpost_get_deck' ) ) :
+	function minnpost_get_deck( $post_id = '' ) {
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
+		$deck = get_post_meta( $post_id, '_mp_subtitle_settings_deck', true );
+		if ( ! empty( $deck ) ) {
+			return '<div class="m-entry-meta m-entry-meta-deck">' . $deck . '</div>';
+		} else {
+			return '';
+		}
+	}
+endif;
+
+/**
 * Outputs HTML for MinnPost Plus content
 *
 * @param int $post_id

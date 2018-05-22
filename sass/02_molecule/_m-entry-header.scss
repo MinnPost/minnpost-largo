@@ -21,6 +21,10 @@
 		font-size: 124%;
 		text-transform: none;
 		font-weight: normal;
+		&.m-entry-meta-deck {
+			margin-bottom: 0.25em;
+			font-weight: bold;
+		}
 	}
 }
 .m-page .m-entry-header {

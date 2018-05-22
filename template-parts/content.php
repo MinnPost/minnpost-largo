@@ -42,6 +42,8 @@
 			?>
 		</div>
 
+		<?php minnpost_deck(); ?>
+
 		<div class="m-entry-meta">
 			<?php minnpost_posted_by(); ?> | <?php minnpost_posted_on(); ?>
 		</div>
