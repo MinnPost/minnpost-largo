@@ -212,6 +212,45 @@ if ( ! function_exists( 'minnpost_posted_on' ) ) :
 endif;
 
 /**
+* Get when the article was posted
+*
+* @param int $id
+* @return string
+*
+*/
+if ( ! function_exists( 'minnpost_get_posted_on' ) ) :
+	/**
+	 * Prints HTML with meta information for the current post-date/time and author.
+	 */
+	function minnpost_get_posted_on( $id = '' ) {
+		$posted_on = '';
+		if ( '' === $id ) {
+			$id = get_the_ID();
+		}
+		$hide_date = get_post_meta( $id, '_mp_remove_date_from_display', true );
+		if ( 'on' === $hide_date ) {
+			return $posted_on;
+		}
+		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
+		$time_string = sprintf( $time_string,
+			esc_attr( get_the_date( 'c' ), $id ),
+			esc_html( get_the_date( '', $id ) ),
+			esc_attr( get_the_modified_date( 'c', $id ) ),
+			esc_html( get_the_modified_date( '', $id ) )
+		);
+
+		$posted_on = sprintf(
+			// translators: the placeholder is the time string, which can be translated
+			esc_html_x( '%s', 'post date', 'minnpost-largo' ),
+			$time_string
+		);
+
+		$posted_on = '<span class="posted-on">' . $posted_on . '</span>'; // WPCS: XSS OK.
+		return $posted_on;
+	}
+endif;
+
+/**
 * Output the author/authors who posted the article
 * This depends on the Co-Authors Plus plugin
 *
@@ -223,22 +262,7 @@ if ( ! function_exists( 'minnpost_posted_by' ) ) :
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
-		if ( ! empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) ) ) :
-			printf( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) );
-		else :
-			if ( function_exists( 'coauthors_posts_links' ) ) :
-				printf(
-					'By %s ',
-					coauthors_posts_links( ',', ',', null, null, false )
-				);
-			else :
-				printf(
-					'By <a href="%s">%s</a>',
-					get_the_author_posts_url( get_the_author_meta( 'ID' ) ),
-					the_author( $id )
-				);
-			endif;
-		endif;
+		echo minnpost_get_posted_by();
 	}
 endif;
 
@@ -255,6 +279,11 @@ if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
+		$posted_by   = '';
+		$hide_author = get_post_meta( $id, '_mp_remove_author_from_display', true );
+		if ( 'on' === $hide_author ) {
+			return $posted_by;
+		}
 		if ( ! empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) ) ) :
 			return esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) );
 		else :
@@ -264,6 +293,7 @@ if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
 				return 'By <a href="' . get_the_author_posts_url( get_the_author_meta( 'ID' ) ) . '">' . the_author( $id ) . '</a>';
 			endif;
 		endif;
+		return $posted_by;
 	}
 endif;
 

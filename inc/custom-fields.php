@@ -211,6 +211,48 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		$object_type = 'post';
 
 		/**
+		 * Display settings
+		 */
+		$display_settings = new_cmb2_box( array(
+			'id'           => $object_type . '_display_settings',
+			'title'        => 'Display Settings',
+			'object_types' => array( $object_type ),
+			'context'      => 'normal',
+			'priority'     => 'high',
+			'closed'       => true,
+		) );
+		$display_settings->add_field( array(
+			'name' => 'Remove category from display?',
+			'id'   => '_mp_remove_category_from_display',
+			'type' => 'checkbox',
+			'desc' => '',
+		) );
+		$display_settings->add_field( array(
+			'name' => 'Remove title from display?',
+			'id'   => '_mp_remove_title_from_display',
+			'type' => 'checkbox',
+			'desc' => '',
+		) );
+		$display_settings->add_field( array(
+			'name' => 'Remove author(s) from display?',
+			'id'   => '_mp_remove_author_from_display',
+			'type' => 'checkbox',
+			'desc' => '',
+		) );
+		$display_settings->add_field( array(
+			'name' => 'Remove deck from display?',
+			'id'   => '_mp_remove_deck_from_display',
+			'type' => 'checkbox',
+			'desc' => '',
+		) );
+		$display_settings->add_field( array(
+			'name' => 'Remove date from display?',
+			'id'   => '_mp_remove_date_from_display',
+			'type' => 'checkbox',
+			'desc' => '',
+		) );
+
+		/**
 		 * Image settings
 		 */
 		$image_settings = new_cmb2_box( array(

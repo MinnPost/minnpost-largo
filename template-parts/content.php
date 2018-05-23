@@ -25,28 +25,35 @@
 
 	<header class="m-entry-header<?php if ( is_singular() ) { ?> m-entry-header-singular<?php } ?><?php if ( is_single() ) { ?> m-entry-header-single<?php } ?>">
 		<?php
-		if ( is_single() ) :
-			the_title( '<h1 class="a-entry-title">', '</h1>' );
-		else :
-			the_title( '<h3 class="a-entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
-		endif;
+		$hide_title = get_post_meta( $id, '_mp_remove_title_from_display', true );
+		if ( 'on' !== $hide_title ) {
+			if ( is_single() ) :
+				the_title( '<h1 class="a-entry-title">', '</h1>' );
+			else :
+				the_title( '<h3 class="a-entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
+			endif;
+		}
 
 		if ( 'post' === get_post_type() ) :
 		?>
 
-		<div class="m-entry-share m-entry-share-top">
-			<?php
-			if ( function_exists( 'sharing_display' ) ) {
-				sharing_display( '', true );
-			}
-			?>
-		</div>
+			<?php if ( function_exists( 'sharing_display' ) ) : ?>
+				<div class="m-entry-share m-entry-share-top">
+					<?php sharing_display( '', true ); ?>
+				</div>
+			<?php endif; ?>
 
-		<?php minnpost_deck(); ?>
+			<?php minnpost_deck(); ?>
 
-		<div class="m-entry-meta">
-			<?php minnpost_posted_by(); ?> | <?php minnpost_posted_on(); ?>
-		</div>
+			<?php if ( '' !== minnpost_get_posted_by() && '' !== minnpost_get_posted_on() ) : ?>
+				<div class="m-entry-meta">
+					<?php minnpost_posted_by(); ?> | <?php minnpost_posted_on(); ?>
+				</div>
+			<?php elseif ( '' !== minnpost_get_posted_by() ) : ?>
+				<?php minnpost_posted_by(); ?>
+			<?php elseif ( '' !== minnpost_get_posted_on() ) : ?>
+				<?php minnpost_posted_on(); ?>
+			<?php endif; ?>
 
 		<?php endif; ?>
 
@@ -62,13 +69,11 @@
 		<?php the_content(); ?>
 	</div><!-- .m-entry-content -->
 
-	<div class="m-entry-share m-entry-share-bottom">
-		<?php
-		if ( function_exists( 'sharing_display' ) ) {
-			sharing_display( '', true );
-		}
-		?>
-	</div>
+	<?php if ( function_exists( 'sharing_display' ) ) : ?>
+		<div class="m-entry-share m-entry-share-bottom">
+			<?php sharing_display( '', true ); ?>
+		</div>
+	<?php endif; ?>
 
 	<?php echo do_shortcode( '[newsletter_embed newsletter="default"]' ); ?>
 
