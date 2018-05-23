@@ -296,6 +296,43 @@ if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
 endif;
 
 /**
+* Output the share buttons for top or bottom
+*
+* @param string $position
+* @param int $id
+*
+*/
+if ( ! function_exists( 'minnpost_share_buttons' ) ) :
+	function minnpost_share_buttons( $position, $id = '' ) {
+		if ( '' === $id ) {
+			$id = get_the_ID();
+		}
+		$display_share  = true;
+		$share_location = get_post_meta( $id, '_mp_share_display_location', true );
+		if ( '' !== $share_location ) {
+			switch ( $share_location ) {
+				case 'both':
+					$display_share = true;
+					break;
+				case $position:
+					$display_share = true;
+					break;
+				default:
+					$display_share = false;
+					break;
+			}
+		}
+		if ( function_exists( 'sharing_display' ) && true === $display_share ) {
+		?>
+			<div class="m-entry-share m-entry-share-<?php echo $position; ?>">
+				<?php sharing_display( '', true ); ?>
+			</div>
+		<?php
+		}
+	}
+endif;
+
+/**
 * Output the related stories for a post
 *
 * @param string $type

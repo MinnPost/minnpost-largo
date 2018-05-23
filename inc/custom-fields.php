@@ -263,6 +263,19 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'type' => 'checkbox',
 			'desc' => '',
 		) );
+		$display_settings->add_field( array(
+			'name'             => 'Share button location',
+			'id'               => '_mp_share_display_location',
+			'type'             => 'select',
+			'show_option_none' => true,
+			'desc'             => 'Select an location for the share buttons to display',
+			'default'          => 'both',
+			'options'          => array(
+				'both'   => __( 'Both', 'minnpost-largo' ),
+				'top'    => __( 'Top', 'minnpost-largo' ),
+				'bottom' => __( 'Bottom', 'minnpost-largo' ),
+			),
+		) );
 
 		/**
 		 * Image settings

@@ -43,11 +43,7 @@
 		if ( 'post' === get_post_type() ) :
 		?>
 
-			<?php if ( function_exists( 'sharing_display' ) ) : ?>
-				<div class="m-entry-share m-entry-share-top">
-					<?php sharing_display( '', true ); ?>
-				</div>
-			<?php endif; ?>
+			<?php minnpost_share_buttons( 'top' ); ?>
 
 			<?php minnpost_deck(); ?>
 
@@ -75,11 +71,7 @@
 		<?php the_content(); ?>
 	</div><!-- .m-entry-content -->
 
-	<?php if ( function_exists( 'sharing_display' ) ) : ?>
-		<div class="m-entry-share m-entry-share-bottom">
-			<?php sharing_display( '', true ); ?>
-		</div>
-	<?php endif; ?>
+	<?php minnpost_share_buttons( 'bottom' ); ?>
 
 	<?php if ( 'on' !== get_post_meta( get_the_ID(), '_mp_remove_newsletter_signup_from_display', true ) ) : ?>
 		<?php echo do_shortcode( '[newsletter_embed newsletter="default"]' ); ?>
