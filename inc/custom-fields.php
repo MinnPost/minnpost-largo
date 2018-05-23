@@ -228,6 +228,12 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'desc' => '',
 		) );
 		$display_settings->add_field( array(
+			'name' => 'Replace category text',
+			'id'   => '_mp_replace_category_text',
+			'type' => 'text',
+			'desc' => 'This text will show in place of the category',
+		) );
+		$display_settings->add_field( array(
 			'name' => 'Remove title from display?',
 			'id'   => '_mp_remove_title_from_display',
 			'type' => 'checkbox',
@@ -465,6 +471,12 @@ if ( ! function_exists( 'cmb2_page_fields' ) ) :
 			'object_types' => array( $object_type ),
 			'context'      => 'normal',
 			'priority'     => 'low',
+		) );
+		$page_settings->add_field( array(
+			'name' => 'Pre-title text',
+			'id'   => '_mp_replace_category_text',
+			'type' => 'text',
+			'desc' => 'This text will show above the title',
 		) );
 		$page_settings->add_field( array(
 			'name' => 'Remove title from display?',

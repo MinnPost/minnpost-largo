@@ -838,6 +838,41 @@ if ( ! function_exists( 'minnpost_get_category_name' ) ) :
 endif;
 
 /**
+* Replace category text at the top of a post
+*
+* @param int $post_id
+* @return string $pre_title_text
+*
+*/
+if ( ! function_exists( 'minnpost_get_replace_category_text' ) ) :
+	function minnpost_get_replace_category_text( $post_id = '' ) {
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
+		$replace_category_text = get_post_meta( $post_id, '_mp_replace_category_text', true );
+		return $replace_category_text;
+	}
+endif;
+
+/**
+* Outputs HTML for pre title text
+*
+* @param int $post_id
+*
+*/
+if ( ! function_exists( 'minnpost_replace_category_text' ) ) :
+	function minnpost_replace_category_text( $post_id = '' ) {
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
+		$replace_category_text = minnpost_get_replace_category_text( $post_id );
+		if ( '' !== $replace_category_text ) {
+			echo '<div class="a-breadcrumb">' . $replace_category_text . '</div>';
+		}
+	}
+endif;
+
+/**
 * Outputs HTML for category sponsorship
 *
 * @param int $post_id

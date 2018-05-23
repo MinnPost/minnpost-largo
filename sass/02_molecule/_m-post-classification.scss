@@ -1,5 +1,6 @@
-.m-post-classification {
+.m-post-classification, .m-page-classification {
 	max-width: 100%;
 	display: flex;
 	justify-content: space-between;
+	padding: 10px 0;
 }

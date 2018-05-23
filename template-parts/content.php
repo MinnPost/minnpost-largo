@@ -11,9 +11,13 @@
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post' ); ?>>
 
-	<?php if ( '' !== minnpost_get_category_name() ) : ?>
+	<?php if ( '' !== minnpost_get_category_name() || '' !== minnpost_get_replace_category_text() ) : ?>
 		<div class="m-post-classification">
-			<?php minnpost_category_breadcrumb(); ?>
+			<?php if ( '' === minnpost_get_replace_category_text() ) : ?>
+				<?php minnpost_category_breadcrumb(); ?>
+			<?php else : ?>
+				<?php minnpost_replace_category_text(); ?>
+			<?php endif; ?>
 			<?php minnpost_plus_icon(); ?>
 		</div>
 		<?php minnpost_category_sponsorship(); ?>
