@@ -1,5 +1,4 @@
-body .node-unpublished {background-repeat: no-repeat;}
-body #content-header .page-title, body .fieldlayout-region-before-detail, body .mp_classification {
+#content .a-entry-title, #content .m-entry-meta {
   display: none;
 }
 
