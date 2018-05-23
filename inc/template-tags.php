@@ -801,9 +801,14 @@ endif;
 */
 if ( ! function_exists( 'minnpost_get_category_name' ) ) :
 	function minnpost_get_category_name( $post_id = '' ) {
-
+		$category_name = '';
 		if ( '' === $post_id ) {
 			$post_id = get_the_ID();
+		}
+
+		$hide_category = get_post_meta( $post_id, '_mp_remove_category_from_display', true );
+		if ( 'on' === $hide_category ) {
+			return $category_name;
 		}
 
 		$category_permalink = get_post_meta( $post_id, '_category_permalink', true );

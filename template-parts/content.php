@@ -11,11 +11,13 @@
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post' ); ?>>
 
-	<div class="m-post-classification">
-		<?php minnpost_category_breadcrumb(); ?>
-		<?php minnpost_plus_icon(); ?>
-	</div>
-	<?php minnpost_category_sponsorship(); ?>
+	<?php if ( '' !== minnpost_get_category_name() ) : ?>
+		<div class="m-post-classification">
+			<?php minnpost_category_breadcrumb(); ?>
+			<?php minnpost_plus_icon(); ?>
+		</div>
+		<?php minnpost_category_sponsorship(); ?>
+	<?php endif; ?>
 
 	<?php
 	if ( ! is_singular() ) {
