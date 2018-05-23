@@ -112,8 +112,6 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 		if ( 'large' === $size ) {
 			if ( '' !== $main_image_id ) {
 				$image_id = $main_image_id;
-			} elseif ( '' !== $thumbnail_image_id ) {
-				$image_id = $thumbnail_image_id;
 			}
 		} else {
 			if ( '' !== $thumbnail_image_id ) {
