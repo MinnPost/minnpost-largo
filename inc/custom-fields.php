@@ -257,6 +257,12 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'type' => 'checkbox',
 			'desc' => '',
 		) );
+		$display_settings->add_field( array(
+			'name' => 'Remove newsletter signup from display?',
+			'id'   => '_mp_remove_newsletter_signup_from_display',
+			'type' => 'checkbox',
+			'desc' => '',
+		) );
 
 		/**
 		 * Image settings

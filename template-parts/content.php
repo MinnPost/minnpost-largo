@@ -81,7 +81,9 @@
 		</div>
 	<?php endif; ?>
 
-	<?php echo do_shortcode( '[newsletter_embed newsletter="default"]' ); ?>
+	<?php if ( 'on' !== get_post_meta( get_the_ID(), '_mp_remove_newsletter_signup_from_display', true ) ) : ?>
+		<?php echo do_shortcode( '[newsletter_embed newsletter="default"]' ); ?>
+	<?php endif; ?>
 
 	<?php
 	minnpost_related( 'multimedia' );
