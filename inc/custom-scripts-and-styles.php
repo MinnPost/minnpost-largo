@@ -37,8 +37,8 @@ if ( ! function_exists( 'minnpost_largo_add_remove_scripts' ) ) :
 	function minnpost_largo_add_remove_scripts() {
 		// add
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && 'true' === SCRIPT_DEBUG ) ? '' : '.min';
-		wp_enqueue_script( 'modernizr', get_theme_file_uri() . '/assets/js/modernizr-custom' . $suffix . '.js', array(), '1.0', true );
-		wp_enqueue_script( 'minnpost', get_theme_file_uri() . '/assets/js/minnpost' . $suffix . '.js', array( 'jquery', 'modernizr' ), filemtime( get_theme_file_path() . '/assets/js/minnpost' . $suffix . '.js' ), false );
+		wp_enqueue_script( 'modernizr', get_theme_file_uri() . '/assets/js/modernizr-custom' . $suffix . '.js', array(), '1.0', false );
+		wp_enqueue_script( 'minnpost', get_theme_file_uri() . '/assets/js/minnpost' . $suffix . '.js', array( 'jquery', 'modernizr' ), filemtime( get_theme_file_path() . '/assets/js/minnpost' . $suffix . '.js' ), true );
 		// localize
 		$params = array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
