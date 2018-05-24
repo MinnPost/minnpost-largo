@@ -23,20 +23,30 @@ jQuery( document ).ready( function( $ ) {
 				if ( response.success === true ) {
 					$('fieldset', that).hide();
 					button.text('Thanks');
+					var analytics_action = 'Signup';
 					switch (response.data.user_status) {
 						case 'existing':
+							analytics_action = 'Update';
 							message = 'Thanks for updating your email preferences. They will go into effect immediately.';
 							break;
 						case 'new':
+							analytics_action = 'Signup';
 							message = 'We have added you to the MinnPost mailing list.';
 							break;
 						case 'pending':
+							analytics_action = 'Signup';
 							message = 'We have added you to the MinnPost mailing list. You will need to click the confirmation link in the email we sent to begin receiving messages.';
 							break;
+					}
+					if ( 'function' === typeof mp_analytics_tracking_event ) {
+						mp_analytics_tracking_event( 'event', 'Newsletter', analytics_action, location.pathname );
 					}
 				} else {
 					button.prop('disabled', false);
 					button.text('Subscribe');
+					if ( 'function' === typeof mp_analytics_tracking_event ) {
+						mp_analytics_tracking_event( 'event', 'Newsletter', 'Fail', location.pathname );
+					}
 				}
 				$('.m-hold-message').html('<div class="m-form-message m-form-message-info">' + message + '</div>');
 			})
@@ -44,6 +54,9 @@ jQuery( document ).ready( function( $ ) {
 				$('.m-hold-message').html('<div class="m-form-message m-form-message-info">An error has occured. Please try again.</div>');
 				button.prop('disabled', false);
 				button.text('Subscribe');
+				if ( 'function' === typeof mp_analytics_tracking_event ) {
+					mp_analytics_tracking_event( 'event', 'Newsletter', 'Fail', location.pathname );
+				}
 			})
 			.always(function() {
 				event.target.reset();
