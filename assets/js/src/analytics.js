@@ -10,6 +10,58 @@ function mp_analytics_tracking_event( type, category, action, label, value ) {
 	}
 }
 
+function trackShare( text, position ) {
+
+	// if a not logged in user tries to email, don't count that as a share
+	if ( ! $( 'body ').hasClass( 'logged-in') && 'Email' === text ) {
+		return;
+	}
+
+	// track as an event, and as social if it is twitter or fb
+	mp_analytics_tracking_event( 'event', 'Share - ' + position, text, location.pathname );
+	if ( 'undefined' !== typeof ga ) {
+		if ( 'Facebook' === text || 'Twitter' === text ) {
+			if ( text == 'Facebook' ) {
+				ga( 'send', 'social', text, 'Share', location.pathname );
+			} else {
+				ga( 'send', 'social', text, 'Tweet', location.pathname );
+			}
+		}
+	} else {
+		return;
+	}
+}
+
+jQuery ( '.m-entry-share-top a' ).click( function( $ ) {
+	var text = $( this ).text().trim();
+	var position = 'top';
+	trackShare( text, position );
+});
+
+jQuery ( '.m-entry-share-bottom a' ).click( function( $ ) {
+	var text = $( this ).text().trim();
+	var position = 'bottom';
+	trackShare( text, position );
+});
+
+$( '#navigation-featured a' ).click( function( e ) {
+	mp_analytics_tracking_event( 'event', 'Featured Bar Link', 'Click', this.href );
+});
+$( 'a.glean-sidebar' ).click( function( e ) {
+	mp_analytics_tracking_event( 'event', 'Sidebar Support Link', 'Click', this.href );
+});
+
+$( 'a', $( '#o-site-sidebar' ) ).click( function( e ) {
+	var widget_title = $(this).closest('.m-widget').find('h3').text();
+	var sidebar_section_title = '';
+	if (widget_title === '') {
+		//sidebar_section_title = $(this).closest('.node-type-spill').find('.node-title a').text();
+	} else {
+		sidebar_section_title = widget_title;
+	}
+	mp_analytics_tracking_event('event', 'Sidebar Link', 'Click', sidebar_section_title);
+});
+
 jQuery( document ).ready( function ( $ ) {
 	if ( 'undefined' !== typeof minnpost_membership_data && '' !== minnpost_membership_data.url_access_level ) {
 		var type = 'event';
