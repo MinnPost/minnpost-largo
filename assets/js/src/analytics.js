@@ -13,7 +13,7 @@ function mp_analytics_tracking_event( type, category, action, label, value ) {
 function trackShare( text, position ) {
 
 	// if a not logged in user tries to email, don't count that as a share
-	if ( ! $( 'body ').hasClass( 'logged-in') && 'Email' === text ) {
+	if ( ! jQuery( 'body ').hasClass( 'logged-in') && 'Email' === text ) {
 		return;
 	}
 
@@ -51,7 +51,7 @@ jQuery( 'a.glean-sidebar' ).click( function( $ ) {
 	mp_analytics_tracking_event( 'event', 'Sidebar Support Link', 'Click', this.href );
 });
 
-jQuery( 'a', $( '#o-site-sidebar' ) ).click( function( $ ) {
+jQuery( 'a', jQuery( '#o-site-sidebar' ) ).click( function( $ ) {
 	var widget_title = $(this).closest('.m-widget').find('h3').text();
 	var sidebar_section_title = '';
 	if (widget_title === '') {
