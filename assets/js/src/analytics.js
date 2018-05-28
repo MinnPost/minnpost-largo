@@ -44,14 +44,14 @@ jQuery ( '.m-entry-share-bottom a' ).click( function( $ ) {
 	trackShare( text, position );
 });
 
-$( '#navigation-featured a' ).click( function( e ) {
+jquery( '#navigation-featured a' ).click( function( $ ) {
 	mp_analytics_tracking_event( 'event', 'Featured Bar Link', 'Click', this.href );
 });
-$( 'a.glean-sidebar' ).click( function( e ) {
+jquery( 'a.glean-sidebar' ).click( function( $ ) {
 	mp_analytics_tracking_event( 'event', 'Sidebar Support Link', 'Click', this.href );
 });
 
-$( 'a', $( '#o-site-sidebar' ) ).click( function( e ) {
+jquery( 'a', $( '#o-site-sidebar' ) ).click( function( $ ) {
 	var widget_title = $(this).closest('.m-widget').find('h3').text();
 	var sidebar_section_title = '';
 	if (widget_title === '') {
