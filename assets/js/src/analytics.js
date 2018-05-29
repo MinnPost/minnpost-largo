@@ -53,7 +53,7 @@
 		mp_analytics_tracking_event( 'event', 'Sidebar Support Link', 'Click', this.href );
 	});
 
-	$( 'a', $( '#o-site-sidebar' ) ).click( function( e ) {
+	$( 'a', $( '.o-site-sidebar' ) ).click( function( e ) {
 		var widget_title = $(this).closest('.m-widget').find('h3').text();
 		var sidebar_section_title = '';
 		if (widget_title === '') {
