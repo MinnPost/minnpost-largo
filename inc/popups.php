@@ -40,7 +40,7 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 			'group'    => __( 'User', 'minnpost-largo' ),
 			'name'     => __( 'User: Logged In', 'minnpost-largo' ),
 			'callback' => 'is_user_logged_in',
-			//'priority' => 1,
+			'priority' => 1,
 		);
 		$conditions['has_role']     = array(
 			'group'    => __( 'User', 'minnpost-largo' ),
@@ -56,7 +56,13 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 				),
 			),
 			'callback' => 'minnpost_user_has_role',
-			//'priority' => 2,
+			'priority' => 2,
+		);
+		$conditions['is_member']    = array(
+			'group'    => __( 'User', 'minnpost-largo' ),
+			'name'     => __( 'User: Is Member', 'minnpost-largo' ),
+			'callback' => 'minnpost_user_is_member',
+			'priority' => 2,
 		);
 		/*$conditions['using_ad_blocker'] = array(
 			'group'    => __( 'User', 'minnpost-largo' ),
@@ -64,16 +70,35 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 			'callback' => 'user_is_using_ad_blocker',
 			'priority' => 2,
 		);
-		$conditions['is_member']        = array(
-			'group'    => __( 'User', 'minnpost-largo' ),
-			'name'     => __( 'User: Is Member', 'minnpost-largo' ),
-			'callback' => 'user_is_member',
-			'priority' => 2,
-		);*/
-
+		*/
 		return $conditions;
 	}
 endif;
+
+if ( ! function_exists( 'minnpost_user_is_member' ) ) :
+	function minnpost_user_is_member() {
+		$user = wp_get_current_user();
+		if ( 0 === $user ) {
+			return false;
+		}
+
+		global $minnpost_membership;
+		$member_levels = array_column( $minnpost_membership->member_levels->get_member_levels( '', false ), 'slug' );
+
+		// Check each selected role against the user's roles
+		foreach ( $member_levels as $level ) {
+			// If the selected role matches, return true
+			if ( in_array( $level, (array) $user->roles ) ) {
+				return true;
+			}
+		}
+
+		// otherwise, return false
+		return false;
+
+	}
+endif;
+
 
 if ( ! function_exists( 'minnpost_popup_roles' ) ) :
 	function minnpost_popup_roles() {
@@ -100,7 +125,7 @@ if ( ! function_exists( 'minnpost_user_has_role' ) ) :
 
 		$settings = $settings['settings'];
 
-		// Sanity check to make sure that the 'selected' key is a valid array.
+		// we can support either single or multiple values for the <select> here
 		$check_items = array();
 		if ( is_string( $settings['selected'] ) ) {
 			$check_items[] = $settings['selected'];
@@ -131,4 +156,10 @@ if ( ! function_exists( 'minnpost_popup_cookies' ) ) :
 	}
 endif;
 
-// pum_condition_sort_order
+if ( ! function_exists( 'minnpost_popup_condition_order' ) ) :
+	add_filter( 'pum_condition_sort_order', 'minnpost_popup_condition_order', 10, 1 );
+	function minnpost_popup_condition_order( $order ) {
+		$order['User'] = 2;
+		return $order;
+	}
+endif;
