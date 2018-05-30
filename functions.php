@@ -119,3 +119,8 @@ require get_theme_file_path() . '/inc/custom-scripts-and-styles.php';
  * Jetpack related methods
  */
 require get_theme_file_path() . '/inc/jetpack.php';
+
+/**
+ * Customize that popup plugin
+ */
+require get_theme_file_path() . '/inc/popups.php';
