@@ -36,13 +36,19 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 				unset( $conditions[ $key ] );
 			}
 		}
-		$conditions['is_logged_in'] = array(
+		$conditions['is_logged_in']     = array(
 			'group'    => __( 'User', 'minnpost-largo' ),
 			'name'     => __( 'User: Logged In', 'minnpost-largo' ),
 			'callback' => 'is_user_logged_in',
 			'priority' => 1,
 		);
-		$conditions['has_role']     = array(
+		$conditions['is_member']        = array(
+			'group'    => __( 'User', 'minnpost-largo' ),
+			'name'     => __( 'User: Is Member', 'minnpost-largo' ),
+			'callback' => 'minnpost_user_is_member',
+			'priority' => 2,
+		);
+		$conditions['has_role']         = array(
 			'group'    => __( 'User', 'minnpost-largo' ),
 			'name'     => __( 'User: Has Role', 'minnpost-largo' ),
 			'fields'   => array(
@@ -58,10 +64,20 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 			'callback' => 'minnpost_user_has_role',
 			'priority' => 2,
 		);
-		$conditions['is_member']    = array(
+		$conditions['benefit_eligible'] = array(
 			'group'    => __( 'User', 'minnpost-largo' ),
-			'name'     => __( 'User: Is Member', 'minnpost-largo' ),
-			'callback' => 'minnpost_user_is_member',
+			'name'     => __( 'User: Eligible For Benefit', 'minnpost-largo' ),
+			'fields'   => array(
+				'selected' => array(
+					'placeholder' => __( 'Select Benefit', 'minnpost-largo' ),
+					'type'        => 'select',
+					'multiple'    => true,
+					//'select2'     => true,
+					'as_array'    => true,
+					'options'     => minnpost_popup_benefits(),
+				),
+			),
+			'callback' => 'minnpost_user_eligible_for_benefit',
 			'priority' => 2,
 		);
 		/*$conditions['using_ad_blocker'] = array(
@@ -75,6 +91,11 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 	}
 endif;
 
+/**
+* Check to see if the user has any membership level role
+*
+* @return bool
+*/
 if ( ! function_exists( 'minnpost_user_is_member' ) ) :
 	function minnpost_user_is_member() {
 		$user = wp_get_current_user();
@@ -99,7 +120,11 @@ if ( ! function_exists( 'minnpost_user_is_member' ) ) :
 	}
 endif;
 
-
+/**
+* Get roles as options for the <select>
+*
+* @return array $roles
+*/
 if ( ! function_exists( 'minnpost_popup_roles' ) ) :
 	function minnpost_popup_roles() {
 		static $roles = null;
@@ -116,6 +141,12 @@ if ( ! function_exists( 'minnpost_popup_roles' ) ) :
 	}
 endif;
 
+/**
+* Check to see if the user has any of the selected roles
+*
+* @param array $settings
+* @return bool
+*/
 if ( ! function_exists( 'minnpost_user_has_role' ) ) :
 	function minnpost_user_has_role( $settings = array() ) {
 		$user = wp_get_current_user();
@@ -133,13 +164,8 @@ if ( ! function_exists( 'minnpost_user_has_role' ) ) :
 			$check_items = $settings['selected'];
 		}
 
-		// Check each selected role against the user's roles
-		foreach ( $check_items as $check ) {
-			// If the selected role matches, return true
-			if ( in_array( $check, (array) $user->roles ) ) {
-				return true;
-			}
-		}
+		// here we will need to use whatever method we use to check whether a user is eligible to claim the selected benefit(s)
+		// if the user is eligible for the selected benefit, return true
 
 		// otherwise, return false
 		return false;
@@ -147,6 +173,42 @@ if ( ! function_exists( 'minnpost_user_has_role' ) ) :
 	}
 endif;
 
+/**
+* Get benefits as options for the <select>
+*
+* @return array $benefits
+*/
+if ( ! function_exists( 'minnpost_popup_benefits' ) ) :
+	function minnpost_popup_benefits() {
+		static $benefits = null;
+		if ( null === $benefits ) {
+			$benefits = array(
+				'partner_offers' => 'Partner Offers',
+				'fan_club'       => 'Fan Club',
+			);
+		}
+		return $benefits;
+	}
+endif;
+
+/**
+* Check to see if the user is eligible for has any of the selected benefits
+*
+* @param array $settings
+* @return bool
+*/
+if ( ! function_exists( 'minnpost_user_eligible_for_benefit' ) ) :
+	function minnpost_user_eligible_for_benefit( $settings = array() ) {
+	}
+endif;
+
+
+/**
+* Filter the cookies that can trigger a popup
+*
+* @param array $cookies
+* @return array $cookies
+*/
 if ( ! function_exists( 'minnpost_popup_cookies' ) ) :
 	add_filter( 'pum_registered_cookies', 'minnpost_popup_cookies', 10, 1 );
 	function minnpost_popup_cookies( $cookies ) {
@@ -156,6 +218,12 @@ if ( ! function_exists( 'minnpost_popup_cookies' ) ) :
 	}
 endif;
 
+/**
+* Filter the order of popup conditons in the admin UI
+*
+* @param array $order
+* @return array $order
+*/
 if ( ! function_exists( 'minnpost_popup_condition_order' ) ) :
 	add_filter( 'pum_condition_sort_order', 'minnpost_popup_condition_order', 10, 1 );
 	function minnpost_popup_condition_order( $order ) {
