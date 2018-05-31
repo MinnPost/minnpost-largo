@@ -231,3 +231,16 @@ if ( ! function_exists( 'minnpost_popup_condition_order' ) ) :
 		return $order;
 	}
 endif;
+
+if ( ! function_exists( 'minnpost_popup_settings_fields' ) ) :
+	add_filter( 'pum_settings_fields', 'minnpost_popup_settings_fields', 10, 1 );
+	function minnpost_popup_settings_fields( $fields ) {
+		if ( isset( $fields['privacy']['forms'] ) && ! empty( $fields['privacy']['forms'] ) ) {
+			$fields['privacy']['forms'] = array();
+		}
+		if ( isset( $fields['subscriptions'] ) && ! empty( $fields['subscriptions'] ) ) {
+			$fields['subscriptions'] = array();
+		}
+		return $fields;
+	}
+endif;
