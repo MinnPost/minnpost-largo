@@ -6,6 +6,30 @@
  */
 
 /**
+* Allows us to determine if a popup can be loaded, after the conditions have been processed.
+* We use this to prevent popups on /user and /support urls
+*
+* @param bool $loadable
+* @return int $id
+*/
+if ( ! function_exists( 'minnpost_popup_is_loadable' ) ) :
+	add_filter( 'pum_popup_is_loadable', 'minnpost_popup_is_loadable', 10, 2 );
+	function minnpost_popup_is_loadable( $loadable, $id ) {
+		$url = wp_parse_url( $_SERVER['REQUEST_URI'] );
+		if ( isset( $url['path'] ) ) {
+			$path = $url['path'];
+			if ( substr( $path, 0, strlen( '/support' ) ) === '/support' ) {
+				$loadable = false;
+			}
+			if ( substr( $path, 0, strlen( '/user' ) ) === '/user' ) {
+				$loadable = false;
+			}
+		}
+		return $loadable;
+	}
+endif;
+
+/**
 * Modify the pages that show on the admin side of the popup manager
 *
 * @param array $admin_pages
