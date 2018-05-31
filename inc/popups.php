@@ -60,19 +60,31 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 				unset( $conditions[ $key ] );
 			}
 		}
-		$conditions['is_logged_in']     = array(
+		$conditions['is_logged_in']         = array(
 			'group'    => __( 'User', 'minnpost-largo' ),
-			'name'     => __( 'User: Logged In', 'minnpost-largo' ),
+			'name'     => __( 'User: Is Logged In', 'minnpost-largo' ),
 			'callback' => 'is_user_logged_in',
 			'priority' => 1,
 		);
-		$conditions['is_member']        = array(
+		$conditions['is_member']            = array(
 			'group'    => __( 'User', 'minnpost-largo' ),
 			'name'     => __( 'User: Is Member', 'minnpost-largo' ),
 			'callback' => 'minnpost_user_is_member',
 			'priority' => 2,
 		);
-		$conditions['has_role']         = array(
+		$conditions['is_sustaining_member'] = array(
+			'group'    => __( 'User', 'minnpost-largo' ),
+			'name'     => __( 'User: Is Sustaining Member', 'minnpost-largo' ),
+			'callback' => 'minnpost_user_is_sustaining_member',
+			'priority' => 2,
+		);
+		$conditions['is_in_campaign']       = array(
+			'group'    => __( 'User', 'minnpost-largo' ),
+			'name'     => __( 'User: In This Campaign', 'minnpost-largo' ),
+			'callback' => 'minnpost_user_is_in_campaign',
+			'priority' => 2,
+		);
+		$conditions['has_role']             = array(
 			'group'    => __( 'User', 'minnpost-largo' ),
 			'name'     => __( 'User: Has Role', 'minnpost-largo' ),
 			'fields'   => array(
@@ -88,7 +100,7 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 			'callback' => 'minnpost_user_has_role',
 			'priority' => 2,
 		);
-		$conditions['benefit_eligible'] = array(
+		$conditions['benefit_eligible']     = array(
 			'group'    => __( 'User', 'minnpost-largo' ),
 			'name'     => __( 'User: Eligible For Benefit', 'minnpost-largo' ),
 			'fields'   => array(
@@ -136,6 +148,56 @@ if ( ! function_exists( 'minnpost_user_is_member' ) ) :
 			if ( in_array( $level, (array) $user->roles ) ) {
 				return true;
 			}
+		}
+
+		// otherwise, return false
+		return false;
+
+	}
+endif;
+
+/**
+* Check to see if the user has the sustaining member meta field value of 1
+*
+* @return bool
+*/
+if ( ! function_exists( 'minnpost_user_is_sustaining_member' ) ) :
+	function minnpost_user_is_sustaining_member() {
+
+		$user_id = get_current_user_id();
+		if ( 0 === $user_id ) {
+			return false;
+		}
+
+		$sustaining_member = get_user_meta( $user_id, '_sustaining_member', true );
+		if ( true === filter_var( $sustaining_member, FILTER_VALIDATE_BOOLEAN ) ) {
+			// if this user is a sustaining member, return true
+			return true;
+		}
+
+		// otherwise, return false
+		return false;
+
+	}
+endif;
+
+/**
+* Check to see if the user is excluded from the current campaign
+*
+* @return bool
+*/
+if ( ! function_exists( 'minnpost_user_is_in_campaign' ) ) :
+	function minnpost_user_is_in_campaign() {
+
+		$user_id = get_current_user_id();
+		if ( 0 === $user_id ) {
+			return false;
+		}
+
+		$exclude_from_current_campaign = get_user_meta( $user_id, '_exclude_from_current_campaign', true );
+		if ( true !== filter_var( $exclude_from_current_campaign, FILTER_VALIDATE_BOOLEAN ) ) {
+			// if this user is NOT excluded from this campaign, return true
+			return true;
 		}
 
 		// otherwise, return false
