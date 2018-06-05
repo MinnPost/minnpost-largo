@@ -35,7 +35,7 @@ const paths = {
 	'icons': 'assets/img/svg-icons/*.svg',
 	'images': [ 'assets/img/*', 'assets/img/icons/*', '!assets/img/*-icons.svg' ],
 	'php': [ './*.php', './**/*.php' ],
-	'sass': 'sass/**/*.scss',
+	'sass': [ 'sass/**/*.scss', 'assets/sass/**/*.scss' ],
 	'concat_scripts': 'assets/js/src/*.js',
 	'scripts': [ 'assets/js/*.js', '!assets/js/*.min.js', '!assets/js/customizer.js' ],
 	'sprites': 'assets/img/sprites/*.png'
@@ -116,6 +116,52 @@ gulp.task( 'postcss', [ 'clean:styles' ], () =>
 );
 
 /**
+ * Compile Sass and run stylesheet through PostCSS.
+ *
+ * https://www.npmjs.com/package/gulp-sass
+ * https://www.npmjs.com/package/gulp-postcss
+ * https://www.npmjs.com/package/gulp-autoprefixer
+ * https://www.npmjs.com/package/css-mqpacker
+ */
+gulp.task( 'post_asset_css', [ 'clean:styles' ], () =>
+	gulp.src( 'assets/sass/*.scss' )
+
+		// Deal with errors.
+		.pipe( plumber( {'errorHandler': handleErrors} ) )
+
+		// Wrap tasks in a sourcemap.
+		.pipe( sourcemaps.init() )
+
+			// glob files together
+			.pipe(globbing({
+		        // Configure it to use SCSS files
+		        extensions: ['.scss']
+		    }))
+
+			// Compile Sass using LibSass.
+			.pipe( sass( {
+				'errLogToConsole': true,
+				'outputStyle': 'expanded' // Options: nested, expanded, compact, compressed
+			} ) )
+
+			// Parse with PostCSS plugins.
+			.pipe( postcss( [
+				autoprefixer( {
+					'browsers': [ 'last 2 version' ]
+				} ),
+				mqpacker( {
+					'sort': true
+				} )
+			] ) )
+
+		// Create sourcemap.
+		.pipe( sourcemaps.write() )
+
+		.pipe( gulp.dest( 'assets/css/' ) )
+		.pipe( browserSync.stream() )
+);
+
+/**
  * Minify and optimize style.css.
  *
  * https://www.npmjs.com/package/gulp-cssnano
@@ -128,6 +174,24 @@ gulp.task( 'cssnano', [ 'postcss' ], () =>
 		} ) )
 		.pipe( rename( 'style.min.css' ) )
 		.pipe( gulp.dest( './' ) )
+		.pipe( browserSync.stream() )
+);
+
+/**
+ * Minify and optimize minnpost-membership-admin.css.
+ *
+ * https://www.npmjs.com/package/gulp-cssnano
+ */
+gulp.task( 'asset_cssnano', [ 'post_asset_css' ], () =>
+	gulp.src( 'assets/css/**/*.css' )
+		.pipe( plumber( {'errorHandler': handleErrors} ) )
+		.pipe( cssnano( {
+			'safe': true // Use safe optimizations.
+		} ) )
+		.pipe( rename( function(path) {
+			path.extname = ".css";
+		} ) )
+		.pipe( gulp.dest( 'assets/css' ) )
 		.pipe( browserSync.stream() )
 );
 
@@ -355,7 +419,7 @@ gulp.task( 'markup', browserSync.reload );
 gulp.task( 'i18n', [ 'wp-pot' ] );
 gulp.task( 'icons', [ 'svg' ] );
 gulp.task( 'scripts', [ 'uglify' ] );
-gulp.task( 'styles', [ 'cssnano' ] );
+gulp.task( 'styles', [ 'cssnano', 'asset_cssnano' ] );
 gulp.task( 'sprites', [ 'spritesmith' ] );
 gulp.task( 'lint', [ 'sass:lint', 'js:lint' ] );
 gulp.task( 'default', [ 'i18n', 'icons', 'styles', 'scripts', 'imagemin'] );
