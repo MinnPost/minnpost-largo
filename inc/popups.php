@@ -420,3 +420,13 @@ if ( ! function_exists( 'minnpost_popup_url_matches' ) ) :
 		return $is_match;
 	}
 endif;
+
+
+// Checks preloaded popups in the head for which assets to enqueue.
+if ( ! function_exists( 'minnpost_popup_assets' ) ) :
+	add_action( 'pum_preload_popup', 'minnpost_popup_assets' );
+	add_filter( 'wp_enqueue_scripts', 'minnpost_popup_assets' );
+	function minnpost_popup_assets( $popup_id = 0 ) {
+		wp_enqueue_style( 'minnpost-popups', get_theme_file_uri() . 'assets/css/popups.css', array(), filemtime( get_theme_file_path() . '/assets/css/popups.css' ), false );
+	}
+endif;
