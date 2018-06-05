@@ -2,46 +2,35 @@
 .pum-theme-157583, .pum-theme-default-theme {
 	background-color: rgba( 255, 255, 255, 1.00 );
 	.pum-container {
-		padding: 18px;
+		padding: 8px;
 		border-radius: 0;
 		border: 1px none #000;
 		box-shadow: 1px 1px 3px 0px rgba( 2, 2, 2, 0.23 );
-		background-color: rgba( 249, 249, 249, 1.00 )
+		background-color: rgba( 134, 36, 39, 1.00 );
 	}
 	.pum-title {
-		color: #000;
+		color: #fff;
 		text-align: left;
 		text-shadow: 0px 0px 0px rgba( 2, 2, 2, 0.23 );
-		font-family: inherit;
-		font-weight: inherit;
+		font-family: inherit; 
 		font-size: 32px;
-		font-style: normal;
 		line-height: 36px;
 	}
 	.pum-content {
-		color: #8c8c8c;
-		font-family: inherit;
-		font-weight: inherit;
-		font-style: normal;
-	}
-	.pum-content + .pum-close {
-		height: auto;
-		width: auto;
-		left: auto;
-		right: 0;
-		bottom: auto;
-		top: 0;
-		padding: 8px;
 		color: #fff;
 		font-family: inherit;
-		font-weight: inherit;
+	}
+	.pum-content + .pum-close {
+		height: 25px;
+		width: 25px;
+		right: -12.5px;
+		top: -12.5px;
+		color: #fff;
+		font-family: inherit;
 		font-size: 12px;
-		font-style: normal;
-		line-height: 14px;
-		border: 1px none #fff;
-		border-radius: 0;
-		box-shadow: 0px 0px 0px 0px rgba( 2, 2, 2, 0.23 );
-		text-shadow: 0px 0px 0px rgba( 0, 0, 0, 0.23 );
-		background-color: rgba( 0, 183, 205, 1.00 );
-	} 
+		line-height: normal;
+		border: 2px solid #fff;
+		border-radius: 50%;
+		background-color: #000;
+	}
 }

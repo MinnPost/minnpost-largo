@@ -427,6 +427,7 @@ if ( ! function_exists( 'minnpost_popup_assets' ) ) :
 	add_action( 'pum_preload_popup', 'minnpost_popup_assets' );
 	add_filter( 'wp_enqueue_scripts', 'minnpost_popup_assets' );
 	function minnpost_popup_assets( $popup_id = 0 ) {
-		wp_enqueue_style( 'minnpost-popups', get_theme_file_uri() . 'assets/css/popups.css', array(), filemtime( get_theme_file_path() . '/assets/css/popups.css' ), false );
+		wp_dequeue_style( 'popup-maker-site' );
+		wp_enqueue_style( 'minnpost-popups', get_theme_file_uri() . '/assets/css/popups.css', array(), filemtime( get_theme_file_path() . '/assets/css/popups.css' ), false );
 	}
 endif;
