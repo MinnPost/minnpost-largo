@@ -183,7 +183,7 @@ h6, .h6 {
 	}
 }
 
-.m-entry-content h3, .m-entry-content .h3 {
+.m-entry-content h3, .m-entry-content .h3, .m-partner-offer-content h1, .m-partner-offer-content .h1 {
 	font-size: 215.4%;
 	line-height: 1.15em;
 	font-family: $font__headings;
@@ -225,4 +225,9 @@ h3.a-finish-strong {
 	font-weight: normal;
 	font-style: normal;
 	font-variant: normal;
+}
+
+h2.a-offer {
+	color: $_color-base-gray;
+	margin-bottom: 0.25em;
 }
