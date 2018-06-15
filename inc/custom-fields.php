@@ -842,6 +842,12 @@ if ( ! function_exists( 'cmb2_user_fields' ) ) :
 			'desc' => '',
 		) );
 		$user_donation_info->add_field( array(
+			'name' => 'Last Partner Claim Date',
+			'id'   => '_last_partner_claim_date',
+			'type' => 'text_date',
+			'desc' => '',
+		) );
+		$user_donation_info->add_field( array(
 			'name' => 'Exclude from current campaign',
 			'id'   => '_exclude_from_current_campaign',
 			'type' => 'checkbox',
