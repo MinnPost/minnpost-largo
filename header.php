@@ -27,7 +27,7 @@
 		</div>
 	</div>
 
-	<header id="masthead" class="o-header" role="banner">
+	<header id="masthead" class="o-header">
 		<div class="o-wrapper o-wrapper-site-header">
 			<div class="a-site-branding">
 				<a class="a-logo a-logo-svg" rel="home" href="<?php echo esc_url( home_url( '/' ) ); ?>">
@@ -37,16 +37,16 @@
 					</picture>
 				</a>
 			</div><!-- .a-site-branding -->
-			<nav id="navigation-ext" class="m-secondary-navigation" role="navigation">
+			<nav id="navigation-ext" class="m-secondary-navigation">
 				<?php
 				wp_nav_menu(
 					array(
 						'theme_location' => 'minnpost_network',
-						'menu_id' => 'minnpost-network',
-						'depth' => 1,
-						'container' => false,
-						'item_classes' => 'values',
-						'walker' => new Minnpost_Walker_Nav_Menu,
+						'menu_id'        => 'minnpost-network',
+						'depth'          => 1,
+						'container'      => false,
+						'item_classes'   => 'values',
+						'walker'         => new Minnpost_Walker_Nav_Menu,
 					)
 				);
 				?>
@@ -55,26 +55,26 @@
 				wp_nav_menu(
 					array(
 						'theme_location' => 'secondary_links',
-						'menu_id' => 'secondary-links',
-						'depth' => 1,
-						'container' => false,
-						'walker' => new Minnpost_Walker_Nav_Menu,
+						'menu_id'        => 'secondary-links',
+						'depth'          => 1,
+						'container'      => false,
+						'walker'         => new Minnpost_Walker_Nav_Menu,
 					)
 				);
 				?>
 			</nav><!-- #navigation-ext -->
 		</div>
 		<div class="o-wrapper o-wrapper-site-navigation">
-			<nav id="navigation-primary" class="m-main-navigation" role="navigation">
-				<button class="menu-toggle" aria-controls="primary-menu" aria-expanded="false"><?php esc_html_e( 'Sections', 'minnpost-largo' ); ?></button>
+			<nav id="navigation-primary" class="m-main-navigation">
+				<button class="menu-toggle" aria-controls="primary-links" aria-expanded="false"><?php esc_html_e( 'Sections', 'minnpost-largo' ); ?></button>
 				<?php
 				wp_nav_menu(
 					array(
 						'theme_location' => 'primary_links',
-						'menu_id' => 'primary-links',
-						'depth' => 1,
-						'container' => false,
-						'walker' => new Minnpost_Walker_Nav_Menu,
+						'menu_id'        => 'primary-links',
+						'depth'          => 1,
+						'container'      => false,
+						'walker'         => new Minnpost_Walker_Nav_Menu,
 					)
 				);
 				?>
@@ -83,14 +83,14 @@
 				$featured_menu = wp_nav_menu(
 					array(
 						'theme_location' => 'primary_links',
-						'menu_id' => 'featured-links',
-						'depth' => 2,
-						'container' => false,
-						'walker' => new Minnpost_Walker_Nav_Menu,
-						'item_classes' => 'values',
-						'sub_menu' => true,
-						'echo' => false,
-						'fallback_cb' => '__return_false',
+						'menu_id'        => 'featured-links',
+						'depth'          => 2,
+						'container'      => false,
+						'walker'         => new Minnpost_Walker_Nav_Menu,
+						'item_classes'   => 'values',
+						'sub_menu'       => true,
+						'echo'           => false,
+						'fallback_cb'    => '__return_false',
 					)
 				);
 
@@ -99,14 +99,13 @@
 			<?php if ( ! empty( $featured_menu ) || ! empty( $user_account_access_menu ) ) : ?>
 				<div id="navigation-featured-account-access">
 					<?php if ( ! empty( $featured_menu ) ) : ?>
-					<nav id="navigation-featured" class="m-featured-navigation" role="navigation">
+					<nav id="navigation-featured" class="m-featured-navigation">
 						<span class="a-nav-label">Featured:</span>
 						<?php echo $featured_menu; ?>
 					</nav><!-- #navigation-featured -->
 					<?php endif; ?>
-
 					<?php if ( ! empty( $user_account_access_menu ) ) : ?>
-					<nav id="navigation-user-account-access" class="m-secondary-navigation" role="navigation">
+					<nav id="navigation-user-account-access" class="m-secondary-navigation">
 						<?php echo $user_account_access_menu; ?>
 					</nav><!-- #navigation-user-account-access -->
 					<?php endif; ?>
@@ -119,7 +118,7 @@
 	<?php
 	$full_class = '';
 	if ( is_singular() ) {
-		$remove_sidebar = get_post_meta( get_the_ID() , '_mp_remove_right_sidebar', true );
+		$remove_sidebar = get_post_meta( get_the_ID(), '_mp_remove_right_sidebar', true );
 		if ( isset( $remove_sidebar ) && 'on' === $remove_sidebar ) {
 			$full_class = ' o-wrapper-content-full';
 		}

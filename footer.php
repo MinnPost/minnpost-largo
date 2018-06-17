@@ -13,7 +13,7 @@
 
 	</div>
 
-	<footer id="site-footer" class="o-footer" role="contentinfo">
+	<footer id="site-footer" class="o-footer">
 
 		<div class="o-wrapper o-wrapper-site-footer">
 
@@ -22,29 +22,29 @@
 			</aside>
 
 			<aside class="o-footer-links">
-				<nav id="footer-primary" class="m-secondary-navigation" role="navigation">
+				<nav id="footer-primary" class="m-secondary-navigation">
 					<?php
 					wp_nav_menu(
 						array(
 							'theme_location' => 'footer_primary',
-							'menu_id' => 'footer-primary',
-							'depth' => 1,
-							'container' => false,
-							'walker' => new Minnpost_Walker_Nav_Menu,
+							'menu_id'        => 'footer-primary-links',
+							'depth'          => 1,
+							'container'      => false,
+							'walker'         => new Minnpost_Walker_Nav_Menu,
 						)
 					);
 					?>
 				</nav><!-- #footer-primary -->
 
-				<nav id="footer-secondary" class="m-secondary-navigation" role="navigation">
+				<nav id="footer-secondary" class="m-secondary-navigation">
 					<?php
 					wp_nav_menu(
 						array(
 							'theme_location' => 'footer_secondary',
-							'menu_id' => 'footer-secondary',
-							'depth' => 1,
-							'container' => false,
-							'walker' => new Minnpost_Walker_Nav_Menu,
+							'menu_id'        => 'footer-secondary-links',
+							'depth'          => 1,
+							'container'      => false,
+							'walker'         => new Minnpost_Walker_Nav_Menu,
 						)
 					);
 					?>
@@ -61,7 +61,6 @@
 
 		</div>
 	</footer>
-
 
 <?php wp_footer(); ?>
 
