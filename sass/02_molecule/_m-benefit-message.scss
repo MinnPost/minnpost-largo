@@ -1,5 +1,4 @@
-.m-benefit-message {
-	display: none;
+.m-benefit-message-visible {
 	padding: 0.5em;
 	margin: 0.5em 0;
 	border: 1px solid $color__gray-lightest;
@@ -9,6 +8,10 @@
 	}
 	&.m-benefit-message-info {
 		background: rgba_color($_color-base-yellow, 0.4);
+		color: $color__gray-dark;
+	}
+	&.m-benefit-message-success {
+		background: rgba_color($color__minnpost-green, 0.4);
 		color: $color__gray-dark;
 	}
 }
