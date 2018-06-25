@@ -10,6 +10,10 @@
 		background: rgba_color($_color-base-yellow, 0.4);
 		color: $color__gray-dark;
 	}
+	&.m-benefit-message-future {
+		background: $color__gray-dark;
+		color: $color__white;
+	}
 	&.m-benefit-message-success {
 		background: rgba_color($color__minnpost-green, 0.4);
 		color: $color__gray-dark;
