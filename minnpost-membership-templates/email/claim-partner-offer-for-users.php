@@ -80,7 +80,7 @@ color: #ffffff !important; text-decoration: none !important;
 
 	<!-- limit to 50 characters; only display if there is a value -->
 	<span style="display: none !important; font-size: 0; color: #fff;"> <!-- gmail only takes display none if it has !important; outlook still doesn't care -->
-		Welcome to your MinnPost.com website account.
+		You have claimed a MinnPost partner offer.
 	</span>
 
 	<center class="wrapper" style="width: 100%; table-layout: fixed; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
@@ -136,9 +136,13 @@ color: #ffffff !important; text-decoration: none !important;
 											<tr>
 												<td valign="top" style="border-collapse: collapse; margin: 0; padding: 0;">
 													<div>
-														
-														<p>put some content in here.</p>
+														<?php
+														// formatting is done in the wysiwyg, and variable replacement is done in class-minnpost-membership-front-end.php
+														$msg = '';
+														$msg .= $attributes['body'];
 
+														echo $msg;
+														?>
 													</div>
 												</td>
 											</tr>

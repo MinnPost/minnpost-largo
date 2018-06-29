@@ -80,7 +80,7 @@ color: #ffffff !important; text-decoration: none !important;
 
 	<!-- limit to 50 characters; only display if there is a value -->
 	<span style="display: none !important; font-size: 0; color: #fff;"> <!-- gmail only takes display none if it has !important; outlook still doesn't care -->
-		Welcome to your MinnPost.com website account.
+		A partner offer has been claimed
 	</span>
 
 	<center class="wrapper" style="width: 100%; table-layout: fixed; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
