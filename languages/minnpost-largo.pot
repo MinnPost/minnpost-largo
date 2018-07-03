@@ -49,19 +49,31 @@ msgstr ""
 msgid "Trash"
 msgstr ""
 
-#: inc/custom-fields.php:320
+#: inc/custom-fields.php:274
+msgid "Both"
+msgstr ""
+
+#: inc/custom-fields.php:275
+msgid "Top"
+msgstr ""
+
+#: inc/custom-fields.php:276
+msgid "Bottom"
+msgstr ""
+
+#: inc/custom-fields.php:387
 msgid "Black on White"
 msgstr ""
 
-#: inc/custom-fields.php:321
+#: inc/custom-fields.php:388
 msgid "White on Black"
 msgstr ""
 
-#: inc/custom-fields.php:322
+#: inc/custom-fields.php:389
 msgid "White on Red"
 msgstr ""
 
-#: inc/custom-fields.php:323
+#: inc/custom-fields.php:390
 msgid "White on Transparent"
 msgstr ""
 
@@ -193,35 +205,108 @@ msgstr ""
 msgid "User Account Management Menu"
 msgstr ""
 
+#: inc/popups.php:64, inc/popups.php:70, inc/popups.php:76, inc/popups.php:82, inc/popups.php:88, inc/popups.php:104
+msgid "User"
+msgstr ""
+
+#: inc/popups.php:65
+msgid "User: Is Logged In"
+msgstr ""
+
+#: inc/popups.php:71
+msgid "User: Is Member"
+msgstr ""
+
+#: inc/popups.php:77
+msgid "User: Is Sustaining Member"
+msgstr ""
+
+#: inc/popups.php:83
+msgid "User: In This Campaign"
+msgstr ""
+
+#: inc/popups.php:89
+msgid "User: Has Role"
+msgstr ""
+
+#: inc/popups.php:92
+msgid "Select Role"
+msgstr ""
+
+#: inc/popups.php:105
+msgid "User: Eligible For Benefit"
+msgstr ""
+
+#: inc/popups.php:108
+msgid "Select Benefit"
+msgstr ""
+
+#: inc/popups.php:120, inc/popups.php:132, inc/popups.php:144, inc/popups.php:156
+msgid "URL"
+msgstr ""
+
+#: inc/popups.php:121
+msgid "URL: Is"
+msgstr ""
+
+#: inc/popups.php:124
+msgid "Enter the exact URL"
+msgstr ""
+
+#: inc/popups.php:133
+msgid "URL: Contains"
+msgstr ""
+
+#: inc/popups.php:136
+msgid "Check for text in the URL"
+msgstr ""
+
+#: inc/popups.php:145
+msgid "URL: Begins With"
+msgstr ""
+
+#: inc/popups.php:148
+msgid "Check for text at the beginning of the URL"
+msgstr ""
+
+#: inc/popups.php:157
+msgid "URL: Ends With"
+msgstr ""
+
+#: inc/popups.php:160
+msgid "Check for text at the end of the URL"
+msgstr ""
+
 #. translators: the placeholder is the time string, which can be translated
-#: inc/template-tags.php:205
+#. translators: the placeholder is the time string, which can be translated
+#: inc/template-tags.php:203, inc/template-tags.php:242
 msgctxt "post date"
 msgid "%s"
 msgstr ""
 
 #. translators: used between list items, there is a space after the comma
 #. translators: used between list items, there is a space after the comma
-#: inc/template-tags.php:630, inc/template-tags.php:637
+#: inc/template-tags.php:702, inc/template-tags.php:709
 msgid ", "
 msgstr ""
 
 #. translators: placeholder is the list of categories
-#: inc/template-tags.php:633
+#: inc/template-tags.php:705
 msgid "Posted in %1$s"
 msgstr ""
 
 #. translators: placeholder is the list of tags
-#: inc/template-tags.php:640
+#: inc/template-tags.php:712
 msgid "Tagged %1$s"
 msgstr ""
 
-#: inc/template-tags.php:650
+#: inc/template-tags.php:722
 msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
 #. translators: %s: Name of current post
 #. translators: %s: Name of current post
-#: inc/template-tags.php:666, inc/template-tags.php:696
+#: inc/template-tags.php:738, inc/template-tags.php:768
 msgid "Edit %s"
 msgstr ""
 

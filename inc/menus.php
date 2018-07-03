@@ -199,6 +199,14 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 			if ( home_url() !== $url && substr( '/wp_logout_url()', 0, $length ) === $url ) {
 				$url = wp_logout_url();
 			}
+
+			if ( rtrim( wp_login_url(), '/' ) === $url ) {
+				$current_url = $_SERVER['REQUEST_URI'];
+				if ( home_url() !== rtrim( site_url( $current_url ), '/' ) ) {
+					$url = wp_login_url( $current_url );
+				}
+			}
+			
 			if ( rtrim( site_url( '/user/' ), '/' ) === $url && 'Welcome' === $item->title ) {
 				$user = wp_get_current_user();
 				if ( isset( $user->first_name ) && '' !== trim( $user->first_name ) ) {
