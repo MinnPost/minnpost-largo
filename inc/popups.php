@@ -317,8 +317,8 @@ if ( ! function_exists( 'minnpost_popup_benefits' ) ) :
 		static $benefits = null;
 		if ( null === $benefits ) {
 			$benefits = array(
-				'partner_offers' => 'Partner Offers',
-				'fan_club'       => 'Fan Club',
+				'partner-offers' => 'Partner Offers',
+				'fan-club'       => 'Fan Club',
 			);
 		}
 		return $benefits;
