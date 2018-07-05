@@ -333,6 +333,25 @@ endif;
 */
 if ( ! function_exists( 'minnpost_user_eligible_for_benefit' ) ) :
 	function minnpost_user_eligible_for_benefit( $settings = array() ) {
+		$benefit_prefix = 'account-benefits-';
+		$benefit_name   = $settings['settings']['selected'][0];
+		global $minnpost_membership;
+		$user_claim_eligibility = $minnpost_membership->user_info->get_user_benefit_eligibility( $benefit_name );
+		if ( 'member_eligible' === $user_claim_eligibility['state'] ) {
+			$user_claim_status = $minnpost_membership->front_end->get_user_claim_status( $benefit_prefix, $benefit_name );
+			if ( is_array( $user_claim_status ) && ! empty( $user_claim_status ) ) {
+				if ( isset( $user_claim_status['status'] ) ) {
+					$user_claim_status = $user_claim_status['status'];
+				}
+			}
+			if ( 'user_is_eligible' === $user_claim_status ) {
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
 	}
 endif;
 
