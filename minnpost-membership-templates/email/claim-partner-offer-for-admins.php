@@ -6,7 +6,7 @@
 			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<!--<![endif]-->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Welcome to MinnPost</title>
+		<title>Partner Offer Claim Alert</title>
 		<style type="text/css" data-premailer="ignore">
 			.webkit {
 				max-width: 600px;
