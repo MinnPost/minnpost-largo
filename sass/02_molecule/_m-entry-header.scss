@@ -7,6 +7,12 @@
 		line-height: 1.3em;
 		margin: 0.25em 0;
 	}
+	.a-intro {
+		margin: 1em 0;
+		line-height: $base-line-height-em;
+		font-family: $font__serif;
+		font-size: 1.23em;
+	}
 }
 .m-entry-header-single {
 	.m-entry-meta {
