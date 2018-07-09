@@ -872,8 +872,10 @@ if ( ! function_exists( 'get_member_levels' ) ) :
 		$values = array();
 		if ( ! class_exists( 'MinnPost_Membership' ) ) {
 			$file = TEMPLATEPATH . 'plugins/minnpost-membership/minnpost-membership.php';
-			if( file_exists( $file ) ) {
+			if ( file_exists( $file ) ) {
 				require_once( $file );
+			} else {
+				return array();
 			}
 		}
 		$minnpost_membership = MinnPost_Membership::get_instance();
