@@ -1170,7 +1170,9 @@ endif;
 if ( ! function_exists( 'minnpost_newsletter_arrange' ) ) :
 	function minnpost_newsletter_arrange( $content, $news_right_top, $type = '' ) {
 		$promo_dom = new DomDocument;
-		$promo_dom->loadHTML( '<?xml encoding="utf-8" ?>' . $content );
+		libxml_use_internal_errors( true );
+		$promo_dom->loadHTML( $content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+		libxml_use_internal_errors( false );
 		$imgs = $promo_dom->getElementsByTagName( 'img' );
 		foreach ( $imgs as $img ) {
 			$img->setAttribute( 'style', 'border: 0 none; display: block; height: auto; line-height: 100%; Margin-left: auto; Margin-right: auto; outline: none; text-decoration: none; max-width: 100%;' );
@@ -1179,12 +1181,17 @@ if ( ! function_exists( 'minnpost_newsletter_arrange' ) ) :
 		$promo_div   = $promo_xpath->query( "//div[contains(concat(' ', @class, ' '), ' image ')]/div" );
 
 		$dom = new DomDocument;
-		$dom->loadHTML( '<?xml encoding="utf-8" ?>' . $content );
+		libxml_use_internal_errors( true );
+		$dom->loadHTML( $content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+		libxml_use_internal_errors( false );
 		$xpath = new DOMXpath( $dom );
 		$divs  = $xpath->query( "//div[contains(concat(' ', @class, ' '), ' story ')]" );
 
 		$ad_dom = new DomDocument;
-		$ad_dom->loadHTML( '<?xml encoding="utf-8" ?>' . $news_right_top );
+
+		libxml_use_internal_errors( true );
+		$ad_dom->loadHTML( $news_right_top, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+		libxml_use_internal_errors( false );
 		$ad_xpath = new DOMXpath( $ad_dom );
 		$ad_divs  = $ad_xpath->query( "//div[contains(concat(' ', @class, ' '), ' block ')]/div/div/p" );
 
