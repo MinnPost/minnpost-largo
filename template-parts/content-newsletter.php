@@ -195,7 +195,7 @@
 		$ad_dom->loadHTML( '<?xml encoding="utf-8" ?>' . $sidebar );
 		libxml_clear_errors();
 		$ad_xpath = new DOMXpath( $ad_dom );
-		$ad_divs  = $ad_xpath->query( "//div[contains(concat(' ', @class, ' '), ' m-widget ')]/div/p" );
+		$ad_divs  = $ad_xpath->query( "//section[contains(concat(' ', @class, ' '), ' m-widget ')]/div/p" );
 
 		$ads = array();
 		if ( 'dc_memo' !== $newsletter_type ) {
