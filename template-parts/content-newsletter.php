@@ -192,8 +192,8 @@
 
 		$ad_dom = new DomDocument;
 		libxml_use_internal_errors( true );
-		$ad_dom->loadHTML( '<?xml encoding="utf-8" ?>' . $sidebar );
-		libxml_clear_errors();
+		$ad_dom->loadHTML( $sidebar, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+		libxml_use_internal_errors( false );
 		$ad_xpath = new DOMXpath( $ad_dom );
 		$ad_divs  = $ad_xpath->query( "//section[contains(concat(' ', @class, ' '), ' m-widget ')]/div/p" );
 
