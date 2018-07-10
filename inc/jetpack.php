@@ -45,7 +45,7 @@ if ( ! function_exists( 'share_content' ) ) :
 		if ( ! is_user_logged_in() && ! empty( $sharing_content ) ) {
 			$doc = new DOMDocument();
 			libxml_use_internal_errors( true );
-			$doc->loadHTML( $sharing_content );
+			$doc->loadHTML( $sharing_content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
 			libxml_use_internal_errors( false );
 			$finder    = new DomXPath( $doc );
 			$classname = 'share-email';
