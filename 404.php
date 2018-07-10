@@ -11,7 +11,7 @@ header( 'HTTP/1.0 404 Not Found' );
 get_header(); ?>
 
 	<div id="primary" class="m-layout-primary">
-		<main id="main" class="site-main" role="main">
+		<main id="main" class="site-main">
 
 			<?php
 			$query = new WP_Query(

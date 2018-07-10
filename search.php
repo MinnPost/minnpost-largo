@@ -10,7 +10,7 @@
 get_header(); ?>
 
 	<div id="primary" class="m-layout-primary o-search-result">
-		<main id="main" class="site-main" role="main">
+		<main id="main" class="site-main">
 
 		<?php if ( have_posts() ) : ?>
 

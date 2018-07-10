@@ -12,7 +12,7 @@
 get_header(); ?>
 		
 	<div id="primary" class="m-layout-primary o-homepage-listing">
-		<main id="main" class="site-main m-homepage-zones" role="main">
+		<main id="main" class="site-main m-homepage-zones">
 			<?php
 			if ( function_exists( 'z_get_zone' ) ) {
 				$the_query = z_get_zone_query( 'homepage-top' );
