@@ -32,16 +32,16 @@
 				<label>Subscribe to these regular newsletters:</label>
 				<div class="m-field-group m-form-item m-form-item-interests m-form-checkboxes">
 					<label>
-						<input name="_newsletters[]" value="04471b1571" checked="true" type="checkbox"> <span>Daily newsletter</span>
+						<input name="_newsletters[]" value="04471b1571" checked type="checkbox"> <span>Daily newsletter</span>
 					</label>
 					<label>
-						<input name="_newsletters[]" value="94fc1bd7c9" checked="true" type="checkbox"> <span>Sunday review</span>
+						<input name="_newsletters[]" value="94fc1bd7c9" checked type="checkbox"> <span>Sunday review</span>
 					</label>
 					<label>
 						<input name="_newsletters[]" value="ce6fd734b6" type="checkbox"> <span>Greater Minnesota newsletter</span>
 					</label>
 					<label>
-						<input name="_newsletters[]" value="d89249e207" type="checkbox" checked="true"> <span>D.C. Memo</span>
+						<input name="_newsletters[]" value="d89249e207" type="checkbox" checked> <span>D.C. Memo</span>
 					</label>
 				</div>
 			</div>
@@ -49,7 +49,7 @@
 				<label>Occasional MinnPost emails:</label>
 				<div class="m-field-group m-form-item m-form-item-interests m-form-checkboxes">
 					<label>
-						<input name="_occasional_emails[]" value="68449d845c" type="checkbox" checked="true"> <span>Events &amp; member benefits</span>
+						<input name="_occasional_emails[]" value="68449d845c" type="checkbox" checked> <span>Events &amp; member benefits</span>
 					</label>
 					<label>
 						<input name="_occasional_emails[]" value="958bdb5d3c" type="checkbox"> <span>Opportunities to give input/feedback</span>

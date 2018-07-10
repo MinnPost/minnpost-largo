@@ -31,16 +31,16 @@
 			</div>
 			<div class="m-field-group m-form-item m-form-item-interests m-form-checkboxes">
 				<label>
-					<input name="_newsletters[]" value="04471b1571" checked="true" type="checkbox"> <span>Daily newsletter</span>
+					<input name="_newsletters[]" value="04471b1571" checked type="checkbox"> <span>Daily newsletter</span>
 				</label>
 				<label>
-					<input name="_newsletters[]" value="94fc1bd7c9" checked="true" type="checkbox"> <span>Sunday review</span>
+					<input name="_newsletters[]" value="94fc1bd7c9" checked type="checkbox"> <span>Sunday review</span>
 				</label>
 				<label>
 					<input name="_newsletters[]" value="ce6fd734b6" type="checkbox"> <span>Greater Minnesota newsletter</span>
 				</label>
 				<label>
-					<input name="_newsletters[]" value="d89249e207" type="checkbox" checked="true"> <span>D.C. Memo</span>
+					<input name="_newsletters[]" value="d89249e207" type="checkbox" checked> <span>D.C. Memo</span>
 				</label>
 			</div>
 		</fieldset>
