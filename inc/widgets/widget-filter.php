@@ -69,7 +69,7 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 		$html = '';
 		$doc = new DOMDocument();
 		libxml_use_internal_errors( true );
-		$doc->loadHTML( $widget_output );
+		$doc->loadHTML( $widget_output, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
 		libxml_use_internal_errors( false );
 		$title = $doc->getElementsByTagName( 'h3' )->item( 0 )->nodeValue;
 		$list_items = $doc->getElementsByTagName( 'li' );

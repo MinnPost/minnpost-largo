@@ -50,7 +50,9 @@
 	$pagination        = paginate_links( $args );
 	if ( ! empty( $pagination ) && ( 1 !== $page || $pages !== $page ) ) {
 		$doc = new DOMDocument();
-		$doc->loadHTML( $pagination );
+		libxml_use_internal_errors( true );
+		$doc->loadHTML( $pagination, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+		libxml_use_internal_errors( false );
 		if ( 1 !== $page ) {
 			$ul   = $doc->getElementsByTagName( 'ul' )->item( 0 );
 			$node = $ul->childNodes->item( 0 );
