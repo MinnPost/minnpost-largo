@@ -336,6 +336,11 @@ if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
 			$wp_admin_bar->remove_menu( 'edit' );
 		}
 
+		// business users
+		if ( ! in_array( 'business', (array) $user->roles ) ) {
+			$wp_admin_bar->remove_menu( 'popup-maker' );
+		}
+
 		$wp_admin_bar->remove_menu( 'customize' );
 		$wp_admin_bar->remove_menu( 'tribe-events' );
 
@@ -345,5 +350,24 @@ if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
 		{
 		}*/
 
+	}
+endif;
+
+/**
+* Remove Jetpack from menu for non admin users
+* This relies on user access levels, and on the Advanced Access Manager plugin
+*
+*/
+if ( ! function_exists( 'minnpost_largo_remove_jetpack_page' ) ) :
+	add_action( 'admin_menu', 'minnpost_largo_remove_jetpack_page', 999 );
+	function minnpost_largo_remove_jetpack_page( ) {
+		if ( class_exists( 'Jetpack' ) && ! current_user_can( 'manage_jetpack' ) ) {
+			remove_menu_page( 'jetpack' );
+		}
+		// business users
+		$user = wp_get_current_user();
+		if ( ! in_array( 'business', (array) $user->roles ) ) {
+			remove_submenu_page( 'themes.php', 'edit.php?post_type=popup_theme' );
+		}
 	}
 endif;
