@@ -211,6 +211,27 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		$object_type = 'post';
 
 		/**
+		 * Subtitle settings
+		 */
+		$subtitle_settings = new_cmb2_box( array(
+			'id'           => 'subtitle_settings',
+			'title'        => 'Subtitle Settings',
+			'object_types' => array( $object_type ),
+			'context'      => 'normal',
+			'priority'     => 'high',
+		) );
+		$subtitle_settings->add_field( array(
+			'name' => 'Deck',
+			'id'   => '_mp_subtitle_settings_deck',
+			'type' => 'text',
+		) );
+		$subtitle_settings->add_field( array(
+			'name' => 'Byline',
+			'id'   => '_mp_subtitle_settings_byline',
+			'type' => 'text',
+		) );
+
+		/**
 		 * Display settings
 		 */
 		$display_settings = new_cmb2_box( array(
@@ -333,27 +354,6 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'query_args'   => array(
 				'type' => 'image',
 			),
-		) );
-
-		/**
-		 * Subtitle settings
-		 */
-		$subtitle_settings = new_cmb2_box( array(
-			'id'           => 'subtitle_settings',
-			'title'        => 'Subtitle Settings',
-			'object_types' => array( $object_type ),
-			'context'      => 'after_title',
-			'priority'     => 'high',
-		) );
-		$subtitle_settings->add_field( array(
-			'name' => 'Deck',
-			'id'   => '_mp_subtitle_settings_deck',
-			'type' => 'text',
-		) );
-		$subtitle_settings->add_field( array(
-			'name' => 'Byline',
-			'id'   => '_mp_subtitle_settings_byline',
-			'type' => 'text',
 		) );
 
 		/**
