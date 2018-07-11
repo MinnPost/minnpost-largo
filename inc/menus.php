@@ -328,8 +328,9 @@ if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
 			}
 		}
 
-		// comment moderators
 		$user = wp_get_current_user();
+
+		// comment moderators
 		if ( in_array( 'comment_moderator', (array) $user->roles ) ) {
 			$wp_admin_bar->remove_menu( 'new-content' );
 			$wp_admin_bar->remove_menu( 'edit' );
