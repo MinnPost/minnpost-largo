@@ -178,37 +178,68 @@ if ( ! function_exists( 'remove_featured_images_from_child_theme' ) ) :
 endif;
 
 /**
-* Show meta boxes that are hidden by default
-*
-* @param array $hidden
-* @param object screen
-*
-* @return array $hidden
-*/
-if ( ! function_exists( 'show_hidden_meta_boxes' ) ) :
-	add_filter( 'default_hidden_meta_boxes', 'show_hidden_meta_boxes', 10, 2 );
-	function show_hidden_meta_boxes( $hidden, $screen ) {
-		if ( 'post' == $screen->base ) {
-			foreach ( $hidden as $key => $value ) {
-				if ( 'postexcerpt' == $value ) {
-					unset( $hidden[ $key ] );
-					break;
-				}
-			}
-		}
-		return $hidden;
+ * Remove the default WordPress excerpt field.
+ */
+function minnpost_largo_admin_hide_excerpt_field() {
+	add_action( 'dbx_post_advanced', '_minnpost_largo_admin_hide_excerpt_field' );
+}
+add_filter( 'admin_init', 'minnpost_largo_admin_hide_excerpt_field' );
+function _minnpost_largo_admin_hide_excerpt_field() {
+	$screen = get_current_screen();
+	if ( isset( $screen->post_type ) && 'post' === $screen->post_type ) {
+		remove_meta_box( 'postexcerpt', null, 'normal' );
 	}
-endif;
+}
+
+/**
+ * Override the WordPress Excerpt field
+ */
+function minnpost_largo_override_excerpt_display( $data, $post_id ) {
+	return get_post_field( 'post_excerpt', $post_id );
+}
+add_filter( 'cmb2_override_excerpt_meta_value', 'minnpost_largo_override_excerpt_display', 10, 2 );
+/*
+ * WP will handle the saving for us, so don't save to meta.
+ */
+add_filter( 'cmb2_override_excerpt_meta_save', '__return_true' );
 
 /**
 * Add custom fields to posts
 *
 */
 if ( ! function_exists( 'cmb2_post_fields' ) ) :
+
 	add_action( 'cmb2_init', 'cmb2_post_fields' );
 	function cmb2_post_fields() {
 
 		$object_type = 'post';
+
+		/**
+		 * Excerpt settings
+		 */
+		$excerpt = new_cmb2_box( array(
+			'id'           => 'cmb2_excerpt',
+			'title'        => 'Excerpt',
+			'object_types' => array( $object_type, ), // Post type
+			'context'      => 'after_title',
+			'show_names'   => false,
+		) );
+		$excerpt->add_field( array(
+			/*
+			 * As long as the 'id' matches the name field of the regular WP field,
+			 * WP will handle the saving for you.
+			 */
+			'id'        => 'excerpt',
+			'name'      => 'Excerpt',
+			'desc'      => '',
+			'type'      => 'wysiwyg',
+			'escape_cb' => false,
+			'options' => array(
+			    'media_buttons' => false, // show insert/upload button(s)
+			    'textarea_rows' => 5,
+			    'teeny' => true, // output the minimal editor config used in Press This
+			),
+		) );
 
 		/**
 		 * Subtitle settings
