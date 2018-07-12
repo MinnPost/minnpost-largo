@@ -470,7 +470,8 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'filter_boxes'    => true, // Show a text box for filtering the results
 				'query_args'      => array(
 					'posts_per_page' => 10,
-					'post_type'      => 'post',
+					'post_type'      => $object_type,
+					'cache_results' => false,
 				), // override the get_posts args
 			),
 			'attributes' => array(
@@ -488,7 +489,8 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'filter_boxes'    => true, // Show a text box for filtering the results
 				'query_args'      => array(
 					'posts_per_page' => 10,
-					'post_type'      => 'post',
+					'post_type'      => $object_type,
+					'cache_results' => false,
 				), // override the get_posts args
 			),
 			'attributes' => array(
