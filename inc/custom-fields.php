@@ -467,13 +467,14 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'type'       => 'custom_attached_posts',
 			'options'    => array(
 				'show_thumbnails' => false, // Show thumbnails on the left
-				'filter_boxes'    => true, // Show a text box for filtering the results
+				'filter_boxes'    => false, // Show a text box for filtering the results
 				'query_args'      => array(
 					'posts_per_page' => 10,
 					'post_type'      => $object_type,
-					'cache_results' => false,
+					//'cache_results' => false,
 				), // override the get_posts args
 			),
+			'attached_posts_search_query_cb' => 'mp_attached_posts_search',
 			'attributes' => array(
 				'required'               => false,
 				'data-conditional-id'    => '_mp_show_related_content',
@@ -486,23 +487,47 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'type'       => 'custom_attached_posts',
 			'options'    => array(
 				'show_thumbnails' => false, // Show thumbnails on the left
-				'filter_boxes'    => true, // Show a text box for filtering the results
+				'filter_boxes'    => false, // Show a text box for filtering the results
 				'query_args'      => array(
 					'posts_per_page' => 10,
 					'post_type'      => $object_type,
-					'cache_results' => false,
+					//'cache_results' => false,
 				), // override the get_posts args
 			),
+			'attached_posts_search_query_cb' => 'mp_attached_posts_search',
 			'attributes' => array(
 				'required'               => false,
 				'data-conditional-id'    => '_mp_show_related_content',
 				'data-conditional-value' => 'on',
 			),
 		) );
+		/*$related_settings->add_field( array(
+			'name'          => __( 'Related Multimedia', 'cmb2' ),
+			'desc'          => '',
+			'id'            => '_mp_related_multimedia',
+			'type'          => 'post_ajax_search',
+			'multiple'      => true,
+			'limit'      	=> -1,
+			'query_args'	=> array(
+				'post_type'			=> array( 'post' ),
+				'post_status'		=> array( 'publish', 'pending' ),
+				'posts_per_page'    => 5,
+			)
+		) );*/
 
 	}
 endif;
 
+/**
+* Use CMB2 filter for searching
+*
+*/
+if ( ! function_exists( 'mp_attached_posts_search' ) ) :
+	function mp_attached_posts_search( $query ) {
+		$query->query_vars['posts_per_page'] = 10;
+		return $query;
+	}
+endif;
 
 /**
 * Add custom fields to pages
