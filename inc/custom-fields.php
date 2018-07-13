@@ -62,10 +62,10 @@ if ( function_exists( 'create_newsletter' ) ) :
 			'desc'    => 'Select an option',
 			'default' => 'daily',
 			'options' => array(
-				'daily'         => __( 'Daily', 'cmb2' ),
-				'greater_mn'    => __( 'Greater MN', 'cmb2' ),
-				'sunday_review' => __( 'Sunday Review', 'cmb2' ),
-				'dc_memo'       => __( 'D.C. Memo', 'cmb2' ),
+				'daily'         => __( 'Daily', 'minnpost-largo' ),
+				'greater_mn'    => __( 'Greater MN', 'minnpost-largo' ),
+				'sunday_review' => __( 'Sunday Review', 'minnpost-largo' ),
+				'dc_memo'       => __( 'D.C. Memo', 'minnpost-largo' ),
 			),
 		) );
 		$newsletter_setup->add_field( array(
@@ -112,19 +112,19 @@ if ( function_exists( 'create_newsletter' ) ) :
 		);
 		$newsletter_top_posts = new_cmb2_box( array(
 			'id'           => $prefix . 'top_posts',
-			'title'        => __( 'Top Stories', 'cmb2' ),
+			'title'        => __( 'Top Stories', 'minnpost-largo' ),
 			'object_types' => array( $object_type ), // Post type
 			'context'      => 'normal',
 			'priority'     => 'high',
 			'show_names'   => false, // Show field names on the left
 		) );
 		$newsletter_top_posts->add_field( array(
-			'name'    => __( 'Top Stories', 'cmb2' ),
-			'desc'    => __( 'Drag posts from the left column to the right column to attach them to this page.<br />You may rearrange the order of the posts in the right column by dragging and dropping.', 'cmb2' ),
-			'id'      => $prefix . 'top_posts',
-			'type'    => 'custom_attached_posts',
+			'name'                           => __( 'Top Stories', 'minnpost-largo' ),
+			'desc'                           => __( 'Drag posts from the left column to the right column to attach them to this page.<br />You may rearrange the order of the posts in the right column by dragging and dropping.', 'minnpost-largo' ),
+			'id'                             => $prefix . 'top_posts',
+			'type'                           => 'custom_attached_posts',
 			'attached_posts_search_query_cb' => 'mp_attached_posts_search',
-			'options' => array(
+			'options'                        => array(
 				'show_thumbnails' => false, // Show thumbnails on the left
 				'filter_boxes'    => true, // Show a text box for filtering the results
 				'query_args'      => $newsletter_post_args,
@@ -138,19 +138,19 @@ if ( function_exists( 'create_newsletter' ) ) :
 		) );
 		$newsletter_more_posts = new_cmb2_box( array(
 			'id'           => $prefix . 'more_posts',
-			'title'        => __( 'More Stories', 'cmb2' ),
+			'title'        => __( 'More Stories', 'minnpost-largo' ),
 			'object_types' => array( $object_type ), // Post type
 			'context'      => 'normal',
 			'priority'     => 'high',
 			'show_names'   => false, // Show field names on the left
 		) );
 		$newsletter_more_posts->add_field( array(
-			'name'    => __( 'More Stories', 'cmb2' ),
-			'desc'    => __( 'Drag posts from the left column to the right column to attach them to this page.<br />You may rearrange the order of the posts in the right column by dragging and dropping.', 'cmb2' ),
-			'id'      => $prefix . 'more_posts',
-			'type'    => 'custom_attached_posts',
+			'name'                           => __( 'More Stories', 'minnpost-largo' ),
+			'desc'                           => __( 'Drag posts from the left column to the right column to attach them to this page.<br />You may rearrange the order of the posts in the right column by dragging and dropping.', 'minnpost-largo' ),
+			'id'                             => $prefix . 'more_posts',
+			'type'                           => 'custom_attached_posts',
 			'attached_posts_search_query_cb' => 'mp_attached_posts_search',
-			'options' => array(
+			'options'                        => array(
 				'show_thumbnails' => false, // Show thumbnails on the left
 				'filter_boxes'    => true, // Show a text box for filtering the results
 				'query_args'      => $newsletter_post_args,
@@ -222,7 +222,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		$excerpt = new_cmb2_box( array(
 			'id'           => 'cmb2_excerpt',
 			'title'        => 'Excerpt',
-			'object_types' => array( $object_type, ), // Post type
+			'object_types' => array( $object_type ), // Post type
 			'context'      => 'after_title',
 			'show_names'   => false,
 		) );
@@ -236,10 +236,10 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'desc'      => '',
 			'type'      => 'wysiwyg',
 			'escape_cb' => false,
-			'options' => array(
-			    'media_buttons' => false, // show insert/upload button(s)
-			    'textarea_rows' => 5,
-			    'teeny' => true, // output the minimal editor config used in Press This
+			'options'   => array(
+				'media_buttons' => false, // show insert/upload button(s)
+				'textarea_rows' => 5,
+				'teeny'         => true, // output the minimal editor config used in Press This
 			),
 		) );
 
@@ -342,19 +342,19 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'priority'     => 'high',
 		) );
 		$image_settings->add_field( array(
-			'name'       => 'Thumbnail Image',
-			'desc'       => 'Upload an image or enter an URL.',
-			'id'         => '_mp_post_thumbnail_image',
-			'type'       => 'file',
+			'name'         => 'Thumbnail Image',
+			'desc'         => 'Upload an image or enter an URL.',
+			'id'           => '_mp_post_thumbnail_image',
+			'type'         => 'file',
 			'preview_size' => array( 130, 85 ),
-			'options'    => array(
+			'options'      => array(
 				//'url' => false, // Hide the text input for the url
 			),
-			'text'       => array(
+			'text'         => array(
 				//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
 			),
 			// query_args are passed to wp.media's library query.
-			'query_args' => array(
+			'query_args'   => array(
 				'type' => 'image',
 			),
 		) );
@@ -366,9 +366,9 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'desc'             => 'Select an option',
 			'default'          => 'feature-large',
 			'options'          => array(
-				'feature-medium' => __( 'Medium', 'cmb2' ),
-				'none'           => __( 'Do not display image', 'cmb2' ),
-				'feature-large'  => __( 'Large', 'cmb2' ),
+				'feature-medium' => __( 'Medium', 'minnpost-largo' ),
+				'none'           => __( 'Do not display image', 'minnpost-largo' ),
+				'feature-large'  => __( 'Large', 'minnpost-largo' ),
 			),
 		) );
 		$image_settings->add_field( array(
@@ -464,10 +464,10 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'desc' => '',
 		) );
 		$related_settings->add_field( array(
-			'name'       => 'Related Content',
-			'id'         => '_mp_related_content',
-			'type'       => 'custom_attached_posts',
-			'options'    => array(
+			'name'                           => 'Related Content',
+			'id'                             => '_mp_related_content',
+			'type'                           => 'custom_attached_posts',
+			'options'                        => array(
 				'show_thumbnails' => false, // Show thumbnails on the left
 				'filter_boxes'    => false, // Show a text box for filtering the results
 				'query_args'      => array(
@@ -477,17 +477,17 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				), // override the get_posts args
 			),
 			'attached_posts_search_query_cb' => 'mp_attached_posts_search',
-			'attributes' => array(
+			'attributes'                     => array(
 				'required'               => false,
 				'data-conditional-id'    => '_mp_show_related_content',
 				'data-conditional-value' => 'on',
 			),
 		) );
 		$related_settings->add_field( array(
-			'name'       => 'Related Multimedia',
-			'id'         => '_mp_related_multimedia',
-			'type'       => 'custom_attached_posts',
-			'options'    => array(
+			'name'                           => 'Related Multimedia',
+			'id'                             => '_mp_related_multimedia',
+			'type'                           => 'custom_attached_posts',
+			'options'                        => array(
 				'show_thumbnails' => false, // Show thumbnails on the left
 				'filter_boxes'    => false, // Show a text box for filtering the results
 				'query_args'      => array(
@@ -497,14 +497,14 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				), // override the get_posts args
 			),
 			'attached_posts_search_query_cb' => 'mp_attached_posts_search',
-			'attributes' => array(
+			'attributes'                     => array(
 				'required'               => false,
 				'data-conditional-id'    => '_mp_show_related_content',
 				'data-conditional-value' => 'on',
 			),
 		) );
 		/*$related_settings->add_field( array(
-			'name'          => __( 'Related Multimedia', 'cmb2' ),
+			'name'          => __( 'Related Multimedia', 'minnpost-largo' ),
 			'desc'          => '',
 			'id'            => '_mp_related_multimedia',
 			'type'          => 'post_ajax_search',
@@ -681,7 +681,7 @@ if ( ! function_exists( 'remove_default_category_description' ) ) :
 				$('textarea#description, textarea#tag-description').closest('tr.form-field, div.form-field').remove();
 			});
 			</script>
-		<?php
+			<?php
 		}
 	}
 endif;
@@ -1147,9 +1147,9 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 			'desc'             => 'Select an option',
 			'default'          => 'feature-large',
 			'options'          => array(
-				'feature-medium' => __( 'Medium', 'cmb2' ),
-				'none'           => __( 'Do not display image', 'cmb2' ),
-				'feature-large'  => __( 'Large', 'cmb2' ),
+				'feature-medium' => __( 'Medium', 'minnpost-largo' ),
+				'none'           => __( 'Do not display image', 'minnpost-largo' ),
+				'feature-large'  => __( 'Large', 'minnpost-largo' ),
 			),
 		) );
 		$image_settings->add_field( array(
