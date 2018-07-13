@@ -123,6 +123,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 			'desc'    => __( 'Drag posts from the left column to the right column to attach them to this page.<br />You may rearrange the order of the posts in the right column by dragging and dropping.', 'cmb2' ),
 			'id'      => $prefix . 'top_posts',
 			'type'    => 'custom_attached_posts',
+			'attached_posts_search_query_cb' => 'mp_attached_posts_search',
 			'options' => array(
 				'show_thumbnails' => false, // Show thumbnails on the left
 				'filter_boxes'    => true, // Show a text box for filtering the results
@@ -148,6 +149,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 			'desc'    => __( 'Drag posts from the left column to the right column to attach them to this page.<br />You may rearrange the order of the posts in the right column by dragging and dropping.', 'cmb2' ),
 			'id'      => $prefix . 'more_posts',
 			'type'    => 'custom_attached_posts',
+			'attached_posts_search_query_cb' => 'mp_attached_posts_search',
 			'options' => array(
 				'show_thumbnails' => false, // Show thumbnails on the left
 				'filter_boxes'    => true, // Show a text box for filtering the results
