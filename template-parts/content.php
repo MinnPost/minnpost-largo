@@ -41,7 +41,7 @@
 		}
 
 		if ( 'post' === get_post_type() ) :
-		?>
+			?>
 
 			<?php minnpost_share_buttons( 'top' ); ?>
 

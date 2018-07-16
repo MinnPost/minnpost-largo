@@ -254,13 +254,13 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'priority'     => 'high',
 		) );
 		$subtitle_settings->add_field( array(
-			'name' => 'Deck',
-			'id'   => '_mp_subtitle_settings_deck',
+			'name' => 'Byline',
+			'id'   => '_mp_subtitle_settings_byline',
 			'type' => 'text',
 		) );
 		$subtitle_settings->add_field( array(
-			'name' => 'Byline',
-			'id'   => '_mp_subtitle_settings_byline',
+			'name' => 'Deck',
+			'id'   => '_mp_subtitle_settings_deck',
 			'type' => 'text',
 		) );
 
