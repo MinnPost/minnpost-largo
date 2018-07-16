@@ -361,8 +361,10 @@ endif;
 if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 	add_action( 'admin_menu', 'minnpost_largo_remove_menu_pages', 999 );
 	function minnpost_largo_remove_menu_pages() {
+		// users who cannot manage jetpack
 		if ( class_exists( 'Jetpack' ) && ! current_user_can( 'manage_jetpack' ) ) {
 			remove_menu_page( 'jetpack' );
+			remove_submenu_page( 'options-general.php', 'sharing' );
 		}
 		// users who cannot edit popup themes
 		if ( ! current_user_can( 'edit_popup_themes' ) ) {
@@ -394,5 +396,51 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 				remove_submenu_page( 'edit.php?post_type=cr3ativsponsor', 'post-new.php?post_type=cr3ativsponsor' );
 			}
 		}
+
+		// cron
+		if ( ! current_user_can( 'manage_cron' ) ) {
+			// tools
+			remove_submenu_page( 'tools.php', 'crontrol_admin_manage_page' );
+			// settings
+			remove_submenu_page( 'options-general.php', 'crontrol_admin_options_page' );
+		}
+
+		// advertising
+		if ( ! current_user_can( 'manage_advertising' ) ) {
+			// tools
+			remove_submenu_page( 'tools.php', 'ad-code-manager' );
+			// settings
+			remove_submenu_page( 'options-general.php', 'appnexus-acm-provider' );
+		}
+
+		// thumbnails
+		if ( ! current_user_can( 'upload_files' ) ) {
+			// tools
+			remove_submenu_page( 'tools.php', 'regenerate-thumbnails' );
+			//settings
+			remove_submenu_page( 'options-general.php', 'options-media.php' );
+		}
+
+		// admins only
+		if ( ! current_user_can( 'administrator' ) ) {
+			// tools
+			remove_submenu_page( 'tools.php', 'tools.php' );
+			remove_submenu_page( 'tools.php', 'widget-settings-import' );
+			remove_submenu_page( 'tools.php', 'widget-settings-export' );
+			// settings
+			remove_submenu_page( 'options-general.php', 'options-writing.php' );
+			remove_submenu_page( 'options-general.php', 'options-permalink.php' );
+			remove_submenu_page( 'options-general.php', 'deserialize-metadata' );
+			remove_submenu_page( 'options-general.php', 'notices-wbcr_dan' );
+			remove_submenu_page( 'options-general.php', 'duplicatepost' );
+			remove_submenu_page( 'options-general.php', 'easylazyloader' );
+			remove_submenu_page( 'options-general.php', 'form-processor-mailchimp' );
+			remove_submenu_page( 'options-general.php', 'merge-serialized-fields' );
+			remove_submenu_page( 'options-general.php', 'migrate-random-things' );
+			remove_submenu_page( 'options-general.php', 'user-account-management' );
+			remove_submenu_page( 'options-general.php', 'widgetopts_plugin_settings' );
+			remove_submenu_page( 'options-general.php', 'wp-analytics-tracking-generator-admin' );
+		}
+
 	}
 endif;
