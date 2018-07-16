@@ -369,6 +369,13 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 			remove_submenu_page( 'themes.php', 'edit.php?post_type=popup_theme' );
 		}
 
+		// users who cannot edit themes
+		if ( ! current_user_can( 'edit_themes' ) ) {
+			remove_submenu_page( 'themes.php', 'themes.php' );
+			$customize_url = add_query_arg( 'return', urlencode( wp_unslash( $_SERVER['REQUEST_URI'] ) ), 'customize.php' );
+			remove_submenu_page( 'themes.php', $customize_url );
+		}
+
 		// users who cannot do anything with sponsors
 		if ( ! current_user_can( 'edit_sponsors' ) && ! current_user_can( 'create_sponsors' ) && ! current_user_can( 'edit_sponsor_levels' ) ) {
 			remove_menu_page( 'edit.php?post_type=cr3ativsponsor' );
