@@ -159,3 +159,6 @@ if ( ! function_exists( 'minnpost_email_subscribe_form_process' ) ) :
 		}
 	}
 endif;
+
+// remove Add Form gravityforms button from post forms
+add_filter( 'gform_display_add_form_button', '__return_false' );
