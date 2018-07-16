@@ -354,20 +354,38 @@ if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
 endif;
 
 /**
-* Remove Jetpack from menu for non admin users
+* Remove pages from admin menu
 * This relies on user access levels, and on the Advanced Access Manager plugin
 *
 */
-if ( ! function_exists( 'minnpost_largo_remove_jetpack_page' ) ) :
-	add_action( 'admin_menu', 'minnpost_largo_remove_jetpack_page', 999 );
-	function minnpost_largo_remove_jetpack_page( ) {
+if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
+	add_action( 'admin_menu', 'minnpost_largo_remove_menu_pages', 999 );
+	function minnpost_largo_remove_menu_pages() {
 		if ( class_exists( 'Jetpack' ) && ! current_user_can( 'manage_jetpack' ) ) {
 			remove_menu_page( 'jetpack' );
 		}
-		// business users
-		$user = wp_get_current_user();
-		if ( ! in_array( 'business', (array) $user->roles ) ) {
+		// users who cannot edit popup themes
+		if ( ! current_user_can( 'edit_popup_themes' ) ) {
 			remove_submenu_page( 'themes.php', 'edit.php?post_type=popup_theme' );
+		}
+
+		// users who cannot do anything with sponsors
+		if ( ! current_user_can( 'edit_sponsors' ) && ! current_user_can( 'create_sponsors' ) && ! current_user_can( 'edit_sponsor_levels' ) ) {
+			remove_menu_page( 'edit.php?post_type=cr3ativsponsor' );
+		} else {
+			// users who cannot edit sponsors
+			if ( ! current_user_can( 'edit_sponsors' ) ) {
+				remove_submenu_page( 'edit.php?post_type=cr3ativsponsor', 'edit.php?post_type=cr3ativsponsor' );
+			}
+			// users who cannot edit sponsor levels
+			if ( ! current_user_can( 'edit_sponsor_levels' ) ) {
+				remove_submenu_page( 'edit.php?post_type=cr3ativsponsor', 'edit-tags.php?taxonomy=cr3ativsponsor_level&amp;post_type=cr3ativsponsor' );
+				remove_submenu_page( 'post-new.php?post_type=cr3ativsponsor', 'edit-tags.php?taxonomy=cr3ativsponsor_level&amp;post_type=cr3ativsponsor' );
+			}
+			// users who cannot create sponsors
+			if ( ! current_user_can( 'create_sponsors' ) ) {
+				remove_submenu_page( 'edit.php?post_type=cr3ativsponsor', 'post-new.php?post_type=cr3ativsponsor' );
+			}
 		}
 	}
 endif;
