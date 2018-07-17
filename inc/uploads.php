@@ -30,6 +30,28 @@ if ( ! function_exists( 'minnpost_image_sizes' ) ) :
 endif;
 
 /**
+* Add image sizes to media chooser
+* These are added to dropdown when images are chosen in posts
+*
+*/
+if ( ! function_exists( 'minnpost_image_size_chooser' ) ) :
+	add_filter( 'image_size_names_choose', 'minnpost_image_size_chooser' );
+	function minnpost_image_size_chooser( $sizes ) {
+		return array_merge( $sizes, array(
+			'feature'                  => __( 'Feature', 'minnpost-largo' ),
+			'feature-large'            => __( 'Feature large', 'minnpost-largo' ),
+			'feature-medium'           => __( 'Feature medium', 'minnpost-largo' ),
+			'newsletter-thumbnail'     => __( 'Newsletter thumbnail', 'minnpost-largo' ),
+			'category-featured-column' => __( 'Featured column', 'minnpost-largo' ),
+			'author-image'             => __( 'Author photo', 'minnpost-largo' ),
+			'author-teaser'            => __( 'Author teaser', 'minnpost-largo' ),
+			'author-thumbnail'         => __( 'Author thumbnail', 'minnpost-largo' ),
+			'partner-logo'             => __( 'Partner logo', 'minnpost-largo' ),
+		) );
+	}
+endif;
+
+/**
 * Size attribute for thumbnail images
 *
 * @param array $attr
