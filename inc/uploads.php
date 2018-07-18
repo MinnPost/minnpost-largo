@@ -6,13 +6,14 @@
  */
 
 /**
-* Add image sizes for posts.
+* Add image settings for posts.
 * These are created when an image is uploaded.
 *
 */
-if ( ! function_exists( 'minnpost_image_sizes' ) ) :
-	add_action( 'after_setup_theme', 'minnpost_image_sizes' );
-	function minnpost_image_sizes() {
+if ( ! function_exists( 'minnpost_image_settings' ) ) :
+	add_action( 'after_setup_theme', 'minnpost_image_settings' );
+	function minnpost_image_settings() {
+		add_theme_support( 'html5', array( 'caption' ) );
 		// images for posts
 		add_image_size( 'feature', 190, 9999 );
 		add_image_size( 'feature-large', 400, 400 );
@@ -98,3 +99,256 @@ if ( ! function_exists( 'image_watermark_allowed' ) ) :
 		return $allowed;
 	}
 endif;
+
+/**
+ * Add custom fields to media
+ */
+if ( ! function_exists( 'minnpost_largo_attachment_fields' ) ) :
+	add_filter( 'attachment_fields_to_edit', 'minnpost_largo_attachment_fields', 10, 2 );
+	function minnpost_largo_attachment_fields( $fields, $post ) {
+		$credit                     = get_post_meta( $post->ID, 'media_credit', true );
+		$credit_url                 = get_post_meta( $post->ID, 'media_credit_url', true );
+		$fields['media_credit']     = array(
+			'label'        => __( 'Credit', 'text-domain' ),
+			'input'        => 'text',
+			'value'        => $credit,
+			'show_in_edit' => true,
+		);
+		$fields['media_credit_url'] = array(
+			'label'        => __( 'Credit URL', 'text-domain' ),
+			'input'        => 'text',
+			'value'        => $credit_url,
+			'show_in_edit' => true,
+		);
+		return $fields;
+	}
+endif;
+
+/**
+ * Update custom fields within media overlay (via ajax)
+ */
+if ( ! function_exists( 'minnpost_largo_media_fields' ) ) :
+	add_action( 'wp_ajax_save-attachment-compat', 'minnpost_largo_media_fields', 0, 1 );
+	function minnpost_largo_media_fields() {
+		$post_id    = $_POST['id'];
+		$credit     = $_POST['attachments'][ $post_id ]['media_credit'];
+		$credit_url = $_POST['attachments'][ $post_id ]['media_credit_url'];
+		update_post_meta( $post_id, 'media_credit', $credit );
+		update_post_meta( $post_id, 'media_credit_url', $credit_url );
+		clean_post_cache( $post_id );
+	}
+endif;
+
+/**
+ * Update media custom fields from edit media page (non ajax).
+ */
+if ( ! function_exists( 'minnpost_largo_update_attachment_meta' ) ) :
+	add_action( 'edit_attachment', 'minnpost_largo_update_attachment_meta', 1 );
+	function minnpost_largo_update_attachment_meta( $post_id ) {
+		$credit     = isset( $_POST['attachments'][ $post_id ]['media_credit'] ) ? $_POST['attachments'][ $post_id ]['media_credit'] : false;
+		$credit_url = isset( $_POST['attachments'][ $post_id ]['media_credit_url'] ) ? $_POST['attachments'][ $post_id ]['media_credit_url'] : false;
+		update_post_meta( $post_id, 'media_credit', $credit );
+		update_post_meta( $post_id, 'media_credit_url', $credit_url );
+		return;
+	}
+endif;
+
+if ( ! function_exists( 'get_media_credit_html' ) ) :
+	function get_media_credit_html( $post_id = 0 ) {
+		if ( 0 === $post_id ) {
+			return '';
+		}
+		$credit_meta = get_post_meta( $post_id, 'media_credit', true );
+		$credit_url  = get_post_meta( $post_id, 'media_credit_url', true );
+		$credit      = '';
+
+		if ( '' !== $credit_meta ) {
+			if ( ! empty( $credit_url ) ) {
+				$credit = '<a href="' . esc_url( $credit_url ) . '">' . $credit_meta . '</a>';
+			} else {
+				$credit = $credit_meta;
+			}
+		}
+
+		return $credit;
+	}
+endif;
+
+if ( ! function_exists( 'minnpost_insert_image' ) ) :
+	//add_filter( 'image_add_caption_text', 'minnpost_remove_caption', 1, 2 );
+	function minnpost_remove_caption( $caption, $id ) {
+		return '';
+	}
+
+	//add_filter( 'image_add_caption_text', 'minnpost_add_credit', 1, 2 );
+	function minnpost_add_credit( $caption, $image_id ) {
+		//error_log( 'attr is ' . print_r( $attr, true ) );
+		$caption = wp_get_attachment_caption( $image_id );
+		$credit  = get_media_credit_html( $image_id );
+		$html    = '';
+		if ( '' !== $caption || '' !== $credit ) {
+			if ( '' !== $credit ) {
+				$html .= '<div class="a-media-meta a-media-credit">' . $credit . '</div>';
+			}
+			if ( '' !== $caption ) {
+				$html .= '<div class="a-media-meta a-media-caption">' . $caption . '</div>';
+			}
+		}
+		return $html;
+	}
+
+	//add_filter( 'image_send_to_editor', 'minnpost_insert_image', 1, 8 );
+	function minnpost_insert_image( $html, $image_id, $caption, $title, $align, $url, $size = 'medium', $alt ) {
+
+		$caption = wp_get_attachment_caption( $image_id );
+		$credit  = get_media_credit_html( $image_id );
+
+		$class = 'align' . esc_attr( $align ) . ' size-' . esc_attr( $size ) . ' wp-image-' . $image_id;
+
+		$figure  = '';
+		//$figure .= '<div class="m-inline-image m-inline-image-' . $size . ' ' . $class . '">';
+		$figure .= $html;
+
+		if ( '' !== $caption || '' !== $credit ) {
+			$figure .= '<figcaption>';
+			if ( '' !== $credit ) {
+				$figure .= '<div class="a-media-meta a-media-credit">' . $credit . '</div>';
+			}
+			if ( '' !== $caption ) {
+				$figure .= '<div class="a-media-meta a-media-caption">' . $caption . '</div>';
+			}
+			$figure .= '</figcaption>';
+		}
+
+		//$figure .= '</figure>';
+
+		return $figure;
+	}
+endif;
+
+
+
+function image_add_caption_with_credit( $html, $id, $caption, $title, $align, $url, $size, $alt = '' ) {
+
+	/**
+	* Filters the caption text and adds source info.
+	*
+	* Note: If the caption text is empty, the caption shortcode will not be appended
+	* to the image HTML when inserted into the editor.
+	*
+	* Passing an empty value also prevents the {@see 'image_add_caption_shortcode'}
+	* Filters from being evaluated at the end of image_add_caption().
+	*
+	* @since 4.1.0
+	*
+	* @param string $caption The original caption text.
+	* @param int    $id      The attachment ID.
+	*/
+	$caption = apply_filters( 'image_add_caption_text', $caption, $id );
+	$credit  = get_media_credit_html( $id );
+
+	/**
+	* Filters whether to disable captions.
+	*
+	* Prevents image captions from being appended to image HTML when inserted into the editor.
+	*
+	* @since 2.6.0
+	*
+	* @param bool $bool Whether to disable appending captions. Returning true to the filter
+	*                   will disable captions. Default empty string.
+	*/
+	if ( ( empty( $caption ) && empty( $credit ) ) || apply_filters( 'disable_captions', '' ) ) {
+		return $html;
+	}
+
+	$id = ( 0 < (int) $id ) ? 'attachment_' . $id : '';
+
+	if ( ! preg_match( '/width=["\']([0-9]+)/', $html, $matches ) ) {
+		return $html;
+	}
+
+	$width = $matches[1];
+
+	$caption = str_replace( array( "\r\n", "\r" ), "\n", $caption );
+	$caption = preg_replace_callback( '/<[a-zA-Z0-9]+(?: [^<>]+>)*/', '_cleanup_image_add_caption', $caption );
+
+	// Convert any remaining line breaks to <br>.
+	$caption = preg_replace( '/[ \n\t]*\n[ \t]*/', '<br />', $caption );
+
+	$html = preg_replace( '/(class=["\'][^\'"]*)align(none|left|right|center)\s?/', '$1', $html );
+
+	if ( empty( $align ) ) {
+		$align = 'none';
+	}
+
+	$shcode = '[caption id="' . $id . '" align="align' . $align . '" width="' . $width . '"]' . $html . '<code>[div class="a-media-meta a-media-credit"]' . $credit . '[/div][div class="a-media-meta a-media-caption"]' . $caption . '[/div]</code>[/caption]';
+
+	/**
+	* Filters the image HTML markup including the caption shortcode.
+	*
+	* @since 2.6.0
+	*
+	* @param string $shcode The image HTML markup with caption shortcode.
+	* @param string $html   The image HTML markup.
+	*/
+
+	return apply_filters( 'image_add_caption_shortcode', $shcode, $html );
+}
+
+
+// remove the existing filter
+remove_filter( 'image_send_to_editor', 'image_add_caption', 20, 8 );
+// add the new filter
+add_filter( 'image_send_to_editor', 'image_add_caption_with_credit', 20, 8 );
+
+add_filter( 'img_caption_shortcode', 'fix_shortcode', 10, 3 );
+function fix_shortcode( $output, $attr, $content ) {
+	$atts          = shortcode_atts( array(
+		'id'      => '',
+		'align'   => 'alignnone',
+		'width'   => '',
+		'caption' => '',
+		'class'   => '',
+	), $attr, 'caption' );
+	$atts['width'] = (int) $atts['width'];
+	if ( $atts['width'] < 1 || empty( $atts['caption'] ) ) {
+		return $content;
+	}
+	if ( ! empty( $atts['id'] ) ) {
+		$atts['id'] = 'id="' . esc_attr( sanitize_html_class( $atts['id'] ) ) . '" ';
+	}
+	$class = trim( 'wp-caption ' . $atts['align'] . ' ' . $atts['class'] );
+	$width = $atts['width'];
+	/**
+	 * Filters the width of an image's caption.
+	 *
+	 * By default, the caption is 10 pixels greater than the width of the image,
+	 * to prevent post content from running up against a floated image.
+	 *
+	 * @since 3.7.0
+	 *
+	 * @see img_caption_shortcode()
+	 *
+	 * @param int    $width    Width of the caption in pixels. To remove this inline style,
+	 *                         return zero.
+	 * @param array  $atts     Attributes of the caption shortcode.
+	 * @param string $content  The image element, possibly wrapped in a hyperlink.
+	 */
+	$caption_width = apply_filters( 'img_caption_shortcode_width', $width, $atts, $content );
+
+	$style = '';
+	if ( $caption_width ) {
+		$style = 'style="width: ' . (int) $caption_width . 'px" ';
+	}
+	$html = '<figure ' . $atts['id'] . $style . 'class="' . esc_attr( $class ) . '">'
+		. do_shortcode( $content ) . '<figcaption class="wp-caption-text">' . $atts['caption'] . '</figcaption></figure>';
+	$html = str_replace( '[div class="a-media-meta a-media-credit"]', '<div class="a-media-meta a-media-credit">', $html );
+	$html = str_replace( '[div class="a-media-meta a-media-caption"]', '<div class="a-media-meta a-media-caption">', $html );
+	$html = str_replace( '[/div]', '</div>', $html );
+	$html = str_replace( '<code>', '', $html );
+	$html = str_replace( '</code>', '', $html );
+
+	return $html;
+}
+
+

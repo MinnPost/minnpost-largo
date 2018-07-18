@@ -39,7 +39,7 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 		}
 
 		$caption = wp_get_attachment_caption( $image_id );
-		$credit  = get_media_credit_html( $image_id, false ); // don't show the uploader by default
+		$credit  = get_media_credit_html( $image_id );
 
 		if ( is_singular() && ! is_singular( 'newsletter' ) && ( ! isset( $attributes['location'] ) || 'related' !== $attributes['location'] ) ) : ?>
 			<figure class="m-post-image m-post-image-<?php echo $size; ?>">
@@ -564,7 +564,7 @@ if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
 		$name = get_cat_name( $category_id, $size );
 
 		$caption = wp_get_attachment_caption( $image_id );
-		$credit  = get_media_credit_html( $image_id, false ); // don't show the uploader by default
+		$credit  = get_media_credit_html( $image_id );
 
 		if ( is_singular() || is_archive() || is_home() ) {
 			$output  = '';
