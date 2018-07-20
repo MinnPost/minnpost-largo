@@ -554,6 +554,7 @@ if ( ! function_exists( 'cmb2_page_fields' ) ) :
 			'object_types' => array( $object_type ),
 			'context'      => 'normal',
 			'priority'     => 'low',
+			'closed'       => true,
 		) );
 		$page_settings->add_field( array(
 			'name' => 'Pre-title text',
@@ -570,10 +571,11 @@ if ( ! function_exists( 'cmb2_page_fields' ) ) :
 
 		$page_sidebar = new_cmb2_box( array(
 			'id'           => $object_type . '_sidebar_options',
-			'title'        => 'Sidebar Options',
+			'title'        => 'Sidebar Settings',
 			'object_types' => array( $object_type ),
 			'context'      => 'normal',
 			'priority'     => 'low',
+			'closed'       => true,
 		) );
 		$page_sidebar->add_field( array(
 			'name' => 'Remove whole right sidebar from this post?',
@@ -613,14 +615,24 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 		) );
 		// text fields
 		$category_setup->add_field( array(
-			'name' => 'Excerpt',
-			'id'   => '_mp_category_excerpt',
-			'type' => 'wysiwyg',
+			'name'    => 'Excerpt',
+			'id'      => '_mp_category_excerpt',
+			'type'    => 'wysiwyg',
+			'options' => array(
+				'media_buttons' => false, // show insert/upload button(s)
+				'textarea_rows' => 5,
+				'teeny'         => true, // output the minimal editor config used in Press This
+			),
 		) );
 		$category_setup->add_field( array(
-			'name' => 'Sponsorship',
-			'id'   => '_mp_category_sponsorship',
-			'type' => 'wysiwyg',
+			'name'    => 'Sponsorship',
+			'id'      => '_mp_category_sponsorship',
+			'type'    => 'wysiwyg',
+			'options' => array(
+				'media_buttons' => false, // show insert/upload button(s)
+				'textarea_rows' => 5,
+				'teeny'         => true, // output the minimal editor config used in Press This
+			),
 		) );
 		// image fields
 		$category_setup->add_field( array(
@@ -635,9 +647,13 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 		) );
 		// main body field
 		$category_setup->add_field( array(
-			'name' => 'Body',
-			'id'   => '_mp_category_body',
-			'type' => 'wysiwyg',
+			'name'    => 'Body',
+			'id'      => '_mp_category_body',
+			'type'    => 'wysiwyg',
+			'options' => array(
+				'media_buttons' => false, // show insert/upload button(s)
+				'teeny'         => false, // output the minimal editor config used in Press This
+			),
 		) );
 
 		// featured columns that appear on categories
@@ -734,7 +750,7 @@ if ( ! function_exists( 'cmb2_author_fields' ) ) :
 		 * Author Settings
 		 */
 		$author_setup = new_cmb2_box( array(
-			'id'           => $object_type . '_image_settings',
+			'id'           => $object_type . '_page_settings',
 			'title'        => 'Page Info',
 			'object_types' => array( $object_type ),
 			'context'      => 'normal',
@@ -748,15 +764,25 @@ if ( ! function_exists( 'cmb2_author_fields' ) ) :
 		) );
 		// excerpt
 		$author_setup->add_field( array(
-			'name' => 'Excerpt',
-			'id'   => '_mp_author_excerpt',
-			'type' => 'wysiwyg',
+			'name'    => 'Excerpt',
+			'id'      => '_mp_author_excerpt',
+			'type'    => 'wysiwyg',
+			'options' => array(
+				'media_buttons' => false, // show insert/upload button(s)
+				'textarea_rows' => 5,
+				'teeny'         => true, // output the minimal editor config used in Press This
+			),
 		) );
 		// full bio
 		$author_setup->add_field( array(
-			'name' => 'Bio',
-			'id'   => '_mp_author_bio',
-			'type' => 'wysiwyg',
+			'name'    => 'Bio',
+			'id'      => '_mp_author_bio',
+			'type'    => 'wysiwyg',
+			'options' => array(
+				'media_buttons' => false, // show insert/upload button(s)
+				'textarea_rows' => 5,
+				'teeny'         => true, // output the minimal editor config used in Press This
+			),
 		) );
 		$author_setup->add_field( array(
 			'name' => 'Staff Member?',
@@ -1179,7 +1205,7 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 		 */
 		$sidebar_settings = new_cmb2_box( array(
 			'id'           => $object_type . '_sidebar_options',
-			'title'        => 'Sidebar Options',
+			'title'        => 'Sidebar Settings',
 			'object_types' => array( $object_type ),
 			'context'      => 'normal',
 			'priority'     => 'low',
