@@ -252,6 +252,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'object_types' => array( $object_type ),
 			'context'      => 'normal',
 			'priority'     => 'high',
+			'closed'       => true,
 		) );
 		$subtitle_settings->add_field( array(
 			'name' => 'Byline',
@@ -262,6 +263,65 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'name' => 'Deck',
 			'id'   => '_mp_subtitle_settings_deck',
 			'type' => 'text',
+		) );
+
+		/**
+		 * Image settings
+		 */
+		$image_settings = new_cmb2_box( array(
+			'id'           => $object_type . '_image_settings',
+			'title'        => 'Image Settings',
+			'object_types' => array( $object_type ),
+			'context'      => 'normal',
+			'priority'     => 'high',
+			'closed'       => true,
+		) );
+		$image_settings->add_field( array(
+			'name'         => 'Thumbnail Image',
+			'desc'         => 'Upload an image or enter an URL.',
+			'id'           => '_mp_post_thumbnail_image',
+			'type'         => 'file',
+			'preview_size' => array( 130, 85 ),
+			'options'      => array(
+				//'url' => false, // Hide the text input for the url
+			),
+			'text'         => array(
+				//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
+			),
+			// query_args are passed to wp.media's library query.
+			'query_args'   => array(
+				'type' => 'image',
+			),
+		) );
+		$image_settings->add_field( array(
+			'name'             => 'Homepage Image Size',
+			'id'               => '_mp_post_homepage_image_size',
+			'type'             => 'select',
+			'show_option_none' => true,
+			'desc'             => 'Select an option',
+			'default'          => 'feature-large',
+			'options'          => array(
+				'feature-medium' => __( 'Medium', 'minnpost-largo' ),
+				'none'           => __( 'Do not display image', 'minnpost-largo' ),
+				'feature-large'  => __( 'Large', 'minnpost-largo' ),
+			),
+		) );
+		$image_settings->add_field( array(
+			'name'         => 'Main Image',
+			'desc'         => 'Upload an image or enter an URL.',
+			'id'           => '_mp_post_main_image',
+			'type'         => 'file',
+			'preview_size' => array( 130, 85 ),
+			'options'      => array(
+				//'url' => false, // Hide the text input for the url
+			),
+			'text'         => array(
+				//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
+			),
+			// query_args are passed to wp.media's library query.
+			'query_args'   => array(
+				'type' => 'image',
+			),
 		) );
 
 		/**
@@ -332,104 +392,11 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		) );
 
 		/**
-		 * Image settings
-		 */
-		$image_settings = new_cmb2_box( array(
-			'id'           => $object_type . '_image_settings',
-			'title'        => 'Image Settings',
-			'object_types' => array( $object_type ),
-			'context'      => 'normal',
-			'priority'     => 'high',
-		) );
-		$image_settings->add_field( array(
-			'name'         => 'Thumbnail Image',
-			'desc'         => 'Upload an image or enter an URL.',
-			'id'           => '_mp_post_thumbnail_image',
-			'type'         => 'file',
-			'preview_size' => array( 130, 85 ),
-			'options'      => array(
-				//'url' => false, // Hide the text input for the url
-			),
-			'text'         => array(
-				//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
-			),
-			// query_args are passed to wp.media's library query.
-			'query_args'   => array(
-				'type' => 'image',
-			),
-		) );
-		$image_settings->add_field( array(
-			'name'             => 'Homepage Image Size',
-			'id'               => '_mp_post_homepage_image_size',
-			'type'             => 'select',
-			'show_option_none' => true,
-			'desc'             => 'Select an option',
-			'default'          => 'feature-large',
-			'options'          => array(
-				'feature-medium' => __( 'Medium', 'minnpost-largo' ),
-				'none'           => __( 'Do not display image', 'minnpost-largo' ),
-				'feature-large'  => __( 'Large', 'minnpost-largo' ),
-			),
-		) );
-		$image_settings->add_field( array(
-			'name'         => 'Main Image',
-			'desc'         => 'Upload an image or enter an URL.',
-			'id'           => '_mp_post_main_image',
-			'type'         => 'file',
-			'preview_size' => array( 130, 85 ),
-			'options'      => array(
-				//'url' => false, // Hide the text input for the url
-			),
-			'text'         => array(
-				//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
-			),
-			// query_args are passed to wp.media's library query.
-			'query_args'   => array(
-				'type' => 'image',
-			),
-		) );
-
-		/**
-		 * Membership content settings
-		 * This depends on the Blocked Content Template plugin, which is called in get_member_levels()
-		 */
-		$member_content_settings = new_cmb2_box( array(
-			'id'           => $object_type . '_member_content_options',
-			'title'        => 'Member Content Settings',
-			'object_types' => array( $object_type ),
-			'context'      => 'normal',
-			'priority'     => 'low',
-		) );
-		$member_content_settings->add_field( array(
-			'name'             => 'Lowest access level',
-			'id'               => '_access_level',
-			'type'             => 'select',
-			'desc'             => 'If this content is restricted, select the lowest level that can access it.',
-			'show_option_none' => true,
-			'default'          => '',
-			'options'          => get_member_levels(),
-		) );
-		$member_content_settings->add_field( array(
-			'name'             => 'MinnPost+ icon style',
-			'id'               => '_mp_plus_icon_style',
-			'type'             => 'select',
-			'desc'             => 'Which MP+ icon to overlay on the thumbnails',
-			'show_option_none' => true,
-			'default'          => '',
-			'options'          => array(
-				'mp_plus_blackonwhite'       => __( 'Black on White', 'minnpost-largo' ),
-				'mp_plus_whiteonblack'       => __( 'White on Black', 'minnpost-largo' ),
-				'mp_plus_whiteonred'         => __( 'White on Red', 'minnpost-largo' ),
-				'mp_plus_whiteontransparent' => __( 'White on Transparent', 'minnpost-largo' ),
-			),
-		) );
-
-		/**
 		 * Sidebar settings
 		 */
 		$sidebar_settings = new_cmb2_box( array(
 			'id'           => $object_type . '_sidebar_options',
-			'title'        => 'Sidebar Options',
+			'title'        => 'Sidebar Settings',
 			'object_types' => array( $object_type ),
 			'context'      => 'normal',
 			'priority'     => 'low',
@@ -452,13 +419,14 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		 */
 		$related_settings = new_cmb2_box( array(
 			'id'           => $object_type . '_related_content_options',
-			'title'        => 'Related Content Options',
+			'title'        => 'Related Content Settings',
 			'object_types' => array( $object_type ),
 			'context'      => 'normal',
 			'priority'     => 'low',
+			'closed'       => true,
 		) );
 		$related_settings->add_field( array(
-			'name' => 'Show related content?',
+			'name' => 'Add related content to this post?',
 			'id'   => '_mp_show_related_content',
 			'type' => 'checkbox',
 			'desc' => '',
@@ -516,6 +484,42 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'posts_per_page'    => 5,
 			)
 		) );*/
+
+		/**
+		 * Membership content settings
+		 * This depends on the Blocked Content Template plugin, which is called in get_member_levels()
+		 */
+		$member_content_settings = new_cmb2_box( array(
+			'id'           => $object_type . '_member_content_options',
+			'title'        => 'Member Content Settings',
+			'object_types' => array( $object_type ),
+			'context'      => 'normal',
+			'priority'     => 'low',
+			'closed'       => true,
+		) );
+		$member_content_settings->add_field( array(
+			'name'             => 'Lowest access level',
+			'id'               => '_access_level',
+			'type'             => 'select',
+			'desc'             => 'If this content is restricted, select the lowest level that can access it.',
+			'show_option_none' => true,
+			'default'          => '',
+			'options'          => get_member_levels(),
+		) );
+		$member_content_settings->add_field( array(
+			'name'             => 'MinnPost+ icon style',
+			'id'               => '_mp_plus_icon_style',
+			'type'             => 'select',
+			'desc'             => 'Which MP+ icon to overlay on the thumbnails',
+			'show_option_none' => true,
+			'default'          => '',
+			'options'          => array(
+				'mp_plus_blackonwhite'       => __( 'Black on White', 'minnpost-largo' ),
+				'mp_plus_whiteonblack'       => __( 'White on Black', 'minnpost-largo' ),
+				'mp_plus_whiteonred'         => __( 'White on Red', 'minnpost-largo' ),
+				'mp_plus_whiteontransparent' => __( 'White on Transparent', 'minnpost-largo' ),
+			),
+		) );
 
 	}
 endif;
@@ -1179,6 +1183,7 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 			'object_types' => array( $object_type ),
 			'context'      => 'normal',
 			'priority'     => 'low',
+			'closed'       => true,
 		) );
 		$sidebar_settings->add_field( array(
 			'name' => 'Remove whole right sidebar from this post?',
