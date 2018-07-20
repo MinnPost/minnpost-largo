@@ -16,3 +16,11 @@
 	background-color: #fdfdfd;
 	margin: 20px 0;
 }
+
+/* excerpt fixes */
+#cmb2_excerpt .cmb2-context-wrap .cmb-row {
+	padding: 0;
+}
+#cmb2_excerpt .cmb2-context-wrap .cmb-td {
+	width: 100%;
+}

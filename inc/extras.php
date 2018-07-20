@@ -274,3 +274,26 @@ if ( ! function_exists( 'change_get_option_home' ) ) :
 		return false;
 	}
 endif;
+
+/**
+ * default editor for certain posts
+ */
+if ( ! function_exists( 'minnpost_set_default_editor' ) ) :
+	add_filter( 'wp_default_editor', 'minnpost_set_default_editor' );
+	function minnpost_set_default_editor( $editor ) {
+		//$screen = get_current_screen();
+
+		if ( is_admin() ) {
+			global $post;
+			$id       = $post->ID;
+			$use_html = get_post_meta( $id, '_mp_post_use_html_editor', true );
+			if ( 'on' === $use_html ) {
+				$editor = 'html';
+			} else {
+				$editor = 'tinymce';
+			}
+		}
+
+		return $editor;
+	}
+endif;

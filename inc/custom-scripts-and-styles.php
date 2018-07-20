@@ -57,10 +57,6 @@ endif;
 if ( ! function_exists( 'minnpost_admin_style' ) ) :
 	add_action( 'admin_enqueue_scripts', 'minnpost_admin_style' );
 	function minnpost_admin_style( $hook ) {
-		// Load only on ?page=toplevel_page_zoninator to fix that awful css
-		/*if ( 'toplevel_page_zoninator' !== $hook ) {
-			return;
-		}*/
 		wp_enqueue_style( 'custom_wp_admin_css', get_theme_file_uri() . '/admin-style.css' );
 	}
 endif;

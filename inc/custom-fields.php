@@ -224,14 +224,11 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'id'           => 'cmb2_excerpt',
 			'title'        => 'Excerpt',
 			'object_types' => array( $object_type ), // Post type
-			'context'      => 'after_title',
+			'context'      => 'after_editor',
+			'priority'     => 'high',
 			'show_names'   => false,
 		) );
 		$excerpt->add_field( array(
-			/*
-			 * As long as the 'id' matches the name field of the regular WP field,
-			 * WP will handle the saving for you.
-			 */
 			'id'        => 'excerpt',
 			'name'      => 'Excerpt',
 			'desc'      => '',
@@ -337,6 +334,12 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'closed'       => true,
 		) );
 		$display_settings->add_field( array(
+			'name' => 'Load HTML editor by default?',
+			'id'   => '_mp_post_use_html_editor',
+			'type' => 'checkbox',
+			'desc' => '',
+		) );
+		$display_settings->add_field( array(
 			'name' => 'Remove category from display?',
 			'id'   => '_mp_remove_category_from_display',
 			'type' => 'checkbox',
@@ -400,7 +403,8 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'title'        => 'Sidebar Settings',
 			'object_types' => array( $object_type ),
 			'context'      => 'normal',
-			'priority'     => 'low',
+			'priority'     => 'high',
+			'closed'       => true,
 		) );
 		$sidebar_settings->add_field( array(
 			'name' => 'Remove whole right sidebar from this post?',
@@ -423,7 +427,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'title'        => 'Related Content Settings',
 			'object_types' => array( $object_type ),
 			'context'      => 'normal',
-			'priority'     => 'low',
+			'priority'     => 'high',
 			'closed'       => true,
 		) );
 		$related_settings->add_field( array(
@@ -495,7 +499,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'title'        => 'Member Content Settings',
 			'object_types' => array( $object_type ),
 			'context'      => 'normal',
-			'priority'     => 'low',
+			'priority'     => 'high',
 			'closed'       => true,
 		) );
 		$member_content_settings->add_field( array(
