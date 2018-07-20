@@ -196,10 +196,11 @@ function _minnpost_largo_admin_hide_excerpt_field() {
 /**
  * Override the WordPress Excerpt field
  */
+add_filter( 'cmb2_override_excerpt_meta_value', 'minnpost_largo_override_excerpt_display', 10, 2 );
 function minnpost_largo_override_excerpt_display( $data, $post_id ) {
 	return get_post_field( 'post_excerpt', $post_id );
 }
-add_filter( 'cmb2_override_excerpt_meta_value', 'minnpost_largo_override_excerpt_display', 10, 2 );
+
 /*
  * WP will handle the saving for us, so don't save to meta.
  */
