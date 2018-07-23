@@ -1,7 +1,8 @@
+$search-width: 117px;
 .m-secondary-navigation .search-form {
-	width: 117px;
+	width: $search-width;
 	height: 29px;
-	border: 2px solid #cdcdd0;
+	border: 2px solid $color__gray-lightest;
 	z-index: 1;
 	position: absolute;
 	top: 8px;
@@ -31,6 +32,20 @@
 		position: absolute;
 		right: 0;
 		top: 3px;
+	}
+	.typeahead {
+		border: 2px solid $color__gray-lightest;
+		border-top: none;
+		display: block;
+		z-index: 100;
+		width: $search-width;
+		padding: 1px 2px 3px 2px;
+		margin-left: -2.5px;
+		position: absolute;
+		background: $color__white;
+		li {
+			padding: 0.25em;
+		}
 	}
 }
 
