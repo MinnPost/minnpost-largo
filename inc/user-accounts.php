@@ -250,3 +250,28 @@ if ( ! function_exists( 'save_minnpost_user_data' ) ) :
 		}
 	}
 endif;
+
+/**
+* When a user dropdown is in use (this only happens in admin pages for us, filter it so it shows the roles we would want
+*
+* @param array $query_args
+* @return array $existing_user_data
+*
+*/
+if ( ! function_exists( 'filter_wp_dropdown_users_args' ) ) :
+	add_filter( 'wp_dropdown_users_args', 'filter_wp_dropdown_users_args' );
+	function filter_wp_dropdown_users_args( $query_args ) {
+		$query_args['role__in'] = array(
+			'administrator',
+			'editor',
+			'business',
+			'author',
+			'contributor',
+			'comment_moderator',
+			'staff',
+		);
+		// Unset the 'who' as this defaults to the 'author' role
+		unset( $query_args['who'] );
+		return $query_args;
+	}
+endif;
