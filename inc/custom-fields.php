@@ -99,6 +99,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 			$most_recent_newsletter_modified = strtotime( time() );
 		}
 		$newsletter_post_args = array(
+			'ep_integrate'   => true,
 			'posts_per_page' => -1,
 			'post_type'      => 'post',
 			'orderby'        => 'modified',
@@ -119,12 +120,11 @@ if ( function_exists( 'create_newsletter' ) ) :
 			'show_names'   => false, // Show field names on the left
 		) );
 		$newsletter_top_posts->add_field( array(
-			'name'                           => __( 'Top Stories', 'minnpost-largo' ),
-			'desc'                           => __( 'Drag posts from the left column to the right column to attach them to this page.<br />You may rearrange the order of the posts in the right column by dragging and dropping.', 'minnpost-largo' ),
-			'id'                             => $prefix . 'top_posts',
-			'type'                           => 'custom_attached_posts',
-			'attached_posts_search_query_cb' => 'mp_attached_posts_search',
-			'options'                        => array(
+			'name'    => __( 'Top Stories', 'minnpost-largo' ),
+			'desc'    => __( 'Drag posts from the left column to the right column to attach them to this page.<br />You may rearrange the order of the posts in the right column by dragging and dropping.', 'minnpost-largo' ),
+			'id'      => $prefix . 'top_posts',
+			'type'    => 'custom_attached_posts',
+			'options' => array(
 				'show_thumbnails' => false, // Show thumbnails on the left
 				'filter_boxes'    => true, // Show a text box for filtering the results
 				'query_args'      => $newsletter_post_args,
@@ -145,12 +145,11 @@ if ( function_exists( 'create_newsletter' ) ) :
 			'show_names'   => false, // Show field names on the left
 		) );
 		$newsletter_more_posts->add_field( array(
-			'name'                           => __( 'More Stories', 'minnpost-largo' ),
-			'desc'                           => __( 'Drag posts from the left column to the right column to attach them to this page.<br />You may rearrange the order of the posts in the right column by dragging and dropping.', 'minnpost-largo' ),
-			'id'                             => $prefix . 'more_posts',
-			'type'                           => 'custom_attached_posts',
-			'attached_posts_search_query_cb' => 'mp_attached_posts_search',
-			'options'                        => array(
+			'name'    => __( 'More Stories', 'minnpost-largo' ),
+			'desc'    => __( 'Drag posts from the left column to the right column to attach them to this page.<br />You may rearrange the order of the posts in the right column by dragging and dropping.', 'minnpost-largo' ),
+			'id'      => $prefix . 'more_posts',
+			'type'    => 'custom_attached_posts',
+			'options' => array(
 				'show_thumbnails' => false, // Show thumbnails on the left
 				'filter_boxes'    => true, // Show a text box for filtering the results
 				'query_args'      => $newsletter_post_args,
@@ -437,40 +436,38 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'desc' => '',
 		) );
 		$related_settings->add_field( array(
-			'name'                           => 'Related Content',
-			'id'                             => '_mp_related_content',
-			'type'                           => 'custom_attached_posts',
-			'options'                        => array(
+			'name'       => 'Related Content',
+			'id'         => '_mp_related_content',
+			'type'       => 'custom_attached_posts',
+			'options'    => array(
 				'show_thumbnails' => false, // Show thumbnails on the left
 				'filter_boxes'    => false, // Show a text box for filtering the results
 				'query_args'      => array(
-					'posts_per_page' => 10,
-					'post_type'      => $object_type,
-					//'cache_results' => false,
+					'post_status'  => 'publish',
+					'post_type'    => $object_type,
+					'ep_integrate' => true,
 				), // override the get_posts args
 			),
-			'attached_posts_search_query_cb' => 'mp_attached_posts_search',
-			'attributes'                     => array(
+			'attributes' => array(
 				'required'               => false,
 				'data-conditional-id'    => '_mp_show_related_content',
 				'data-conditional-value' => 'on',
 			),
 		) );
 		$related_settings->add_field( array(
-			'name'                           => 'Related Multimedia',
-			'id'                             => '_mp_related_multimedia',
-			'type'                           => 'custom_attached_posts',
-			'options'                        => array(
+			'name'       => 'Related Multimedia',
+			'id'         => '_mp_related_multimedia',
+			'type'       => 'custom_attached_posts',
+			'options'    => array(
 				'show_thumbnails' => false, // Show thumbnails on the left
 				'filter_boxes'    => false, // Show a text box for filtering the results
 				'query_args'      => array(
-					'posts_per_page' => 10,
-					'post_type'      => $object_type,
-					//'cache_results' => false,
+					'post_status'  => 'publish',
+					'post_type'    => $object_type,
+					'ep_integrate' => true,
 				), // override the get_posts args
 			),
-			'attached_posts_search_query_cb' => 'mp_attached_posts_search',
-			'attributes'                     => array(
+			'attributes' => array(
 				'required'               => false,
 				'data-conditional-id'    => '_mp_show_related_content',
 				'data-conditional-value' => 'on',
@@ -526,17 +523,6 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			),
 		) );
 
-	}
-endif;
-
-/**
-* Use CMB2 filter for searching
-*
-*/
-if ( ! function_exists( 'mp_attached_posts_search' ) ) :
-	function mp_attached_posts_search( $query ) {
-		$query->query_vars['posts_per_page'] = 10;
-		return $query;
 	}
 endif;
 
