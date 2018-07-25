@@ -304,3 +304,16 @@ if ( ! function_exists( 'add_elasticpress' ) ) :
 		$query->set( 'ep_integrate', true );
 	}
 endif;
+
+/**
+ * Use ElasticPress for Zoninator zone queries
+ * @param array $args
+ * @return array $args
+ */
+if ( ! function_exists( 'minnpost_zoninator_elasticpress' ) ) :
+	add_filter( 'zoninator_recent_posts_args', 'minnpost_zoninator_elasticpress' );
+	function minnpost_zoninator_elasticpress( $args ) {
+		$args['ep_integrate'] = true;
+		return $args;
+	}
+endif;
