@@ -33,7 +33,7 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 		$widget_output = str_replace( '</div></div>', '</div></section>', $widget_output );
 
 		$html = '';
-		$doc = new DOMDocument();
+		$doc  = new DOMDocument();
 		libxml_use_internal_errors( true );
 		$doc->loadHTML( $widget_output, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
 		libxml_use_internal_errors( false );
@@ -67,23 +67,23 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 	// target featured columns widget
 	if ( false !== strpos( $widget_output, 'menu-menu-featured-columns-container' ) && 'nav_menu' == $widget_type ) {
 		$html = '';
-		$doc = new DOMDocument();
+		$doc  = new DOMDocument();
 		libxml_use_internal_errors( true );
 		$doc->loadHTML( $widget_output, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
 		libxml_use_internal_errors( false );
-		$title = $doc->getElementsByTagName( 'h3' )->item( 0 )->nodeValue;
+		$title      = $doc->getElementsByTagName( 'h3' )->item( 0 )->nodeValue;
 		$list_items = $doc->getElementsByTagName( 'li' );
 
 		$html .= '<section class="m-featured-columns"><h3 class="a-widget-title">' . $title . '</h3><ul>';
 		foreach ( $list_items as $li ) {
 			$name = $li->nodeValue;
-			$id = get_cat_ID( $name );
+			$id   = get_cat_ID( $name );
 
 			$query = new WP_Query(
 				array(
 					'posts_per_page' => 1,
-					'cat' => $id,
-					'orderby' => 'date',
+					'cat'            => $id,
+					'orderby'        => 'date',
 				)
 			);
 
