@@ -297,3 +297,10 @@ if ( ! function_exists( 'minnpost_set_default_editor' ) ) :
 		return $editor;
 	}
 endif;
+
+if ( ! function_exists( 'add_elasticpress' ) ) :
+	//add_action( 'pre_get_posts', 'add_elasticpress' );
+	function add_elasticpress( $query ) {
+		$query->set( 'ep_integrate', true );
+	}
+endif;
