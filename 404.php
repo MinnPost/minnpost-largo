@@ -17,7 +17,7 @@ get_header(); ?>
 			$query = new WP_Query(
 				array(
 					'post_type' => 'page',
-					'pagename' => 'page-not-found',
+					'pagename'  => 'page-not-found',
 				)
 			);
 			while ( $query->have_posts() ) : $query->the_post();
