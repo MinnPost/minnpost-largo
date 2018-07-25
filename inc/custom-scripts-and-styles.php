@@ -7,14 +7,15 @@
 
 /**
 * Handle adding and removing of front end CSS in this theme
-* This also handles whether the CSS should be served as minified based on SCRIPT_DEBUG value
+* This also handles whether the CSS should be served as minified based on WP_DEBUG value
+* We can't use SCRIPT_DEBUG because our server fails to minify, so we have to keep that set to true, but these files are already minified.
 *
 */
 if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
 	add_action( 'wp_print_styles', 'minnpost_largo_add_remove_styles', 10 );
 	function minnpost_largo_add_remove_styles() {
 		// add
-		$suffix = ( defined( 'SCRIPT_DEBUG' ) && 'true' === SCRIPT_DEBUG ) ? '' : '.min';
+		$suffix = ( defined( 'SCRIPT_DEBUG' ) && 'true' === WP_DEBUG ) ? '' : '.min';
 		wp_enqueue_style( 'minnpost-style', get_theme_file_uri() . '/style' . $suffix . '.css', array(), filemtime( get_theme_file_path() . '/style' . $suffix . '.css' ), 'all' );
 		// remove
 		wp_dequeue_style( 'largo-style' );
@@ -29,14 +30,15 @@ endif;
 
 /**
 * Handle adding and removing of front end JavaScript in this theme
-* This also handles whether the JavaScript should be served as minified based on SCRIPT_DEBUG value
+* This also handles whether the JavaScript should be served as minified based on WP_DEBUG value
+* We can't use SCRIPT_DEBUG because our server fails to minify, so we have to keep that set to true, but these files are already minified.
 *
 */
 if ( ! function_exists( 'minnpost_largo_add_remove_scripts' ) ) :
 	add_action( 'wp_enqueue_scripts', 'minnpost_largo_add_remove_scripts' );
 	function minnpost_largo_add_remove_scripts() {
 		// add
-		$suffix = ( defined( 'SCRIPT_DEBUG' ) && 'true' === SCRIPT_DEBUG ) ? '' : '.min';
+		$suffix = ( defined( 'WP_DEBUG' ) && 'true' === WP_DEBUG ) ? '' : '.min';
 		wp_enqueue_script( 'modernizr', get_theme_file_uri() . '/assets/js/modernizr-custom' . $suffix . '.js', array(), '1.0', false );
 		wp_enqueue_script( 'minnpost', get_theme_file_uri() . '/assets/js/minnpost' . $suffix . '.js', array( 'jquery', 'modernizr' ), filemtime( get_theme_file_path() . '/assets/js/minnpost' . $suffix . '.js' ), true );
 		// localize
