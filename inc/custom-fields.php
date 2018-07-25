@@ -119,17 +119,25 @@ if ( function_exists( 'create_newsletter' ) ) :
 			'priority'     => 'high',
 			'show_names'   => false, // Show field names on the left
 		) );
-		$newsletter_top_posts->add_field( array(
-			'name'    => __( 'Top Stories', 'minnpost-largo' ),
-			'desc'    => __( 'Drag posts from the left column to the right column to attach them to this page.<br />You may rearrange the order of the posts in the right column by dragging and dropping.', 'minnpost-largo' ),
-			'id'      => $prefix . 'top_posts',
-			'type'    => 'custom_attached_posts',
-			'options' => array(
-				'show_thumbnails' => false, // Show thumbnails on the left
-				'filter_boxes'    => true, // Show a text box for filtering the results
-				'query_args'      => $newsletter_post_args,
-			),
-		) );
+		$newsletter_top_posts->add_field(
+			minnpost_post_search_field(
+				array(
+					'name'       => __( 'Top Stories', 'minnpost-largo' ),
+					'desc'       => __( 'Search for a post here', 'minnpost-largo' ),
+					'id'         => $prefix . 'top_posts',
+					'query_args' => array(
+						'orderby'    => 'modified',
+						'order'      => 'DESC',
+						'date_query' => array(
+							array(
+								'column' => 'post_modified',
+								'after'  => $most_recent_newsletter_modified,
+							),
+						),
+					),
+				), 'post_search_ajax'
+			)
+		);
 		$newsletter_top_posts->add_field( array(
 			'name' => 'Show Department for Top Stories',
 			'desc' => 'If checked, top stories will also display their department name.',
@@ -144,17 +152,25 @@ if ( function_exists( 'create_newsletter' ) ) :
 			'priority'     => 'high',
 			'show_names'   => false, // Show field names on the left
 		) );
-		$newsletter_more_posts->add_field( array(
-			'name'    => __( 'More Stories', 'minnpost-largo' ),
-			'desc'    => __( 'Drag posts from the left column to the right column to attach them to this page.<br />You may rearrange the order of the posts in the right column by dragging and dropping.', 'minnpost-largo' ),
-			'id'      => $prefix . 'more_posts',
-			'type'    => 'custom_attached_posts',
-			'options' => array(
-				'show_thumbnails' => false, // Show thumbnails on the left
-				'filter_boxes'    => true, // Show a text box for filtering the results
-				'query_args'      => $newsletter_post_args,
-			),
-		) );
+		$newsletter_more_posts->add_field(
+			minnpost_post_search_field(
+				array(
+					'name'       => __( 'More Stories', 'minnpost-largo' ),
+					'desc'       => __( 'Search for a post here', 'minnpost-largo' ),
+					'id'         => $prefix . 'more_posts',
+					'query_args' => array(
+						'orderby'    => 'modified',
+						'order'      => 'DESC',
+						'date_query' => array(
+							array(
+								'column' => 'post_modified',
+								'after'  => $most_recent_newsletter_modified,
+							),
+						),
+					),
+				)
+			)
+		);
 	}
 endif;
 
@@ -435,57 +451,34 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'type' => 'checkbox',
 			'desc' => '',
 		) );
-		$related_settings->add_field( array(
-			'name'       => 'Related Content',
-			'id'         => '_mp_related_content',
-			'type'       => 'custom_attached_posts',
-			'options'    => array(
-				'show_thumbnails' => false, // Show thumbnails on the left
-				'filter_boxes'    => false, // Show a text box for filtering the results
-				'query_args'      => array(
-					'post_status'  => 'publish',
-					'post_type'    => $object_type,
-					'ep_integrate' => true,
-				), // override the get_posts args
-			),
-			'attributes' => array(
-				'required'               => false,
-				'data-conditional-id'    => '_mp_show_related_content',
-				'data-conditional-value' => 'on',
-			),
-		) );
-		$related_settings->add_field( array(
-			'name'       => 'Related Multimedia',
-			'id'         => '_mp_related_multimedia',
-			'type'       => 'custom_attached_posts',
-			'options'    => array(
-				'show_thumbnails' => false, // Show thumbnails on the left
-				'filter_boxes'    => false, // Show a text box for filtering the results
-				'query_args'      => array(
-					'post_status'  => 'publish',
-					'post_type'    => $object_type,
-					'ep_integrate' => true,
-				), // override the get_posts args
-			),
-			'attributes' => array(
-				'required'               => false,
-				'data-conditional-id'    => '_mp_show_related_content',
-				'data-conditional-value' => 'on',
-			),
-		) );
-		/*$related_settings->add_field( array(
-			'name'          => __( 'Related Multimedia', 'minnpost-largo' ),
-			'desc'          => '',
-			'id'            => '_mp_related_multimedia',
-			'type'          => 'post_ajax_search',
-			'multiple'      => true,
-			'limit'      	=> -1,
-			'query_args'	=> array(
-				'post_type'			=> array( 'post' ),
-				'post_status'		=> array( 'publish', 'pending' ),
-				'posts_per_page'    => 5,
+		$related_settings->add_field(
+			minnpost_post_search_field(
+				array(
+					'name'       => __( 'Related Content', 'minnpost-largo' ),
+					'desc'       => __( 'Search for a post here', 'minnpost-largo' ),
+					'id'         => '_mp_related_content',
+					'attributes' => array(
+						'required'               => false,
+						'data-conditional-id'    => '_mp_show_related_content',
+						'data-conditional-value' => 'on',
+					),
+				)
 			)
-		) );*/
+		);
+		$related_settings->add_field(
+			minnpost_post_search_field(
+				array(
+					'name'       => __( 'Related Multimedia', 'minnpost-largo' ),
+					'desc'       => __( 'Search for a post here', 'minnpost-largo' ),
+					'id'         => '_mp_related_multimedia',
+					'attributes' => array(
+						'required'               => false,
+						'data-conditional-id'    => '_mp_show_related_content',
+						'data-conditional-value' => 'on',
+					),
+				)
+			)
+		);
 
 		/**
 		 * Membership content settings
@@ -1217,4 +1210,80 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 
 	}
 
+endif;
+
+/**
+* Generate arguments for CMB2 field for picking other posts on an edit post screen.
+* This can support either custom_attached_posts or post_ajax_search field types from CMB2 plugins
+* @param array $args
+* @param string $type
+* @return array $args
+*
+*/
+if ( ! function_exists( 'minnpost_post_search_field' ) ) :
+	function minnpost_post_search_field( $args, $type = 'post_search_ajax' ) {
+
+		// this is the attached post field default
+		if ( 'custom_attached_posts' === $type ) {
+			$args = array_merge(
+				array(
+					'desc'    => '',
+					'type'    => $type,
+					'options' => array(
+						'show_thumbnails' => false,
+						'filter_boxes'    => false,
+						'query_args'      => array(
+							'post_type'      => 'post',
+							'post_status'    => 'publish',
+							'posts_per_page' => 10,
+							'cache_results'  => false,
+							'ep_integrate'   => true,
+						),
+					),
+				),
+				$args
+			);
+			return $args;
+		}
+
+		// this is the cmb2-field-ajax-search plugin
+		if ( 'post_ajax_search' === $type ) {
+			$args = array_merge(
+				array(
+					'desc'       => '',
+					'type'       => $type,
+					'multiple'   => true,
+					'sortable'   => true,
+					'limit'      => -1,
+					'query_args' => array(
+						'post_type'      => 'post',
+						'post_status'    => 'publish',
+						'posts_per_page' => 10,
+						'ep_integrate'   => true,
+					),
+				),
+				$args
+			);
+			return $args;
+		}
+
+		// this is the cmb2-field-post-search-ajax plugin, which is the default
+		$args = array_merge(
+			array(
+				'desc'       => '',
+				'type'       => $type,
+				'sortable'   => true,
+				'limit'      => -1,
+				'query_args' => array(
+					'post_type'      => 'post',
+					'post_status'    => 'publish',
+					'posts_per_page' => 10,
+					'ep_integrate'   => true,
+				),
+			),
+			$args
+		);
+		return $args;
+
+	}
 endif;

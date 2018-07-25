@@ -24,3 +24,19 @@
 #cmb2_excerpt .cmb2-context-wrap .cmb-td {
 	width: 100%;
 }
+
+/* cmb2 post ajax search fields */
+.cmb-type-post-ajax-search ul.cmb-ajax-search-results {
+	width: auto;
+}
+.cmb-type-post-ajax-search input.cmb-ajax-search {
+	width: 50em;
+}
+
+/* cmb2 post search ajax fields */
+.cmb-type-post-search-ajax ul.cmb-post-search-ajax-results {
+	width: auto;
+}
+.cmb-type-post-search-ajax input.cmb-post-search-ajax {
+	width: 50em;
+}
