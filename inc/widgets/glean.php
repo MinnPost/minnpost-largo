@@ -28,8 +28,9 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 		$the_query = new WP_Query(
 			array(
 				'posts_per_page' => 2,
-				'cat' => $category,
-				'orderby' => 'date',
+				'cat'            => $category,
+				'orderby'        => 'date',
+				'ep_integrate'   => true,
 			)
 		);
 

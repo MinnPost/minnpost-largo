@@ -200,6 +200,7 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 						'terms'    => array( $category ),
 					),
 				),
+				'ep_integrate'   => true,
 			);
 		} else {
 			$args = array(
@@ -207,6 +208,7 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 				'order'          => $order,
 				'orderby'        => $orderby,
 				'posts_per_page' => $show,
+				'ep_integrate'   => true,
 			);
 		}
 
