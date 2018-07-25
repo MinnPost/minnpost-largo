@@ -21,7 +21,7 @@ if ( ! function_exists( 'create_newsletter' ) ) :
 					'name'               => __( 'Newsletters', 'minnpost-largo' ),
 					'singular_name'      => __( 'Newsletter', 'minnpost-largo' ),
 					'menu_name'          => __( 'Newsletters', 'minnpost-largo' ),
-					'name_admin_bar'     => __( 'Newsletters', 'minnpost-largo' ),
+					'name_admin_bar'     => __( 'Newsletter', 'minnpost-largo' ),
 					'add_new'            => __( 'Add New', 'minnpost-largo' ),
 					'add_new_item'       => __( 'Add New Newsletter', 'minnpost-largo' ),
 					'new_item'           => __( 'New Newsletter', 'minnpost-largo' ),
