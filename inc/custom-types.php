@@ -57,7 +57,7 @@ if ( ! function_exists( 'minnpost_indexable_post_types' ) ) :
 			'partner'        => 'partner',
 			'partner_offer'  => 'partner_offer',
 			'popup'          => 'popup',
-			'guest'-author   => 'guest-author',
+			'guest-author'   => 'guest-author',
 			'cr3ativsponsor' => 'cr3ativsponsor',
 			'wp_log'         => 'wp_log',
 			'tribe_events'   => 'tribe_events',
@@ -70,5 +70,36 @@ if ( ! function_exists( 'minnpost_indexable_post_types' ) ) :
 		);
 		$post_types          = array_diff_assoc( $post_types, $non_indexable_types );
 		return $post_types;
+	}
+endif;
+
+/**
+ * Change which post types are publicly searchable, even if they are indexed by ElasticSearch
+ *
+ * @param string $post_type the name of the post type
+ * @param object $args the post type args
+ */
+if ( ! function_exists( 'minnpost_exclude_from_search' ) ) :
+	add_action( 'registered_post_type', 'minnpost_exclude_from_search', 10, 2 );
+	function minnpost_exclude_from_search( $post_type, $args ) {
+
+		$types_to_exclude = array(
+			'attachment',
+			'partner',
+			'partner_offer',
+			'popup',
+			'guest-author',
+			'cr3ativsponsor',
+		);
+
+		if ( ! in_array( $post_type, $types_to_exclude ) ) {
+			return;
+		}
+
+		$args->exclude_from_search = true;
+
+		global $wp_post_types;
+		$wp_post_types[ $post_type ] = $args;
+
 	}
 endif;
