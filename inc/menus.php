@@ -206,7 +206,7 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 					$url = wp_login_url( $current_url );
 				}
 			}
-			
+
 			if ( rtrim( site_url( '/user/' ), '/' ) === $url && 'Welcome' === $item->title ) {
 				$user = wp_get_current_user();
 				if ( isset( $user->first_name ) && '' !== trim( $user->first_name ) ) {
@@ -440,6 +440,8 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 			remove_submenu_page( 'options-general.php', 'user-account-management' );
 			remove_submenu_page( 'options-general.php', 'widgetopts_plugin_settings' );
 			remove_submenu_page( 'options-general.php', 'wp-analytics-tracking-generator-admin' );
+			// elasticpress
+			remove_menu_page( 'elasticpress' );
 		}
 
 	}
