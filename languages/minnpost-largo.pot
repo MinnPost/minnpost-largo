@@ -21,7 +21,7 @@ msgstr ""
 msgid "Sections"
 msgstr ""
 
-#: search.php:18
+#: search.php:16
 msgid "Search Results"
 msgstr ""
 
@@ -49,31 +49,79 @@ msgstr ""
 msgid "Trash"
 msgstr ""
 
-#: inc/custom-fields.php:274
+#: inc/custom-fields.php:65
+msgid "Daily"
+msgstr ""
+
+#: inc/custom-fields.php:66
+msgid "Greater MN"
+msgstr ""
+
+#: inc/custom-fields.php:67
+msgid "Sunday Review"
+msgstr ""
+
+#: inc/custom-fields.php:68
+msgid "D.C. Memo"
+msgstr ""
+
+#: inc/custom-fields.php:116, inc/custom-fields.php:125
+msgid "Top Stories"
+msgstr ""
+
+#: inc/custom-fields.php:126, inc/custom-fields.php:159, inc/custom-fields.php:458, inc/custom-fields.php:472
+msgid "Search for a post here"
+msgstr ""
+
+#: inc/custom-fields.php:149, inc/custom-fields.php:158
+msgid "More Stories"
+msgstr ""
+
+#: inc/custom-fields.php:317, inc/custom-fields.php:1164
+msgid "Medium"
+msgstr ""
+
+#: inc/custom-fields.php:318, inc/custom-fields.php:1165
+msgid "Do not display image"
+msgstr ""
+
+#: inc/custom-fields.php:319, inc/custom-fields.php:1166
+msgid "Large"
+msgstr ""
+
+#: inc/custom-fields.php:407
 msgid "Both"
 msgstr ""
 
-#: inc/custom-fields.php:275
+#: inc/custom-fields.php:408
 msgid "Top"
 msgstr ""
 
-#: inc/custom-fields.php:276
+#: inc/custom-fields.php:409
 msgid "Bottom"
 msgstr ""
 
-#: inc/custom-fields.php:387
+#: inc/custom-fields.php:457
+msgid "Related Content"
+msgstr ""
+
+#: inc/custom-fields.php:471
+msgid "Related Multimedia"
+msgstr ""
+
+#: inc/custom-fields.php:512
 msgid "Black on White"
 msgstr ""
 
-#: inc/custom-fields.php:388
+#: inc/custom-fields.php:513
 msgid "White on Black"
 msgstr ""
 
-#: inc/custom-fields.php:389
+#: inc/custom-fields.php:514
 msgid "White on Red"
 msgstr ""
 
-#: inc/custom-fields.php:390
+#: inc/custom-fields.php:515
 msgid "White on Transparent"
 msgstr ""
 
@@ -117,15 +165,15 @@ msgstr ""
 msgid "We have added you to the MinnPost mailing list. You will need to click the confirmation link in the email we sent to begin receiving messages."
 msgstr ""
 
-#: inc/custom-shortcodes.php:307
+#: inc/custom-shortcodes.php:309
 msgid "You do not have permission to access this page."
 msgstr ""
 
-#: inc/custom-types.php:19, inc/custom-types.php:22
+#: inc/custom-types.php:19, inc/custom-types.php:22, inc/custom-types.php:24
 msgid "Newsletter"
 msgstr ""
 
-#: inc/custom-types.php:21, inc/custom-types.php:23, inc/custom-types.php:24
+#: inc/custom-types.php:21, inc/custom-types.php:23
 msgid "Newsletters"
 msgstr ""
 
@@ -308,6 +356,42 @@ msgstr ""
 #. translators: %s: Name of current post
 #: inc/template-tags.php:738, inc/template-tags.php:768
 msgid "Edit %s"
+msgstr ""
+
+#: inc/uploads.php:42
+msgid "Feature"
+msgstr ""
+
+#: inc/uploads.php:43
+msgid "Feature large"
+msgstr ""
+
+#: inc/uploads.php:44
+msgid "Feature medium"
+msgstr ""
+
+#: inc/uploads.php:45
+msgid "Newsletter thumbnail"
+msgstr ""
+
+#: inc/uploads.php:46
+msgid "Featured column"
+msgstr ""
+
+#: inc/uploads.php:47
+msgid "Author photo"
+msgstr ""
+
+#: inc/uploads.php:48
+msgid "Author teaser"
+msgstr ""
+
+#: inc/uploads.php:49
+msgid "Author thumbnail"
+msgstr ""
+
+#: inc/uploads.php:50
+msgid "Partner logo"
 msgstr ""
 
 #: inc/user-accounts.php:212
