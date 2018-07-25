@@ -16,8 +16,8 @@ if ( ! function_exists( 'create_newsletter' ) ) :
 		register_post_type(
 			'newsletter',
 			array(
-				'label'        => __( 'Newsletter', 'minnpost-largo' ),
-				'labels'       => array(
+				'label'               => __( 'Newsletter', 'minnpost-largo' ),
+				'labels'              => array(
 					'name'               => __( 'Newsletters', 'minnpost-largo' ),
 					'singular_name'      => __( 'Newsletter', 'minnpost-largo' ),
 					'menu_name'          => __( 'Newsletters', 'minnpost-largo' ),
@@ -33,10 +33,11 @@ if ( ! function_exists( 'create_newsletter' ) ) :
 					'not_found'          => __( 'No newsletters found.', 'minnpost-largo' ),
 					'not_found_in_trash' => __( 'No newsletters found in Trash.', 'minnpost-largo' ),
 				),
-				'show_ui'      => true,
-				'public'       => true,
-				'hierarchical' => true,
-				'supports'     => array(
+				'show_ui'             => true,
+				'public'              => true,
+				'exclude_from_search' => true,
+				'hierarchical'        => true,
+				'supports'            => array(
 					'title',
 					'editor',
 				),
