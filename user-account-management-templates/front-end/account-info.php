@@ -18,7 +18,7 @@
 					$attributes['topics_query']->the_post();
 					?>
 					<?php get_template_part( 'template-parts/content', 'interests' ); ?>
-				<?php
+					<?php
 				}
 				wp_reset_postdata();
 			}
@@ -32,13 +32,39 @@
 
 <section class="o-user-section o-communication-preferences">
 	<h2 class="a-user-section-title">Communication preferences</h2>
-	<?php if ( ! empty( $attributes['newsletters'] ) || ! empty( $attributes['occasional_emails'] ) ) : ?>
+
+	<?php
+		$user_info   = get_mailchimp_user_values( array(), array(), true );
+		$user_emails = isset( $user_info['checked'] ) ? array_values( $user_info['checked'] ) : array();
+	?>
+
+	<?php if ( ! empty( $user_emails ) ) : ?>
+
+		<?php
+		$newsletters            = get_mailchimp_newsletter_options();
+		$occasional_emails      = get_mailchimp_occasional_email_options();
+		$newsletter_index       = 1;
+		$occasional_email_index = 1;
+		$user_newsletters       = array();
+		$user_occasional        = array();
+		foreach ( $newsletters as $key => $value ) {
+			if ( in_array( $key, $user_emails ) ) {
+				$user_newsletters[ $key ] = $value;
+			}
+		}
+		foreach ( $occasional_emails as $key => $value ) {
+			if ( in_array( $key, $user_emails ) ) {
+				$user_occasional[ $key ] = $value;
+			}
+		}
+		?>
+
 		<p>These are the MinnPost email messages that you currently receive. You can <a href="/user/preferences/">edit your preferences</a> to change them.</p>
 		<dl class="a-user-emails">
 			<dt>Newsletter subscriptions</dt>
-			<dd><?php echo implode( ', ', array_values( $attributes['newsletters'] ) ); ?></dd>
+			<dd><?php echo implode( ', ', array_values( $user_newsletters ) ); ?></dd>
 			<dt>Occasional messages</dt>
-			<dd><?php echo implode( ', ', array_values( $attributes['occasional_emails'] ) ); ?></dd>
+			<dd><?php echo implode( ', ', array_values( $user_occasional ) ); ?></dd>
 		</dl>
 		<p class="a-edit-preferences"><a href="/user/preferences/">Edit your preferences</a></p>
 	<?php else : ?>
