@@ -18,7 +18,7 @@
 	<?php endif; ?>
 
 	<?php if ( ! empty( $attributes['instructions'] ) ) : ?>
-	<?php echo $attributes['instructions']; ?>
+		<?php echo $attributes['instructions']; ?>
 	<?php endif; ?>
 
 	<?php if ( count( $attributes['errors'] ) > 0 ) : ?>
@@ -67,10 +67,10 @@
 		<?php endif; ?>
 
 		<?php
-		$newsletters = get_mailchimp_newsletter_options();
-		$occasional_emails = get_mailchimp_occasional_email_options();
-		$user_emails = isset( $user_info['checked'] ) ? array_values( $user_info['checked'] ) : array();
-		$newsletter_index = 1;
+		$newsletters            = get_mailchimp_newsletter_options();
+		$occasional_emails      = get_mailchimp_occasional_email_options();
+		$user_emails            = isset( $user_info['checked'] ) ? array_values( $user_info['checked'] ) : array();
+		$newsletter_index       = 1;
 		$occasional_email_index = 1;
 		?>
 		<div class="m-form-item m-form-email-options m-form-change-email-options">
