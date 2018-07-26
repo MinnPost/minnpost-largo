@@ -3,3 +3,9 @@
 		display: none;
 	}
 }
+
+@media screen and (min-width: $nav-breaks) {
+	.m-entry-share {
+		float: right;
+	}
+}
