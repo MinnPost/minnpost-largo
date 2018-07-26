@@ -285,12 +285,14 @@ if ( ! function_exists( 'minnpost_set_default_editor' ) ) :
 
 		if ( is_admin() ) {
 			global $post;
-			$id       = $post->ID;
-			$use_html = get_post_meta( $id, '_mp_post_use_html_editor', true );
-			if ( 'on' === $use_html ) {
-				$editor = 'html';
-			} else {
-				$editor = 'tinymce';
+			if ( is_object( $post ) && isset( $post->ID ) ) {
+				$id       = $post->ID;
+				$use_html = get_post_meta( $id, '_mp_post_use_html_editor', true );
+				if ( 'on' === $use_html ) {
+					$editor = 'html';
+				} else {
+					$editor = 'tinymce';
+				}
 			}
 		}
 
