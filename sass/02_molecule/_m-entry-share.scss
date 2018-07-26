@@ -2,10 +2,21 @@
 	div.sharedaddy h3.sd-title {
 		display: none;
 	}
+	ul {
+		display: flex;
+		li {
+			text-align: center;
+		}
+	}
 }
 
 @media screen and (min-width: $nav-breaks) {
-	.m-entry-share {
-		float: right;
+	.m-entry-header-single {
+		.m-entry-share {
+			float: right;
+			ul li {
+				text-align: left;
+			}
+		}
 	}
 }
