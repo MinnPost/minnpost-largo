@@ -446,3 +446,29 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 
 	}
 endif;
+
+/**
+* Set Zoninator access capabilities
+*
+*/
+if ( ! function_exists( 'minnpost_largo_add_zones' ) ) :
+	add_filter( 'zoninator_add_zone_cap', 'minnpost_largo_add_zones', 10, 1 );
+	function minnpost_largo_add_zones( $role ) {
+		return 'create_zones';
+	}
+endif;
+
+if ( ! function_exists( 'minnpost_largo_edit_zones' ) ) :
+	add_filter( 'zoninator_edit_zone_cap', 'minnpost_largo_edit_zones', 10, 1 );
+	function minnpost_largo_edit_zones( $role ) {
+		return 'edit_zones';
+	}
+endif;
+
+if ( ! function_exists( 'minnpost_largo_manage_zones' ) ) :
+	add_filter( 'zoninator_manage_zone_cap', 'minnpost_largo_manage_zones', 10, 1 );
+	function minnpost_largo_manage_zones( $role ) {
+		return 'manage_zones';
+	}
+endif;
+
