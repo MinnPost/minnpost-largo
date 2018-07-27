@@ -281,7 +281,22 @@ function image_add_caption_with_credit( $html, $id, $caption, $title, $align, $u
 		$align = 'none';
 	}
 
-	$shcode = '[caption id="' . $id . '" align="align' . $align . '" width="' . $width . '"]' . $html . '<code>[div class="credit"]' . $credit . '[/div]<br>[div class="caption"]' . $caption . '[/div]</code>[/caption]';
+	$credit_html = '';
+	if ( '' !== $credit ) {
+		$credit_html = '[div class="credit"]' . $credit . '[/div]';
+	}
+
+	$caption_html = '';
+	if ( '' !== $caption ) {
+		$caption_html = '[div class="caption"]' . $caption . '[/div]';
+	}
+
+	$join = '';
+	if ( '' !== $credit_html && '' !== $caption_html ) {
+		$join = '<br>';
+	}
+
+	$shcode = '[caption id="' . $id . '" align="align' . $align . '" width="' . $width . '"]' . $html . '<code>' . $credit_html . '<br>' . $caption_html . '</code>[/caption]';
 
 	/**
 	* Filters the image HTML markup including the caption shortcode.
@@ -340,8 +355,8 @@ function fix_shortcode( $output, $attr, $content ) {
 	if ( $caption_width ) {
 		$style = 'style="width: ' . (int) $caption_width . 'px" ';
 	}
-	$html = '<figure ' . $atts['id'] . $style . 'class="' . esc_attr( $class ) . '">'
-		. do_shortcode( $content ) . '<figcaption class="wp-caption-text">' . $atts['caption'] . '</figcaption></figure>';
+	$html = '<figure ' . $atts['id'] . $style . 'class="m-content-media ' . esc_attr( $class ) . '">'
+		. do_shortcode( $content ) . '<figcaption class="m-content-caption wp-caption-text">' . $atts['caption'] . '</figcaption></figure>';
 	$html = str_replace( '[div class="credit"]', '<div class="a-media-meta a-media-credit">', $html );
 	$html = str_replace( '[div class="caption"]', '<div class="a-media-meta a-media-caption">', $html );
 	$html = str_replace( '[/div]', '</div>', $html );
