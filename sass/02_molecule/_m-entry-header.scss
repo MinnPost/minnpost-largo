@@ -1,5 +1,6 @@
 .m-entry-header {
 	font-family: $font__sans;
+	@include clearfix;
 	.m-entry-meta {
 		font-size: 76.9%;
 		text-transform: uppercase;

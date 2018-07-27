@@ -7,19 +7,3 @@
 	font-size: 100%;
 	line-height: 1.3em;
 }
-
-.m-entry-content .content-image {
-	margin-bottom: 10px;
-	&.content-image-right {
-		float: right;
-		clear: right;
-		margin-left: 20px;
-		margin-bottom: 20px;
-	}
-	&.content-image-left {
-		float: left;
-		clear: left;
-		margin-right: 20px;
-		margin-bottom: 20px;
-	}
-}
