@@ -114,6 +114,10 @@ require get_theme_file_path() . '/inc/custom-ad-providers.php';
  */
 require get_theme_file_path() . '/inc/custom-scripts-and-styles.php';
 
+/**
+ * Settings for PWA (progressive web app) plugin
+ */
+require get_theme_file_path() . '/inc/pwa.php';
 
 /**
  * Jetpack related methods
