@@ -15,6 +15,13 @@
 		font-size: 1.23em;
 	}
 }
+
+.m-archive article .m-entry-header {
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 0.25em;
+}
+
 .m-entry-header-single {
 	.m-entry-meta {
 		margin-bottom: 1em;
