@@ -59,7 +59,7 @@ class Minnpost_General_Setting {
 		);
 
 		// site footer message
-		register_setting( 'general', 'site_footer_message', 'esc_attr' );
+		register_setting( 'general', 'site_footer_message' );
 		add_settings_field(
 			'site_footer_message',
 			'<label for="site_footer_message">' . __( 'Site Footer Message', 'minnpost-largo' ) . '</label>',

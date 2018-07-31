@@ -349,59 +349,65 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'closed'       => true,
 		) );
 		$display_settings->add_field( array(
+			'name' => 'Prevent automatic ads?',
+			'id'   => '_mp_prevent_automatic_ads',
+			'type' => 'checkbox',
+			'desc' => 'If checked, this post will not contain automatic ads.',
+		) );
+		$display_settings->add_field( array(
 			'name' => 'Load HTML editor by default?',
 			'id'   => '_mp_post_use_html_editor',
 			'type' => 'checkbox',
-			'desc' => '',
+			'desc' => 'If checked, this post will open with the HTML editor visile.',
 		) );
 		$display_settings->add_field( array(
 			'name' => 'Remove category from display?',
 			'id'   => '_mp_remove_category_from_display',
 			'type' => 'checkbox',
-			'desc' => '',
+			'desc' => 'If checked, this post will not display its categories.',
 		) );
 		$display_settings->add_field( array(
 			'name' => 'Replace category text',
 			'id'   => '_mp_replace_category_text',
 			'type' => 'text',
-			'desc' => 'This text will show in place of the category',
+			'desc' => 'This text will show in place of the category name(s).',
 		) );
 		$display_settings->add_field( array(
 			'name' => 'Remove title from display?',
 			'id'   => '_mp_remove_title_from_display',
 			'type' => 'checkbox',
-			'desc' => '',
+			'desc' => 'If checked, the post title will not display.',
 		) );
 		$display_settings->add_field( array(
 			'name' => 'Remove author(s) from display?',
 			'id'   => '_mp_remove_author_from_display',
 			'type' => 'checkbox',
-			'desc' => '',
+			'desc' => 'If checked, the post author(s) will not display.',
 		) );
 		$display_settings->add_field( array(
 			'name' => 'Remove deck from display?',
 			'id'   => '_mp_remove_deck_from_display',
 			'type' => 'checkbox',
-			'desc' => '',
+			'desc' => 'If checked, any deck content will be ignored.',
 		) );
 		$display_settings->add_field( array(
 			'name' => 'Remove date from display?',
 			'id'   => '_mp_remove_date_from_display',
 			'type' => 'checkbox',
-			'desc' => '',
+			'desc' => 'If checked, the post date will not display.',
 		) );
 		$display_settings->add_field( array(
 			'name' => 'Remove newsletter signup from display?',
 			'id'   => '_mp_remove_newsletter_signup_from_display',
 			'type' => 'checkbox',
-			'desc' => '',
+			'desc' => 'If checked, this post will not have a newsletter signup box.',
 		) );
 		$display_settings->add_field( array(
 			'name'             => 'Share button location',
 			'id'               => '_mp_share_display_location',
 			'type'             => 'select',
 			'show_option_none' => true,
-			'desc'             => 'Select an location for the share buttons to display',
+			'desc'             => 'Select a location for the share buttons to display',
 			'default'          => 'both',
 			'options'          => array(
 				'both'   => __( 'Both', 'minnpost-largo' ),
