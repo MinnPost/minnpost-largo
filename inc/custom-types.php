@@ -103,3 +103,29 @@ if ( ! function_exists( 'minnpost_exclude_from_search' ) ) :
 
 	}
 endif;
+
+/**
+ * Change visibility for the wp_log type
+ *
+ * @param array $log_args the arguments for that post type
+ * @return array $log_args the arguments for that post type
+ */
+if ( ! function_exists( 'minnpost_log_args' ) ) :
+	add_action( 'wp_logging_post_type_args', 'minnpost_log_args', 10, 2 );
+	function minnpost_log_args( $log_args ) {
+
+		$log_args['capabilities'] = array(
+			'edit_post'          => 'edit_log',
+			'read_post'          => 'read_log',
+			'delete_post'        => 'delete_log',
+			'edit_posts'         => 'edit_logs',
+			'edit_others_posts'  => 'edit_others_logs',
+			'publish_posts'      => 'publish_logs',
+			'read_private_posts' => 'read_private_logs',
+			'create_posts'       => 'create_logs',
+		);
+
+		return $log_args;
+
+	}
+endif;
