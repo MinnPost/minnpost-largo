@@ -69,7 +69,7 @@ msgstr ""
 msgid "Top Stories"
 msgstr ""
 
-#: inc/custom-fields.php:126, inc/custom-fields.php:159, inc/custom-fields.php:458, inc/custom-fields.php:472
+#: inc/custom-fields.php:126, inc/custom-fields.php:159, inc/custom-fields.php:464, inc/custom-fields.php:478
 msgid "Search for a post here"
 msgstr ""
 
@@ -77,51 +77,51 @@ msgstr ""
 msgid "More Stories"
 msgstr ""
 
-#: inc/custom-fields.php:317, inc/custom-fields.php:1164
+#: inc/custom-fields.php:317, inc/custom-fields.php:1170
 msgid "Medium"
 msgstr ""
 
-#: inc/custom-fields.php:318, inc/custom-fields.php:1165
+#: inc/custom-fields.php:318, inc/custom-fields.php:1171
 msgid "Do not display image"
 msgstr ""
 
-#: inc/custom-fields.php:319, inc/custom-fields.php:1166
+#: inc/custom-fields.php:319, inc/custom-fields.php:1172
 msgid "Large"
 msgstr ""
 
-#: inc/custom-fields.php:407
+#: inc/custom-fields.php:413
 msgid "Both"
 msgstr ""
 
-#: inc/custom-fields.php:408
+#: inc/custom-fields.php:414
 msgid "Top"
 msgstr ""
 
-#: inc/custom-fields.php:409
+#: inc/custom-fields.php:415
 msgid "Bottom"
 msgstr ""
 
-#: inc/custom-fields.php:457
+#: inc/custom-fields.php:463
 msgid "Related Content"
 msgstr ""
 
-#: inc/custom-fields.php:471
+#: inc/custom-fields.php:477
 msgid "Related Multimedia"
 msgstr ""
 
-#: inc/custom-fields.php:512
+#: inc/custom-fields.php:518
 msgid "Black on White"
 msgstr ""
 
-#: inc/custom-fields.php:513
+#: inc/custom-fields.php:519
 msgid "White on Black"
 msgstr ""
 
-#: inc/custom-fields.php:514
+#: inc/custom-fields.php:520
 msgid "White on Red"
 msgstr ""
 
-#: inc/custom-fields.php:515
+#: inc/custom-fields.php:521
 msgid "White on Transparent"
 msgstr ""
 
