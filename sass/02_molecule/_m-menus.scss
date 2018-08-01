@@ -1,3 +1,5 @@
+$a-user-initial-size: 18px;
+
 .m-secondary-navigation, .m-featured-navigation, .m-pagination {
 	position: relative;
 	ul {
@@ -219,12 +221,12 @@
 		color: $color__white;
 		display: inline-block;
 		margin: -4px 12px 0 6px;
-		width: 22px;
-		height: 22px;
+		width: $a-user-initial-size;
+		height: $a-user-initial-size;
 		font-size: 14px;
 		vertical-align: middle;
 		text-align: center;
-		line-height: 22px;
+		line-height: $a-user-initial-size;
 		// letter-spacing: 0.075em; // if we use two letters
 	}
 	li span.a-arrow-down {
