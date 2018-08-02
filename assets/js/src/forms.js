@@ -1,3 +1,16 @@
+function gtag_report_conversion(url) {
+	var callback = function () {
+	  if (typeof(url) != 'undefined') {
+	    window.location = url;
+	  }
+	};
+	gtag('event', 'conversion', {
+	  'send_to': 'AW-976620175/jqCyCL7atXkQj5XY0QM',
+	  'event_callback': callback
+	});
+	return false;
+}
+
 jQuery( document ).ready( function( $ ) {
 	"use strict";
 	if ( $('.m-form-newsletter-shortcode').length > 0 ) {
@@ -40,6 +53,7 @@ jQuery( document ).ready( function( $ ) {
 					}
 					if ( 'function' === typeof mp_analytics_tracking_event ) {
 						mp_analytics_tracking_event( 'event', 'Newsletter', analytics_action, location.pathname );
+						gtag_report_conversion( location.pathname );
 					}
 				} else {
 					button.prop('disabled', false);
