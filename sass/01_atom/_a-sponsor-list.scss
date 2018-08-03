@@ -8,6 +8,7 @@
 			display: flex;
 			figcaption, img {
 				display: block;
+				align-self: flex-start;
 			}
 			figcaption {
 				width: 70px;
