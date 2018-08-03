@@ -450,3 +450,26 @@ if ( ! function_exists( 'minnpost_popup_assets' ) ) :
 		wp_enqueue_style( 'minnpost-popups', get_theme_file_uri() . '/assets/css/popups.css', array(), filemtime( get_theme_file_path() . '/assets/css/popups.css' ), 'screen' );
 	}
 endif;
+
+/**
+ * Removes undesired buttons from the first row of the tiny mce editor
+ *
+ * @link     http://thestizmedia.com/remove-buttons-items-wordpress-tinymce-editor/
+ *
+ * @param    array    $buttons    The default array of buttons
+ * @return   array                The updated array of buttons that exludes some items
+ */
+if ( ! function_exists( 'minnpost_remove_tiny_mce_buttons_from_editor' ) ) :
+	add_filter( 'mce_buttons', 'minnpost_remove_tiny_mce_buttons_from_editor', 20 );
+	function minnpost_remove_tiny_mce_buttons_from_editor( $buttons ) {
+		$remove_buttons = array(
+			'pum_shortcodes',
+		);
+		foreach ( $buttons as $button_key => $button_value ) {
+			if ( in_array( $button_value, $remove_buttons ) ) {
+				unset( $buttons[ $button_key ] );
+			}
+		}
+		return $buttons;
+	}
+endif;
