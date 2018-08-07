@@ -20,6 +20,9 @@
 	display: flex;
 	flex-wrap: wrap;
 	margin-bottom: 0.25em;
+	.m-entry-meta {
+		flex-basis: 100%;
+	}
 }
 
 .m-entry-header-single {
