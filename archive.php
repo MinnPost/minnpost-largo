@@ -17,7 +17,7 @@ get_header(); ?>
 			<?php
 			if ( is_category() ) {
 				$category_id = $wp_query->get_queried_object_id();
-				$figure = minnpost_get_term_figure( $category_id );
+				$figure      = minnpost_get_term_figure( $category_id );
 				if ( '' === $figure ) {
 					$sponsorship = minnpost_get_category_sponsorship( '', $category_id );
 					if ( '' !== $sponsorship ) {
@@ -85,7 +85,7 @@ get_header(); ?>
 			<?php endif; ?>
 
 			<?php
-			$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+			$paged        = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
 			$featured_num = get_query_var( 'featured_num' );
 			?>
 
@@ -104,11 +104,9 @@ get_header(); ?>
 				// getting rid of the icymi box
 				// then we do need to allow for widgets to be here but that's it
 				?>
-				
 				<?php if ( '' !== $featured_columns || is_active_sidebar( 'sidebar-2' ) ) : ?>
 				<div class="m-archive-has-sidebar">
 				<?php endif; ?>
-
 				<section class="m-archive m-archive-excerpt">
 					<?php
 					while ( have_posts() ) : the_post();
@@ -155,7 +153,7 @@ get_header(); ?>
 				</section>
 			<?php endif; ?>
 
-		<?php
+			<?php
 		else :
 			get_template_part( 'template-parts/content', 'none' );
 		endif;
