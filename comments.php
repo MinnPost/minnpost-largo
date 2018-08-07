@@ -23,56 +23,50 @@ if ( post_password_required() ) {
 <section id="comments" class="o-comments-area o-comments-area-post">
 
 	<?php
+
+	$status = function_exists( 'get_comment_status_by_access' ) ? get_comment_status_by_access() : 'approve';
 	$params = array(
 		'post_id' => get_the_ID(),
-		'status' => function_exists( 'get_comment_status_by_access' ) ? get_comment_status_by_access() : 'approve',
-		'type' => array( 'comment' ),
+		'status'  => $status,
+		'type'    => array( 'comment' ),
 	);
 	if ( is_user_logged_in() ) {
 		$params['include_unapproved'] = get_current_user_id();
 	}
-	$count_approved_comments = get_comments(
+	$count_visible_comments = get_comments(
 		array_merge(
 			$params,
 			array(
 				'count' => true,
-				'post_id' => get_the_ID(),
-				'status' => 'approve',
-				'type' => array( 'comment' ),
 			)
 		)
 	);
 	?>
-	<?php if ( 0 < $count_approved_comments ) : ?>
-		<h3 class="a-comments-title">Comments (<?php echo $count_approved_comments; ?>)</h3>
-
-		<?php if ( have_comments() ) : ?>
-			<ol>
-				<?php
-				$comments_query = new WP_Comment_Query;
-				$comments = $comments_query->query( $params );
-
-				wp_list_comments(
-					array(
-						'callback' => 'minnpost_largo_comment',
-						'type' => 'comment',
-					)
-				);
-				?>
-			</ol>
-		<?php endif; ?>
-
+	<?php if ( 0 < $count_visible_comments ) : ?>
+		<h3 class="a-comments-title">Comments (<?php echo $count_visible_comments; ?>)</h3>
+		<ol>
+			<?php
+			$comments_query = new WP_Comment_Query;
+			$comments       = $comments_query->query( $params );
+			wp_list_comments(
+				array(
+					'callback' => 'minnpost_largo_comment',
+					'type'     => 'comment',
+				)
+			);
+			?>
+		</ol>
 		<?php
 		// If comments are closed and there are comments, let's leave a little note
 		if ( ! comments_open() && get_comments_number() && post_type_supports( get_post_type(), 'comments' ) ) :
-		?>
+			?>
 			<p class="no-comments"><?php esc_html_e( 'Comments are closed.', 'minnpost-largo' ); ?></p>
-		<?php
+			<?php
 		endif;
 		?>
 
 	<?php else : ?>
-		<h3 class="a-comments-title">No comments yet</h3>
+		<h3 class="a-comments-title"><?php echo esc_html_e( 'No comments yet', 'minnpost-largo' ); ?></h3>
 	<?php endif; ?>
 
 	<?php
@@ -88,14 +82,13 @@ if ( post_password_required() ) {
 	// if the user is allowed to comment, show them the comment form
 	if ( ! current_user_can( 'not_comment', get_the_ID() ) ) {
 		$comment_form_args = array(
-			'logged_in_as' => $logged_in_as,
+			'logged_in_as'       => $logged_in_as,
 			'title_reply_before' => '<h3 id="reply-title" class="a-comment-reply-title">',
-			'class_form' => 'm-form m-form-comment-form m-form-standalone',
-			'comment_field' => '<div class="m-form-item m-form-item-comment"><label for="comment">' . _x( 'Comment', 'noun' ) . '</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" aria-required="true" required="required"></textarea></div>',
-			'submit_field' => '<div class="m-form-actions">%1$s %2$s</div>',
+			'class_form'         => 'm-form m-form-comment-form m-form-standalone',
+			'comment_field'      => '<div class="m-form-item m-form-item-comment"><label for="comment">' . _x( 'Comment', 'noun' ) . '</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" aria-required="true" required="required"></textarea></div>',
+			'submit_field'       => '<div class="m-form-actions">%1$s %2$s</div>',
 		);
 		comment_form( $comment_form_args );
 	}
 	?>
-
 </section><!-- #comments -->

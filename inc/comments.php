@@ -14,8 +14,7 @@
 if ( ! function_exists( 'user_can_moderate' ) ) :
 	function user_can_moderate() {
 		$can_moderate = false;
-		$user         = wp_get_current_user();
-		if ( in_array( 'comment_moderator', (array) $user->roles ) ) {
+		if ( current_user_can( 'moderate_comments' ) ) {
 			$can_moderate = true;
 		}
 		return $can_moderate;
