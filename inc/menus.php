@@ -421,6 +421,20 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 			remove_submenu_page( 'options-general.php', 'options-media.php' );
 		}
 
+		// comment moderators
+		if ( current_user_can( 'comment_moderator' ) ) {
+			// posts
+			remove_menu_page( 'edit.php' );
+			// popups
+			remove_menu_page( 'edit.php?post_type=popup' );
+			// newsletters
+			remove_menu_page( 'edit.php?post_type=newsletter' );
+			// tools
+			remove_menu_page( 'tools.php' );
+			// profile
+			remove_menu_page( 'profile.php' );
+		}
+
 		// admins only
 		if ( ! current_user_can( 'administrator' ) ) {
 			// tools
