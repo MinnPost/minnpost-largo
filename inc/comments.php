@@ -22,6 +22,25 @@ if ( ! function_exists( 'user_can_moderate' ) ) :
 endif;
 
 /**
+* Change the URL for the post link in the "In Response To" column of the comment screen for comment moderators since they can't edit posts
+*
+* @param string $link
+* @param int $post_id
+* @param string $context
+* @return string $link
+*
+*/
+if ( ! function_exists( 'minnpost_largo_comment_table_post_link' ) ) :
+	add_action( 'get_edit_post_link', 'minnpost_largo_comment_table_post_link', 10, 3 );
+	function minnpost_largo_comment_table_post_link( $link, $post_id, $context ) {
+		if ( current_user_can( 'comment_moderator' ) ) {
+			$link = get_permalink( $post_id );
+		}
+		return $link;
+	}
+endif;
+
+/**
 * Detect whether a user has been banned. These users cannot comment.
 * This depends on the Advanced Access Manager plugin, which creates the banned role and assigns its capabilities
 *
