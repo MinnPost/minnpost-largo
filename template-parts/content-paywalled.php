@@ -27,7 +27,7 @@
 	</header><!-- .m-entry-header -->
 
 	<div class="m-entry-content-paywalled">
-		<?php echo apply_filters( 'the_content', $minnpost_membership->front_end->get_option_based_on_user_status( $minnpost_membership->option_prefix . 'post_access_blocked_message', $user_state ) ); ?>
+		<?php echo wpautop( apply_filters( 'the_content', $minnpost_membership->front_end->get_option_based_on_user_status( $minnpost_membership->option_prefix . 'post_access_blocked_message', $user_state ) ), false ); ?>
 	</div><!-- .m-entry-content -->
 
 </article><!-- #post-## -->
