@@ -41,6 +41,57 @@ if ( ! function_exists( 'minnpost_largo_comment_table_post_link' ) ) :
 endif;
 
 /**
+* Modify the columns on the edit-comments admin page
+*
+* @param array $columns
+* @return array $columns
+*
+*/
+if ( ! function_exists( 'minnpost_largo_comment_columns' ) ) :
+	add_filter( 'manage_edit-comments_columns', 'minnpost_largo_comment_columns' );
+	function minnpost_largo_comment_columns( $columns ) {
+		unset( $columns['date'] );
+		$columns['custom_date'] = _x( 'Submitted On', 'column name' );
+		return $columns;
+	}
+endif;
+
+/**
+* Set up our custom comment date column for the edit-comments screen
+*
+* @param string $column
+* @return int $comment_id
+*
+*/
+if ( ! function_exists( 'minnpost_largo_comment_date_column' ) ) :
+	add_action( 'manage_comments_custom_column', 'minnpost_largo_comment_date_column', 10, 2 );
+	function minnpost_largo_comment_date_column( $column, $comment_id ) {
+		if ( 'custom_date' == $column ) {
+			$comment = get_comment( $comment_id );
+			/* translators: 1: comment date, 2: comment time */
+			$submitted = sprintf( __( '%1$s at %2$s' ),
+				/* translators: comment date format. See https://secure.php.net/date */
+				get_comment_date( __( 'Y/m/d' ), $comment ),
+				get_comment_date( __( 'g:i a' ), $comment )
+			);
+
+			echo '<div class="submitted-on">';
+			if ( ! empty( $comment->comment_post_ID ) ) {
+				printf(
+					'<a href="%s" target="wp-comment-%s">%s</a>',
+					esc_url( get_comment_link( $comment ) ),
+					$comment_id,
+					$submitted
+				);
+			} else {
+				echo $submitted;
+			}
+			echo '</div>';
+		}
+	}
+endif;
+
+/**
 * Detect whether a user has been banned. These users cannot comment.
 * This depends on the Advanced Access Manager plugin, which creates the banned role and assigns its capabilities
 *
