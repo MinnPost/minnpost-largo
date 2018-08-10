@@ -276,6 +276,11 @@ if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
 			$wp_admin_bar->remove_menu( 'itsec_admin_bar_menu' );
 		}
 
+		// remove comment count from users who cannot moderate
+		if ( ! current_user_can( 'moderate_comments' ) ) {
+			$wp_admin_bar->remove_menu( 'comments' );
+		}
+
 		global $wp_query;
 
 		// edit/view user stuff
@@ -341,6 +346,11 @@ if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
 			$wp_admin_bar->remove_menu( 'popup-maker' );
 		}
 
+		// users who cannot create sponsors
+		if ( ! current_user_can( 'create_sponsors' ) ) {
+			$wp_admin_bar->remove_node( 'new-cr3ativsponsor' );
+		}
+
 		$wp_admin_bar->remove_menu( 'customize' );
 		$wp_admin_bar->remove_menu( 'tribe-events' );
 
@@ -366,6 +376,7 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 			remove_menu_page( 'jetpack' );
 			remove_submenu_page( 'options-general.php', 'sharing' );
 		}
+
 		// users who cannot edit popup themes
 		if ( ! current_user_can( 'edit_popup_themes' ) ) {
 			remove_submenu_page( 'themes.php', 'edit.php?post_type=popup_theme' );
@@ -397,6 +408,11 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 			}
 		}
 
+		// users who cannot moderate comments
+		if ( ! current_user_can( 'moderate_comments' ) ) {
+			remove_menu_page( 'edit-comments.php' );
+		}
+
 		// cron
 		if ( ! current_user_can( 'manage_cron' ) ) {
 			// tools
@@ -421,18 +437,21 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 			remove_submenu_page( 'options-general.php', 'options-media.php' );
 		}
 
+		// whole tools menu
+		if ( ! current_user_can( 'see_tools_menu' ) ) {
+			remove_menu_page( 'tools.php' );
+		}
+
+		// whole profile menu
+		if ( ! current_user_can( 'see_profile_menu' ) ) {
+			remove_menu_page( 'profile.php' );
+		}
+
 		// comment moderators
+		// this uses current_user_can with a role which is not recommended - the codex says this can produce unreliable results but it seems to work in this case
 		if ( current_user_can( 'comment_moderator' ) ) {
 			// posts
 			remove_menu_page( 'edit.php' );
-			// popups
-			remove_menu_page( 'edit.php?post_type=popup' );
-			// newsletters
-			remove_menu_page( 'edit.php?post_type=newsletter' );
-			// tools
-			remove_menu_page( 'tools.php' );
-			// profile
-			remove_menu_page( 'profile.php' );
 		}
 
 		// admins only
@@ -456,6 +475,11 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 			remove_submenu_page( 'options-general.php', 'wp-analytics-tracking-generator-admin' );
 			// elasticpress
 			remove_menu_page( 'elasticpress' );
+			// remove those weird popup menus
+			remove_submenu_page( 'edit.php?post_type=popup', 'pum-extensions' );
+			remove_submenu_page( 'edit.php?post_type=popup', 'pum-support' );
+			remove_submenu_page( 'edit.php?post_type=popup', 'pum-settings' );
+			remove_submenu_page( 'edit.php?post_type=popup', 'pum-tools' );
 		}
 
 	}

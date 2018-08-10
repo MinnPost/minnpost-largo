@@ -46,6 +46,22 @@ if ( ! function_exists( 'minnpost_popup_admin_pages' ) ) :
 endif;
 
 /**
+* Modify the popup capabilities
+*
+* @param array $admin_pages
+* @return array $admin_pages
+*/
+if ( ! function_exists( 'minnpost_popup_admin_pages' ) ) :
+	add_filter( 'pum_admin_pages', 'minnpost_popup_admin_pages' );
+	function minnpost_popup_admin_pages( $admin_pages ) {
+		if ( isset( $admin_pages['subscribers'] ) ) {
+			$admin_pages['subscribers']['capability'] = 'nobody_needs_this';
+		}
+		return $admin_pages;
+	}
+endif;
+
+/**
 * Modify the conditions that control when users see popups
 *
 * @param array $conditions
@@ -452,24 +468,45 @@ if ( ! function_exists( 'minnpost_popup_assets' ) ) :
 endif;
 
 /**
- * Removes undesired buttons from the first row of the tiny mce editor
+ * Modify popup post type arguments
  *
- * @link     http://thestizmedia.com/remove-buttons-items-wordpress-tinymce-editor/
- *
- * @param    array    $buttons    The default array of buttons
- * @return   array                The updated array of buttons that exludes some items
+ * @param    array    $popup_args
+ * @return   array    $popup_args
  */
-if ( ! function_exists( 'minnpost_remove_tiny_mce_buttons_from_editor' ) ) :
-	add_filter( 'mce_buttons', 'minnpost_remove_tiny_mce_buttons_from_editor', 20 );
-	function minnpost_remove_tiny_mce_buttons_from_editor( $buttons ) {
-		$remove_buttons = array(
-			'pum_shortcodes',
+if ( ! function_exists( 'minnpost_popup_post_type_args' ) ) :
+	add_filter( 'popmake_popup_post_type_args', 'minnpost_popup_post_type_args', 10, 1 );
+	function minnpost_popup_post_type_args( $popup_args ) {
+		$popup_args['capabilities'] = array(
+			'edit_post'          => 'edit_popup',
+			'delete_post'        => 'delete_popup',
+			'delete_posts'       => 'delete_popup',
+			'edit_posts'         => 'edit_popups',
+			'edit_others_posts'  => 'edit_others_popups',
+			'publish_posts'      => 'publish_popups',
+			'read_private_posts' => 'read_private_popups',
 		);
-		foreach ( $buttons as $button_key => $button_value ) {
-			if ( in_array( $button_value, $remove_buttons ) ) {
-				unset( $buttons[ $button_key ] );
-			}
-		}
-		return $buttons;
+		return $popup_args;
+	}
+endif;
+
+/**
+ * Modify popup theme post type arguments
+ *
+ * @param    array    $popup_theme_args
+ * @return   array    $popup_theme_args
+ */
+if ( ! function_exists( 'minnpost_popup_theme_post_type_args' ) ) :
+	add_filter( 'popmake_popup_theme_post_type_args', 'minnpost_popup_theme_post_type_args', 10, 1 );
+	function minnpost_popup_theme_post_type_args( $popup_theme_args ) {
+		$popup_theme_args['capabilities'] = array(
+			'edit_post'          => 'edit_popup_theme',
+			'delete_post'        => 'delete_popup_theme',
+			'delete_posts'       => 'delete_popup_theme',
+			'edit_posts'         => 'edit_popup_themes',
+			'edit_others_posts'  => 'edit_others_popup_themes',
+			'publish_posts'      => 'publish_popup_themes',
+			'read_private_posts' => 'read_private_popup_themes',
+		);
+		return $popup_theme_args;
 	}
 endif;

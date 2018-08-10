@@ -41,6 +41,14 @@ if ( ! function_exists( 'create_newsletter' ) ) :
 					'title',
 					'editor',
 				),
+				'capabilities'        => array(
+					'edit_post'          => 'edit_newsletter',
+					'delete_post'        => 'delete_newsletter',
+					'edit_posts'         => 'edit_newsletters',
+					'edit_others_posts'  => 'edit_others_newsletters',
+					'publish_posts'      => 'publish_newsletters',
+					'read_private_posts' => 'read_private_newsletters',
+				),
 			)
 		);
 	}
@@ -127,5 +135,15 @@ if ( ! function_exists( 'minnpost_log_args' ) ) :
 
 		return $log_args;
 
+	}
+endif;
+
+if ( ! function_exists( 'minnpost_deleted_event_args' ) ) :
+	add_filter( 'register_post_type_args', 'minnpost_deleted_event_args', 20, 2 );
+	function minnpost_deleted_event_args( $args, $post_type ) {
+		if ( 'deleted_event' === $post_type ) {
+			$args['label'] = __( 'Deleted Events', 'minnpost-largo' );
+		}
+		return $args;
 	}
 endif;
