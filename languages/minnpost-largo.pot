@@ -13,8 +13,12 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: comments.php:69
+#: comments.php:63
 msgid "Comments are closed."
+msgstr ""
+
+#: comments.php:69
+msgid "No comments yet"
 msgstr ""
 
 #: header.php:69
@@ -217,6 +221,10 @@ msgstr ""
 msgid "No newsletters found in Trash."
 msgstr ""
 
+#: inc/custom-types.php:145
+msgid "Deleted Events"
+msgstr ""
+
 #: inc/menus.php:17
 msgid "Footer Primary"
 msgstr ""
@@ -253,75 +261,75 @@ msgstr ""
 msgid "User Account Management Menu"
 msgstr ""
 
-#: inc/popups.php:64, inc/popups.php:70, inc/popups.php:76, inc/popups.php:82, inc/popups.php:88, inc/popups.php:104
+#: inc/popups.php:80, inc/popups.php:86, inc/popups.php:92, inc/popups.php:98, inc/popups.php:104, inc/popups.php:120
 msgid "User"
 msgstr ""
 
-#: inc/popups.php:65
+#: inc/popups.php:81
 msgid "User: Is Logged In"
 msgstr ""
 
-#: inc/popups.php:71
+#: inc/popups.php:87
 msgid "User: Is Member"
 msgstr ""
 
-#: inc/popups.php:77
+#: inc/popups.php:93
 msgid "User: Is Sustaining Member"
 msgstr ""
 
-#: inc/popups.php:83
+#: inc/popups.php:99
 msgid "User: In This Campaign"
 msgstr ""
 
-#: inc/popups.php:89
+#: inc/popups.php:105
 msgid "User: Has Role"
 msgstr ""
 
-#: inc/popups.php:92
+#: inc/popups.php:108
 msgid "Select Role"
 msgstr ""
 
-#: inc/popups.php:105
+#: inc/popups.php:121
 msgid "User: Eligible For Benefit"
 msgstr ""
 
-#: inc/popups.php:108
+#: inc/popups.php:124
 msgid "Select Benefit"
 msgstr ""
 
-#: inc/popups.php:120, inc/popups.php:132, inc/popups.php:144, inc/popups.php:156
+#: inc/popups.php:136, inc/popups.php:148, inc/popups.php:160, inc/popups.php:172
 msgid "URL"
 msgstr ""
 
-#: inc/popups.php:121
+#: inc/popups.php:137
 msgid "URL: Is"
 msgstr ""
 
-#: inc/popups.php:124
+#: inc/popups.php:140
 msgid "Enter the exact URL"
 msgstr ""
 
-#: inc/popups.php:133
+#: inc/popups.php:149
 msgid "URL: Contains"
 msgstr ""
 
-#: inc/popups.php:136
+#: inc/popups.php:152
 msgid "Check for text in the URL"
 msgstr ""
 
-#: inc/popups.php:145
+#: inc/popups.php:161
 msgid "URL: Begins With"
 msgstr ""
 
-#: inc/popups.php:148
+#: inc/popups.php:164
 msgid "Check for text at the beginning of the URL"
 msgstr ""
 
-#: inc/popups.php:157
+#: inc/popups.php:173
 msgid "URL: Ends With"
 msgstr ""
 
-#: inc/popups.php:160
+#: inc/popups.php:176
 msgid "Check for text at the end of the URL"
 msgstr ""
 

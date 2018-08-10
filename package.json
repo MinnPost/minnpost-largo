@@ -39,7 +39,7 @@
     "gulp-util": "~3",
     "gulp-wp-pot": "^2.3.2",
     "gulp.spritesmith": "^6.9.0",
-    "node-sass": "^4.9.2",
+    "node-sass": "^4.9.3",
     "npm": "^6.3.0",
     "webpack": "^4.16.5"
   },
