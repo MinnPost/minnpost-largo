@@ -51,7 +51,7 @@ if ( ! function_exists( 'minnpost_largo_comment_columns' ) ) :
 	add_filter( 'manage_edit-comments_columns', 'minnpost_largo_comment_columns' );
 	function minnpost_largo_comment_columns( $columns ) {
 		unset( $columns['date'] );
-		$columns['custom_date'] = _x( 'Submitted On', 'column name' );
+		$columns['custom_date'] = _x( 'In Context', 'column name' );
 		return $columns;
 	}
 endif;
@@ -69,7 +69,7 @@ if ( ! function_exists( 'minnpost_largo_comment_date_column' ) ) :
 		if ( 'custom_date' == $column ) {
 			$comment = get_comment( $comment_id );
 			/* translators: 1: comment date, 2: comment time */
-			$submitted = sprintf( __( '%1$s at %2$s' ),
+			$submitted = sprintf( __( 'Submitted on %1$s at %2$s' ),
 				/* translators: comment date format. See https://secure.php.net/date */
 				get_comment_date( __( 'Y/m/d' ), $comment ),
 				get_comment_date( __( 'g:i a' ), $comment )
@@ -78,7 +78,7 @@ if ( ! function_exists( 'minnpost_largo_comment_date_column' ) ) :
 			echo '<div class="submitted-on">';
 			if ( ! empty( $comment->comment_post_ID ) ) {
 				printf(
-					'<a href="%s" target="wp-comment-%s">%s</a>',
+					'<a href="%s" target="wp-comment-%s">View comment in context</a> (%s)',
 					esc_url( get_comment_link( $comment ) ),
 					$comment_id,
 					$submitted
