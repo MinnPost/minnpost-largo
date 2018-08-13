@@ -6,7 +6,7 @@
   "author": "MinnPost",
   "license": "GPL-2.0",
   "dependencies": {
-    "autoprefixer": "^9.1.0",
+    "autoprefixer": "^9.1.1",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
     "babel-preset-es2015": "~6",
