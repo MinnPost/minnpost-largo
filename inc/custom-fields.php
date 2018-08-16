@@ -626,14 +626,21 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 		) );
 		// image fields
 		$category_setup->add_field( array(
-			'name' => 'Category Thumbnail',
-			'id'   => '_mp_category_thumbnail_image',
-			'type' => 'file',
+			'name'       => 'Category Thumbnail',
+			'id'         => '_mp_category_thumbnail_image',
+			'type'       => 'file',
+			'query_args' => array(
+				'type' => 'image',
+			),
 		) );
 		$category_setup->add_field( array(
-			'name' => 'Category Main Image',
-			'id'   => '_mp_category_main_image',
-			'type' => 'file',
+			'name'       => 'Category Main Image',
+			'id'         => '_mp_category_main_image',
+			'type'       => 'file',
+			// query_args are passed to wp.media's library query.
+			'query_args' => array(
+				'type' => 'image',
+			),
 		) );
 		// main body field
 		$category_setup->add_field( array(
