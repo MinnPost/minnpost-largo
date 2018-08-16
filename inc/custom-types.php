@@ -192,6 +192,7 @@ if ( ! function_exists( 'minnpost_message_args' ) ) :
 			'edit_post'          => 'edit_message',
 			'read_post'          => 'read_message',
 			'delete_post'        => 'delete_message',
+			'delete_posts'       => 'delete_messages',
 			'edit_posts'         => 'edit_messages',
 			'edit_others_posts'  => 'edit_others_messages',
 			'publish_posts'      => 'publish_messages',
