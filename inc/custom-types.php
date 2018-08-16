@@ -138,6 +138,13 @@ if ( ! function_exists( 'minnpost_log_args' ) ) :
 	}
 endif;
 
+/**
+ * Change label for the deleted event type from the Event Calendar plugin
+ *
+ * @param array $args
+ * @param string $post_type
+ * @return array $args
+ */
 if ( ! function_exists( 'minnpost_deleted_event_args' ) ) :
 	add_filter( 'register_post_type_args', 'minnpost_deleted_event_args', 20, 2 );
 	function minnpost_deleted_event_args( $args, $post_type ) {
