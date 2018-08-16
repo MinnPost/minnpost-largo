@@ -75,6 +75,7 @@ if ( ! function_exists( 'minnpost_indexable_post_types' ) ) :
 		$non_indexable_types = array(
 			'partner_offer' => 'partner_offer',
 			'wp_log'        => 'wp_log',
+			'message'       => 'message',
 		);
 		$post_types          = array_diff_assoc( $post_types, $non_indexable_types );
 		return $post_types;
@@ -98,6 +99,7 @@ if ( ! function_exists( 'minnpost_exclude_from_search' ) ) :
 			'popup',
 			'guest-author',
 			'cr3ativsponsor',
+			'message',
 		);
 
 		if ( ! in_array( $post_type, $types_to_exclude ) ) {
@@ -152,5 +154,52 @@ if ( ! function_exists( 'minnpost_deleted_event_args' ) ) :
 			$args['label'] = __( 'Deleted Events', 'minnpost-largo' );
 		}
 		return $args;
+	}
+endif;
+
+/**
+ * Define regions where inserted messages can appear on the site
+ *
+ * @param array $regions
+ * @return array $regions
+ */
+if ( ! function_exists( 'minnpost_message_regions' ) ) :
+	add_filter( 'wp_message_inserter_regions', 'minnpost_message_regions' );
+	function minnpost_message_regions( $regions ) {
+		$regions = array(
+			'header'          => __( 'Site Header', 'minnpost-largo' ),
+			'primary'         => __( 'Primary Content', 'minnpost-largo' ),
+			'main'            => __( 'Main Content', 'minnpost-largo' ),
+			'sidebar'         => __( 'Main Sidebar', 'minnpost-largo' ),
+			'primary_sidebar' => __( 'Primary Sidebar', 'minnpost-largo' ),
+			'footer'          => __( 'Site Footer', 'minnpost-largo' ),
+		);
+		return $regions;
+	}
+endif;
+
+/**
+ * Change visibility for the message type
+ *
+ * @param array $message_args the arguments for that post type
+ * @return array $message_args the arguments for that post type
+ */
+if ( ! function_exists( 'minnpost_message_args' ) ) :
+	add_action( 'wp_message_inserter_message_type_args', 'minnpost_message_args', 10, 2 );
+	function minnpost_message_args( $message_args ) {
+
+		$message_args['capabilities'] = array(
+			'edit_post'          => 'edit_message',
+			'read_post'          => 'read_message',
+			'delete_post'        => 'delete_message',
+			'edit_posts'         => 'edit_messages',
+			'edit_others_posts'  => 'edit_others_messages',
+			'publish_posts'      => 'publish_messages',
+			'read_private_posts' => 'read_private_messages',
+			'create_posts'       => 'create_messages',
+		);
+
+		return $message_args;
+
 	}
 endif;
