@@ -171,11 +171,11 @@ if ( ! function_exists( 'minnpost_message_regions' ) ) :
 	function minnpost_message_regions( $regions ) {
 		$regions = array(
 			'header'          => __( 'Site Header', 'minnpost-largo' ),
-			'primary'         => __( 'Primary Content', 'minnpost-largo' ),
+			/*'primary'         => __( 'Primary Content', 'minnpost-largo' ),
 			'main'            => __( 'Main Content', 'minnpost-largo' ),
 			'sidebar'         => __( 'Main Sidebar', 'minnpost-largo' ),
 			'primary_sidebar' => __( 'Primary Sidebar', 'minnpost-largo' ),
-			'footer'          => __( 'Site Footer', 'minnpost-largo' ),
+			'footer'          => __( 'Site Footer', 'minnpost-largo' ),*/
 		);
 		return $regions;
 	}
