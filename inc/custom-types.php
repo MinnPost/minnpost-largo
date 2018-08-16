@@ -44,11 +44,13 @@ if ( ! function_exists( 'create_newsletter' ) ) :
 				'capabilities'        => array(
 					'edit_post'          => 'edit_newsletter',
 					'delete_post'        => 'delete_newsletter',
+					'delete_posts'       => 'delete_newsletters',
 					'edit_posts'         => 'edit_newsletters',
 					'edit_others_posts'  => 'edit_others_newsletters',
 					'publish_posts'      => 'publish_newsletters',
 					'read_private_posts' => 'read_private_newsletters',
 				),
+				'menu_icon'           => 'dashicons-email-alt',
 			)
 		);
 	}
@@ -128,6 +130,7 @@ if ( ! function_exists( 'minnpost_log_args' ) ) :
 			'edit_post'          => 'edit_log',
 			'read_post'          => 'read_log',
 			'delete_post'        => 'delete_log',
+			'delete_posts'       => 'delete_logs',
 			'edit_posts'         => 'edit_logs',
 			'edit_others_posts'  => 'edit_others_logs',
 			'publish_posts'      => 'publish_logs',
