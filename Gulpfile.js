@@ -33,7 +33,7 @@ const wpPot = require( 'gulp-wp-pot' );
 const paths = {
 	'css': [ './*.css', '!*.min.css' ],
 	'icons': 'assets/img/svg-icons/*.svg',
-	'images': [ 'assets/img/*', 'assets/img/icons/*', '!assets/img/*-icons.svg' ],
+	'images': [ 'assets/img/*', 'assets/img/app-icons/*', 'assets/img/icons/*', '!assets/img/*-icons.svg' ],
 	'php': [ './*.php', './**/*.php' ],
 	'sass': [ 'sass/**/*.scss', 'assets/sass/**/*.scss' ],
 	'concat_scripts': 'assets/js/src/*.js',
