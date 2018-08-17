@@ -81,15 +81,15 @@ msgstr ""
 msgid "More Stories"
 msgstr ""
 
-#: inc/custom-fields.php:317, inc/custom-fields.php:1170
+#: inc/custom-fields.php:317, inc/custom-fields.php:1177
 msgid "Medium"
 msgstr ""
 
-#: inc/custom-fields.php:318, inc/custom-fields.php:1171
+#: inc/custom-fields.php:318, inc/custom-fields.php:1178
 msgid "Do not display image"
 msgstr ""
 
-#: inc/custom-fields.php:319, inc/custom-fields.php:1172
+#: inc/custom-fields.php:319, inc/custom-fields.php:1179
 msgid "Large"
 msgstr ""
 
@@ -221,8 +221,12 @@ msgstr ""
 msgid "No newsletters found in Trash."
 msgstr ""
 
-#: inc/custom-types.php:145
+#: inc/custom-types.php:157
 msgid "Deleted Events"
+msgstr ""
+
+#: inc/custom-types.php:173
+msgid "Site Header"
 msgstr ""
 
 #: inc/menus.php:17
