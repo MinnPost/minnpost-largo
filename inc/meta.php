@@ -103,7 +103,7 @@ endif;
 if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 	add_action( 'wp_head', 'minnpost_largo_add_meta_tags' );
 	function minnpost_largo_add_meta_tags() {
-	?>
+		?>
 		<meta property="og:site_name" content="<?php echo get_bloginfo( 'name' ); ?>">
 		<meta property="og:url" content="<?php echo get_current_url(); ?>">
 		<meta name="twitter:site" content="@minnpost" />
@@ -127,7 +127,7 @@ if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 			<meta property="og:image" content="<?php echo minnpost_largo_get_og_image(); ?>">
 			<meta property="twitter:image" content="<?php echo minnpost_largo_get_og_image(); ?>">
 		<?php endif; ?>
-	<?php
+		<?php
 	}
 endif;
 
