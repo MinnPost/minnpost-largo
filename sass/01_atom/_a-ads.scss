@@ -112,6 +112,9 @@ main .ad-x110 {
 
 .ad-middle3 {
 	margin-bottom: $standard-page-margin;
+	div {
+		@include clearfix;
+	}
 }
 
 .o-site-sidebar .appnexus-ad {
