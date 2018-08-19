@@ -332,3 +332,15 @@ if ( ! function_exists( 'minnpost_message_args' ) ) :
 		return $args;
 	}
 endif;
+
+/**
+ * Turn off the view count because we don't use it anyway
+ * @param bool $status
+ * @return bool false
+ */
+if ( ! function_exists( 'minnpost_turn_off_popular_views' ) ) :
+	add_filter( 'pop_set_post_view', 'minnpost_turn_off_popular_views' );
+	function minnpost_turn_off_popular_views( $status ) {
+		return false;
+	}
+endif;
