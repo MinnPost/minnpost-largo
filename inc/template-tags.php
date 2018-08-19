@@ -191,9 +191,15 @@ if ( ! function_exists( 'minnpost_posted_on' ) ) :
 			$id = get_the_ID();
 		}
 		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
+
+		$visible_date = esc_html( get_the_date( '', $id ) );
+		if ( date( get_option( 'date_format' ), current_time( 'timestamp' ) ) === $visible_date ) {
+			$visible_date = esc_html( get_the_date( get_option( 'time_format' ), $id ) );
+		}
+
 		$time_string = sprintf( $time_string,
 			esc_attr( get_the_date( 'c' ), $id ),
-			esc_html( get_the_date( '', $id ) ),
+			$visible_date,
 			esc_attr( get_the_modified_date( 'c', $id ) ),
 			esc_html( get_the_modified_date( '', $id ) )
 		);
