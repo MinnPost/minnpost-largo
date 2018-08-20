@@ -12,13 +12,9 @@
 <li id="post-<?php the_ID(); ?>" <?php post_class( 'm-interest-post' ); ?>>
 
 	<a href="<?php echo esc_url( get_permalink() ); ?>">
-		<?php
-		$image_data = get_minnpost_post_image( 'author-thumbnail' );
-		$is_new     = ( true === is_post_new( get_the_ID() ) ) ? '<span class="a-new" title="New since you last visited MinnPost">new</span>' : '';
-		?>
+		<?php $image_data = get_minnpost_post_image( 'author-thumbnail' ); ?>
 
 		<div class="a-interest-image">
-			<?php echo $is_new; ?>
 			<?php echo $image_data['markup']; ?>
 		</div>
 
