@@ -207,3 +207,30 @@ if ( ! function_exists( 'minnpost_message_args' ) ) :
 
 	}
 endif;
+
+/**
+ * Change visibility for the action scheduler posts
+ *
+ * @param array $post_args the arguments for that post type
+ * @return array $post_args the arguments for that post type
+ */
+if ( ! function_exists( 'minnpost_action_scheduler_args' ) ) :
+	add_action( 'action_scheduler_post_type_args', 'minnpost_action_scheduler_args', 10, 1 );
+	function minnpost_action_scheduler_args( $post_args ) {
+
+		$post_args['capabilities'] = array(
+			'edit_post'          => 'edit_scheduled_action',
+			'read_post'          => 'read_scheduled_action',
+			'delete_post'        => 'delete_scheduled_action',
+			'delete_posts'       => 'delete_scheduled_actions',
+			'edit_posts'         => 'edit_scheduled_actions',
+			'edit_others_posts'  => 'edit_others_scheduled_actions',
+			'publish_posts'      => 'publish_scheduled_actions',
+			'read_private_posts' => 'read_private_scheduled_actions',
+			'create_posts'       => 'create_scheduled_actions',
+		);
+
+		return $post_args;
+
+	}
+endif;
