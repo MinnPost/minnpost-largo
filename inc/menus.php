@@ -437,6 +437,11 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 			remove_submenu_page( 'options-general.php', 'options-media.php' );
 		}
 
+		// users who cannot do anything with scheduled actions
+		if ( ! current_user_can( 'edit_scheduled_actions' ) && ! current_user_can( 'create_scheduled_actions' ) ) {
+			remove_submenu_page( 'tools.php', 'action-scheduler' );
+		}
+
 		// whole tools menu
 		if ( ! current_user_can( 'see_tools_menu' ) ) {
 			remove_menu_page( 'tools.php' );
