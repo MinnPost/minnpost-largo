@@ -339,34 +339,34 @@ msgstr ""
 
 #. translators: the placeholder is the time string, which can be translated
 #. translators: the placeholder is the time string, which can be translated
-#: inc/template-tags.php:203, inc/template-tags.php:242
+#: inc/template-tags.php:209, inc/template-tags.php:248
 msgctxt "post date"
 msgid "%s"
 msgstr ""
 
 #. translators: used between list items, there is a space after the comma
 #. translators: used between list items, there is a space after the comma
-#: inc/template-tags.php:702, inc/template-tags.php:709
+#: inc/template-tags.php:708, inc/template-tags.php:715
 msgid ", "
 msgstr ""
 
 #. translators: placeholder is the list of categories
-#: inc/template-tags.php:705
+#: inc/template-tags.php:711
 msgid "Posted in %1$s"
 msgstr ""
 
 #. translators: placeholder is the list of tags
-#: inc/template-tags.php:712
+#: inc/template-tags.php:718
 msgid "Tagged %1$s"
 msgstr ""
 
-#: inc/template-tags.php:722
+#: inc/template-tags.php:728
 msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
 #. translators: %s: Name of current post
 #. translators: %s: Name of current post
-#: inc/template-tags.php:738, inc/template-tags.php:768
+#: inc/template-tags.php:744, inc/template-tags.php:774
 msgid "Edit %s"
 msgstr ""
 
