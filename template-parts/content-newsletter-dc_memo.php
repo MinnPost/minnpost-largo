@@ -218,6 +218,8 @@ a[x-apple-data-detectors] {
 				$body = str_replace( '<p class="intro">', '<p>', $body );
 				$body = preg_replace( '/<p>/', '<p class="intro" style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 17.6px; line-height: 24.9444px; margin: 0 0 15px; padding: 15px 0 0;">', $body, 1 );
 				$body = str_replace( '<p>', '<p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', $body );
+				$body = str_replace( '<li>', '<li style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', $body );
+				$body = str_replace( '<ul>', '<ul style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0 0 0 40px;">', $body );
 
 				// inline sponsor before this week's essential reads
 				$body = str_replace(
