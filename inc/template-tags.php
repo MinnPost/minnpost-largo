@@ -195,6 +195,8 @@ if ( ! function_exists( 'minnpost_posted_on' ) ) :
 		$visible_date = esc_html( get_the_date( '', $id ) );
 		if ( ! is_singular( 'newsletter' ) && date( get_option( 'date_format' ), current_time( 'timestamp' ) ) === $visible_date ) {
 			$visible_date = esc_html( get_the_date( get_option( 'time_format' ), $id ) );
+		} elseif ( is_singular( 'newsletter' ) ) {
+			$visible_date = esc_html( get_the_date( 'F j, Y', $id ) );
 		}
 
 		$time_string = sprintf( $time_string,
