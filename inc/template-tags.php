@@ -30,7 +30,7 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 			$image     = $image_data['markup'];
 		}
 
-		if ( post_password_required() || is_attachment() || ( ! isset( $image_id ) && ! isset( $image_url ) ) ) {
+		if ( post_password_required() || is_attachment() || ( ! isset( $image_id ) && ! isset( $image_url ) ) || empty( $image ) ) {
 			return;
 		}
 
