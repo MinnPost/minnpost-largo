@@ -816,22 +816,13 @@ if ( ! function_exists( 'minnpost_category_breadcrumb' ) ) :
 			$post_id = get_the_ID();
 		}
 
-		$category_permalink = get_post_meta( $post_id, '_category_permalink', true );
-		if ( null !== $category_permalink && '' !== $category_permalink ) {
-			if ( isset( $category_permalink['category'] ) && '' !== $category_permalink['category'] ) {
-				$cat_id   = $category_permalink['category'];
-				$category = get_category( $cat_id );
-			} else {
-				$categories = get_the_category();
-				$category   = $categories[0];
-			}
-		} else {
-			$categories = get_the_category();
-			$category   = $categories[0];
+		$category_id = minnpost_get_permalink_category_id( $post_id );
+		if ( '' !== $category_id ) {
+			$category      = get_category( $category_id );
+			$category_link = get_category_link( $category );
+			$category_name = $category->name;
+			echo '<div class="a-breadcrumb"><a href="' . $category_link . '">' . $category_name . '</a></div>';
 		}
-		$category_link = get_category_link( $category );
-		$category_name = $category->name;
-		echo '<div class="a-breadcrumb"><a href="' . $category_link . '">' . $category_name . '</a></div>';
 	}
 endif;
 
@@ -854,29 +845,45 @@ if ( ! function_exists( 'minnpost_get_category_name' ) ) :
 			return $category_name;
 		}
 
-		$category_permalink = get_post_meta( $post_id, '_category_permalink', true );
-		// we have to check a few conditions to get the category correctly
-		if ( null !== $category_permalink && '' !== $category_permalink ) {
-			if ( is_array( $category_permalink ) ) {
-				$cat_id = $category_permalink['category'];
-			} else {
-				$cat_id = $category_permalink;
-			}
-			$category = get_category( $cat_id );
-		} else {
-			$categories = get_the_category();
-			if ( empty( $categories ) ) {
-				return '';
-			}
-			$category = $categories[0];
+		$category_id = minnpost_get_permalink_category_id( $post_id );
+		if ( '' !== $category_id ) {
+			$category = get_category( $category_id );
 		}
+
 		if ( isset( $category->name ) ) {
 			$category_name = $category->name;
-		} else {
-			$category_name = ''; // there is no category
 		}
 
 		return $category_name;
+	}
+endif;
+
+/**
+* Returns the category ID for a post's permalink category
+*
+* @param int $post_id
+* @return int $category_id
+*
+*/
+if ( ! function_exists( 'minnpost_get_permalink_category_id' ) ) :
+	function minnpost_get_permalink_category_id( $post_id = '' ) {
+		$category_id = '';
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
+		$category_permalink = get_post_meta( $post_id, '_category_permalink', true );
+		if ( null !== $category_permalink && '' !== $category_permalink ) {
+			if ( isset( $category_permalink['category'] ) && '' !== $category_permalink['category'] ) {
+				$category_id = $category_permalink['category'];
+			} else {
+				$categories  = get_the_category();
+				$category_id = $categories[0]->term_id;
+			}
+		} else {
+			$categories  = get_the_category();
+			$category_id = $categories[0]->term_id;
+		}
+		return $category_id;
 	}
 endif;
 
@@ -943,12 +950,9 @@ if ( ! function_exists( 'minnpost_get_category_sponsorship' ) ) :
 			if ( '' === $post_id ) {
 				$post_id = get_the_ID();
 			}
-			$category_permalink = get_post_meta( $post_id, '_category_permalink', true );
-			if ( null !== $category_permalink && '' !== $category_permalink ) {
-				$category_id = $category_permalink['category'];
-			} else {
-				$categories  = get_the_category();
-				$category_id = $categories[0]->cat_id;
+			$category_id = minnpost_get_permalink_category_id( $post_id );
+			if ( '' === $category_id ) {
+				return '';
 			}
 		}
 		$sponsorship = get_term_meta( $category_id, '_mp_category_sponsorship', true );
