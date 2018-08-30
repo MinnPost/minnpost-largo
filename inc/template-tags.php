@@ -193,7 +193,7 @@ if ( ! function_exists( 'minnpost_posted_on' ) ) :
 		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
 
 		$visible_date = esc_html( get_the_date( '', $id ) );
-		if ( date( get_option( 'date_format' ), current_time( 'timestamp' ) ) === $visible_date ) {
+		if ( ! is_singular( 'newsletter' ) && date( get_option( 'date_format' ), current_time( 'timestamp' ) ) === $visible_date ) {
 			$visible_date = esc_html( get_the_date( get_option( 'time_format' ), $id ) );
 		}
 
