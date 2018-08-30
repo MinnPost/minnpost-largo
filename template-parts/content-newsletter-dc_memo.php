@@ -211,7 +211,7 @@ a[x-apple-data-detectors] {
 			</tr> <!-- end row -->
 
 			<?php
-			$body = get_the_content();
+			$body = apply_filters( 'the_content', get_the_content() );
 			if ( '' !== $body ) :
 				$body = str_replace( '<a href="', '<a style="color: #801019; text-decoration: none;" href="', $body );
 				$body = str_replace( ' dir="ltr"', '', $body );
