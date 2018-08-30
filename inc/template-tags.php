@@ -127,7 +127,7 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
 			// this requires that the custom image sizes in custom-fields.php work correctly
-			$image = wp_get_attachment_image( $image_id, $size );
+			$image = wp_get_attachment_image( $image_id, $size, false, $attributes );
 		} else {
 			if ( '' !== $image_id ) {
 				$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
