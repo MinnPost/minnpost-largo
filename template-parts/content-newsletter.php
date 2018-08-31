@@ -265,7 +265,7 @@
 				</td><td width="20">&nbsp;</td><td width="50%" valign="top">
 				<![endif]-->
 				<div class="column more" style="display: inline-block; Margin-right: 0; max-width: 300px; vertical-align: top; width: 100%">
-					<?php if ( $more_query->have_posts() ) : ?>
+					<?php if ( isset( $more_query ) && $more_query->have_posts() ) : ?>
 						<table cellpadding="0" cellspacing="0" class="more" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
 							<tr>
 								<td class="inner" style="background: #f0f0f5; border: 1px solid #cccccf; border-collapse: collapse; Margin: 0; max-width: 100%; padding: 15px; width: 100%" bgcolor="#f0f0f5">
