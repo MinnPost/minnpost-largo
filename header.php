@@ -13,7 +13,7 @@
 <html class="no-js" <?php language_attributes(); ?>>
 <head <?php do_action( 'add_head_attributes' ); ?>>
 <meta charset="<?php bloginfo( 'charset' ); ?>">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <?php wp_head(); ?>
 </head>
