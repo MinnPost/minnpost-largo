@@ -5,11 +5,18 @@
 	}
 }
 .m-archive-top .m-post-image, .m-archive-excerpt .m-post-image {
-	float: left;
 	margin-bottom: 20px;
 	margin-right: 20px;
 }
 .m-archive-top.m-archive-has-1-post .m-post-image {
 	float: none;
 	margin: 0;
+}
+
+@media screen and (min-width: $medium-screen) {
+	.m-archive-top .m-post-image, .m-archive-excerpt .m-post-image {
+		float: left;
+		margin-bottom: 20px;
+		margin-right: 20px;
+	}
 }
