@@ -144,25 +144,28 @@ function minnpost_widget_display_callback( $instance, $widget, $args ) {
 	return $instance;
 }
 
-add_filter( 'rpwe_default_query_arguments', 'minnpost_recent_stories_widget', 10, 1 );
-function minnpost_recent_stories_widget( $query ) {
-	global $wpdb;
-	$results       = $wpdb->get_results( 'SELECT DISTINCT `post_id` FROM wp_postmeta WHERE meta_key LIKE "_zoninator_order_%"', 'ARRAY_A' );
-	$exclude_ids   = array_column( $results, 'post_id' );
-	$exclude_ids[] = get_the_ID();
-	$query         = array(
-		'post__not_in' => $exclude_ids,
-		'post_type'    => 'post',
-		'orderby'      => 'modified',
-		'ep_integrate' => true,
-		'date_query'   => array(
-			array(
-				'after' => '7 days ago',
+if ( ! function_exists( 'minnpost_recent_stories_widget' ) ) :
+	add_filter( 'rpwe_default_query_arguments', 'minnpost_recent_stories_widget', 10, 1 );
+	function minnpost_recent_stories_widget( $query ) {
+		global $wpdb;
+		$results       = $wpdb->get_results( 'SELECT DISTINCT `post_id` FROM wp_postmeta WHERE meta_key LIKE "_zoninator_order_%"', 'ARRAY_A' );
+		$exclude_ids   = array_column( $results, 'post_id' );
+		$exclude_ids[] = get_the_ID();
+		$query         = array(
+			'post__not_in'     => $exclude_ids,
+			'post_type'        => 'post',
+			'orderby'          => 'modified',
+			'ep_integrate'     => true,
+			'date_query'       => array(
+				array(
+					'after' => '7 days ago',
+				),
 			),
-		),
-	);
-	return $query;
-}
+			'category__not_in' => array( 55577, 55630, 55590, 55628, 55569, 55575 ),
+		);
+		return $query;
+	}
+endif;
 
 if ( ! function_exists( 'get_the_image' ) ) :
 	function get_the_image( $args ) {
