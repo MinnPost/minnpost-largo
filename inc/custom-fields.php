@@ -358,7 +358,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'name' => 'Load HTML editor by default?',
 			'id'   => '_mp_post_use_html_editor',
 			'type' => 'checkbox',
-			'desc' => 'If checked, this post will open with the HTML editor visile.',
+			'desc' => 'If checked, this post will open with the HTML editor visible.',
 		) );
 		$display_settings->add_field( array(
 			'name' => 'Remove category from display?',
@@ -406,13 +406,14 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'name'             => 'Share button location',
 			'id'               => '_mp_share_display_location',
 			'type'             => 'select',
-			'show_option_none' => true,
+			'show_option_none' => false,
 			'desc'             => 'Select a location for the share buttons to display',
 			'default'          => 'both',
 			'options'          => array(
-				'both'   => __( 'Both', 'minnpost-largo' ),
-				'top'    => __( 'Top', 'minnpost-largo' ),
-				'bottom' => __( 'Bottom', 'minnpost-largo' ),
+				'neither' => __( 'Neither', 'minnpost-largo' ),
+				'both'    => __( 'Both', 'minnpost-largo' ),
+				'top'     => __( 'Top', 'minnpost-largo' ),
+				'bottom'  => __( 'Bottom', 'minnpost-largo' ),
 			),
 		) );
 

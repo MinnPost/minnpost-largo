@@ -331,11 +331,11 @@ if ( ! function_exists( 'minnpost_share_buttons' ) ) :
 			}
 		}
 		if ( function_exists( 'sharing_display' ) && true === $display_share ) {
-		?>
+			?>
 			<div class="m-entry-share m-entry-share-<?php echo $position; ?>">
 				<?php sharing_display( '', true ); ?>
 			</div>
-		<?php
+			<?php
 		}
 	}
 endif;
@@ -349,7 +349,7 @@ endif;
 if ( ! function_exists( 'minnpost_related' ) ) :
 	function minnpost_related( $type = 'content' ) {
 		if ( ! empty( get_post_meta( get_the_ID(), '_mp_related_' . $type, true ) ) ) :
-		?>
+			?>
 		<aside class="m-related m-related-<?php echo $type; ?>">
 			<h3 class="a-related-title a-related-title-<?php echo $type; ?>">Related <?php echo ucfirst( $type ); ?>:</h3>
 			<ul class="a-related-list a-related-list-<?php echo $type; ?>">
@@ -360,7 +360,7 @@ if ( ! function_exists( 'minnpost_related' ) ) :
 				}
 				foreach ( $ids as $id ) :
 					//$post = get_post( $id, ARRAY_A );
-				?>
+					?>
 					<li>
 						<?php
 							minnpost_post_image(
@@ -382,12 +382,12 @@ if ( ! function_exists( 'minnpost_related' ) ) :
 						</header>
 						<div class="m-entry-excerpt"><?php echo wpautop( get_the_excerpt( $id ) ); ?></div>
 					</li>
-				<?php
+					<?php
 				endforeach;
 				?>
 			</ul>
 		</aside>
-		<?php
+			<?php
 	endif;
 	}
 endif;
