@@ -126,14 +126,8 @@ if ( function_exists( 'create_newsletter' ) ) :
 					'desc'       => __( 'Search for a post here', 'minnpost-largo' ),
 					'id'         => $prefix . 'top_posts',
 					'query_args' => array(
-						'orderby'    => 'modified',
-						'order'      => 'DESC',
-						'date_query' => array(
-							array(
-								'column' => 'post_modified',
-								'after'  => $most_recent_newsletter_modified,
-							),
-						),
+						'orderby' => 'modified',
+						'order'   => 'DESC',
 					),
 				), 'post_search_ajax'
 			)
@@ -159,14 +153,8 @@ if ( function_exists( 'create_newsletter' ) ) :
 					'desc'       => __( 'Search for a post here', 'minnpost-largo' ),
 					'id'         => $prefix . 'more_posts',
 					'query_args' => array(
-						'orderby'    => 'modified',
-						'order'      => 'DESC',
-						'date_query' => array(
-							array(
-								'column' => 'post_modified',
-								'after'  => $most_recent_newsletter_modified,
-							),
-						),
+						'orderby' => 'modified',
+						'order'   => 'DESC',
 					),
 				)
 			)
