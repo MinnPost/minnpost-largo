@@ -56,6 +56,33 @@ if ( ! function_exists( 'create_newsletter' ) ) :
 	}
 endif;
 
+/**
+* Set the admin sort order for Newsletters
+*
+* @param object $query
+* @return object $query
+*
+*/
+if ( ! function_exists( 'minnpost_newsletter_default_order' ) ) :
+	add_filter( 'pre_get_posts', 'minnpost_newsletter_default_order' );
+	function minnpost_newsletter_default_order( $query ) {
+		if ( $query->is_admin ) {
+			if ( 'newsletter' === $query->get( 'post_type' ) ) {
+				$query->set( 'orderby', 'date' );
+				$query->set( 'order', 'DESC' );
+			}
+		}
+		return $query;
+	}
+endif;
+
+/**
+* Set which post types are indexable by Elasticpress
+*
+* @param array $post_types
+* @return array $post_types
+*
+*/
 if ( ! function_exists( 'minnpost_indexable_post_types' ) ) :
 	add_filter( 'ep_indexable_post_types', 'minnpost_indexable_post_types' );
 	function minnpost_indexable_post_types( $post_types ) {
