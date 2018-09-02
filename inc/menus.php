@@ -475,6 +475,7 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 			remove_submenu_page( 'options-general.php', 'form-processor-mailchimp' );
 			remove_submenu_page( 'options-general.php', 'merge-serialized-fields' );
 			remove_submenu_page( 'options-general.php', 'migrate-random-things' );
+			remove_submenu_page( 'options-general.php', 'redis-cache' ); // we should only allow this if there is a point where we can clear the cache by which group the data is in
 			remove_submenu_page( 'options-general.php', 'user-account-management' );
 			remove_submenu_page( 'options-general.php', 'widgetopts_plugin_settings' );
 			remove_submenu_page( 'options-general.php', 'wp-analytics-tracking-generator-admin' );
