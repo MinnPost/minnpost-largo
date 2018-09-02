@@ -440,12 +440,6 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'priority'     => 'high',
 			'closed'       => true,
 		) );
-		/*$related_settings->add_field( array(
-			'name' => 'Add related content to this post?',
-			'id'   => '_mp_show_related_content',
-			'type' => 'checkbox',
-			'desc' => '',
-		) );*/
 		$related_settings->add_field(
 			minnpost_post_search_field(
 				array(
