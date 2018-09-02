@@ -440,23 +440,18 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'priority'     => 'high',
 			'closed'       => true,
 		) );
-		$related_settings->add_field( array(
+		/*$related_settings->add_field( array(
 			'name' => 'Add related content to this post?',
 			'id'   => '_mp_show_related_content',
 			'type' => 'checkbox',
 			'desc' => '',
-		) );
+		) );*/
 		$related_settings->add_field(
 			minnpost_post_search_field(
 				array(
 					'name'       => __( 'Related Content', 'minnpost-largo' ),
 					'desc'       => __( 'Search for a post here', 'minnpost-largo' ),
 					'id'         => '_mp_related_content',
-					'attributes' => array(
-						'required'               => false,
-						'data-conditional-id'    => '_mp_show_related_content',
-						'data-conditional-value' => 'on',
-					),
 					'query_args' => array(
 						'nopaging' => true,
 					),
@@ -469,11 +464,6 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 					'name'       => __( 'Related Multimedia', 'minnpost-largo' ),
 					'desc'       => __( 'Search for a post here', 'minnpost-largo' ),
 					'id'         => '_mp_related_multimedia',
-					'attributes' => array(
-						'required'               => false,
-						'data-conditional-id'    => '_mp_show_related_content',
-						'data-conditional-value' => 'on',
-					),
 					'query_args' => array(
 						'nopaging' => true,
 					),
