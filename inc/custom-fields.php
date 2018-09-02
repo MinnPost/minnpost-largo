@@ -457,6 +457,9 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 						'data-conditional-id'    => '_mp_show_related_content',
 						'data-conditional-value' => 'on',
 					),
+					'query_args' => array(
+						'nopaging' => true,
+					),
 				)
 			)
 		);
@@ -470,6 +473,9 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 						'required'               => false,
 						'data-conditional-id'    => '_mp_show_related_content',
 						'data-conditional-value' => 'on',
+					),
+					'query_args' => array(
+						'nopaging' => true,
 					),
 				)
 			)
