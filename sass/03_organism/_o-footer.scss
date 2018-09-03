@@ -5,7 +5,8 @@
 			border: 1px solid $color__gray-lightest;
 			outline: 15px solid $color__minnpost-white;
 			background: $color__white;
-			padding: 30px 15px;
+			padding: 15px;
+			margin: 0 15px;
 			font-size: 92.3%;
 			font-family: $font__sans;
 			&.m-widget-sponsor-list {
@@ -15,7 +16,8 @@
 				}
 			}
 			&:first-of-type {
-				padding-top: 15px;
+				//padding-top: 15px;
+				//margin-right: 15px;
 			}
 			.a-widget-title {
 				color: $color__minnpost-red;
