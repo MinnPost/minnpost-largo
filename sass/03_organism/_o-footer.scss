@@ -1,12 +1,12 @@
 .o-footer {
 	.o-footer-hat {
-		padding: 0 30px 20px 15px;
+		padding: 0 $footer-box-spacing * 2 $standard-page-margin $footer-box-spacing;
 		section {
 			border: 1px solid $color__gray-lightest;
-			outline: 15px solid $color__minnpost-white;
+			outline: $footer-box-spacing solid $color__minnpost-white;
 			background: $color__white;
-			padding: 15px;
-			margin: 0 15px;
+			padding: $footer-box-spacing * 2 $footer-box-spacing $footer-box-spacing $footer-box-spacing;
+			margin: 0 $footer-box-spacing;
 			font-size: 92.3%;
 			font-family: $font__sans;
 			&.m-widget-sponsor-list {
@@ -16,8 +16,7 @@
 				}
 			}
 			&:first-of-type {
-				//padding-top: 15px;
-				//margin-right: 15px;
+				padding-top: $footer-box-spacing;
 			}
 			.a-widget-title {
 				color: $color__minnpost-red;
@@ -43,7 +42,7 @@
 			section {
 				flex: 1;
 				width: auto;
-				margin-right: 30px;
+				margin-right: $footer-box-spacing * 2;
 				&.m-footer-donors {
 					flex: 3;
 					margin: 0;
@@ -61,13 +60,13 @@
 		font-family: $font__sans;
 		word-wrap: break-word;
 		border-top: 1px solid $color__gray-lightest;
-		margin-top: 20px;
-		padding-top: 10px;
+		margin-top: $standard-page-margin;
+		padding-top: $standard-page-margin / 2;
 	}
 	.a-footer-message {
 		font-size: 92.3%;
 		text-align: center;
-		margin-bottom: 20px;
+		margin-bottom: $standard-page-margin;
 	}
 }
 
@@ -78,9 +77,9 @@
 			justify-content: space-between;
 			flex-flow: row;
 			flex-wrap: wrap;
-			padding: 0 30px 20px 15px;
+			padding: 0 $footer-box-spacing * 2 $standard-page-margin $footer-box-spacing;
 			section {
-				padding: 15px;
+				padding: $footer-box-spacing;
 				flex: $size__footer-column 1 1;
 			}
 		}
@@ -93,7 +92,7 @@
 			display: flex;
 			justify-content: space-between;
 			flex-flow: row;
-			padding: 0 30px 20px 15px;
+			padding: 0 $footer-box-spacing * 2 $standard-page-margin $footer-box-spacing;
 			section {
 				width: 29.0322580645161%;
 			}
