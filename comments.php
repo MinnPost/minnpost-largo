@@ -26,9 +26,10 @@ if ( post_password_required() ) {
 
 	$status = function_exists( 'get_comment_status_by_access' ) ? get_comment_status_by_access() : 'approve';
 	$params = array(
-		'post_id' => get_the_ID(),
-		'status'  => $status,
-		'type'    => array( 'comment' ),
+		'post_id'          => get_the_ID(),
+		'status'           => $status,
+		'type'             => array( 'comment' ),
+		'reverse_children' => false,
 	);
 	if ( is_user_logged_in() ) {
 		$params['include_unapproved'] = get_current_user_id();
