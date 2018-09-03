@@ -1,5 +1,5 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
+<html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 		<!--[if !mso]><!-->
@@ -7,8 +7,6 @@
 		<!--<![endif]-->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Reset your MinnPost password</title>
-
-		
 
 		<style type="text/css" data-premailer="ignore">
 			.webkit {
@@ -20,7 +18,6 @@
 			.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
 				line-height: 100%;
 			}
-			
 			a[x-apple-data-detectors] {
 				color: #801019 !important;
 				text-decoration: none !important;
@@ -31,11 +28,11 @@
 			}
 		</style>
 
-		 <!--[if (gte mso 9)|(IE)]>
-			<style type="text/css" data-premailer="ignore">
-			.header table { font-size:1px; line-height:0; mso-margin-top-alt:1px; }
-			</style>
-			<![endif]-->
+		<!--[if (gte mso 9)|(IE)]>
+		<style type="text/css" data-premailer="ignore">
+		.header table { font-size:1px; line-height:0; mso-margin-top-alt:1px; }
+		</style>
+		<![endif]-->
 
 	<style>body {
 margin: 0; padding: 0; min-width: 100%; background-color: #ffffff;
@@ -87,15 +84,13 @@ color: #ffffff !important; text-decoration: none !important;
 	</span>
 
 	<center class="wrapper" style="width: 100%; table-layout: fixed; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
-		<div class="webkit">
-			
+		<div class="webkit">	
 			<!--[if (gte mso 9)|(IE)]>
 				<table cellpadding="0" cellspacing="0" width="600" align="center">
 					<tr>
 						<td>
 						<![endif]-->
 				<table cellpadding="0" cellspacing="0" class="outer" align="center" style="border-spacing: 0; margin: 0 auto; padding: 0; font-family: Helvetica, Arial, Geneva, sans-serif; color: #1a1818; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; width: 100%; max-width: 600px;">
-					
 					<tr>
 						<td class="one-column header" style="border-collapse: collapse; font-size: 0; border-bottom-width: 10px; border-bottom-color: #000; border-bottom-style: solid; margin: 0; padding: 0;" align="center">
 						<!--[if (gte mso 9)|(IE)]>
