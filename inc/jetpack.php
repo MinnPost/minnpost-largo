@@ -33,6 +33,12 @@ if ( ! function_exists( 'jptweak_remove_share' ) ) :
 endif;
 
 /**
+* Remove count from share buttons
+*
+*/
+add_filter( 'jetpack_sharing_counts', '__return_false' );
+
+/**
 * Edit markup for sharing
 *
 * @param string $sharing_content
