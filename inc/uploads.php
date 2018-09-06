@@ -104,6 +104,10 @@ endif;
 
 /**
  * Get credit HTML
+ *
+ * @param int $post_id
+ * @return string $credit
+ *
  */
 if ( ! function_exists( 'get_media_credit_html' ) ) :
 	function get_media_credit_html( $post_id = 0 ) {
@@ -113,11 +117,12 @@ if ( ! function_exists( 'get_media_credit_html' ) ) :
 		$credit_meta = get_post_meta( $post_id, '_wp_attachment_source_name', true );
 		$credit_url  = get_post_meta( $post_id, '_wp_attachment_source_url', true );
 
+		// deprecated credit field
 		if ( '' === $credit_meta ) {
-			// deprecated
 			$credit_meta = get_post_meta( $post_id, 'media_credit', true );
 		}
 
+		// deprecated credit url field
 		if ( '' === $credit_url ) {
 			$credit_url = get_post_meta( $post_id, 'media_credit_url', true );
 		}
