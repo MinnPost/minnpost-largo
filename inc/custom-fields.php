@@ -1279,3 +1279,17 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 
 	}
 endif;
+
+/**
+* Remove raw html meta box from non-admins
+*
+*/
+if ( ! function_exists( 'limit_raw_html_box' ) ) :
+	add_action( 'do_meta_boxes', 'limit_raw_html_box' );
+	function limit_raw_html_box() {
+		if ( ! current_user_can( 'administrator' ) ) {
+			remove_meta_box( 'rawhtml_meta_box', 'post', 'side' );
+			remove_meta_box( 'rawhtml_meta_box', 'page', 'side' );
+		}
+	}
+endif;
