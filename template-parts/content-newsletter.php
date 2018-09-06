@@ -130,8 +130,10 @@
 
 		<?php
 		$body = get_the_content();
+		$body = apply_filters( 'the_content', get_the_content() );
+
 		if ( '' !== $body ) {
-		?>
+			?>
 		<tr>
 			<td class="one-column content promo" style="border-collapse: collapse; margin: 0; padding: 0">
 			<!--[if (gte mso 9)|(IE)]>
@@ -149,7 +151,7 @@
 				<![endif]-->
 			</td> <!-- end .one-column.promo -->
 		</tr> <!-- end row -->
-		<?php
+			<?php
 		}
 		$top_offset  = 2;
 		$top_stories = get_post_meta( get_the_ID(), '_mp_newsletter_top_posts', true );
@@ -282,10 +284,10 @@
 														?>
 														<h4 style="color: #555556; display: block; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 10px; font-weight: normal; line-height: 100%; Margin: 0 0 5px; text-align: left; text-transform: uppercase" align="left"><?php echo minnpost_get_category_name(); ?></h4>
 														<h3 style="color: #1a1818; display: block; font-family: Georgia, 'Times New Roman]', Times, serif; font-size: 13px; font-weight: normal; line-height: 100%; Margin: 0 0 15px; padding: 0; text-align: left" align="left"><a href="<?php echo esc_url( get_permalink() ); ?>" style="color: #1A1818; text-decoration: none"><?php echo get_the_title(); ?></a></h3>
-													<?php
+														<?php
 													endwhile;
 													wp_reset_postdata();
-													?>
+?>
 												</div> <!-- end .inner -->
 											</td>
 										</tr>
@@ -312,7 +314,7 @@
 							<?php
 							$footer_message = get_option( 'site_footer_message', '' );
 							if ( '' !== $footer_message ) :
-							?>
+								?>
 								<p class="address" style="font-size: 12px; Margin: 10px 0 15px; padding: 0; text-align: center;" align="center"><?php echo $footer_message; ?></p>
 							<?php endif; ?>
 						</td>
