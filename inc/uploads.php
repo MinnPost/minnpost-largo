@@ -100,67 +100,29 @@ if ( ! function_exists( 'image_watermark_allowed' ) ) :
 	}
 endif;
 
-/**
- * Add custom fields to media
- */
-if ( ! function_exists( 'minnpost_largo_attachment_fields' ) ) :
-	add_filter( 'attachment_fields_to_edit', 'minnpost_largo_attachment_fields', 10, 2 );
-	function minnpost_largo_attachment_fields( $fields, $post ) {
-		$credit                     = get_post_meta( $post->ID, 'media_credit', true );
-		$credit_url                 = get_post_meta( $post->ID, 'media_credit_url', true );
-		$fields['media_credit']     = array(
-			'label'        => __( 'Credit', 'text-domain' ),
-			'input'        => 'text',
-			'value'        => $credit,
-			'show_in_edit' => true,
-		);
-		$fields['media_credit_url'] = array(
-			'label'        => __( 'Credit URL', 'text-domain' ),
-			'input'        => 'text',
-			'value'        => $credit_url,
-			'show_in_edit' => true,
-		);
-		return $fields;
-	}
-endif;
+
 
 /**
- * Update custom fields within media overlay (via ajax)
+ * Get credit HTML
  */
-if ( ! function_exists( 'minnpost_largo_media_fields' ) ) :
-	add_action( 'wp_ajax_save-attachment-compat', 'minnpost_largo_media_fields', 0, 1 );
-	function minnpost_largo_media_fields() {
-		$post_id    = $_POST['id'];
-		$credit     = $_POST['attachments'][ $post_id ]['media_credit'];
-		$credit_url = $_POST['attachments'][ $post_id ]['media_credit_url'];
-		update_post_meta( $post_id, 'media_credit', $credit );
-		update_post_meta( $post_id, 'media_credit_url', $credit_url );
-		clean_post_cache( $post_id );
-	}
-endif;
-
-/**
- * Update media custom fields from edit media page (non ajax).
- */
-if ( ! function_exists( 'minnpost_largo_update_attachment_meta' ) ) :
-	add_action( 'edit_attachment', 'minnpost_largo_update_attachment_meta', 1 );
-	function minnpost_largo_update_attachment_meta( $post_id ) {
-		$credit     = isset( $_POST['attachments'][ $post_id ]['media_credit'] ) ? $_POST['attachments'][ $post_id ]['media_credit'] : false;
-		$credit_url = isset( $_POST['attachments'][ $post_id ]['media_credit_url'] ) ? $_POST['attachments'][ $post_id ]['media_credit_url'] : false;
-		update_post_meta( $post_id, 'media_credit', $credit );
-		update_post_meta( $post_id, 'media_credit_url', $credit_url );
-		return;
-	}
-endif;
-
 if ( ! function_exists( 'get_media_credit_html' ) ) :
 	function get_media_credit_html( $post_id = 0 ) {
 		if ( 0 === $post_id ) {
 			return '';
 		}
-		$credit_meta = get_post_meta( $post_id, 'media_credit', true );
-		$credit_url  = get_post_meta( $post_id, 'media_credit_url', true );
-		$credit      = '';
+		$credit_meta = get_post_meta( $post_id, '_wp_attachment_source_name', true );
+		$credit_url  = get_post_meta( $post_id, '_wp_attachment_source_url', true );
+
+		if ( '' === $credit_meta ) {
+			// deprecated
+			$credit_meta = get_post_meta( $post_id, 'media_credit', true );
+		}
+
+		if ( '' === $credit_url ) {
+			$credit_url = get_post_meta( $post_id, 'media_credit_url', true );
+		}
+
+		$credit = '';
 
 		if ( '' !== $credit_meta ) {
 			if ( ! empty( $credit_url ) ) {
