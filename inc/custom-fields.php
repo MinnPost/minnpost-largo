@@ -1293,3 +1293,16 @@ if ( ! function_exists( 'limit_raw_html_box' ) ) :
 		}
 	}
 endif;
+
+/**
+* Change expiration of public post preview links
+*
+* @return int $nonce_life
+*
+*/
+if ( ! function_exists( 'minnpost_public_preview_nonce_life' ) ) :
+	add_filter( 'ppp_nonce_life', 'minnpost_public_preview_nonce_life' );
+	function minnpost_public_preview_nonce_life() {
+		return 259200; // 3 days
+	}
+endif;
