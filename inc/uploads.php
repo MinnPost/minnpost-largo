@@ -222,7 +222,7 @@ if ( ! function_exists( 'minnpost_largo_image_add_caption_with_credit' ) ) :
 			$caption_html = '[image_caption]' . $caption . '[/image_caption]';
 		}
 
-		$shcode = '[caption id="' . $id . '" align="align' . $align . '" width="' . $width . '"]' . $html . $credit_html . $caption_html . '[/caption]';
+		$shcode = '[caption id="' . $id . '" align="align' . $align . '" width="' . $width . '"]' . $html . '<code>' . $credit_html . $caption_html . '</code>[/caption]';
 
 		/**
 		* Filters the image HTML markup including the caption shortcode.
@@ -341,10 +341,10 @@ if ( ! function_exists( 'minnpost_largo_fix_shortcode' ) ) :
 		}
 		$html = '<figure ' . $attributes['id'] . $style . 'class="m-content-media ' . esc_attr( $class ) . '">'
 			. do_shortcode( $content ) . '<figcaption class="m-content-caption wp-caption-text">' . do_shortcode( $attributes['caption'] ) . '</figcaption></figure>';
-		// deprecated
-		$html = str_replace( '<br />', '', $html );
 		$html = str_replace( '<code>', '', $html );
 		$html = str_replace( '</code>', '', $html );
+		// deprecated
+		$html = str_replace( '<br />', '', $html );
 		return $html;
 	}
 endif;
