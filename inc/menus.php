@@ -479,6 +479,7 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 			remove_submenu_page( 'options-general.php', 'user-account-management' );
 			remove_submenu_page( 'options-general.php', 'widgetopts_plugin_settings' );
 			remove_submenu_page( 'options-general.php', 'wp-analytics-tracking-generator-admin' );
+			remove_submenu_page( 'options-general.php', 'image-credits' ); // these settings are ignored anyway because of how the theme works
 			// chartbeat
 			remove_menu_page( 'chartbeat_console' );
 			// elasticpress
