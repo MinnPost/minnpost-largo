@@ -245,12 +245,12 @@ function image_add_caption_with_credit( $html, $id, $caption, $title, $align, $u
 
 	$credit_html = '';
 	if ( '' !== $credit ) {
-		$credit_html = '[div class="credit"]' . $credit . '[/div]';
+		$credit_html = '[image_credit]' . $credit . '[/image_credit]';
 	}
 
 	$caption_html = '';
 	if ( '' !== $caption ) {
-		$caption_html = '[div class="caption"]' . $caption . '[/div]';
+		$caption_html = '[image_caption]' . $caption . '[/image_caption]';
 	}
 
 	$join = '';
@@ -258,7 +258,7 @@ function image_add_caption_with_credit( $html, $id, $caption, $title, $align, $u
 		$join = '<br>';
 	}
 
-	$shcode = '[caption id="' . $id . '" align="align' . $align . '" width="' . $width . '"]' . $html . '<code>' . $credit_html . '<br>' . $caption_html . '</code>[/caption]';
+	$shcode = '[caption id="' . $id . '" align="align' . $align . '" width="' . $width . '"]' . $html . $credit_html . $caption_html . '[/caption]';
 
 	/**
 	* Filters the image HTML markup including the caption shortcode.
@@ -271,6 +271,31 @@ function image_add_caption_with_credit( $html, $id, $caption, $title, $align, $u
 
 	return apply_filters( 'image_add_caption_shortcode', $shcode, $html );
 }
+
+add_shortcode( 'image_caption', 'image_caption' );
+function image_caption( $atts, $content = '' ) {
+	return '<div class="a-media-meta a-media-caption">' . $content . '</div>';
+}
+
+add_shortcode( 'image_credit', 'image_credit' );
+function image_credit( $atts, $content = '' ) {
+	return '<div class="a-media-meta a-media-credit">' . $content . '</div>';
+}
+
+// deprecated
+add_shortcode( 'div', 'div_shortcode' );
+function div_shortcode( $atts, $content = '' ) {
+	$a = shortcode_atts( array(
+		'class' => '',
+	), $atts );
+	if ( 'caption' === $a['class'] ) {
+		return '<div class="a-media-meta a-media-caption">' . $content . '</div>';
+	} elseif ( 'credit' === $a['class'] ) {
+		return '<div class="a-media-meta a-media-credit">' . $content . '</div>';
+	}
+	return $content;
+}
+
 
 
 // remove the existing filter
@@ -318,14 +343,11 @@ function fix_shortcode( $output, $attr, $content ) {
 		$style = 'style="width: ' . (int) $caption_width . 'px" ';
 	}
 	$html = '<figure ' . $atts['id'] . $style . 'class="m-content-media ' . esc_attr( $class ) . '">'
-		. do_shortcode( $content ) . '<figcaption class="m-content-caption wp-caption-text">' . $atts['caption'] . '</figcaption></figure>';
-	$html = str_replace( '[div class="credit"]', '<div class="a-media-meta a-media-credit">', $html );
-	$html = str_replace( '[div class="caption"]', '<div class="a-media-meta a-media-caption">', $html );
-	$html = str_replace( '[/div]', '</div>', $html );
+		. do_shortcode( $content ) . '<figcaption class="m-content-caption wp-caption-text">' . do_shortcode( $atts['caption'] ) . '</figcaption></figure>';
+	// deprecated
 	$html = str_replace( '<br />', '', $html );
 	$html = str_replace( '<code>', '', $html );
 	$html = str_replace( '</code>', '', $html );
-
 	return $html;
 }
 
