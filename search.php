@@ -24,7 +24,7 @@ get_header(); ?>
 					global $wp_query;
 
 					$paged = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-					$from = ( $wp_query->query_vars['posts_per_page'] * $paged ) - ( $wp_query->query_vars['posts_per_page'] - 1 );
+					$from  = ( $wp_query->query_vars['posts_per_page'] * $paged ) - ( $wp_query->query_vars['posts_per_page'] - 1 );
 					if ( ( $wp_query->query_vars['posts_per_page'] * $paged ) <= ( $wp_query->found_posts ) ) {
 						$to = ( $wp_query->query_vars['posts_per_page'] * $paged );
 					} else {
@@ -48,7 +48,8 @@ get_header(); ?>
 
 				<section class="m-search-result">
 					<?php
-					while ( have_posts() ) : the_post();
+					while ( have_posts() ) :
+						the_post();
 						/**
 						 * Run the loop for the search to output the results.
 						 * If you want to overload this in a child theme then include a file

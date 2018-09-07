@@ -16,7 +16,7 @@ get_header(); ?>
 			<?php
 
 			$query_var = $wp_query->query_vars['users'];
-			$args = array(
+			$args      = array(
 				'include' => array( $query_var ),
 			);
 
@@ -32,7 +32,7 @@ get_header(); ?>
 					get_template_part( 'template-parts/user', 'profile' );
 				endforeach;
 				?>
-			<?php
+				<?php
 			else :
 				get_template_part( 'template-parts/user', 'none' );
 			endif;

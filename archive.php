@@ -92,7 +92,8 @@ get_header(); ?>
 			<?php if ( is_category() && 1 === $paged ) : ?>
 				<section class="m-archive m-archive-top m-category-top">
 					<?php
-					while ( have_posts() ) : the_post();
+					while ( have_posts() ) :
+						the_post();
 						if ( $featured_num > $wp_the_query->current_post ) :
 							get_template_part( 'template-parts/content', 'top' );
 						endif;
@@ -109,7 +110,8 @@ get_header(); ?>
 				<?php endif; ?>
 				<section class="m-archive m-archive-excerpt">
 					<?php
-					while ( have_posts() ) : the_post();
+					while ( have_posts() ) :
+						the_post();
 						if ( $featured_num <= $wp_the_query->current_post ) :
 							get_template_part( 'template-parts/content', 'excerpt' );
 						endif;
@@ -145,7 +147,8 @@ get_header(); ?>
 			<?php else : ?>
 				<section class="m-archive m-archive-excerpt">
 					<?php
-					while ( have_posts() ) : the_post();
+					while ( have_posts() ) :
+						the_post();
 						get_template_part( 'template-parts/content', 'excerpt' );
 					endwhile;
 					?>
