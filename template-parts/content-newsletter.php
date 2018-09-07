@@ -129,7 +129,6 @@
 		</tr> <!-- end row -->
 
 		<?php
-		$body = get_the_content();
 		$body = apply_filters( 'the_content', get_the_content() );
 
 		if ( '' !== $body ) {

@@ -510,3 +510,18 @@ if ( ! function_exists( 'minnpost_popup_theme_post_type_args' ) ) :
 		return $popup_theme_args;
 	}
 endif;
+
+/**
+ * Filter popup content - allows [raw] to be parsed
+ *
+ * @param    string    $content
+ * @param    int       $id
+ * @return   string    $content
+ */
+if ( ! function_exists( 'minnpost_popup_content_filter' ) ) :
+	add_filter( 'pum_popup_content', 'minnpost_popup_content_filter', 10, 2 );
+	function minnpost_popup_content_filter( $content, $id ) {
+		$content = apply_filters( 'the_content', $content );
+		return $content;
+	}
+endif;
