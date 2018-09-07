@@ -31,7 +31,8 @@ get_header(); ?>
 
 			<section class="m-archive m-archive-excerpt">
 				<?php
-				while ( have_posts() ) : the_post();
+				while ( have_posts() ) :
+					the_post();
 					get_template_part( 'template-parts/content', 'excerpt' );
 				endwhile;
 				?>

@@ -91,13 +91,14 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 			while ( $query->have_posts() ) {
 				$query->the_post();
 				$first_title = get_the_title();
+				$first_id    = get_the_ID();
 			}
 
 			if ( isset( $first_title ) ) {
 
 				$html .= '
 					<li>
-						<a href="' . get_category_link( $id ) . '">' .
+						<a href="' . get_permalink( $first_id ) . '">' .
 							minnpost_get_term_figure( $id, 'featured_column', false, false ) .
 							'<h3 class="a-featured-title">' . $name . '</h3>' .
 							'<p>' . $first_title . '</p>' .

@@ -44,7 +44,7 @@ if ( ! function_exists( 'minnpost_dom_innerhtml' ) ) :
 endif;
 
 /**
-* Expire auth cookie after 1 year. I don't know why it's 1 year.
+* Expire auth cookie after 1 year. The max is 1 year.
 *
 * @param int $expirein
 *

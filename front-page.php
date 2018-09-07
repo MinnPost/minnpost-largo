@@ -18,7 +18,8 @@ get_header(); ?>
 					<?php $post_count = $the_query->post_count; ?>
 					<section class="m-zone m-zone-homepage-top m-archive m-archive-top m-archive-has-<?php echo $post_count; ?>-post">
 						<?php
-						while ( $the_query->have_posts() ) : $the_query->the_post();
+						while ( $the_query->have_posts() ) :
+							$the_query->the_post();
 							get_template_part( 'template-parts/content', 'top' ); // content-top
 						endwhile;
 						?>
@@ -30,7 +31,8 @@ get_header(); ?>
 				<?php if ( $the_query->have_posts() ) : ?>
 					<section class="m-zone m-zone-homepage-middle m-archive m-archive-middle">
 						<?php
-						while ( $the_query->have_posts() ) : $the_query->the_post();
+						while ( $the_query->have_posts() ) :
+							$the_query->the_post();
 							get_template_part( 'template-parts/content', 'middle' ); // content-middle
 						endwhile;
 						?>
@@ -47,7 +49,8 @@ get_header(); ?>
 				<?php if ( $the_query->have_posts() ) : ?>
 					<section class="m-zone m-zone-homepage-bottom m-archive m-archive-excerpt">
 						<?php
-						while ( $the_query->have_posts() ) : $the_query->the_post();
+						while ( $the_query->have_posts() ) :
+							$the_query->the_post();
 							get_template_part( 'template-parts/content', 'excerpt' ); // content-excerpt
 						endwhile;
 						?>
