@@ -50,9 +50,9 @@ endif;
 *
 * @return int
 */
-if ( ! function_exists( 'keep_me_logged_in_for_1_year' ) ) :
-	add_filter( 'auth_cookie_expiration', 'keep_me_logged_in_for_1_year' );
-	function keep_me_logged_in_for_1_year( $expirein ) {
+if ( ! function_exists( 'minnpost_login_expiration' ) ) :
+	add_filter( 'auth_cookie_expiration', 'minnpost_login_expiration' );
+	function minnpost_login_expiration( $expirein ) {
 		return 31556926; // 1 year in seconds
 	}
 endif;
