@@ -735,7 +735,7 @@ if ( ! function_exists( 'cmb2_author_fields' ) ) :
 		// image
 		$author_setup->add_field( array(
 			'name' => 'Photo',
-			'id'   => '_mp_author_image_id',
+			'id'   => '_mp_author_image',
 			'type' => 'file',
 		) );
 		// excerpt

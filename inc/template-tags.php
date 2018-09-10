@@ -461,7 +461,7 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 			$output  = '';
 			$output .= '<figure class="a-archive-figure a-author-figure a-author-figure-' . $size . '">';
 			$output .= $image;
-			if ( true === $include_text && '' !== $text ) {
+			if ( true === $include_text && ( '' !== $text || '' !== $name ) ) {
 				$output .= '<figcaption>';
 				if ( true === $include_name && '' !== $name ) {
 					$output .= '<h3 class="a-author-title"><a href="' . get_author_posts_url( $author_id, sanitize_title( $name ) ) . '">' . $name . '</a></h3>';
@@ -508,7 +508,7 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 		}
 
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
-			// todo: test this display because so far we just have external urls
+			// this requires that the custom image sizes in custom-fields.php work correctly
 			$image = wp_get_attachment_image( $image_id, $size );
 		} else {
 			$alt   = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
