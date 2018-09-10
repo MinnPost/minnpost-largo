@@ -358,8 +358,10 @@ if ( ! function_exists( 'minnpost_related' ) ) :
 				if ( ! is_array( $ids ) ) {
 					$ids = explode( ',', esc_html( $ids ) );
 				}
+				global $post;
 				foreach ( $ids as $id ) :
-					//$post = get_post( $id, ARRAY_A );
+					$post = get_post( $id );
+					setup_postdata( $post );
 					?>
 					<li>
 						<?php
@@ -384,6 +386,7 @@ if ( ! function_exists( 'minnpost_related' ) ) :
 					</li>
 					<?php
 				endforeach;
+				wp_reset_postdata();
 				?>
 			</ul>
 		</aside>
