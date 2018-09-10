@@ -268,7 +268,7 @@ if ( ! function_exists( 'minnpost_posted_by' ) ) :
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
-		echo minnpost_get_posted_by();
+		echo minnpost_get_posted_by( $id );
 	}
 endif;
 

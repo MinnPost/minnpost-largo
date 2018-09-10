@@ -541,7 +541,7 @@ if ( function_exists( 'wp_cache_flush' ) ) :
 		$dashboard_url = admin_url( add_query_arg( 'flush-cache-button', 'flush', 'index.php' ) );
 		$args          = array(
 			'id'    => 'flush_cache_button',
-			'title' => __( 'Flush Object Cache', 'minnpost-largo' ),
+			'title' => __( '&#x1F6BD; Flush Object Cache', 'minnpost-largo' ),
 			'href'  => wp_nonce_url( $dashboard_url, 'flush-cache-button' ),
 			'meta'  => array( 'class' => 'flush-cache-button' ),
 		);
