@@ -13,11 +13,11 @@ msgstr ""
 "X-Poedit-SourceCharset: UTF-8\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: comments.php:63
+#: comments.php:65
 msgid "Comments are closed."
 msgstr ""
 
-#: comments.php:69
+#: comments.php:71
 msgid "No comments yet"
 msgstr ""
 
@@ -73,7 +73,7 @@ msgstr ""
 msgid "Top Stories"
 msgstr ""
 
-#: inc/custom-fields.php:126, inc/custom-fields.php:153, inc/custom-fields.php:453, inc/custom-fields.php:467
+#: inc/custom-fields.php:126, inc/custom-fields.php:153, inc/custom-fields.php:447, inc/custom-fields.php:459
 msgid "Search for a post here"
 msgstr ""
 
@@ -81,15 +81,15 @@ msgstr ""
 msgid "More Stories"
 msgstr ""
 
-#: inc/custom-fields.php:305, inc/custom-fields.php:1166
+#: inc/custom-fields.php:305, inc/custom-fields.php:1156
 msgid "Medium"
 msgstr ""
 
-#: inc/custom-fields.php:306, inc/custom-fields.php:1167
+#: inc/custom-fields.php:306, inc/custom-fields.php:1157
 msgid "Do not display image"
 msgstr ""
 
-#: inc/custom-fields.php:307, inc/custom-fields.php:1168
+#: inc/custom-fields.php:307, inc/custom-fields.php:1158
 msgid "Large"
 msgstr ""
 
@@ -109,27 +109,27 @@ msgstr ""
 msgid "Bottom"
 msgstr ""
 
-#: inc/custom-fields.php:452
+#: inc/custom-fields.php:446
 msgid "Related Content"
 msgstr ""
 
-#: inc/custom-fields.php:466
+#: inc/custom-fields.php:458
 msgid "Related Multimedia"
 msgstr ""
 
-#: inc/custom-fields.php:507
+#: inc/custom-fields.php:497
 msgid "Black on White"
 msgstr ""
 
-#: inc/custom-fields.php:508
+#: inc/custom-fields.php:498
 msgid "White on Black"
 msgstr ""
 
-#: inc/custom-fields.php:509
+#: inc/custom-fields.php:499
 msgid "White on Red"
 msgstr ""
 
-#: inc/custom-fields.php:510
+#: inc/custom-fields.php:500
 msgid "White on Transparent"
 msgstr ""
 
@@ -269,6 +269,10 @@ msgstr ""
 msgid "User Account Management Menu"
 msgstr ""
 
+#: inc/menus.php:544
+msgid "&#x1F6BD; Flush Object Cache"
+msgstr ""
+
 #: inc/popups.php:80, inc/popups.php:86, inc/popups.php:92, inc/popups.php:98, inc/popups.php:104, inc/popups.php:120
 msgid "User"
 msgstr ""
@@ -350,27 +354,27 @@ msgstr ""
 
 #. translators: used between list items, there is a space after the comma
 #. translators: used between list items, there is a space after the comma
-#: inc/template-tags.php:710, inc/template-tags.php:717
+#: inc/template-tags.php:713, inc/template-tags.php:720
 msgid ", "
 msgstr ""
 
 #. translators: placeholder is the list of categories
-#: inc/template-tags.php:713
+#: inc/template-tags.php:716
 msgid "Posted in %1$s"
 msgstr ""
 
 #. translators: placeholder is the list of tags
-#: inc/template-tags.php:720
+#: inc/template-tags.php:723
 msgid "Tagged %1$s"
 msgstr ""
 
-#: inc/template-tags.php:730
+#: inc/template-tags.php:733
 msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
 #. translators: %s: Name of current post
 #. translators: %s: Name of current post
-#: inc/template-tags.php:746, inc/template-tags.php:776
+#: inc/template-tags.php:749, inc/template-tags.php:779
 msgid "Edit %s"
 msgstr ""
 
