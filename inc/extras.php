@@ -44,20 +44,6 @@ if ( ! function_exists( 'minnpost_dom_innerhtml' ) ) :
 endif;
 
 /**
-* Expire auth cookie after 1 year. The max is 1 year.
-*
-* @param int $expirein
-*
-* @return int
-*/
-if ( ! function_exists( 'minnpost_login_expiration' ) ) :
-	add_filter( 'auth_cookie_expiration', 'minnpost_login_expiration' );
-	function minnpost_login_expiration( $expirein ) {
-		return 31556926; // 1 year in seconds
-	}
-endif;
-
-/**
 * Unregister widgets we don't want
 * Currently this method is unused.
 */
