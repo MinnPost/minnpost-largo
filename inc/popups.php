@@ -280,7 +280,10 @@ if ( ! function_exists( 'minnpost_popup_roles' ) ) :
 		static $roles = null;
 
 		if ( null === $roles ) {
-			$roles          = array();
+			$roles = array();
+			if ( ! function_exists( 'get_editable_roles' ) ) {
+				require_once( ABSPATH . '/wp-admin/includes/user.php' );
+			}
 			$editable_roles = array_keys( get_editable_roles() );
 			foreach ( $editable_roles as $editable_role ) {
 				$roles[ $editable_role ] = $editable_role;
