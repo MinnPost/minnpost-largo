@@ -883,8 +883,10 @@ if ( ! function_exists( 'minnpost_get_permalink_category_id' ) ) :
 				$category_id = $categories[0]->term_id;
 			}
 		} else {
-			$categories  = get_the_category();
-			$category_id = $categories[0]->term_id;
+			$categories = get_the_category();
+			if ( isset( $categories[0] ) && is_object( $categories[0] ) && ! is_wp_error( $categories[0] ) ) {
+				$category_id = $categories[0]->term_id;
+			}
 		}
 		return $category_id;
 	}
