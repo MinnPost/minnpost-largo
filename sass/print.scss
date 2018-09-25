@@ -1,3 +1,11 @@
+p {
+	orphans: 2;
+	widows: 2;
+}
+figure, table, div.image {
+	break-inside: avoid;
+}
+
 .appnexus-ad, article .appnexus-ad {
 	display: none;
 }
@@ -15,6 +23,9 @@ header {
 			display: none;
 		}
 	}
+	#navigation-featured-account-access {
+		display: none;
+	}
 	form {
 		display: none;
 	}
@@ -24,14 +35,30 @@ footer {
 		display: none;
 	}
 }
-article {
-	.m-form-newsletter-shortcode {
+#content {
+	display: block;
+	article {
+		.m-form-newsletter-shortcode {
+			display: none;
+		}
+	}
+	#comments {
+		#respond {
+			display: none;
+		}
+	}
+	.m-entry-share {
 		display: none;
 	}
 }
-#comments form {
-	display: none;
-}
-.m-entry-share {
-	display: none;
+.o-site-sidebar {
+	.m-minnpost-spills-widget {
+		display: none;
+	}
+	.m-widget-popular-widget {
+		display: none;
+	}
+	.m-widget-rpwe-widget {
+		display: none;
+	}
 }
