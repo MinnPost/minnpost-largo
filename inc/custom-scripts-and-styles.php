@@ -17,6 +17,7 @@ if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
 		// add
 		$suffix = ( defined( 'SCRIPT_DEBUG' ) && 'true' === WP_DEBUG ) ? '' : '.min';
 		wp_enqueue_style( 'minnpost-style', get_theme_file_uri() . '/style' . $suffix . '.css', array(), filemtime( get_theme_file_path() . '/style' . $suffix . '.css' ), 'all' );
+		wp_enqueue_style( 'minnpost-style-print', get_theme_file_uri() . '/print' . $suffix . '.css', array(), filemtime( get_theme_file_path() . '/print' . $suffix . '.css' ), 'print' );
 		// remove
 		wp_dequeue_style( 'largo-style' );
 		wp_dequeue_style( 'media-credit' );

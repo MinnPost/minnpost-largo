@@ -1,0 +1,37 @@
+.appnexus-ad, article .appnexus-ad {
+	display: none;
+}
+header {
+	.a-site-branding {
+		float: none;
+		height: 51px;
+		.a-logo {
+			height: 100%;
+		}
+	}
+	nav {
+		display: none;
+		&#navigation-ext {
+			display: none;
+		}
+	}
+	form {
+		display: none;
+	}
+}
+footer {
+	nav {
+		display: none;
+	}
+}
+article {
+	.m-form-newsletter-shortcode {
+		display: none;
+	}
+}
+#comments form {
+	display: none;
+}
+.m-entry-share {
+	display: none;
+}
