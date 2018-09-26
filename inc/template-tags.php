@@ -127,7 +127,8 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
 			// this requires that the custom image sizes in custom-fields.php work correctly
-			$image = wp_get_attachment_image( $image_id, $size, false, $attributes );
+			$image     = wp_get_attachment_image( $image_id, $size, false, $attributes );
+			$image_url = wp_get_attachment_url( $image_id );
 		} else {
 			if ( '' !== $image_id ) {
 				$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
@@ -509,7 +510,8 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
 			// this requires that the custom image sizes in custom-fields.php work correctly
-			$image = wp_get_attachment_image( $image_id, $size );
+			$image     = wp_get_attachment_image( $image_id, $size );
+			$image_url = wp_get_attachment_url( $image_id );
 		} else {
 			$alt   = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
 			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
@@ -630,8 +632,9 @@ if ( ! function_exists( 'minnpost_get_term_image' ) ) :
 		}
 
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
-			// todo: test this display because so far we just have external urls
-			$image = wp_get_attachment_image( $image_id, $size );
+			// this requires that the custom image sizes in custom-fields.php work correctly
+			$image     = wp_get_attachment_image( $image_id, $size );
+			$image_url = wp_get_attachment_url( $image_id );
 		} else {
 			$alt   = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
 			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
