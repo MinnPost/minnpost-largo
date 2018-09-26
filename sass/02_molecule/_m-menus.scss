@@ -282,7 +282,8 @@ $a-user-initial-size: 18px;
 		display: flex;
 		background: $color__gray-sub-menu;
 		justify-content: flex-start;
-		margin: 1em -0.75em;
+		padding: 0 -0.75em;
+		margin: 1em 0;
 		li {
 			line-height: 3em;
 			margin: 0 0.75em;
