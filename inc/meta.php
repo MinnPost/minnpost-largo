@@ -97,6 +97,22 @@ if ( ! function_exists( 'minnpost_largo_get_og_image' ) ) :
 endif;
 
 /**
+* Set the og image tag for post thumbnail also
+*
+* @return string $image_url
+*/
+if ( ! function_exists( 'minnpost_largo_get_og_image_thumbnail' ) ) :
+	function minnpost_largo_get_og_image_thumbnail() {
+		$image_url = '';
+		if ( is_single() ) {
+			$image_data = get_minnpost_post_image( 'feature-large' );
+			$image_url  = $image_data['image_url'];
+		}
+		return $image_url;
+	}
+endif;
+
+/**
 * Set meta tags in <head>
 *
 */
@@ -127,6 +143,27 @@ if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 			<meta property="og:image" content="<?php echo minnpost_largo_get_og_image(); ?>">
 			<meta property="twitter:image" content="<?php echo minnpost_largo_get_og_image(); ?>">
 		<?php endif; ?>
+		<?php if ( '' !== minnpost_largo_get_og_image_thumbnail() ) : ?>
+			<meta property="og:image" content="<?php echo minnpost_largo_get_og_image_thumbnail(); ?>">
+		<?php endif; ?>
+
+		<?php if ( is_single() && ! is_home() && ! wp_attachment_is_image() ) : ?>
+			<?php
+				global $post;
+				$images = get_children(array(
+					'post_parent'    => $post->ID,
+					'post_type'      => 'attachment',
+					'posts_per_page' => -1,
+					'post_mime_type' => 'image',
+				));
+			?>
+			<?php if ( $images ) : ?>
+				<?php foreach ( $images as $image ) : ?>
+					<meta property="og:image" content="<?php echo wp_get_attachment_url( $image->ID ); ?>">
+				<?php endforeach; ?>
+			<?php endif; ?>
+		<?php endif; ?>
+
 		<?php
 	}
 endif;
