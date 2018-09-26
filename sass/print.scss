@@ -30,11 +30,6 @@ header {
 		display: none;
 	}
 }
-footer {
-	nav {
-		display: none;
-	}
-}
 #content {
 	display: block;
 	article {
@@ -60,5 +55,13 @@ footer {
 	}
 	.m-widget-rpwe-widget {
 		display: none;
+	}
+}
+footer {
+	nav {
+		display: none;
+	}
+	.o-footer .o-footer-hat {
+		display: block;
 	}
 }

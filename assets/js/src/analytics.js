@@ -1,38 +1,38 @@
-( function( $ ) {
+function mp_analytics_tracking_event( type, category, action, label, value ) {
+	if ( typeof ga !== 'undefined' ) {
+		if ( typeof value === 'undefined' ) {
+			ga( 'send', type, category, action, label );
+		} else {
+			ga( 'send', type, category, action, label, value );
+		}
+	} else {
+		return;
+	}
+}
 
-	function mp_analytics_tracking_event( type, category, action, label, value ) {
-		if ( typeof ga !== 'undefined' ) {
-			if ( typeof value === 'undefined' ) {
-				ga( 'send', type, category, action, label );
+function trackShare( text, position ) {
+
+	// if a not logged in user tries to email, don't count that as a share
+	if ( ! $( 'body ').hasClass( 'logged-in') && 'Email' === text ) {
+		return;
+	}
+
+	// track as an event, and as social if it is twitter or fb
+	mp_analytics_tracking_event( 'event', 'Share - ' + position, text, location.pathname );
+	if ( 'undefined' !== typeof ga ) {
+		if ( 'Facebook' === text || 'Twitter' === text ) {
+			if ( text == 'Facebook' ) {
+				ga( 'send', 'social', text, 'Share', location.pathname );
 			} else {
-				ga( 'send', type, category, action, label, value );
+				ga( 'send', 'social', text, 'Tweet', location.pathname );
 			}
-		} else {
-			return;
 		}
+	} else {
+		return;
 	}
+}
 
-	function trackShare( text, position ) {
-
-		// if a not logged in user tries to email, don't count that as a share
-		if ( ! $( 'body ').hasClass( 'logged-in') && 'Email' === text ) {
-			return;
-		}
-
-		// track as an event, and as social if it is twitter or fb
-		mp_analytics_tracking_event( 'event', 'Share - ' + position, text, location.pathname );
-		if ( 'undefined' !== typeof ga ) {
-			if ( 'Facebook' === text || 'Twitter' === text ) {
-				if ( text == 'Facebook' ) {
-					ga( 'send', 'social', text, 'Share', location.pathname );
-				} else {
-					ga( 'send', 'social', text, 'Tweet', location.pathname );
-				}
-			}
-		} else {
-			return;
-		}
-	}
+( function( $ ) {
 
 	$ ( '.m-entry-share-top a' ).click( function( e ) {
 		var text = $( this ).text().trim();
