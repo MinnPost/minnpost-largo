@@ -84,7 +84,7 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_indexable_post_types' ) ) :
-	add_filter( 'ep_indexable_post_types', 'minnpost_indexable_post_types' );
+	add_filter( 'ep_indexable_post_types', 'minnpost_indexable_post_types', 11 );
 	function minnpost_indexable_post_types( $post_types ) {
 		/* default value here is:
 		$post_types = array(
