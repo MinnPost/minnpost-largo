@@ -14,6 +14,11 @@ function enqueue_parent_styles() {
 require get_theme_file_path() . '/vendor/autoload.php';
 
 /**
+ * Site data the theme can use
+ */
+require get_theme_file_path() . '/inc/get-site-data.php';
+
+/**
  * Custom settings
  */
 require get_theme_file_path() . '/inc/custom-settings.php';

@@ -137,23 +137,6 @@ if ( ! function_exists( 'minnpost_remove_head_hooks' ) ) :
 endif;
 
 /**
-* Easy method to get the current URL
-*
-* @return string $current_url
-*/
-if ( ! function_exists( 'get_current_url' ) ) :
-	function get_current_url() {
-		if ( is_page() || is_single() ) {
-			$current_url = wp_get_canonical_url();
-		} else {
-			global $wp;
-			$current_url = home_url( add_query_arg( array(), $wp->request ) );
-		}
-		return $current_url;
-	}
-endif;
-
-/**
 * Remove the absurd X-Pingback header
 *
 * @param array $headers
@@ -208,21 +191,6 @@ if ( ! function_exists( 'redirection_to_editor' ) ) :
 	add_filter( 'redirection_role', 'redirection_to_editor' );
 	function redirection_to_editor() {
 		return 'edit_pages';
-	}
-endif;
-
-/**
- * Change get_option( 'home' ) and any functions that rely on it to use
- * the value of the WP_HOME constant.
- *
- */
-if ( ! function_exists( 'change_get_option_home' ) ) :
-	add_filter( 'pre_option_home', 'change_get_option_home' );
-	function change_get_option_home( $option ) {
-		if ( defined( 'WP_HOME' ) ) {
-			return WP_HOME;
-		}
-		return false;
 	}
 endif;
 
