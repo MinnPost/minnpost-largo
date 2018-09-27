@@ -75,21 +75,21 @@ if ( ! function_exists( 'minnpost_largo_get_og_image' ) ) :
 		$image_url = '';
 		if ( is_single() ) {
 			$image_data = get_minnpost_post_image( 'large' );
-			$image_url  = $image_data['image_url'];
+			$image_url  = isset( $image_data['image_url'] ) ? $image_data['image_url'] : '';
 		} elseif ( is_front_page() ) {
 			$image_url = get_option( 'default_image_url', '' );
 		} elseif ( is_category() ) {
 			$id         = get_query_var( 'cat' );
 			$image_data = minnpost_get_term_image( $id, 'feature' );
 			if ( '' !== $image_data ) {
-				$image_url = $image_data['image_url'];
+				$image_url = isset( $image_data['image_url'] ) ? $image_data['image_url'] : '';
 			}
 		} elseif ( is_author() ) {
 			$author     = get_queried_object();
 			$id         = $author->ID;
 			$image_data = minnpost_get_author_image( $id, 'photo' );
 			if ( '' !== $image_data ) {
-				$image_url = $image_data['image_url'];
+				$image_url = isset( $image_data['image_url'] ) ? $image_data['image_url'] : '';
 			}
 		}
 		return $image_url;
@@ -106,7 +106,7 @@ if ( ! function_exists( 'minnpost_largo_get_og_image_thumbnail' ) ) :
 		$image_url = '';
 		if ( is_single() ) {
 			$image_data = get_minnpost_post_image( 'feature-large' );
-			$image_url  = $image_data['image_url'];
+			$image_url  = isset( $image_data['image_url'] ) ? $image_data['image_url'] : '';
 		}
 		return $image_url;
 	}
@@ -121,8 +121,9 @@ if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 	function minnpost_largo_add_meta_tags() {
 		?>
 		<meta property="og:site_name" content="<?php echo get_bloginfo( 'name' ); ?>">
+		<meta property="og:locale" content="<?php echo get_locale(); ?>">
 		<meta property="og:url" content="<?php echo get_current_url(); ?>">
-		<meta name="twitter:site" content="@minnpost" />
+		<meta name="twitter:site" content="@<?php echo get_bloginfo( 'name' ); ?>" />
 		<?php if ( '' !== minnpost_largo_get_title() ) : ?>
 			<meta property="og:title" content="<?php echo minnpost_largo_get_title(); ?>">
 		<?php endif; ?>
@@ -133,6 +134,8 @@ if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 		<?php endif; ?>
 		<?php if ( is_single() ) : ?>
 		<meta property="og:type" content="article">
+		<meta property="article:published_time" content="<?php echo get_the_date( 'c' ); ?>">
+		<meta property="article:modified_time" content="<?php echo get_the_modified_date( 'c' ); ?>">
 		<?php endif; ?>
 		<?php if ( is_single() ) : ?>
 			<meta property="twitter:card" content="summary_large_image">

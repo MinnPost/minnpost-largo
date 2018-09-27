@@ -120,7 +120,8 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 		}
 
 		if ( ! isset( $image_id ) ) {
-			$image_id = '';
+			$image_id  = '';
+			$image_url = '';
 		}
 
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
