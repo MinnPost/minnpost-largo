@@ -337,6 +337,12 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'closed'       => true,
 		) );
 		$display_settings->add_field( array(
+			'name' => 'Prevent ads?',
+			'id'   => '_mp_prevent_ads',
+			'type' => 'checkbox',
+			'desc' => 'If checked, this post will not contain any ads.',
+		) );
+		$display_settings->add_field( array(
 			'name' => 'Prevent automatic ads?',
 			'id'   => '_mp_prevent_automatic_ads',
 			'type' => 'checkbox',
