@@ -97,3 +97,6 @@ if ( ! function_exists( 'minnpost_show_sharing_box' ) ) :
 		return false;
 	}
 endif;
+
+// remove the open graph tags because we handle them in meta.php
+add_filter( 'jetpack_enable_open_graph', '__return_false' );
