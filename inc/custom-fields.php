@@ -337,16 +337,16 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'closed'       => true,
 		) );
 		$display_settings->add_field( array(
-			'name' => 'Prevent ads?',
-			'id'   => '_mp_prevent_ads',
-			'type' => 'checkbox',
-			'desc' => 'If checked, this post will not contain any ads.',
-		) );
-		$display_settings->add_field( array(
-			'name' => 'Prevent automatic ads?',
+			'name' => 'Prevent automatic embed ads?',
 			'id'   => '_mp_prevent_automatic_ads',
 			'type' => 'checkbox',
-			'desc' => 'If checked, this post will not contain automatic ads.',
+			'desc' => 'If checked, this post will not contain automatic embed ads.',
+		) );
+		$display_settings->add_field( array(
+			'name' => 'Prevent all embed ads?',
+			'id'   => '_mp_prevent_ads',
+			'type' => 'checkbox',
+			'desc' => 'If checked, this post will not contain any embed ads.',
 		) );
 		$display_settings->add_field( array(
 			'name' => 'Load HTML editor by default?',
