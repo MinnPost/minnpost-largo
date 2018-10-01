@@ -33,15 +33,25 @@ if ( ! function_exists( 'minnpost_largo_get_title' ) ) :
 					$seo_title .= ' | ' . get_bloginfo( 'name' );
 				}
 				$title = $seo_title;
+			} else {
+				if ( substr( $title, -strlen( ' | ' . get_bloginfo( 'name' ) ) ) !== ' | ' . get_bloginfo( 'name' ) ) {
+					$title .= ' | ' . get_bloginfo( 'name' );
+				}
 			}
 		} elseif ( is_front_page() ) {
 			$title = get_bloginfo( 'name' );
 		} elseif ( is_archive() && ! is_author() ) {
 			$title = get_the_archive_title();
+			if ( substr( $title, -strlen( ' | ' . get_bloginfo( 'name' ) ) ) !== ' | ' . get_bloginfo( 'name' ) ) {
+				$title .= ' | ' . get_bloginfo( 'name' );
+			}
 		} elseif ( is_author() ) {
 			$author = get_queried_object();
 			$id     = $author->ID;
 			$title  = get_the_title( $id );
+			if ( substr( $title, -strlen( ' | ' . get_bloginfo( 'name' ) ) ) !== ' | ' . get_bloginfo( 'name' ) ) {
+				$title .= ' | ' . get_bloginfo( 'name' );
+			}
 		} else {
 			$title = '';
 		}
