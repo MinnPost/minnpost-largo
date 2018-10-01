@@ -247,7 +247,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		/**
 		 * SEO settings
 		 */
-		$seo_settings = new_cmb2_box( array(
+		/*$seo_settings = new_cmb2_box( array(
 			'id'           => 'seo_settings',
 			'title'        => 'SEO Settings',
 			'object_types' => array( $object_type ),
@@ -275,7 +275,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'maxlength' => 300, // retrieved from https://moz.com/blog/how-long-should-your-meta-description-be-2018 on 9/27/2018
 			),
 			'desc'       => __( 'If you do not fill this out, the post excerpt will be used.' ),
-		) );
+		) );*/
 
 		/**
 		 * Subtitle settings
