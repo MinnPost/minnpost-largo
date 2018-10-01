@@ -276,6 +276,11 @@ if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
 			$wp_admin_bar->remove_menu( 'itsec_admin_bar_menu' );
 		}
 
+		// remove autoptimize from non admins
+		if ( ! current_user_can( 'administrator' ) ) {
+			$wp_admin_bar->remove_menu( 'autoptimize' );
+		}
+
 		// remove comment count from users who cannot moderate
 		if ( ! current_user_can( 'moderate_comments' ) ) {
 			$wp_admin_bar->remove_menu( 'comments' );
@@ -489,6 +494,8 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 			remove_submenu_page( 'edit.php?post_type=popup', 'pum-support' );
 			remove_submenu_page( 'edit.php?post_type=popup', 'pum-settings' );
 			remove_submenu_page( 'edit.php?post_type=popup', 'pum-tools' );
+			// autoptimize
+			remove_submenu_page( 'options-general.php', 'autoptimize' );
 		}
 
 	}
