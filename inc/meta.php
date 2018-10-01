@@ -22,9 +22,18 @@ endif;
 * @return string $title
 */
 if ( ! function_exists( 'minnpost_largo_get_title' ) ) :
+	add_filter( 'pre_get_document_title', 'minnpost_largo_get_title' );
 	function minnpost_largo_get_title() {
 		if ( is_page() || is_single() ) {
-			$title = get_the_title();
+			$title     = get_the_title();
+			$post_id   = get_the_ID();
+			$seo_title = get_post_meta( $post_id, '_mp_seo_title', true );
+			if ( '' !== $seo_title ) {
+				if ( false === strpos( $seo_title, get_bloginfo( 'name' ) ) ) {
+					$seo_title .= ' | ' . get_bloginfo( 'name' );
+				}
+				$title = $seo_title;
+			}
 		} elseif ( is_front_page() ) {
 			$title = get_bloginfo( 'name' );
 		} elseif ( is_archive() && ! is_author() ) {
@@ -48,7 +57,12 @@ endif;
 if ( ! function_exists( 'minnpost_largo_get_description' ) ) :
 	function minnpost_largo_get_description() {
 		if ( is_page() || is_single() ) {
-			$excerpt = get_the_excerpt();
+			$excerpt  = get_the_excerpt();
+			$post_id  = get_the_ID();
+			$seo_desc = get_post_meta( $post_id, '_mp_seo_description', true );
+			if ( '' !== $seo_desc ) {
+				$excerpt = $seo_desc;
+			}
 		} elseif ( is_front_page() ) {
 			$excerpt = get_option( 'site_blurb' ) ? stripslashes( get_option( 'site_blurb' ) ) : '';
 		} elseif ( is_category() ) {

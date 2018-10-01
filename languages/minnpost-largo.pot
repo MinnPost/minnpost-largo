@@ -73,7 +73,7 @@ msgstr ""
 msgid "Top Stories"
 msgstr ""
 
-#: inc/custom-fields.php:126, inc/custom-fields.php:153, inc/custom-fields.php:447, inc/custom-fields.php:459
+#: inc/custom-fields.php:126, inc/custom-fields.php:153, inc/custom-fields.php:486, inc/custom-fields.php:498
 msgid "Search for a post here"
 msgstr ""
 
@@ -81,55 +81,55 @@ msgstr ""
 msgid "More Stories"
 msgstr ""
 
-#: inc/custom-fields.php:305, inc/custom-fields.php:1156
+#: inc/custom-fields.php:338, inc/custom-fields.php:1195
 msgid "Medium"
 msgstr ""
 
-#: inc/custom-fields.php:306, inc/custom-fields.php:1157
+#: inc/custom-fields.php:339, inc/custom-fields.php:1196
 msgid "Do not display image"
 msgstr ""
 
-#: inc/custom-fields.php:307, inc/custom-fields.php:1158
+#: inc/custom-fields.php:340, inc/custom-fields.php:1197
 msgid "Large"
 msgstr ""
 
-#: inc/custom-fields.php:401
+#: inc/custom-fields.php:440
 msgid "Neither"
 msgstr ""
 
-#: inc/custom-fields.php:402
+#: inc/custom-fields.php:441
 msgid "Both"
 msgstr ""
 
-#: inc/custom-fields.php:403
+#: inc/custom-fields.php:442
 msgid "Top"
 msgstr ""
 
-#: inc/custom-fields.php:404
+#: inc/custom-fields.php:443
 msgid "Bottom"
 msgstr ""
 
-#: inc/custom-fields.php:446
+#: inc/custom-fields.php:485
 msgid "Related Content"
 msgstr ""
 
-#: inc/custom-fields.php:458
+#: inc/custom-fields.php:497
 msgid "Related Multimedia"
 msgstr ""
 
-#: inc/custom-fields.php:497
+#: inc/custom-fields.php:536
 msgid "Black on White"
 msgstr ""
 
-#: inc/custom-fields.php:498
+#: inc/custom-fields.php:537
 msgid "White on Black"
 msgstr ""
 
-#: inc/custom-fields.php:499
+#: inc/custom-fields.php:538
 msgid "White on Red"
 msgstr ""
 
-#: inc/custom-fields.php:500
+#: inc/custom-fields.php:539
 msgid "White on Transparent"
 msgstr ""
 
@@ -347,34 +347,34 @@ msgstr ""
 
 #. translators: the placeholder is the time string, which can be translated
 #. translators: the placeholder is the time string, which can be translated
-#: inc/template-tags.php:210, inc/template-tags.php:249
+#: inc/template-tags.php:211, inc/template-tags.php:250
 msgctxt "post date"
 msgid "%s"
 msgstr ""
 
 #. translators: used between list items, there is a space after the comma
 #. translators: used between list items, there is a space after the comma
-#: inc/template-tags.php:714, inc/template-tags.php:721
+#: inc/template-tags.php:715, inc/template-tags.php:722
 msgid ", "
 msgstr ""
 
 #. translators: placeholder is the list of categories
-#: inc/template-tags.php:717
+#: inc/template-tags.php:718
 msgid "Posted in %1$s"
 msgstr ""
 
 #. translators: placeholder is the list of tags
-#: inc/template-tags.php:724
+#: inc/template-tags.php:725
 msgid "Tagged %1$s"
 msgstr ""
 
-#: inc/template-tags.php:734
+#: inc/template-tags.php:735
 msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
 #. translators: %s: Name of current post
 #. translators: %s: Name of current post
-#: inc/template-tags.php:750, inc/template-tags.php:780
+#: inc/template-tags.php:751, inc/template-tags.php:781
 msgid "Edit %s"
 msgstr ""
 
