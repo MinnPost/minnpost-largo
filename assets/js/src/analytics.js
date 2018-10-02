@@ -13,7 +13,7 @@ function mp_analytics_tracking_event( type, category, action, label, value ) {
 function trackShare( text, position ) {
 
 	// if a not logged in user tries to email, don't count that as a share
-	if ( ! $( 'body ').hasClass( 'logged-in') && 'Email' === text ) {
+	if ( ! jQuery( 'body ').hasClass( 'logged-in') && 'Email' === text ) {
 		return;
 	}
 
