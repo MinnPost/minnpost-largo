@@ -99,7 +99,7 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 				$html .= '
 					<li>
 						<a href="' . get_permalink( $first_id ) . '">' .
-							minnpost_get_term_figure( $id, 'featured_column', false, false ) .
+							minnpost_get_term_figure( $id, 'category-featured-column', false, false ) .
 							'<h3 class="a-featured-title">' . $name . '</h3>' .
 							'<p>' . $first_title . '</p>' .
 						'</a>
