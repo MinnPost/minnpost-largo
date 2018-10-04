@@ -348,3 +348,6 @@ if ( ! function_exists( 'minnpost_largo_fix_shortcode' ) ) :
 		return $html;
 	}
 endif;
+
+// don't break responsive images by adding a width to the figure tag
+add_filter( 'img_caption_shortcode_width', '__return_false' );
