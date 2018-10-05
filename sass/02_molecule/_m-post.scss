@@ -1,5 +1,5 @@
 .m-post {
-	&.status-draft {
+	&.status-draft, &.status-future {
 		background: $background-unpublished;
 	}
 }
