@@ -62,3 +62,19 @@ if ( ! function_exists( 'custom_archive_query_vars' ) ) :
 endif;
 
 // add_filter( 'coauthors_plus_should_query_post_author', '__return_false' );
+
+/**
+* Change the post query used for zoninator recent posts and for the search box
+*
+* @param array $args
+* @return array $args
+*/
+if ( ! function_exists( 'minnpost_zoninator_search_args' ) ) :
+	add_filter( 'zoninator_recent_posts_args', 'minnpost_zoninator_search_args' );
+	add_filter( 'zoninator_search_args', 'minnpost_zoninator_search_args' );
+	function minnpost_zoninator_search_args( $args ) {
+		$args['post_status'] = 'publish';
+		$args['post_type']   = 'post';
+		return $args;
+	}
+endif;
