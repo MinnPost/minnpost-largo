@@ -333,3 +333,13 @@ if ( ! function_exists( 'remove_schedule_delete' ) ) :
 	}
 	add_action( 'init', 'remove_schedule_delete' );
 endif;
+
+/**
+* Set max comments depth to 99 on the discussion settings page
+*
+* @param int $max
+* @return int $max
+*/
+add_filter( 'thread_comments_depth_max', function( $max ) {
+	return 99;
+} );

@@ -56,6 +56,6 @@ function minnpost_largo_comment( $comment, $args, $depth ) {
 			<?php edit_comment_link( __( 'Edit', 'minnpost-largo' ), '<div class="a-comment-link a-comment-link-edit">', '</div>' ); ?>
 			<?php trash_comment_link( __( 'Trash', 'minnpost-largo' ), '<div class="a-comment-link a-comment-link-trash">', '</div>' ); ?>
 		</div>
-<?php
+	<?php
 	// we omit the closing </li> tag because WordPress adds that automatically
 }
