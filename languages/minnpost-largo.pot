@@ -225,11 +225,11 @@ msgstr ""
 msgid "No newsletters found in Trash."
 msgstr ""
 
-#: inc/custom-types.php:184
+#: inc/custom-types.php:202
 msgid "Deleted Events"
 msgstr ""
 
-#: inc/custom-types.php:200
+#: inc/custom-types.php:218
 msgid "Site Header"
 msgstr ""
 
