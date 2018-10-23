@@ -882,7 +882,7 @@ if ( ! function_exists( 'minnpost_get_permalink_category_id' ) ) :
 				$category_id = $category_permalink['category'];
 			} else {
 				$categories  = get_the_category();
-				$category_id = $categories[0]->term_id;
+				$category_id = isset( $categories[0] ) ? $categories[0]->term_id : '';
 			}
 		} else {
 			$categories = get_the_category();
