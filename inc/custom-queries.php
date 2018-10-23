@@ -6,11 +6,19 @@
  *
  */
 
+/*
+ * On site home and archives, drafts should be visible to users who can see unpublished posts
+ */
 if ( ! function_exists( 'minnpost_largo_unpublished_posts' ) ) :
 	add_action( 'pre_get_posts', 'minnpost_largo_unpublished_posts' );
 	function minnpost_largo_unpublished_posts( $query ) {
-		if ( ! is_admin() && $query->is_main_query() && current_user_can( 'view_unpublished_posts' ) ) {
-			$query->set( 'post_status', 'any' );
+		if ( ! is_admin() && current_user_can( 'view_unpublished_posts' ) ) {
+			if ( $query->is_main_query() ) {
+				$query->set( 'post_status', 'any' );
+			}
+			if ( is_singular() ) {
+				$query->set( 'post_status', array( 'publish', 'draft', 'future' ) );
+			}
 		}
 		return $query;
 
