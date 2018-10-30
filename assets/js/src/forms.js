@@ -51,6 +51,9 @@ jQuery( document ).ready( function( $ ) {
 							message = 'We have added you to the MinnPost mailing list. You will need to click the confirmation link in the email we sent to begin receiving messages.';
 							break;
 					}
+					if ( response.data.confirm_message !== '' ) {
+						message = response.data.confirm_message;
+					}
 					if ( 'function' === typeof mp_analytics_tracking_event ) {
 						mp_analytics_tracking_event( 'event', 'Newsletter', analytics_action, location.pathname );
 						gtag_report_conversion( location.pathname );
