@@ -51,6 +51,9 @@ endif;
 if ( ! function_exists( 'newsletter_embed' ) ) :
 	add_shortcode( 'newsletter_embed', 'newsletter_embed' );
 	function newsletter_embed( $atts ) {
+		if ( is_admin() ) {
+			return false;
+		}
 		$args    = shortcode_atts(
 			array(
 				'newsletter' => '',
