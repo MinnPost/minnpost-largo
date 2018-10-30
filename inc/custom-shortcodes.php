@@ -117,6 +117,17 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 				set_query_var( 'message', $message );
 				get_template_part( 'inc/forms/newsletter', 'full-dc' );
 			}
+		} else {
+			set_query_var( 'newsletter', 'email' );
+			set_query_var( 'newsletter_nonce', $newsletter_nonce );
+			set_query_var( 'redirect_url', get_current_url() );
+			set_query_var( 'message', $message );
+			set_query_var( 'confirm_message', $confirm_message );
+			ob_start();
+			$file = get_template_part( 'inc/forms/newsletter', 'shortcode-email' );
+			$html = ob_get_contents();
+			ob_end_clean();
+			return $html;
 		}
 
 	}

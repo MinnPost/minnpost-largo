@@ -85,6 +85,20 @@ $search-width: 117px;
 			}
 		}
 	}
+	&.m-form-newsletter-shortcode-email {
+		padding: 1em;
+		font-size: inherit;
+		.m-form-message {
+			margin-bottom: 0;
+			border: 0;
+			padding: 0.5em;
+		}
+		button {
+			padding: 0.17em 0.5em;
+			font-size: 1em;
+			line-height: normal;
+		}
+	}
 }
 
 // forms in sidebar widgets
