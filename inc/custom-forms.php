@@ -40,6 +40,8 @@ if ( ! function_exists( 'minnpost_email_subscribe_form_process' ) ) :
 			$occasional_emails_available = isset( $_POST['occasional_emails_available'] ) ? (array) $_POST['occasional_emails_available'] : array();
 			$occasional_emails_available = array_map( 'esc_attr', $occasional_emails_available );
 
+			$confirm_message = isset( $_POST['confirm_message'] ) ? sanitize_text_field( $_POST['confirm_message'] ) : '';
+
 			$user_data = array(
 				'_mailchimp_user_id' => $id,
 				'user_email'         => $email,
@@ -84,8 +86,9 @@ if ( ! function_exists( 'minnpost_email_subscribe_form_process' ) ) :
 				if ( isset( $_POST['ajaxrequest'] ) && 'true' === $_POST['ajaxrequest'] ) {
 					wp_send_json_success(
 						array(
-							'id'          => $result['id'],
-							'user_status' => $user_status,
+							'id'              => $result['id'],
+							'user_status'     => $user_status,
+							'confirm_message' => $confirm_message,
 						)
 					);
 				} else {
