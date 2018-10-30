@@ -133,11 +133,11 @@ msgstr ""
 msgid "White on Transparent"
 msgstr ""
 
-#: inc/custom-forms.php:151
+#: inc/custom-forms.php:154
 msgid "Invalid nonce specified"
 msgstr ""
 
-#: inc/custom-forms.php:152
+#: inc/custom-forms.php:155
 msgid "Error"
 msgstr ""
 
@@ -161,19 +161,19 @@ msgstr ""
 msgid "Email Sending Name"
 msgstr ""
 
-#: inc/custom-shortcodes.php:64
+#: inc/custom-shortcodes.php:69
 msgid "Thanks for updating your email preferences. They will go into effect immediately."
 msgstr ""
 
-#: inc/custom-shortcodes.php:67
+#: inc/custom-shortcodes.php:72
 msgid "We have added you to the MinnPost mailing list."
 msgstr ""
 
-#: inc/custom-shortcodes.php:70
+#: inc/custom-shortcodes.php:75
 msgid "We have added you to the MinnPost mailing list. You will need to click the confirmation link in the email we sent to begin receiving messages."
 msgstr ""
 
-#: inc/custom-shortcodes.php:309
+#: inc/custom-shortcodes.php:330
 msgid "You do not have permission to access this page."
 msgstr ""
 
