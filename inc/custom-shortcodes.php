@@ -56,27 +56,34 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 		}
 		$args    = shortcode_atts(
 			array(
-				'newsletter' => '',
+				'newsletter'      => '',
+				'confirm_message' => '',
 			),
 			$atts
 		);
 		$message = '';
 		if ( isset( $_GET['subscribe-message'] ) ) {
-			switch ( $_GET['subscribe-message'] ) {
-				case 'success-existing':
-					$message = __( 'Thanks for updating your email preferences. They will go into effect immediately.', 'minnpost-largo' );
-					break;
-				case 'success-new':
-					$message = __( 'We have added you to the MinnPost mailing list.', 'minnpost-largo' );
-					break;
-				case 'success-pending':
-					$message = __( 'We have added you to the MinnPost mailing list. You will need to click the confirmation link in the email we sent to begin receiving messages.', 'minnpost-largo' );
-					break;
-				default:
-					$message = '';
-					break;
+			if ( '' === $args['confirm_message'] ) {
+				switch ( $_GET['subscribe-message'] ) {
+					case 'success-existing':
+						$message = __( 'Thanks for updating your email preferences. They will go into effect immediately.', 'minnpost-largo' );
+						break;
+					case 'success-new':
+						$message = __( 'We have added you to the MinnPost mailing list.', 'minnpost-largo' );
+						break;
+					case 'success-pending':
+						$message = __( 'We have added you to the MinnPost mailing list. You will need to click the confirmation link in the email we sent to begin receiving messages.', 'minnpost-largo' );
+						break;
+					default:
+						$message = $args['confirm_message'];
+						break;
+				}
+			} else {
+				$message = $args['confirm_message'];
 			}
 			$message = '<div class="m-form-message m-form-message-info">' . $message . '</div>';
+		} else {
+			$confirm_message = $args['confirm_message'];
 		}
 		// Generate a custom nonce value.
 		$newsletter_nonce = wp_create_nonce( 'mp_newsletter_form_nonce' );
