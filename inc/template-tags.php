@@ -801,7 +801,7 @@ if ( ! function_exists( 'minnpost_post_sidebar' ) ) :
 			$post_id = get_the_ID();
 		}
 
-		$sidebar = get_post_meta( $post_id, '_mp_post_sidebar', true );
+		$sidebar = wpautop( get_post_meta( $post_id, '_mp_post_sidebar', true ) );
 		if ( null !== $sidebar && '' !== $sidebar ) {
 			echo '<section id="post-sidebar" class="m-post-sidebar">' . $sidebar . '</section>';
 		}
