@@ -16,7 +16,7 @@ if ( ! function_exists( 'minnpost_largo_unpublished_posts' ) ) :
 			if ( $query->is_main_query() ) {
 				$query->set( 'post_status', 'any' );
 			}
-			if ( is_singular() ) {
+			if ( is_singular( 'post' ) ) {
 				$query->set( 'post_status', array( 'publish', 'draft', 'future' ) );
 			}
 		}
