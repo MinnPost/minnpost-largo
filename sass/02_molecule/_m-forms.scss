@@ -86,8 +86,10 @@ $search-width: 117px;
 		}
 	}
 	&.m-form-newsletter-shortcode-email {
-		padding: 1em;
+		padding: 0;
 		font-size: inherit;
+		margin: 0;
+		border: 0;
 		.m-form-message {
 			margin-bottom: 0;
 			border: 0;
