@@ -15,7 +15,7 @@ if ( ! function_exists( 'minnpost_largo_unpublished_posts' ) ) :
 		if ( ! is_admin() && current_user_can( 'view_unpublished_posts' ) ) {
 			if ( $query->is_main_query() ) {
 				$query->set( 'post_status', 'any' );
-				if ( $query->query['p'] === $_GET['p'] ) {
+				if ( isset( $_GET['p'] ) && filter_var( $_GET['p'], FILTER_VALIDATE_INT ) === filter_var( $query->query['p'], FILTER_VALIDATE_INT ) ) {
 					$query->set( 'post_status', array( 'publish', 'draft', 'future' ) );
 				}
 			}
