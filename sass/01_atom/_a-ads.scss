@@ -125,7 +125,7 @@ main .ad-x110 {
 		margin-bottom: $standard-page-margin;
 		text-align: center;
 	}
-	img, iframe, object, div {
+	img, iframe, object, > div {
 		margin-bottom: $standard-page-margin;
 	}
 }
