@@ -26,6 +26,12 @@ if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
 		wp_dequeue_style( 'minnpost-donation-progress-widget' );
 		wp_dequeue_style( 'popular-widget' );
 		wp_dequeue_style( 'creativ_sponsor' );
+
+		$is_liveblog = get_post_meta( get_the_ID(), 'liveblog', true );
+		if ( 'enable' === $is_liveblog || 'archive' === $is_liveblog ) {
+			wp_enqueue_style( 'minnpost-liveblog', get_theme_file_uri() . '/assets/css/liveblog.css', array(), filemtime( get_theme_file_path() . '/assets/css/liveblog.css' ), 'all' );
+		}
+
 	}
 endif;
 
