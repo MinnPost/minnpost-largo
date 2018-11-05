@@ -140,6 +140,7 @@ gulp.task( 'post_asset_css', [ 'clean:styles' ], () =>
 
 			// Compile Sass using LibSass.
 			.pipe( sass( {
+				'includePaths': [].concat( bourbon ),
 				'errLogToConsole': true,
 				'outputStyle': 'expanded' // Options: nested, expanded, compact, compressed
 			} ) )
