@@ -47,14 +47,18 @@
 		$occasional_email_index = 1;
 		$user_newsletters       = array();
 		$user_occasional        = array();
-		foreach ( $newsletters as $key => $value ) {
-			if ( in_array( $key, $user_emails ) ) {
-				$user_newsletters[ $key ] = $value;
+		if ( ! empty( $newsletters ) ) {
+			foreach ( $newsletters as $key => $value ) {
+				if ( in_array( $key, $user_emails ) ) {
+					$user_newsletters[ $key ] = $value;
+				}
 			}
 		}
-		foreach ( $occasional_emails as $key => $value ) {
-			if ( in_array( $key, $user_emails ) ) {
-				$user_occasional[ $key ] = $value;
+		if ( ! empty( $occasional_emails ) ) {
+			foreach ( $occasional_emails as $key => $value ) {
+				if ( in_array( $key, $user_emails ) ) {
+					$user_occasional[ $key ] = $value;
+				}
 			}
 		}
 		?>
