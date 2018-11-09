@@ -405,8 +405,8 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_author_figure' ) ) :
-	function minnpost_author_figure( $author_id = '', $size = 'photo', $include_text = true, $include_name = false ) {
-		$output = minnpost_get_author_figure( $author_id, $size, $include_text, $include_name );
+	function minnpost_author_figure( $author_id = '', $size = 'photo', $include_text = true, $include_name = false, $lazy_load = true ) {
+		$output = minnpost_get_author_figure( $author_id, $size, $include_text, $include_name, $lazy_load );
 		echo $output;
 	}
 endif;
@@ -426,7 +426,7 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 	/**
 	 * Returns author image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
 	 */
-	function minnpost_get_author_figure( $author_id = '', $size = 'photo', $include_text = true, $include_name = false ) {
+	function minnpost_get_author_figure( $author_id = '', $size = 'photo', $include_text = true, $include_name = false, $lazy_load = true ) {
 
 		// in drupal there was only one author image size
 		if ( '' === $author_id ) {
@@ -485,7 +485,7 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_get_author_image' ) ) :
-	function minnpost_get_author_image( $author_id = '', $size = 'photo' ) {
+	function minnpost_get_author_image( $author_id = '', $size = 'photo', $lazy_load = true ) {
 
 		$image_url = get_post_meta( $author_id, '_mp_author_image', true );
 		if ( 'photo' !== $size ) {
@@ -539,8 +539,8 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_term_figure' ) ) :
-	function minnpost_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false, $link_on = 'title' ) {
-		$output = minnpost_get_term_figure( $category_id, $size, $include_text, $include_name, $link_on );
+	function minnpost_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false, $link_on = 'title', $lazy_load = true ) {
+		$output = minnpost_get_term_figure( $category_id, $size, $include_text, $include_name, $link_on, $lazy_load );
 		echo $output;
 	}
 endif;
@@ -557,7 +557,7 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
-	function minnpost_get_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false, $link_on = 'title' ) {
+	function minnpost_get_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false, $link_on = 'title', $lazy_load = true ) {
 
 		$image_data = minnpost_get_term_image( $category_id, $size );
 		if ( '' !== $image_data ) {
@@ -617,7 +617,7 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_get_term_image' ) ) :
-	function minnpost_get_term_image( $category_id = '', $size = 'feature' ) {
+	function minnpost_get_term_image( $category_id = '', $size = 'feature', $lazy_load = true ) {
 		$image_url = get_term_meta( $category_id, '_mp_category_main_image', true );
 		if ( 'feature' !== $size ) {
 			$image_url = get_term_meta( $category_id, '_mp_category_' . $size . '_image', true );
@@ -1013,7 +1013,7 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_plus_icon' ) ) :
-	function minnpost_plus_icon( $post_id = '' ) {
+	function minnpost_plus_icon( $post_id = '', $lazy_load = true ) {
 		if ( '' === $post_id ) {
 			$post_id = get_the_ID();
 		}
