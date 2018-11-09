@@ -34,10 +34,6 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 			return;
 		}
 
-		if ( true === $lazy_load ) {
-			$image = apply_filters( 'easy_lazy_loader_html', $image );
-		}
-
 		$caption = wp_get_attachment_caption( $image_id );
 		$credit  = get_media_credit_html( $image_id );
 
@@ -163,8 +159,8 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 			return;
 		}
 
-		if ( true === $lazy_load ) {
-			$image = apply_filters( 'easy_lazy_loader_html', $image );
+		if ( array_key_exists( 'wp_lozad_lazyload_convert_html', $GLOBALS['wp_filter'] ) && true === $lazy_load ) {
+			$image = apply_filters( 'wp_lozad_lazyload_convert_html', $image, array( 'html_tag' => 'img' ) );
 		}
 
 		$image_data = array(
@@ -451,6 +447,10 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 			return;
 		}
 
+		if ( array_key_exists( 'wp_lozad_lazyload_convert_html', $GLOBALS['wp_filter'] ) && true === $lazy_load ) {
+			$image = apply_filters( 'wp_lozad_lazyload_convert_html', $image, array( 'html_tag' => 'img' ) );
+		}
+
 		$name = '';
 		$name = get_post_meta( $author_id, 'cap-display_name', true );
 
@@ -516,7 +516,9 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
 		}
 
-		$image = apply_filters( 'easy_lazy_loader_html', $image );
+		if ( array_key_exists( 'wp_lozad_lazyload_convert_html', $GLOBALS['wp_filter'] ) && true === $lazy_load ) {
+			$image = apply_filters( 'wp_lozad_lazyload_convert_html', $image, array( 'html_tag' => 'img' ) );
+		}
 
 		$image_data = array(
 			'image_id'  => $image_id,
@@ -570,6 +572,10 @@ if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
 
 		if ( post_password_required() || is_attachment() || ( ! isset( $image_id ) && ! isset( $image_url ) ) ) {
 			return '';
+		}
+
+		if ( array_key_exists( 'wp_lozad_lazyload_convert_html', $GLOBALS['wp_filter'] ) && true === $lazy_load ) {
+			$image = apply_filters( 'wp_lozad_lazyload_convert_html', $image, array( 'html_tag' => 'img' ) );
 		}
 
 		$name = '';
@@ -639,7 +645,9 @@ if ( ! function_exists( 'minnpost_get_term_image' ) ) :
 			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
 		}
 
-		$image = apply_filters( 'easy_lazy_loader_html', $image );
+		if ( array_key_exists( 'wp_lozad_lazyload_convert_html', $GLOBALS['wp_filter'] ) && true === $lazy_load ) {
+			$image = apply_filters( 'wp_lozad_lazyload_convert_html', $image, array( 'html_tag' => 'img' ) );
+		}
 
 		$image_data = array(
 			'image_id'  => $image_id,
@@ -1026,9 +1034,14 @@ if ( ! function_exists( 'minnpost_plus_icon' ) ) :
 					return;
 				}
 			}
-			echo '<div class="a-minnpost-plus">
-				<img src="' . get_theme_file_uri() . '/assets/img/MinnPostPlusLogo.png' . '" alt="MinnPostPlus">
-			</div>';
+
+			$image = '<img src="' . get_theme_file_uri() . '/assets/img/MinnPostPlusLogo.png' . '" alt="MinnPostPlus">';
+
+			if ( array_key_exists( 'wp_lozad_lazyload_convert_html', $GLOBALS['wp_filter'] ) && true === $lazy_load ) {
+				$image = apply_filters( 'wp_lozad_lazyload_convert_html', $image, array( 'html_tag' => 'img' ) );
+			}
+
+			echo '<div class="a-minnpost-plus">' . $image . '</div>';
 		}
 	}
 endif;
