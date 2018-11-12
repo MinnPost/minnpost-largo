@@ -447,10 +447,6 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 			return;
 		}
 
-		if ( array_key_exists( 'wp_lozad_lazyload_convert_html', $GLOBALS['wp_filter'] ) && true === $lazy_load ) {
-			$image = apply_filters( 'wp_lozad_lazyload_convert_html', $image, array( 'html_tag' => 'img' ) );
-		}
-
 		$name = '';
 		$name = get_post_meta( $author_id, 'cap-display_name', true );
 
@@ -572,10 +568,6 @@ if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
 
 		if ( post_password_required() || is_attachment() || ( ! isset( $image_id ) && ! isset( $image_url ) ) ) {
 			return '';
-		}
-
-		if ( array_key_exists( 'wp_lozad_lazyload_convert_html', $GLOBALS['wp_filter'] ) && true === $lazy_load ) {
-			$image = apply_filters( 'wp_lozad_lazyload_convert_html', $image, array( 'html_tag' => 'img' ) );
 		}
 
 		$name = '';
