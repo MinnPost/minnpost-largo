@@ -347,7 +347,7 @@ msgstr ""
 
 #. translators: the placeholder is the time string, which can be translated
 #. translators: the placeholder is the time string, which can be translated
-#: inc/template-tags.php:211, inc/template-tags.php:250
+#: inc/template-tags.php:207, inc/template-tags.php:246
 msgctxt "post date"
 msgid "%s"
 msgstr ""
