@@ -1,7 +1,12 @@
 .m-entry-content .m-content-media {
+	display: table;
 	margin: 1em 0;
 	img {
 		display: block;
+	}
+	figcaption {
+		display: table-caption;
+		caption-side: bottom;
 	}
 	&.alignnone {
 
