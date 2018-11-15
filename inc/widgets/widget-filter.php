@@ -16,7 +16,7 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 	$widget_output = str_replace( '<h3 class="widget-title"', '<h3 class="a-widget-title"', $widget_output );
 	$widget_output = str_replace( '<div class="textwidget custom-html-widget">', '<div class="m-widget-contents m-textwidget m-custom-html-widget">', $widget_output );
 	$widget_output = str_replace( ' class="widget_text widget widget_custom_html">', ' class="m-widget m-widget-text m-widget-custom-html">', $widget_output );
-	$widget_output = str_replace( ' class="widget popular-widget">', ' class="m-widget m-widget-popular-widget">', $widget_output );
+	$widget_output = str_replace( ' class="widget widget_most-commented">', ' class="m-widget m-widget-most-commented">', $widget_output );
 	$widget_output = str_replace( ' class="widget rpwe_widget recent-posts-extended">', ' class="m-widget m-widget-rpwe-widget m-widget-recent-posts-extended">', $widget_output );
 
 	// target custom html widget
@@ -120,12 +120,11 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 		$widget_output = str_replace( '</h3></li>', '</p></li>', $widget_output );
 	}
 
-	// target popular widget
-	if ( false !== strpos( $widget_output, 'class="m-widget m-widget-popular-widget"' ) && 'popular-widget' == $widget_type ) {
-		$widget_output = str_replace( '<div id="popular-widget-', '<section id="popular-widget-', $widget_output );
-		$widget_output = str_replace( '</div><!--.pop-layout-v--></div>', '</div></section>', $widget_output );
-		$widget_output = str_replace( '<a href="#commented" rel="nofollow">Most Commented</a>', '<h3 class="a-widget-title"><a href="#commented" rel="nofollow">Most Commented</a></h3>', $widget_output );
-		$widget_output = str_replace( '<div class="pop-inside-', '<div class="m-widget-contents pop-inside-', $widget_output );
+	// target most commented widget
+	if ( false !== strpos( $widget_output, 'class="m-widget m-widget-most-commented"' ) && 'most-commented' == $widget_type ) {
+		$widget_output = str_replace( '<div id="most-commented-', '<section id="most-commented-widget-', $widget_output );
+		$widget_output = str_replace( '</ul></div>', '</ul></section>', $widget_output );
+		$widget_output = str_replace( '<ul', '<div class="m-widget-contents"><ul', $widget_output );
 	}
 
 	return $widget_output;
