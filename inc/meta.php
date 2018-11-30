@@ -116,6 +116,9 @@ if ( ! function_exists( 'minnpost_largo_get_og_image' ) ) :
 				$image_url = isset( $image_data['image_url'] ) ? $image_data['image_url'] : '';
 			}
 		}
+		if ( '' === $image_url ) {
+			$image_url = get_option( 'default_image_url', '' );
+		}
 		return $image_url;
 	}
 endif;
