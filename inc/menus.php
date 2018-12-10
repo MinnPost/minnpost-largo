@@ -67,7 +67,7 @@ if ( ! function_exists( 'minnpost_wp_nav_menu_objects_sub_menu' ) ) :
 				if ( $menu_item->current ) {
 					// set the root id based on whether the current menu item has a parent or not
 					$root_id = ( $menu_item->menu_item_parent ) ? $menu_item->menu_item_parent : $menu_item->ID;
-					break;
+					continue;
 				}
 			}
 
@@ -93,7 +93,7 @@ if ( ! function_exists( 'minnpost_wp_nav_menu_objects_sub_menu' ) ) :
 					$menu_item_parents[] = $item->ID;
 				} elseif ( (int) $root_id === (int) $item->menu_item_parent ) {
 					$menu_item_parents[] = $item->menu_item_parent;
-					break;
+					continue;
 				}
 				if ( in_array( $item->menu_item_parent, $menu_item_parents ) ) {
 					// part of sub-tree: keep!
@@ -101,6 +101,7 @@ if ( ! function_exists( 'minnpost_wp_nav_menu_objects_sub_menu' ) ) :
 				} elseif ( ! ( isset( $args->show_parent ) && in_array( $item->ID, $menu_item_parents ) ) ) {
 					// not part of sub-tree: away with it!
 					unset( $sorted_menu_items[ $key ] );
+					continue;
 				}
 			}
 
