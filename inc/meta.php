@@ -194,6 +194,17 @@ if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 			<?php endif; ?>
 		<?php endif; ?>
 
+		<?php if ( is_singular() ) : ?>
+			<?php
+			global $wp_query;
+			if ( array_key_exists( 'users', $wp_query->query_vars ) ) {
+				?>
+				<meta name="robots" content="noindex">
+				<?php
+			}
+			?>
+		<?php endif; ?>
+
 		<?php
 	}
 endif;
