@@ -269,7 +269,7 @@ msgstr ""
 msgid "User Account Management Menu"
 msgstr ""
 
-#: inc/menus.php:551
+#: inc/menus.php:552
 msgid "&#x1F6BD; Flush Object Cache"
 msgstr ""
 
