@@ -290,9 +290,9 @@ if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
 			return esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) );
 		else :
 			if ( function_exists( 'coauthors_posts_links' ) ) :
-				return 'By ' . coauthors_posts_links( ', ', ' and ', null, null, false );
+				return 'By&nbsp;' . coauthors_posts_links( ', ', ' and ', null, null, false );
 			else :
-				return 'By <a href="' . get_the_author_posts_url( get_the_author_meta( 'ID' ) ) . '">' . the_author( $id ) . '</a>';
+				return 'By&nbsp;<a href="' . get_the_author_posts_url( get_the_author_meta( 'ID' ) ) . '">' . the_author( $id ) . '</a>';
 			endif;
 		endif;
 		return $posted_by;
