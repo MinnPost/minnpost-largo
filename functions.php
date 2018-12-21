@@ -24,6 +24,11 @@ require get_theme_file_path() . '/inc/get-site-data.php';
 require get_theme_file_path() . '/inc/custom-settings.php';
 
 /**
+ * Roles and capabilities for users
+ */
+require get_theme_file_path() . '/inc/roles-capabilities.php';
+
+/**
  * Menu functionality
  */
 require get_theme_file_path() . '/inc/menus.php';
