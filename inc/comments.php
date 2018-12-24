@@ -7,7 +7,7 @@
 
 /**
 * Detect whether a user has the capability of moderating comments
-* This depends on the Advanced Access Manager plugin, which creates the comment_moderator role and assigns its capabilities
+* This depends on the comment_moderator role and its capabilities
 *
 * @return bool $can_moderate
 */
@@ -87,22 +87,6 @@ if ( ! function_exists( 'minnpost_largo_comment_date_column' ) ) :
 				echo $submitted;
 			}
 			echo '</div>';
-		}
-	}
-endif;
-
-/**
-* Detect whether a user has been banned. These users cannot comment.
-* This depends on the Advanced Access Manager plugin, which creates the banned role and assigns its capabilities
-*
-* @return bool $can_moderate
-*/
-if ( ! function_exists( 'minnpost_disallow_banned_user_comments' ) ) :
-	add_action( 'init', 'minnpost_disallow_banned_user_comments', 10 );
-	function minnpost_disallow_banned_user_comments() {
-		$user = wp_get_current_user();
-		if ( in_array( 'banned', (array) $user->roles ) ) {
-			add_filter( 'comments_open', '__return_false' );
 		}
 	}
 endif;
