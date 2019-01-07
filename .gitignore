@@ -14,13 +14,8 @@ lang/*.merged
 ## Misc
 .idea/
 node_modules
-
-#######################
-#  sphinx .gitignore  #
-#######################
-
-## sphinx build folder
-_build
+.sass-cache
+phpdoc-cache-*
 
 ## Compiled source
 *.com
@@ -30,4 +25,7 @@ _build
 *.o
 *.so
 
-/vendor/
+# composer
+/vendor/**/.git/
+/vendor/**/.github/
+/vendor/**/test/
