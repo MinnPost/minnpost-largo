@@ -205,6 +205,10 @@ if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 			?>
 		<?php endif; ?>
 
+		<?php if ( is_search() ) : ?>
+			<meta name="robots" content="noindex, nofollow">
+		<?php endif; ?>
+
 		<?php
 	}
 endif;
