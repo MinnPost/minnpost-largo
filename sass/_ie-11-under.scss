@@ -21,7 +21,7 @@
 	}
 }
 
-@media only screen and (-ms-high-contrast:active), (-ms-high-contrast:none) and (max-width: $medim-margins-too-small) {
+@media only screen and (-ms-high-contrast:active), (-ms-high-contrast:none) and (max-width: $medium-margins-too-small) {
 	.o-archive-listing {
 		&.m-layout-primary {
 			display: block;
@@ -30,7 +30,7 @@
 }
 
 // ie 10 and under only - dependent on modernizr
-@media screen and (min-width: $medim-margins-too-small) and (max-width: $max-width-page) {
+@media screen and (min-width: $medium-margins-too-small) and (max-width: $max-width-page) {
 	.no-borderimage .archive {
 		.o-wrapper-content {
 			padding-right: $size__site-sidebar + $archive-content-sidebar-padding;

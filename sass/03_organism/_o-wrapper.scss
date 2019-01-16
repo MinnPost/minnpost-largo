@@ -22,7 +22,7 @@ body.post .o-wrapper-content, body.page .o-wrapper-content {
 	}
 }
 
-@media screen and (min-width: $medim-margins-too-small) {
+@media screen and (min-width: $medium-margins-too-small) {
 	.archive .o-wrapper.o-wrapper-content {
 		flex-direction: row;
 	}

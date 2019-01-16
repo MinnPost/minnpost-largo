@@ -358,7 +358,7 @@ $a-user-initial-size: 18px;
 	}
 }
 
-@media screen and (min-width: $medim-margins-too-small) {
+@media screen and (min-width: $medium-margins-too-small) {
 	.m-pagination {
 		margin-bottom: 0.75em;
 	}
