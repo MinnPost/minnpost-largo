@@ -382,6 +382,12 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			'desc' => 'If checked, this post will not contain any embed ads.',
 		) );
 		$display_settings->add_field( array(
+			'name' => 'Prevent lazy loading?',
+			'id'   => 'wp_lozad_lazyload_prevent_lozad_lazyload',
+			'type' => 'checkbox',
+			'desc' => 'If checked, this post will not attempt to lazy load ads or other content.',
+		) );
+		$display_settings->add_field( array(
 			'name' => 'Load HTML editor by default?',
 			'id'   => '_mp_post_use_html_editor',
 			'type' => 'checkbox',
@@ -1343,5 +1349,18 @@ if ( ! function_exists( 'minnpost_public_preview_nonce_life' ) ) :
 	add_filter( 'ppp_nonce_life', 'minnpost_public_preview_nonce_life' );
 	function minnpost_public_preview_nonce_life() {
 		return 259200; // 3 days
+	}
+endif;
+
+/**
+* Remove liveblog meta box from non-editors
+*
+*/
+if ( ! function_exists( 'limit_liveblog_box' ) ) :
+	add_action( 'do_meta_boxes', 'limit_liveblog_box' );
+	function limit_liveblog_box() {
+		if ( ! current_user_can( 'enable_liveblog' ) ) {
+			remove_meta_box( 'liveblog', 'post', 'advanced' );
+		}
 	}
 endif;
