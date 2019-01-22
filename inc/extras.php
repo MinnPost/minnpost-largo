@@ -263,3 +263,15 @@ if ( ! function_exists( 'minnpost_turn_off_popular_views' ) ) :
 		return false;
 	}
 endif;
+
+/**
+ * Set external domains allowed for redirects
+ * @param array $hosts
+ * @return array $hosts
+ */
+add_filter( 'allowed_redirect_hosts', function( $hosts ) {
+	$hosts[] = 'members.minnpost.com';
+	$hosts[] = 'support.minnpost.com';
+	$hosts[] = 'givemn.org';
+    return $hosts;
+});
