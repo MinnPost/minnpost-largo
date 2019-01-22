@@ -67,7 +67,8 @@ endif;
 if ( ! function_exists( 'minnpost_largo_get_description' ) ) :
 	function minnpost_largo_get_description() {
 		if ( is_page() || is_single() ) {
-			$excerpt  = get_the_excerpt();
+			global $post;
+			$excerpt  = ! empty( $post->post_excerpt ) ? get_the_excerpt() : null;
 			$post_id  = get_the_ID();
 			$seo_desc = get_post_meta( $post_id, '_mp_seo_description', true );
 			if ( '' !== $seo_desc ) {
@@ -85,7 +86,7 @@ if ( ! function_exists( 'minnpost_largo_get_description' ) ) :
 		} else {
 			$excerpt = '';
 		}
-		return strip_tags( $excerpt );
+		return wp_strip_all_tags( $excerpt, true );
 	}
 endif;
 
