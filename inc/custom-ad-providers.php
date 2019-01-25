@@ -35,6 +35,9 @@ endif;
 if ( ! function_exists( 'acm_no_ad_users' ) ) :
 	add_filter( 'acm_output_html_after_tokens_processed', 'acm_no_ad_users', 10, 2 );
 	function acm_no_ad_users( $output_html, $tag_id = null ) {
+		if ( is_feed() ) {
+			return $output_html;
+		}
 
 		if ( 'TopRight' === $tag_id ) {
 			// get the support nav item if there is not an ad
@@ -68,16 +71,16 @@ if ( ! function_exists( 'acm_no_ad_users' ) ) :
 			}
 			return $default_top_right;
 		}
-		//return $output_html;
 		if ( ! current_user_can( 'browse_without_ads' ) ) {
 			return $output_html;
 		} else {
 			if ( 'appnexus_head' === $tag_id ) {
-				return '';
+				$output_html = '';
 			} else {
-				return '<div class="appnexus-ad appnexus-ad-placeholder ad-' . sanitize_title( $tag_id ) . '">AD: ' . $tag_id . '</div>';
+				$output_html = '<div class="appnexus-ad appnexus-ad-placeholder ad-' . sanitize_title( $tag_id ) . '">AD: ' . $tag_id . '</div>';
 			}
 		}
+		return $output_html;
 	}
 endif;
 
