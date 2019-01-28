@@ -1,8 +1,8 @@
 <?php
 /**
- * Create custom ad providers
+ * Theme settings for ad providers
  *
- * Currently this uses the Ad Code Manager plugin from Automattic
+ * Currently this depends on the Ad Code Manager plugin from Automattic
  *
  * @link https://vip.wordpress.com/documentation/configure-ad-code-manager-to-manage-the-advertisements-on-your-site/
  *
@@ -20,6 +20,7 @@ if ( ! function_exists( 'minnpost_acm_whitelisted_conditionals' ) ) :
 	function minnpost_acm_whitelisted_conditionals( $conditionals ) {
 		$conditionals[] = 'minnpost_is_post_type';
 		$conditionals[] = 'is_post_type_archive';
+		$conditionals[] = 'is_feed';
 		return $conditionals;
 	}
 endif;
@@ -96,6 +97,21 @@ if ( ! function_exists( 'minnpost_acm_ad_count' ) ) :
 	function minnpost_acm_ad_count( $adcount ) {
 		$adcount = 200;
 		return $adcount;
+	}
+endif;
+
+/**
+* Highest count available for the ad code table. This should always be set to a value higher than what we need.
+*
+* @param string $current_provider_slug
+* @return string $current_provider_slug
+*
+*/
+if ( ! function_exists( 'minnpost_acm_default_provider' ) ) :
+	add_filter( 'acm_provider_slug', 'minnpost_acm_default_provider' );
+	function minnpost_acm_default_provider( $current_provider_slug ) {
+		$current_provider_slug = 'appnexus';
+		return $current_provider_slug;
 	}
 endif;
 
