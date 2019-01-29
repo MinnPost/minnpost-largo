@@ -100,3 +100,18 @@ endif;
 
 // remove the open graph tags because we handle them in meta.php
 add_filter( 'jetpack_enable_open_graph', '__return_false' );
+
+/**
+* Arguments for VIP Go image processing
+* documentation at https://vip.wordpress.com/documentation/vip-go/images-on-vip-go/
+*
+* @param array $args
+* @return array $args
+*/
+if ( ! function_exists( 'minnpost_largo_custom_photon' ) ) :
+	add_filter( 'jetpack_photon_pre_args', 'minnpost_largo_custom_photon' );
+	function minnpost_largo_custom_photon( $args ) {
+	    $args['strip'] = 'all';
+	    return $args;
+	}
+endif;
