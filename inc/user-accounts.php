@@ -227,6 +227,22 @@ endif;
 if ( ! function_exists( 'add_to_user_data' ) ) :
 	add_filter( 'user_account_management_add_to_user_data', 'add_to_user_data', 10, 3 );
 	function add_to_user_data( $user_data, $posted, $existing_user_data ) {
+		// if these are cmb2 fields, they'll be sanitized by cmb2
+		// handle consolidated email addresses if they're submitted by the form
+		if ( isset( $posted['_consolidated_emails_array'] ) && is_array( $posted['_consolidated_emails_array'] ) ) {
+			$posted['_consolidated_emails_array'] = array_map( 'sanitize_email', wp_unslash( $posted['_consolidated_emails_array'] ) );
+			$user_data['_consolidated_emails_combined'] = implode( ',', $posted['_consolidated_emails_array'] );
+		}
+		// combine all consolidated emails
+		if ( isset( $posted['_consolidated_emails'] ) && ! empty( $posted['_consolidated_emails'] ) ) {
+			$user_data['_consolidated_emails'] = $posted['_consolidated_emails'];
+		} else {
+			// if the user didn't submit any extras, store their main email in that field
+			$user_data['_consolidated_emails'] = $posted['email'];
+		}
+		if ( isset( $user_data['_consolidated_emails_combined'] ) ) {
+			$user_data['_consolidated_emails'] .= ',' . $user_data['_consolidated_emails_combined'];
+		}
 		// reading preferences field
 		if ( isset( $posted['_reading_topics'] ) && ! empty( $posted['_reading_topics'] ) ) {
 			$user_data['_reading_topics'] = $posted['_reading_topics'];
@@ -236,7 +252,7 @@ if ( ! function_exists( 'add_to_user_data' ) ) :
 endif;
 
 /**
-* Save user data
+* Save custom MP fields to user data
 *
 * @param array $user_data
 * @param array $existing_user_data
@@ -245,6 +261,11 @@ endif;
 if ( ! function_exists( 'save_minnpost_user_data' ) ) :
 	add_action( 'user_account_management_post_user_data_save', 'save_minnpost_user_data', 10, 2 );
 	function save_minnpost_user_data( $user_data, $existing_user_data ) {
+		// handle consolidated email addresses
+		if ( isset( $user_data['_consolidated_emails'] ) && '' !== $user_data['_consolidated_emails'] ) {
+			update_user_meta( $user_data['ID'], '_consolidated_emails', $user_data['_consolidated_emails'] );
+		}
+		// reading preferences field
 		if ( isset( $user_data['_reading_topics'] ) && '' !== $user_data['_reading_topics'] ) {
 			update_user_meta( $user_data['ID'], '_reading_topics', $user_data['_reading_topics'] );
 		}
@@ -273,5 +294,22 @@ if ( ! function_exists( 'filter_wp_dropdown_users_args' ) ) :
 		// Unset the 'who' as this defaults to the 'author' role
 		unset( $query_args['who'] );
 		return $query_args;
+	}
+endif;
+
+if ( ! function_exists( 'minnpost_largo_check_consolidated_emails' ) ) :
+	function minnpost_largo_check_consolidated_emails( $user_data, $current_email ) {
+		$emails = array();
+		// this is $_POST data
+		if ( isset( $user_data['consolidated_emails'] ) ) {
+			$emails = array_map( 'trim', explode( ',', $user_data['consolidated_emails'] ) );
+		} elseif ( isset( $user_data['_consolidated_emails'][0] ) ) {
+			// this is stored user data
+			$emails = array_map( 'trim', explode( ',', $user_data['_consolidated_emails'][0] ) );
+		}
+		if ( false !== ( $key = array_search( $current_email, $emails ) ) ) {
+		    unset( $emails[ $key ] );
+		}
+		return $emails;
 	}
 endif;
