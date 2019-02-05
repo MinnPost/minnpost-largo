@@ -834,6 +834,12 @@ if ( ! function_exists( 'cmb2_user_fields' ) ) :
 			'priority'     => 'low',
 		) );
 		$user_address->add_field( array(
+			'name' => 'All Email Addresses',
+			'id'   => '_consolidated_emails',
+			'type' => 'text',
+			'desc' => 'Separate each email address with a comma.',
+		) );
+		$user_address->add_field( array(
 			'name' => 'Street Address',
 			'id'   => '_street_address',
 			'type' => 'text',
