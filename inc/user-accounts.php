@@ -209,14 +209,14 @@ if ( ! function_exists( 'restrict_comment_moderators' ) ) :
 		$user->roles  = array_diff( (array) $user->roles, $member_roles );
 		if ( in_array( 'comment_moderator', (array) $user->roles ) ) {
 			if ( ( 'edit.php' === $pagenow || 'post.php' === $pagenow || 'post-new.php' === $pagenow ) ) {
-				wp_die( __( 'You are not allowed to access this part of the site', 'minnpost-largo' ) );
+				wp_die( esc_html__( 'You are not allowed to access this part of the site', 'minnpost-largo' ) );
 			}
 		}
 	}
 endif;
 
 /**
-* Add reading topics to user data
+* Add custom MP fields to user data
 *
 * @param array $user_data
 * @param array $posted
