@@ -1,0 +1,16 @@
+.m-entry-content .m-user-email-list {
+	list-style: none;
+	padding-left: 0;
+	li {
+		@include clearfix;
+		font-family: $font__sans;
+		font-size: 92.3%;
+		list-style: none;
+		border-bottom: 1px solid $color__border-input;
+		margin-bottom: 0.375em;
+		padding: 0.25em 0.5em;
+		div {
+			float: right;
+		}
+	}
+}
