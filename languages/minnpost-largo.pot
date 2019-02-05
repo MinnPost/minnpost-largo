@@ -1,4 +1,4 @@
-# Copyright (C) 2018 minnpost-largo
+# Copyright (C) 2019 minnpost-largo
 # This file is distributed under the same license as the minnpost-largo package.
 msgid ""
 msgstr ""
@@ -73,7 +73,7 @@ msgstr ""
 msgid "Top Stories"
 msgstr ""
 
-#: inc/custom-fields.php:126, inc/custom-fields.php:153, inc/custom-fields.php:486, inc/custom-fields.php:498
+#: inc/custom-fields.php:126, inc/custom-fields.php:153, inc/custom-fields.php:492, inc/custom-fields.php:504
 msgid "Search for a post here"
 msgstr ""
 
@@ -81,55 +81,55 @@ msgstr ""
 msgid "More Stories"
 msgstr ""
 
-#: inc/custom-fields.php:338, inc/custom-fields.php:1195
+#: inc/custom-fields.php:338, inc/custom-fields.php:1207
 msgid "Medium"
 msgstr ""
 
-#: inc/custom-fields.php:339, inc/custom-fields.php:1196
+#: inc/custom-fields.php:339, inc/custom-fields.php:1208
 msgid "Do not display image"
 msgstr ""
 
-#: inc/custom-fields.php:340, inc/custom-fields.php:1197
+#: inc/custom-fields.php:340, inc/custom-fields.php:1209
 msgid "Large"
 msgstr ""
 
-#: inc/custom-fields.php:440
+#: inc/custom-fields.php:446
 msgid "Neither"
 msgstr ""
 
-#: inc/custom-fields.php:441
+#: inc/custom-fields.php:447
 msgid "Both"
 msgstr ""
 
-#: inc/custom-fields.php:442
+#: inc/custom-fields.php:448
 msgid "Top"
 msgstr ""
 
-#: inc/custom-fields.php:443
+#: inc/custom-fields.php:449
 msgid "Bottom"
 msgstr ""
 
-#: inc/custom-fields.php:485
+#: inc/custom-fields.php:491
 msgid "Related Content"
 msgstr ""
 
-#: inc/custom-fields.php:497
+#: inc/custom-fields.php:503
 msgid "Related Multimedia"
 msgstr ""
 
-#: inc/custom-fields.php:536
+#: inc/custom-fields.php:542
 msgid "Black on White"
 msgstr ""
 
-#: inc/custom-fields.php:537
+#: inc/custom-fields.php:543
 msgid "White on Black"
 msgstr ""
 
-#: inc/custom-fields.php:538
+#: inc/custom-fields.php:544
 msgid "White on Red"
 msgstr ""
 
-#: inc/custom-fields.php:539
+#: inc/custom-fields.php:545
 msgid "White on Transparent"
 msgstr ""
 
@@ -424,4 +424,52 @@ msgstr ""
 
 #: user-account-management-templates/front-end/account-preferences-form.php:49
 msgid "Reading Preferences:"
+msgstr ""
+
+#: user-account-management-templates/front-end/account-settings-form.php:34
+msgid "Your account settings were successfully updated."
+msgstr ""
+
+#: user-account-management-templates/front-end/account-settings-form.php:45
+msgid "Email address:"
+msgstr ""
+
+#: user-account-management-templates/front-end/account-settings-form.php:47
+msgid "Email addresses:"
+msgstr ""
+
+#: user-account-management-templates/front-end/account-settings-form.php:74
+msgid "First Name:"
+msgstr ""
+
+#: user-account-management-templates/front-end/account-settings-form.php:74, user-account-management-templates/front-end/account-settings-form.php:79, user-account-management-templates/front-end/account-settings-form.php:85, user-account-management-templates/front-end/account-settings-form.php:89, user-account-management-templates/front-end/account-settings-form.php:95, user-account-management-templates/front-end/account-settings-form.php:101
+msgid "This field is required."
+msgstr ""
+
+#: user-account-management-templates/front-end/account-settings-form.php:79
+msgid "Last Name:"
+msgstr ""
+
+#: user-account-management-templates/front-end/account-settings-form.php:85
+msgid "City:"
+msgstr ""
+
+#: user-account-management-templates/front-end/account-settings-form.php:89
+msgid "State:"
+msgstr ""
+
+#: user-account-management-templates/front-end/account-settings-form.php:95
+msgid "Zip Code:"
+msgstr ""
+
+#: user-account-management-templates/front-end/account-settings-form.php:101
+msgid "Country:"
+msgstr ""
+
+#: user-account-management-templates/front-end/account-settings-form.php:116
+msgid "Only fill in if you are not human:"
+msgstr ""
+
+#: user-account-management-templates/front-end/account-settings-form.php:121
+msgid "Save Changes"
 msgstr ""
