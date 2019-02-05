@@ -11,8 +11,37 @@ function gtag_report_conversion(url) {
 	return false;
 }
 
+function manageEmails() {
+	var nextEmailCount = 1;
+	var emailToRemove  = '';
+	var consolidatedEmails = [];
+	if ( $('.m-user-email-list').length > 0 ) {
+		// if a user removes an email, take it away from the visual and from the form
+		$('.a-form-caption.a-remove-email').click( function( event ) {
+			event.preventDefault();
+			emailToRemove      = $(this).parents('li').contents().get(0).nodeValue.trim();
+			consolidatedEmails = $( '#_consolidated_emails' ).val().split( ',' );
+			consolidatedEmails = $.grep( consolidatedEmails, function( value ) {
+				return value !== emailToRemove;
+			});
+			$( '#_consolidated_emails' ).val( consolidatedEmails.join(',') );
+			$( this ).parents( 'li' ).remove();
+		});
+		nextEmailCount = $('.m-user-email-list li').length;
+	}
+	// if a user wants to add an email, give them a properly numbered field
+	$('.a-form-caption.a-add-email').click( function( event ) {
+		event.preventDefault();
+		$('.a-form-caption.a-add-email').before('<input type="email" name="_consolidated_emails_array[' + nextEmailCount + ']" id="_consolidated_emails_array[' + nextEmailCount + ']" value="">')
+		nextEmailCount++;
+	});
+}
+
 jQuery( document ).ready( function( $ ) {
 	"use strict";
+	if ( $('.m-form-email').length > 0 ) {
+		manageEmails();
+	}
 	if ( $('.m-form-newsletter-shortcode').length > 0 ) {
 		$('.m-form-newsletter-shortcode fieldset').before('<div class="m-hold-message"></div>');
 		$('.m-form-newsletter-shortcode form').submit(function(event) {
