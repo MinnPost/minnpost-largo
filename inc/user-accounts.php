@@ -236,7 +236,7 @@ if ( ! function_exists( 'add_to_user_data' ) ) :
 		$all_emails[] = $user_data['user_email'];
 		// combine all consolidated emails
 		if ( isset( $posted['_consolidated_emails'] ) && ! empty( $posted['_consolidated_emails'] ) ) {
-			// this is a cmb2 field
+			// this is a cmb2 field or a rest api field
 			$all_emails = array_map( 'trim', explode( ',', $posted['_consolidated_emails'] ) );
 			// if the user is changing their primary email, switch the new primary with the old primary.
 			if ( isset( $posted['primary_email'] ) ) {
