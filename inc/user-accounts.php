@@ -229,24 +229,45 @@ if ( ! function_exists( 'add_to_user_data' ) ) :
 	function add_to_user_data( $user_data, $posted, $existing_user_data ) {
 		// if these are cmb2 fields, they'll be sanitized by cmb2
 		// handle consolidated email addresses if they're submitted by the form
+		// this array is all of the submitted email addresses, not all the previously saved ones
 		if ( isset( $posted['_consolidated_emails_array'] ) && is_array( $posted['_consolidated_emails_array'] ) ) {
-			$posted['_consolidated_emails_array'] = array_map( 'sanitize_email', wp_unslash( $posted['_consolidated_emails_array'] ) );
-			$user_data['_consolidated_emails_combined'] = implode( ',', $posted['_consolidated_emails_array'] );
+			$user_data['_consolidated_emails_array']       = array_map( 'sanitize_email', wp_unslash( $posted['_consolidated_emails_array'] ) );
 		}
+		$all_emails[] = $user_data['user_email'];
 		// combine all consolidated emails
 		if ( isset( $posted['_consolidated_emails'] ) && ! empty( $posted['_consolidated_emails'] ) ) {
-			$user_data['_consolidated_emails'] = $posted['_consolidated_emails'];
-		} else {
-			// if the user didn't submit any extras, store their main email in that field
-			$user_data['_consolidated_emails'] = $posted['email'];
+			// this is a cmb2 field
+			$all_emails = array_map( 'trim', explode( ',', $posted['_consolidated_emails'] ) );
+			// if the user is changing their primary email, switch the new primary with the old primary.
+			if ( isset( $posted['primary_email'] ) ) {
+				$primary_email   = sanitize_email( $posted['primary_email'] );
+				if ( in_array( $primary_email, $all_emails ) ) {
+					$user_data['user_email'] = $primary_email;
+				}
+			}
 		}
-		if ( isset( $user_data['_consolidated_emails_combined'] ) ) {
-			$user_data['_consolidated_emails'] .= ',' . $user_data['_consolidated_emails_combined'];
+
+		// combine all the emails into one array
+		if ( isset( $user_data['_consolidated_emails_array'] ) ) {
+			$all_emails = array_merge( $all_emails, $user_data['_consolidated_emails_array'] );
 		}
+
+		// if the user is removing an email, delete it
+		if ( isset( $posted['remove_email'] ) && ! empty( $posted['remove_email'] ) ) {
+			$remove_emails = array_map( 'sanitize_email', wp_unslash( $posted['remove_email'] ) );
+			$all_emails    = array_diff( $all_emails, $remove_emails );
+		}
+
+		// make sure the array of emails is unique, and put it together in a string to pass on
+		$all_emails                        = array_unique( $all_emails );
+		$posted['_consolidated_emails']    = implode( ',', $all_emails );
+		$user_data['_consolidated_emails'] = $posted['_consolidated_emails'];
+
 		// reading preferences field
 		if ( isset( $posted['_reading_topics'] ) && ! empty( $posted['_reading_topics'] ) ) {
 			$user_data['_reading_topics'] = $posted['_reading_topics'];
 		}
+
 		return $user_data;
 	}
 endif;

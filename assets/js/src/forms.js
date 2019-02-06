@@ -15,20 +15,14 @@ function manageEmails() {
 	var nextEmailCount = 1;
 	var emailToRemove  = '';
 	var consolidatedEmails = [];
-	if ( $('.m-user-email-list').length > 0 ) {
+	/*if ( $('.m-user-email-list').length > 0 ) {
 		// if a user removes an email, take it away from the visual and from the form
-		$('.a-form-caption.a-remove-email').click( function( event ) {
-			event.preventDefault();
-			emailToRemove      = $(this).parents('li').contents().get(0).nodeValue.trim();
-			consolidatedEmails = $( '#_consolidated_emails' ).val().split( ',' );
-			consolidatedEmails = $.grep( consolidatedEmails, function( value ) {
-				return value !== emailToRemove;
-			});
-			$( '#_consolidated_emails' ).val( consolidatedEmails.join(',') );
+		$('.a-form-caption.a-remove-email').change( function( event ) {
+			emailToRemove = $(this).val();
 			$( this ).parents( 'li' ).remove();
 		});
 		nextEmailCount = $('.m-user-email-list li').length;
-	}
+	}*/
 	// if a user wants to add an email, give them a properly numbered field
 	$('.a-form-caption.a-add-email').click( function( event ) {
 		event.preventDefault();
