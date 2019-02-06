@@ -68,7 +68,7 @@
 						</li>
 					<?php endforeach; ?>
 					<input type="hidden" name="email" id="email" value="<?php echo isset( $attributes['user']->user_email ) ? esc_html( $attributes['user']->user_email ) : ''; ?>">
-					<input type="text" name="_consolidated_emails" id="_consolidated_emails" value="<?php echo isset( $attributes['user']->user_email ) ? esc_html( $attributes['user']->user_email ) . ',' : ''; ?><?php echo implode( ',', array_map( 'esc_html', wp_unslash( $user_other_emails ) ) ); ?>">
+					<input type="hidden" name="_consolidated_emails" id="_consolidated_emails" value="<?php echo isset( $attributes['user']->user_email ) ? esc_html( $attributes['user']->user_email ) . ',' : ''; ?><?php echo implode( ',', array_map( 'esc_html', wp_unslash( $user_other_emails ) ) ); ?>">
 				</ul>
 			<?php else : ?>
 					<input type="email" name="email" id="email" value="<?php echo isset( $_POST['email'] ) && wp_verify_nonce( sanitize_key( $_POST['wp_create_nonce'] ), 'uam-account-settings-nonce' ) ? sanitize_email( $_POST['email'] ) : isset( $attributes['user']->user_email ) ? esc_html( $attributes['user']->user_email ) : ''; ?>" required>

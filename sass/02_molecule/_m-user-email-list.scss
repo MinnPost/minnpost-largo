@@ -20,6 +20,7 @@
 				padding-left: 0.5em;
 				position: relative;
 				label {
+					display: inline-block;
 					color: $color__link;
 					text-decoration: none;
 					cursor: pointer;
@@ -37,12 +38,12 @@
 					margin-left: 0;
 					padding-left: 0;
 				}
-				input[type="radio"], input[type="checkbox"] {
+				/*input[type="radio"], input[type="checkbox"] {
 					left: 0;
 				    opacity: 0;
 				    position: absolute;
 				    top: 0;
-				}
+				}*/
 			}
 		}
 		&.a-user-email-primary small {
