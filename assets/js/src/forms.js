@@ -12,8 +12,10 @@ function gtag_report_conversion(url) {
 }
 
 function manageEmails() {
-	var nextEmailCount = 1;
-	var emailToRemove  = '';
+	var form               = $('#account-settings-form');
+	var submitUrl          = form.attr( 'action' );
+	var nextEmailCount     = 1;
+	var emailToRemove      = '';
 	var consolidatedEmails = [];
 	/*if ( $('.m-user-email-list').length > 0 ) {
 		// if a user removes an email, take it away from the visual and from the form
@@ -28,6 +30,7 @@ function manageEmails() {
 		event.preventDefault();
 		$('.a-form-caption.a-add-email').before('<input type="email" name="_consolidated_emails_array[' + nextEmailCount + ']" id="_consolidated_emails_array[' + nextEmailCount + ']" value="">')
 		nextEmailCount++;
+		
 	});
 }
 
