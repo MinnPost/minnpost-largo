@@ -117,6 +117,18 @@ if ( ! function_exists( 'minnpost_largo_get_og_image' ) ) :
 				$image_url = isset( $image_data['image_url'] ) ? $image_data['image_url'] : '';
 			}
 		}
+		return $image_url;
+	}
+endif;
+
+/**
+* Get a default og image url if nothing else is present
+*
+* @return string $image_url
+*/
+if ( ! function_exists( 'minnpost_largo_get_og_default' ) ) :
+	function minnpost_largo_get_og_default() {
+		$image_url = '';
 		if ( '' === $image_url ) {
 			$image_url = get_option( 'default_image_url', '' );
 		}
@@ -193,6 +205,10 @@ if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 					<meta property="og:image" content="<?php echo wp_get_attachment_url( $image->ID ); ?>">
 				<?php endforeach; ?>
 			<?php endif; ?>
+		<?php endif; ?>
+
+		<?php if ( '' === minnpost_largo_get_og_image() && '' === minnpost_largo_get_og_image_thumbnail() && '' !== minnpost_largo_get_og_default() ) : ?>
+			<meta property="og:image" content="<?php echo minnpost_largo_get_og_default(); ?>">
 		<?php endif; ?>
 
 		<?php if ( is_singular() ) : ?>
