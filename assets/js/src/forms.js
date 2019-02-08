@@ -21,28 +21,40 @@
 		var consolidatedEmails = [];
 		var newEmails          = [];
 		var ajax_form_data     = '';
-		if ( $('.m-user-email-list').length > 0 ) {
+		var that               = '';
+		if ( $( '.m-user-email-list' ).length > 0 ) {
 			nextEmailCount = $( '.m-user-email-list > li' ).length;
 			// if a user removes an email, take it away from the visual and from the form
-			$('.a-form-caption.a-remove-email input[type="checkbox"]').change( function( event ) {
+			$( '.m-user-email-list' ).on( 'change', '.a-form-caption.a-remove-email input[type="checkbox"]', function( event ) {
 				emailToRemove = $( this ).val();
 				$( '.m-user-email-list > li' ).each( function( index ) {
 					if ( $( this ).contents().get(0).nodeValue !== emailToRemove ) {
 						consolidatedEmails.push( $( this ).contents().get(0).nodeValue );
 					}
 				});
-				// check for confirmation from user, then do this:
-				$( this ).parent().html( 'Are you sure you want to remove this email? <button type="button" name="a-confirm-removal" id="a-confirm-removal" class="a-button">Confirm</button>' );
-				$( '#a-confirm-removal' ).click( function( event ) {
+				// get or don't get confirmation from user
+				that = $( this ).parent().parent();
+				$( '.a-pre-confirm', that ).hide();
+				$( '.a-form-confirm', that ).show();
+				$( this ).parent().parent().addClass( 'a-pre-confirm' );
+				$( this ).parent().parent().removeClass( 'a-stop-confirm' );
+				$( this ).parent().after( '<li class="a-form-caption a-form-confirm"><label>Are you sure? <a id="a-confirm-removal" href="#">Yes</a> | <a id="a-stop-removal" href="#">No</a></label></li>' );
+				$( '.m-user-email-list' ).on( 'click', '#a-confirm-removal', function( event ) {
+					event.preventDefault();
 					$( this ).parents( 'li' ).remove();
 					$( '#_consolidated_emails' ).val( consolidatedEmails.join( ',' ) );
 					nextEmailCount = $( '.m-user-email-list > li' ).length;
 					form.submit();
 				});
+				$( '.m-user-email-list' ).on( 'click', '#a-stop-removal', function( event ) {
+					event.preventDefault();
+					$( '.a-pre-confirm', that.parent() ).show();
+					$( '.a-form-confirm', that.parent() ).remove();
+				});
 			});
 		}
 		// if a user wants to add an email, give them a properly numbered field
-		$('.a-form-caption.a-add-email').click( function( event ) {
+		$('.a-form-caption.a-add-email').on( 'click', function( event ) {
 			event.preventDefault();
 			$('.a-form-caption.a-add-email').before('<div class="a-input-with-button a-button-sentence"><input type="email" name="_consolidated_emails_array[]" id="_consolidated_emails_array[]" value=""><button type="submit" name="a-add-email-' + nextEmailCount + '" id="a-add-email-' + nextEmailCount + '" class="a-button">Add</button></div>' );
 			nextEmailCount++;
@@ -65,7 +77,7 @@
 				}).get();
 				$.each( newEmails, function( index, value ) {
 					nextEmailCount = nextEmailCount + index;
-					$( '.m-user-email-list' ).append( '<li>' + value + '<ul class="a-form-caption a-user-email-actions"><li class="a-form-caption a-make-primary-email"><input type="radio" name="primary_email" id="primary_email_' + nextEmailCount + '" value="' + value + '"><label for="primary_email_' + nextEmailCount + '"><small>Make Primary</small></label></li><li class="a-form-caption a-remove-email"><input type="checkbox" name="remove_email[' + nextEmailCount + ']" id="remove_email_' + nextEmailCount + '" value="' + value + '"><label for="remove_email_' + nextEmailCount + '"><small>Remove</small></label></li></ul></li>' );
+					$( '.m-user-email-list' ).append( '<li>' + value + '<ul class="a-form-caption a-user-email-actions"><li class="a-form-caption a-pre-confirm a-make-primary-email"><input type="radio" name="primary_email" id="primary_email_' + nextEmailCount + '" value="' + value + '"><label for="primary_email_' + nextEmailCount + '"><small>Make Primary</small></label></li><li class="a-form-caption a-pre-confirm a-remove-email"><input type="checkbox" name="remove_email[' + nextEmailCount + ']" id="remove_email_' + nextEmailCount + '" value="' + value + '"><label for="remove_email_' + nextEmailCount + '"><small>Remove</small></label></li></ul></li>' );
 				});
 				$( '.m-form-change-email .a-input-with-button' ).remove();
 			});

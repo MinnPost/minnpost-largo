@@ -58,20 +58,20 @@
 					</li>
 					<?php foreach ( $user_other_emails as $key => $other_email ) : ?>
 						<li><?php echo esc_html( trim( $other_email ) ); ?><ul class="a-form-caption a-user-email-actions">
-								<li class="a-form-caption a-make-primary-email">
+								<li class="a-form-caption a-pre-confirm a-make-primary-email">
 									<input type="radio" name="primary_email" id="primary_email_<?php echo esc_attr( $key ); ?>" value="<?php echo esc_html( $other_email ); ?>">
 									<label for="primary_email_<?php echo esc_attr( $key ); ?>"><small><?php echo esc_html( 'Make Primary', 'minnpost-largo' ); ?></small></label>
 								</li>
-								<li class="a-form-caption a-remove-email">
+								<li class="a-form-caption a-pre-confirm a-remove-email">
 									<input type="checkbox" name="remove_email[<?php echo esc_attr( $key ); ?>]" id="remove_email_<?php echo esc_attr( $key ); ?>" value="<?php echo esc_html( $other_email ); ?>">
 									<label for="remove_email_<?php echo esc_attr( $key ); ?>"><small><?php echo esc_html( 'Remove', 'minnpost-largo' ); ?></small></label>
 								</li>
 							</ul>
 						</li>
 					<?php endforeach; ?>
-					<input type="hidden" name="email" id="email" value="<?php echo isset( $attributes['user']->user_email ) ? esc_html( $attributes['user']->user_email ) : ''; ?>">
-					<input type="hidden" name="_consolidated_emails" id="_consolidated_emails" value="<?php echo isset( $attributes['user']->user_email ) ? esc_html( $attributes['user']->user_email ) . ',' : ''; ?><?php echo implode( ',', array_map( 'esc_html', wp_unslash( $user_other_emails ) ) ); ?>">
 				</ul>
+				<input type="hidden" name="email" id="email" value="<?php echo isset( $attributes['user']->user_email ) ? esc_html( $attributes['user']->user_email ) : ''; ?>">
+				<input type="hidden" name="_consolidated_emails" id="_consolidated_emails" value="<?php echo isset( $attributes['user']->user_email ) ? esc_html( $attributes['user']->user_email ) . ',' : ''; ?><?php echo implode( ',', array_map( 'esc_html', wp_unslash( $user_other_emails ) ) ); ?>">
 			<?php else : ?>
 					<input type="email" name="email" id="email" value="<?php echo isset( $_POST['email'] ) && wp_verify_nonce( sanitize_key( $_POST['wp_create_nonce'] ), 'uam-account-settings-nonce' ) ? sanitize_email( $_POST['email'] ) : isset( $attributes['user']->user_email ) ? esc_html( $attributes['user']->user_email ) : ''; ?>" required>
 			<?php endif; ?>
