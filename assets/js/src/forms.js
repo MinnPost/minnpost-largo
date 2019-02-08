@@ -22,30 +22,29 @@
 		var newEmails          = [];
 		var ajax_form_data     = '';
 		if ( $('.m-user-email-list').length > 0 ) {
-			nextEmailCount = $('.m-user-email-list > li').length;
+			nextEmailCount = $( '.m-user-email-list > li' ).length;
 			// if a user removes an email, take it away from the visual and from the form
-			$('.a-form-caption.a-remove-email').change( function( event ) {
-				//emailToRemove = $(this).val();
-				//$( this ).parents( 'li' ).remove();
-				ajax_form_data = $( this ).serialize(); //add our own ajax check as X-Requested-With is not always reliable
-
-				ajax_form_data = ajax_form_data + '&ajaxrequest=true&subscribe';
-				$.ajax({
-					url: full_url,
-					type: 'post',
-					dataType: 'json',
-					data: ajax_form_data
-				}).done(function (response) {
-					console.log('respond');
+			$('.a-form-caption.a-remove-email input[type="checkbox"]').change( function( event ) {
+				emailToRemove = $( this ).val();
+				$( '.m-user-email-list > li' ).each( function( index ) {
+					if ( $( this ).contents().get(0).nodeValue !== emailToRemove ) {
+						consolidatedEmails.push( $( this ).contents().get(0).nodeValue );
+					}
 				});
-
+				// check for confirmation from user, then do this:
+				$( this ).parent().html( 'Are you sure you want to remove this email? <button type="button" name="a-confirm-removal" id="a-confirm-removal" class="a-button">Confirm</button>' );
+				$( '#a-confirm-removal' ).click( function( event ) {
+					$( this ).parents( 'li' ).remove();
+					$( '#_consolidated_emails' ).val( consolidatedEmails.join( ',' ) );
+					nextEmailCount = $( '.m-user-email-list > li' ).length;
+					form.submit();
+				});
 			});
-			nextEmailCount = $('.m-user-email-list > li').length;
 		}
 		// if a user wants to add an email, give them a properly numbered field
 		$('.a-form-caption.a-add-email').click( function( event ) {
 			event.preventDefault();
-			$('.a-form-caption.a-add-email').before('<div class="a-input-with-button a-button-sentence"><input type="email" name="_consolidated_emails_array[]" id="_consolidated_emails_array[]" value=""><button type="submit" name="a-add-email-' + nextEmailCount + '" id="a-add-email-' + nextEmailCount + '" class="a-button">Add</button></div>');
+			$('.a-form-caption.a-add-email').before('<div class="a-input-with-button a-button-sentence"><input type="email" name="_consolidated_emails_array[]" id="_consolidated_emails_array[]" value=""><button type="submit" name="a-add-email-' + nextEmailCount + '" id="a-add-email-' + nextEmailCount + '" class="a-button">Add</button></div>' );
 			nextEmailCount++;
 		});
 		$( form ).on( 'submit', function( event ) {
@@ -66,7 +65,7 @@
 				}).get();
 				$.each( newEmails, function( index, value ) {
 					nextEmailCount = nextEmailCount + index;
-					$( '.m-user-email-list' ).append('<li>' + value + '<ul class="a-form-caption a-user-email-actions"><li class="a-form-caption a-make-primary-email"><input type="radio" name="primary_email" id="primary_email_' + nextEmailCount + '" value="' + value + '"><label for="primary_email_' + nextEmailCount + '"><small>Make Primary</small></label></li><li class="a-form-caption a-remove-email"><input type="checkbox" name="remove_email[' + nextEmailCount + ']" id="remove_email_' + nextEmailCount + '" value="' + value + '"><label for="remove_email_' + nextEmailCount + '"><small>Remove</small></label></li></ul></li>' );
+					$( '.m-user-email-list' ).append( '<li>' + value + '<ul class="a-form-caption a-user-email-actions"><li class="a-form-caption a-make-primary-email"><input type="radio" name="primary_email" id="primary_email_' + nextEmailCount + '" value="' + value + '"><label for="primary_email_' + nextEmailCount + '"><small>Make Primary</small></label></li><li class="a-form-caption a-remove-email"><input type="checkbox" name="remove_email[' + nextEmailCount + ']" id="remove_email_' + nextEmailCount + '" value="' + value + '"><label for="remove_email_' + nextEmailCount + '"><small>Remove</small></label></li></ul></li>' );
 				});
 				$( '.m-form-change-email .a-input-with-button' ).remove();
 			});
