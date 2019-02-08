@@ -1,6 +1,8 @@
 <form id="account-settings-form" action="<?php echo esc_url( $attributes['current_url'] ); ?>" method="post" class="m-form m-form-standalone m-form-user m-form-account-settings">
 	<?php if ( isset( $_GET['user_id'] ) ) : ?>
 		<input type="hidden" name="user_id" value="<?php echo intval( wp_unslash( $_GET['user_id'] ) ); ?>">
+	<?php else: ?>
+		<input type="hidden" name="user_id" value="<?php echo intval( wp_unslash( get_current_user_id() ) ); ?>">
 	<?php endif; ?>
 	<input type="hidden" name="user_account_management_action" value="account-settings-update">
 	<input type="hidden" name="user_account_management_redirect" value="<?php echo esc_url( $attributes['redirect'] ); ?>"/>
