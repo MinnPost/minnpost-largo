@@ -27,6 +27,7 @@ if ( ! function_exists( 'minnpost_image_settings' ) ) :
 		add_image_size( 'author-thumbnail', 130, 85, true ); // cropping the height appears to be necessary
 		remove_image_size( 'rpwe-thumbnail' ); // this is from the recent post widget; we don't need it
 		add_image_size( 'partner-logo', 200, 9999 ); // scale so the width is 200px
+		add_image_size( 'sponsor-thumb', '130', '130', false ); // max size is a 130x130 square, but don't crop the height
 	}
 endif;
 
