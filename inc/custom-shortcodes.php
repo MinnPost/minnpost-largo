@@ -28,7 +28,7 @@ if ( ! function_exists( 'widget_instance' ) ) :
 		if ( '' !== $args['id'] && false !== strpos( $args['id'], strtolower( $spill_type ) ) ) {
 			$id     = str_replace( strtolower( $spill_type ) . '-', '', $args['id'] );
 			$spills = get_option( 'widget_' . strtolower( $spill_type ), '' );
-			if ( array_key_exists( $id, $spills ) ) {
+			if ( is_array( $spills ) && array_key_exists( $id, $spills ) ) {
 				$args = $spills[ $id ];
 				ob_start();
 				the_widget( $spill_type, $args );
@@ -258,7 +258,7 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 				$temp_title      = get_the_title( $post->ID );
 				$temp_sponsorurl = get_post_meta( $post->ID, 'cr3ativ_sponsorurl', true );
 				$temp_excerpt    = get_post_meta( $post->ID, 'cr3ativ_sponsortext', true );
-				$image_data      = get_minnpost_post_image( 'thumbnail', array( 'location' => 'footer' ), $post->ID );
+				$image_data      = get_minnpost_post_image( 'sponsor-thumbnail', array( 'location' => 'footer' ), $post->ID );
 				$temp_image      = $image_data['markup'];
 				$output         .= '<li class="a-sponsor">';
 
