@@ -1,4 +1,4 @@
-input[type="submit"], button[type="submit"], a.a-button {
+input[type="submit"], button[type="submit"], button[type="button"], a.a-button {
 	padding: 0.25em;
 	font-size: $base-line-height-em;
 	font-weight: normal;
@@ -35,9 +35,21 @@ input[type="submit"], button[type="submit"], a.a-button {
 	}
 }
 .a-button-sentence {
-	a.a-button:link, a.a-button:visited {
+	a.a-button:link, a.a-button:visited, button[type="submit"], button[type="button"] {
 		margin-right: 0;
 	}
+}
+.a-input-with-button {
+	width: 100%;
+	margin-bottom: 0.375em;
+	display: flex;
+	input[type="submit"], button[type="submit"], button[type="button"], a.a-button {
+		margin: 0;
+	}
+}
+
+.m-form-standalone .m-form-item .a-input-with-button input:not([type=checkbox]):not([type=radio]), .m-form-standalone .m-form-item .a-input-with-button select, .m-form-standalone .m-form-item .a-input-with-button textarea {
+	margin-bottom: 0;
 }
 
 // overwrite gravityforms button style
