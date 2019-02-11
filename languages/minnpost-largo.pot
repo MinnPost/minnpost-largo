@@ -378,39 +378,39 @@ msgstr ""
 msgid "Edit %s"
 msgstr ""
 
-#: inc/uploads.php:42
+#: inc/uploads.php:43
 msgid "Feature"
 msgstr ""
 
-#: inc/uploads.php:43
+#: inc/uploads.php:44
 msgid "Feature large"
 msgstr ""
 
-#: inc/uploads.php:44
+#: inc/uploads.php:45
 msgid "Feature medium"
 msgstr ""
 
-#: inc/uploads.php:45
+#: inc/uploads.php:46
 msgid "Newsletter thumbnail"
 msgstr ""
 
-#: inc/uploads.php:46
+#: inc/uploads.php:47
 msgid "Featured column"
 msgstr ""
 
-#: inc/uploads.php:47
+#: inc/uploads.php:48
 msgid "Author photo"
 msgstr ""
 
-#: inc/uploads.php:48
+#: inc/uploads.php:49
 msgid "Author teaser"
 msgstr ""
 
-#: inc/uploads.php:49
+#: inc/uploads.php:50
 msgid "Author thumbnail"
 msgstr ""
 
-#: inc/uploads.php:50
+#: inc/uploads.php:51
 msgid "Partner logo"
 msgstr ""
 
@@ -426,50 +426,54 @@ msgstr ""
 msgid "Reading Preferences:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:34
+#: user-account-management-templates/front-end/account-settings-form.php:36
 msgid "Your account settings were successfully updated."
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:45
+#: user-account-management-templates/front-end/account-settings-form.php:47
 msgid "Email address:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:47
+#: user-account-management-templates/front-end/account-settings-form.php:49
 msgid "Email addresses:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:74
+#: user-account-management-templates/front-end/account-settings-form.php:56
+msgid "(Primary)"
+msgstr ""
+
+#: user-account-management-templates/front-end/account-settings-form.php:84
 msgid "First Name:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:74, user-account-management-templates/front-end/account-settings-form.php:79, user-account-management-templates/front-end/account-settings-form.php:85, user-account-management-templates/front-end/account-settings-form.php:89, user-account-management-templates/front-end/account-settings-form.php:95, user-account-management-templates/front-end/account-settings-form.php:101
+#: user-account-management-templates/front-end/account-settings-form.php:84, user-account-management-templates/front-end/account-settings-form.php:89, user-account-management-templates/front-end/account-settings-form.php:95, user-account-management-templates/front-end/account-settings-form.php:99, user-account-management-templates/front-end/account-settings-form.php:105, user-account-management-templates/front-end/account-settings-form.php:111
 msgid "This field is required."
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:79
+#: user-account-management-templates/front-end/account-settings-form.php:89
 msgid "Last Name:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:85
+#: user-account-management-templates/front-end/account-settings-form.php:95
 msgid "City:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:89
+#: user-account-management-templates/front-end/account-settings-form.php:99
 msgid "State:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:95
+#: user-account-management-templates/front-end/account-settings-form.php:105
 msgid "Zip Code:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:101
+#: user-account-management-templates/front-end/account-settings-form.php:111
 msgid "Country:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:116
+#: user-account-management-templates/front-end/account-settings-form.php:126
 msgid "Only fill in if you are not human:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:121
+#: user-account-management-templates/front-end/account-settings-form.php:131
 msgid "Save Changes"
 msgstr ""
