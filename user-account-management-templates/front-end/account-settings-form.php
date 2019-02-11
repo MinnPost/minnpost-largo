@@ -57,7 +57,7 @@
 						</ul>
 					</li>
 					<?php foreach ( $user_other_emails as $key => $other_email ) : ?>
-						<li><?php echo esc_html( trim( $other_email ) ); ?><ul class="a-form-caption a-user-email-actions">
+						<li id="user-email-<?php echo esc_attr( $key ); ?>"><?php echo esc_html( trim( $other_email ) ); ?><ul class="a-form-caption a-user-email-actions">
 								<li class="a-form-caption a-pre-confirm a-make-primary-email">
 									<input type="radio" name="primary_email" id="primary_email_<?php echo esc_attr( $key ); ?>" value="<?php echo esc_html( $other_email ); ?>">
 									<label for="primary_email_<?php echo esc_attr( $key ); ?>"><small><?php echo esc_html( 'Make Primary', 'minnpost-largo' ); ?></small></label>

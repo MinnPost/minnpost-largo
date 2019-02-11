@@ -12,11 +12,20 @@
 		return false;
 	}
 
+	jQuery.fn.textNodes = function() {
+		return this.contents().filter(function() {
+			return (this.nodeType === Node.TEXT_NODE && this.nodeValue.trim() !== "");
+		});
+	}
+
 	function manageEmails() {
 		var form               = $('#account-settings-form');
 		var rest_root          = user_account_management_rest.site_url + user_account_management_rest.rest_namespace;
 		var full_url           = rest_root + '/' + 'update-user/';
 		var nextEmailCount     = 1;
+		var newPrimaryEmail    = '';
+		var oldPrimaryEmail    = '';
+		var primaryId          = '';
 		var emailToRemove      = '';
 		var consolidatedEmails = [];
 		var newEmails          = [];
@@ -24,6 +33,20 @@
 		var that               = '';
 		if ( $( '.m-user-email-list' ).length > 0 ) {
 			nextEmailCount = $( '.m-user-email-list > li' ).length;
+			// if a user selects a new primary, move it into that position
+			$( '.m-user-email-list' ).on( 'change', '.a-form-caption.a-make-primary-email input[type="radio"]', function( event ) {
+				newPrimaryEmail = $( this ).val();
+				oldPrimaryEmail = $( '#email' ).val();
+				primaryId       = $( this ).prop( 'id' ).replace( 'primary_email_', '' );
+				// change the form values to the old primary email
+				$( '#primary_email_' + primaryId ).val( oldPrimaryEmail );
+				$( '#remove_email_' + primaryId ).val( oldPrimaryEmail );
+				// change the user facing values
+				$( '.m-user-email-list > li' ).textNodes().first().replaceWith( newPrimaryEmail );
+				$( '#user-email-' + primaryId ).textNodes().first().replaceWith( oldPrimaryEmail );
+				// change the main hidden form value. do this last.
+				$( '#email' ).val( newPrimaryEmail );
+			});
 			// if a user removes an email, take it away from the visual and from the form
 			$( '.m-user-email-list' ).on( 'change', '.a-form-caption.a-remove-email input[type="checkbox"]', function( event ) {
 				emailToRemove = $( this ).val();
