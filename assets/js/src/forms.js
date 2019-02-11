@@ -18,10 +18,16 @@
 		});
 	}
 
+	function getConfirmChangeMarkup( action ) {
+		var markup = '<li class="a-form-caption a-form-confirm"><label>Are you sure? <a id="a-confirm-' + action + '" href="#">Yes</a> | <a id="a-stop-' + action + '" href="#">No</a></label></li>';
+		return markup;
+	}
+
 	function manageEmails() {
 		var form               = $('#account-settings-form');
 		var rest_root          = user_account_management_rest.site_url + user_account_management_rest.rest_namespace;
 		var full_url           = rest_root + '/' + 'update-user/';
+		var confirmChange      = '';
 		var nextEmailCount     = 1;
 		var newPrimaryEmail    = '';
 		var oldPrimaryEmail    = '';
@@ -34,25 +40,50 @@
 		if ( $( '.m-user-email-list' ).length > 0 ) {
 			nextEmailCount = $( '.m-user-email-list > li' ).length;
 			// if a user selects a new primary, move it into that position
-			$( '.m-user-email-list' ).on( 'change', '.a-form-caption.a-make-primary-email input[type="radio"]', function( event ) {
+			$( '.m-user-email-list' ).on( 'click', '.a-form-caption.a-make-primary-email input[type="radio"]', function( event ) {
+				
 				newPrimaryEmail = $( this ).val();
 				oldPrimaryEmail = $( '#email' ).val();
 				primaryId       = $( this ).prop( 'id' ).replace( 'primary_email_', '' );
-				// change the form values to the old primary email
-				$( '#primary_email_' + primaryId ).val( oldPrimaryEmail );
-				$( '#remove_email_' + primaryId ).val( oldPrimaryEmail );
-				// change the user facing values
-				$( '.m-user-email-list > li' ).textNodes().first().replaceWith( newPrimaryEmail );
-				$( '#user-email-' + primaryId ).textNodes().first().replaceWith( oldPrimaryEmail );
-				// change the main hidden form value. do this last.
-				$( '#email' ).val( newPrimaryEmail );
+				confirmChange   = getConfirmChangeMarkup( 'primary-change' );
+
+				// get or don't get confirmation from user
+				that = $( this ).parent().parent();
+				$( '.a-pre-confirm', that ).hide();
+				$( '.a-form-confirm', that ).show();
+				$( this ).parent().parent().addClass( 'a-pre-confirm' );
+				$( this ).parent().parent().removeClass( 'a-stop-confirm' );
+				//$( this ).parent().after( confirmChange );
+				$( this ).parent().parent().append( confirmChange );
+
+				$( '.m-user-email-list' ).on( 'click', '#a-confirm-primary-change', function( event ) {
+					event.preventDefault();
+					// change the form values to the old primary email
+					$( '#primary_email_' + primaryId ).val( oldPrimaryEmail );
+					$( '#remove_email_' + primaryId ).val( oldPrimaryEmail );
+					// change the user facing values
+					$( '.m-user-email-list > li' ).textNodes().first().replaceWith( newPrimaryEmail );
+					$( '#user-email-' + primaryId ).textNodes().first().replaceWith( oldPrimaryEmail );
+					// change the main hidden form value
+					$( '#email' ).val( newPrimaryEmail );
+					// submit form values.
+					form.submit();
+					$( '.a-form-confirm', that.parent() ).remove();
+				});
+				$( '.m-user-email-list' ).on( 'click', '#a-stop-primary-change', function( event ) {
+					event.preventDefault();
+					$( '.a-pre-confirm', that.parent() ).show();
+					$( '.a-form-confirm', that.parent() ).remove();
+				});
 			});
+
 			// if a user removes an email, take it away from the visual and from the form
 			$( '.m-user-email-list' ).on( 'change', '.a-form-caption.a-remove-email input[type="checkbox"]', function( event ) {
 				emailToRemove = $( this ).val();
+				confirmChange   = getConfirmChangeMarkup( 'removal' );
 				$( '.m-user-email-list > li' ).each( function( index ) {
-					if ( $( this ).contents().get(0).nodeValue !== emailToRemove ) {
-						consolidatedEmails.push( $( this ).contents().get(0).nodeValue );
+					if ( $( this ).contents().get( 0 ).nodeValue !== emailToRemove ) {
+						consolidatedEmails.push( $( this ).contents().get( 0 ).nodeValue );
 					}
 				});
 				// get or don't get confirmation from user
@@ -61,13 +92,15 @@
 				$( '.a-form-confirm', that ).show();
 				$( this ).parent().parent().addClass( 'a-pre-confirm' );
 				$( this ).parent().parent().removeClass( 'a-stop-confirm' );
-				$( this ).parent().after( '<li class="a-form-caption a-form-confirm"><label>Are you sure? <a id="a-confirm-removal" href="#">Yes</a> | <a id="a-stop-removal" href="#">No</a></label></li>' );
+				//$( this ).parent().after( confirmChange );
+				$( this ).parent().parent().append( confirmChange );
 				$( '.m-user-email-list' ).on( 'click', '#a-confirm-removal', function( event ) {
 					event.preventDefault();
 					$( this ).parents( 'li' ).remove();
 					$( '#_consolidated_emails' ).val( consolidatedEmails.join( ',' ) );
 					nextEmailCount = $( '.m-user-email-list > li' ).length;
 					form.submit();
+					$( '.a-form-confirm', that.parent() ).remove();
 				});
 				$( '.m-user-email-list' ).on( 'click', '#a-stop-removal', function( event ) {
 					event.preventDefault();
@@ -76,12 +109,14 @@
 				});
 			});
 		}
+
 		// if a user wants to add an email, give them a properly numbered field
 		$('.a-form-caption.a-add-email').on( 'click', function( event ) {
 			event.preventDefault();
-			$('.a-form-caption.a-add-email').before('<div class="a-input-with-button a-button-sentence"><input type="email" name="_consolidated_emails_array[]" id="_consolidated_emails_array[]" value=""><button type="submit" name="a-add-email-' + nextEmailCount + '" id="a-add-email-' + nextEmailCount + '" class="a-button">Add</button></div>' );
+			$('.a-form-caption.a-add-email').before( '<div class="a-input-with-button a-button-sentence"><input type="email" name="_consolidated_emails_array[]" id="_consolidated_emails_array[]" value=""><button type="submit" name="a-add-email-' + nextEmailCount + '" id="a-add-email-' + nextEmailCount + '" class="a-button">Add</button></div>' );
 			nextEmailCount++;
 		});
+
 		$( form ).on( 'submit', function( event ) {
 			event.preventDefault();
 			ajax_form_data = form.serialize(); //add our own ajax check as X-Requested-With is not always reliable
@@ -94,7 +129,7 @@
 			    },
 				dataType: 'json',
 				data: ajax_form_data
-			}).done(function(data) {
+			}).done( function( data ) {
 				newEmails = $( 'input[name="_consolidated_emails_array[]"]' ).map( function() {
 					return $(this).val();
 				}).get();
