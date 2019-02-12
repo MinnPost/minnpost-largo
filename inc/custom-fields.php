@@ -99,7 +99,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 			$most_recent_newsletter_modified = strtotime( time() );
 		}
 		$newsletter_post_args = array(
-			'ep_integrate'   => true,
+			'es'             => true,
 			'posts_per_page' => -1,
 			'post_type'      => 'post',
 			'orderby'        => 'modified',
@@ -1280,7 +1280,7 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 							'post_status'    => 'publish',
 							'posts_per_page' => 10,
 							'cache_results'  => false,
-							'ep_integrate'   => true,
+							'es'             => true,
 						),
 					),
 				),
@@ -1302,7 +1302,7 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 						'post_status'    => 'publish',
 						'posts_per_page' => 10,
 						'cache_results'  => false,
-						'ep_integrate'   => true,
+						'es'             => true,
 					),
 				),
 				$args
@@ -1321,7 +1321,7 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 					'post_status'    => 'publish',
 					'posts_per_page' => 10,
 					'cache_results'  => false,
-					'ep_integrate'   => true,
+					'es'             => true,
 				),
 			),
 			$args

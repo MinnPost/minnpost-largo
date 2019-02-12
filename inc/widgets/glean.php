@@ -30,7 +30,7 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 				'posts_per_page' => 2,
 				'cat'            => $category,
 				'orderby'        => 'date',
-				'ep_integrate'   => true,
+				'es'             => true,
 			)
 		);
 

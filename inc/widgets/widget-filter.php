@@ -84,7 +84,7 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 					'posts_per_page' => 1,
 					'cat'            => $id,
 					'orderby'        => 'date',
-					'ep_integrate'   => true,
+					'es'             => true,
 				)
 			);
 
@@ -152,11 +152,11 @@ if ( ! function_exists( 'minnpost_recent_stories_widget' ) ) :
 		$exclude_ids   = array_column( $results, 'post_id' );
 		$exclude_ids[] = get_the_ID();
 		$query         = array(
-			'post__not_in'     => $exclude_ids,
-			'post_type'        => 'post',
-			'orderby'          => 'modified',
-			'ep_integrate'     => true,
-			'date_query'       => array(
+			'post__not_in' => $exclude_ids,
+			'post_type'    => 'post',
+			'orderby'      => 'modified',
+			'es'           => true,
+			'date_query'   => array(
 				array(
 					'after' => '7 days ago',
 				),

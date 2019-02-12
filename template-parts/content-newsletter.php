@@ -159,17 +159,17 @@
 				'post__in'       => $top_stories,
 				'posts_per_page' => $top_offset,
 				'orderby'        => 'post__in',
-				'ep_integrate'   => true,
+				'es'             => true,
 			)
 		);
 
 		$second_query = new WP_Query(
 			array(
-				'post__in'     => $top_stories,
-				'paged'        => 1,
-				'offset'       => $top_offset,
-				'orderby'      => 'post__in',
-				'ep_integrate' => true,
+				'post__in' => $top_stories,
+				'paged'    => 1,
+				'offset'   => $top_offset,
+				'orderby'  => 'post__in',
+				'es'       => true,
 			)
 		);
 		// the total does not stop at posts_per_page
@@ -184,7 +184,7 @@
 					'post__in'       => $more_stories,
 					'posts_per_page' => -1,
 					'orderby'        => 'post__in',
-					'ep_integrate'   => true,
+					'es'             => true,
 				)
 			);
 		}
