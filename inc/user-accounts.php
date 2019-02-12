@@ -284,8 +284,21 @@ if ( ! function_exists( 'save_minnpost_user_data' ) ) :
 	function save_minnpost_user_data( $user_data, $existing_user_data ) {
 		// handle consolidated email addresses
 		if ( isset( $user_data['ID'] ) && isset( $user_data['_consolidated_emails'] ) && '' !== $user_data['_consolidated_emails'] ) {
-			update_user_meta( $user_data['ID'], '_consolidated_emails', $user_data['_consolidated_emails'] );
+			$all_emails = array_map( 'trim', explode( ',', $user_data['_consolidated_emails'] ) );
 		}
+
+		// handle removing email addresses from a user's account
+		if ( isset( $user_data['ID'] ) && isset( $user_data['remove_email'] ) ) {
+			$all_emails = array_diff( $all_emails, $user_data['remove_email'] );
+		}
+
+		// make a string out of the email array and save it
+		if ( isset( $all_emails ) ) {
+			$all_emails = array_unique( $all_emails );
+			$all_emails = implode( ',', $all_emails );
+			update_user_meta( $user_data['ID'], '_consolidated_emails', $all_emails );
+		}
+
 		// reading preferences field
 		if ( isset( $user_data['ID'] ) && isset( $user_data['_reading_topics'] ) && '' !== $user_data['_reading_topics'] ) {
 			update_user_meta( $user_data['ID'], '_reading_topics', $user_data['_reading_topics'] );
