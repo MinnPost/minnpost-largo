@@ -129,7 +129,7 @@
 			nextEmailCount++;
 		});
 
-		$( '.m-entry-content' ).on( 'submit', form, function( event ) {
+		$( '.m-entry-content' ).on( 'submit', '#account-settings-form', function( event ) {
 			event.preventDefault();
 			ajax_form_data = form.serialize(); //add our own ajax check as X-Requested-With is not always reliable
 			ajax_form_data = ajax_form_data + '&rest=true';
