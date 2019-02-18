@@ -30,7 +30,7 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 			$image     = $image_data['markup'];
 		}
 
-		if ( post_password_required() || is_attachment() || ( ! isset( $image_id ) && ! isset( $image_url ) ) || empty( $image ) ) {
+		if ( post_password_required() || is_attachment() || ( ! isset( $image_id ) && ! isset( $image_url ) ) || empty( $image ) || false === $id ) {
 			return;
 		}
 
@@ -1016,6 +1016,9 @@ if ( ! function_exists( 'minnpost_plus_icon' ) ) :
 	function minnpost_plus_icon( $post_id = '', $lazy_load = true ) {
 		if ( '' === $post_id ) {
 			$post_id = get_the_ID();
+		}
+		if ( false === $post_id ) {
+			return;
 		}
 		$access_level = get_post_meta( $post_id, '_access_level', true );
 		if ( '' !== $access_level ) {
