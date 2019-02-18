@@ -20,6 +20,11 @@ if ( ! function_exists( 'minnpost_largo_web_app_manifest' ) ) :
 		$args['display']     = 'browser';
 		$args['icons']       = array(
 			array(
+				'src'   => get_theme_file_uri() . '/assets/img/app-icons/favicon.ico',
+				'sizes' => '16x16',
+				'type'  => 'image/ico',
+			),
+			array(
 				'src'   => get_theme_file_uri() . '/assets/img/app-icons/icon-72x72.png',
 				'sizes' => '72x72',
 				'type'  => 'image/png',
