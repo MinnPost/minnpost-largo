@@ -275,3 +275,5 @@ add_filter( 'allowed_redirect_hosts', function( $hosts ) {
 	$hosts[] = 'givemn.org';
     return $hosts;
 });
+
+wpcom_vip_load_gutenberg( false );
