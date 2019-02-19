@@ -69,7 +69,8 @@ if ( ! function_exists( 'custom_archive_query_vars' ) ) :
 	}
 endif;
 
-// add_filter( 'coauthors_plus_should_query_post_author', '__return_false' );
+// Use simple tax queries for CAP to improve performance
+add_filter( 'coauthors_plus_should_query_post_author', '__return_false' );
 
 /**
 * Change the post query used for zoninator recent posts and for the search box
