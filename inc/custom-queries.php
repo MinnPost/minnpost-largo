@@ -47,6 +47,14 @@ if ( ! function_exists( 'custom_archive_query_vars' ) ) :
 				}
 			} elseif ( is_author() ) {
 				$featured_num = 3;
+				// author archives should not get byline posts
+				$query->set( 'meta_query', array(
+						array(
+							'key' => '_mp_subtitle_settings_byline',
+							'compare' => 'NOT EXISTS',
+						)
+					)
+				);
 			} else {
 				$featured_num = 0;
 			}
