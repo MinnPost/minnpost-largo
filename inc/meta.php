@@ -161,6 +161,7 @@ if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 	function minnpost_largo_add_meta_tags() {
 		?>
 		<meta property="og:site_name" content="<?php echo get_bloginfo( 'name' ); ?>">
+		<link rel="shortcut icon" href="<?php echo get_theme_file_uri( '/assets/img/app-icons/favicon.ico' ); ?>" type="image/x-icon" />
 		<meta property="og:locale" content="<?php echo get_locale(); ?>">
 		<meta property="og:url" content="<?php echo get_current_url(); ?>">
 		<meta name="twitter:site" content="@<?php echo get_bloginfo( 'name' ); ?>" />
