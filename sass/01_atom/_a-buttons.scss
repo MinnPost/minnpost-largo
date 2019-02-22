@@ -33,10 +33,29 @@ input[type="submit"], button[type="submit"], button[type="button"], a.a-button {
 			background: palette(blue, dark);
 		}
 	}
+	&.a-button-secondary {
+		color: $color__gray-meta;
+		border-color: $color__border-button;
+		background: $color__background-screen;
+		box-shadow: 0 1px 0 #ccc;
+		border-width: 1px;
+		border-style: solid;
+		&:hover, &:focus, &:active {
+			background: darken($color__background-screen, 10);
+			text-decoration: none;
+		}
+	}
 }
 .a-button-sentence {
 	a.a-button:link, a.a-button:visited, button[type="submit"], button[type="button"] {
 		margin-right: 0;
+	}
+	.a-between-buttons {
+		display: inline-block;
+		margin: 0 0.5em;
+		color: $color__gray-meta;
+		text-transform: uppercase;
+		font-family: $font__sans;
 	}
 }
 .a-input-with-button {
