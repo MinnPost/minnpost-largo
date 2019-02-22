@@ -321,7 +321,8 @@ nav {
 		li {
 			display: none;
 			line-height: 3em;
-			margin: 0 0.75em;
+			margin: 0 0.5em;
+			white-space: nowrap;
 			a {
 				background: transparent;
 			    font-weight: normal;
