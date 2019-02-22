@@ -246,6 +246,10 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 		}
 
 		$output .= '<li' . $active_class . '><a href="' . $url . '">' . $item->title . '</a>';
+
+		if ( 'Your MinnPost' === $item->title ) {
+			$output .= '<button class="menu-toggle" aria-controls="user-account-management" aria-expanded="false">' . esc_html( 'Sections', 'minnpost-largo' ) . '</button>';
+		}
 	}
 
 	// end item with a </li>

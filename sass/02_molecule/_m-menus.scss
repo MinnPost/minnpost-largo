@@ -1,5 +1,19 @@
 $a-user-initial-size: 18px;
 
+nav {
+	li span.a-arrow-down {
+		width: 0; 
+		height: 0; 
+		border-left: 4px solid transparent;
+		border-right: 4px solid transparent;
+		border-top: 4px solid $color__minnpost-black;
+		position: absolute;
+		display: block;
+		top: 6px;
+		right: 0;
+	}
+}
+
 .m-secondary-navigation, .m-featured-navigation, .m-pagination {
 	position: relative;
 	ul {
@@ -232,17 +246,6 @@ $a-user-initial-size: 18px;
 		line-height: $a-user-initial-size;
 		// letter-spacing: 0.075em; // if we use two letters
 	}
-	li span.a-arrow-down {
-		width: 0; 
-		height: 0; 
-		border-left: 4px solid transparent;
-		border-right: 4px solid transparent;
-		border-top: 4px solid $color__minnpost-black;
-		position: absolute;
-		display: block;
-		top: 6px;
-		right: 0;
-	}
 	ul ul {
 		position: absolute;
 		z-index: 100;
@@ -278,13 +281,45 @@ $a-user-initial-size: 18px;
 }
 
 #navigation-user-account-management {
+	z-index: 10;
+	position: relative;
+	button {
+		display: inline-block;
+		-webkit-appearance: none;
+		border: 0;
+		margin: 0 0 0 6px;
+		text-indent: 6px;
+		padding: 0;
+		line-height: inherit;
+		vertical-align: middle;
+		cursor: pointer;
+		font: inherit;
+		color: $color__minnpost-black;
+		background: transparent;
+		overflow: visible;
+		-moz-user-select: text;
+		text-transform: uppercase;
+		font-weight: bold;
+		font-family: $font__sans;
+		font-size: 76.9%;
+		&:hover, &:focus {
+			background: $color__minnpost-white;
+		}
+		&:after {
+		    content: " \25BC";
+		}
+	}
 	ul {
 		display: flex;
+		flex-grow: none;
+		flex-wrap: nowrap;
+		flex-direction: column;
 		background: $color__gray-sub-menu;
 		justify-content: flex-start;
 		padding: 0 -0.75em;
 		margin: 1em 0;
 		li {
+			display: none;
 			line-height: 3em;
 			margin: 0 0.75em;
 			a {
@@ -293,9 +328,25 @@ $a-user-initial-size: 18px;
 			    height: 3em;
 			    padding: 0 0 0 8px;
 			    vertical-align: middle;
+			    position: relative;
 			}
 			&.active > a {
 				font-weight: bold;
+			}
+			&:first-of-type {
+				display: block;
+			}
+		}
+	}
+	&.toggled {
+		button {
+			&:after {
+				content: " \25B2";
+			}
+		}
+		ul {
+			li {
+				display: block;
 			}
 		}
 	}
@@ -389,6 +440,17 @@ $a-user-initial-size: 18px;
 			display: flex;
 			li a {
 				padding: 8px;
+			}
+		}
+	}
+	#navigation-user-account-management {
+		button {
+			display: none;
+		}
+		ul, &.toggled ul {
+			flex-direction: row;
+			li {
+				display: block;
 			}
 		}
 	}
