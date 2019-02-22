@@ -101,7 +101,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 		$newsletter_post_args = array(
 			'es'             => true,
 			'posts_per_page' => -1,
-			'post_type'      => 'post',
+			'post_type'      => array( 'post' ),
 			'orderby'        => 'modified',
 			'order'          => 'DESC',
 			'date_query'     => array(
@@ -1276,7 +1276,7 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 						'show_thumbnails' => false,
 						'filter_boxes'    => false,
 						'query_args'      => array(
-							'post_type'      => 'post',
+							'post_type'      => array( 'post' ),
 							'post_status'    => 'publish',
 							'posts_per_page' => 10,
 							'cache_results'  => false,
@@ -1298,7 +1298,7 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 					'multiple'   => true,
 					'sortable'   => true,
 					'query_args' => array(
-						'post_type'      => 'post',
+						'post_type'      => array( 'post' ),
 						'post_status'    => 'publish',
 						'posts_per_page' => 10,
 						'cache_results'  => false,
@@ -1317,7 +1317,7 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 				'type'       => $type,
 				'sortable'   => true,
 				'query_args' => array(
-					'post_type'      => 'post',
+					'post_type'      => array( 'post' ),
 					'post_status'    => 'publish',
 					'posts_per_page' => 10,
 					'cache_results'  => false,
