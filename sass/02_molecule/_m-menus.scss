@@ -315,21 +315,20 @@ nav {
 		flex-wrap: nowrap;
 		flex-direction: column;
 		background: $color__gray-sub-menu;
-		justify-content: flex-start;
-		padding: 0 -0.75em;
+		justify-content: space-between;
 		margin: 1em 0;
+		padding: 0 0.5em;
 		li {
 			display: none;
 			line-height: 3em;
-			margin: 0 0.5em;
-			white-space: nowrap;
 			a {
+				display: inline-block;
+				height: 3em;
 				background: transparent;
 			    font-weight: normal;
-			    height: 3em;
-			    padding: 0 0 0 8px;
 			    vertical-align: middle;
 			    position: relative;
+			    white-space: nowrap;
 			}
 			&.active > a {
 				font-weight: bold;
