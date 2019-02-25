@@ -3,6 +3,11 @@
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: wrap;
+	margin-bottom: $standard-page-margin;
+	border-bottom: 1px solid $color__gray-lightest;
+	&:last-of-type {
+		border-bottom: none;
+	}
 	section {
 		text-align: center;
 		padding: 0.5em;
@@ -13,17 +18,8 @@
 			padding-right: 1em;
 		}
 	}
-	.m-donation-platinum {
-		background: $color__minnpost-platinum;
-	}
-	.m-donation-gold {
-		background: $color__minnpost-gold;
-	}
-	.m-donation-silver {
-		background: $color__minnpost-silver;
-	}
-	.m-donation-bronze {
-		background: $color__minnpost-bronze;
+	.m-donation {
+		background: $color__gray-lightest;
 	}
 	.a-donation-amount {
 		font-size: 3em;
