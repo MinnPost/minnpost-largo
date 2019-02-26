@@ -247,7 +247,7 @@ endif;
 if ( ! function_exists( 'minnpost_message_args' ) ) :
 	add_filter( 'wp_message_inserter_post_args', 'minnpost_message_args' );
 	function minnpost_message_args( $args ) {
-		$args['es'] = true;
+		//$args['es'] = true;
 		return $args;
 	}
 endif;
