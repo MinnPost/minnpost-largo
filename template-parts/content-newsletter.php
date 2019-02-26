@@ -159,7 +159,7 @@
 				'post__in'       => $top_stories,
 				'posts_per_page' => $top_offset,
 				'orderby'        => 'post__in',
-				//'es'             => true,
+				'es'             => true,
 			)
 		);
 
@@ -169,7 +169,7 @@
 				'paged'    => 1,
 				'offset'   => $top_offset,
 				'orderby'  => 'post__in',
-				//'es'       => true,
+				'es'       => true,
 			)
 		);
 		// the total does not stop at posts_per_page
@@ -184,7 +184,7 @@
 					'post__in'       => $more_stories,
 					'posts_per_page' => -1,
 					'orderby'        => 'post__in',
-					//'es'             => true,
+					'es'             => true,
 				)
 			);
 		}
