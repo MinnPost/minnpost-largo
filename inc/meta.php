@@ -231,6 +231,13 @@ if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 	}
 endif;
 
+if ( ! function_exists( 'admin_favicon' ) ) :
+	add_action( 'admin_head', 'admin_favicon' );
+	function admin_favicon() {
+		echo '<link rel="shortcut icon" href="' . esc_url( get_theme_file_uri( '/assets/img/app-icons/favicon.ico' ) ) . '" type="image/x-icon">';
+	}
+endif;
+
 if ( ! function_exists( 'remove_dashboard_widgets' ) ) :
 	add_action( 'wp_dashboard_setup', 'remove_dashboard_widgets' );
 	function remove_dashboard_widgets() {
