@@ -221,7 +221,7 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 						'terms'    => array( $category ),
 					),
 				),
-				'es'             => true,
+				//'es'             => true,
 			);
 		} else {
 			$args = array(
@@ -229,7 +229,7 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 				'order'          => $order,
 				'orderby'        => $orderby,
 				'posts_per_page' => $show,
-				'es'             => true,
+				//'es'             => true,
 			);
 		}
 

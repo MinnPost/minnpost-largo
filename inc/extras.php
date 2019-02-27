@@ -219,13 +219,6 @@ if ( ! function_exists( 'minnpost_set_default_editor' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'add_elasticpress' ) ) :
-	//add_action( 'pre_get_posts', 'add_elasticpress' );
-	function add_elasticpress( $query ) {
-		$query->set( 'es', true );
-	}
-endif;
-
 /**
  * Use ElasticPress for Zoninator zone queries
  * @param array $args
@@ -234,7 +227,7 @@ endif;
 if ( ! function_exists( 'minnpost_zoninator_elasticpress' ) ) :
 	add_filter( 'zoninator_recent_posts_args', 'minnpost_zoninator_elasticpress' );
 	function minnpost_zoninator_elasticpress( $args ) {
-		$args['es'] = true;
+		//$args['es'] = true;
 		return $args;
 	}
 endif;
@@ -247,7 +240,7 @@ endif;
 if ( ! function_exists( 'minnpost_message_args' ) ) :
 	add_filter( 'wp_message_inserter_post_args', 'minnpost_message_args' );
 	function minnpost_message_args( $args ) {
-		$args['es'] = true;
+		//$args['es'] = true;
 		return $args;
 	}
 endif;
