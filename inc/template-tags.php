@@ -622,7 +622,9 @@ if ( ! function_exists( 'minnpost_get_term_image' ) ) :
 			$image_id  = get_term_meta( $category_id, '_mp_category_' . $size . '_image_id', true );
 		}
 
-		$image_id = get_term_meta( $category_id, '_mp_category_main_image_id', true );
+		if ( ! isset( $image_id ) ) {
+			$image_id = get_term_meta( $category_id, '_mp_category_main_image_id', true );
+		}
 
 		if ( post_password_required() || is_attachment() || ( ! $image_id && ! $image_url ) ) {
 			return '';
