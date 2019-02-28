@@ -17,7 +17,7 @@
 				<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 			<!--<![endif]-->
 			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-			<link rel="shortcut icon" href="https://www.minnpost.com/sites/default/themes/siteskin/favicon.ico" type="image/x-icon" />
+			<link rel="shortcut icon" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/favicon.ico' ) ); ?>" type="image/x-icon" />
 			<!-- Facebook sharing information tags -->
 			<meta property="og:title" content="<?php echo get_the_title(); ?> | <?php bloginfo( 'name' ); ?>">
 			<title><?php echo get_the_title(); ?> | <?php bloginfo( 'name' ); ?></title>

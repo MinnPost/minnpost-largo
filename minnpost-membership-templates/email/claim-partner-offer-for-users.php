@@ -104,7 +104,7 @@ color: #ffffff !important; text-decoration: none !important;
 											<table cellpadding="0" cellspacing="0" class="contents" style="border-spacing: 0; margin: 0; padding: 0; font-family: Helvetica, Arial, Geneva, sans-serif; color: #1a1818; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; width: 100%; font-size: 16px; text-align: left;">
 												<tr>
 													<td style="border-collapse: collapse; margin: 0; padding: 0; max-height: 90px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-size: 0; line-height: 0px;" valign="bottom">
-														<a href="https://www.minnpost.com/" style="color: #801019; text-decoration: none;"><img src="https://www.minnpost.com/sites/default/themes/siteskin/inc/images/newsletter-logo-daily.png" alt="MinnPost" width="390" height="90" align="left" style="height: auto; margin: 0; padding: 0; border: 0 none; line-height: 100%; outline: none; text-decoration: none; width: 100%; max-width: 390px; max-height: 90px; display: block; vertical-align: bottom;" /></a>
+														<a href="https://www.minnpost.com/" style="color: #801019; text-decoration: none;"><img src="https://www.minnpost.com/wp-content/uploads/sites/default/themes/siteskin/inc/images/newsletter-logo-daily.png" alt="MinnPost" width="390" height="90" align="left" style="height: auto; margin: 0; padding: 0; border: 0 none; line-height: 100%; outline: none; text-decoration: none; width: 100%; max-width: 390px; max-height: 90px; display: block; vertical-align: bottom;" /></a>
 													</td>
 												</tr>
 											</table>
