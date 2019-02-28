@@ -1,5 +1,4 @@
 <?php
-header( 'HTTP/1.0 404 Not Found' );
 /**
  * The template for displaying 404 pages (not found)
  *
