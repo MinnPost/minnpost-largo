@@ -160,17 +160,17 @@ if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 	add_action( 'wp_head', 'minnpost_largo_add_meta_tags' );
 	function minnpost_largo_add_meta_tags() {
 		?>
-		<meta property="og:site_name" content="<?php echo get_bloginfo( 'name' ); ?>">
-		<link rel="shortcut icon" href="<?php echo get_theme_file_uri( '/assets/img/app-icons/favicon.ico' ); ?>" type="image/x-icon" />
-		<meta property="og:locale" content="<?php echo get_locale(); ?>">
-		<meta property="og:url" content="<?php echo get_current_url(); ?>">
-		<meta name="twitter:site" content="@<?php echo get_bloginfo( 'name' ); ?>" />
+		<meta property="og:site_name" content="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
+		<link rel="shortcut icon" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/favicon.ico' ) ); ?>" type="image/x-icon">
+		<meta property="og:locale" content="<?php echo esc_attr( get_locale() ); ?>">
+		<meta property="og:url" content="<?php echo esc_url( get_current_url() ); ?>">
+		<meta name="twitter:site" content="@<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" />
 		<?php if ( '' !== minnpost_largo_get_title() ) : ?>
-			<meta property="og:title" content="<?php echo minnpost_largo_get_title(); ?>">
+			<meta property="og:title" content="<?php echo esc_attr( minnpost_largo_get_title() ); ?>">
 		<?php endif; ?>
 		<?php if ( '' !== minnpost_largo_get_description() ) : ?>
-			<meta name="description" content="<?php echo minnpost_largo_get_description(); ?>">
-			<meta property="og:description" content="<?php echo minnpost_largo_get_description(); ?>">
+			<meta name="description" content="<?php echo esc_attr( minnpost_largo_get_description() ); ?>">
+			<meta property="og:description" content="<?php echo esc_attr( minnpost_largo_get_description() ); ?>">
 			<meta property="twitter:description" content="<?php echo minnpost_largo_get_description(); ?>">
 		<?php endif; ?>
 		<?php if ( is_single() ) : ?>
