@@ -227,6 +227,10 @@ if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 			<meta name="robots" content="noindex, nofollow">
 		<?php endif; ?>
 
+		<?php if ( 'production' !== VIP_GO_ENV ) : ?>
+			<meta name="robots" content="noindex, follow">
+		<?php endif; ?>
+
 		<?php
 	}
 endif;
