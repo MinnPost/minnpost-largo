@@ -92,8 +92,6 @@
 				$( '.m-user-email-list > li' ).each( function( index ) {
 					if ( $( this ).contents().get( 0 ).nodeValue !== emailToRemove ) {
 						consolidatedEmails.push( $( this ).contents().get( 0 ).nodeValue );
-					} else {
-						consolidatedEmails.splice( $.inArray( consolidatedEmails, $( this ).contents().get( 0 ).nodeValue ), 1 );
 					}
 				});
 				// get or don't get confirmation from user for removal
@@ -110,6 +108,7 @@
 						$( this ).remove();
 					});
 					$( '#_consolidated_emails' ).val( consolidatedEmails.join( ',' ) );
+					console.log( 'value is ' + consolidatedEmails.join( ',' ) );
 					nextEmailCount = $( '.m-user-email-list > li' ).length;
 					form.submit();
 					$( '.a-form-confirm', that.parent() ).remove();
@@ -129,35 +128,46 @@
 			nextEmailCount++;
 		});
 
+		$( 'input[type=submit]' ).click( function ( e ) {
+			var button = $( this );
+			var button_form = button.closest( 'form' );
+			button_form.data( 'submitting_button', button.val() );
+		});
+
 		$( '.m-entry-content' ).on( 'submit', '#account-settings-form', function( event ) {
-			event.preventDefault();
-			ajax_form_data = form.serialize(); //add our own ajax check as X-Requested-With is not always reliable
-			ajax_form_data = ajax_form_data + '&rest=true';
-			$.ajax({
-				url: full_url,
-				type: 'post',
-				beforeSend: function ( xhr ) {
-			        xhr.setRequestHeader( 'X-WP-Nonce', user_account_management_rest.nonce );
-			    },
-				dataType: 'json',
-				data: ajax_form_data
-			}).done( function( data ) {
-				newEmails = $( 'input[name="_consolidated_emails_array[]"]' ).map( function() {
-					return $(this).val();
-				}).get();
-				$.each( newEmails, function( index, value ) {
-					nextEmailCount = nextEmailCount + index;
-					$( '.m-user-email-list' ).append( '<li id="user-email-' + nextEmailCount + '">' + value + '<ul class="a-form-caption a-user-email-actions"><li class="a-form-caption a-pre-confirm a-make-primary-email"><input type="radio" name="primary_email" id="primary_email_' + nextEmailCount + '" value="' + value + '"><label for="primary_email_' + nextEmailCount + '"><small>Make Primary</small></label></li><li class="a-form-caption a-pre-confirm a-remove-email"><input type="checkbox" name="remove_email[' + nextEmailCount + ']" id="remove_email_' + nextEmailCount + '" value="' + value + '"><label for="remove_email_' + nextEmailCount + '"><small>Remove</small></label></li></ul></li>' );
-					$( '#_consolidated_emails' ).val( $( '#_consolidated_emails' ).val() + ',' + value );
-				});
-				$( '.m-form-change-email .a-input-with-button' ).remove();
-				if ( $( '.m-user-email-list' ).length === 0 ) {
-					if ( $( 'input[name="_consolidated_emails_array[]"]' ) !== $( 'input[name="email"]' ) ) {
-						// it would be nice to only load the form, but then click events still don't work
-						location.reload();
+			var form = $( this );
+			var submitting_button = form.data( 'submitting_button' ) || '';
+			// if there is no submitting button, pass it by Ajax
+			if ( '' === submitting_button || 'Save Changes' !== submitting_button ) {
+				event.preventDefault();
+				ajax_form_data = form.serialize(); //add our own ajax check as X-Requested-With is not always reliable
+				ajax_form_data = ajax_form_data + '&rest=true';
+				$.ajax({
+					url: full_url,
+					type: 'post',
+					beforeSend: function ( xhr ) {
+				        xhr.setRequestHeader( 'X-WP-Nonce', user_account_management_rest.nonce );
+				    },
+					dataType: 'json',
+					data: ajax_form_data
+				}).done( function( data ) {
+					newEmails = $( 'input[name="_consolidated_emails_array[]"]' ).map( function() {
+						return $(this).val();
+					}).get();
+					$.each( newEmails, function( index, value ) {
+						nextEmailCount = nextEmailCount + index;
+						$( '.m-user-email-list' ).append( '<li id="user-email-' + nextEmailCount + '">' + value + '<ul class="a-form-caption a-user-email-actions"><li class="a-form-caption a-pre-confirm a-make-primary-email"><input type="radio" name="primary_email" id="primary_email_' + nextEmailCount + '" value="' + value + '"><label for="primary_email_' + nextEmailCount + '"><small>Make Primary</small></label></li><li class="a-form-caption a-pre-confirm a-remove-email"><input type="checkbox" name="remove_email[' + nextEmailCount + ']" id="remove_email_' + nextEmailCount + '" value="' + value + '"><label for="remove_email_' + nextEmailCount + '"><small>Remove</small></label></li></ul></li>' );
+						$( '#_consolidated_emails' ).val( $( '#_consolidated_emails' ).val() + ',' + value );
+					});
+					$( '.m-form-change-email .a-input-with-button' ).remove();
+					if ( $( '.m-user-email-list' ).length === 0 ) {
+						if ( $( 'input[name="_consolidated_emails_array[]"]' ) !== $( 'input[name="email"]' ) ) {
+							// it would be nice to only load the form, but then click events still don't work
+							location.reload();
+						}
 					}
-				}
-			});
+				});
+			}
 		});
 	}
 
