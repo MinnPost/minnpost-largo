@@ -268,6 +268,11 @@ if ( ! function_exists( 'add_to_user_data' ) ) :
 			$user_data['_reading_topics'] = $posted['_reading_topics'];
 		}
 
+		// street address field
+		if ( isset( $posted['street_address'] ) && ! empty( $posted['street_address'] ) ) {
+			$user_data['_street_address'] = $posted['street_address'];
+		}
+
 		return $user_data;
 	}
 endif;
@@ -302,6 +307,11 @@ if ( ! function_exists( 'save_minnpost_user_data' ) ) :
 		// reading preferences field
 		if ( isset( $user_data['ID'] ) && isset( $user_data['_reading_topics'] ) && '' !== $user_data['_reading_topics'] ) {
 			update_user_meta( $user_data['ID'], '_reading_topics', $user_data['_reading_topics'] );
+		}
+
+		// street address field
+		if ( isset( $user_data['_street_address'] ) ) {
+			update_user_meta( $user_data['ID'], '_street_address', $user_data['_street_address'] );
 		}
 	}
 endif;
