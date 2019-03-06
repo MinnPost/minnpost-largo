@@ -21,7 +21,7 @@ msgstr ""
 msgid "No comments yet"
 msgstr ""
 
-#: header.php:69
+#: header.php:70
 msgid "Sections"
 msgstr ""
 
@@ -269,7 +269,7 @@ msgstr ""
 msgid "User Account Management Menu"
 msgstr ""
 
-#: inc/menus.php:552
+#: inc/menus.php:556
 msgid "&#x1F6BD; Flush Object Cache"
 msgstr ""
 
@@ -354,27 +354,27 @@ msgstr ""
 
 #. translators: used between list items, there is a space after the comma
 #. translators: used between list items, there is a space after the comma
-#: inc/template-tags.php:715, inc/template-tags.php:722
+#: inc/template-tags.php:717, inc/template-tags.php:724
 msgid ", "
 msgstr ""
 
 #. translators: placeholder is the list of categories
-#: inc/template-tags.php:718
+#: inc/template-tags.php:720
 msgid "Posted in %1$s"
 msgstr ""
 
 #. translators: placeholder is the list of tags
-#: inc/template-tags.php:725
+#: inc/template-tags.php:727
 msgid "Tagged %1$s"
 msgstr ""
 
-#: inc/template-tags.php:735
+#: inc/template-tags.php:737
 msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
 #. translators: %s: Name of current post
 #. translators: %s: Name of current post
-#: inc/template-tags.php:751, inc/template-tags.php:781
+#: inc/template-tags.php:753, inc/template-tags.php:783
 msgid "Edit %s"
 msgstr ""
 
@@ -443,15 +443,15 @@ msgid "(Primary)"
 msgstr ""
 
 #: user-account-management-templates/front-end/account-settings-form.php:84
-msgid "First Name:"
+msgid "First name:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:84, user-account-management-templates/front-end/account-settings-form.php:89, user-account-management-templates/front-end/account-settings-form.php:95, user-account-management-templates/front-end/account-settings-form.php:99, user-account-management-templates/front-end/account-settings-form.php:105, user-account-management-templates/front-end/account-settings-form.php:111
+#: user-account-management-templates/front-end/account-settings-form.php:84, user-account-management-templates/front-end/account-settings-form.php:89, user-account-management-templates/front-end/account-settings-form.php:95, user-account-management-templates/front-end/account-settings-form.php:99, user-account-management-templates/front-end/account-settings-form.php:110, user-account-management-templates/front-end/account-settings-form.php:116
 msgid "This field is required."
 msgstr ""
 
 #: user-account-management-templates/front-end/account-settings-form.php:89
-msgid "Last Name:"
+msgid "Last name:"
 msgstr ""
 
 #: user-account-management-templates/front-end/account-settings-form.php:95
@@ -463,17 +463,21 @@ msgid "State:"
 msgstr ""
 
 #: user-account-management-templates/front-end/account-settings-form.php:105
-msgid "Zip Code:"
+msgid "Street address:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:111
+#: user-account-management-templates/front-end/account-settings-form.php:110
+msgid "Zip code:"
+msgstr ""
+
+#: user-account-management-templates/front-end/account-settings-form.php:116
 msgid "Country:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:126
+#: user-account-management-templates/front-end/account-settings-form.php:131
 msgid "Only fill in if you are not human:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:131
+#: user-account-management-templates/front-end/account-settings-form.php:136
 msgid "Save Changes"
 msgstr ""
