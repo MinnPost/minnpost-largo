@@ -58,6 +58,7 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 			array(
 				'newsletter'      => '',
 				'confirm_message' => '',
+				'content'         => '',
 			),
 			$atts
 		);
@@ -85,6 +86,11 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 		} else {
 			$confirm_message = $args['confirm_message'];
 		}
+
+		if ( '' !== $args['content'] ) {
+			set_query_var( 'content', wp_kses_post( wpautop( $args['content'] ) ) );
+		}
+
 		// Generate a custom nonce value.
 		$newsletter_nonce = wp_create_nonce( 'mp_newsletter_form_nonce' );
 		if ( '' !== $args['newsletter'] ) {
