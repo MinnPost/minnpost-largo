@@ -151,7 +151,13 @@ if ( ! function_exists( 'minnpost_recent_stories_widget' ) ) :
 	add_filter( 'rpwe_default_query_arguments', 'minnpost_recent_stories_widget', 10, 1 );
 	function minnpost_recent_stories_widget( $query ) {
 		global $wpdb;
-		$results       = $wpdb->get_results( 'SELECT DISTINCT `post_id` FROM wp_postmeta WHERE meta_key LIKE "_zoninator_order_%"', 'ARRAY_A' );
+		$cache_key   = md5('recent_stories_widget_post_ids');
+        $cache_group = 'minnpost';
+        $results     = wp_cache_get( $cache_key, $cache_group );
+        if ( false === $results ) {
+			$results = $wpdb->get_results( 'SELECT DISTINCT `post_id` FROM wp_postmeta WHERE meta_key LIKE "_zoninator_order_%"', 'ARRAY_A' );
+			wp_cache_set( $cache_key, $results, $cache_group, MINUTE_IN_SECONDS * 30 );
+		}
 		$exclude_ids   = array_column( $results, 'post_id' );
 		$exclude_ids[] = get_the_ID();
 		$query         = array(
