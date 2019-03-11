@@ -164,7 +164,7 @@ if ( ! function_exists( 'minnpost_recent_stories_widget' ) ) :
 			'post__not_in' => $exclude_ids,
 			'post_type'    => 'post',
 			'orderby'      => 'modified',
-			//'es'           => true, // elasticsearch
+			'es'           => true, // elasticsearch
 			'date_query'   => array(
 				array(
 					'after' => '7 days ago',
