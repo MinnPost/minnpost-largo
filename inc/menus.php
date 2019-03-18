@@ -268,6 +268,18 @@ if ( ! current_user_can( 'see_admin_bar' ) ) {
 }
 
 /**
+* Show the debug bar menu - included with WP VIP Go - to administrator level users
+*
+*/
+if ( ! function_exists( 'minnpost_largo_debug_bar_render' ) ) :
+	add_filter( 'debug_bar_enable', 'minnpost_largo_debug_bar_render', 100, 1 );
+	function minnpost_largo_debug_bar_render( $enable ) {
+		$enable = true;
+		return $enable;
+	}
+endif;
+
+/**
 * Change links and menus in the admin bar
 * This relies on user access levels, and a little bit on the MinnPost Roles and Capabilities plugin (for the comment moderator part)
 *
@@ -421,14 +433,6 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 		// users who cannot moderate comments
 		if ( ! current_user_can( 'moderate_comments' ) ) {
 			remove_menu_page( 'edit-comments.php' );
-		}
-
-		// cron
-		if ( ! current_user_can( 'manage_cron' ) ) {
-			// tools
-			remove_submenu_page( 'tools.php', 'crontrol_admin_manage_page' );
-			// settings
-			remove_submenu_page( 'options-general.php', 'crontrol_admin_options_page' );
 		}
 
 		// advertising
