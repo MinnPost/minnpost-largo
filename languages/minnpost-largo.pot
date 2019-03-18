@@ -161,19 +161,19 @@ msgstr ""
 msgid "Email Sending Name"
 msgstr ""
 
-#: inc/custom-shortcodes.php:69
+#: inc/custom-shortcodes.php:70
 msgid "Thanks for updating your email preferences. They will go into effect immediately."
 msgstr ""
 
-#: inc/custom-shortcodes.php:72
+#: inc/custom-shortcodes.php:73
 msgid "We have added you to the MinnPost mailing list."
 msgstr ""
 
-#: inc/custom-shortcodes.php:75
+#: inc/custom-shortcodes.php:76
 msgid "We have added you to the MinnPost mailing list. You will need to click the confirmation link in the email we sent to begin receiving messages."
 msgstr ""
 
-#: inc/custom-shortcodes.php:330
+#: inc/custom-shortcodes.php:336
 msgid "You do not have permission to access this page."
 msgstr ""
 
@@ -269,7 +269,7 @@ msgstr ""
 msgid "User Account Management Menu"
 msgstr ""
 
-#: inc/menus.php:556
+#: inc/menus.php:548
 msgid "&#x1F6BD; Flush Object Cache"
 msgstr ""
 
