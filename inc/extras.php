@@ -270,3 +270,19 @@ add_filter( 'allowed_redirect_hosts', function( $hosts ) {
 });
 
 wpcom_vip_load_gutenberg( false );
+
+/**
+ * Prevent VIP Support users from being redirected to /user/login. They can use wp-login.php.
+ * @param boolean $skip_login_redirect
+ * @return boolean $skip_login_redirect
+ */
+if ( ! function_exists( 'minnpost_prevent_login_redirect' ) ) :
+	add_filter( 'user_account_management_skip_login_redirect', 'minnpost_prevent_login_redirect', 10, 1 );
+	function minnpost_prevent_login_redirect( $skip_login_redirect ) {
+		if ( defined( 'A8C_PROXIED_REQUEST' ) && true === A8C_PROXIED_REQUEST ) {
+			// The request originates from WordPress.com VIP (Automattic)
+			$skip_login_redirect = true;
+		}
+		return $skip_login_redirect;
+	}
+endif;
