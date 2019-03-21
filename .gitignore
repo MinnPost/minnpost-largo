@@ -29,3 +29,5 @@ phpdoc-cache-*
 /vendor/**/.git/
 /vendor/**/.github/
 /vendor/**/test/
+assets/img/app-icons/icons.html
+assets/img/app-icons/site.webmanifest
