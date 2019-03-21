@@ -196,7 +196,7 @@ endif;
 /**
 * This stops comment moderators from doing things with posts
 * WordPress would otherwise allow this, but it is not viable for us
-* This depends on the Advanced Access Manager plugin
+* This depends on the MinnPost Roles and Capabilities plugin
 *
 *
 */
@@ -231,7 +231,7 @@ if ( ! function_exists( 'add_to_user_data' ) ) :
 		// handle consolidated email addresses if they're submitted by the form
 		// this array is all of the submitted email addresses, not all the previously saved ones
 		if ( isset( $posted['_consolidated_emails_array'] ) && is_array( $posted['_consolidated_emails_array'] ) ) {
-			$user_data['_consolidated_emails_array']       = array_map( 'sanitize_email', wp_unslash( $posted['_consolidated_emails_array'] ) );
+			$user_data['_consolidated_emails_array'] = array_map( 'sanitize_email', wp_unslash( $posted['_consolidated_emails_array'] ) );
 		}
 		$all_emails[] = $user_data['user_email'];
 		// combine all consolidated emails
@@ -240,7 +240,7 @@ if ( ! function_exists( 'add_to_user_data' ) ) :
 			$all_emails = array_map( 'trim', explode( ',', $posted['_consolidated_emails'] ) );
 			// if the user is changing their primary email, switch the new primary with the old primary.
 			if ( isset( $posted['primary_email'] ) ) {
-				$primary_email   = sanitize_email( $posted['primary_email'] );
+				$primary_email = sanitize_email( $posted['primary_email'] );
 				if ( in_array( $primary_email, $all_emails ) ) {
 					$user_data['user_email'] = $primary_email;
 				}
@@ -352,7 +352,7 @@ if ( ! function_exists( 'minnpost_largo_check_consolidated_emails' ) ) :
 			$emails = array_map( 'trim', explode( ',', $user_data['_consolidated_emails'][0] ) );
 		}
 		if ( false !== ( $key = array_search( $current_email, $emails ) ) ) {
-		    unset( $emails[ $key ] );
+			unset( $emails[ $key ] );
 		}
 		return $emails;
 	}
