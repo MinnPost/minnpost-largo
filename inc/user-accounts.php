@@ -357,3 +357,22 @@ if ( ! function_exists( 'minnpost_largo_check_consolidated_emails' ) ) :
 		return $emails;
 	}
 endif;
+
+/**
+ * Apple News: allow authors and above to automatically
+ * publish their posts on Apple News.
+ */
+add_filter( 'apple_news_publish_capability', function() {
+	return 'publish_posts';
+}, 10, 0 );
+
+/**
+ * Apple News: allow editors and above to see the Apple News
+ * listing screen.
+ *
+ * Users with this capability will be able to push any posts
+ * to the Apple News channel
+ */
+add_filter( 'apple_news_list_capability', function() {
+	return 'edit_others_posts';
+}, 10, 0 );
