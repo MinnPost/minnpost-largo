@@ -163,7 +163,7 @@ if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 		<meta property="og:site_name" content="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
 		<link rel="shortcut icon" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/favicon.ico' ) ); ?>" type="image/x-icon">
 
-		<link rel="icon" type="image/png" sizes="16x16" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/favicon-16x16.png' ) ); ?>">
+		<link rel="icon" type="image/png" sizes="16x16" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/favicon-32x32.png' ) ); ?>">
 		<link rel="icon" type="image/png" sizes="32x32" href="<?php echo esc_url( get_theme_file_uri( 'assets/img/app-icons/favicon-32x32.png' ) ); ?>">
 		<link rel="apple-touch-icon" sizes="76x76" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/icon-76x76.png' ) ); ?>">
 		<link rel="apple-touch-icon" sizes="120x120" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/icon-120x120.png' ) ); ?>">
@@ -172,7 +172,7 @@ if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 		<link rel="apple-touch-icon" sizes="180x180" href="<?php echo esc_url( get_theme_file_uri( 'assets/img/app-icons/apple-touch-icon.png' ) ); ?>">
 		<link rel="icon" sizes="192x192" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/icon-192x192.png' ) ); ?>">
 
-		<link rel="mask-icon" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/safari-pinned-tab.svg' ) ); ?>" color="#5bbad5">
+		<link rel="mask-icon" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/mp.svg' ) ); ?>" color="#5bbad5">
 		<meta name="msapplication-TileColor" content="#da532c">
 		<meta name="msapplication-TileImage" content="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/mstile-144x144.png' ) ); ?>">
 		<meta name="msapplication-config" content="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/browserconfig.xml' ) ); ?>">
