@@ -43,10 +43,10 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 
 		$paragraphs = $doc->getElementsByTagName( 'p' );
 		foreach ( $paragraphs as $paragraph ) {
-			foreach ( $paragraph->childNodes as $node ) {
-				if ( isset( $node->tagName ) && 'a' === $node->tagName && 'a-more' === $node->getAttribute( 'class' ) ) {
-					$move = $paragraph->ownerDocument->saveHTML( $paragraph );
-					$paragraph->parentNode->removeChild( $paragraph );
+			foreach ( $paragraph->childNodes as $node ) { // phpcs:ignore WordPress
+				if ( isset( $node->tagName ) && 'a' === $node->tagName && 'a-more' === $node->getAttribute( 'class' ) ) { // phpcs:ignore WordPress
+					$move = $paragraph->ownerDocument->saveHTML( $paragraph ); // phpcs:ignore WordPress
+					$paragraph->parentNode->removeChild( $paragraph ); // phpcs:ignore WordPress
 				}
 			}
 		}
@@ -79,7 +79,7 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 
 		$html .= '<section class="m-featured-columns"><h3 class="a-widget-title">' . $title . '</h3><ul>';
 		foreach ( $list_items as $li ) {
-			$name = $li->nodeValue;
+			$name = $li->nodeValue; // phpcs:ignore WordPress
 			$id   = get_cat_ID( $name );
 
 			$query = new WP_Query(
@@ -87,7 +87,7 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 					'posts_per_page' => 1,
 					'cat'            => $id,
 					'orderby'        => 'date',
-					//'es'             => true, // elasticsearch
+					'es'             => true, // elasticsearch
 				)
 			);
 
