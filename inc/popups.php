@@ -255,7 +255,8 @@ if ( ! function_exists( 'minnpost_user_is_in_campaign' ) ) :
 
 		$user_id = get_current_user_id();
 		if ( 0 === $user_id ) {
-			return false;
+			// user is NOT logged in. return true because we can't exclude them.
+			return true;
 		}
 
 		$exclude_from_current_campaign = get_user_meta( $user_id, '_exclude_from_current_campaign', true );
