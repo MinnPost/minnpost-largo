@@ -109,19 +109,31 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 				set_query_var( 'newsletter_nonce', $newsletter_nonce );
 				set_query_var( 'redirect_url', get_current_url() );
 				set_query_var( 'message', $message );
-				get_template_part( 'inc/forms/newsletter', 'shortcode' );
+				ob_start();
+				$file = get_template_part( 'inc/forms/newsletter', 'shortcode' );
+				$html = ob_get_contents();
+				ob_end_clean();
+				return $html;
 			} elseif ( 'full' === $args['newsletter'] ) {
 				set_query_var( 'newsletter', 'full' );
 				set_query_var( 'newsletter_nonce', $newsletter_nonce );
 				set_query_var( 'redirect_url', get_current_url() );
 				set_query_var( 'message', $message );
-				get_template_part( 'inc/forms/newsletter', 'full' );
+				ob_start();
+				$file = get_template_part( 'inc/forms/newsletter', 'full' );
+				$html = ob_get_contents();
+				ob_end_clean();
+				return $html;
 			} elseif ( 'full-dc' === $args['newsletter'] ) {
 				set_query_var( 'newsletter', 'full-dc' );
 				set_query_var( 'newsletter_nonce', $newsletter_nonce );
 				set_query_var( 'redirect_url', get_current_url() );
 				set_query_var( 'message', $message );
-				get_template_part( 'inc/forms/newsletter', 'full-dc' );
+				ob_start();
+				$file = get_template_part( 'inc/forms/newsletter', 'full-dc' );
+				$html = ob_get_contents();
+				ob_end_clean();
+				return $html;
 			}
 		} else {
 			set_query_var( 'newsletter', 'email' );
@@ -135,7 +147,6 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 			ob_end_clean();
 			return $html;
 		}
-
 	}
 endif;
 
