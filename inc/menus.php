@@ -274,7 +274,10 @@ if ( ! current_user_can( 'see_admin_bar' ) ) {
 if ( ! function_exists( 'minnpost_largo_debug_bar_render' ) ) :
 	add_filter( 'debug_bar_enable', 'minnpost_largo_debug_bar_render', 100, 1 );
 	function minnpost_largo_debug_bar_render( $enable ) {
-		$enable = true;
+		// remove autoptimize from non admins
+		if ( current_user_can( 'administrator' ) ) {
+			$enable = true;
+		}
 		return $enable;
 	}
 endif;
