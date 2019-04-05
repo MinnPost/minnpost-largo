@@ -58,6 +58,7 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 			array(
 				'newsletter'      => '',
 				'confirm_message' => '',
+				'content'         => '',
 			),
 			$atts
 		);
@@ -85,6 +86,11 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 		} else {
 			$confirm_message = $args['confirm_message'];
 		}
+
+		if ( '' !== $args['content'] ) {
+			set_query_var( 'content', wp_kses_post( wpautop( $args['content'] ) ) );
+		}
+
 		// Generate a custom nonce value.
 		$newsletter_nonce = wp_create_nonce( 'mp_newsletter_form_nonce' );
 		if ( '' !== $args['newsletter'] ) {
@@ -103,19 +109,31 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 				set_query_var( 'newsletter_nonce', $newsletter_nonce );
 				set_query_var( 'redirect_url', get_current_url() );
 				set_query_var( 'message', $message );
-				get_template_part( 'inc/forms/newsletter', 'shortcode' );
+				ob_start();
+				$file = get_template_part( 'inc/forms/newsletter', 'shortcode' );
+				$html = ob_get_contents();
+				ob_end_clean();
+				return $html;
 			} elseif ( 'full' === $args['newsletter'] ) {
 				set_query_var( 'newsletter', 'full' );
 				set_query_var( 'newsletter_nonce', $newsletter_nonce );
 				set_query_var( 'redirect_url', get_current_url() );
 				set_query_var( 'message', $message );
-				get_template_part( 'inc/forms/newsletter', 'full' );
+				ob_start();
+				$file = get_template_part( 'inc/forms/newsletter', 'full' );
+				$html = ob_get_contents();
+				ob_end_clean();
+				return $html;
 			} elseif ( 'full-dc' === $args['newsletter'] ) {
 				set_query_var( 'newsletter', 'full-dc' );
 				set_query_var( 'newsletter_nonce', $newsletter_nonce );
 				set_query_var( 'redirect_url', get_current_url() );
 				set_query_var( 'message', $message );
-				get_template_part( 'inc/forms/newsletter', 'full-dc' );
+				ob_start();
+				$file = get_template_part( 'inc/forms/newsletter', 'full-dc' );
+				$html = ob_get_contents();
+				ob_end_clean();
+				return $html;
 			}
 		} else {
 			set_query_var( 'newsletter', 'email' );
@@ -129,7 +147,6 @@ if ( ! function_exists( 'newsletter_embed' ) ) :
 			ob_end_clean();
 			return $html;
 		}
-
 	}
 endif;
 

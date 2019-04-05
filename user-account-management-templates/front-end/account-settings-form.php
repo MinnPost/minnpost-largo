@@ -81,12 +81,12 @@
 		</div>
 
 		<div class="m-form-item m-form-first-name m-form-change-first-name">
-			<label for="first-name"><?php echo esc_html__( 'First Name:', 'minnpost-largo' ); ?> <span class="a-form-item-required" title="<?php echo esc_html__( 'This field is required.', 'minnpost-largo' ); ?>">*</span></label>
+			<label for="first-name"><?php echo esc_html__( 'First name:', 'minnpost-largo' ); ?> <span class="a-form-item-required" title="<?php echo esc_html__( 'This field is required.', 'minnpost-largo' ); ?>">*</span></label>
 			<input type="text" name="first_name" id="first-name" value="<?php echo isset( $_POST['first_name'] ) && wp_verify_nonce( sanitize_key( $_POST['wp_create_nonce'] ), 'uam-account-settings-nonce' ) ? sanitize_text_field( $_POST['first_name'] ) : isset( $attributes['user']->first_name ) ? esc_html( $attributes['user']->first_name ) : ''; ?>" required>
 		</div>
 
 		<div class="m-form-item m-form-last-name m-form-change-last-name">
-			<label for="last-name"><?php echo esc_html__( 'Last Name:', 'minnpost-largo' ); ?> <span class="a-form-item-required" title="<?php echo esc_html__( 'This field is required.', 'minnpost-largo' ); ?>">*</span></label>
+			<label for="last-name"><?php echo esc_html__( 'Last name:', 'minnpost-largo' ); ?> <span class="a-form-item-required" title="<?php echo esc_html__( 'This field is required.', 'minnpost-largo' ); ?>">*</span></label>
 			<input type="text" name="last_name" id="last-name" value="<?php echo isset( $_POST['last_name'] ) && wp_verify_nonce( sanitize_key( $_POST['wp_create_nonce'] ), 'uam-account-settings-nonce' ) ? sanitize_text_field( $_POST['last_name'] ) : isset( $attributes['user']->last_name ) ? $attributes['user']->last_name : ''; ?>" required>
 		</div>
 
@@ -101,8 +101,13 @@
 			</div>
 		<?php endif; ?>
 
+		<div class="m-form-item m-form-street-address m-form-change-street-address">
+			<label for="street-address"><?php echo esc_html__( 'Street address:', 'minnpost-largo' ); ?></label>
+			<input type="text" name="street_address" id="street-address" value="<?php echo isset( $_POST['street_address'] ) ? $_POST['street_address'] : isset( $attributes['user_meta']['_street_address'] ) ? $attributes['user_meta']['_street_address'][0] : ''; ?>">
+		</div>
+
 		<div class="m-form-item m-form-zip-code m-form-change-zip-code">
-			<label for="zip-code"><?php echo esc_html__( 'Zip Code:', 'minnpost-largo' ); ?> <span class="a-form-item-required" title="<?php echo esc_html__( 'This field is required.', 'minnpost-largo' ); ?>">*</span></label>
+			<label for="zip-code"><?php echo esc_html__( 'Zip code:', 'minnpost-largo' ); ?> <span class="a-form-item-required" title="<?php echo esc_html__( 'This field is required.', 'minnpost-largo' ); ?>">*</span></label>
 			<input type="tel" name="zip_code" id="zip-code" value="<?php echo isset( $_POST['zip_code'] ) ? $_POST['zip_code'] : isset( $attributes['user_meta']['_zip_code'] ) ? $attributes['user_meta']['_zip_code'][0] : ''; ?>" required>
 		</div>
 

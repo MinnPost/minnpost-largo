@@ -453,6 +453,26 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 		$caption = wp_get_attachment_caption( $image_id );
 		$credit  = get_media_credit_html( $image_id );
 
+		// Make sure the guest author actually exists
+		if ( class_exists( 'CoAuthors_Guest_Authors' ) ) {
+			$guest_authors = new CoAuthors_Guest_Authors;
+			$guest_author  = $guest_authors->get_guest_author_by( 'ID', (int) $author_id );
+			if ( ! $guest_author ) {
+				$count = 0;
+			} else {
+				// get post count
+				global $coauthors_plus;
+				$term = $coauthors_plus->get_author_term( $guest_author );
+				if ( $term ) {
+					$count = $term->count;
+				} else {
+					$count = 0;
+				}
+			}
+		} else {
+			$count = 0;
+		}
+
 		if ( is_singular() || is_archive() ) {
 			$output  = '';
 			$output .= '<figure class="a-archive-figure a-author-figure a-author-figure-' . $size . '">';
@@ -460,7 +480,16 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 			if ( true === $include_text && ( '' !== $text || '' !== $name ) ) {
 				$output .= '<figcaption>';
 				if ( true === $include_name && '' !== $name ) {
-					$output .= '<h3 class="a-author-title"><a href="' . get_author_posts_url( $author_id, sanitize_title( $name ) ) . '">' . $name . '</a></h3>';
+					$output .= '<h3 class="a-author-title">';
+					if ( 0 < $count ) {
+						$author_url = get_author_posts_url( $author_id, sanitize_title( $name ) );
+						$output    .= '<a href="' . $author_url . '">';
+					}
+					$output .= $name;
+					if ( 0 < $count ) {
+						$output .= '</a>';
+					}
+					$output .= '</h3>';
 				}
 				$output .= $text;
 				$output .= '</figcaption>';

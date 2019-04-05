@@ -196,7 +196,7 @@ endif;
 /**
 * This stops comment moderators from doing things with posts
 * WordPress would otherwise allow this, but it is not viable for us
-* This depends on the Advanced Access Manager plugin
+* This depends on the MinnPost Roles and Capabilities plugin
 *
 *
 */
@@ -231,7 +231,7 @@ if ( ! function_exists( 'add_to_user_data' ) ) :
 		// handle consolidated email addresses if they're submitted by the form
 		// this array is all of the submitted email addresses, not all the previously saved ones
 		if ( isset( $posted['_consolidated_emails_array'] ) && is_array( $posted['_consolidated_emails_array'] ) ) {
-			$user_data['_consolidated_emails_array']       = array_map( 'sanitize_email', wp_unslash( $posted['_consolidated_emails_array'] ) );
+			$user_data['_consolidated_emails_array'] = array_map( 'sanitize_email', wp_unslash( $posted['_consolidated_emails_array'] ) );
 		}
 		$all_emails[] = $user_data['user_email'];
 		// combine all consolidated emails
@@ -240,7 +240,7 @@ if ( ! function_exists( 'add_to_user_data' ) ) :
 			$all_emails = array_map( 'trim', explode( ',', $posted['_consolidated_emails'] ) );
 			// if the user is changing their primary email, switch the new primary with the old primary.
 			if ( isset( $posted['primary_email'] ) ) {
-				$primary_email   = sanitize_email( $posted['primary_email'] );
+				$primary_email = sanitize_email( $posted['primary_email'] );
 				if ( in_array( $primary_email, $all_emails ) ) {
 					$user_data['user_email'] = $primary_email;
 				}
@@ -266,6 +266,11 @@ if ( ! function_exists( 'add_to_user_data' ) ) :
 		// reading preferences field
 		if ( isset( $posted['_reading_topics'] ) && ! empty( $posted['_reading_topics'] ) ) {
 			$user_data['_reading_topics'] = $posted['_reading_topics'];
+		}
+
+		// street address field
+		if ( isset( $posted['street_address'] ) && ! empty( $posted['street_address'] ) ) {
+			$user_data['_street_address'] = $posted['street_address'];
 		}
 
 		return $user_data;
@@ -302,6 +307,11 @@ if ( ! function_exists( 'save_minnpost_user_data' ) ) :
 		// reading preferences field
 		if ( isset( $user_data['ID'] ) && isset( $user_data['_reading_topics'] ) && '' !== $user_data['_reading_topics'] ) {
 			update_user_meta( $user_data['ID'], '_reading_topics', $user_data['_reading_topics'] );
+		}
+
+		// street address field
+		if ( isset( $user_data['_street_address'] ) ) {
+			update_user_meta( $user_data['ID'], '_street_address', $user_data['_street_address'] );
 		}
 	}
 endif;
@@ -342,8 +352,27 @@ if ( ! function_exists( 'minnpost_largo_check_consolidated_emails' ) ) :
 			$emails = array_map( 'trim', explode( ',', $user_data['_consolidated_emails'][0] ) );
 		}
 		if ( false !== ( $key = array_search( $current_email, $emails ) ) ) {
-		    unset( $emails[ $key ] );
+			unset( $emails[ $key ] );
 		}
 		return $emails;
 	}
 endif;
+
+/**
+ * Apple News: allow authors and above to automatically
+ * publish their posts on Apple News.
+ */
+add_filter( 'apple_news_publish_capability', function() {
+	return 'publish_posts';
+}, 10, 0 );
+
+/**
+ * Apple News: allow editors and above to see the Apple News
+ * listing screen.
+ *
+ * Users with this capability will be able to push any posts
+ * to the Apple News channel
+ */
+add_filter( 'apple_news_list_capability', function() {
+	return 'edit_others_posts';
+}, 10, 0 );

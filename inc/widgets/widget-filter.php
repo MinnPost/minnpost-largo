@@ -29,6 +29,9 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 		// sponsor list
 		if ( false !== strpos( $widget_output, 'a-sponsor-list' ) ) {
 			$widget_output = str_replace( 'class="m-widget m-widget-text m-widget-custom-html"', 'class="m-widget m-widget-text m-widget-custom-html m-widget-sponsor-list"', $widget_output );
+			// vip link is added here, not in the widget panel
+			$vip           = vip_powered_wpcom( 5 );
+			$widget_output = str_replace( '</ul></div>', '<li class="a-sponsor">' . $vip . '</li></ul></div>', $widget_output );
 		}
 		$widget_output = str_replace( '</div></div>', '</div></section>', $widget_output );
 
@@ -40,10 +43,10 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 
 		$paragraphs = $doc->getElementsByTagName( 'p' );
 		foreach ( $paragraphs as $paragraph ) {
-			foreach ( $paragraph->childNodes as $node ) {
-				if ( isset( $node->tagName ) && 'a' === $node->tagName && 'a-more' === $node->getAttribute( 'class' ) ) {
-					$move = $paragraph->ownerDocument->saveHTML( $paragraph );
-					$paragraph->parentNode->removeChild( $paragraph );
+			foreach ( $paragraph->childNodes as $node ) { // phpcs:ignore WordPress
+				if ( isset( $node->tagName ) && 'a' === $node->tagName && 'a-more' === $node->getAttribute( 'class' ) ) { // phpcs:ignore WordPress
+					$move = $paragraph->ownerDocument->saveHTML( $paragraph ); // phpcs:ignore WordPress
+					$paragraph->parentNode->removeChild( $paragraph ); // phpcs:ignore WordPress
 				}
 			}
 		}
@@ -76,7 +79,7 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 
 		$html .= '<section class="m-featured-columns"><h3 class="a-widget-title">' . $title . '</h3><ul>';
 		foreach ( $list_items as $li ) {
-			$name = $li->nodeValue;
+			$name = $li->nodeValue; // phpcs:ignore WordPress
 			$id   = get_cat_ID( $name );
 
 			$query = new WP_Query(
@@ -148,15 +151,21 @@ if ( ! function_exists( 'minnpost_recent_stories_widget' ) ) :
 	add_filter( 'rpwe_default_query_arguments', 'minnpost_recent_stories_widget', 10, 1 );
 	function minnpost_recent_stories_widget( $query ) {
 		global $wpdb;
-		$results       = $wpdb->get_results( 'SELECT DISTINCT `post_id` FROM wp_postmeta WHERE meta_key LIKE "_zoninator_order_%"', 'ARRAY_A' );
+		$cache_key   = md5( 'recent_stories_widget_post_ids' );
+		$cache_group = 'minnpost';
+		$results     = wp_cache_get( $cache_key, $cache_group );
+		if ( false === $results ) {
+			$results = $wpdb->get_results( 'SELECT DISTINCT `post_id` FROM wp_postmeta WHERE meta_key LIKE "_zoninator_order_%"', 'ARRAY_A' );
+			wp_cache_set( $cache_key, $results, $cache_group, MINUTE_IN_SECONDS * 30 );
+		}
 		$exclude_ids   = array_column( $results, 'post_id' );
 		$exclude_ids[] = get_the_ID();
 		$query         = array(
-			'post__not_in' => $exclude_ids,
-			'post_type'    => 'post',
-			'orderby'      => 'modified',
-			'es'           => true, // elasticsearch
-			'date_query'   => array(
+			'post__not_in'     => $exclude_ids,
+			'post_type'        => 'post',
+			'orderby'          => 'modified',
+			'es'               => true, // elasticsearch
+			'date_query'       => array(
 				array(
 					'after' => '7 days ago',
 				),

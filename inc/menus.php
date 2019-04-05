@@ -260,7 +260,7 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 
 /**
 * Show the admin bar only for users with see_admin_bar capability
-* This relies on the Advanced Access Manager plugin which creates this capability and assigns it to roles
+* This relies on the MinnPost Roles and Capabilities plugin which creates this capability and assigns it to roles
 *
 */
 if ( ! current_user_can( 'see_admin_bar' ) ) {
@@ -268,8 +268,23 @@ if ( ! current_user_can( 'see_admin_bar' ) ) {
 }
 
 /**
+* Show the debug bar menu - included with WP VIP Go - to administrator level users
+*
+*/
+if ( ! function_exists( 'minnpost_largo_debug_bar_render' ) ) :
+	add_filter( 'debug_bar_enable', 'minnpost_largo_debug_bar_render', 100, 1 );
+	function minnpost_largo_debug_bar_render( $enable ) {
+		// remove autoptimize from non admins
+		if ( current_user_can( 'administrator' ) ) {
+			$enable = true;
+		}
+		return $enable;
+	}
+endif;
+
+/**
 * Change links and menus in the admin bar
-* This relies on user access levels, and a little bit on the Advanced Access Manager plugin (for the comment moderator part)
+* This relies on user access levels, and a little bit on the MinnPost Roles and Capabilities plugin (for the comment moderator part)
 *
 */
 if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
@@ -375,7 +390,7 @@ endif;
 
 /**
 * Remove pages from admin menu
-* This relies on user access levels, and on the Advanced Access Manager plugin
+* This relies on user access levels, and on the MinnPost Roles and Capabilities plugin
 *
 */
 if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
@@ -423,14 +438,6 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 			remove_menu_page( 'edit-comments.php' );
 		}
 
-		// cron
-		if ( ! current_user_can( 'manage_cron' ) ) {
-			// tools
-			remove_submenu_page( 'tools.php', 'crontrol_admin_manage_page' );
-			// settings
-			remove_submenu_page( 'options-general.php', 'crontrol_admin_options_page' );
-		}
-
 		// advertising
 		if ( ! current_user_can( 'manage_advertising' ) ) {
 			// tools
@@ -441,8 +448,6 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 
 		// thumbnails
 		if ( ! current_user_can( 'upload_files' ) ) {
-			// tools
-			remove_submenu_page( 'tools.php', 'regenerate-thumbnails' );
 			//settings
 			remove_submenu_page( 'options-general.php', 'options-media.php' );
 		}
@@ -478,29 +483,19 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 			// settings
 			remove_submenu_page( 'options-general.php', 'options-writing.php' );
 			remove_submenu_page( 'options-general.php', 'options-permalink.php' );
-			remove_submenu_page( 'options-general.php', 'deserialize-metadata' );
-			remove_submenu_page( 'options-general.php', 'notices-wbcr_dan' );
 			remove_submenu_page( 'options-general.php', 'duplicatepost' );
-			remove_submenu_page( 'options-general.php', 'easylazyloader' );
 			remove_submenu_page( 'options-general.php', 'form-processor-mailchimp' );
-			remove_submenu_page( 'options-general.php', 'merge-serialized-fields' );
-			remove_submenu_page( 'options-general.php', 'migrate-random-things' );
-			remove_submenu_page( 'options-general.php', 'redis-cache' ); // we should only allow this if there is a point where we can clear the cache by which group the data is in
 			remove_submenu_page( 'options-general.php', 'user-account-management' );
 			remove_submenu_page( 'options-general.php', 'widgetopts_plugin_settings' );
 			remove_submenu_page( 'options-general.php', 'wp-analytics-tracking-generator-admin' );
 			remove_submenu_page( 'options-general.php', 'image-credits' ); // these settings are ignored anyway because of how the theme works
 			// chartbeat
 			remove_menu_page( 'chartbeat_console' );
-			// elasticpress
-			remove_menu_page( 'elasticpress' );
 			// remove those weird popup menus
 			remove_submenu_page( 'edit.php?post_type=popup', 'pum-extensions' );
 			remove_submenu_page( 'edit.php?post_type=popup', 'pum-support' );
 			remove_submenu_page( 'edit.php?post_type=popup', 'pum-settings' );
 			remove_submenu_page( 'edit.php?post_type=popup', 'pum-tools' );
-			// autoptimize
-			remove_submenu_page( 'options-general.php', 'autoptimize' );
 		}
 
 	}

@@ -12,7 +12,7 @@
 <li id="post-<?php the_ID(); ?>" <?php post_class( 'm-interest-post' ); ?>>
 
 	<a href="<?php echo esc_url( get_permalink() ); ?>">
-		<?php $image_data = get_minnpost_post_image( 'author-thumbnail' ); ?>
+		<?php $image_data = get_minnpost_post_image( 'author-teaser' ); ?>
 
 		<div class="a-interest-image">
 			<?php echo $image_data['markup']; ?>

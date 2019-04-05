@@ -14,7 +14,7 @@
 		<input type="hidden" name="redirect_url" value="<?php echo $redirect_url; ?>">
 		<input type="hidden" name="newsletters_available[]" value="d89249e207">
 		<input type="hidden" name="_newsletters[]" value="d89249e207">
-		<p>Written by MinnPost Washington correspondent Sam Brodey and delivered to inboxes every Thursday, the D.C. Memo provides a one-stop source for finding the most informative, insightful and entertaining coverage coming out of Washington. Subscribe to this free newsletter by filling out the form.</p>
+		<?php echo wpautop( $content ); ?>
 		<?php echo $message; ?>
 		<fieldset class="m-user-preferences">
 			<p><small><span class="a-form-item-required">*</span> indicates required</small></p>
