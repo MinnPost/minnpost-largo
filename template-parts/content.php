@@ -74,7 +74,8 @@
 	<?php minnpost_share_buttons( 'bottom' ); ?>
 
 	<?php if ( 'on' !== get_post_meta( get_the_ID(), '_mp_remove_newsletter_signup_from_display', true ) ) : ?>
-		<?php echo do_shortcode( '[newsletter_embed newsletter="default"]' ); ?>
+		<?php /* TODO: we would change this to instead run the 'message' plugin, which would have content around the shortcode, and would contain the shortcode itself */ ?>
+		<?php echo do_shortcode( '[newsletter_form placement="instory" lists="default"]' ); ?>
 	<?php endif; ?>
 
 	<?php
