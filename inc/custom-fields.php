@@ -99,7 +99,6 @@ if ( function_exists( 'create_newsletter' ) ) :
 			$most_recent_newsletter_modified = strtotime( time() );
 		}
 		$newsletter_post_args = array(
-			'es'             => true,
 			'posts_per_page' => -1,
 			'post_type'      => array( 'post' ),
 			'orderby'        => 'modified',
@@ -111,14 +110,19 @@ if ( function_exists( 'create_newsletter' ) ) :
 				),
 			),
 		);
-		$newsletter_top_posts = new_cmb2_box( array(
-			'id'           => $prefix . 'top_posts',
-			'title'        => __( 'Top Stories', 'minnpost-largo' ),
-			'object_types' => array( $object_type ), // Post type
-			'context'      => 'normal',
-			'priority'     => 'high',
-			'show_names'   => false, // Show field names on the left
-		) );
+		if ( 'production' === VIP_GO_ENV ) {
+			$newsletter_post_args['es'] = true; // elasticsearch on production only
+		}
+		$newsletter_top_posts = new_cmb2_box(
+			array(
+				'id'           => $prefix . 'top_posts',
+				'title'        => __( 'Top Stories', 'minnpost-largo' ),
+				'object_types' => array( $object_type ), // Post type
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'show_names'   => false, // Show field names on the left
+			)
+		);
 		$newsletter_top_posts->add_field(
 			minnpost_post_search_field(
 				array(
@@ -1280,12 +1284,14 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 							'post_status'    => 'publish',
 							'posts_per_page' => 10,
 							'cache_results'  => false,
-							'es'             => true,
 						),
 					),
 				),
 				$args
 			);
+			if ( 'production' === VIP_GO_ENV ) {
+				$args['es'] = true; // elasticsearch on production only
+			}
 			return $args;
 		}
 
@@ -1302,11 +1308,13 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 						'post_status'    => 'publish',
 						'posts_per_page' => 10,
 						'cache_results'  => false,
-						'es'             => true,
 					),
 				),
 				$args
 			);
+			if ( 'production' === VIP_GO_ENV ) {
+				$args['es'] = true; // elasticsearch on production only
+			}
 			return $args;
 		}
 
@@ -1321,11 +1329,13 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 					'post_status'    => 'publish',
 					'posts_per_page' => 10,
 					'cache_results'  => false,
-					'es'             => true,
 				),
 			),
 			$args
 		);
+		if ( 'production' === VIP_GO_ENV ) {
+			$args['es'] = true; // elasticsearch on production only
+		}
 		return $args;
 
 	}
