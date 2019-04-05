@@ -82,14 +82,15 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 			$name = $li->nodeValue; // phpcs:ignore WordPress
 			$id   = get_cat_ID( $name );
 
-			$query = new WP_Query(
-				array(
-					'posts_per_page' => 1,
-					'cat'            => $id,
-					'orderby'        => 'date',
-					'es'             => true, // elasticsearch
-				)
+			$query_args = array(
+				'posts_per_page' => 1,
+				'cat'            => $id,
+				'orderby'        => 'date',
 			);
+			if ( 'production' === VIP_GO_ENV ) {
+				$query_args['es'] = true; // elasticsearch on production only
+			}
+			$query = new WP_Query( $query_args );
 
 			while ( $query->have_posts() ) {
 				$query->the_post();
@@ -164,7 +165,6 @@ if ( ! function_exists( 'minnpost_recent_stories_widget' ) ) :
 			'post__not_in'     => $exclude_ids,
 			'post_type'        => 'post',
 			'orderby'          => 'modified',
-			'es'               => true, // elasticsearch
 			'date_query'       => array(
 				array(
 					'after' => '7 days ago',
@@ -172,6 +172,9 @@ if ( ! function_exists( 'minnpost_recent_stories_widget' ) ) :
 			),
 			'category__not_in' => array( 55577, 55630, 55590, 55628, 55569, 55575 ),
 		);
+		if ( 'production' === VIP_GO_ENV ) {
+			$query['es'] = true; // elasticsearch on production only
+		}
 		return $query;
 	}
 endif;

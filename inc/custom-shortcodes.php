@@ -238,16 +238,20 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 						'terms'    => array( $category ),
 					),
 				),
-				//'es'             => true,
 			);
+			if ( 'production' === VIP_GO_ENV ) {
+				$args['es'] = true; // elasticsearch on production only
+			}
 		} else {
 			$args = array(
 				'post_type'      => 'cr3ativsponsor',
 				'order'          => $order,
 				'orderby'        => $orderby,
 				'posts_per_page' => $show,
-				//'es'             => true,
 			);
+			if ( 'production' === VIP_GO_ENV ) {
+				$args['es'] = true; // elasticsearch on production only
+			}
 		}
 
 		$sponsors = new WP_Query( $args );
