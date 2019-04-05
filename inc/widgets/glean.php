@@ -25,23 +25,22 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 			echo $content;
 		}
 
-		$the_query = new WP_Query(
-			array(
-				'posts_per_page' => 2,
-				'cat'            => $category,
-				'orderby'        => 'date',
-			)
+		$glean_query_args = array(
+			'posts_per_page' => 2,
+			'cat'            => $category,
+			'orderby'        => 'date',
 		);
 		if ( 'production' === VIP_GO_ENV ) {
-			$the_query['es'] = true; // elasticsearch on production only
+			$glean_query_args['es'] = true; // elasticsearch on production only
 		}
+		$glean_query = new WP_Query( $glean_query_args );
 
 		?>
 
-		<?php if ( $the_query->have_posts() ) : ?>
+		<?php if ( $glean_query->have_posts() ) : ?>
 			<article id="<?php the_ID(); ?>" class="m-post m-post-glean">
 				<!-- the loop -->
-				<?php $i = 0; while ( $the_query->have_posts() ) : $the_query->the_post(); ?>
+				<?php $i = 0; while ( $glean_query->have_posts() ) : $glean_query->the_post(); ?>
 					<?php if ( 0 === $i ) : ?>
 						<header class="m-entry-header">
 							<?php the_title( '<h3 class="a-entry-title a-spill-entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
