@@ -30,9 +30,11 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 				'posts_per_page' => 2,
 				'cat'            => $category,
 				'orderby'        => 'date',
-				'es'             => true, // elasticsearch
 			)
 		);
+		if ( 'production' === VIP_GO_ENV ) {
+			$the_query['es'] = true; // elasticsearch on production only
+		}
 
 		?>
 
