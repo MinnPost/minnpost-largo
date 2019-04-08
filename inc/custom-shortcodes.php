@@ -130,9 +130,9 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 					),
 				),
 			);
-			if ( 'production' === VIP_GO_ENV ) {
+			/*if ( 'production' === VIP_GO_ENV ) {
 				$args['es'] = true; // elasticsearch on production only
-			}
+			}*/
 		} else {
 			$args = array(
 				'post_type'      => 'cr3ativsponsor',
@@ -140,9 +140,9 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 				'orderby'        => $orderby,
 				'posts_per_page' => $show,
 			);
-			if ( 'production' === VIP_GO_ENV ) {
+			/*if ( 'production' === VIP_GO_ENV ) {
 				$args['es'] = true; // elasticsearch on production only
-			}
+			}*/
 		}
 
 		$sponsors = new WP_Query( $args );
