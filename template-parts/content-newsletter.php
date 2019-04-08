@@ -159,7 +159,7 @@
 			'posts_per_page' => $top_offset,
 			'orderby'        => 'post__in',
 		);
-		$top_query = new WP_Query( $top_query_args );
+		$top_query      = new WP_Query( $top_query_args );
 
 		$second_query_args = array(
 			'post__in' => $top_stories,
@@ -167,7 +167,7 @@
 			'offset'   => $top_offset,
 			'orderby'  => 'post__in',
 		);
-		$second_query = new WP_Query( $second_query_args );
+		$second_query      = new WP_Query( $second_query_args );
 		// the total does not stop at posts_per_page
 		set_query_var( 'found_posts', $top_query->found_posts );
 
@@ -180,10 +180,7 @@
 				'posts_per_page' => -1,
 				'orderby'        => 'post__in',
 			);
-			if ( 'production' === VIP_GO_ENV ) {
-				$more_query_args['es'] = true; // elasticsearch on production only
-			}
-			$more_query = new WP_Query( $more_query_args );
+			$more_query      = new WP_Query( $more_query_args );
 		}
 
 		ob_start();
