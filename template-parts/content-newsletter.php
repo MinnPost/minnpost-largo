@@ -152,26 +152,28 @@
 		</tr> <!-- end row -->
 			<?php
 		}
-		$top_offset  = 2;
-		$top_stories = get_post_meta( get_the_ID(), '_mp_newsletter_top_posts', true );
-		$top_query   = new WP_Query(
-			array(
-				'post__in'       => $top_stories,
-				'posts_per_page' => $top_offset,
-				'orderby'        => 'post__in',
-				//'es'             => true,
-			)
+		$top_offset     = 2;
+		$top_stories    = get_post_meta( get_the_ID(), '_mp_newsletter_top_posts', true );
+		$top_query_args = array(
+			'post__in'       => $top_stories,
+			'posts_per_page' => $top_offset,
+			'orderby'        => 'post__in',
 		);
+		if ( 'production' === VIP_GO_ENV ) {
+			$top_query_args['es'] = true; // elasticsearch on production only
+		}
+		$top_query = new WP_Query( $top_query_args );
 
-		$second_query = new WP_Query(
-			array(
-				'post__in' => $top_stories,
-				'paged'    => 1,
-				'offset'   => $top_offset,
-				'orderby'  => 'post__in',
-				//'es'       => true,
-			)
+		$second_query_args = array(
+			'post__in' => $top_stories,
+			'paged'    => 1,
+			'offset'   => $top_offset,
+			'orderby'  => 'post__in',
 		);
+		if ( 'production' === VIP_GO_ENV ) {
+			$second_query_args['es'] = true; // elasticsearch on production only
+		}
+		$second_query = new WP_Query( $second_query_args );
 		// the total does not stop at posts_per_page
 		set_query_var( 'found_posts', $top_query->found_posts );
 
@@ -179,14 +181,15 @@
 
 		$more_stories = get_post_meta( get_the_ID(), '_mp_newsletter_more_posts', true );
 		if ( '' !== $more_stories ) {
-			$more_query = new WP_Query(
-				array(
-					'post__in'       => $more_stories,
-					'posts_per_page' => -1,
-					'orderby'        => 'post__in',
-					//'es'             => true,
-				)
+			$more_query_args = array(
+				'post__in'       => $more_stories,
+				'posts_per_page' => -1,
+				'orderby'        => 'post__in',
 			);
+			if ( 'production' === VIP_GO_ENV ) {
+				$more_query_args['es'] = true; // elasticsearch on production only
+			}
+			$more_query = new WP_Query( $more_query_args );
 		}
 
 		ob_start();

@@ -227,7 +227,9 @@ endif;
 if ( ! function_exists( 'minnpost_zoninator_elasticpress' ) ) :
 	add_filter( 'zoninator_recent_posts_args', 'minnpost_zoninator_elasticpress' );
 	function minnpost_zoninator_elasticpress( $args ) {
-		//$args['es'] = true;
+		if ( 'production' === VIP_GO_ENV ) {
+			$args['es'] = true; // elasticsearch on production only
+		}
 		return $args;
 	}
 endif;
@@ -240,7 +242,9 @@ endif;
 if ( ! function_exists( 'minnpost_message_args' ) ) :
 	add_filter( 'wp_message_inserter_post_args', 'minnpost_message_args' );
 	function minnpost_message_args( $args ) {
-		//$args['es'] = true;
+		if ( 'production' === VIP_GO_ENV ) {
+			$args['es'] = true; // elasticsearch on production only
+		}
 		return $args;
 	}
 endif;
