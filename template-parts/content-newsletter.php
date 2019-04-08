@@ -159,9 +159,6 @@
 			'posts_per_page' => $top_offset,
 			'orderby'        => 'post__in',
 		);
-		if ( 'production' === VIP_GO_ENV ) {
-			$top_query_args['es'] = true; // elasticsearch on production only
-		}
 		$top_query = new WP_Query( $top_query_args );
 
 		$second_query_args = array(
@@ -170,9 +167,6 @@
 			'offset'   => $top_offset,
 			'orderby'  => 'post__in',
 		);
-		if ( 'production' === VIP_GO_ENV ) {
-			$second_query_args['es'] = true; // elasticsearch on production only
-		}
 		$second_query = new WP_Query( $second_query_args );
 		// the total does not stop at posts_per_page
 		set_query_var( 'found_posts', $top_query->found_posts );
