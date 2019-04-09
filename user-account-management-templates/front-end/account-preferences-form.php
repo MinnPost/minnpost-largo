@@ -61,3 +61,5 @@
 	</div>
 
 </form>
+
+<?php echo do_shortcode( '[newsletter_form placement="useraccount"]' ); ?>
