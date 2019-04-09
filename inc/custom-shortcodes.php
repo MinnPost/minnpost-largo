@@ -280,3 +280,96 @@ if ( ! function_exists( 'minnpost_account_info' ) ) :
 		return $account_management->get_template_html( 'account-info', 'front-end', $attributes );
 	}
 endif;
+
+/**
+* User Account preferences shortcode
+* This depends on the User Account Management plugin
+* We use this for the user preferences page
+*
+* @param array $attributes
+* @param string $content
+* @return string output of get_template_html from account management plugin
+*
+*/
+if ( ! function_exists( 'minnpost_account_preferences' ) ) :
+	add_shortcode( 'custom-account-preferences-form', 'minnpost_account_preferences' );
+	function minnpost_account_preferences( $attributes, $content = null ) {
+
+		if ( ! is_array( $attributes ) ) {
+			$attributes = array();
+		}
+
+		$user_id = get_query_var( 'users', '' );
+		if ( isset( $_GET['user_id'] ) ) {
+			$user_id = esc_attr( $_GET['user_id'] );
+		} else {
+			$user_id = get_current_user_id();
+		}
+
+		$can_access = false;
+		if ( class_exists( 'User_Account_Management' ) ) {
+			$account_management = User_Account_Management::get_instance();
+			$can_access         = $account_management->check_user_permissions( $user_id );
+		} else {
+			return;
+		}
+		// if we are on the current user, or if this user can edit users
+		if ( false === $can_access ) {
+			return __( 'You do not have permission to access this page.', 'minnpost-largo' );
+		}
+
+		// this functionality is mostly from https://pippinsplugins.com/change-password-form-short-code/
+		// we should use it for this page as well, unless and until it becomes insufficient
+
+		$attributes['current_url'] = get_current_url();
+		$attributes['redirect']    = $attributes['current_url'];
+
+		if ( ! is_user_logged_in() ) {
+			return __( 'You are not signed in.', 'minnpost-largo' );
+		} else {
+			// Error messages
+			$errors = array();
+			if ( isset( $_REQUEST['errors'] ) ) {
+				$error_codes = explode( ',', $_REQUEST['errors'] );
+
+				foreach ( $error_codes as $code ) {
+					$errors[] = $account_management->get_error_message( $code );
+				}
+			}
+			$attributes['errors'] = $errors;
+			if ( isset( $user_id ) && '' !== $user_id ) {
+				$attributes['user'] = get_userdata( $user_id );
+			} else {
+				$attributes['user'] = wp_get_current_user();
+			}
+			$attributes['user_meta'] = get_user_meta( $attributes['user']->ID );
+
+			// todo: this should probably be in the database somewhere
+			$attributes['reading_topics'] = array(
+				'Arts & Culture'         => __( 'Arts & Culture', 'minnpost-largo' ),
+				'Economy'                => __( 'Economy', 'minnpost-largo' ),
+				'Education'              => __( 'Education', 'minnpost-largo' ),
+				'Environment'            => __( 'Environment', 'minnpost-largo' ),
+				'Greater Minnesota news' => __( 'Greater Minnesota news', 'minnpost-largo' ),
+				'Health'                 => __( 'Health', 'minnpost-largo' ),
+				'MinnPost announcements' => __( 'MinnPost announcements', 'minnpost-largo' ),
+				'Opinion/Commentary'     => __( 'Opinion/Commentary', 'minnpost-largo' ),
+				'Politics & Policy'      => __( 'Politics & Policy', 'minnpost-largo' ),
+				'Sports'                 => __( 'Sports', 'minnpost-largo' ),
+			);
+
+			$attributes['user_reading_topics'] = array();
+			if ( isset( $attributes['user_meta']['_reading_topics'] ) ) {
+				if ( is_array( maybe_unserialize( $attributes['user_meta']['_reading_topics'][0] ) ) ) {
+					$topics = maybe_unserialize( $attributes['user_meta']['_reading_topics'][0] );
+					foreach ( $topics as $topic ) {
+						$attributes['user_reading_topics'][] = $topic;
+					}
+				}
+			}
+
+			return $account_management->get_template_html( 'account-preferences-form', 'front-end', $attributes );
+
+		}
+	}
+endif;
