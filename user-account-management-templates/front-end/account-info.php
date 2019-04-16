@@ -32,6 +32,6 @@
 
 <section class="o-user-section o-communication-preferences">
 	<h2 class="a-user-section-title">Communication preferences</h2>
-	<?php echo do_shortcode( '[newsletter_form placement="usersummary"]' ); ?>
-	<p>You can <a href="/user/preferences/">edit your preferences</a> for MinnPost email newsletters.</p>
+	<p>These are the MinnPost email messages that you currently receive. You can <a href="/user/preferences/">edit your preferences</a> to change them.</p>
+	<?php echo do_shortcode( '[newsletter_form placement="usersummary" groups_available="all"]' ); ?>
 </section>

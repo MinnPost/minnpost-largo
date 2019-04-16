@@ -57,9 +57,9 @@
 	</fieldset>
 
 	<div class="m-form-actions">
-		<input type="submit" name="submit" id="change-button" value="<?php _e( 'Save Changes', 'user-account-management' ); ?>" class="btn btn-submit btn-account-settings">
+		<input type="submit" name="submit" id="change-button" value="<?php _e( 'Save Reading Preferences', 'minnpost-largo' ); ?>" class="btn btn-submit btn-account-settings">
 	</div>
 
 </form>
 
-<?php echo do_shortcode( '[newsletter_form placement="useraccount"]' ); ?>
+<?php echo do_shortcode( '[newsletter_form placement="useraccount" groups_available="all"]' ); ?>
