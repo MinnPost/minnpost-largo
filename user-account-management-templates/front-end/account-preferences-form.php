@@ -44,7 +44,7 @@
 					<?php foreach ( $attributes['reading_topics'] as $topic ) : ?>
 						<?php
 						$checked = '';
-						if ( in_array( $topic, $user_topics ) ) {
+						if ( in_array( $topic, $user_topics, true ) ) {
 							$checked = ' checked';
 						}
 						?>
