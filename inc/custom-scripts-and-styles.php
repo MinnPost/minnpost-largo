@@ -26,6 +26,7 @@ if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
 		wp_dequeue_style( 'minnpost-donation-progress-widget' );
 		wp_dequeue_style( 'popular-widget' );
 		wp_dequeue_style( 'creativ_sponsor' );
+		wp_dequeue_script( 'pum-admin-theme-editor' );
 
 		$is_liveblog = get_post_meta( get_the_ID(), 'liveblog', true );
 		if ( 'enable' === $is_liveblog || 'archive' === $is_liveblog ) {
