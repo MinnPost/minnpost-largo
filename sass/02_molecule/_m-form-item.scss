@@ -2,6 +2,12 @@
 	margin: 0 0 0.5em 0;
 }
 
+.m-form-standalone .m-form-item, .m-form-widget .m-form-item {
+	label input {
+		margin-top: 0.375em;
+	}
+}
+
 .m-form-standalone .m-form-item {
 	margin-bottom: 1.25em;
 	width: 100%;
