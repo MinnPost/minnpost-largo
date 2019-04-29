@@ -104,61 +104,12 @@ $search-width: 117px;
 	}
 }
 
-// forms in sidebar widgets
-.m-widget.m-form-minnpost-form-processor-mailchimp {
-	font-size: 95%;
-	margin: 1em auto 20px auto;
-	.m-form-container {
-		padding: 0;
-		p, fieldset {
-			padding: 0 0.5em;
-		}
-	}
-	fieldset {
-		border: 0;
-		margin: 0;
-		padding: 0;
-	}
-	input {
-		width: 90%;
-	}
-	input:last-of-type {
-		margin-bottom: 0.5em;
-	}
-}
-
+// theme-specific styles for mailchimp plugin
 .o-content-sidebar .m-widget.m-form-minnpost-form-processor-mailchimp {
 	padding: 0;
 }
-
-// mailchimp form in stories
 .m-form-instory.m-form-minnpost-form-processor-mailchimp {
-	padding: 0.5em 0 1.5em 0;
 	border: 1px solid $color__border-light;
-	.m-form-container {
-		padding: 0 0.5em;
-		h3, p, fieldset {
-			padding: 0 0.5em;
-			margin-bottom: 1em;
-			&:last-child {
-				margin-bottom: 0;
-			}
-		}
-		h3 {
-			padding: 0 0.5em;
-		    margin-top: 0.5em;
-		    font-size: 138.5%;
-		    line-height: 1.15em;
-		}
-	}
-	fieldset {
-		border: 0;
-		margin: 0;
-		padding: 0;
-		input {
-			width: 100%;
-		}
-	}
 	&.legacy {
 	    margin-bottom: 1em;
 	    background: $color__background-pre;
@@ -213,6 +164,7 @@ $search-width: 117px;
 	}
 }
 
+// for theme sizes
 @media screen and (min-width: $medium-screen ) {
 	.m-form-instory.m-form-minnpost-form-processor-mailchimp {
 		&.legacy {
