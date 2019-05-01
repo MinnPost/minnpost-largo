@@ -62,4 +62,4 @@
 
 </form>
 
-<?php echo do_shortcode( '[newsletter_form placement="useraccount" groups_available="all"]' ); ?>
+<?php echo do_shortcode( '[newsletter_form placement="useraccount" groups_available="all" button_text="Save Email Preferences"]' ); ?>
