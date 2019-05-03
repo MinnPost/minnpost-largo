@@ -69,76 +69,68 @@ msgstr ""
 msgid "D.C. Memo"
 msgstr ""
 
-#: inc/custom-fields.php:116, inc/custom-fields.php:125
+#: inc/custom-fields.php:119, inc/custom-fields.php:129
 msgid "Top Stories"
 msgstr ""
 
-#: inc/custom-fields.php:126, inc/custom-fields.php:153, inc/custom-fields.php:492, inc/custom-fields.php:504
+#: inc/custom-fields.php:130, inc/custom-fields.php:157, inc/custom-fields.php:496, inc/custom-fields.php:508
 msgid "Search for a post here"
 msgstr ""
 
-#: inc/custom-fields.php:143, inc/custom-fields.php:152
+#: inc/custom-fields.php:147, inc/custom-fields.php:156
 msgid "More Stories"
 msgstr ""
 
-#: inc/custom-fields.php:338, inc/custom-fields.php:1207
+#: inc/custom-fields.php:342, inc/custom-fields.php:1211
 msgid "Medium"
 msgstr ""
 
-#: inc/custom-fields.php:339, inc/custom-fields.php:1208
+#: inc/custom-fields.php:343, inc/custom-fields.php:1212
 msgid "Do not display image"
 msgstr ""
 
-#: inc/custom-fields.php:340, inc/custom-fields.php:1209
+#: inc/custom-fields.php:344, inc/custom-fields.php:1213
 msgid "Large"
 msgstr ""
 
-#: inc/custom-fields.php:446
+#: inc/custom-fields.php:450
 msgid "Neither"
 msgstr ""
 
-#: inc/custom-fields.php:447
+#: inc/custom-fields.php:451
 msgid "Both"
 msgstr ""
 
-#: inc/custom-fields.php:448
+#: inc/custom-fields.php:452
 msgid "Top"
 msgstr ""
 
-#: inc/custom-fields.php:449
+#: inc/custom-fields.php:453
 msgid "Bottom"
 msgstr ""
 
-#: inc/custom-fields.php:491
+#: inc/custom-fields.php:495
 msgid "Related Content"
 msgstr ""
 
-#: inc/custom-fields.php:503
+#: inc/custom-fields.php:507
 msgid "Related Multimedia"
 msgstr ""
 
-#: inc/custom-fields.php:542
+#: inc/custom-fields.php:546
 msgid "Black on White"
 msgstr ""
 
-#: inc/custom-fields.php:543
+#: inc/custom-fields.php:547
 msgid "White on Black"
 msgstr ""
 
-#: inc/custom-fields.php:544
+#: inc/custom-fields.php:548
 msgid "White on Red"
 msgstr ""
 
-#: inc/custom-fields.php:545
+#: inc/custom-fields.php:549
 msgid "White on Transparent"
-msgstr ""
-
-#: inc/custom-forms.php:154
-msgid "Invalid nonce specified"
-msgstr ""
-
-#: inc/custom-forms.php:155
-msgid "Error"
 msgstr ""
 
 #: inc/custom-settings.php:41
@@ -161,20 +153,52 @@ msgstr ""
 msgid "Email Sending Name"
 msgstr ""
 
-#: inc/custom-shortcodes.php:70
-msgid "Thanks for updating your email preferences. They will go into effect immediately."
-msgstr ""
-
-#: inc/custom-shortcodes.php:73
-msgid "We have added you to the MinnPost mailing list."
-msgstr ""
-
-#: inc/custom-shortcodes.php:76
-msgid "We have added you to the MinnPost mailing list. You will need to click the confirmation link in the email we sent to begin receiving messages."
-msgstr ""
-
-#: inc/custom-shortcodes.php:336
+#: inc/custom-shortcodes.php:242, inc/custom-shortcodes.php:318
 msgid "You do not have permission to access this page."
+msgstr ""
+
+#: inc/custom-shortcodes.php:328
+msgid "You are not signed in."
+msgstr ""
+
+#: inc/custom-shortcodes.php:349
+msgid "Arts & Culture"
+msgstr ""
+
+#: inc/custom-shortcodes.php:350
+msgid "Economy"
+msgstr ""
+
+#: inc/custom-shortcodes.php:351
+msgid "Education"
+msgstr ""
+
+#: inc/custom-shortcodes.php:352
+msgid "Environment"
+msgstr ""
+
+#: inc/custom-shortcodes.php:353
+msgid "Greater Minnesota news"
+msgstr ""
+
+#: inc/custom-shortcodes.php:354
+msgid "Health"
+msgstr ""
+
+#: inc/custom-shortcodes.php:355
+msgid "MinnPost announcements"
+msgstr ""
+
+#: inc/custom-shortcodes.php:356
+msgid "Opinion/Commentary"
+msgstr ""
+
+#: inc/custom-shortcodes.php:357
+msgid "Politics & Policy"
+msgstr ""
+
+#: inc/custom-shortcodes.php:358
+msgid "Sports"
 msgstr ""
 
 #: inc/custom-types.php:19, inc/custom-types.php:22, inc/custom-types.php:24
@@ -269,7 +293,7 @@ msgstr ""
 msgid "User Account Management Menu"
 msgstr ""
 
-#: inc/menus.php:548
+#: inc/menus.php:551
 msgid "&#x1F6BD; Flush Object Cache"
 msgstr ""
 
@@ -354,27 +378,27 @@ msgstr ""
 
 #. translators: used between list items, there is a space after the comma
 #. translators: used between list items, there is a space after the comma
-#: inc/template-tags.php:717, inc/template-tags.php:724
+#: inc/template-tags.php:746, inc/template-tags.php:753
 msgid ", "
 msgstr ""
 
 #. translators: placeholder is the list of categories
-#: inc/template-tags.php:720
+#: inc/template-tags.php:749
 msgid "Posted in %1$s"
 msgstr ""
 
 #. translators: placeholder is the list of tags
-#: inc/template-tags.php:727
+#: inc/template-tags.php:756
 msgid "Tagged %1$s"
 msgstr ""
 
-#: inc/template-tags.php:737
+#: inc/template-tags.php:766
 msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
 #. translators: %s: Name of current post
 #. translators: %s: Name of current post
-#: inc/template-tags.php:753, inc/template-tags.php:783
+#: inc/template-tags.php:782, inc/template-tags.php:812
 msgid "Edit %s"
 msgstr ""
 
@@ -418,12 +442,16 @@ msgstr ""
 msgid "You are not allowed to access this part of the site"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-preferences-form.php:41
+#: user-account-management-templates/front-end/account-preferences-form.php:30
 msgid "Your preferences were successfully updated."
 msgstr ""
 
-#: user-account-management-templates/front-end/account-preferences-form.php:49
+#: user-account-management-templates/front-end/account-preferences-form.php:38
 msgid "Reading Preferences:"
+msgstr ""
+
+#: user-account-management-templates/front-end/account-preferences-form.php:60
+msgid "Save Reading Preferences"
 msgstr ""
 
 #: user-account-management-templates/front-end/account-settings-form.php:36
@@ -442,42 +470,42 @@ msgstr ""
 msgid "(Primary)"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:84
+#: user-account-management-templates/front-end/account-settings-form.php:85
 msgid "First name:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:84, user-account-management-templates/front-end/account-settings-form.php:89, user-account-management-templates/front-end/account-settings-form.php:95, user-account-management-templates/front-end/account-settings-form.php:99, user-account-management-templates/front-end/account-settings-form.php:110, user-account-management-templates/front-end/account-settings-form.php:116
+#: user-account-management-templates/front-end/account-settings-form.php:85, user-account-management-templates/front-end/account-settings-form.php:90, user-account-management-templates/front-end/account-settings-form.php:96, user-account-management-templates/front-end/account-settings-form.php:100, user-account-management-templates/front-end/account-settings-form.php:111, user-account-management-templates/front-end/account-settings-form.php:117
 msgid "This field is required."
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:89
+#: user-account-management-templates/front-end/account-settings-form.php:90
 msgid "Last name:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:95
+#: user-account-management-templates/front-end/account-settings-form.php:96
 msgid "City:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:99
+#: user-account-management-templates/front-end/account-settings-form.php:100
 msgid "State:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:105
+#: user-account-management-templates/front-end/account-settings-form.php:106
 msgid "Street address:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:110
+#: user-account-management-templates/front-end/account-settings-form.php:111
 msgid "Zip code:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:116
+#: user-account-management-templates/front-end/account-settings-form.php:117
 msgid "Country:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:131
+#: user-account-management-templates/front-end/account-settings-form.php:132
 msgid "Only fill in if you are not human:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:136
+#: user-account-management-templates/front-end/account-settings-form.php:137
 msgid "Save Changes"
 msgstr ""

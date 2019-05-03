@@ -104,22 +104,21 @@ $search-width: 117px;
 	}
 }
 
-// forms in sidebar widgets
-.m-widget.m-form-newsletter-shortcode {
-	font-size: 95%;
-	width: 95%;
-	margin: 1em auto 20px auto;
-	input {
-		width: 90%;
-	}
-	input#mce-LNAME {
-		margin-bottom: 0.5em;
+// theme-specific styles for mailchimp plugin
+.o-content-sidebar .m-widget.m-form-minnpost-form-processor-mailchimp {
+	padding: 0;
+}
+.m-form-instory.m-form-minnpost-form-processor-mailchimp {
+	border: 1px solid $color__border-light;
+	&.legacy {
+	    margin-bottom: 1em;
+	    background: $color__background-pre;
+	    figure {
+	    	margin: 0;
+	    }
 	}
 }
 
-.o-content-sidebar .m-widget.m-widget-form-dc {
-	padding: 0;
-}
 .m-form-container {
 	padding: 0 0.5em;
 }
@@ -163,4 +162,15 @@ $search-width: 117px;
 		left: auto;
 		right: 0;
 	}
+}
+
+// for theme sizes
+@media screen and (min-width: $medium-screen ) {
+	.m-form-instory.m-form-minnpost-form-processor-mailchimp {
+		&.legacy {
+		    width: 50%;
+		    float: right;
+		    margin-left: 1em;
+		}
+	}	
 }

@@ -277,6 +277,32 @@ if ( ! function_exists( 'add_to_user_data' ) ) :
 	}
 endif;
 
+
+/**
+* Set the user email address for the form. Used when users have multiple email addresses and need to set the MailChimp preferences for them.
+*
+* @param string $user_email
+* @param int $user_id
+* @return string $user_email
+*
+*/
+if ( ! function_exists( 'mailchimp_set_form_user_email' ) ) :
+	add_filter( 'minnpost_form_processor_mailchimp_set_form_user_email', 'mailchimp_set_form_user_email', 10, 2 );
+	function mailchimp_set_form_user_email( $user_email, $user_id ) {
+		$emails = get_user_meta( $user_id, '_consolidated_emails', true );
+		$emails = explode( ',', $emails );
+		if ( 1 >= count( $emails ) ) {
+			return $user_email;
+		} else {
+			$email_to_check = sanitize_email( $_GET['email'] );
+			if ( in_array( $email_to_check, $emails, true ) ) {
+				return $email_to_check;
+			}
+		}
+		return $user_email;
+	}
+endif;
+
 /**
 * Save custom MP fields to user data
 *

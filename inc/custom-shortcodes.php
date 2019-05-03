@@ -42,115 +42,6 @@ if ( ! function_exists( 'widget_instance' ) ) :
 endif;
 
 /**
-* Add newsletter embed shortcode
-* This allows us to use newsletter form as widgets
-*
-* @param array $atts
-*
-*/
-if ( ! function_exists( 'newsletter_embed' ) ) :
-	add_shortcode( 'newsletter_embed', 'newsletter_embed' );
-	function newsletter_embed( $atts ) {
-		if ( is_admin() ) {
-			return false;
-		}
-		$args    = shortcode_atts(
-			array(
-				'newsletter'      => '',
-				'confirm_message' => '',
-				'content'         => '',
-			),
-			$atts
-		);
-		$message = '';
-		if ( isset( $_GET['subscribe-message'] ) ) {
-			if ( '' === $args['confirm_message'] ) {
-				switch ( $_GET['subscribe-message'] ) {
-					case 'success-existing':
-						$message = __( 'Thanks for updating your email preferences. They will go into effect immediately.', 'minnpost-largo' );
-						break;
-					case 'success-new':
-						$message = __( 'We have added you to the MinnPost mailing list.', 'minnpost-largo' );
-						break;
-					case 'success-pending':
-						$message = __( 'We have added you to the MinnPost mailing list. You will need to click the confirmation link in the email we sent to begin receiving messages.', 'minnpost-largo' );
-						break;
-					default:
-						$message = $args['confirm_message'];
-						break;
-				}
-			} else {
-				$message = $args['confirm_message'];
-			}
-			$message = '<div class="m-form-message m-form-message-info">' . $message . '</div>';
-		} else {
-			$confirm_message = $args['confirm_message'];
-		}
-
-		if ( '' !== $args['content'] ) {
-			set_query_var( 'content', wp_kses_post( wpautop( $args['content'] ) ) );
-		}
-
-		// Generate a custom nonce value.
-		$newsletter_nonce = wp_create_nonce( 'mp_newsletter_form_nonce' );
-		if ( '' !== $args['newsletter'] ) {
-			if ( 'dc' === $args['newsletter'] ) {
-				set_query_var( 'newsletter', 'dc' );
-				set_query_var( 'newsletter_nonce', $newsletter_nonce );
-				set_query_var( 'redirect_url', get_current_url() . '#form-newsletter-shortcode-' . $args['newsletter'] );
-				set_query_var( 'message', $message );
-				ob_start();
-				$file = get_template_part( 'inc/forms/newsletter', 'shortcode-dc' );
-				$html = ob_get_contents();
-				ob_end_clean();
-				return $html;
-			} elseif ( 'default' === $args['newsletter'] ) {
-				set_query_var( 'newsletter', 'default' );
-				set_query_var( 'newsletter_nonce', $newsletter_nonce );
-				set_query_var( 'redirect_url', get_current_url() );
-				set_query_var( 'message', $message );
-				ob_start();
-				$file = get_template_part( 'inc/forms/newsletter', 'shortcode' );
-				$html = ob_get_contents();
-				ob_end_clean();
-				return $html;
-			} elseif ( 'full' === $args['newsletter'] ) {
-				set_query_var( 'newsletter', 'full' );
-				set_query_var( 'newsletter_nonce', $newsletter_nonce );
-				set_query_var( 'redirect_url', get_current_url() );
-				set_query_var( 'message', $message );
-				ob_start();
-				$file = get_template_part( 'inc/forms/newsletter', 'full' );
-				$html = ob_get_contents();
-				ob_end_clean();
-				return $html;
-			} elseif ( 'full-dc' === $args['newsletter'] ) {
-				set_query_var( 'newsletter', 'full-dc' );
-				set_query_var( 'newsletter_nonce', $newsletter_nonce );
-				set_query_var( 'redirect_url', get_current_url() );
-				set_query_var( 'message', $message );
-				ob_start();
-				$file = get_template_part( 'inc/forms/newsletter', 'full-dc' );
-				$html = ob_get_contents();
-				ob_end_clean();
-				return $html;
-			}
-		} else {
-			set_query_var( 'newsletter', 'email' );
-			set_query_var( 'newsletter_nonce', $newsletter_nonce );
-			set_query_var( 'redirect_url', get_current_url() );
-			set_query_var( 'message', $message );
-			set_query_var( 'confirm_message', $confirm_message );
-			ob_start();
-			$file = get_template_part( 'inc/forms/newsletter', 'shortcode-email' );
-			$html = ob_get_contents();
-			ob_end_clean();
-			return $html;
-		}
-	}
-endif;
-
-/**
 * Add column list
 * This allows us to display list of categories as shortcode
 *
@@ -387,5 +278,98 @@ if ( ! function_exists( 'minnpost_account_info' ) ) :
 		}
 
 		return $account_management->get_template_html( 'account-info', 'front-end', $attributes );
+	}
+endif;
+
+/**
+* User Account preferences shortcode
+* This depends on the User Account Management plugin
+* We use this for the user preferences page
+*
+* @param array $attributes
+* @param string $content
+* @return string output of get_template_html from account management plugin
+*
+*/
+if ( ! function_exists( 'minnpost_account_preferences' ) ) :
+	add_shortcode( 'custom-account-preferences-form', 'minnpost_account_preferences' );
+	function minnpost_account_preferences( $attributes, $content = null ) {
+
+		if ( ! is_array( $attributes ) ) {
+			$attributes = array();
+		}
+
+		$user_id = get_query_var( 'users', '' );
+		if ( isset( $_GET['user_id'] ) ) {
+			$user_id = esc_attr( $_GET['user_id'] );
+		} else {
+			$user_id = get_current_user_id();
+		}
+
+		$can_access = false;
+		if ( class_exists( 'User_Account_Management' ) ) {
+			$account_management = User_Account_Management::get_instance();
+			$can_access         = $account_management->check_user_permissions( $user_id );
+		} else {
+			return;
+		}
+		// if we are on the current user, or if this user can edit users
+		if ( false === $can_access ) {
+			return __( 'You do not have permission to access this page.', 'minnpost-largo' );
+		}
+
+		// this functionality is mostly from https://pippinsplugins.com/change-password-form-short-code/
+		// we should use it for this page as well, unless and until it becomes insufficient
+
+		$attributes['current_url'] = get_current_url();
+		$attributes['redirect']    = $attributes['current_url'];
+
+		if ( ! is_user_logged_in() ) {
+			return __( 'You are not signed in.', 'minnpost-largo' );
+		} else {
+			// Error messages
+			$errors = array();
+			if ( isset( $_REQUEST['errors'] ) ) {
+				$error_codes = explode( ',', $_REQUEST['errors'] );
+
+				foreach ( $error_codes as $code ) {
+					$errors[] = $account_management->get_error_message( $code );
+				}
+			}
+			$attributes['errors'] = $errors;
+			if ( isset( $user_id ) && '' !== $user_id ) {
+				$attributes['user'] = get_userdata( $user_id );
+			} else {
+				$attributes['user'] = wp_get_current_user();
+			}
+			$attributes['user_meta'] = get_user_meta( $attributes['user']->ID );
+
+			// todo: this should probably be in the database somewhere
+			$attributes['reading_topics'] = array(
+				'Arts & Culture'         => __( 'Arts & Culture', 'minnpost-largo' ),
+				'Economy'                => __( 'Economy', 'minnpost-largo' ),
+				'Education'              => __( 'Education', 'minnpost-largo' ),
+				'Environment'            => __( 'Environment', 'minnpost-largo' ),
+				'Greater Minnesota news' => __( 'Greater Minnesota news', 'minnpost-largo' ),
+				'Health'                 => __( 'Health', 'minnpost-largo' ),
+				'MinnPost announcements' => __( 'MinnPost announcements', 'minnpost-largo' ),
+				'Opinion/Commentary'     => __( 'Opinion/Commentary', 'minnpost-largo' ),
+				'Politics & Policy'      => __( 'Politics & Policy', 'minnpost-largo' ),
+				'Sports'                 => __( 'Sports', 'minnpost-largo' ),
+			);
+
+			$attributes['user_reading_topics'] = array();
+			if ( isset( $attributes['user_meta']['_reading_topics'] ) ) {
+				if ( is_array( maybe_unserialize( $attributes['user_meta']['_reading_topics'][0] ) ) ) {
+					$topics = maybe_unserialize( $attributes['user_meta']['_reading_topics'][0] );
+					foreach ( $topics as $topic ) {
+						$attributes['user_reading_topics'][] = $topic;
+					}
+				}
+			}
+
+			return $account_management->get_template_html( 'account-preferences-form', 'front-end', $attributes );
+
+		}
 	}
 endif;

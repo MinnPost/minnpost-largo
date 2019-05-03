@@ -1027,7 +1027,7 @@ if ( ! function_exists( 'get_mailchimp_user_values' ) ) :
 		if ( ! class_exists( 'Minnpost_Form_Processor_MailChimp' ) ) {
 			require_once( TEMPLATEPATH . 'plugins/minnpost-form-processor-mailchimp/minnpost-form-processor-mailchimp.php' );
 		}
-		$minnpost_form_processor = Minnpost_Form_Processor_MailChimp::get_instance();
+		$minnpost_form_processor = minnpost_form_processor_mailchimp();
 		$values                  = $minnpost_form_processor->get_mailchimp_user_values( $reset );
 		return $values;
 	}
@@ -1048,8 +1048,8 @@ if ( ! function_exists( 'get_mailchimp_newsletter_options' ) ) :
 		if ( ! class_exists( 'Minnpost_Form_Processor_MailChimp' ) ) {
 			require_once( TEMPLATEPATH . 'plugins/minnpost-form-processor-mailchimp/minnpost-form-processor-mailchimp.php' );
 		}
-		$minnpost_form = Minnpost_Form_Processor_MailChimp::get_instance();
-		$options       = $minnpost_form->get_mailchimp_field_options( '_newsletters', 'f88ee8cb3b' );
+		$minnpost_form = minnpost_form_processor_mailchimp();
+		$options       = $minnpost_form->get_data->get_mailchimp_field_options( '_newsletters', 'f88ee8cb3b' );
 		return $options;
 	}
 endif;
@@ -1069,8 +1069,8 @@ if ( ! function_exists( 'get_mailchimp_occasional_email_options' ) ) :
 		if ( ! class_exists( 'Minnpost_Form_Processor_MailChimp' ) ) {
 			require_once( TEMPLATEPATH . 'plugins/minnpost-form-processor-mailchimp/minnpost-form-processor-mailchimp.php' );
 		}
-		$minnpost_form = Minnpost_Form_Processor_MailChimp::get_instance();
-		$options       = $minnpost_form->get_mailchimp_field_options( '_occasional_emails', '93f0b57b1b' );
+		$minnpost_form = minnpost_form_processor_mailchimp();
+		$options       = $minnpost_form->get_data->get_mailchimp_field_options( '_occasional_emails', '93f0b57b1b' );
 		return $options;
 	}
 endif;

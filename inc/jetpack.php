@@ -111,7 +111,7 @@ add_filter( 'jetpack_enable_open_graph', '__return_false' );
 if ( ! function_exists( 'minnpost_largo_custom_photon' ) ) :
 	add_filter( 'jetpack_photon_pre_args', 'minnpost_largo_custom_photon' );
 	function minnpost_largo_custom_photon( $args ) {
-	    $args['strip'] = 'all';
-	    return $args;
+		$args['strip'] = 'all';
+		return $args;
 	}
 endif;
