@@ -294,9 +294,11 @@ if ( ! function_exists( 'mailchimp_set_form_user_email' ) ) :
 		if ( 1 >= count( $emails ) ) {
 			return $user_email;
 		} else {
-			$email_to_check = sanitize_email( $_GET['email'] );
-			if ( in_array( $email_to_check, $emails, true ) ) {
-				return $email_to_check;
+			if ( isset( $_GET['email'] ) ) {
+				$email_to_check = sanitize_email( $_GET['email'] );
+				if ( in_array( $email_to_check, $emails, true ) ) {
+					return $email_to_check;
+				}
 			}
 		}
 		return $user_email;
