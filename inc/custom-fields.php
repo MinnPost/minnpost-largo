@@ -901,24 +901,6 @@ if ( ! function_exists( 'cmb2_user_fields' ) ) :
 			),
 		) );
 
-		// mailchimp newsletter fields
-		$user_preferences->add_field( array(
-			'name'       => 'Subscribe to these regular newsletters:',
-			'desc'       => '',
-			'id'         => '_newsletters',
-			'type'       => 'multicheck',
-			'options_cb' => 'get_mailchimp_newsletter_options',
-			'default_cb' => 'get_mailchimp_user_values',
-		) );
-		$user_preferences->add_field( array(
-			'name'       => 'Occasional MinnPost emails:',
-			'desc'       => '',
-			'id'         => '_occasional_emails',
-			'type'       => 'multicheck',
-			'options_cb' => 'get_mailchimp_occasional_email_options',
-			'default_cb' => 'get_mailchimp_user_values',
-		) );
-
 		$user_donation_info = new_cmb2_box( array(
 			'id'           => $object_type . '_donation_info',
 			'title'        => 'Donation Info',
@@ -1005,73 +987,6 @@ if ( ! function_exists( 'get_member_levels' ) ) :
 			$values[ $key + 1 ] = $value['name'];
 		}
 		return $values;
-	}
-endif;
-
-/**
-* Get user's current values for the MailChimp settings on user profiles.
-* This determines what their subscription status is before they do anything on the website, and keeps it updated if they change their settings elsewhere.
-* This depends on the MinnPost Form Processor for MailChimp, and the Form Processor for MailChimp, plugins.
-*
-* @param array $field_args
-* @param array $field
-* @param bool $reset
-*
-* @return array $values
-*/
-if ( ! function_exists( 'get_mailchimp_user_values' ) ) :
-	function get_mailchimp_user_values( $field_args = array(), $field = array(), $reset = false ) {
-		// figure out if we have a current user and use their settings as the default selections
-		// problem: if the user has a setting for this field, this default callback won't be called
-		// solution: we just never save this field. the mailchimp plugin's cache settings help keep from overloading the api
-		if ( ! class_exists( 'Minnpost_Form_Processor_MailChimp' ) ) {
-			require_once( TEMPLATEPATH . 'plugins/minnpost-form-processor-mailchimp/minnpost-form-processor-mailchimp.php' );
-		}
-		$minnpost_form_processor = minnpost_form_processor_mailchimp();
-		$values                  = $minnpost_form_processor->get_mailchimp_user_values( $reset );
-		return $values;
-	}
-endif;
-
-/**
-* Get available newsletter options to display on user's profile
-* This determines what they can subscribe to.
-* This depends on the MinnPost Form Processor for MailChimp, and the Form Processor for MailChimp, plugins.
-*
-* @param array $field
-*
-* @return array $options
-*/
-if ( ! function_exists( 'get_mailchimp_newsletter_options' ) ) :
-	function get_mailchimp_newsletter_options( $field = array() ) {
-		// mailchimp fields
-		if ( ! class_exists( 'Minnpost_Form_Processor_MailChimp' ) ) {
-			require_once( TEMPLATEPATH . 'plugins/minnpost-form-processor-mailchimp/minnpost-form-processor-mailchimp.php' );
-		}
-		$minnpost_form = minnpost_form_processor_mailchimp();
-		$options       = $minnpost_form->get_data->get_mailchimp_field_options( '_newsletters', 'f88ee8cb3b' );
-		return $options;
-	}
-endif;
-
-/**
-* Get available "occasional email" options to display on user's profile
-* This determines what they can subscribe to.
-* This depends on the MinnPost Form Processor for MailChimp, and the Form Processor for MailChimp, plugins.
-*
-* @param array $field
-*
-* @return array $options
-*/
-if ( ! function_exists( 'get_mailchimp_occasional_email_options' ) ) :
-	function get_mailchimp_occasional_email_options( $field = array() ) {
-		// mailchimp fields
-		if ( ! class_exists( 'Minnpost_Form_Processor_MailChimp' ) ) {
-			require_once( TEMPLATEPATH . 'plugins/minnpost-form-processor-mailchimp/minnpost-form-processor-mailchimp.php' );
-		}
-		$minnpost_form = minnpost_form_processor_mailchimp();
-		$options       = $minnpost_form->get_data->get_mailchimp_field_options( '_occasional_emails', '93f0b57b1b' );
-		return $options;
 	}
 endif;
 
