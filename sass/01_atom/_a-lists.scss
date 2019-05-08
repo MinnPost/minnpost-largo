@@ -32,6 +32,6 @@ dd {
 	padding-left: $base-line-height-em;
 	margin-left: 0;
 	li {
-		list-style: disc outside;
+		list-style-position: outside;
 	}
 }
