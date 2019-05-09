@@ -1,532 +1,182 @@
 // Require our dependencies
-const autoprefixer = require( 'autoprefixer' );
-const babel = require( 'gulp-babel' );
+const autoprefixer = require('autoprefixer');
+const babel = require('gulp-babel');
 const bourbon = require( 'bourbon' ).includePaths;
-const browserSync = require( 'browser-sync' );
-const cheerio = require( 'gulp-cheerio' );
-const concat = require( 'gulp-concat' );
-const cssnano = require( 'gulp-cssnano' );
-const del = require( 'del' );
-const eslint = require( 'gulp-eslint' );
-const gulp = require( 'gulp' );
-const gutil = require( 'gulp-util' );
-const globbing = require( 'gulp-css-globbing' );
-const imagemin = require( 'gulp-imagemin' );
+const browserSync = require('browser-sync').create();
+const concat = require('gulp-concat');
+const cssnano = require('cssnano');
+const gulp = require('gulp');
 const mqpacker = require( 'css-mqpacker' );
-const neat = require( 'bourbon-neat' ).includePaths;
-const notify = require( 'gulp-notify' );
-const plumber = require( 'gulp-plumber' );
-const postcss = require( 'gulp-postcss' );
-const reload = browserSync.reload;
-const rename = require( 'gulp-rename' );
-const sass = require( 'gulp-sass' );
-const sassLint = require( 'gulp-sass-lint' );
-const sort = require( 'gulp-sort' );
-const sourcemaps = require( 'gulp-sourcemaps' );
-const spritesmith = require( 'gulp.spritesmith' );
-const svgmin = require( 'gulp-svgmin' );
-const svgstore = require( 'gulp-svgstore' );
-const uglify = require( 'gulp-uglify' );
-const wpPot = require( 'gulp-wp-pot' );
+const postcss = require('gulp-postcss');
+const rename = require('gulp-rename');
+const sass = require('gulp-sass');
+const sassGlob = require('gulp-sass-glob');
+const sourcemaps = require('gulp-sourcemaps');
+const uglify = require('gulp-uglify');
 
-// Set assets paths.
-const paths = {
-	'css': [ './*.css', '!*.min.css' ],
-	'icons': 'assets/img/svg-icons/*.svg',
-	'images': [ 'assets/img/*', 'assets/img/app-icons/*', 'assets/img/icons/*', '!assets/img/*-icons.svg' ],
-	'php': [ './*.php', './**/*.php' ],
-	'sass': [ 'sass/**/*.scss', 'assets/sass/**/*.scss' ],
-	'concat_scripts': 'assets/js/src/*.js',
-	'scripts': [ 'assets/js/*.js', '!assets/js/*.min.js', '!assets/js/customizer.js' ],
-	'sprites': 'assets/img/sprites/*.png'
+// Some config data for our tasks
+const config = {
+  styles: {
+    //admin: 'assets/sass/admin.scss',
+    front_end: 'assets/sass/**/*.scss',
+    main: 'sass/**/*.scss',
+    srcDir: 'assets/sass',
+    front_end_dest: 'assets/css',
+    main_dest: './'
+  },
+  scripts: {
+    //admin: './assets/js/admin/**/*.js',
+    front_end: './assets/js/src/**/*.js',
+    dest: './assets/js'
+  },
+  browserSync: {
+    active: false,
+    localURL: 'mylocalsite.local'
+  }
 };
 
-/**
- * Handle errors and alert the user.
- */
-function handleErrors () {
-	const args = Array.prototype.slice.call( arguments );
-
-	notify.onError( {
-		'title': 'Task Failed [<%= error.message %>',
-		'message': 'See console.',
-		'sound': 'Sosumi' // See: https://github.com/mikaelbr/node-notifier#all-notification-options-with-their-defaults
-	} ).apply( this, args );
-
-	gutil.beep(); // Beep 'sosumi' again.
-
-	// Prevent the 'watch' task from stopping.
-	this.emit( 'end' );
+function adminstyles() {
+  return gulp.src(config.styles.admin)
+    .pipe(sourcemaps.init()) // Sourcemaps need to init before compilation
+    .pipe(sassGlob()) // Allow for globbed @import statements in SCSS
+    .pipe(sass()) // Compile
+    .on('error', sass.logError) // Error reporting
+    .pipe(postcss([
+      autoprefixer(), // Autoprefix resulting CSS
+      cssnano() // Minify
+    ]))
+    .pipe(rename({ // Rename to .min.css
+      suffix: '.min'
+    }))
+    .pipe(sourcemaps.write()) // Write the sourcemap files
+    .pipe(gulp.dest(config.styles.dest)) // Drop the resulting CSS file in the specified dir
+    .pipe(browserSync.stream());
 }
 
-/**
- * Delete main CSS before we minify and optimize
- */
-gulp.task( 'clean:styles', () =>
-	del( [ 'style.css', 'style.min.css', 'print.css', 'print.min.css' ] )
-);
+function frontendstyles() {
+  return gulp.src(config.styles.front_end)
+    .pipe(sourcemaps.init()) // Sourcemaps need to init before compilation
+    .pipe(sassGlob()) // Allow for globbed @import statements in SCSS
+    .pipe(sass( {
+    		'includePaths': bourbon
+    	}
+    )) // Compile
+    .on('error', sass.logError) // Error reporting
+    .pipe(postcss([
+      autoprefixer(), // Autoprefix resulting CSS
+      cssnano() // Minify
+    ]))
+    .pipe(rename({ // Rename to .min.css
+      suffix: '.min'
+    }))
+    .pipe(sourcemaps.write()) // Write the sourcemap files
+    .pipe(gulp.dest(config.styles.front_end_dest)) // Drop the resulting CSS file in the specified dir
+    .pipe(browserSync.stream());
+}
 
-/**
- * Compile Sass and run stylesheet through PostCSS.
- *
- * https://www.npmjs.com/package/gulp-sass
- * https://www.npmjs.com/package/gulp-postcss
- * https://www.npmjs.com/package/gulp-autoprefixer
- * https://www.npmjs.com/package/css-mqpacker
- */
-gulp.task( 'postcss', [ 'clean:styles' ], () =>
-	gulp.src( 'sass/*.scss', paths.css )
-
-		// Deal with errors.
-		.pipe( plumber( {'errorHandler': handleErrors} ) )
-
-		// Wrap tasks in a sourcemap.
-		.pipe( sourcemaps.init() )
-
-			// glob files together
-			.pipe(globbing({
-		        // Configure it to use SCSS files
-		        extensions: ['.scss']
-		    }))
-
-			// Compile Sass using LibSass.
-			.pipe( sass( {
-				//'includePaths': [].concat( bourbon, neat ),
-				'includePaths': [].concat( bourbon ),
-				'errLogToConsole': true,
-				'outputStyle': 'expanded' // Options: nested, expanded, compact, compressed
-			} ) )
-
-			// Parse with PostCSS plugins.
-			.pipe( postcss( [
-				autoprefixer( {
-					'browsers': [ 'last 3 version' ]
-				} ),
-				mqpacker( {
-					'sort': true
-				} )
-			] ) )
-
-		// Create sourcemap.
-		.pipe( sourcemaps.write() )
-
-		// Create style.css.
-		.pipe( gulp.dest( './' ) )
-		.pipe( browserSync.stream() )
-);
-
-/**
- * Compile Sass and run stylesheet through PostCSS.
- *
- * https://www.npmjs.com/package/gulp-sass
- * https://www.npmjs.com/package/gulp-postcss
- * https://www.npmjs.com/package/gulp-autoprefixer
- * https://www.npmjs.com/package/css-mqpacker
- */
-gulp.task( 'post_asset_css', [ 'clean:styles' ], () =>
-	gulp.src( 'assets/sass/*.scss' )
-
-		// Deal with errors.
-		.pipe( plumber( {'errorHandler': handleErrors} ) )
-
-		// Wrap tasks in a sourcemap.
-		.pipe( sourcemaps.init() )
-
-			// glob files together
-			.pipe(globbing({
-		        // Configure it to use SCSS files
-		        extensions: ['.scss']
-		    }))
-
-			// Compile Sass using LibSass.
-			.pipe( sass( {
-				'includePaths': [].concat( bourbon ),
-				'errLogToConsole': true,
-				'outputStyle': 'expanded' // Options: nested, expanded, compact, compressed
-			} ) )
-
-			// Parse with PostCSS plugins.
-			.pipe( postcss( [
-				autoprefixer( {
-					'browsers': [ 'last 2 version' ]
-				} ),
-				mqpacker( {
-					'sort': true
-				} )
-			] ) )
-
-		// Create sourcemap.
-		.pipe( sourcemaps.write() )
-
-		.pipe( gulp.dest( 'assets/css/' ) )
-		.pipe( browserSync.stream() )
-);
-
-/**
- * Minify and optimize style.css.
- *
- * https://www.npmjs.com/package/gulp-cssnano
- */
-gulp.task( 'cssnano', [ 'postcss' ], () =>
-	gulp.src( 'style.css' )
-		.pipe( plumber( {'errorHandler': handleErrors} ) )
-		.pipe( cssnano( {
+function mainstyles() {
+  return gulp.src(config.styles.main)
+    .pipe(sourcemaps.init()) // Sourcemaps need to init before compilation
+    .pipe(sassGlob()) // Allow for globbed @import statements in SCSS
+    .pipe(sass( {
+    		'includePaths': bourbon
+    	}
+    )) // Compile
+    .on('error', sass.logError) // Error reporting
+    .pipe(postcss([
+		autoprefixer( {
+			'browsers': [ 'last 3 version' ]
+		} ),
+		mqpacker( {
+			'sort': true
+		} ),
+      	cssnano( {
 			'safe': true // Use safe optimizations.
-		} ) )
-		.pipe( rename( 'style.min.css' ) )
-		.pipe( gulp.dest( './' ) )
-		.pipe( browserSync.stream() )
+		} ) // Minify
+    ]))
+    .pipe(rename({ // Rename to .min.css
+      suffix: '.min'
+    }))
+    //.pipe(sourcemaps.write()) // Write the sourcemap files
+    .pipe(gulp.dest(config.styles.main_dest)) // Drop the resulting CSS file in the specified dir
+    .pipe(browserSync.stream());
+}
+
+function adminscripts() {
+  return gulp.src(config.scripts.admin)
+    .pipe(sourcemaps.init())
+    .pipe(babel({
+      presets: ['@babel/preset-env']
+    }))
+    .pipe(concat('admin.js')) // Concatenate
+    .pipe(uglify()) // Minify + compress
+    .pipe(rename({
+      suffix: '.min'
+    }))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest(config.scripts.dest))
+    .pipe(browserSync.stream());
+}
+
+function frontendscripts() {
+  return gulp.src(config.scripts.front_end)
+    .pipe(sourcemaps.init())
+    .pipe(babel({
+      presets: ['@babel/preset-env']
+    }))
+    .pipe(concat('front-end.js')) // Concatenate
+    .pipe(uglify()) // Minify + compress
+    .pipe(rename({
+      suffix: '.min'
+    }))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest(config.scripts.dest))
+    .pipe(browserSync.stream());
+}
+
+// Injects changes into browser
+function browserSyncTask() {
+  if (config.browserSync.active) {
+    browserSync.init({
+      proxy: config.browserSync.localURL
+    });
+  }
+}
+
+// Reloads browsers that are using browsersync
+function browserSyncReload(done) {
+  browserSync.reload();
+  done();
+}
+
+// Watch directories, and run specific tasks on file changes
+function watch() {
+  gulp.watch(config.styles.srcDir, styles);
+  gulp.watch(config.scripts.admin, adminscripts);
+  
+  // Reload browsersync when PHP files change, if active
+  if (config.browserSync.active) {
+    gulp.watch('./**/*.php', browserSyncReload);
+  }
+}
+
+// export tasks
+exports.adminstyles     = adminstyles;
+exports.frontendstyles  = frontendstyles;
+exports.mainstyles      = mainstyles;
+exports.adminscripts    = adminscripts;
+exports.frontendscripts = frontendscripts;
+exports.watch           = watch;
+
+// What happens when we run gulp?
+gulp.task('default',
+  gulp.series(
+    gulp.parallel(frontendstyles, mainstyles) // run these tasks asynchronously
+  )
 );
 
-/**
- * Minify and optimize print.css.
- *
- * https://www.npmjs.com/package/gulp-cssnano
- */
-gulp.task( 'cssnano_print', [ 'postcss' ], () =>
-	gulp.src( 'print.css' )
-		.pipe( plumber( {'errorHandler': handleErrors} ) )
-		.pipe( cssnano( {
-			'safe': true // Use safe optimizations.
-		} ) )
-		.pipe( rename( 'print.min.css' ) )
-		.pipe( gulp.dest( './' ) )
-		.pipe( browserSync.stream() )
-);
 
-/**
- * Minify and optimize other CSS
- *
- * https://www.npmjs.com/package/gulp-cssnano
- */
-gulp.task( 'asset_cssnano', [ 'post_asset_css' ], () =>
-	gulp.src( 'assets/css/**/*.css' )
-		.pipe( plumber( {'errorHandler': handleErrors} ) )
-		.pipe( cssnano( {
-			'safe': true // Use safe optimizations.
-		} ) )
-		.pipe( rename( function(path) {
-			path.extname = ".css";
-		} ) )
-		.pipe( gulp.dest( 'assets/css' ) )
-		.pipe( browserSync.stream() )
-);
-
-/**
- * Delete the svg-icons.svg before we minify, concat.
- */
-gulp.task( 'clean:icons', () =>
-	del( [ 'assets/img/svg-icons.svg' ] )
-);
-
-/**
- * Minify, concatenate, and clean SVG icons.
- *
- * https://www.npmjs.com/package/gulp-svgmin
- * https://www.npmjs.com/package/gulp-svgstore
- * https://www.npmjs.com/package/gulp-cheerio
- */
-gulp.task( 'svg', [ 'clean:icons' ], () =>
-	gulp.src( paths.icons )
-
-		// Deal with errors.
-		.pipe( plumber( {'errorHandler': handleErrors} ) )
-
-		// Minify SVGs.
-		.pipe( svgmin() )
-
-		// Add a prefix to SVG IDs.
-		.pipe( rename( {'prefix': 'icon-'} ) )
-
-		// Combine all SVGs into a single <symbol>
-		.pipe( svgstore( {'inlineSvg': true} ) )
-
-		// Clean up the <symbol> by removing the following cruft...
-		.pipe( cheerio( {
-			'run': function ( $, file ) {
-				$( 'svg' ).attr( 'style', 'display:none' );
-				$( '[fill]' ).removeAttr( 'fill' );
-				$( 'path' ).removeAttr( 'class' );
-			},
-			'parserOptions': {'xmlMode': true}
-		} ) )
-
-		// Save svg-icons.svg.
-		.pipe( gulp.dest( 'assets/img/' ) )
-		.pipe( browserSync.stream() )
-);
-
-/**
- * Optimize images.
- *
- * https://www.npmjs.com/package/gulp-imagemin
- */
-gulp.task( 'imagemin', () =>
-	gulp.src( paths.images, {base: "./"} )
-		.pipe( plumber( {'errorHandler': handleErrors} ) )
-		.pipe( imagemin( {
-			'optimizationLevel': 5,
-			'progressive': true,
-			'interlaced': true
-		} ) )
-		.pipe( gulp.dest( "./" ) )
-);
-
-/**
- * Delete the sprites.png before rebuilding sprite.
- */
-gulp.task( 'clean:sprites', () => {
-	del( [ 'assets/img/sprites.png' ] )
-} );
-
-/**
- * Concatenate images into a single PNG sprite.
- *
- * https://www.npmjs.com/package/gulp.spritesmith
- */
-gulp.task( 'spritesmith', [ 'clean:sprites' ], () =>
-	gulp.src( paths.sprites )
-		.pipe( plumber( {'errorHandler': handleErrors} ) )
-		.pipe( spritesmith( {
-			'imgName': 'sprites.png',
-			'cssName': '../../../sass/02_molecule/_m-sprites.scss',
-			'imgPath': 'assets/img/sprites.png',
-			'algorithm': 'binary-tree'
-		} ) )
-		.pipe( gulp.dest( 'assets/img/' ) )
-		.pipe( browserSync.stream() )
-);
-
-/**
- * Concatenate and transform JavaScript.
- *
- * https://www.npmjs.com/package/gulp-concat
- * https://github.com/babel/gulp-babel
- * https://www.npmjs.com/package/gulp-sourcemaps
- */
-gulp.task( 'concat', () =>
-	gulp.src( paths.concat_scripts )
-
-		// Deal with errors.
-		.pipe( plumber(
-			{'errorHandler': handleErrors}
-		) )
-
-		// Start a sourcemap.
-		.pipe( sourcemaps.init() )
-
-		// Convert ES6+ to ES2015.
-		.pipe( babel( {
-			presets: [ 'env' ]
-		} ) )
-
-		// Concatenate partials into a single script.
-		.pipe( concat( 'minnpost.js' ) )
-
-		// Append the sourcemap to project.js.
-		.pipe( sourcemaps.write() )
-
-		// Save project.js
-		.pipe( gulp.dest( 'assets/js' ) )
-		.pipe( browserSync.stream() )
-);
-
-/**
-  * Minify compiled JavaScript.
-  *
-  * https://www.npmjs.com/package/gulp-uglify
-  */
-gulp.task( 'uglify', [ 'concat' ], () =>
-	gulp.src( paths.scripts )
-		.pipe( rename( {'suffix': '.min'} ) )
-		.pipe( uglify( {
-			'mangle': false
-		} ) )
-		.pipe( gulp.dest( 'assets/js' ) )
-);
-
-/**
- * Delete the theme's .pot before we create a new one.
- */
-gulp.task( 'clean:pot', () =>
-	del( [ 'languages/minnpost-largo.pot' ] )
-);
-
-/**
- * Scan the theme and create a POT file.
- *
- * https://www.npmjs.com/package/gulp-wp-pot
- */
-gulp.task( 'wp-pot', [ 'clean:pot' ], () =>
-	gulp.src( paths.php )
-		.pipe( plumber( {'errorHandler': handleErrors} ) )
-		.pipe( sort() )
-		.pipe( wpPot( {
-			'domain': 'minnpost-largo',
-			'package': 'minnpost-largo',
-		} ) )
-		.pipe( gulp.dest( 'languages/minnpost-largo.pot' ) )
-);
-
-/**
- * Sass linting.
- *
- * https://www.npmjs.com/package/sass-lint
- */
-gulp.task( 'sass:lint', () =>
-	gulp.src( [
-		'sass/**/*.scss',
-		'!node_modules/**'
-	] )
-		.pipe( sassLint() )
-		.pipe( sassLint.format() )
-		.pipe( sassLint.failOnError() )
-);
-
-/**
- * JavaScript linting.
- *
- * https://www.npmjs.com/package/gulp-eslint
- */
-gulp.task( 'js:lint', () =>
-	gulp.src( [
-		'assets/js/concat/*.js',
-		'assets/js/*.js',
-		'!assets/js/project.js',
-		'!assets/js/*.min.js',
-		'!Gruntfile.js',
-		'!Gulpfile.js',
-		'!node_modules/**'
-	] )
-		.pipe( eslint() )
-		.pipe( eslint.format() )
-		.pipe( eslint.failAfterError() )
-);
-
-var realFavicon = require ('gulp-real-favicon');
-var fs = require('fs');
-
-// File where the favicon markups are stored
-var FAVICON_DATA_FILE = 'faviconData.json';
-
-// Generate the icons. This task takes a few seconds to complete.
-// You should run it at least once to create the icons. Then,
-// you should run it whenever RealFaviconGenerator updates its
-// package (see the check-for-favicon-update task below).
-gulp.task('generate-favicon', function(done) {
-	realFavicon.generateFavicon({
-		masterPicture: 'assets/img/apple-touch-icon.png',
-		dest: 'assets/img/app-icons/',
-		iconsPath: '/wp-content/themes/minnpost-largo/assets/img/app-icons/',
-		design: {
-			ios: {
-				pictureAspect: 'noChange',
-				assets: {
-					ios6AndPriorIcons: false,
-					ios7AndLaterIcons: false,
-					precomposedIcons: false,
-					declareOnlyDefaultIcon: true
-				}
-			},
-			desktopBrowser: {},
-			windows: {
-				pictureAspect: 'noChange',
-				backgroundColor: '#da532c',
-				onConflict: 'override',
-				assets: {
-					windows80Ie10Tile: false,
-					windows10Ie11EdgeTiles: {
-						small: false,
-						medium: true,
-						big: false,
-						rectangle: false
-					}
-				}
-			},
-			androidChrome: {
-				pictureAspect: 'noChange',
-				themeColor: '#ffffff',
-				manifest: {
-					display: 'standalone',
-					orientation: 'notSet',
-					onConflict: 'override',
-					declared: true
-				},
-				assets: {
-					legacyIcon: false,
-					lowResolutionIcons: false
-				}
-			},
-			safariPinnedTab: {
-				pictureAspect: 'blackAndWhite',
-				threshold: 50,
-				themeColor: '#5bbad5'
-			}
-		},
-		settings: {
-			scalingAlgorithm: 'Mitchell',
-			errorOnImageTooSmall: false,
-			readmeFile: false,
-			htmlCodeFile: false,
-			usePathAsIs: false
-		},
-		markupFile: FAVICON_DATA_FILE
-	}, function() {
-		done();
-	});
-});
-
-// Check for updates on RealFaviconGenerator (think: Apple has just
-// released a new Touch icon along with the latest version of iOS).
-// Run this task from time to time. Ideally, make it part of your
-// continuous integration system.
-gulp.task('check-for-favicon-update', function(done) {
-	var currentVersion = JSON.parse(fs.readFileSync(FAVICON_DATA_FILE)).version;
-	realFavicon.checkForUpdates(currentVersion, function(err) {
-		if (err) {
-			throw err;
-		}
-	});
-});
-
-// Inject the favicon markups in your HTML pages. You should run
-// this task whenever you modify a page. You can keep this task
-// as is or refactor your existing HTML pipeline.
-gulp.task('inject-favicon-markups', function() {
-	return gulp.src([ 'assets/img/app-icons/icons.html' ])
-		.pipe(realFavicon.injectFaviconMarkups(JSON.parse(fs.readFileSync(FAVICON_DATA_FILE)).favicon.html_code))
-		.pipe(gulp.dest('assets/img/app-icons/'));
-});
-
-/**
- * Process tasks and reload browsers on file changes.
- *
- * https://www.npmjs.com/package/browser-sync
- */
-gulp.task( 'watch', function () {
-
-	// Kick off BrowserSync.
-	browserSync( {
-		'open': false,             // Open project in a new tab?
-		'injectChanges': true,     // Auto inject changes instead of full reload.
-		'proxy': 'testing.dev',    // Use http://largo.com:3000 to use BrowserSync.
-		'watchOptions': {
-			'debounceDelay': 1000  // Wait 1 second before injecting.
-		}
-	} );
-
-	// Run tasks when files change.
-	gulp.watch( paths.icons, [ 'icons' ] );
-	gulp.watch( paths.sass, [ 'styles' ] );
-	gulp.watch( paths.scripts, [ 'scripts' ] );
-	gulp.watch( paths.concat_scripts, [ 'scripts' ] );
-	gulp.watch( paths.sprites, [ 'sprites' ] );
-	gulp.watch( paths.php, [ 'markup' ] );
-} );
-
-/**
- * Create individual tasks.
- */
+/*
 gulp.task( 'markup', browserSync.reload );
 gulp.task( 'i18n', [ 'wp-pot' ] );
 gulp.task( 'icons', [ 'svg' ] );
@@ -535,3 +185,4 @@ gulp.task( 'styles', [ 'cssnano', 'cssnano_print', 'asset_cssnano' ] );
 gulp.task( 'sprites', [ 'spritesmith' ] );
 gulp.task( 'lint', [ 'sass:lint', 'js:lint' ] );
 gulp.task( 'default', [ 'i18n', 'icons', 'styles', 'scripts', 'imagemin'] );
+*/
