@@ -27,7 +27,8 @@ const config = {
   },
   scripts: {
     //admin: './assets/js/admin/**/*.js',
-    front_end: './assets/js/src/**/*.js',
+    main: './assets/js/src/**/*.js',
+    uglify: [ 'assets/js/*.js', '!assets/js/*.min.js', '!assets/js/customizer.js' ],
     dest: './assets/js'
   },
   browserSync: {
@@ -124,18 +125,29 @@ function adminscripts() {
     .pipe(browserSync.stream());
 }
 
-function frontendscripts() {
-  return gulp.src(config.scripts.front_end)
+function mainscripts() {
+  return gulp.src(config.scripts.main)
     .pipe(sourcemaps.init())
     .pipe(babel({
       presets: ['@babel/preset-env']
     }))
-    .pipe(concat('front-end.js')) // Concatenate
+    .pipe(concat('minnpost.js')) // Concatenate
+    /*.pipe(uglify()) // Minify + compress
+    .pipe(rename({
+      suffix: '.min'
+    }))*/
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest(config.scripts.dest))
+    .pipe(browserSync.stream());
+}
+
+function uglifyscripts() {
+  return gulp.src(config.scripts.uglify)
     .pipe(uglify()) // Minify + compress
     .pipe(rename({
       suffix: '.min'
     }))
-    .pipe(sourcemaps.write())
+    //.pipe(sourcemaps.write())
     .pipe(gulp.dest(config.scripts.dest))
     .pipe(browserSync.stream());
 }
@@ -171,13 +183,14 @@ exports.adminstyles     = adminstyles;
 exports.frontendstyles  = frontendstyles;
 exports.mainstyles      = mainstyles;
 exports.adminscripts    = adminscripts;
-exports.frontendscripts = frontendscripts;
+exports.mainscripts     = mainscripts;
+exports.uglifyscripts   = uglifyscripts;
 exports.watch           = watch;
 
 // What happens when we run gulp?
 gulp.task('default',
   gulp.series(
-    gulp.parallel(frontendstyles, mainstyles) // run these tasks asynchronously
+    gulp.parallel(frontendstyles, mainstyles, mainscripts) // run these tasks asynchronously
   )
 );
 
