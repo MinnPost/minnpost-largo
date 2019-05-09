@@ -67,7 +67,7 @@ if ( post_password_required() ) {
 		endif;
 		?>
 
-	<?php else : ?>
+	<?php elseif ( comments_open() ) : ?>
 		<h3 class="a-comments-title"><?php echo esc_html_e( 'No comments yet', 'minnpost-largo' ); ?></h3>
 	<?php endif; ?>
 
