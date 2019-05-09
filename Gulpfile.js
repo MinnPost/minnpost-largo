@@ -14,6 +14,7 @@ const sass = require('gulp-sass');
 const sassGlob = require('gulp-sass-glob');
 const sort = require( 'gulp-sort' );
 const sourcemaps = require('gulp-sourcemaps');
+const svgmin = require( 'gulp-svgmin' );
 const uglify = require('gulp-uglify');
 
 // Some config data for our tasks
@@ -179,6 +180,12 @@ function images() {
     .pipe(gulp.dest(config.images.dest));
 }
 
+function svgminify() {
+	return gulp.src( config.images.main + '.svg' )
+        .pipe(svgmin())
+        .pipe(gulp.dest(config.images.dest));
+}
+
 // Injects changes into browser
 function browserSyncTask() {
   if (config.browserSync.active) {
@@ -213,6 +220,7 @@ exports.adminscripts   = adminscripts;
 exports.mainscripts    = mainscripts;
 exports.uglifyscripts  = uglifyscripts;
 exports.images         = images;
+exports.svgminify      = svgminify;
 exports.watch          = watch;
 
 // What happens when we run gulp?
