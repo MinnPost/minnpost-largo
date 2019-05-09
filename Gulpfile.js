@@ -11,6 +11,7 @@ const postcss = require('gulp-postcss');
 const rename = require('gulp-rename');
 const sass = require('gulp-sass');
 const sassGlob = require('gulp-sass-glob');
+const sort = require( 'gulp-sort' );
 const sourcemaps = require('gulp-sourcemaps');
 const uglify = require('gulp-uglify');
 
@@ -18,7 +19,7 @@ const uglify = require('gulp-uglify');
 const config = {
   styles: {
     //admin: 'assets/sass/admin.scss',
-    front_end: 'assets/sass/**/*.scss',
+    front_end: 'assets/sass/*.scss',
     main: 'sass/**/*.scss',
     srcDir: 'assets/sass',
     front_end_dest: 'assets/css',
@@ -42,12 +43,16 @@ function adminstyles() {
     .pipe(sass()) // Compile
     .on('error', sass.logError) // Error reporting
     .pipe(postcss([
-      autoprefixer(), // Autoprefix resulting CSS
-      cssnano() // Minify
+		autoprefixer( {
+			'browsers': [ 'last 2 version' ]
+		} ),
+		mqpacker( {
+			'sort': true
+		} ),
+      	cssnano( {
+			'safe': true // Use safe optimizations.
+		} ) // Minify
     ]))
-    .pipe(rename({ // Rename to .min.css
-      suffix: '.min'
-    }))
     .pipe(sourcemaps.write()) // Write the sourcemap files
     .pipe(gulp.dest(config.styles.dest)) // Drop the resulting CSS file in the specified dir
     .pipe(browserSync.stream());
@@ -63,12 +68,16 @@ function frontendstyles() {
     )) // Compile
     .on('error', sass.logError) // Error reporting
     .pipe(postcss([
-      autoprefixer(), // Autoprefix resulting CSS
-      cssnano() // Minify
+		autoprefixer( {
+			'browsers': [ 'last 2 version' ]
+		} ),
+		mqpacker( {
+			'sort': true
+		} ),
+      	cssnano( {
+			'safe': true // Use safe optimizations.
+		} ) // Minify
     ]))
-    .pipe(rename({ // Rename to .min.css
-      suffix: '.min'
-    }))
     .pipe(sourcemaps.write()) // Write the sourcemap files
     .pipe(gulp.dest(config.styles.front_end_dest)) // Drop the resulting CSS file in the specified dir
     .pipe(browserSync.stream());
