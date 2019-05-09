@@ -85,7 +85,7 @@ function mainstyles() {
     .on('error', sass.logError) // Error reporting
     .pipe(postcss([
 		autoprefixer( {
-			'browsers': [ 'last 3 version' ]
+			'browsers': [ 'last 2 version' ]
 		} ),
 		mqpacker( {
 			'sort': true
@@ -94,10 +94,7 @@ function mainstyles() {
 			'safe': true // Use safe optimizations.
 		} ) // Minify
     ]))
-    .pipe(rename({ // Rename to .min.css
-      suffix: '.min'
-    }))
-    //.pipe(sourcemaps.write()) // Write the sourcemap files
+    .pipe(sourcemaps.write()) // Write the sourcemap files
     .pipe(gulp.dest(config.styles.main_dest)) // Drop the resulting CSS file in the specified dir
     .pipe(browserSync.stream());
 }
