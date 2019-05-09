@@ -6,6 +6,7 @@ const browserSync = require('browser-sync').create();
 const concat = require('gulp-concat');
 const cssnano = require('cssnano');
 const gulp = require('gulp');
+const imagemin = require('gulp-imagemin');
 const mqpacker = require( 'css-mqpacker' );
 const postcss = require('gulp-postcss');
 const rename = require('gulp-rename');
@@ -30,6 +31,10 @@ const config = {
     main: './assets/js/src/**/*.js',
     uglify: [ 'assets/js/*.js', '!assets/js/*.min.js', '!assets/js/customizer.js' ],
     dest: './assets/js'
+  },
+  images: {
+  	main: './assets/img/**/*',
+  	dest: './assets/img/'
   },
   browserSync: {
     active: false,
@@ -152,6 +157,28 @@ function uglifyscripts() {
     .pipe(browserSync.stream());
 }
 
+// Optimize Images
+function images() {
+  return gulp
+    .src(config.images.main)
+    .pipe(
+      imagemin([
+        imagemin.gifsicle({ interlaced: true }),
+        imagemin.jpegtran({ progressive: true }),
+        imagemin.optipng({ optimizationLevel: 5 }),
+        imagemin.svgo({
+          plugins: [
+            {
+              removeViewBox: false,
+              collapseGroups: true
+            }
+          ]
+        })
+      ])
+    )
+    .pipe(gulp.dest(config.images.dest));
+}
+
 // Injects changes into browser
 function browserSyncTask() {
   if (config.browserSync.active) {
@@ -179,18 +206,19 @@ function watch() {
 }
 
 // export tasks
-exports.adminstyles     = adminstyles;
-exports.frontendstyles  = frontendstyles;
-exports.mainstyles      = mainstyles;
-exports.adminscripts    = adminscripts;
-exports.mainscripts     = mainscripts;
-exports.uglifyscripts   = uglifyscripts;
-exports.watch           = watch;
+exports.adminstyles    = adminstyles;
+exports.frontendstyles = frontendstyles;
+exports.mainstyles     = mainstyles;
+exports.adminscripts   = adminscripts;
+exports.mainscripts    = mainscripts;
+exports.uglifyscripts  = uglifyscripts;
+exports.images         = images;
+exports.watch          = watch;
 
 // What happens when we run gulp?
 gulp.task('default',
   gulp.series(
-    gulp.parallel(frontendstyles, mainstyles, mainscripts) // run these tasks asynchronously
+    gulp.parallel(frontendstyles, mainstyles, mainscripts, uglifyscripts, images) // run these tasks asynchronously
   )
 );
 
