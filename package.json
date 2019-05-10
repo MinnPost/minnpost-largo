@@ -31,6 +31,7 @@
     "gulp-sass-glob": "^1.0.9",
     "gulp-sort": "~2",
     "gulp-sourcemaps": "^2.6.5",
+    "gulp-svgmin": "^2.2.0",
     "gulp-uglify": "^3.0.2",
     "npm-check-updates": "^3.1.9"
   }

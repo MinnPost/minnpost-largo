@@ -1,7 +1,10 @@
 .a-related-tags {
 	font-family: $font__sans;
 	h4, ul, li {
-		display: inline;
+		display: inline-block;
+	}
+	h4 {
+		margin-top: $standard-page-margin;
 	}
 	ul {
 		margin: 0;
