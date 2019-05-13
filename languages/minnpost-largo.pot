@@ -81,15 +81,15 @@ msgstr ""
 msgid "More Stories"
 msgstr ""
 
-#: inc/custom-fields.php:342, inc/custom-fields.php:1211
+#: inc/custom-fields.php:342, inc/custom-fields.php:1126
 msgid "Medium"
 msgstr ""
 
-#: inc/custom-fields.php:343, inc/custom-fields.php:1212
+#: inc/custom-fields.php:343, inc/custom-fields.php:1127
 msgid "Do not display image"
 msgstr ""
 
-#: inc/custom-fields.php:344, inc/custom-fields.php:1213
+#: inc/custom-fields.php:344, inc/custom-fields.php:1128
 msgid "Large"
 msgstr ""
 
@@ -378,27 +378,27 @@ msgstr ""
 
 #. translators: used between list items, there is a space after the comma
 #. translators: used between list items, there is a space after the comma
-#: inc/template-tags.php:746, inc/template-tags.php:753
+#: inc/template-tags.php:741, inc/template-tags.php:748
 msgid ", "
 msgstr ""
 
 #. translators: placeholder is the list of categories
-#: inc/template-tags.php:749
+#: inc/template-tags.php:744
 msgid "Posted in %1$s"
 msgstr ""
 
 #. translators: placeholder is the list of tags
-#: inc/template-tags.php:756
+#: inc/template-tags.php:751
 msgid "Tagged %1$s"
 msgstr ""
 
-#: inc/template-tags.php:766
+#: inc/template-tags.php:761
 msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
 #. translators: %s: Name of current post
 #. translators: %s: Name of current post
-#: inc/template-tags.php:782, inc/template-tags.php:812
+#: inc/template-tags.php:777, inc/template-tags.php:807
 msgid "Edit %s"
 msgstr ""
 
