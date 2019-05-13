@@ -5,9 +5,12 @@ const bourbon = require( 'bourbon' ).includePaths;
 const browserSync = require('browser-sync').create();
 const concat = require('gulp-concat');
 const cssnano = require('cssnano');
+const fs = require('fs');
 const gulp = require('gulp');
 const imagemin = require('gulp-imagemin');
+const packagejson = JSON.parse(fs.readFileSync('./package.json'));
 const mqpacker = require( 'css-mqpacker' );
+const plumber = require('gulp-plumber');
 const postcss = require('gulp-postcss');
 const rename = require('gulp-rename');
 const sass = require('gulp-sass');
@@ -16,11 +19,11 @@ const sort = require( 'gulp-sort' );
 const sourcemaps = require('gulp-sourcemaps');
 const svgmin = require( 'gulp-svgmin' );
 const uglify = require('gulp-uglify');
+const wpPot = require('wp-pot');
 
 // Some config data for our tasks
 const config = {
   styles: {
-    //admin: 'assets/sass/admin.scss',
     front_end: 'assets/sass/*.scss',
     main: 'sass/**/*.scss',
     srcDir: 'assets/sass',
@@ -28,7 +31,6 @@ const config = {
     main_dest: './'
   },
   scripts: {
-    //admin: './assets/js/admin/**/*.js',
     main: './assets/js/src/**/*.js',
     uglify: [ 'assets/js/*.js', '!assets/js/*.min.js', '!assets/js/customizer.js' ],
     dest: './assets/js'
@@ -36,6 +38,10 @@ const config = {
   images: {
   	main: './assets/img/**/*',
   	dest: './assets/img/'
+  },
+  languages: {
+    src: 'functions.php',
+    dest: './languages/'
   },
   browserSync: {
     active: false,
@@ -186,6 +192,17 @@ function svgminify() {
         .pipe(gulp.dest(config.images.dest));
 }
 
+// Generates translation file. THIS IS BROKEN.
+function translation() {
+    return gulp
+      .src( config.languages.src )
+      .pipe( wpPot( {
+        domain: packagejson.name,
+        package: packagejson.name
+      } ) )
+      .pipe( gulp.dest( './languages/minnpost-largo.pot' ) );
+}
+
 // Injects changes into browser
 function browserSyncTask() {
   if (config.browserSync.active) {
@@ -221,6 +238,7 @@ exports.mainscripts    = mainscripts;
 exports.uglifyscripts  = uglifyscripts;
 exports.images         = images;
 exports.svgminify      = svgminify;
+exports.translation    = translation;
 exports.watch          = watch;
 
 // What happens when we run gulp?
