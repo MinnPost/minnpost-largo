@@ -15,9 +15,8 @@ if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
 	add_action( 'wp_print_styles', 'minnpost_largo_add_remove_styles', 10 );
 	function minnpost_largo_add_remove_styles() {
 		// add
-		$suffix = ( defined( 'SCRIPT_DEBUG' ) && 'true' === WP_DEBUG ) ? '' : '.min';
-		wp_enqueue_style( 'minnpost-style', get_theme_file_uri() . '/style' . $suffix . '.css', array(), filemtime( get_theme_file_path() . '/style' . $suffix . '.css' ), 'all' );
-		wp_enqueue_style( 'minnpost-style-print', get_theme_file_uri() . '/print' . $suffix . '.css', array(), filemtime( get_theme_file_path() . '/print' . $suffix . '.css' ), 'print' );
+		wp_enqueue_style( 'minnpost-style', get_theme_file_uri() . '/style.css', array(), filemtime( get_theme_file_path() . '/style.css' ), 'all' );
+		wp_enqueue_style( 'minnpost-style-print', get_theme_file_uri() . '/print.css', array(), filemtime( get_theme_file_path() . '/print.css' ), 'print' );
 		// remove
 		wp_dequeue_style( 'largo-style' );
 		wp_dequeue_style( 'media-credit' );
@@ -46,9 +45,8 @@ if ( ! function_exists( 'minnpost_largo_add_remove_scripts' ) ) :
 	add_action( 'wp_enqueue_scripts', 'minnpost_largo_add_remove_scripts' );
 	function minnpost_largo_add_remove_scripts() {
 		// add
-		$suffix = ( defined( 'WP_DEBUG' ) && 'true' === WP_DEBUG ) ? '' : '.min';
-		wp_enqueue_script( 'modernizr', get_theme_file_uri() . '/assets/js/modernizr-custom' . $suffix . '.js', array(), '1.0', false );
-		wp_enqueue_script( 'minnpost', get_theme_file_uri() . '/assets/js/minnpost' . $suffix . '.js', array( 'jquery', 'modernizr' ), filemtime( get_theme_file_path() . '/assets/js/minnpost' . $suffix . '.js' ), true );
+		wp_enqueue_script( 'modernizr', get_theme_file_uri() . '/assets/js/modernizr-custom.min.js', array(), '1.0', false );
+		wp_enqueue_script( 'minnpost', get_theme_file_uri() . '/assets/js/minnpost.min.js', array( 'jquery', 'modernizr' ), filemtime( get_theme_file_path() . '/assets/js/minnpost.min.js' ), true );
 		// localize
 		$params = array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
