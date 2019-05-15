@@ -19,7 +19,7 @@ const sort = require( 'gulp-sort' );
 const sourcemaps = require('gulp-sourcemaps');
 const svgmin = require( 'gulp-svgmin' );
 const uglify = require('gulp-uglify');
-const wpPot = require('wp-pot');
+const wpPot = require('gulp-wp-pot');
 
 // Some config data for our tasks
 const config = {
@@ -40,8 +40,8 @@ const config = {
   	dest: './assets/img/'
   },
   languages: {
-    src: 'functions.php',
-    dest: './languages/'
+    src: [ './**/*.php', '!vendor/*' ],
+    dest: './languages/' + packagejson.name + '.pot'
   },
   browserSync: {
     active: false,
@@ -192,15 +192,15 @@ function svgminify() {
         .pipe(gulp.dest(config.images.dest));
 }
 
-// Generates translation file. THIS IS BROKEN.
-function translation() {
+// Generates translation file.
+function translate() {
     return gulp
       .src( config.languages.src )
       .pipe( wpPot( {
         domain: packagejson.name,
         package: packagejson.name
       } ) )
-      .pipe( gulp.dest( './languages/minnpost-largo.pot' ) );
+      .pipe( gulp.dest( config.languages.dest ) );
 }
 
 // Injects changes into browser
@@ -238,7 +238,7 @@ exports.mainscripts    = mainscripts;
 exports.uglifyscripts  = uglifyscripts;
 exports.images         = images;
 exports.svgminify      = svgminify;
-exports.translation    = translation;
+exports.translate      = translate;
 exports.watch          = watch;
 
 // What happens when we run gulp?
