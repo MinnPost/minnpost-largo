@@ -244,18 +244,6 @@ exports.watch          = watch;
 // What happens when we run gulp?
 gulp.task('default',
   gulp.series(
-    gulp.parallel(frontendstyles, mainstyles, mainscripts, uglifyscripts, images) // run these tasks asynchronously
+    gulp.parallel(frontendstyles, mainstyles, mainscripts, uglifyscripts, images, translate) // run these tasks asynchronously
   )
 );
-
-
-/*
-gulp.task( 'markup', browserSync.reload );
-gulp.task( 'i18n', [ 'wp-pot' ] );
-gulp.task( 'icons', [ 'svg' ] );
-gulp.task( 'scripts', [ 'uglify' ] );
-gulp.task( 'styles', [ 'cssnano', 'cssnano_print', 'asset_cssnano' ] );
-gulp.task( 'sprites', [ 'spritesmith' ] );
-gulp.task( 'lint', [ 'sass:lint', 'js:lint' ] );
-gulp.task( 'default', [ 'i18n', 'icons', 'styles', 'scripts', 'imagemin'] );
-*/
