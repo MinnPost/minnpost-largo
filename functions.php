@@ -125,6 +125,11 @@ require get_theme_file_path() . '/inc/custom-scripts-and-styles.php';
 require get_theme_file_path() . '/inc/pwa.php';
 
 /**
+ * Settings for Apple News
+ */
+require get_theme_file_path() . '/inc/apple-news.php';
+
+/**
  * Settings for robots.txt
  */
 require get_theme_file_path() . '/inc/robots.php';
