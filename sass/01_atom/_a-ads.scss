@@ -1,10 +1,13 @@
-.appnexus-ad {
+// variables:
+$top: '728x90';
+
+.acm-ad {
 	position: relative;
 	font-size: 13px;
 	line-height: normal;
 	width: auto;
 	height: auto;
-	&.appnexus-ad-placeholder {
+	&.acm-ad-placeholder {
 		text-align: center;
 		background-color: $color__black;
 		color: $color__white;
@@ -34,7 +37,7 @@
 	}
 }
 
-.ad-top {
+.ad-#{$top} {
 	width: 100%;
 }
 
@@ -55,7 +58,7 @@
 		text-align: center;
 		background: $color__minnpost-black;
 		color: $color__white;
-		&.appnexus-ad-placeholder {
+		&.acm-ad-placeholder {
 			padding: 0;
 		}
 		nav {
@@ -106,7 +109,7 @@ main .ad-x110 {
 	display: flex;
 	justify-content: center;
 	flex-direction: row;
-	&.appnexus-ad-placeholder {
+	&.acm-ad-placeholder {
 		width: $ad-embed-width;
 		height: $ad-embed-height;
 	}
@@ -119,9 +122,9 @@ main .ad-x110 {
 	}
 }
 
-.o-site-sidebar .appnexus-ad {
+.o-site-sidebar .acm-ad {
 	@include clearfix;
-	&.appnexus-ad-placeholder {
+	&.acm-ad-placeholder {
 		margin-bottom: $standard-page-margin;
 		text-align: center;
 	}
@@ -133,13 +136,13 @@ main .ad-x110 {
 // media queries for ads
 
 @media screen and (min-width: $ad-top-width) {
-	.appnexus-ad {
+	.acm-ad {
 		/*img, div, p, iframe {
 			max-width: none;
 			max-height: none;
 		}*/
 	}
-	.ad-top {
+	.ad-#{$top} {
 		width: $ad-top-width;
 		height: $ad-top-height;
 		margin: 0 auto;
@@ -165,7 +168,7 @@ main .ad-x110 {
 }
 
 @media screen and (min-width: $max-width-page) {
-	.ad-top {
+	.ad-#{$top} {
 		float: left;
 	}
 	.ad-topright {

@@ -22,7 +22,7 @@
 
 	<div class="m-ad-region m-ad-region-leaderboard">
 		<div class="o-wrapper">
-			<?php do_action( 'acm_tag', 'Top' ); ?>
+			<?php do_action( 'acm_tag', '728x90' ); ?>
 			<?php do_action( 'acm_tag', 'TopRight' ); ?>
 		</div>
 	</div>

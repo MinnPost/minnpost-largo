@@ -46,9 +46,9 @@ if ( ! function_exists( 'acm_no_ad_users' ) ) :
 			if ( ! current_user_can( 'browse_without_ads' ) ) {
 				$placeholder = '';
 			} else {
-				$placeholder = ' appnexus-ad-placeholder';
+				$placeholder = ' acm-ad-placeholder';
 			}
-			$default_top_right .= '<div class="appnexus-ad ad-topright ad-support' . $placeholder . '">';
+			$default_top_right .= '<div class="acm-ad ad-topright ad-support' . $placeholder . '">';
 			if ( current_user_can( 'browse_without_ads' ) ) {
 				$default_top_right .= '<div class="ad-overlay">AD: ' . $tag_id . '</div>';
 			}
@@ -75,10 +75,10 @@ if ( ! function_exists( 'acm_no_ad_users' ) ) :
 		if ( ! current_user_can( 'browse_without_ads' ) ) {
 			return $output_html;
 		} else {
-			if ( 'appnexus_head' === $tag_id ) {
+			if ( 'dfp_head' === $tag_id ) {
 				$output_html = '';
 			} else {
-				$output_html = '<div class="appnexus-ad appnexus-ad-placeholder ad-' . sanitize_title( $tag_id ) . '">AD: ' . $tag_id . '</div>';
+				$output_html = '<div class="acm-ad acm-ad-placeholder ad-' . sanitize_title( $tag_id ) . '">AD: ' . $tag_id . '</div>';
 			}
 		}
 		return $output_html;
