@@ -1,6 +1,3 @@
-// variables:
-$top: '728x90';
-
 .acm-ad {
 	position: relative;
 	font-size: 13px;
@@ -37,7 +34,7 @@ $top: '728x90';
 	}
 }
 
-.ad-#{$top} {
+.ad-#{$top-ad-size} {
 	width: 100%;
 }
 
@@ -142,7 +139,7 @@ main .ad-x110 {
 			max-height: none;
 		}*/
 	}
-	.ad-#{$top} {
+	.ad-#{$top-ad-size} {
 		width: $ad-top-width;
 		height: $ad-top-height;
 		margin: 0 auto;
@@ -168,7 +165,7 @@ main .ad-x110 {
 }
 
 @media screen and (min-width: $max-width-page) {
-	.ad-#{$top} {
+	.ad-#{$top-ad-size} {
 		float: left;
 	}
 	.ad-topright {
