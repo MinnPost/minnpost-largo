@@ -50,6 +50,21 @@
 					?>
 				</nav><!-- #footer-secondary -->
 
+				<nav id="footer-network" class="m-secondary-navigation">
+					<?php
+					wp_nav_menu(
+						array(
+							'theme_location' => 'minnpost_network',
+							'menu_id'        => 'minnpost-network',
+							'depth'          => 1,
+							'container'      => false,
+							'item_classes'   => 'values',
+							'walker'         => new Minnpost_Walker_Nav_Menu,
+						)
+					);
+					?>
+				</nav><!-- #footer-network -->
+
 				<?php
 				$footer_message = get_option( 'site_footer_message', '' );
 				if ( '' !== $footer_message ) :

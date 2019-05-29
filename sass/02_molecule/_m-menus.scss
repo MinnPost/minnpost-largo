@@ -34,38 +34,30 @@ nav {
 }
 
 #minnpost-network {
-	display: none;
-	margin: 2px 30px 8px 0;
+	margin: 8px auto;
 	a {
 		@include hide-text;
-		width: 25px;
-		height: 25px;
+		width: 30px;
+		height: 30px;
 		display: block;
-		background: url('assets/img/sprites/social-lg.png') no-repeat;
 		&:hover {
 			opacity: .65;
 		}
 	}
 	li:not(:last-child) {
-		padding-right: 5px;
-	}
-	li.subscribe {
-		padding-left: 7px;
-	}
-	li.subscribe a {
-
+		margin-right: 10px
 	}
 	li.twitter a {
-		background-position: -25px 0;
+		background: url('https://www.minnpost.com/wp-content/uploads/2019/03/twitter.png?w=30') no-repeat;
 	}
 	li.facebook a {
-		background-position: -50px 0;
+		background: url('https://www.minnpost.com/wp-content/uploads/2019/03/facebook.png?w=30') no-repeat;
 	}
-	li.youtube a {
-		background-position: -100px 0;
+	li.instagram a {
+		background: url('https://www.minnpost.com/wp-content/uploads/2019/03/instagram.png?w=30') no-repeat;
 	}
-	li.rss-feeds a {
-		background-position: -125px 0;
+	li.rss-feeds-list a {
+		background: url('https://www.minnpost.com/wp-content/uploads/2019/05/feed-icon.png?w=30') no-repeat;
 	}
 }
 
@@ -425,10 +417,6 @@ nav {
 		justify-content: flex-end;
 		position: relative;
 	}
-	#minnpost-network {
-		display: flex;
-		margin: 2px 29px 10px 0
-	}
 	#secondary-links {
 		margin-top: -1px;
 	}
@@ -475,9 +463,6 @@ nav {
 @media screen and (min-width: $max-width-page) {
 	#navigation-ext {
 		width: auto;
-	}
-	#minnpost-network {
-		margin: 2px 30px 8px 0;
 	}
 	.m-main-navigation {
 		letter-spacing: 1px;
