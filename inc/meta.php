@@ -178,6 +178,42 @@ if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 		<meta name="msapplication-config" content="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/browserconfig.xml' ) ); ?>">
 		<meta name="theme-color" content="#ffffff">
 
+		<?php
+		echo sprintf(
+			'<link rel="alternate" type="application/rss+xml" title="%1$s articles | RSS Feed" href="%2$s">',
+			get_bloginfo( 'name' ),
+			get_bloginfo( 'rss2_url' )
+		);
+		if ( is_category() ) {
+				$category_id = get_query_var( 'cat' );
+				echo sprintf(
+					'<link rel="alternate" type="application/rss+xml" title="%1$s %2$s articles | RSS Feed" href="%3$s">',
+					get_bloginfo( 'name' ),
+					get_the_archive_title(),
+					get_category_feed_link( $category_id )
+				);
+		}
+		if ( is_author() ) {
+				$author    = get_queried_object();
+				$author_id = $author->ID;
+				echo sprintf(
+					'<link rel="alternate" type="application/rss+xml" title="%1$s articles by %2$s | RSS Feed" href="%3$s">',
+					get_bloginfo( 'name' ),
+					get_the_title( $author_id ),
+					get_author_feed_link( $author_id )
+				);
+		}
+		if ( is_tag() ) {
+				$tag_id = get_query_var( 'tag' );
+				echo sprintf(
+					'<link rel="alternate" type="application/rss+xml" title="%1$s %2$s articles | RSS Feed" href="%3$s">',
+					get_bloginfo( 'name' ),
+					get_the_archive_title(),
+					get_tag_feed_link( $tag_id )
+				);
+		}
+		?>
+
 		<meta property="og:locale" content="<?php echo esc_attr( get_locale() ); ?>">
 		<meta property="og:url" content="<?php echo esc_url( get_current_url() ); ?>">
 		<meta name="twitter:site" content="@<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" />
@@ -210,12 +246,14 @@ if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 		<?php if ( is_single() && ! is_home() && ! wp_attachment_is_image() ) : ?>
 			<?php
 				global $post;
-				$images = get_children(array(
-					'post_parent'    => $post->ID,
-					'post_type'      => 'attachment',
-					'posts_per_page' => -1,
-					'post_mime_type' => 'image',
-				));
+				$images = get_children(
+					array(
+						'post_parent'    => $post->ID,
+						'post_type'      => 'attachment',
+						'posts_per_page' => -1,
+						'post_mime_type' => 'image',
+					)
+				);
 			?>
 			<?php if ( $images ) : ?>
 				<?php foreach ( $images as $image ) : ?>

@@ -54,7 +54,6 @@ get_header(); ?>
 					}
 					?>
 					<ul class="a-archive-links a-category-links">
-						<li class="a-rss-link"><a href="<?php echo get_category_feed_link( $category_id ); ?>">Subscribe with RSS</a></li>
 						<?php minnpost_term_extra_links( $category_id ); ?>
 					</ul>
 				</aside>
@@ -65,7 +64,6 @@ get_header(); ?>
 					minnpost_author_figure();
 					?>
 					<ul class="a-archive-links a-author-links">
-						<li class="a-rss-link"><a href="<?php echo get_author_feed_link( $author_id ); ?>">Subscribe with RSS</a></li>
 						<?php if ( '' !== get_post_meta( $author_id, 'cap-user_email', true ) ) : ?>
 							<li class="a-email-link"><a href="mailto:<?php echo get_post_meta( $author_id, 'cap-user_email', true ); ?>">Email</a></li>
 						<?php endif; ?>
@@ -75,13 +73,6 @@ get_header(); ?>
 					</ul>
 				</aside>
 				<h2 class="a-archive-subtitle">Articles by this author:</h2>
-			<?php elseif ( is_tag() ) : ?>
-				<aside class="m-archive-info m-category-info m-category-full-info">
-					<?php $tag_id = $wp_query->get_queried_object_id(); ?>
-					<ul class="a-archive-links a-tag-links">
-						<li class="a-rss-link"><a href="<?php echo get_tag_feed_link( $tag_id ); ?>">Subscribe with RSS</a></li>
-					</ul>
-				</aside>
 			<?php endif; ?>
 
 			<?php
