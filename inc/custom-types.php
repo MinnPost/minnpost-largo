@@ -216,11 +216,14 @@ if ( ! function_exists( 'minnpost_message_regions' ) ) :
 	function minnpost_message_regions( $regions ) {
 		$regions = array(
 			'header'          => __( 'Site Header', 'minnpost-largo' ),
-			/*'primary'         => __( 'Primary Content', 'minnpost-largo' ),
-			'main'            => __( 'Main Content', 'minnpost-largo' ),
-			'sidebar'         => __( 'Main Sidebar', 'minnpost-largo' ),
-			'primary_sidebar' => __( 'Primary Sidebar', 'minnpost-largo' ),
-			'footer'          => __( 'Site Footer', 'minnpost-largo' ),*/
+			'article_bottom'  => __( 'Article Bottom', 'minnpost-largo' ),
+			'homepage_middle' => __( 'Homepage Middle', 'minnpost-largo' ),
+			//'article_middle'  => __( 'Article Middle', 'minnpost-largo' ),
+			'archive_middle'  => __( 'Archive Middle', 'minnpost-largo' ),
+			'user_account'    => __( 'User Account', 'minnpost-largo' ),
+			'email_header'    => __( 'Email Header', 'minnpost-largo' ),
+			'email_middle'    => __( 'Email Middle', 'minnpost-largo' ),
+			'email_footer'    => __( 'Email Footer', 'minnpost-largo' ),
 		);
 		return $regions;
 	}
