@@ -89,11 +89,13 @@ nav {
 	-moz-font-feature-settings: "calt=0,dlig=0,ss01=0,liga=0";
 	-moz-font-feature-settings: "calt" 0,"dlig" 0,"ss01" 0,"liga" 0;
 	background: $color__minnpost-black;
-	padding-top: 5px;
+	//padding-top: 5px;
 	min-height: 44px;
 	position: relative;
 	z-index: 10;
-	margin-bottom: 30px; // this is for the secondary nav to be visible
+	margin-bottom: 30px; // this is for the secondary nav to be visible. todo: do we still need?
+	display: flex;
+	align-items: flex-end;
 	button {
 		display: inline-block;
 		-webkit-appearance: none;
@@ -118,10 +120,14 @@ nav {
 		}
 	}
 	ul {
+		width: 100%;
 		list-style: none;
 		display: none;
-		justify-content: flex-start;
-		margin: 7px 0 0 0;
+		//justify-content: flex-start;
+		//margin: 7px 0 0 0;
+		justify-content: space-between;
+		//margin: 0 8px;
+		margin: 0;
 		padding: 0;
 		flex-grow: none;
 		flex-wrap: nowrap;
@@ -140,19 +146,46 @@ nav {
 	li {
 		text-transform: uppercase;
 		flex-shrink: 0;
-    	flex: 0 0 auto;
-		&:last-child, &:nth-last-child(2) {
+    	//flex: 0 0 auto;
+    	&:first-child a:after, &:last-child a:after {
+    		font-family: dashicons;
+    	}
+    	&:first-child, &:last-child {
+    		a {
+    			font-size: 0;
+    			padding: 0;
+    			&:after {
+    				font-family: dashicons;
+    				display: inline-block;
+    				padding: 8px 4px;
+    				vertical-align: bottom;
+    			}
+    		}
+    	}
+    	&:first-child a:after {
+    		content: "\f102";
+    		font-size: 24px;
+    	}
+    	&:last-child a:after {
+    		content: "\f179";
+    		font-size: 18px;
+    		//margin-left: 6px;
+    	}
+		&:last-child, &:nth-last-child(2), &:nth-last-child(3), &:nth-last-child(4) {
 			text-transform: none;
 		}
-		&:last-child {
+		/*&:last-child {
+			margin-left: auto;
+		}*/
+		&:nth-last-child(4) {
 			margin-left: auto;
 		}
-		&:nth-last-child(2) {
+		/*&:nth-last-child(2) {
 			order: 9;
-		}
+		}*/
 	}
 	li a {
-		padding: 6px;
+		padding: 0 8px;
 		color: $color__white;
 		text-decoration: none;
 		display: inline-block;
@@ -449,12 +482,12 @@ nav {
 		ul, &.toggled ul {
 			flex-grow: 2;
 			flex-wrap: wrap;
-			li:nth-last-child(2) {
+			/*li:nth-last-child(2) {
 				order: inherit;
 				margin-left: auto;
-			}
+			}*/
 			li a {
-				padding: 8px 4px;
+				//padding: 8px 4px;
 			}
 		}
 	}
@@ -465,10 +498,10 @@ nav {
 		width: auto;
 	}
 	.m-main-navigation {
-		letter-spacing: 1px;
+		//letter-spacing: 1px;
 		ul {
 			li a {
-				padding: 8px;
+				//padding: 8px;
 			}
 		}
 	}

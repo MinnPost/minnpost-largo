@@ -38,7 +38,6 @@
 				</a>
 			</div><!-- .a-site-branding -->
 			<nav id="navigation-ext" class="m-secondary-navigation">
-				<?php get_search_form(); ?>
 				<?php
 				wp_nav_menu(
 					array(
