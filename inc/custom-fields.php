@@ -915,6 +915,12 @@ if ( ! function_exists( 'cmb2_user_fields' ) ) :
 			'type' => 'text',
 		) );
 		$user_donation_info->add_field( array(
+			'name' => 'Membership Qualification Amount',
+			'desc' => '',
+			'id'   => '_membership_qualification_amount',
+			'type' => 'text',
+		) );
+		$user_donation_info->add_field( array(
 			'name' => 'Annual Recurring Amount',
 			'desc' => '',
 			'id'   => '_annual_recurring_amount',
