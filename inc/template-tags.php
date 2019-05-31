@@ -705,7 +705,21 @@ endif;
 */
 if ( ! function_exists( 'minnpost_term_extra_links' ) ) :
 	function minnpost_term_extra_links( $category_id = '' ) {
-		$link = get_term_meta( $category_id, '_mp_category_excerpt_links', true );
+		$list_item = minnpost_get_term_extra_links( $category_id );
+	}
+endif;
+
+/**
+* Gets and returns any additional links for the term archive page (rss, twitter, etc.)
+*
+* @param int $category_id
+* @return string $list_item
+*
+*/
+if ( ! function_exists( 'minnpost_get_term_extra_links' ) ) :
+	function minnpost_get_term_extra_links( $category_id = '' ) {
+		$list_item = '';
+		$link      = get_term_meta( $category_id, '_mp_category_excerpt_links', true );
 		if ( ! empty( $link ) ) {
 			if ( 'Author bio' === $link['text'] ) {
 				$class      = ' class="a-bio-link"';
@@ -720,8 +734,9 @@ if ( ! function_exists( 'minnpost_term_extra_links' ) ) :
 				$class      = '';
 				$url_prefix = '';
 			}
-			echo '<li' . $class . '><a href="' . $url_prefix . $link['url'] . '">' . $link['text'] . '</a></li>';
+			$list_item = '<li' . $class . '><a href="' . $url_prefix . $link['url'] . '">' . $link['text'] . '</a></li>';
 		}
+		return $list_item;
 	}
 endif;
 
