@@ -146,11 +146,10 @@ nav {
 	li {
 		text-transform: uppercase;
 		flex-shrink: 0;
-    	//flex: 0 0 auto;
-    	&:first-child a:after, &:last-child a:after {
+    	&.home, &.search {
     		font-family: dashicons;
     	}
-    	&:first-child, &:last-child {
+    	&.home, &.search {
     		a {
     			font-size: 0;
     			padding: 0;
@@ -162,11 +161,11 @@ nav {
     			}
     		}
     	}
-    	&:first-child a:after {
+    	&.home a:after {
     		content: "\f102";
     		font-size: 24px;
     	}
-    	&:last-child a:after {
+    	&.search a:after {
     		content: "\f179";
     		font-size: 18px;
     		//margin-left: 6px;
@@ -174,15 +173,9 @@ nav {
 		&:last-child, &:nth-last-child(2), &:nth-last-child(3), &:nth-last-child(4) {
 			text-transform: none;
 		}
-		/*&:last-child {
-			margin-left: auto;
-		}*/
 		&:nth-last-child(4) {
 			margin-left: auto;
 		}
-		/*&:nth-last-child(2) {
-			order: 9;
-		}*/
 	}
 	li a {
 		padding: 0 8px;
