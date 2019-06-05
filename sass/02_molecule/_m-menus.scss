@@ -1,4 +1,5 @@
 $a-user-initial-size: 18px;
+$a-initial-right-margin: 12px;
 
 nav {
 	li span.a-arrow-down {
@@ -94,15 +95,13 @@ nav {
 	position: relative;
 	z-index: 10;
 	margin-bottom: 30px; // this is for the secondary nav to be visible. todo: do we still need?
-	display: flex;
-	align-items: flex-end;
 	button {
 		display: inline-block;
 		-webkit-appearance: none;
 		border: 0;
-		margin: 9px 0 0 6px;
-		text-indent: 6px;
-		padding: 0;
+		//margin: 9px 0 0 6px;
+		//text-indent: 6px;
+		padding: 8px;
 		line-height: normal;
 		cursor: pointer;
 		font: inherit;
@@ -146,30 +145,6 @@ nav {
 	li {
 		text-transform: uppercase;
 		flex-shrink: 0;
-    	&.home, &.search {
-    		font-family: dashicons;
-    	}
-    	&.home, &.search {
-    		a {
-    			font-size: 0;
-    			padding: 0;
-    			&:after {
-    				font-family: dashicons;
-    				display: inline-block;
-    				padding: 8px 4px;
-    				vertical-align: bottom;
-    			}
-    		}
-    	}
-    	&.home a:after {
-    		content: "\f102";
-    		font-size: 24px;
-    	}
-    	&.search a:after {
-    		content: "\f179";
-    		font-size: 18px;
-    		//margin-left: 6px;
-    	}
 		&:last-child, &:nth-last-child(2), &:nth-last-child(3), &:nth-last-child(4) {
 			text-transform: none;
 		}
@@ -178,7 +153,7 @@ nav {
 		}
 	}
 	li a {
-		padding: 0 8px;
+		padding: 8px;
 		color: $color__white;
 		text-decoration: none;
 		display: inline-block;
@@ -242,6 +217,10 @@ nav {
 	li a:hover span.name, li a:focus span.name, li a:active span.name, ul li a:hover, ul li a:focus, ul li a:active {
 		text-decoration: underline;
 	}
+	li span.name {
+		display: inline-block;
+		margin-right: 0;
+	}
 	li span.a-user-initial {
 		font-family: $font__headings;
 		font-weight: normal;
@@ -255,7 +234,7 @@ nav {
 		border-radius: 50%;
 		color: $color__white;
 		display: inline-block;
-		margin: -4px 12px 0 6px;
+		margin: -4px $a-initial-right-margin 0 6px;
 		width: $a-user-initial-size;
 		height: $a-user-initial-size;
 		font-size: 14px;
@@ -427,6 +406,17 @@ nav {
 	}
 }
 
+@media screen and (min-width: $medium-screen) and (max-width: $nav-move-end) {
+	#navigation-user-account-access {
+		li span.name {
+			margin-right: $a-initial-right-margin;
+		}
+		li span.a-user-initial {
+			display: none;
+		}
+	}
+}
+
 @media screen and (min-width: $medium-margins-too-small) {
 	.m-pagination {
 		margin-bottom: 0.75em;
@@ -447,13 +437,38 @@ nav {
 		margin-top: -1px;
 	}
 	.m-main-navigation {
+		display: flex;
+		align-items: flex-end;
 		button {
 			display: none;
 		}
 		ul, &.toggled ul {
 			display: flex;
-			li a {
-				padding: 8px;
+			li {
+				&.home, &.search {
+		    		font-family: dashicons;
+		    	}
+		    	&.home, &.search {
+		    		a {
+		    			font-size: 0;
+		    			padding: 0;
+		    			&:after {
+		    				font-family: dashicons;
+		    				display: inline-block;
+		    				padding: 8px 4px;
+		    				vertical-align: bottom;
+		    			}
+		    		}
+		    	}
+		    	&.home a:after {
+		    		content: "\f102";
+		    		font-size: 24px;
+		    	}
+		    	&.search a:after {
+		    		content: "\f179";
+		    		font-size: 18px;
+		    		//margin-left: 6px;
+		    	}
 			}
 		}
 	}
@@ -478,10 +493,18 @@ nav {
 			/*li:nth-last-child(2) {
 				order: inherit;
 				margin-left: auto;
-			}*/
-			li a {
-				//padding: 8px 4px;
 			}
+			li a {
+				padding: 8px 4px;
+			}*/
+		}
+	}
+}
+
+@media screen and (min-width: $nav-move-end) and (max-width: $nav-wrap-screen) {
+	.m-main-navigation {
+		ul, &.toggled ul {
+			justify-content: flex-end;
 		}
 	}
 }
@@ -490,12 +513,12 @@ nav {
 	#navigation-ext {
 		width: auto;
 	}
-	.m-main-navigation {
+	/*.m-main-navigation {
 		//letter-spacing: 1px;
 		ul {
 			li a {
 				//padding: 8px;
 			}
 		}
-	}
+	}*/
 }
