@@ -15,7 +15,7 @@ if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
 	add_action( 'wp_print_styles', 'minnpost_largo_add_remove_styles', 10 );
 	function minnpost_largo_add_remove_styles() {
 		// add
-		wp_enqueue_style( 'minnpost-style', get_theme_file_uri() . '/style.css', array(), filemtime( get_theme_file_path() . '/style.css' ), 'all' );
+		wp_enqueue_style( 'minnpost-style', get_theme_file_uri() . '/style.css', array( 'dashicons' ), filemtime( get_theme_file_path() . '/style.css' ), 'all' );
 		wp_enqueue_style( 'minnpost-style-print', get_theme_file_uri() . '/print.css', array(), filemtime( get_theme_file_path() . '/print.css' ), 'print' );
 		// remove
 		wp_dequeue_style( 'largo-style' );
