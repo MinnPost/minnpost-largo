@@ -254,8 +254,8 @@ gulp.task('styles',
   )
 );
 
-gulp.task('styles',
+gulp.task('scripts',
   gulp.series(
-    gulp.parallel(frontendstyles, mainstyles) // run these tasks asynchronously
+    gulp.parallel(mainscripts, uglifyscripts) // run these tasks asynchronously
   )
 );

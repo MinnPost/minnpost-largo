@@ -151,6 +151,30 @@ nav {
 		&:nth-last-child(4) {
 			margin-left: auto;
 		}
+		&.search {
+			position: relative;
+			a.toggled-form {
+				background: $color__minnpost-white;
+				color: $color__minnpost-black;
+			}
+			form {
+				display: none;
+				position: absolute;
+				right: 0;
+				top: 0;
+				z-index: 100;
+				min-height: 38px;
+				padding-right: 8px;
+				fieldset {
+					margin: 0;
+					padding: 0;
+					border: 0;
+				}
+				&.toggled-form {
+					display: block;
+				}
+			}
+		}
 	}
 	li a {
 		padding: 8px;
@@ -386,6 +410,7 @@ nav {
 }
 
 // media queries for menus
+// todo: does this go away?
 @media screen and (min-width: 560px) {
 	#secondary-links {
 		margin-top: -21px;
@@ -458,6 +483,12 @@ nav {
 		    				padding: 8px 4px;
 		    				vertical-align: bottom;
 		    			}
+		    		}
+		    	}
+		    	&.search {
+		    		form {
+		    			right: 24px;
+						top: -6px;
 		    		}
 		    	}
 		    	&.home a:after {

@@ -8,6 +8,39 @@ jQuery( document ).ready( function( $ ) {
 
 	setupMenu( 'navigation-primary' );
 	setupMenu( 'navigation-user-account-management' );
+	setupNavSearch( 'navigation-primary' );
+
+	function setupNavSearch( container ) {
+
+		var navsearchtoggle, navsearchform;
+
+		container = document.getElementById( container );
+		if ( ! container ) {
+			return;
+		}
+
+		navsearchtoggle = $( 'li.search a', $( container ) );
+		navsearchform   = container.getElementsByTagName( 'form' )[0];
+
+		if ( 'undefined' === typeof navsearchtoggle || 'undefined' === typeof navsearchform ) {
+			return;
+		}
+
+		if ( $( navsearchform ).length > 0 ) {
+			$( navsearchtoggle ).on( 'click', function( event ) {
+				event.preventDefault();
+				if ( -1 !== navsearchform.className.indexOf( 'toggled-form' ) ) {
+					navsearchform.className = navsearchform.className.replace( ' toggled-form', '' );
+					$( navsearchtoggle ).prop( 'aria-expanded', false );
+					$( navsearchtoggle ).removeClass( 'toggled-form' );
+				} else {
+					navsearchform.className += ' toggled-form';
+					$( navsearchtoggle ).prop( 'aria-expanded', true );
+					$( navsearchtoggle ).addClass( 'toggled-form' );
+				}
+			});
+		}
+	}
 
 	function setupMenu( container ) {
 		var button, menu, links, i, len;

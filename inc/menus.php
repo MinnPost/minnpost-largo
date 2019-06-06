@@ -201,6 +201,11 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 				$url = wp_logout_url();
 			}
 
+			if ( '/?s=' === $url ) {
+				$form     = get_search_form( false );
+				$has_form = true;
+			}
+
 			if ( rtrim( wp_login_url(), '/' ) === $url ) {
 				$current_url = $_SERVER['REQUEST_URI'];
 				if ( home_url() !== rtrim( site_url( $current_url ), '/' ) ) {
@@ -259,6 +264,10 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 		}
 
 		$output .= '<li' . $active_class . '><a href="' . $url . '">' . $item->title . '</a>';
+
+		if ( isset( $has_form ) && true === $has_form ) {
+			$output .= $form;
+		}
 
 		if ( 'Your MinnPost' === $item->title ) {
 			$output .= '<button class="menu-toggle" aria-controls="user-account-management" aria-expanded="false">' . esc_html( 'Sections', 'minnpost-largo' ) . '</button>';
