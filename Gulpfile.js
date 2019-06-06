@@ -255,7 +255,5 @@ gulp.task('styles',
 );
 
 gulp.task('scripts',
-  gulp.series(
-    gulp.parallel(mainscripts, uglifyscripts) // run these tasks asynchronously
-  )
+  gulp.series(mainscripts, uglifyscripts) // run these tasks in a series
 );
