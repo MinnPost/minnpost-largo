@@ -89,8 +89,8 @@ nav {
 	font-variant: normal;
 	-moz-font-feature-settings: "calt=0,dlig=0,ss01=0,liga=0";
 	-moz-font-feature-settings: "calt" 0,"dlig" 0,"ss01" 0,"liga" 0;
+	letter-spacing: 0.02em;
 	background: $color__minnpost-black;
-	//padding-top: 5px;
 	min-height: 44px;
 	position: relative;
 	z-index: 10;
@@ -99,8 +99,6 @@ nav {
 		display: inline-block;
 		-webkit-appearance: none;
 		border: 0;
-		//margin: 9px 0 0 6px;
-		//text-indent: 6px;
 		padding: 8px;
 		line-height: normal;
 		cursor: pointer;
@@ -122,10 +120,7 @@ nav {
 		width: 100%;
 		list-style: none;
 		display: none;
-		//justify-content: flex-start;
-		//margin: 7px 0 0 0;
 		justify-content: space-between;
-		//margin: 0 8px;
 		margin: 0;
 		padding: 0;
 		flex-grow: none;
@@ -485,6 +480,9 @@ nav {
 		    			}
 		    		}
 		    	}
+		    	&.home {
+		    		display: none;
+		    	}
 		    	&.search {
 		    		form {
 		    			right: 24px;
@@ -498,7 +496,6 @@ nav {
 		    	&.search a:after {
 		    		content: "\f179";
 		    		font-size: 18px;
-		    		//margin-left: 6px;
 		    	}
 			}
 		}
@@ -521,13 +518,6 @@ nav {
 		ul, &.toggled ul {
 			flex-grow: 2;
 			flex-wrap: wrap;
-			/*li:nth-last-child(2) {
-				order: inherit;
-				margin-left: auto;
-			}
-			li a {
-				padding: 8px 4px;
-			}*/
 		}
 	}
 }
@@ -544,12 +534,4 @@ nav {
 	#navigation-ext {
 		width: auto;
 	}
-	/*.m-main-navigation {
-		//letter-spacing: 1px;
-		ul {
-			li a {
-				//padding: 8px;
-			}
-		}
-	}*/
 }
