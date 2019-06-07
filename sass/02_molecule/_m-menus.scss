@@ -96,11 +96,11 @@ nav {
 	z-index: 10;
 	margin-bottom: 30px; // this is for the secondary nav to be visible. todo: do we still need?
 	button {
-		display: inline-block;
 		-webkit-appearance: none;
 		border: 0;
-		padding: 8px;
+		padding: 0 4px;
 		line-height: normal;
+		margin: 4px 0 4px 6px;
 		cursor: pointer;
 		font: inherit;
 		color: $color__white;
@@ -108,6 +108,11 @@ nav {
 		text-transform: uppercase;
 		overflow: visible;
 		-moz-user-select: text;
+		span {
+			display: inline-flex;
+  			align-items: center;
+  			line-height: 36px;
+  		}
 		&:hover, &:focus {
 			background: $color__minnpost-white;
 			color: $color__minnpost-black;
@@ -146,6 +151,9 @@ nav {
 		&:nth-last-child(4) {
 			margin-left: auto;
 		}
+		&.home {
+    		display: none;
+    	}
 		&.search {
 			position: relative;
 			a.toggled-form {
@@ -479,9 +487,6 @@ nav {
 		    				vertical-align: bottom;
 		    			}
 		    		}
-		    	}
-		    	&.home {
-		    		display: none;
 		    	}
 		    	&.search {
 		    		form {
