@@ -8,6 +8,48 @@ jQuery( document ).ready( function( $ ) {
 
 	setupMenu( 'navigation-primary' );
 	setupMenu( 'navigation-user-account-management' );
+	setupNavSearch( 'navigation-primary' );
+
+	function setupNavSearch( container ) {
+
+		var navsearchcontainer, navsearchtoggle, navsearchform;
+
+		container = document.getElementById( container );
+		if ( ! container ) {
+			return;
+		}
+
+		navsearchcontainer = $( 'li.search', $( container ) );
+		navsearchtoggle    = $( 'li.search a', $( container ) );
+		navsearchform      = container.getElementsByTagName( 'form' )[0];
+
+		if ( 'undefined' === typeof navsearchtoggle || 'undefined' === typeof navsearchform ) {
+			return;
+		}
+
+		if ( $( navsearchform ).length > 0 ) {
+			$( document ).click( function( event ) {
+				var $target = $( event.target );
+				if ( ! $target.closest( navsearchcontainer ).length && $( navsearchform ).is( ':visible' ) ) {
+					navsearchform.className = navsearchform.className.replace( ' toggled-form', '' );
+					$( navsearchtoggle ).prop( 'aria-expanded', false );
+					$( navsearchtoggle ).removeClass( 'toggled-form' );
+				}        
+			});
+			$( navsearchtoggle ).on( 'click', function( event ) {
+				event.preventDefault();
+				if ( -1 !== navsearchform.className.indexOf( 'toggled-form' ) ) {
+					navsearchform.className = navsearchform.className.replace( ' toggled-form', '' );
+					$( navsearchtoggle ).prop( 'aria-expanded', false );
+					$( navsearchtoggle ).removeClass( 'toggled-form' );
+				} else {
+					navsearchform.className += ' toggled-form';
+					$( navsearchtoggle ).prop( 'aria-expanded', true );
+					$( navsearchtoggle ).addClass( 'toggled-form' );
+				}
+			});
+		}
+	}
 
 	function setupMenu( container ) {
 		var button, menu, links, i, len;

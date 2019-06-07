@@ -159,12 +159,12 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 
 		$active_class = '';
 		if ( in_array( 'current-menu-item', $classes ) ) {
-			$active_class = ' class="active"';
+			$active_class = 'active';
 		} elseif ( in_array( 'current-menu-parent', $classes ) && '/' !== $item->url ) {
 			// checking '/' because home menu should never be a parent menu
-			$active_class = ' class="active-parent"';
+			$active_class = 'active-parent';
 		} elseif ( in_array( 'current-menu-ancestor', $classes ) ) {
-			$active_class = ' class="active-ancestor"';
+			$active_class = 'active-ancestor';
 		}
 
 		// if we aren't on the main category, remove the active classes for other categories
@@ -199,6 +199,11 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 			}
 			if ( home_url() !== $url && substr( '/wp_logout_url()', 0, $length ) === $url ) {
 				$url = wp_logout_url();
+			}
+
+			if ( '/?s=' === $url ) {
+				$form     = get_search_form( false );
+				$has_form = true;
 			}
 
 			if ( rtrim( wp_login_url(), '/' ) === $url ) {
@@ -241,11 +246,28 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 			if ( '' !== $active_class ) {
 				$active_class .= ' ' . sanitize_title( $item->title );
 			} else {
-				$active_class = ' class="' . sanitize_title( $item->title ) . '"';
+				$active_class = sanitize_title( $item->title );
 			}
 		}
 
+		if ( ! isset( $args->item_classes ) || 'values' !== $args->item_classes ) {
+			$custom_classes = $this->get_custom_classes( $item->classes );
+			if ( '' !== $active_class ) {
+				$active_class .= ' ' . $custom_classes;
+			} else {
+				$active_class = $custom_classes;
+			}
+		}
+
+		if ( '' !== $active_class ) {
+			$active_class = ' class="' . $active_class . '"';
+		}
+
 		$output .= '<li' . $active_class . '><a href="' . $url . '">' . $item->title . '</a>';
+
+		if ( isset( $has_form ) && true === $has_form ) {
+			$output .= $form;
+		}
 
 		if ( 'Your MinnPost' === $item->title ) {
 			$output .= '<button class="menu-toggle" aria-controls="user-account-management" aria-expanded="false">' . esc_html( 'Sections', 'minnpost-largo' ) . '</button>';
@@ -255,6 +277,23 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 	// end item with a </li>
 	public function end_el( &$output, $item, $depth = 0, $args = array() ) {
 		$output .= '</li>';
+	}
+
+	/**
+	* Return the custom classes added in the admin by filtering out the default WordPress classes
+	*
+	* @param array $all_classes
+	* @return string $custom_classes
+	*
+	*/
+	private function get_custom_classes( $all_classes ) {
+		$custom_classes = array_filter(
+			$all_classes,
+			function( $value ) {
+				return ( str_replace( [ 'menu-', 'page_', 'page-' ], '', $value ) != $value ) ? false : true;
+			}
+		);
+		return implode( ' ', $custom_classes );
 	}
 }
 

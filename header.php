@@ -38,7 +38,6 @@
 				</a>
 			</div><!-- .a-site-branding -->
 			<nav id="navigation-ext" class="m-secondary-navigation">
-				<?php get_search_form(); ?>
 				<?php
 				wp_nav_menu(
 					array(
@@ -55,7 +54,7 @@
 		<div class="o-wrapper o-wrapper-site-navigation">
 			<nav id="navigation-primary" class="m-main-navigation">
 				<button class="menu-toggle" aria-controls="primary-links" aria-expanded="false">
-					<?php esc_html_e( 'Sections', 'minnpost-largo' ); ?>
+					<span><?php esc_html_e( 'Menu', 'minnpost-largo' ); ?></span>
 				</button>
 				<?php
 				wp_nav_menu(

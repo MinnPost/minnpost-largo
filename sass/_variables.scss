@@ -135,8 +135,9 @@ $small-screen: 480px;
 $more-than-logo-screen: 500px;
 $medium-screen: 640px;
 $nav-breaks: 768px;
+$nav-move-end: 810px;
 $large-screen: 860px;
-$nav-wrap-screen: 900px;
+$nav-wrap-screen: 950px;
 
 $medium-screen-up: new-breakpoint(min-width $medium-screen 4);
 $large-screen-up: new-breakpoint(min-width $large-screen 8);
@@ -160,6 +161,7 @@ $standard-page-margin: 1.538461538461538em; // 20px
 $home-content-sidebar-padding: 35px;
 $archive-content-sidebar-padding: 15px;
 $footer-box-spacing: 15px;
+$form-text-indent: 6px;
 
 // ads
 $ad-top-width: 728px;
