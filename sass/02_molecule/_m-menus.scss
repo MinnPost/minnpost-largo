@@ -1,5 +1,6 @@
 $a-user-initial-size: 18px;
 $a-initial-right-margin: 12px;
+$nav-common-spacing: 6px;
 
 nav {
 	li span.a-arrow-down {
@@ -10,7 +11,7 @@ nav {
 		border-top: 4px solid $color__minnpost-black;
 		position: absolute;
 		display: block;
-		top: 6px;
+		top: $nav-common-spacing;
 		right: 0;
 	}
 }
@@ -100,7 +101,7 @@ nav {
 		border: 0;
 		padding: 0 4px;
 		line-height: normal;
-		margin: 4px 0 4px 6px;
+		margin: 4px 0 4px $nav-common-spacing;
 		cursor: pointer;
 		font: inherit;
 		color: $color__white;
@@ -138,8 +139,9 @@ nav {
 			}
 		}
 		ul {
-			display: block;
-			columns: 2;
+			display: flex;
+		    flex-wrap: wrap;
+		    justify-content: space-between;
 		}
 	}
 	li {
@@ -175,6 +177,25 @@ nav {
 				}
 				&.toggled-form {
 					display: block;
+				}
+			}
+		}
+	}
+	&.toggled {
+		li {
+			flex: 1 1 50%;
+			&.search {
+				width: 100%;
+				display: block;
+				flex: none;
+				min-height: 38px;
+				margin-bottom: $nav-common-spacing;
+				form {
+					display: block;
+					left: 0;
+					right: auto;
+					padding-right: 0;
+					padding-left: $nav-common-spacing;
 				}
 			}
 		}
@@ -261,7 +282,7 @@ nav {
 		border-radius: 50%;
 		color: $color__white;
 		display: inline-block;
-		margin: -4px $a-initial-right-margin 0 6px;
+		margin: -4px $a-initial-right-margin 0 $nav-common-spacing;
 		width: $a-user-initial-size;
 		height: $a-user-initial-size;
 		font-size: 14px;
@@ -286,10 +307,10 @@ nav {
 			content: "\A";
 			width: 0;
 			height: 0;
-			border-left: 6px solid transparent;
-			border-right: 6px solid transparent;
-			border-bottom: 6px solid $color__gray-sub-menu;
-			top: -6px;
+			border-left: $nav-common-spacing solid transparent;
+			border-right: $nav-common-spacing solid transparent;
+			border-bottom: $nav-common-spacing solid $color__gray-sub-menu;
+			top: -$nav-common-spacing;
 			position: absolute;
 			right: 20px;
 		}
@@ -311,8 +332,8 @@ nav {
 		display: inline-block;
 		-webkit-appearance: none;
 		border: 0;
-		margin: 0 0 0 6px;
-		text-indent: 6px;
+		margin: 0 0 0 $nav-common-spacing;
+		text-indent: $form-text-indent;
 		padding: 0;
 		line-height: inherit;
 		vertical-align: middle;
@@ -427,9 +448,10 @@ nav {
 	}
 	.m-main-navigation {
 		margin-bottom: 0;
-		&.toggled ul {
-			display: block;
-			columns: 3;
+		&.toggled {
+			li {
+				flex: 1 1 33%;
+			}
 		}
 	}
 }
@@ -491,7 +513,7 @@ nav {
 		    	&.search {
 		    		form {
 		    			right: 24px;
-						top: -6px;
+						top: -$nav-common-spacing;
 		    		}
 		    	}
 		    	&.home a:after {
@@ -500,7 +522,7 @@ nav {
 		    	}
 		    	&.search a:after {
 		    		content: "\f179";
-		    		font-size: 18px;
+		    		font-size: $a-user-initial-size;
 		    	}
 			}
 		}

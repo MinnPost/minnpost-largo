@@ -2,6 +2,8 @@
 	input[type="search"] {
 		-webkit-appearance: none;
 		border-radius: 0;
+		border: 0;
+		text-indent: $form-text-indent;
 	}
 	::-webkit-search-decoration {
 		display:none;
