@@ -41,19 +41,6 @@
 				<?php
 				wp_nav_menu(
 					array(
-						'theme_location' => 'minnpost_network',
-						'menu_id'        => 'minnpost-network',
-						'depth'          => 1,
-						'container'      => false,
-						'item_classes'   => 'values',
-						'walker'         => new Minnpost_Walker_Nav_Menu,
-					)
-				);
-				?>
-				<?php get_search_form(); ?>
-				<?php
-				wp_nav_menu(
-					array(
 						'theme_location' => 'secondary_links',
 						'menu_id'        => 'secondary-links',
 						'depth'          => 1,
@@ -67,7 +54,7 @@
 		<div class="o-wrapper o-wrapper-site-navigation">
 			<nav id="navigation-primary" class="m-main-navigation">
 				<button class="menu-toggle" aria-controls="primary-links" aria-expanded="false">
-					<?php esc_html_e( 'Sections', 'minnpost-largo' ); ?>
+					<span><?php esc_html_e( 'Menu', 'minnpost-largo' ); ?></span>
 				</button>
 				<?php
 				wp_nav_menu(
