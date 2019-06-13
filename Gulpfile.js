@@ -247,3 +247,13 @@ gulp.task('default',
     gulp.parallel(frontendstyles, mainstyles, mainscripts, uglifyscripts, images, translate) // run these tasks asynchronously
   )
 );
+
+gulp.task('styles',
+  gulp.series(
+    gulp.parallel(frontendstyles, mainstyles) // run these tasks asynchronously
+  )
+);
+
+gulp.task('scripts',
+  gulp.series(mainscripts, uglifyscripts) // run these tasks in a series
+);

@@ -48,38 +48,46 @@ if ( function_exists( 'create_newsletter' ) ) :
 		/**
 		 * Fields above body
 		 */
-		$newsletter_setup = new_cmb2_box( array(
-			'id'           => $prefix . 'setup',
-			'title'        => 'Setup',
-			'object_types' => array( $object_type ),
-			//'context'    => 'after_title',
-			//'priority'   => 'high',
-		) );
-		$newsletter_setup->add_field( array(
-			'name'    => 'Newsletter Type',
-			'id'      => $prefix . 'type',
-			'type'    => 'select',
-			'desc'    => 'Select an option',
-			'default' => 'daily',
-			'options' => array(
-				'daily'         => __( 'Daily', 'minnpost-largo' ),
-				'greater_mn'    => __( 'Greater MN', 'minnpost-largo' ),
-				'sunday_review' => __( 'Sunday Review', 'minnpost-largo' ),
-				'dc_memo'       => __( 'D.C. Memo', 'minnpost-largo' ),
-			),
-		) );
-		$newsletter_setup->add_field( array(
-			'name' => 'Preview Text',
-			'id'   => $prefix . 'preview_text',
-			'type' => 'text',
-			'desc' => 'This is visible before users open the email in some email clients. If there\'s no value, we won\'t use it. Limited to 50 characters.',
-		) );
-		$newsletter_setup->add_field( array(
-			'name' => 'Show Department for Top Stories?',
-			'id'   => $prefix . 'show_department_for_top_stories',
-			'type' => 'checkbox',
-			'desc' => '',
-		) );
+		$newsletter_setup = new_cmb2_box(
+			array(
+				'id'           => $prefix . 'setup',
+				'title'        => __( 'Setup', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				//'context'    => 'after_title',
+				//'priority'   => 'high',
+			)
+		);
+		$newsletter_setup->add_field(
+			array(
+				'name'    => __( 'Newsletter Type', 'minnpost-largo' ),
+				'id'      => $prefix . 'type',
+				'type'    => 'select',
+				'desc'    => __( 'Select an option', 'minnpost-largo' ),
+				'default' => 'daily',
+				'options' => array(
+					'daily'         => __( 'Daily', 'minnpost-largo' ),
+					'greater_mn'    => __( 'Greater MN', 'minnpost-largo' ),
+					'sunday_review' => __( 'Sunday Review', 'minnpost-largo' ),
+					'dc_memo'       => __( 'D.C. Memo', 'minnpost-largo' ),
+				),
+			)
+		);
+		$newsletter_setup->add_field(
+			array(
+				'name' => __( 'Preview Text', 'minnpost-largo' ),
+				'id'   => $prefix . 'preview_text',
+				'type' => 'text',
+				'desc' => __( 'This is visible before users open the email in some email clients. If there\'s no value, we won\'t use it. Limited to 50 characters.', 'minnpost-largo' ),
+			)
+		);
+		$newsletter_setup->add_field(
+			array(
+				'name' => __( 'Show Department for Top Stories?', 'minnpost-largo' ),
+				'id'   => $prefix . 'show_department_for_top_stories',
+				'type' => 'checkbox',
+				'desc' => '',
+			)
+		);
 
 		/**
 		 * For posts on newsletters
@@ -133,23 +141,28 @@ if ( function_exists( 'create_newsletter' ) ) :
 						'orderby' => 'modified',
 						'order'   => 'DESC',
 					),
-				), 'post_search_ajax'
+				),
+				'post_search_ajax'
 			)
 		);
-		$newsletter_top_posts->add_field( array(
-			'name' => 'Show Department for Top Stories',
-			'desc' => 'If checked, top stories will also display their department name.',
-			'id'   => 'top_posts_show_department',
-			'type' => 'checkbox',
-		) );
-		$newsletter_more_posts = new_cmb2_box( array(
-			'id'           => $prefix . 'more_posts',
-			'title'        => __( 'More Stories', 'minnpost-largo' ),
-			'object_types' => array( $object_type ), // Post type
-			'context'      => 'normal',
-			'priority'     => 'high',
-			'show_names'   => false, // Show field names on the left
-		) );
+		$newsletter_top_posts->add_field(
+			array(
+				'name' => __( 'Show Department for Top Stories', 'minnpost-largo' ),
+				'desc' => __( 'If checked, top stories will also display their department name.', 'minnpost-largo' ),
+				'id'   => 'top_posts_show_department',
+				'type' => 'checkbox',
+			)
+		);
+		$newsletter_more_posts = new_cmb2_box(
+			array(
+				'id'           => $prefix . 'more_posts',
+				'title'        => __( 'More Stories', 'minnpost-largo' ),
+				'object_types' => array( $object_type ), // Post type
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'show_names'   => false, // Show field names on the left
+			)
+		);
 		$newsletter_more_posts->add_field(
 			minnpost_post_search_field(
 				array(
@@ -227,268 +240,287 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		/**
 		 * Excerpt settings
 		 */
-		$excerpt = new_cmb2_box( array(
-			'id'           => 'cmb2_excerpt',
-			'title'        => 'Excerpt',
-			'object_types' => array( $object_type ), // Post type
-			'context'      => 'after_editor',
-			'priority'     => 'high',
-			'show_names'   => false,
-		) );
-		$excerpt->add_field( array(
-			'id'        => 'excerpt',
-			'name'      => 'Excerpt',
-			'desc'      => '',
-			'type'      => 'wysiwyg',
-			'escape_cb' => false,
-			'options'   => array(
-				'media_buttons' => false, // show insert/upload button(s)
-				'textarea_rows' => 5,
-				'teeny'         => true, // output the minimal editor config used in Press This
-			),
-		) );
-
-		/**
-		 * SEO settings
-		 */
-		/*$seo_settings = new_cmb2_box( array(
-			'id'           => 'seo_settings',
-			'title'        => 'SEO Settings',
-			'object_types' => array( $object_type ),
-			'context'      => 'normal',
-			'priority'     => 'high',
-			'closed'       => true,
-		) );
-		$seo_settings->add_field( array(
-			'name'       => 'Title',
-			'id'         => '_mp_seo_title',
-			'type'       => 'text',
-			// translators: 1) the sitename
-			'desc'       => sprintf( __( 'If you do not fill this out, the post title will be used. If you do fill it out and do not include %1$s in the value, it will be placed at the end in this way: Your Title | %1$s' ),
-				get_bloginfo( 'name' )
-			),
-			'attributes' => array(
-				'maxlength' => 78, // retrieved from https://seopressor.com/blog/google-title-meta-descriptions-length/ on 9/27/2018
-			),
-		) );
-		$seo_settings->add_field( array(
-			'name'       => 'Description',
-			'id'         => '_mp_seo_description',
-			'type'       => 'textarea_small',
-			'attributes' => array(
-				'maxlength' => 300, // retrieved from https://moz.com/blog/how-long-should-your-meta-description-be-2018 on 9/27/2018
-			),
-			'desc'       => __( 'If you do not fill this out, the post excerpt will be used.' ),
-		) );*/
+		$excerpt = new_cmb2_box(
+			array(
+				'id'           => 'cmb2_excerpt',
+				'title'        => __( 'Excerpt', 'minnpost-largo' ),
+				'object_types' => array( $object_type ), // Post type
+				'context'      => 'after_editor',
+				'priority'     => 'high',
+				'show_names'   => false,
+			)
+		);
+		$excerpt->add_field(
+			array(
+				'id'        => 'excerpt',
+				'name'      => __( 'Excerpt', 'minnpost-largo' ),
+				'desc'      => '',
+				'type'      => 'wysiwyg',
+				'escape_cb' => false,
+				'options'   => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'textarea_rows' => 5,
+					'teeny'         => true, // output the minimal editor config used in Press This
+				),
+			)
+		);
 
 		/**
 		 * Subtitle settings
 		 */
-		$subtitle_settings = new_cmb2_box( array(
-			'id'           => 'subtitle_settings',
-			'title'        => 'Subtitle Settings',
-			'object_types' => array( $object_type ),
-			'context'      => 'normal',
-			'priority'     => 'high',
-			'closed'       => true,
-		) );
-		$subtitle_settings->add_field( array(
-			'name' => 'Byline',
-			'id'   => '_mp_subtitle_settings_byline',
-			'type' => 'text',
-		) );
-		$subtitle_settings->add_field( array(
-			'name' => 'Deck',
-			'id'   => '_mp_subtitle_settings_deck',
-			'type' => 'text',
-		) );
+		$subtitle_settings = new_cmb2_box(
+			array(
+				'id'           => 'subtitle_settings',
+				'title'        => __( 'Subtitle Settings', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'closed'       => true,
+			)
+		);
+		$subtitle_settings->add_field(
+			array(
+				'name' => __( 'Byline', 'minnpost-largo' ),
+				'id'   => '_mp_subtitle_settings_byline',
+				'type' => 'text',
+			)
+		);
+		$subtitle_settings->add_field(
+			array(
+				'name' => __( 'Deck', 'minnpost-largo' ),
+				'id'   => '_mp_subtitle_settings_deck',
+				'type' => 'text',
+			)
+		);
 
 		/**
 		 * Image settings
 		 */
-		$image_settings = new_cmb2_box( array(
-			'id'           => $object_type . '_image_settings',
-			'title'        => 'Image Settings',
-			'object_types' => array( $object_type ),
-			'context'      => 'normal',
-			'priority'     => 'high',
-			'closed'       => true,
-		) );
-		$image_settings->add_field( array(
-			'name'         => 'Thumbnail Image',
-			'desc'         => 'Upload an image or enter an URL.',
-			'id'           => '_mp_post_thumbnail_image',
-			'type'         => 'file',
-			'preview_size' => array( 130, 85 ),
-			'options'      => array(
-				//'url' => false, // Hide the text input for the url
-			),
-			'text'         => array(
-				//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
-			),
-			// query_args are passed to wp.media's library query.
-			'query_args'   => array(
-				'type' => 'image',
-			),
-		) );
-		$image_settings->add_field( array(
-			'name'             => 'Homepage Image Size',
-			'id'               => '_mp_post_homepage_image_size',
-			'type'             => 'select',
-			'show_option_none' => true,
-			'desc'             => 'Select an option',
-			'default'          => 'feature-large',
-			'options'          => array(
-				'feature-medium' => __( 'Medium', 'minnpost-largo' ),
-				'none'           => __( 'Do not display image', 'minnpost-largo' ),
-				'feature-large'  => __( 'Large', 'minnpost-largo' ),
-			),
-		) );
-		$image_settings->add_field( array(
-			'name'         => 'Main Image',
-			'desc'         => 'Upload an image or enter an URL.',
-			'id'           => '_mp_post_main_image',
-			'type'         => 'file',
-			'preview_size' => array( 130, 85 ),
-			'options'      => array(
-				//'url' => false, // Hide the text input for the url
-			),
-			'text'         => array(
-				//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
-			),
-			// query_args are passed to wp.media's library query.
-			'query_args'   => array(
-				'type' => 'image',
-			),
-		) );
+		$image_settings = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_image_settings',
+				'title'        => __( 'Image Settings', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'closed'       => true,
+			)
+		);
+		$image_settings->add_field(
+			array(
+				'name'         => __( 'Thumbnail Image', 'minnpost-largo' ),
+				'desc'         => __( 'Upload an image or enter an URL.', 'minnpost-largo' ),
+				'id'           => '_mp_post_thumbnail_image',
+				'type'         => 'file',
+				'preview_size' => array( 130, 85 ),
+				'options'      => array(
+					//'url' => false, // Hide the text input for the url
+				),
+				'text'         => array(
+					//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
+				),
+				// query_args are passed to wp.media's library query.
+				'query_args'   => array(
+					'type' => 'image',
+				),
+			)
+		);
+		$image_settings->add_field(
+			array(
+				'name'             => __( 'Homepage Image Size', 'minnpost-largo' ),
+				'id'               => '_mp_post_homepage_image_size',
+				'type'             => 'select',
+				'show_option_none' => true,
+				'desc'             => __( 'Select an option', 'minnpost-largo' ),
+				'default'          => 'feature-large',
+				'options'          => array(
+					'feature-medium' => __( 'Medium', 'minnpost-largo' ),
+					'none'           => __( 'Do not display image', 'minnpost-largo' ),
+					'feature-large'  => __( 'Large', 'minnpost-largo' ),
+				),
+			)
+		);
+		$image_settings->add_field(
+			array(
+				'name'         => __( 'Main Image', 'minnpost-largo' ),
+				'desc'         => __( 'Upload an image or enter an URL.', 'minnpost-largo' ),
+				'id'           => '_mp_post_main_image',
+				'type'         => 'file',
+				'preview_size' => array( 130, 85 ),
+				'options'      => array(
+					//'url' => false, // Hide the text input for the url
+				),
+				'text'         => array(
+					//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
+				),
+				// query_args are passed to wp.media's library query.
+				'query_args'   => array(
+					'type' => 'image',
+				),
+			)
+		);
 
 		/**
 		 * Display settings
 		 */
-		$display_settings = new_cmb2_box( array(
-			'id'           => $object_type . '_display_settings',
-			'title'        => 'Display Settings',
-			'object_types' => array( $object_type ),
-			'context'      => 'normal',
-			'priority'     => 'high',
-			'closed'       => true,
-		) );
-		$display_settings->add_field( array(
-			'name' => 'Prevent automatic embed ads?',
-			'id'   => '_mp_prevent_automatic_ads',
-			'type' => 'checkbox',
-			'desc' => 'If checked, this post will not contain automatic embed ads.',
-		) );
-		$display_settings->add_field( array(
-			'name' => 'Prevent all embed ads?',
-			'id'   => '_mp_prevent_ads',
-			'type' => 'checkbox',
-			'desc' => 'If checked, this post will not contain any embed ads.',
-		) );
-		$display_settings->add_field( array(
-			'name' => 'Prevent lazy loading?',
-			'id'   => 'wp_lozad_lazyload_prevent_lozad_lazyload',
-			'type' => 'checkbox',
-			'desc' => 'If checked, this post will not attempt to lazy load ads or other content.',
-		) );
-		$display_settings->add_field( array(
-			'name' => 'Load HTML editor by default?',
-			'id'   => '_mp_post_use_html_editor',
-			'type' => 'checkbox',
-			'desc' => 'If checked, this post will open with the HTML editor visible.',
-		) );
-		$display_settings->add_field( array(
-			'name' => 'Remove category from display?',
-			'id'   => '_mp_remove_category_from_display',
-			'type' => 'checkbox',
-			'desc' => 'If checked, this post will not display its categories.',
-		) );
-		$display_settings->add_field( array(
-			'name' => 'Replace category text',
-			'id'   => '_mp_replace_category_text',
-			'type' => 'text',
-			'desc' => 'This text will show in place of the category name(s).',
-		) );
-		$display_settings->add_field( array(
-			'name' => 'Remove title from display?',
-			'id'   => '_mp_remove_title_from_display',
-			'type' => 'checkbox',
-			'desc' => 'If checked, the post title will not display.',
-		) );
-		$display_settings->add_field( array(
-			'name' => 'Remove author(s) from display?',
-			'id'   => '_mp_remove_author_from_display',
-			'type' => 'checkbox',
-			'desc' => 'If checked, the post author(s) will not display.',
-		) );
-		$display_settings->add_field( array(
-			'name' => 'Remove deck from display?',
-			'id'   => '_mp_remove_deck_from_display',
-			'type' => 'checkbox',
-			'desc' => 'If checked, any deck content will be ignored.',
-		) );
-		$display_settings->add_field( array(
-			'name' => 'Remove date from display?',
-			'id'   => '_mp_remove_date_from_display',
-			'type' => 'checkbox',
-			'desc' => 'If checked, the post date will not display.',
-		) );
-		$display_settings->add_field( array(
-			'name' => 'Remove newsletter signup from display?',
-			'id'   => '_mp_remove_newsletter_signup_from_display',
-			'type' => 'checkbox',
-			'desc' => 'If checked, this post will not have a newsletter signup box.',
-		) );
-		$display_settings->add_field( array(
-			'name'             => 'Share button location',
-			'id'               => '_mp_share_display_location',
-			'type'             => 'select',
-			'show_option_none' => false,
-			'desc'             => 'Select a location for the share buttons to display',
-			'default'          => 'both',
-			'options'          => array(
-				'neither' => __( 'Neither', 'minnpost-largo' ),
-				'both'    => __( 'Both', 'minnpost-largo' ),
-				'top'     => __( 'Top', 'minnpost-largo' ),
-				'bottom'  => __( 'Bottom', 'minnpost-largo' ),
-			),
-		) );
+		$display_settings = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_display_settings',
+				'title'        => __( 'Display Settings', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'closed'       => true,
+			)
+		);
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Prevent automatic embed ads?', 'minnpost-largo' ),
+				'id'   => '_mp_prevent_automatic_ads',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not contain automatic embed ads.', 'minnpost-largo' ),
+			)
+		);
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Prevent all embed ads?', 'minnpost-largo' ),
+				'id'   => '_mp_prevent_ads',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not contain any embed ads.', 'minnpost-largo' ),
+			)
+		);
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Prevent lazy loading?', 'minnpost-largo' ),
+				'id'   => 'wp_lozad_lazyload_prevent_lozad_lazyload',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not attempt to lazy load ads or other content.', 'minnpost-largo' ),
+			)
+		);
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Load HTML editor by default?', 'minnpost-largo' ),
+				'id'   => '_mp_post_use_html_editor',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will open with the HTML editor visible.', 'minnpost-largo' ),
+			)
+		);
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Remove category from display?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_category_from_display',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not display its categories.', 'minnpost-largo' ),
+			)
+		);
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Replace category text', 'minnpost-largo' ),
+				'id'   => '_mp_replace_category_text',
+				'type' => 'text',
+				'desc' => __( 'This text will show in place of the category name(s).', 'minnpost-largo' ),
+			)
+		);
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Remove title from display?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_title_from_display',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, the post title will not display.', 'minnpost-largo' ),
+			)
+		);
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Remove author(s) from display?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_author_from_display',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, the post author(s) will not display.', 'minnpost-largo' ),
+			)
+		);
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Remove deck from display?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_deck_from_display',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, any deck content will be ignored.', 'minnpost-largo' ),
+			)
+		);
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Remove date from display?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_date_from_display',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, the post date will not display.', 'minnpost-largo' ),
+			)
+		);
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Remove newsletter signup from display?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_newsletter_signup_from_display',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not have a newsletter signup box.', 'minnpost-largo' ),
+			)
+		);
+		$display_settings->add_field(
+			array(
+				'name'             => __( 'Share button location', 'minnpost-largo' ),
+				'id'               => '_mp_share_display_location',
+				'type'             => 'select',
+				'show_option_none' => false,
+				'desc'             => __( 'Select a location for the share buttons to display', 'minnpost-largo' ),
+				'default'          => 'both',
+				'options'          => array(
+					'neither' => __( 'Neither', 'minnpost-largo' ),
+					'both'    => __( 'Both', 'minnpost-largo' ),
+					'top'     => __( 'Top', 'minnpost-largo' ),
+					'bottom'  => __( 'Bottom', 'minnpost-largo' ),
+				),
+			)
+		);
 
 		/**
 		 * Sidebar settings
 		 */
-		$sidebar_settings = new_cmb2_box( array(
-			'id'           => $object_type . '_sidebar_options',
-			'title'        => 'Sidebar Settings',
-			'object_types' => array( $object_type ),
-			'context'      => 'normal',
-			'priority'     => 'high',
-			'closed'       => true,
-		) );
-		$sidebar_settings->add_field( array(
-			'name' => 'Remove whole right sidebar from this post?',
-			'id'   => '_mp_remove_right_sidebar',
-			'type' => 'checkbox',
-			'desc' => '',
-		) );
-		$sidebar_settings->add_field( array(
-			'name' => 'Sidebar Content Box',
-			'desc' => 'Content for a single right sidebar box',
-			'id'   => '_mp_post_sidebar',
-			'type' => 'wysiwyg',
-		) );
+		$sidebar_settings = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_sidebar_options',
+				'title'        => __( 'Sidebar Settings', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'closed'       => true,
+			)
+		);
+		$sidebar_settings->add_field(
+			array(
+				'name' => __( 'Remove whole right sidebar from this post?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_right_sidebar',
+				'type' => 'checkbox',
+				'desc' => '',
+			)
+		);
+		$sidebar_settings->add_field(
+			array(
+				'name' => __( 'Sidebar Content Box', 'minnpost-largo' ),
+				'desc' => __( 'Content for a single right sidebar box', 'minnpost-largo' ),
+				'id'   => '_mp_post_sidebar',
+				'type' => 'wysiwyg',
+			)
+		);
 
 		/**
 		 * Related content settings
 		 */
-		$related_settings = new_cmb2_box( array(
-			'id'           => $object_type . '_related_content_options',
-			'title'        => 'Related Content Settings',
-			'object_types' => array( $object_type ),
-			'context'      => 'normal',
-			'priority'     => 'high',
-			'closed'       => true,
-		) );
+		$related_settings = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_related_content_options',
+				'title'        => __( 'Related Content Settings', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'closed'       => true,
+			)
+		);
 		$related_settings->add_field(
 			minnpost_post_search_field(
 				array(
@@ -513,42 +545,49 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				)
 			)
 		);
+		// todo: put fields related to automatic related content here
 
 		/**
 		 * Membership content settings
 		 * This depends on the Blocked Content Template plugin, which is called in get_member_levels()
 		 */
-		$member_content_settings = new_cmb2_box( array(
-			'id'           => $object_type . '_member_content_options',
-			'title'        => 'Member Content Settings',
-			'object_types' => array( $object_type ),
-			'context'      => 'normal',
-			'priority'     => 'high',
-			'closed'       => true,
-		) );
-		$member_content_settings->add_field( array(
-			'name'             => 'Lowest access level',
-			'id'               => '_access_level',
-			'type'             => 'select',
-			'desc'             => 'If this content is restricted, select the lowest level that can access it.',
-			'show_option_none' => true,
-			'default'          => '',
-			'options'          => get_member_levels(),
-		) );
-		$member_content_settings->add_field( array(
-			'name'             => 'MinnPost+ icon style',
-			'id'               => '_mp_plus_icon_style',
-			'type'             => 'select',
-			'desc'             => 'Which MP+ icon to overlay on the thumbnails',
-			'show_option_none' => true,
-			'default'          => '',
-			'options'          => array(
-				'mp_plus_blackonwhite'       => __( 'Black on White', 'minnpost-largo' ),
-				'mp_plus_whiteonblack'       => __( 'White on Black', 'minnpost-largo' ),
-				'mp_plus_whiteonred'         => __( 'White on Red', 'minnpost-largo' ),
-				'mp_plus_whiteontransparent' => __( 'White on Transparent', 'minnpost-largo' ),
-			),
-		) );
+		$member_content_settings = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_member_content_options',
+				'title'        => __( 'Member Content Settings', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'closed'       => true,
+			)
+		);
+		$member_content_settings->add_field(
+			array(
+				'name'             => __( 'Lowest access level', 'minnpost-largo' ),
+				'id'               => '_access_level',
+				'type'             => 'select',
+				'desc'             => __( 'If this content is restricted, select the lowest level that can access it.', 'minnpost-largo' ),
+				'show_option_none' => true,
+				'default'          => '',
+				'options'          => get_member_levels(),
+			)
+		);
+		$member_content_settings->add_field(
+			array(
+				'name'             => __( 'MinnPost+ icon style', 'minnpost-largo' ),
+				'id'               => '_mp_plus_icon_style',
+				'type'             => 'select',
+				'desc'             => __( 'Which MP+ icon to overlay on the thumbnails', 'minnpost-largo' ),
+				'show_option_none' => true,
+				'default'          => '',
+				'options'          => array(
+					'mp_plus_blackonwhite'       => __( 'Black on White', 'minnpost-largo' ),
+					'mp_plus_whiteonblack'       => __( 'White on Black', 'minnpost-largo' ),
+					'mp_plus_whiteonred'         => __( 'White on Red', 'minnpost-largo' ),
+					'mp_plus_whiteontransparent' => __( 'White on Transparent', 'minnpost-largo' ),
+				),
+			)
+		);
 
 	}
 endif;
@@ -566,47 +605,59 @@ if ( ! function_exists( 'cmb2_page_fields' ) ) :
 		/**
 		 * Page settings
 		 */
-		$page_settings = new_cmb2_box( array(
-			'id'           => 'page_settings',
-			'title'        => 'Page Settings',
-			'object_types' => array( $object_type ),
-			'context'      => 'normal',
-			'priority'     => 'low',
-			'closed'       => true,
-		) );
-		$page_settings->add_field( array(
-			'name' => 'Pre-title text',
-			'id'   => '_mp_replace_category_text',
-			'type' => 'text',
-			'desc' => 'This text will show above the title',
-		) );
-		$page_settings->add_field( array(
-			'name' => 'Remove title from display?',
-			'id'   => '_mp_remove_title_from_display',
-			'type' => 'checkbox',
-			'desc' => '',
-		) );
+		$page_settings = new_cmb2_box(
+			array(
+				'id'           => 'page_settings',
+				'title'        => __( 'Page Settings', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'low',
+				'closed'       => true,
+			)
+		);
+		$page_settings->add_field(
+			array(
+				'name' => __( 'Pre-title text', 'minnpost-largo' ),
+				'id'   => '_mp_replace_category_text',
+				'type' => 'text',
+				'desc' => __( 'This text will show above the title', 'minnpost-largo' ),
+			)
+		);
+		$page_settings->add_field(
+			array(
+				'name' => __( 'Remove title from display?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_title_from_display',
+				'type' => 'checkbox',
+				'desc' => '',
+			)
+		);
 
-		$page_sidebar = new_cmb2_box( array(
-			'id'           => $object_type . '_sidebar_options',
-			'title'        => 'Sidebar Settings',
-			'object_types' => array( $object_type ),
-			'context'      => 'normal',
-			'priority'     => 'low',
-			'closed'       => true,
-		) );
-		$page_sidebar->add_field( array(
-			'name' => 'Remove whole right sidebar from this post?',
-			'id'   => '_mp_remove_right_sidebar',
-			'type' => 'checkbox',
-			'desc' => '',
-		) );
-		$page_sidebar->add_field( array(
-			'name' => 'Sidebar Content Box',
-			'desc' => 'Content for a single right sidebar box',
-			'id'   => '_mp_post_sidebar',
-			'type' => 'wysiwyg',
-		) );
+		$page_sidebar = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_sidebar_options',
+				'title'        => __( 'Sidebar Settings', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'low',
+				'closed'       => true,
+			)
+		);
+		$page_sidebar->add_field(
+			array(
+				'name' => __( 'Remove whole right sidebar from this page?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_right_sidebar',
+				'type' => 'checkbox',
+				'desc' => '',
+			)
+		);
+		$page_sidebar->add_field(
+			array(
+				'name' => __( 'Sidebar Content Box', 'minnpost-largo' ),
+				'desc' => __( 'Content for a single right sidebar box', 'minnpost-largo' ),
+				'id'   => '_mp_post_sidebar',
+				'type' => 'wysiwyg',
+			)
+		);
 	}
 endif;
 
@@ -624,62 +675,74 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 		/**
 		 * Category settings
 		 */
-		$category_setup = new_cmb2_box( array(
-			'id'               => 'category_properties',
-			'title'            => 'Category Settings',
-			'object_types'     => array( $object_type ),
-			'taxonomies'       => array( 'category' ),
-			'new_term_section' => true, // will display in add category section
-		) );
+		$category_setup = new_cmb2_box(
+			array(
+				'id'               => 'category_properties',
+				'title'            => __( 'Category Settings', 'minnpost-largo' ),
+				'object_types'     => array( $object_type ),
+				'taxonomies'       => array( 'category' ),
+				'new_term_section' => true, // will display in add category section
+			)
+		);
 		// text fields
-		$category_setup->add_field( array(
-			'name'    => 'Excerpt',
-			'id'      => '_mp_category_excerpt',
-			'type'    => 'wysiwyg',
-			'options' => array(
-				'media_buttons' => false, // show insert/upload button(s)
-				'textarea_rows' => 5,
-				'teeny'         => true, // output the minimal editor config used in Press This
-			),
-		) );
-		$category_setup->add_field( array(
-			'name'    => 'Sponsorship',
-			'id'      => '_mp_category_sponsorship',
-			'type'    => 'wysiwyg',
-			'options' => array(
-				'media_buttons' => false, // show insert/upload button(s)
-				'textarea_rows' => 5,
-				'teeny'         => true, // output the minimal editor config used in Press This
-			),
-		) );
+		$category_setup->add_field( 
+			array(
+				'name'    => __( 'Excerpt', 'minnpost-largo' ),
+				'id'      => '_mp_category_excerpt',
+				'type'    => 'wysiwyg',
+				'options' => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'textarea_rows' => 5,
+					'teeny'         => true, // output the minimal editor config used in Press This
+				),
+			)
+		);
+		$category_setup->add_field(
+			array(
+				'name'    => __( 'Sponsorship', 'minnpost-largo' ),
+				'id'      => '_mp_category_sponsorship',
+				'type'    => 'wysiwyg',
+				'options' => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'textarea_rows' => 5,
+					'teeny'         => true, // output the minimal editor config used in Press This
+				),
+			)
+		);
 		// image fields
-		$category_setup->add_field( array(
-			'name'       => 'Category Thumbnail',
-			'id'         => '_mp_category_thumbnail_image',
-			'type'       => 'file',
-			'query_args' => array(
-				'type' => 'image',
-			),
-		) );
-		$category_setup->add_field( array(
-			'name'       => 'Category Main Image',
-			'id'         => '_mp_category_main_image',
-			'type'       => 'file',
-			// query_args are passed to wp.media's library query.
-			'query_args' => array(
-				'type' => 'image',
-			),
-		) );
+		$category_setup->add_field(
+			array(
+				'name'       => __( 'Category Thumbnail', 'minnpost-largo' ),
+				'id'         => '_mp_category_thumbnail_image',
+				'type'       => 'file',
+				'query_args' => array(
+					'type' => 'image',
+				),
+			)
+		);
+		$category_setup->add_field(
+			array(
+				'name'       => __( 'Category Main Image', 'minnpost-largo' ),
+				'id'         => '_mp_category_main_image',
+				'type'       => 'file',
+				// query_args are passed to wp.media's library query.
+				'query_args' => array(
+					'type' => 'image',
+				),
+			)
+		);
 		// main body field
-		$category_setup->add_field( array(
-			'name'    => 'Body',
-			'id'      => '_mp_category_body',
-			'type'    => 'wysiwyg',
-			'options' => array(
-				'media_buttons' => false, // show insert/upload button(s)
-				'teeny'         => false, // output the minimal editor config used in Press This
-			),
-		) );
+		$category_setup->add_field(
+			array(
+				'name'    => __( 'Body', 'minnpost-largo' ),
+				'id'      => '_mp_category_body',
+				'type'    => 'wysiwyg',
+				'options' => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'teeny'         => false, // output the minimal editor config used in Press This
+				),
+			)
+		);
 
 		// featured columns that appear on categories
 		$options = array();
@@ -690,21 +753,25 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 			elseif ( isset( $_POST['tag_ID'] ) ) :
 				$category_id = absint( $_POST['tag_ID'] );
 			endif;
-			$categories = get_terms( array(
-				'taxonomy'   => 'category',
-				'hide_empty' => false,
-			) );
+			$categories = get_terms(
+				array(
+					'taxonomy'   => 'category',
+					'hide_empty' => false,
+				)
+			);
 			foreach ( $categories as $category ) {
 				if ( $category_id !== $category->term_id ) {
 					$options[ $category->term_id ] = $category->name;
 				}
 			}
-			$category_setup->add_field( array(
-				'name'    => 'Featured Columns',
-				'id'      => '_mp_category_featured_columns',
-				'type'    => 'multicheck',
-				'options' => $options,
-			) );
+			$category_setup->add_field(
+				array(
+					'name'    => __( 'Featured Columns', 'minnpost-largo' ),
+					'id'      => '_mp_category_featured_columns',
+					'type'    => 'multicheck',
+					'options' => $options,
+				)
+			);
 
 		}
 	}
@@ -774,47 +841,57 @@ if ( ! function_exists( 'cmb2_author_fields' ) ) :
 		/**
 		 * Author Settings
 		 */
-		$author_setup = new_cmb2_box( array(
-			'id'           => $object_type . '_page_settings',
-			'title'        => 'Page Info',
-			'object_types' => array( $object_type ),
-			'context'      => 'normal',
-			'priority'     => 'low',
-		) );
+		$author_setup = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_page_settings',
+				'title'        => __( 'Page Info', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'low',
+			)
+		);
 		// image
-		$author_setup->add_field( array(
-			'name' => 'Photo',
-			'id'   => '_mp_author_image',
-			'type' => 'file',
-		) );
+		$author_setup->add_field(
+			array(
+				'name' => __( 'Photo', 'minnpost-largo' ),
+				'id'   => '_mp_author_image',
+				'type' => 'file',
+			)
+		);
 		// excerpt
-		$author_setup->add_field( array(
-			'name'    => 'Excerpt',
-			'id'      => '_mp_author_excerpt',
-			'type'    => 'wysiwyg',
-			'options' => array(
-				'media_buttons' => false, // show insert/upload button(s)
-				'textarea_rows' => 5,
-				'teeny'         => true, // output the minimal editor config used in Press This
-			),
-		) );
+		$author_setup->add_field(
+			array(
+				'name'    => __( 'Excerpt', 'minnpost-largo' ),
+				'id'      => '_mp_author_excerpt',
+				'type'    => 'wysiwyg',
+				'options' => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'textarea_rows' => 5,
+					'teeny'         => true, // output the minimal editor config used in Press This
+				),
+			)
+		);
 		// full bio
-		$author_setup->add_field( array(
-			'name'    => 'Bio',
-			'id'      => '_mp_author_bio',
-			'type'    => 'wysiwyg',
-			'options' => array(
-				'media_buttons' => false, // show insert/upload button(s)
-				'textarea_rows' => 5,
-				'teeny'         => true, // output the minimal editor config used in Press This
-			),
-		) );
-		$author_setup->add_field( array(
-			'name' => 'Staff Member?',
-			'id'   => '_staff_member',
-			'type' => 'checkbox',
-			'desc' => '',
-		) );
+		$author_setup->add_field(
+			array(
+				'name'    => __( 'Bio', 'minnpost-largo' ),
+				'id'      => '_mp_author_bio',
+				'type'    => 'wysiwyg',
+				'options' => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'textarea_rows' => 5,
+					'teeny'         => true, // output the minimal editor config used in Press This
+				),
+			)
+		);
+		$author_setup->add_field(
+			array(
+				'name' => __( 'Staff Member?', 'minnpost-largo' ),
+				'id'   => '_staff_member',
+				'type' => 'checkbox',
+				'desc' => '',
+			)
+		);
 	}
 
 endif;
@@ -830,132 +907,176 @@ if ( ! function_exists( 'cmb2_user_fields' ) ) :
 		$object_type = 'user';
 
 		// address fields
-		$user_address = new_cmb2_box( array(
-			'id'           => $object_type . '_address',
-			'title'        => 'Address Info',
-			'object_types' => array( $object_type ),
-			'context'      => 'normal',
-			'priority'     => 'low',
-		) );
-		$user_address->add_field( array(
-			'name' => 'All Email Addresses',
-			'id'   => '_consolidated_emails',
-			'type' => 'text',
-			'desc' => 'Separate each email address with a comma.',
-		) );
-		$user_address->add_field( array(
-			'name' => 'Street Address',
-			'id'   => '_street_address',
-			'type' => 'text',
-			'desc' => '',
-		) );
-		$user_address->add_field( array(
-			'name' => 'City',
-			'id'   => '_city',
-			'type' => 'text',
-			'desc' => '',
-		) );
-		$user_address->add_field( array(
-			'name' => 'State',
-			'id'   => '_state',
-			'type' => 'text',
-			'desc' => '',
-		) );
-		$user_address->add_field( array(
-			'name' => 'Zip Code',
-			'id'   => '_zip_code',
-			'type' => 'text',
-			'desc' => '',
-		) );
-		$user_address->add_field( array(
-			'name' => 'Country',
-			'id'   => '_country',
-			'type' => 'text',
-			'desc' => '',
-		) );
+		$user_address = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_address',
+				'title'        => __( 'Address Info', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'low',
+			)
+		);
+		$user_address->add_field(
+			array(
+				'name' => __( 'All Email Addresses', 'minnpost-largo' ),
+				'id'   => '_consolidated_emails',
+				'type' => 'text',
+				'desc' => __( 'Separate each email address with a comma.', 'minnpost-largo' ),
+			)
+		);
+		$user_address->add_field(
+			array(
+				'name' => __( 'Street Address', 'minnpost-largo' ),
+				'id'   => '_street_address',
+				'type' => 'text',
+				'desc' => '',
+			)
+		);
+		$user_address->add_field(
+			array(
+				'name' => __( 'City', 'minnpost-largo' ),
+				'id'   => '_city',
+				'type' => 'text',
+				'desc' => '',
+			)
+		);
+		$user_address->add_field(
+			array(
+				'name' => __( 'State', 'minnpost-largo' ),
+				'id'   => '_state',
+				'type' => 'text',
+				'desc' => '',
+			)
+		);
+		$user_address->add_field(
+			array(
+				'name' => __( 'Zip Code', 'minnpost-largo' ),
+				'id'   => '_zip_code',
+				'type' => 'text',
+				'desc' => '',
+			)
+		);
+		$user_address->add_field(
+			array(
+				'name' => __( 'Country', 'minnpost-largo' ),
+				'id'   => '_country',
+				'type' => 'text',
+				'desc' => '',
+			)
+		);
 
 		// reading preferences
-		$user_preferences = new_cmb2_box( array(
-			'id'           => $object_type . '_reading_preferences',
-			'title'        => 'Reading Preferences',
-			'object_types' => array( $object_type ),
-			'context'      => 'normal',
-			'priority'     => 'low',
-		) );
-		$user_preferences->add_field( array(
-			'name'    => 'Reading preferences:',
-			'desc'    => '',
-			'id'      => '_reading_topics',
-			'type'    => 'multicheck',
-			'options' => array(
-				'Arts & Culture'         => 'Arts & Culture',
-				'Economy'                => 'Economy',
-				'Education'              => 'Education',
-				'Environment'            => 'Environment',
-				'Greater Minnesota news' => 'Greater Minnesota news',
-				'Health'                 => 'Health',
-				'MinnPost announcements' => 'MinnPost announcements',
-				'Opinion/Commentary'     => 'Opinion/Commentary',
-				'Politics & Policy'      => 'Politics & Policy',
-				'Sports'                 => 'Sports',
-			),
-		) );
+		$user_preferences = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_reading_preferences',
+				'title'        => __( 'Reading Preferences', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'low',
+			)
+		);
+		$user_preferences->add_field(
+			array(
+				'name'    => __( 'Reading preferences:', 'minnpost-largo' ),
+				'desc'    => '',
+				'id'      => '_reading_topics',
+				'type'    => 'multicheck',
+				'options' => array(
+					'Arts & Culture'         => __( 'Arts & Culture', 'minnpost-largo' ),
+					'Economy'                => __( 'Economy', 'minnpost-largo' ),
+					'Education'              => __( 'Education', 'minnpost-largo' ),
+					'Environment'            => __( 'Environment', 'minnpost-largo' ),
+					'Greater Minnesota news' => __( 'Greater Minnesota news', 'minnpost-largo' ),
+					'Health'                 => __( 'Health', 'minnpost-largo' ),
+					'MinnPost announcements' => __( 'MinnPost announcements', 'minnpost-largo' ),
+					'Opinion/Commentary'     => __( 'Opinion/Commentary', 'minnpost-largo' ),
+					'Politics & Policy'      => __( 'Politics & Policy', 'minnpost-largo' ),
+					'Sports'                 => __( 'Sports', 'minnpost-largo' ),
+				),
+			)
+		);
 
-		$user_donation_info = new_cmb2_box( array(
-			'id'           => $object_type . '_donation_info',
-			'title'        => 'Donation Info',
-			'object_types' => array( $object_type ),
-			'context'      => 'normal',
-			'priority'     => 'low',
-		) );
-		$user_donation_info->add_field( array(
-			'name' => 'Stripe Customer ID',
-			'desc' => '',
-			'id'   => '_stripe_customer_id',
-			'type' => 'text',
-		) );
-		$user_donation_info->add_field( array(
-			'name' => 'Annual Recurring Amount',
-			'desc' => '',
-			'id'   => '_annual_recurring_amount',
-			'type' => 'text',
-		) );
-		$user_donation_info->add_field( array(
-			'name' => 'Coming Year Contributions',
-			'desc' => '',
-			'id'   => '_coming_year_contributions',
-			'type' => 'text',
-		) );
-		$user_donation_info->add_field( array(
-			'name' => 'Prior Year Contributions',
-			'desc' => '',
-			'id'   => '_prior_year_contributions',
-			'type' => 'text',
-		) );
-		$user_donation_info->add_field( array(
-			'name' => 'Sustaining Member',
-			'id'   => '_sustaining_member',
-			'type' => 'checkbox',
-			'desc' => '',
-		) );
-		$user_donation_info->add_field( array(
-			'name' => 'Next Partner Claim Date',
-			'id'   => '_next_partner_claim_date',
-			'type' => 'text_date',
-			'desc' => '',
-		) );
-		$user_donation_info->add_field( array(
-			'name' => 'Last Partner Claim Date',
-			'id'   => '_last_partner_claim_date',
-			'type' => 'text_date',
-			'desc' => '',
-		) );
-		$user_donation_info->add_field( array(
-			'name' => 'Exclude from current campaign',
-			'id'   => '_exclude_from_current_campaign',
-			'type' => 'checkbox',
-			'desc' => '',
-		) );
+		$user_donation_info = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_donation_info',
+				'title'        => __( 'Donation Info', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'low',
+			)
+		);
+		$user_donation_info->add_field(
+			array(
+				'name' => __( 'Stripe Customer ID', 'minnpost-largo' ),
+				'desc' => '',
+				'id'   => '_stripe_customer_id',
+				'type' => 'text',
+			)
+		);
+		$user_donation_info->add_field(
+			array(
+				'name' => __( 'Membership Qualification Amount', 'minnpost-largo' ),
+				'desc' => '',
+				'id'   => '_membership_qualification_amount',
+				'type' => 'text',
+			)
+		);
+		$user_donation_info->add_field(
+			array(
+				'name' => __( 'Annual Recurring Amount', 'minnpost-largo' ),
+				'desc' => '',
+				'id'   => '_annual_recurring_amount',
+				'type' => 'text',
+			)
+		);
+		$user_donation_info->add_field(
+			array(
+				'name' => __( 'Coming Year Contributions', 'minnpost-largo' ),
+				'desc' => '',
+				'id'   => '_coming_year_contributions',
+				'type' => 'text',
+			)
+		);
+		$user_donation_info->add_field(
+			array(
+				'name' => __( 'Prior Year Contributions', 'minnpost-largo' ),
+				'desc' => '',
+				'id'   => '_prior_year_contributions',
+				'type' => 'text',
+			)
+		);
+		$user_donation_info->add_field(
+			array(
+				'name' => __( 'Sustaining Member', 'minnpost-largo' ),
+				'id'   => '_sustaining_member',
+				'type' => 'checkbox',
+				'desc' => '',
+			)
+		);
+		$user_donation_info->add_field(
+			array(
+				'name' => __( 'Next Partner Claim Date', 'minnpost-largo' ),
+				'id'   => '_next_partner_claim_date',
+				'type' => 'text_date',
+				'desc' => '',
+			)
+		);
+		$user_donation_info->add_field(
+			array(
+				'name' => __( 'Last Partner Claim Date', 'minnpost-largo' ),
+				'id'   => '_last_partner_claim_date',
+				'type' => 'text_date',
+				'desc' => '',
+			)
+		);
+		$user_donation_info->add_field(
+			array(
+				'name' => __( 'Exclude from current campaign', 'minnpost-largo' ),
+				'id'   => '_exclude_from_current_campaign',
+				'type' => 'checkbox',
+				'desc' => '',
+			)
+		);
 
 	}
 endif;
@@ -1001,53 +1122,63 @@ if ( ! function_exists( 'cmb2_sponsor_fields' ) ) :
 
 		$object_type = 'cr3ativsponsor';
 
-		$sponsor_info = new_cmb2_box( array(
-			'id'           => 'cr3ativsponsor_box',
-			'title'        => 'Sponsor Information',
-			'object_types' => array( $object_type ),
-			'context'      => 'normal',
-			'priority'     => 'high',
-		) );
+		$sponsor_info = new_cmb2_box(
+			array(
+				'id'           => 'cr3ativsponsor_box',
+				'title'        => __( 'Sponsor Information', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'high',
+			)
+		);
 		// sponsor company url
-		$sponsor_info->add_field( array(
-			'name' => 'Company URL',
-			'id'   => 'cr3ativ_sponsorurl',
-			'type' => 'text',
-		) );
+		$sponsor_info->add_field(
+			array(
+				'name' => __( 'Company URL', 'minnpost-largo' ),
+				'id'   => 'cr3ativ_sponsorurl',
+				'type' => 'text',
+			)
+		);
 		// what to display for the sponsor
-		$sponsor_info->add_field( array(
-			'name' => 'Display Text',
-			'id'   => 'cr3ativ_sponsortext',
-			'type' => 'text',
-		) );
+		$sponsor_info->add_field(
+			array(
+				'name' => __( 'Display Text', 'minnpost-largo' ),
+				'id'   => 'cr3ativ_sponsortext',
+				'type' => 'text',
+			)
+		);
 
 		/**
 		 * Sponsor image settings
 		 */
-		$sponsor_image = new_cmb2_box( array(
-			'id'           => $object_type . '_image_settings',
-			'title'        => 'Image Settings',
-			'object_types' => array( $object_type ),
-			'context'      => 'normal',
-			'priority'     => 'high',
-		) );
+		$sponsor_image = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_image_settings',
+				'title'        => __( 'Image Settings', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'high',
+			)
+		);
 		// thumbnail
-		$sponsor_image->add_field( array(
-			'name'       => 'Thumbnail Image',
-			'desc'       => 'Upload an image or enter an URL.',
-			'id'         => '_mp_post_thumbnail_image',
-			'type'       => 'file',
-			'options'    => array(
-				//'url' => false, // Hide the text input for the url
-			),
-			'text'       => array(
-				//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
-			),
-			// query_args are passed to wp.media's library query.
-			'query_args' => array(
-				'type' => 'image',
-			),
-		) );
+		$sponsor_image->add_field(
+			array(
+				'name'       => __( 'Thumbnail Image', 'minnpost-largo' ),
+				'desc'       => __( 'Upload an image or enter an URL.', 'minnpost-largo' ),
+				'id'         => '_mp_post_thumbnail_image',
+				'type'       => 'file',
+				'options'    => array(
+					//'url' => false, // Hide the text input for the url
+				),
+				'text'       => array(
+					//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
+				),
+				// query_args are passed to wp.media's library query.
+				'query_args' => array(
+					'type' => 'image',
+				),
+			)
+		);
 
 	}
 
@@ -1092,83 +1223,97 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 		/**
 		 * Image settings
 		 */
-		$image_settings = new_cmb2_box( array(
-			'id'           => $object_type . '_image_settings',
-			'title'        => 'Image Settings',
-			'object_types' => array( $object_type ),
-			'context'      => 'normal',
-			'priority'     => 'high',
-		) );
-		$image_settings->add_field( array(
-			'name'       => 'Thumbnail Image',
-			'desc'       => 'Upload an image or enter an URL.',
-			'id'         => '_mp_post_thumbnail_image',
-			'type'       => 'file',
-			'options'    => array(
-				//'url' => false, // Hide the text input for the url
-			),
-			'text'       => array(
-				//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
-			),
-			// query_args are passed to wp.media's library query.
-			'query_args' => array(
-				'type' => 'image',
-			),
-		) );
-		$image_settings->add_field( array(
-			'name'             => 'Homepage Image Size',
-			'id'               => '_mp_post_homepage_image_size',
-			'type'             => 'select',
-			'show_option_none' => true,
-			'desc'             => 'Select an option',
-			'default'          => 'feature-large',
-			'options'          => array(
-				'feature-medium' => __( 'Medium', 'minnpost-largo' ),
-				'none'           => __( 'Do not display image', 'minnpost-largo' ),
-				'feature-large'  => __( 'Large', 'minnpost-largo' ),
-			),
-		) );
-		$image_settings->add_field( array(
-			'name'         => 'Main Image',
-			'desc'         => 'Upload an image or enter an URL.',
-			'id'           => '_mp_post_main_image',
-			'type'         => 'file',
-			'preview_size' => array( 130, 85 ),
-			'options'      => array(
-				//'url' => false, // Hide the text input for the url
-			),
-			'text'         => array(
-				//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
-			),
-			// query_args are passed to wp.media's library query.
-			'query_args'   => array(
-				'type' => 'image',
-			),
-		) );
+		$image_settings = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_image_settings',
+				'title'        => __( 'Image Settings', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'high',
+			)
+		);
+		$image_settings->add_field(
+			array(
+				'name'       => __( 'Thumbnail Image', 'minnpost-largo' ),
+				'desc'       => __( 'Upload an image or enter an URL.', 'minnpost-largo' ),
+				'id'         => '_mp_post_thumbnail_image',
+				'type'       => 'file',
+				'options'    => array(
+					//'url' => false, // Hide the text input for the url
+				),
+				'text'       => array(
+					//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
+				),
+				// query_args are passed to wp.media's library query.
+				'query_args' => array(
+					'type' => 'image',
+				),
+			)
+		);
+		$image_settings->add_field(
+			array(
+				'name'             => __( 'Homepage Image Size', 'minnpost-largo' ),
+				'id'               => '_mp_post_homepage_image_size',
+				'type'             => 'select',
+				'show_option_none' => true,
+				'desc'             => 'Select an option',
+				'default'          => 'feature-large',
+				'options'          => array(
+					'feature-medium' => __( 'Medium', 'minnpost-largo' ),
+					'none'           => __( 'Do not display image', 'minnpost-largo' ),
+					'feature-large'  => __( 'Large', 'minnpost-largo' ),
+				),
+			)
+		);
+		$image_settings->add_field(
+			array(
+				'name'         => __( 'Main Image', 'minnpost-largo' ),
+				'desc'         => __( 'Upload an image or enter an URL.', 'minnpost-largo' ),
+				'id'           => '_mp_post_main_image',
+				'type'         => 'file',
+				'preview_size' => array( 130, 85 ),
+				'options'      => array(
+					//'url' => false, // Hide the text input for the url
+				),
+				'text'         => array(
+					//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
+				),
+				// query_args are passed to wp.media's library query.
+				'query_args'   => array(
+					'type' => 'image',
+				),
+			)
+		);
 
 		/**
 		 * Sidebar settings
 		 */
-		$sidebar_settings = new_cmb2_box( array(
-			'id'           => $object_type . '_sidebar_options',
-			'title'        => 'Sidebar Settings',
-			'object_types' => array( $object_type ),
-			'context'      => 'normal',
-			'priority'     => 'low',
-			'closed'       => true,
-		) );
-		$sidebar_settings->add_field( array(
-			'name' => 'Remove whole right sidebar from this post?',
-			'id'   => '_mp_remove_right_sidebar',
-			'type' => 'checkbox',
-			'desc' => '',
-		) );
-		$sidebar_settings->add_field( array(
-			'name' => 'Sidebar Content Box',
-			'desc' => 'Content for a single right sidebar box',
-			'id'   => '_mp_post_sidebar',
-			'type' => 'wysiwyg',
-		) );
+		$sidebar_settings = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_sidebar_options',
+				'title'        => __( 'Sidebar Settings', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'low',
+				'closed'       => true,
+			)
+		);
+		$sidebar_settings->add_field(
+			array(
+				'name' => __( 'Remove whole right sidebar from this event?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_right_sidebar',
+				'type' => 'checkbox',
+				'desc' => '',
+			)
+		);
+		$sidebar_settings->add_field(
+			array(
+				'name' => __( 'Sidebar Content Box', 'minnpost-largo' ),
+				'desc' => __( 'Content for a single right sidebar box', 'minnpost-largo' ),
+				'id'   => '_mp_post_sidebar',
+				'type' => 'wysiwyg',
+			)
+		);
 
 	}
 

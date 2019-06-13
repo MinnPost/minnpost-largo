@@ -140,6 +140,6 @@ require get_theme_file_path() . '/inc/robots.php';
 require get_theme_file_path() . '/inc/jetpack.php';
 
 /**
- * Customize that popup plugin
+ * Settings for popup plugin, site messages plugin, etc.
  */
-require get_theme_file_path() . '/inc/popups.php';
+require get_theme_file_path() . '/inc/popups-site-messages.php';

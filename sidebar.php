@@ -15,7 +15,7 @@ if ( isset( $remove_sidebar ) && 'on' === $remove_sidebar ) {
 
 <aside id="secondary" class="o-site-sidebar" role="complementary">
 	<div class="m-ad-region m-ad-region-sidebar">
-		<?php do_action( 'acm_tag', '300x600' ); ?>
+		<?php do_action( 'acm_tag', 'halfpage' ); ?>
 	</div>
 	<?php if ( is_archive() || is_single() ) : ?>
 		<?php

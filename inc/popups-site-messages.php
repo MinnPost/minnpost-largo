@@ -1,6 +1,9 @@
 <?php
 /**
- * MinnPost popup settings
+ * MinnPost settings for popups, site messages, etc.
+ *
+ * Currently, this depends on these plugins: popup-maker (for popups)
+ * and wp-message-inserter-plugin (for site messages)
  *
  * @package MinnPost Largo
  */
@@ -190,6 +193,24 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 		return $conditions;
 	}
 endif;
+
+/**
+* Modify the conditions that control when users see site messages
+*
+* @param array $conditionals
+* @return array $conditionals
+*/
+/*if ( ! function_exists( 'minnpost_site_message_conditionals' ) ) :
+	add_filter( 'wp_message_inserter_conditionals', 'minnpost_site_message_conditionals', 10, 1 );
+	function minnpost_site_message_conditionals( $conditionals ) {
+		$conditionals['user'][] = array(
+			'name'       => 'is_member',
+			'method'     => 'minnpost_user_is_member',
+			'has_params' => false,
+		);
+		return $conditionals;
+	}
+endif;*/
 
 /**
 * Check to see if the user has any membership level role

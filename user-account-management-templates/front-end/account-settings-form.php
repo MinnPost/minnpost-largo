@@ -12,6 +12,16 @@
 		<input type="hidden" name="state" value="<?php echo isset( $_POST['state'] ) && wp_verify_nonce( sanitize_key( $_POST['wp_create_nonce'] ), 'uam-account-settings-nonce' ) ? sanitize_text_field( $_POST['state'] ) : isset( $attributes['user_meta']['_state'] ) ? esc_html( $attributes['user_meta']['_state'][0] ) : ''; ?>">
 	<?php endif; ?>
 
+	<!-- humans should not fill these in and expect good things -->
+	<div class="m-user-field-shift" aria-label="Please leave the following three fields empty">
+		<label for="mhp_name">Name: </label>
+		<input type="text" name="mhp_name" tabindex="-1" value="" placeholder="Mni Sota Makoce" id="mhp_name">
+		<label for="mhp_email">Email: </label>
+		<input type="email" name="mhp_email" tabindex="-1" value="" placeholder="mnisota@makoce.com" id="mhp_email">
+		<label for="mhp_comment">Comment: </label>
+		<textarea name="mhp_comment" tabindex="-1" placeholder="Please comment" id="mhp_comment"></textarea>
+	</div>
+
 	<?php if ( ! empty( $attributes['instructions'] ) ) : ?>
 		<?php echo wp_kses_post( $attributes['instructions'] ); ?>
 	<?php endif; ?>
@@ -127,11 +137,6 @@
 				</select>
 			</div>
 		<?php endif; ?>
-
-		<div class="m-form-item m-form-item-rh-name">
-			<label for="rh_name"><?php echo esc_html__( 'Only fill in if you are not human:', 'minnpost-largo' ); ?></label>
-			<input type="text" name="rh_name" id="rh-name" value="" autocomplete="off" />
-		</div>
 
 		<div class="m-form-actions">
 			<input type="submit" name="submit" id="change-button" value="<?php echo esc_html__( 'Save Changes', 'minnpost-largo' ); ?>" class="btn btn-submit btn-account-settings">

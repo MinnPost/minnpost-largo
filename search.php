@@ -12,11 +12,13 @@ get_header(); ?>
 	<div id="primary" class="m-layout-primary o-search-result">
 		<main id="main" class="site-main">
 
-			<header class="m-search-result-header">
-				<h1 class="a-search-result-title"><?php printf( esc_html__( 'Search Results', 'minnpost-largo' ) ); ?></h1>
-			</header><!-- .m-search-result-header -->
+			<?php $query = ( get_query_var( 's' ) ) ? get_query_var( 's' ) : ''; ?>
 
-			<?php if ( have_posts() ) : ?>
+			<?php if ( '' !== $query && have_posts() ) : ?>
+
+				<header class="m-search-result-header">
+					<h1 class="a-search-result-title"><?php printf( esc_html__( 'Search Results', 'minnpost-largo' ) ); ?></h1>
+				</header><!-- .m-search-result-header -->
 
 				<aside class="m-search-result-info">
 					<?php
@@ -63,12 +65,23 @@ get_header(); ?>
 				<?php
 				numeric_pagination();
 
+			elseif ( '' === $query ) :
+				?>
+				<header class="m-search-result-header">
+					<h1 class="a-search-result-title"><?php printf( esc_html__( 'Search on MinnPost', 'minnpost-largo' ) ); ?></h1>
+				</header><!-- .m-search-result-header -->
+				<section class="m-search-form m-search-page-form">
+					<p><?php echo __( 'Enter your search terms. You can start by searching for a title, author, or topic.', 'minnpost-largo' ); ?></p>
+					<?php get_search_form(); ?>
+				</section>
+				<?php
 			else :
 				?>
 				<section class="m-search-result">
 					<aside class="m-search-result-info">
 						<?php
-						echo sprintf( 'We have no results for <strong>%1$s</strong>. You may be able to try another search.',
+						echo sprintf(
+							'We have no results for <strong>%1$s</strong>. You may be able to try another search.',
 							get_search_query()
 						);
 						?>

@@ -1,4 +1,6 @@
 $a-user-initial-size: 18px;
+$a-initial-right-margin: 12px;
+$nav-common-spacing: 6px;
 
 nav {
 	li span.a-arrow-down {
@@ -9,7 +11,7 @@ nav {
 		border-top: 4px solid $color__minnpost-black;
 		position: absolute;
 		display: block;
-		top: 6px;
+		top: $nav-common-spacing;
 		right: 0;
 	}
 }
@@ -34,38 +36,30 @@ nav {
 }
 
 #minnpost-network {
-	display: none;
-	margin: 2px 30px 8px 0;
+	margin: 8px auto;
 	a {
 		@include hide-text;
-		width: 25px;
-		height: 25px;
+		width: 30px;
+		height: 30px;
 		display: block;
-		background: url('assets/img/sprites/social-lg.png') no-repeat;
 		&:hover {
 			opacity: .65;
 		}
 	}
 	li:not(:last-child) {
-		padding-right: 5px;
-	}
-	li.subscribe {
-		padding-left: 7px;
-	}
-	li.subscribe a {
-
+		margin-right: 10px
 	}
 	li.twitter a {
-		background-position: -25px 0;
+		background: url('https://www.minnpost.com/wp-content/uploads/2019/03/twitter.png?w=30') no-repeat;
 	}
 	li.facebook a {
-		background-position: -50px 0;
+		background: url('https://www.minnpost.com/wp-content/uploads/2019/03/facebook.png?w=30') no-repeat;
 	}
-	li.youtube a {
-		background-position: -100px 0;
+	li.instagram a {
+		background: url('https://www.minnpost.com/wp-content/uploads/2019/03/instagram.png?w=30') no-repeat;
 	}
-	li.rss-feeds a {
-		background-position: -125px 0;
+	li.rss-feeds-list a {
+		background: url('https://www.minnpost.com/wp-content/uploads/2019/05/feed-icon.png?w=30') no-repeat;
 	}
 }
 
@@ -96,20 +90,18 @@ nav {
 	font-variant: normal;
 	-moz-font-feature-settings: "calt=0,dlig=0,ss01=0,liga=0";
 	-moz-font-feature-settings: "calt" 0,"dlig" 0,"ss01" 0,"liga" 0;
+	letter-spacing: 0.02em;
 	background: $color__minnpost-black;
-	padding-top: 5px;
 	min-height: 44px;
 	position: relative;
 	z-index: 10;
-	margin-bottom: 30px; // this is for the secondary nav to be visible
+	margin-bottom: 30px; // this is for the secondary nav to be visible. todo: do we still need?
 	button {
-		display: inline-block;
 		-webkit-appearance: none;
 		border: 0;
-		margin: 9px 0 0 6px;
-		text-indent: 6px;
-		padding: 0;
+		padding: 0 4px;
 		line-height: normal;
+		margin: 4px 0 4px $nav-common-spacing;
 		cursor: pointer;
 		font: inherit;
 		color: $color__white;
@@ -117,6 +109,11 @@ nav {
 		text-transform: uppercase;
 		overflow: visible;
 		-moz-user-select: text;
+		span {
+			display: inline-flex;
+  			align-items: center;
+  			line-height: 36px;
+  		}
 		&:hover, &:focus {
 			background: $color__minnpost-white;
 			color: $color__minnpost-black;
@@ -126,10 +123,11 @@ nav {
 		}
 	}
 	ul {
+		width: 100%;
 		list-style: none;
 		display: none;
-		justify-content: flex-start;
-		margin: 7px 0 0 0;
+		justify-content: space-between;
+		margin: 0;
 		padding: 0;
 		flex-grow: none;
 		flex-wrap: nowrap;
@@ -141,26 +139,69 @@ nav {
 			}
 		}
 		ul {
-			display: block;
-			columns: 2;
+			display: flex;
+		    flex-wrap: wrap;
+		    justify-content: space-between;
 		}
 	}
 	li {
 		text-transform: uppercase;
 		flex-shrink: 0;
-    	flex: 0 0 auto;
-		&:last-child, &:nth-last-child(2) {
+		&:last-child, &:nth-last-child(2), &:nth-last-child(3), &:nth-last-child(4) {
 			text-transform: none;
 		}
-		&:last-child {
+		&:nth-last-child(4) {
 			margin-left: auto;
 		}
-		&:nth-last-child(2) {
-			order: 9;
+		&.home {
+    		display: none;
+    	}
+		&.search {
+			position: relative;
+			a.toggled-form {
+				background: $color__minnpost-white;
+				color: $color__minnpost-black;
+			}
+			form {
+				display: none;
+				position: absolute;
+				right: 0;
+				top: 0;
+				z-index: 100;
+				min-height: 38px;
+				padding-right: 8px;
+				fieldset {
+					margin: 0;
+					padding: 0;
+					border: 0;
+				}
+				&.toggled-form {
+					display: block;
+				}
+			}
+		}
+	}
+	&.toggled {
+		li {
+			flex: 1 1 50%;
+			&.search {
+				width: 100%;
+				display: block;
+				flex: none;
+				min-height: 38px;
+				margin-bottom: $nav-common-spacing;
+				form {
+					display: block;
+					left: 0;
+					right: auto;
+					padding-right: 0;
+					padding-left: $nav-common-spacing;
+				}
+			}
 		}
 	}
 	li a {
-		padding: 6px;
+		padding: 8px;
 		color: $color__white;
 		text-decoration: none;
 		display: inline-block;
@@ -224,6 +265,10 @@ nav {
 	li a:hover span.name, li a:focus span.name, li a:active span.name, ul li a:hover, ul li a:focus, ul li a:active {
 		text-decoration: underline;
 	}
+	li span.name {
+		display: inline-block;
+		margin-right: 0;
+	}
 	li span.a-user-initial {
 		font-family: $font__headings;
 		font-weight: normal;
@@ -237,7 +282,7 @@ nav {
 		border-radius: 50%;
 		color: $color__white;
 		display: inline-block;
-		margin: -4px 12px 0 6px;
+		margin: -4px $a-initial-right-margin 0 $nav-common-spacing;
 		width: $a-user-initial-size;
 		height: $a-user-initial-size;
 		font-size: 14px;
@@ -262,10 +307,10 @@ nav {
 			content: "\A";
 			width: 0;
 			height: 0;
-			border-left: 6px solid transparent;
-			border-right: 6px solid transparent;
-			border-bottom: 6px solid $color__gray-sub-menu;
-			top: -6px;
+			border-left: $nav-common-spacing solid transparent;
+			border-right: $nav-common-spacing solid transparent;
+			border-bottom: $nav-common-spacing solid $color__gray-sub-menu;
+			top: -$nav-common-spacing;
 			position: absolute;
 			right: 20px;
 		}
@@ -287,8 +332,8 @@ nav {
 		display: inline-block;
 		-webkit-appearance: none;
 		border: 0;
-		margin: 0 0 0 6px;
-		text-indent: 6px;
+		margin: 0 0 0 $nav-common-spacing;
+		text-indent: $form-text-indent;
 		padding: 0;
 		line-height: inherit;
 		vertical-align: middle;
@@ -389,6 +434,7 @@ nav {
 }
 
 // media queries for menus
+// todo: this goes away when we have a support cta
 @media screen and (min-width: 560px) {
 	#secondary-links {
 		margin-top: -21px;
@@ -402,9 +448,21 @@ nav {
 	}
 	.m-main-navigation {
 		margin-bottom: 0;
-		&.toggled ul {
-			display: block;
-			columns: 3;
+		&.toggled {
+			li {
+				flex: 1 1 33%;
+			}
+		}
+	}
+}
+
+@media screen and (min-width: $medium-screen) and (max-width: $nav-move-end) {
+	#navigation-user-account-access {
+		li span.name {
+			margin-right: $a-initial-right-margin;
+		}
+		li span.a-user-initial {
+			display: none;
 		}
 	}
 }
@@ -425,21 +483,47 @@ nav {
 		justify-content: flex-end;
 		position: relative;
 	}
-	#minnpost-network {
-		display: flex;
-		margin: 2px 29px 10px 0
-	}
 	#secondary-links {
 		margin-top: -1px;
 	}
 	.m-main-navigation {
+		display: flex;
+		align-items: flex-end;
 		button {
 			display: none;
 		}
 		ul, &.toggled ul {
 			display: flex;
-			li a {
-				padding: 8px;
+			li {
+				&.home, &.search {
+		    		font-family: dashicons;
+		    	}
+		    	&.home, &.search {
+		    		a {
+		    			font-size: 0;
+		    			padding: 0;
+		    			&:after {
+		    				font-family: dashicons;
+		    				display: inline-block;
+		    				padding: 8px 4px;
+		    				vertical-align: bottom;
+		    			}
+		    		}
+		    	}
+		    	&.search {
+		    		form {
+		    			right: 24px;
+						top: -$nav-common-spacing;
+		    		}
+		    	}
+		    	&.home a:after {
+		    		content: "\f102";
+		    		font-size: 24px;
+		    	}
+		    	&.search a:after {
+		    		content: "\f179";
+		    		font-size: $a-user-initial-size;
+		    	}
 			}
 		}
 	}
@@ -461,13 +545,14 @@ nav {
 		ul, &.toggled ul {
 			flex-grow: 2;
 			flex-wrap: wrap;
-			li:nth-last-child(2) {
-				order: inherit;
-				margin-left: auto;
-			}
-			li a {
-				padding: 8px 4px;
-			}
+		}
+	}
+}
+
+@media screen and (min-width: $nav-move-end) and (max-width: $nav-wrap-screen) {
+	.m-main-navigation {
+		ul, &.toggled ul {
+			justify-content: flex-end;
 		}
 	}
 }
@@ -475,16 +560,5 @@ nav {
 @media screen and (min-width: $max-width-page) {
 	#navigation-ext {
 		width: auto;
-	}
-	#minnpost-network {
-		margin: 2px 30px 8px 0;
-	}
-	.m-main-navigation {
-		letter-spacing: 1px;
-		ul {
-			li a {
-				padding: 8px;
-			}
-		}
 	}
 }
