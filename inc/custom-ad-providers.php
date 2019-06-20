@@ -39,39 +39,6 @@ if ( ! function_exists( 'acm_no_ad_users' ) ) :
 		if ( is_feed() ) {
 			return $output_html;
 		}
-
-		if ( 'TopRight' === $tag_id ) {
-			// get the support nav item if there is not an ad
-			$default_top_right = '';
-			if ( ! current_user_can( 'browse_without_ads' ) ) {
-				$placeholder = '';
-			} else {
-				$placeholder = ' appnexus-ad-placeholder';
-			}
-			$default_top_right .= '<div class="appnexus-ad ad-topright ad-support' . $placeholder . '">';
-			if ( current_user_can( 'browse_without_ads' ) ) {
-				$default_top_right .= '<div class="ad-overlay">AD: ' . $tag_id . '</div>';
-			}
-			if ( current_user_can( 'browse_without_ads' ) || '' === $output_html ) {
-				$default_top_right .=
-				'<nav id="navigation-support" class="special-navigation" role="navigation">' .
-					'<h2>Support MinnPost</h2>' .
-					wp_nav_menu(
-						array(
-							'theme_location' => 'support_minnpost',
-							'menu_id'        => 'support-minnpost',
-							'depth'          => 1,
-							'container'      => false,
-							'walker'         => new Minnpost_Walker_Nav_Menu,
-							'echo'           => false,
-						)
-					) .
-				'</nav></div>';
-			} else {
-				$default_top_right = $output_html;
-			}
-			return $default_top_right;
-		}
 		if ( ! current_user_can( 'browse_without_ads' ) ) {
 			return $output_html;
 		} else {
