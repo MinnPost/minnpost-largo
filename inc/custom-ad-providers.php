@@ -77,7 +77,7 @@ endif;
 if ( ! function_exists( 'minnpost_acm_default_provider' ) ) :
 	add_filter( 'acm_provider_slug', 'minnpost_acm_default_provider' );
 	function minnpost_acm_default_provider( $current_provider_slug ) {
-		$current_provider_slug = 'doubleclick_for_publishers_async';
+		$current_provider_slug = 'arcads_dfp';
 		return $current_provider_slug;
 	}
 endif;
