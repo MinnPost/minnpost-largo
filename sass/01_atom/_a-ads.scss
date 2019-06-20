@@ -38,58 +38,6 @@
 	width: 100%;
 }
 
-.ad-topright {
-	display: none;
-	height: auto;
-	max-width: $ad-top-right-width;
-	float: right;
-	iframe {
-		height: $ad-top-right-iframe-height;
-	}
-	.ad-overlay {
-		top: 0;
-		right: 0;
-	}
-	&.ad-support {
-		height: $ad-top-right-iframe-height;
-		text-align: center;
-		background: $color__minnpost-black;
-		color: $color__white;
-		&.appnexus-ad-placeholder {
-			padding: 0;
-		}
-		nav {
-			background: $color__minnpost-black;
-			width: $ad-top-right-width;
-			text-align: left;
-			font-family: $font__sans;
-			h2 {
-				text-indent: 200%;
-				white-space: nowrap;
-				overflow: hidden;
-				background: $color__minnpost-red url('assets/img/support.png') no-repeat 14px 10px;
-				margin: 0 0 1px 0;
-				padding: $standard-page-margin / 2 0 8px 0;
-			}
-			ul, li {
-				margin: 0;
-				padding: 0;
-				list-style: none;
-			}
-			li {
-				padding: 9px 14px;
-				font-weight: bold;
-			}
-			a {
-				color: $color__white;
-				&:after {
-					content: ' ▸';
-				}
-			}
-		}
-	}
-}
-
 main .ad-middle,
 main .ad-x100,
 main .ad-x101,
@@ -144,9 +92,6 @@ main .ad-x110 {
 		height: $ad-top-height;
 		margin: 0 auto;
 	}
-	.ad-support {
-		float: right;
-	}
 	main .ad-middle,
 	main .ad-x100,
 	main .ad-x101,
@@ -161,14 +106,5 @@ main .ad-x110 {
 	main .ad-x110 {
 		clear: both;
 	    margin: 10px auto;
-	}
-}
-
-@media screen and (min-width: $max-width-page) {
-	.ad-top {
-		float: left;
-	}
-	.ad-topright {
-		display: block;
 	}
 }
