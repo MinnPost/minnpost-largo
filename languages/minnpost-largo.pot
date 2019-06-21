@@ -21,12 +21,20 @@ msgstr ""
 msgid "No comments yet"
 msgstr ""
 
-#: header.php:58
-msgid "Sections"
+#: header.php:44
+msgid "Menu"
 msgstr ""
 
-#: search.php:16
+#: search.php:20
 msgid "Search Results"
+msgstr ""
+
+#: search.php:71
+msgid "Search on MinnPost"
+msgstr ""
+
+#: search.php:74
+msgid "Enter your search terms. You can start by searching for a title, author, or topic."
 msgstr ""
 
 #: inc/comment-list.php:28
@@ -630,26 +638,18 @@ msgid "Network Menu"
 msgstr ""
 
 #: inc/menus.php:21
-msgid "Support Menu"
-msgstr ""
-
-#: inc/menus.php:22
-msgid "Secondary"
-msgstr ""
-
-#: inc/menus.php:23
 msgid "Primary"
 msgstr ""
 
-#: inc/menus.php:24
+#: inc/menus.php:22
 msgid "User Account Access Menu"
 msgstr ""
 
-#: inc/menus.php:25
+#: inc/menus.php:23
 msgid "User Account Management Menu"
 msgstr ""
 
-#: inc/menus.php:551
+#: inc/menus.php:588
 msgid "&#x1F6BD; Flush Object Cache"
 msgstr ""
 
