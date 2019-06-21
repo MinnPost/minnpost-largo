@@ -148,6 +148,9 @@ nav {
 					margin: 0;
 					padding: 0;
 					border: 0;
+					input {
+						height: 34px;
+					}
 				}
 				&.toggled-form {
 					display: block;
