@@ -30,6 +30,7 @@
 					</picture>
 				</a>
 			</div><!-- .a-site-branding -->
+			<?php do_action( 'minnpost_membership_site_header', false ); ?>
 		</div>
 		<div class="o-wrapper o-wrapper-site-navigation o-wrapper-support-navigation">
 			<?php

@@ -36,7 +36,7 @@
 					</picture>
 				</a>
 			</div><!-- .a-site-branding -->
-			<?php do_action( 'minnpost_membership_site_header' ); ?>
+			<?php do_action( 'minnpost_membership_site_header', true ); ?>
 		</div>
 		<div class="o-wrapper o-wrapper-site-navigation">
 			<nav id="navigation-primary" class="m-main-navigation">
