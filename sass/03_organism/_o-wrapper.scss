@@ -5,6 +5,7 @@
 	position: relative;
 	&.o-wrapper-site-header {
 		display: flex;
+		flex-wrap: wrap;
 	}
 	&.o-wrapper-content {
 		display: flex;
