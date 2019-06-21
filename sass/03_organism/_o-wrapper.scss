@@ -3,6 +3,9 @@
 	margin-left: $standard-page-margin / 2;
 	margin-right: $standard-page-margin / 2;
 	position: relative;
+	&.o-wrapper-site-header {
+		display: flex;
+	}
 	&.o-wrapper-content {
 		display: flex;
 		flex-direction: column;
