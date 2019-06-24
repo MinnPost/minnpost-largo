@@ -23,7 +23,6 @@
 	<div class="m-ad-region m-ad-region-leaderboard">
 		<div class="o-wrapper">
 			<?php do_action( 'acm_tag', 'Top' ); ?>
-			<?php do_action( 'acm_tag', 'TopRight' ); ?>
 		</div>
 	</div>
 
@@ -37,19 +36,7 @@
 					</picture>
 				</a>
 			</div><!-- .a-site-branding -->
-			<nav id="navigation-ext" class="m-secondary-navigation">
-				<?php
-				wp_nav_menu(
-					array(
-						'theme_location' => 'secondary_links',
-						'menu_id'        => 'secondary-links',
-						'depth'          => 1,
-						'container'      => false,
-						'walker'         => new Minnpost_Walker_Nav_Menu,
-					)
-				);
-				?>
-			</nav><!-- #navigation-ext -->
+			<?php do_action( 'minnpost_membership_site_header', true ); ?>
 		</div>
 		<div class="o-wrapper o-wrapper-site-navigation">
 			<nav id="navigation-primary" class="m-main-navigation">

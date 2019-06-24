@@ -3,6 +3,10 @@
 	margin-left: $standard-page-margin / 2;
 	margin-right: $standard-page-margin / 2;
 	position: relative;
+	&.o-wrapper-site-header {
+		display: flex;
+		flex-wrap: wrap;
+	}
 	&.o-wrapper-content {
 		display: flex;
 		flex-direction: column;
@@ -11,7 +15,7 @@
 }
 
 .o-wrapper-support-navigation {
-	border-top: 1.85em solid #1a1818;
+	border-top: 1.230769230769231em solid #1a1818;
 }
 
 body.post .o-wrapper-content, body.page .o-wrapper-content {
