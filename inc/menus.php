@@ -18,8 +18,6 @@ if ( ! function_exists( 'minnpost_menus' ) ) :
 				'footer_secondary'        => __( 'Footer Secondary', 'minnpost-largo' ), // bottom of footer. careers, etc
 				'featured_columns'        => __( 'Featured Columns', 'minnpost-largo' ), // featured columns on homepage, category pages
 				'minnpost_network'        => __( 'Network Menu', 'minnpost-largo' ), // social networks
-				'support_minnpost'        => __( 'Support Menu', 'minnpost-largo' ), // the support box next to the top banner ad
-				'secondary_links'         => __( 'Secondary', 'minnpost-largo' ), // that weird nav next to logo with columns, weather, events, support
 				'primary_links'           => __( 'Primary', 'minnpost-largo' ), // main nav below logo
 				'user_account_access'     => __( 'User Account Access Menu', 'minnpost-largo' ), // menu where users log in/register/log out
 				'user_account_management' => __( 'User Account Management Menu', 'minnpost-largo' ), // menu where users manage their account info/preferences

@@ -30,11 +30,6 @@ nav {
 	}
 }
 
-#navigation-ext {
-	width: 100%;
-	display: flex;
-}
-
 #minnpost-network {
 	margin: 8px auto;
 	a {
@@ -63,25 +58,6 @@ nav {
 	}
 }
 
-#secondary-links {
-	display: flex;
-	justify-content: flex-end;
-	flex-basis: 100%;
-	margin-top: 48px;
-	margin-bottom: 0;
-	position: absolute;
-	z-index: 1;
-	li:not(:last-child) {
-		padding-right: 15px;
-	}
-	a {
-		font-weight: bold;
-	}
-	li.active > a {
-		color: $color__minnpost-black;
-	}
-}
-
 .m-main-navigation {
 	font-size: 123.1%;
 	font-family: $font__headings;
@@ -92,10 +68,9 @@ nav {
 	-moz-font-feature-settings: "calt" 0,"dlig" 0,"ss01" 0,"liga" 0;
 	letter-spacing: 0.02em;
 	background: $color__minnpost-black;
-	min-height: 44px;
 	position: relative;
 	z-index: 10;
-	margin-bottom: 30px; // this is for the secondary nav to be visible. todo: do we still need?
+	//margin-bottom: 30px; // when we have no secondary nav, we don't need this
 	button {
 		-webkit-appearance: none;
 		border: 0;
@@ -168,12 +143,14 @@ nav {
 				right: 0;
 				top: 0;
 				z-index: 100;
-				min-height: 38px;
 				padding-right: 8px;
 				fieldset {
 					margin: 0;
 					padding: 0;
 					border: 0;
+					input {
+						height: 34px;
+					}
 				}
 				&.toggled-form {
 					display: block;
@@ -201,6 +178,7 @@ nav {
 		}
 	}
 	li a {
+		margin: 2px 0;
 		padding: 8px;
 		color: $color__white;
 		text-decoration: none;
@@ -436,10 +414,7 @@ nav {
 // media queries for menus
 // todo: this goes away when we have a support cta
 @media screen and (min-width: 560px) {
-	#secondary-links {
-		margin-top: -21px;
-		position: relative;
-	}
+	
 }
 
 @media screen and (min-width: $medium-screen) {
@@ -474,18 +449,6 @@ nav {
 }
 
 @media screen and (min-width: $nav-breaks) {
-	#navigation-ext {
-		width: auto; // maybe can use auto here
-		text-align: right;
-		height: $header-height-after-nav-breaks;
-		line-height: normal;
-		flex-flow: row wrap;
-		justify-content: flex-end;
-		position: relative;
-	}
-	#secondary-links {
-		margin-top: -1px;
-	}
 	.m-main-navigation {
 		display: flex;
 		align-items: flex-end;
@@ -513,7 +476,7 @@ nav {
 		    	&.search {
 		    		form {
 		    			right: 24px;
-						top: -$nav-common-spacing;
+						top: 1px;
 		    		}
 		    	}
 		    	&.home a:after {
@@ -558,7 +521,5 @@ nav {
 }
 
 @media screen and (min-width: $max-width-page) {
-	#navigation-ext {
-		width: auto;
-	}
+	
 }
