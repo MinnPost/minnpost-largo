@@ -46,9 +46,6 @@
 		color: #ffffff !important; text-decoration: none !important;
 	}
 	@media only screen and (max-width: 600px) {
-		.two-column.header {
-			border-bottom: none !important;
-		}
 		.two-column.header .logo td {
 			border-bottom: 10px solid #000 !important; Margin-bottom: 5px !important;
 		}
@@ -225,7 +222,7 @@
 		?>
 
 		<tr>
-			<td class="two-column content supp" style="border-bottom-color: #cccccf; border-bottom-style: solid; border-bottom-width: 2px; border-collapse: collapse; font-size: 0; Margin: 0 0 18px; padding: 0; text-align: center" align="center">
+			<td class="two-column content supp" style="border-collapse: collapse; font-size: 0; Margin: 0 0 18px; padding: 0; text-align: center" align="center">
 			<!--[if (gte mso 9)|(IE)]>
 				<table cellpadding="0" cellspacing="0" width="100%">
 					<tr>

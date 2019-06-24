@@ -18,7 +18,7 @@ if ( ( $current_post + 1 ) === (int) $found_posts ) {
 if ( ' story-first' === $label ) {
 	$end_styles = ' Margin-top: 18px;';
 } elseif ( ' story-last' === $label ) {
-	$end_styles = ' border-bottom: none;padding-bottom: 18px;Margin-bottom: 0;';
+	$end_styles = ' padding-bottom: 18px;Margin-bottom: 0;';
 } else {
 	$end_styles = '';
 }
