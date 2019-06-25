@@ -74,6 +74,8 @@
 
 			</aside>
 
+			<?php echo vip_powered_wpcom( 4 ); ?>
+
 		</div>
 	</footer>
 
