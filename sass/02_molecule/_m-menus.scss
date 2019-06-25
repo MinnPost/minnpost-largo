@@ -128,9 +128,6 @@ nav {
 		&:nth-last-child(4) {
 			margin-left: auto;
 		}
-		&.home {
-    		display: none;
-    	}
 		&.search {
 			position: relative;
 			a.toggled-form {
@@ -458,10 +455,10 @@ nav {
 		ul, &.toggled ul {
 			display: flex;
 			li {
-				&.home, &.search {
+		    	&.search {
 		    		font-family: dashicons;
 		    	}
-		    	&.home, &.search {
+		    	&.search {
 		    		a {
 		    			font-size: 0;
 		    			padding: 0;
@@ -478,10 +475,6 @@ nav {
 		    			right: 24px;
 						top: 1px;
 		    		}
-		    	}
-		    	&.home a:after {
-		    		content: "\f102";
-		    		font-size: 24px;
 		    	}
 		    	&.search a:after {
 		    		content: "\f179";
@@ -518,8 +511,4 @@ nav {
 			justify-content: flex-end;
 		}
 	}
-}
-
-@media screen and (min-width: $max-width-page) {
-	
 }
