@@ -26,15 +26,25 @@
 				padding-top: $footer-box-spacing;
 			}
 			.a-widget-title {
-				color: $color__minnpost-red;
-				font-size: 123.1%;
-				text-transform: none;
+				//color: $color__minnpost-red;
+				font-size: 138.5%;
+				//text-transform: none;
 				font-family: $font__sans;
-				font-weight: normal;
-				font-style: normal;
-				font-variant: normal;
+				//font-weight: normal;
+				//font-style: normal;
+				//font-variant: normal;
 				margin-bottom: 0.75em;
 				padding-top: 1px;
+			}
+			.a-heading-donor-thanks {
+				color: $color__minnpost-red;
+				font-size: 123.1%;
+				//text-transform: none;
+				font-family: $font__sans;
+				//font-weight: normal;
+				//font-style: normal;
+				//font-variant: normal;
+				margin-bottom: 0.75em;
 			}
 			ul {
 				margin: 0;
