@@ -66,7 +66,7 @@ nav {
 	font-variant: normal;
 	-moz-font-feature-settings: "calt=0,dlig=0,ss01=0,liga=0";
 	-moz-font-feature-settings: "calt" 0,"dlig" 0,"ss01" 0,"liga" 0;
-	letter-spacing: 0.02em;
+	letter-spacing: 0.03em;
 	background: $color__minnpost-black;
 	position: relative;
 	z-index: 10;
@@ -176,7 +176,7 @@ nav {
 	}
 	li a {
 		margin: 2px 0;
-		padding: 8px;
+		padding: 8px $nav-common-spacing;
 		color: $color__white;
 		text-decoration: none;
 		display: inline-block;
