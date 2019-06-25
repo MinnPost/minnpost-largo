@@ -1,5 +1,9 @@
 .o-footer {
 	.o-footer-hat {
+		display: flex;
+		justify-content: space-between;
+		flex-flow: row;
+		flex-wrap: wrap;
 		padding: 0 $footer-box-spacing * 2 $standard-page-margin $footer-box-spacing;
 		section {
 			border: 1px solid $color__gray-lightest;
@@ -11,6 +15,9 @@
 			font-family: $font__sans;
 			&.m-widget-sponsor-list {
 				font-size: 100%;
+				width: 100%;
+				flex: auto;
+				margin: 0 0 $standard-page-margin 0;
 				.a-widget-title {
 					padding-top: 0;
 				}
@@ -73,10 +80,10 @@
 @media screen and (min-width: $size__footer-column * 2 ) {
 	.o-footer {
 		.o-footer-hat {
-			display: flex;
+			/*display: flex;
 			justify-content: space-between;
 			flex-flow: row;
-			flex-wrap: wrap;
+			flex-wrap: wrap;*/
 			padding: 0 $footer-box-spacing * 2 $standard-page-margin $footer-box-spacing;
 			section {
 				padding: $footer-box-spacing;
@@ -89,9 +96,9 @@
 @media screen and (min-width: $size__footer-column * 3 ) {
 	.o-footer {
 		.o-footer-hat {
-			display: flex;
+			/*display: flex;
 			justify-content: space-between;
-			flex-flow: row;
+			flex-flow: row;*/
 			padding: 0 $footer-box-spacing * 2 $standard-page-margin $footer-box-spacing;
 			section {
 				width: 29.0322580645161%;
