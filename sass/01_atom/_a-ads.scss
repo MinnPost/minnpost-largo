@@ -19,7 +19,7 @@
 		font-size: .5em;
 		text-align: center;
 	}
-	img, div, p, iframe {
+	/*img, div, p, iframe {
 		max-width: 100%;
   		height: auto;
 	}
@@ -31,7 +31,7 @@
 		margin: 0;
 		padding: 0;
 		display: block;
-	}
+	}*/
 }
 
 .ad-#{$top-ad-size} {
@@ -73,9 +73,9 @@ main .ad-x110 {
 		margin-bottom: $standard-page-margin;
 		text-align: center;
 	}
-	img, iframe, object, > div {
+	/*img, iframe, object, > div {
 		margin-bottom: $standard-page-margin;
-	}
+	}*/
 }
 
 // media queries for ads
