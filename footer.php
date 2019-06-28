@@ -36,20 +36,6 @@
 					?>
 				</nav><!-- #footer-primary -->
 
-				<nav id="footer-secondary" class="m-secondary-navigation">
-					<?php
-					wp_nav_menu(
-						array(
-							'theme_location' => 'footer_secondary',
-							'menu_id'        => 'footer-secondary-links',
-							'depth'          => 1,
-							'container'      => false,
-							'walker'         => new Minnpost_Walker_Nav_Menu,
-						)
-					);
-					?>
-				</nav><!-- #footer-secondary -->
-
 				<nav id="footer-network" class="m-secondary-navigation">
 					<?php
 					wp_nav_menu(
