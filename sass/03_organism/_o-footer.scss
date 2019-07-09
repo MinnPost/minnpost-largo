@@ -13,7 +13,7 @@
 				background: $color__white;
 				padding: $footer-box-spacing * 2 $footer-box-spacing $footer-box-spacing $footer-box-spacing;
 				margin: 0 $footer-box-spacing $standard-page-margin $footer-box-spacing;
-				font-size: 92.3%;
+				font-size: $meta-font-size;
 				font-family: $font__sans;
 				font-size: 100%;
 				width: 100%;
@@ -22,7 +22,7 @@
 					padding-top: 0;
 				}
 			}
-			&:first-of-type {
+			> &:first-of-type {
 				padding-top: $footer-box-spacing;
 			}
 			.a-widget-title {
@@ -37,7 +37,7 @@
 				padding-top: 1px;
 			}
 			.a-heading-donor-thanks {
-				color: $color__minnpost-red;
+				
 				font-size: 123.1%;
 				//text-transform: none;
 				font-family: $font__sans;
@@ -45,6 +45,11 @@
 				//font-style: normal;
 				//font-variant: normal;
 				margin-bottom: 0.75em;
+				background: $color__gray-sub-menu;
+				padding: 0.5em;
+				a {
+					color: $color__minnpost-red;
+				}
 			}
 			.a-tagline-bottom {
 				font-size: 138.5%;
@@ -76,7 +81,7 @@
 		flex-direction: column;
 	}
 	.a-footer-message {
-		font-size: 92.3%;
+		font-size: $meta-font-size;
 		text-align: center;
 		margin-bottom: $standard-page-margin;
 	}
