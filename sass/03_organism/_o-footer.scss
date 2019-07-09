@@ -4,20 +4,20 @@
 		justify-content: space-between;
 		flex-flow: row;
 		flex-wrap: wrap;
-		padding: 0 $footer-box-spacing * 2 $standard-page-margin $footer-box-spacing;
+		padding: 0 0 $standard-page-margin 0;
 		section {
-			border: 1px solid $color__gray-lightest;
-			outline: $footer-box-spacing solid $color__minnpost-white;
-			background: $color__white;
-			padding: $footer-box-spacing * 2 $footer-box-spacing $footer-box-spacing $footer-box-spacing;
-			margin: 0 $footer-box-spacing;
-			font-size: 92.3%;
-			font-family: $font__sans;
+			padding-top: $footer-box-spacing;
 			&.m-widget-sponsor-list {
+				border: 1px solid $color__gray-lightest;
+				outline: $footer-box-spacing solid $color__minnpost-white;
+				background: $color__white;
+				padding: $footer-box-spacing * 2 $footer-box-spacing $footer-box-spacing $footer-box-spacing;
+				margin: 0 $footer-box-spacing $standard-page-margin $footer-box-spacing;
+				font-size: 92.3%;
+				font-family: $font__sans;
 				font-size: 100%;
 				width: 100%;
 				flex: auto;
-				margin: 0 0 $standard-page-margin 0;
 				.a-widget-title {
 					padding-top: 0;
 				}
@@ -48,6 +48,7 @@
 			}
 			.a-tagline-bottom {
 				font-size: 138.5%;
+				font-family: $font__sans;
 			}
 			ul {
 				margin: 0;
@@ -63,25 +64,16 @@
 				flex: 1;
 				width: auto;
 				margin-right: $footer-box-spacing * 2;
-				&.m-footer-donors {
-					flex: 3;
-					margin: 0;
-					ul.donors {
-						list-style: none;
-						columns: 2 auto;
-						margin: 0;
-						padding: 0;
-					}
-				}
 			}
 		}
 	}
 	.o-footer-links {
 		font-family: $font__sans;
 		word-wrap: break-word;
-		border-top: 1px solid $color__gray-lightest;
-		margin-top: $standard-page-margin;
 		padding-top: $standard-page-margin / 2;
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
 	}
 	.a-footer-message {
 		font-size: 92.3%;
@@ -97,10 +89,10 @@
 			justify-content: space-between;
 			flex-flow: row;
 			flex-wrap: wrap;*/
-			padding: 0 $footer-box-spacing * 2 $standard-page-margin $footer-box-spacing;
+			//padding: 0 $footer-box-spacing * 2 $standard-page-margin $footer-box-spacing;
 			section {
-				padding: $footer-box-spacing;
-				flex: $size__footer-column 1 1;
+				//padding: $footer-box-spacing;
+				//flex: $size__footer-column 1 1;
 			}
 		}
 	}
@@ -112,9 +104,9 @@
 			/*display: flex;
 			justify-content: space-between;
 			flex-flow: row;*/
-			padding: 0 $footer-box-spacing * 2 $standard-page-margin $footer-box-spacing;
+			//padding: 0 $footer-box-spacing * 2 $standard-page-margin $footer-box-spacing;
 			section {
-				width: 29.0322580645161%;
+				//width: 29.0322580645161%;
 			}
 		}
 	}

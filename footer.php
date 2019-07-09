@@ -19,6 +19,7 @@
 
 			<aside class="o-footer-hat">
 				<?php dynamic_sidebar( 'sidebar-3' ); ?>
+				<?php do_action( 'minnpost_membership_site_footer', true ); ?>
 			</aside>
 
 			<aside class="o-footer-links">
