@@ -191,3 +191,15 @@ if ( ! function_exists( 'get_the_image' ) ) :
 		return $image . $category;
 	}
 endif;
+
+if ( ! function_exists( 'minnpost_largo_extend_widget_options' ) ) :
+	add_filter( 'extended_widget_options_logic_override', 'minnpost_largo_extend_widget_options', 10, 1 );
+	function minnpost_largo_extend_widget_options( $display_logic ) {
+		if ( 'false === is_membership()' === $display_logic ) {
+			if ( ! function_exists( 'is_membership' ) ) {
+				return false;
+			}
+		}
+		return $display_logic;
+	}
+endif;
