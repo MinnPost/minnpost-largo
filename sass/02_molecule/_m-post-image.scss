@@ -1,7 +1,7 @@
 .m-post-image {
 	display: block;
 	&.m-post-image-large {
-		font-size: 1.23em;
+		font-size: $content-font-size;
 	}
 }
 .m-archive-top .m-post-image, .m-archive-excerpt .m-post-image {

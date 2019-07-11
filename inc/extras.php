@@ -290,3 +290,14 @@ if ( ! function_exists( 'minnpost_prevent_login_redirect' ) ) :
 		return $skip_login_redirect;
 	}
 endif;
+
+/**
+ * Check to see if we're on a membership URL
+ * @return bool
+ */
+if ( ! function_exists( 'is_membership' ) ) :
+	function is_membership() {
+		global $wp_query;
+		return ( isset( $wp_query->query['is_membership'] ) && true === $wp_query->query['is_membership'] );
+	}
+endif;
