@@ -15,7 +15,6 @@ if ( ! function_exists( 'minnpost_menus' ) ) :
 		register_nav_menus(
 			array(
 				'footer_primary'          => __( 'Footer Primary', 'minnpost-largo' ), // main footer. about, advertise, member benefits, etc
-				'footer_secondary'        => __( 'Footer Secondary', 'minnpost-largo' ), // bottom of footer. careers, etc
 				'featured_columns'        => __( 'Featured Columns', 'minnpost-largo' ), // featured columns on homepage, category pages
 				'minnpost_network'        => __( 'Network Menu', 'minnpost-largo' ), // social networks
 				'primary_links'           => __( 'Primary', 'minnpost-largo' ), // main nav below logo
@@ -71,11 +70,14 @@ if ( ! function_exists( 'minnpost_wp_nav_menu_objects_sub_menu' ) ) :
 
 			if ( is_home() ) {
 				$root_id = 0;
-				$menu    = wp_get_nav_menu_items( $args->menu->name, array(
-					'posts_per_page' => -1,
-					'meta_key'       => '_menu_item_menu_item_parent',
-					'meta_value'     => $root_id,
-				));
+				$menu    = wp_get_nav_menu_items(
+					$args->menu->name,
+					array(
+						'posts_per_page' => -1,
+						'meta_key'       => '_menu_item_menu_item_parent',
+						'meta_value'     => $root_id,
+					)
+				);
 				$root_id = $menu[0]->ID;
 			}
 
@@ -367,22 +369,26 @@ if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
 			if ( array_key_exists( 'users', $wp_query->query_vars ) ) {
 				$wp_admin_bar->remove_menu( 'edit' );
 				if ( current_user_can( 'edit_user', $user_id ) && $edit_user_link = get_edit_user_link( $user_id ) ) {
-					$wp_admin_bar->add_menu( array(
-						'id'    => 'edit',
-						'title' => __( 'Edit User' ),
-						'href'  => $edit_user_link,
-					) );
+					$wp_admin_bar->add_menu(
+						array(
+							'id'    => 'edit',
+							'title' => __( 'Edit User' ),
+							'href'  => $edit_user_link,
+						)
+					);
 				}
 			}
 
 			if ( isset( $post ) && ( $post->post_parent === $user_parent_id || $post->ID === $user_parent_id )
 				&& current_user_can( 'edit_user', $user_id )
 				&& $edit_user_link = get_edit_user_link( $user_id ) ) {
-				$wp_admin_bar->add_menu( array(
-					'id'    => 'edit',
-					'title' => __( 'Edit User' ),
-					'href'  => $edit_user_link,
-				) );
+				$wp_admin_bar->add_menu(
+					array(
+						'id'    => 'edit',
+						'title' => __( 'Edit User' ),
+						'href'  => $edit_user_link,
+					)
+				);
 			}
 			if ( is_admin() ) {
 				$current_screen = get_current_screen();
@@ -390,11 +396,13 @@ if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
 					&& ( $user_object = get_userdata( $user_id ) )
 					&& $user_object->exists()
 					&& $view_link = site_url( '/users/' . $user_id . '/' ) ) {
-					$wp_admin_bar->add_menu( array(
-						'id'    => 'view',
-						'title' => __( 'View User' ),
-						'href'  => $view_link,
-					) );
+					$wp_admin_bar->add_menu(
+						array(
+							'id'    => 'view',
+							'title' => __( 'View User' ),
+							'href'  => $view_link,
+						)
+					);
 				}
 			}
 		}

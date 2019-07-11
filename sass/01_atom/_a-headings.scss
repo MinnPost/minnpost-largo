@@ -131,7 +131,7 @@ h6, .h6 {
 	line-height: 1.15em;
 }
 .m-category-top .a-entry-title-largeimage {
-	font-size: 215.4%;
+	font-size: $large-title-font-size;
 	line-height: 1.15em;
 	font-family: $font__headings;
 	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
@@ -185,7 +185,7 @@ h6, .h6 {
 }
 
 .m-entry-content h3, .m-entry-content .h3, .m-partner-offer-content h1, .m-partner-offer-content .h1 {
-	font-size: 215.4%;
+	font-size: $large-title-font-size;
 	line-height: 1.15em;
 	font-family: $font__headings;
 	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;

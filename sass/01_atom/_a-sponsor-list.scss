@@ -1,23 +1,20 @@
 .o-footer .o-footer-hat section ul.a-sponsor-list {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
 	li.a-sponsor {
-		border-bottom: 1px solid $color__gray-lightest;
+		//border-bottom: 1px solid $color__gray-lightest;
 		margin-bottom: $standard-page-margin;
 		padding-bottom: $standard-page-margin;
 		figure {
 			margin: 0;
 			display: flex;
-			figcaption, img {
+			a {
+				display: block;
+			}
+			img {
 				display: block;
 				align-self: flex-start;
-			}
-			figcaption {
-				width: 70px;
-				background: $color__minnpost-white;
-				color: $color__gray-meta;
-				font-size: 76.9%;
-				padding: $grid-gap / 2;
-				margin-right: $grid-gap;
-				min-height: 3em;
 			}
 		}
 	}
