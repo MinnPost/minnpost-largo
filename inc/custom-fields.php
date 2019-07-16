@@ -399,7 +399,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		);
 		$display_settings->add_field(
 			array(
-				'name' => __( 'Prevent lazy loading?', 'minnpost-largo' ),
+				'name' => __( 'Prevent lazy loading of images?', 'minnpost-largo' ),
 				'id'   => '_mp_prevent_lazyload',
 				'type' => 'checkbox',
 				'desc' => __( 'If checked, this post will not attempt to lazy load images.', 'minnpost-largo' ),
@@ -668,7 +668,7 @@ if ( ! function_exists( 'cmb2_page_fields' ) ) :
 		);
 		$page_sidebar->add_field(
 			array(
-				'name' => __( 'Prevent lazy loading?', 'minnpost-largo' ),
+				'name' => __( 'Prevent lazy loading of images?', 'minnpost-largo' ),
 				'id'   => '_mp_prevent_lazyload',
 				'type' => 'checkbox',
 				'desc' => __( 'If checked, this page will not attempt to lazy load images.', 'minnpost-largo' ),
@@ -761,7 +761,7 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 		);
 		$category_setup->add_field(
 			array(
-				'name' => __( 'Prevent lazy loading?', 'minnpost-largo' ),
+				'name' => __( 'Prevent lazy loading of image?', 'minnpost-largo' ),
 				'id'   => '_mp_prevent_lazyload',
 				'type' => 'checkbox',
 				'desc' => __( 'If checked, the image for this category will not be lazy loaded.', 'minnpost-largo' ),
