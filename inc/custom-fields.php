@@ -391,6 +391,14 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		);
 		$display_settings->add_field(
 			array(
+				'name' => __( 'Prevent lazy loading of embed ads?', 'minnpost-largo' ),
+				'id'   => 'arcads_dfp_acm_provider_post_prevent_lazyload',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not attempt to lazy load embed ads.', 'minnpost-largo' ),
+			)
+		);
+		$display_settings->add_field(
+			array(
 				'name' => __( 'Prevent lazy loading?', 'minnpost-largo' ),
 				'id'   => 'wp_lozad_lazyload_prevent_lozad_lazyload',
 				'type' => 'checkbox',
