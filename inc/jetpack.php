@@ -53,3 +53,24 @@ if ( ! function_exists( 'minnpost_largo_custom_photon' ) ) :
 		return $args;
 	}
 endif;
+
+if ( ! function_exists( 'minnpost_largo_exclude_class_from_lazy_load' ) ) :
+	add_filter( 'jetpack_lazy_images_blacklisted_classes', 'minnpost_largo_exclude_class_from_lazy_load', 999, 1 );
+	function minnpost_largo_exclude_class_from_lazy_load( $classes ) {
+		$classes[] = 'no-lazy';
+		return $classes;
+	}
+endif;
+
+if ( ! function_exists( 'minnpost_largo_exclude_post_from_lazy_load' ) ) :
+	add_filter( 'lazyload_is_enabled', 'minnpost_largo_exclude_post_from_lazy_load' );
+	function minnpost_largo_exclude_post_from_lazy_load( $enabled ) {
+		global $post;
+		$post_id           = $post->ID;
+		$prevent_lazy_load = get_post_meta( $post_id, '_mp_prevent_lazyload', true );
+		if ( 'on' === $prevent_lazy_load ) {
+			return false;
+		}
+		return $enabled;
+	}
+endif;

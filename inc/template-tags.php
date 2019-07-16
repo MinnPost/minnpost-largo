@@ -59,7 +59,7 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 				echo $image;
 				?>
 			</a>
-		<?php
+			<?php
 		endif; // End is_singular()
 	}
 endif;
@@ -120,6 +120,18 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 			$image_url = '';
 		}
 
+		// handle prevention of lazy loading
+		$prevent_lazy_load = get_post_meta( $id, '_mp_prevent_lazyload', true );
+		if ( 'on' === $prevent_lazy_load ) {
+			$lazy_load = false;
+		}
+		if ( false === $lazy_load ) {
+			if ( isset( $attributes['class'] ) ) {
+				$attributes['class'] .= ' ';
+			}
+			$attributes['class'] .= 'no-lazy';
+		}
+
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
 			// this requires that the custom image sizes in custom-fields.php work correctly
 			$image     = wp_get_attachment_image( $image_id, $size, false, $attributes );
@@ -157,10 +169,6 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 
 		if ( post_password_required() || is_attachment() || ( '' === $image_id && '' === $image_url ) ) {
 			return;
-		}
-
-		if ( array_key_exists( 'wp_lozad_lazyload_convert_html', $GLOBALS['wp_filter'] ) && true === $lazy_load ) {
-			$image = apply_filters( 'wp_lozad_lazyload_convert_html', $image, array( 'html_tag' => 'img' ) );
 		}
 
 		$image_data = array(
@@ -527,17 +535,30 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 			return '';
 		}
 
-		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
-			// this requires that the custom image sizes in custom-fields.php work correctly
-			$image     = wp_get_attachment_image( $image_id, $size );
-			$image_url = wp_get_attachment_url( $image_id );
-		} else {
-			$alt   = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
-			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
+		// handle prevention of lazy loading
+		$prevent_lazy_load = get_post_meta( $author_id, '_mp_prevent_lazyload', true );
+		if ( 'on' === $prevent_lazy_load ) {
+			$lazy_load = false;
+		}
+		if ( false === $lazy_load ) {
+			if ( isset( $attributes['class'] ) ) {
+				$attributes['class'] .= ' ';
+			}
+			$attributes['class'] .= 'no-lazy';
 		}
 
-		if ( array_key_exists( 'wp_lozad_lazyload_convert_html', $GLOBALS['wp_filter'] ) && true === $lazy_load ) {
-			$image = apply_filters( 'wp_lozad_lazyload_convert_html', $image, array( 'html_tag' => 'img' ) );
+		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
+			// this requires that the custom image sizes in custom-fields.php work correctly
+			$image     = wp_get_attachment_image( $image_id, $size, false, $attributes );
+			$image_url = wp_get_attachment_url( $image_id );
+		} else {
+			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+			if ( isset( $attributes['class'] ) ) {
+				$class = ' class="' . $attributes['class'] . '"';
+			} else {
+				$class = '';
+			}
+			$image = '<img src="' . $image_url . '" alt="' . $alt . $class . '">';
 		}
 
 		$image_data = array(
@@ -654,17 +675,30 @@ if ( ! function_exists( 'minnpost_get_term_image' ) ) :
 			return '';
 		}
 
-		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
-			// this requires that the custom image sizes in custom-fields.php work correctly
-			$image     = wp_get_attachment_image( $image_id, $size );
-			$image_url = wp_get_attachment_url( $image_id );
-		} else {
-			$alt   = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
-			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
+		// handle prevention of lazy loading
+		$prevent_lazy_load = get_term_meta( $category_id, '_mp_prevent_lazyload', true );
+		if ( 'on' === $prevent_lazy_load ) {
+			$lazy_load = false;
+		}
+		if ( false === $lazy_load ) {
+			if ( isset( $attributes['class'] ) ) {
+				$attributes['class'] .= ' ';
+			}
+			$attributes['class'] .= 'no-lazy';
 		}
 
-		if ( array_key_exists( 'wp_lozad_lazyload_convert_html', $GLOBALS['wp_filter'] ) && true === $lazy_load ) {
-			$image = apply_filters( 'wp_lozad_lazyload_convert_html', $image, array( 'html_tag' => 'img' ) );
+		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
+			// this requires that the custom image sizes in custom-fields.php work correctly
+			$image     = wp_get_attachment_image( $image_id, $size, false, $attributes );
+			$image_url = wp_get_attachment_url( $image_id );
+		} else {
+			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+			if ( isset( $attributes['class'] ) ) {
+				$class = ' class="' . $attributes['class'] . '"';
+			} else {
+				$class = '';
+			}
+			$image = '<img src="' . $image_url . '" alt="' . $alt . $class . '">';
 		}
 
 		$image_data = array(
@@ -1071,11 +1105,19 @@ if ( ! function_exists( 'minnpost_plus_icon' ) ) :
 				}
 			}
 
-			$image = '<img src="' . get_theme_file_uri() . '/assets/img/MinnPostPlusLogo.png' . '" alt="MinnPostPlus">';
-
-			if ( array_key_exists( 'wp_lozad_lazyload_convert_html', $GLOBALS['wp_filter'] ) && true === $lazy_load ) {
-				$image = apply_filters( 'wp_lozad_lazyload_convert_html', $image, array( 'html_tag' => 'img' ) );
+			// handle prevention of lazy loading
+			$prevent_lazy_load = get_post_meta( $post_id, '_mp_prevent_lazyload', true );
+			if ( 'on' === $prevent_lazy_load ) {
+				$lazy_load = false;
 			}
+
+			if ( false === $lazy_load ) {
+				$class = 'no-lazy';
+			} else {
+				$class = '';
+			}
+
+			$image = '<img src="' . get_theme_file_uri() . '/assets/img/MinnPostPlusLogo.png' . '" alt="MinnPostPlus"' . $class . '>';
 
 			echo '<div class="a-minnpost-plus">' . $image . '</div>';
 		}
@@ -1089,16 +1131,19 @@ endif;
 * @return string $title
 *
 */
-add_filter( 'get_the_archive_title', function ( $title ) {
-	if ( is_category() ) {
-		$title = single_cat_title( '', false );
-	} elseif ( is_tag() ) {
-		$title = single_tag_title( '', false );
-	} elseif ( is_author() ) {
-		$title = '<span class="vcard">' . get_the_author() . '</span>';
+add_filter(
+	'get_the_archive_title',
+	function( $title ) {
+		if ( is_category() ) {
+			$title = single_cat_title( '', false );
+		} elseif ( is_tag() ) {
+			$title = single_tag_title( '', false );
+		} elseif ( is_author() ) {
+			$title = '<span class="vcard">' . get_the_author() . '</span>';
+		}
+		return $title;
 	}
-	return $title;
-});
+);
 
 /**
 * Outputs HTML for numeric pagination on archive pages
