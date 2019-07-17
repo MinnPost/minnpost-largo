@@ -19,19 +19,6 @@
 		font-size: .5em;
 		text-align: center;
 	}
-	/*img, div, p, iframe {
-		max-width: 100%;
-  		height: auto;
-	}
-	iframe {
-		width: 100%;
-		height: 100%;
-		overflow: hidden;
-		border: 0;
-		margin: 0;
-		padding: 0;
-		display: block;
-	}*/
 }
 
 main .ad-middle,
@@ -69,39 +56,6 @@ main .ad-x110 {
 		margin-bottom: $standard-page-margin;
 		text-align: center;
 	}
-	/*img, iframe, object, > div {
-		margin-bottom: $standard-page-margin;
-	}*/
 }
 
 // media queries for ads
-
-@media screen and (min-width: $ad-top-width) {
-	.acm-ad {
-		/*img, div, p, iframe {
-			max-width: none;
-			max-height: none;
-		}*/
-	}
-	main .ad-middle,
-	main .ad-x100,
-	main .ad-x101,
-	main .ad-x102,
-	main .ad-x103,
-	main .ad-x104,
-	main .ad-x105,
-	main .ad-x106,
-	main .ad-x107,
-	main .ad-x108,
-	main .ad-x109,
-	main .ad-x110 {
-		clear: both;
-	    margin: 10px auto;
-	}
-}
-
-@media screen and (min-width: $max-width-page) {
-	.ad-topright {
-		display: block;
-	}
-}
