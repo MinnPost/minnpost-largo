@@ -200,7 +200,7 @@ endif;
 * @param array $conditionals
 * @return array $conditionals
 */
-/*if ( ! function_exists( 'minnpost_site_message_conditionals' ) ) :
+if ( ! function_exists( 'minnpost_site_message_conditionals' ) ) :
 	add_filter( 'wp_message_inserter_conditionals', 'minnpost_site_message_conditionals', 10, 1 );
 	function minnpost_site_message_conditionals( $conditionals ) {
 		$conditionals['user'][] = array(
@@ -210,7 +210,7 @@ endif;
 		);
 		return $conditionals;
 	}
-endif;*/
+endif;
 
 /**
 * Check to see if the user has any membership level role
