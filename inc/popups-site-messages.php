@@ -66,6 +66,7 @@ endif;
 
 /**
 * Modify the conditions that control when users see popups
+* todo: we could move the membership focused methods into the membership plugin
 *
 * @param array $conditions
 * @return array $conditions
@@ -196,6 +197,7 @@ endif;
 
 /**
 * Modify the conditions that control when users see site messages
+* todo: we could move the membership focused methods into the membership plugin
 *
 * @param array $conditionals
 * @return array $conditionals
@@ -263,6 +265,36 @@ if ( ! function_exists( 'minnpost_user_is_sustaining_member' ) ) :
 		if ( true === filter_var( $sustaining_member, FILTER_VALIDATE_BOOLEAN ) ) {
 			// if this user is a sustaining member, return true
 			return true;
+		}
+
+		// otherwise, return false
+		return false;
+
+	}
+endif;
+
+/**
+* Check to see which newsletters, if any, the user is getting
+*
+* @return bool|array
+*/
+if ( ! function_exists( 'minnpost_user_gets_emails' ) ) :
+	function minnpost_user_gets_emails( $emails_to_check = array() ) {
+		$user = wp_get_current_user();
+		if ( 0 === $user ) {
+			return false;
+		}
+
+		// populate values we need for the mc call
+
+		global $minnpost_form_processor_mailchimp;
+		$user_mailchimp_info = $minnpost_form_processor_mailchimp->get_data->get_user_info( $shortcode, $resource_type, $resource_id, $user_email, $reset_user_info );
+
+		if ( ! is_wp_error( $user_mailchimp_info ) ) {
+			$mailchimp_user_id = $user_mailchimp_info['id'];
+			$groups            = $user_mailchimp_info[ $user_mailchimp_groups ];
+			$mailchimp_status  = $user_mailchimp_info['status'];
+			// return a bool or an array of groups
 		}
 
 		// otherwise, return false
