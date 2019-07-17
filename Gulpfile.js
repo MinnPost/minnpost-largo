@@ -56,14 +56,11 @@ function adminstyles() {
     .pipe(sass()) // Compile
     .on('error', sass.logError) // Error reporting
     .pipe(postcss([
-		autoprefixer( {
-			'browsers': [ 'last 2 version' ]
-		} ),
-		mqpacker( {
-			'sort': true
-		} ),
-      	cssnano( {
-			'safe': true // Use safe optimizations.
+      mqpacker( {
+        'sort': true
+      } ),
+      cssnano( {
+        'safe': true // Use safe optimizations.
 		} ) // Minify
     ]))
     .pipe(sourcemaps.write()) // Write the sourcemap files
@@ -81,14 +78,11 @@ function frontendstyles() {
     )) // Compile
     .on('error', sass.logError) // Error reporting
     .pipe(postcss([
-		autoprefixer( {
-			'browsers': [ 'last 2 version' ]
-		} ),
-		mqpacker( {
-			'sort': true
-		} ),
-      	cssnano( {
-			'safe': true // Use safe optimizations.
+      mqpacker( {
+        'sort': true
+      } ),
+      cssnano( {
+        'safe': true // Use safe optimizations.
 		} ) // Minify
     ]))
     .pipe(sourcemaps.write()) // Write the sourcemap files
@@ -106,14 +100,11 @@ function mainstyles() {
     )) // Compile
     .on('error', sass.logError) // Error reporting
     .pipe(postcss([
-		autoprefixer( {
-			'browsers': [ 'last 2 version' ]
-		} ),
-		mqpacker( {
-			'sort': true
-		} ),
-      	cssnano( {
-			'safe': true // Use safe optimizations.
+      mqpacker( {
+        'sort': true
+      } ),
+      cssnano( {
+        'safe': true // Use safe optimizations.
 		} ) // Minify
     ]))
     .pipe(sourcemaps.write()) // Write the sourcemap files
@@ -254,8 +245,6 @@ gulp.task('styles',
   )
 );
 
-gulp.task('styles',
-  gulp.series(
-    gulp.parallel(frontendstyles, mainstyles) // run these tasks asynchronously
-  )
+gulp.task('scripts',
+  gulp.series(mainscripts, uglifyscripts) // run these tasks in a series
 );

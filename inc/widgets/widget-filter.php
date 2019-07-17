@@ -29,9 +29,6 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 		// sponsor list
 		if ( false !== strpos( $widget_output, 'a-sponsor-list' ) ) {
 			$widget_output = str_replace( 'class="m-widget m-widget-text m-widget-custom-html"', 'class="m-widget m-widget-text m-widget-custom-html m-widget-sponsor-list"', $widget_output );
-			// vip link is added here, not in the widget panel
-			$vip           = vip_powered_wpcom( 5 );
-			$widget_output = str_replace( '</ul></div>', '<li class="a-sponsor">' . $vip . '</li></ul></div>', $widget_output );
 		}
 		$widget_output = str_replace( '</div></div>', '</div></section>', $widget_output );
 
@@ -192,5 +189,17 @@ if ( ! function_exists( 'get_the_image' ) ) :
 		$category      = '<p class="a-post-category a-spill-item-category">' . $category_name . '</p>';
 
 		return $image . $category;
+	}
+endif;
+
+if ( ! function_exists( 'minnpost_largo_extend_widget_options' ) ) :
+	add_filter( 'extended_widget_options_logic_override', 'minnpost_largo_extend_widget_options', 10, 1 );
+	function minnpost_largo_extend_widget_options( $display_logic ) {
+		if ( 'false === is_membership()' === $display_logic ) {
+			if ( ! function_exists( 'is_membership' ) ) {
+				return false;
+			}
+		}
+		return $display_logic;
 	}
 endif;

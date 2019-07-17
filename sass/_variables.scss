@@ -33,7 +33,7 @@ $color__minnpost-white: #f0f0f5;
 $color__minnpost-blue: palette(blue);
 
 // more minnpost colors
-$color__minnpost-green: #469B61;
+$color__minnpost-green: #1C8745;
 $color__minnpost-yellow: #FBD341; // 251, 211, 65
 $color__minnpost-red-error: #c00; // probably?
 $color__minnpost-red-required: #c00;
@@ -107,8 +107,13 @@ $font__sans: Helvetica, Arial, sans-serif;
 $font__serif: Georgia, Cambria, "Times New Roman", Times, serif;
 $font__headings: NimbusSanNovConD-Bol, Helvetica, Arial, Geneva, sans-serif;
 
-// Base font sizes
-$base-font-size: 13px; // 16px
+// Font sizes
+$base-font-size: 13px; // 13px
+$content-font-size: 1.23em; // 16px
+$meta-font-size: 92.3%; // 12px
+
+// heading font sizes
+$large-title-font-size: 215.4%;
 
 // Line height
 $base-line-height: 1.5;
@@ -135,8 +140,9 @@ $small-screen: 480px;
 $more-than-logo-screen: 500px;
 $medium-screen: 640px;
 $nav-breaks: 768px;
+$nav-move-end: 810px;
 $large-screen: 860px;
-$nav-wrap-screen: 900px;
+$nav-wrap-screen: 950px;
 
 $medium-screen-up: new-breakpoint(min-width $medium-screen 4);
 $large-screen-up: new-breakpoint(min-width $large-screen 8);
@@ -160,6 +166,7 @@ $standard-page-margin: 1.538461538461538em; // 20px
 $home-content-sidebar-padding: 35px;
 $archive-content-sidebar-padding: 15px;
 $footer-box-spacing: 15px;
+$form-text-indent: 6px;
 
 // ads
 $ad-top-width: 728px;

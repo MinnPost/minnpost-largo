@@ -23,39 +23,18 @@
 	<div class="m-ad-region m-ad-region-leaderboard">
 		<div class="o-wrapper">
 			<?php do_action( 'acm_tag', 'Top' ); ?>
-			<?php do_action( 'acm_tag', 'TopRight' ); ?>
 		</div>
 	</div>
 
 	<header id="masthead" class="o-header">
 		<div class="o-wrapper o-wrapper-site-header">
-			<div class="a-site-branding">
-				<a class="a-logo a-logo-svg" rel="home" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-					<picture>
-						<source type="image/svg+xml" srcset="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/minnpost-logo.svg">
-						<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/logo.png" alt="<?php bloginfo( 'name' ); ?>">
-					</picture>
-				</a>
-			</div><!-- .a-site-branding -->
-			<nav id="navigation-ext" class="m-secondary-navigation">
-				<?php get_search_form(); ?>
-				<?php
-				wp_nav_menu(
-					array(
-						'theme_location' => 'secondary_links',
-						'menu_id'        => 'secondary-links',
-						'depth'          => 1,
-						'container'      => false,
-						'walker'         => new Minnpost_Walker_Nav_Menu,
-					)
-				);
-				?>
-			</nav><!-- #navigation-ext -->
+			<?php get_template_part( 'template-parts/logo', 'top' ); ?>
+			<?php do_action( 'minnpost_membership_site_header', true ); ?>
 		</div>
 		<div class="o-wrapper o-wrapper-site-navigation">
 			<nav id="navigation-primary" class="m-main-navigation">
 				<button class="menu-toggle" aria-controls="primary-links" aria-expanded="false">
-					<?php esc_html_e( 'Sections', 'minnpost-largo' ); ?>
+					<span><?php esc_html_e( 'Menu', 'minnpost-largo' ); ?></span>
 				</button>
 				<?php
 				wp_nav_menu(

@@ -373,3 +373,28 @@ if ( ! function_exists( 'minnpost_account_preferences' ) ) :
 		}
 	}
 endif;
+
+/**
+* Add logo shortcode
+*
+* @param array $atts
+*
+*/
+if ( ! function_exists( 'minnpost_logo' ) ) :
+	add_shortcode( 'minnpost_logo', 'minnpost_logo' );
+	function minnpost_logo( $atts ) {
+
+		$args = shortcode_atts(
+			array(
+				'position' => 'top',
+			),
+			$atts
+		);
+
+		ob_start();
+		get_template_part( 'template-parts/logo', $args['position'] );
+		$output = ob_get_contents();
+		ob_end_clean();
+		return $output;
+	}
+endif;

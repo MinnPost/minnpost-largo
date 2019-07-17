@@ -15,11 +15,8 @@ if ( ! function_exists( 'minnpost_menus' ) ) :
 		register_nav_menus(
 			array(
 				'footer_primary'          => __( 'Footer Primary', 'minnpost-largo' ), // main footer. about, advertise, member benefits, etc
-				'footer_secondary'        => __( 'Footer Secondary', 'minnpost-largo' ), // bottom of footer. careers, etc
 				'featured_columns'        => __( 'Featured Columns', 'minnpost-largo' ), // featured columns on homepage, category pages
 				'minnpost_network'        => __( 'Network Menu', 'minnpost-largo' ), // social networks
-				'support_minnpost'        => __( 'Support Menu', 'minnpost-largo' ), // the support box next to the top banner ad
-				'secondary_links'         => __( 'Secondary', 'minnpost-largo' ), // that weird nav next to logo with columns, weather, events, support
 				'primary_links'           => __( 'Primary', 'minnpost-largo' ), // main nav below logo
 				'user_account_access'     => __( 'User Account Access Menu', 'minnpost-largo' ), // menu where users log in/register/log out
 				'user_account_management' => __( 'User Account Management Menu', 'minnpost-largo' ), // menu where users manage their account info/preferences
@@ -73,11 +70,14 @@ if ( ! function_exists( 'minnpost_wp_nav_menu_objects_sub_menu' ) ) :
 
 			if ( is_home() ) {
 				$root_id = 0;
-				$menu    = wp_get_nav_menu_items( $args->menu->name, array(
-					'posts_per_page' => -1,
-					'meta_key'       => '_menu_item_menu_item_parent',
-					'meta_value'     => $root_id,
-				));
+				$menu    = wp_get_nav_menu_items(
+					$args->menu->name,
+					array(
+						'posts_per_page' => -1,
+						'meta_key'       => '_menu_item_menu_item_parent',
+						'meta_value'     => $root_id,
+					)
+				);
 				$root_id = $menu[0]->ID;
 			}
 
@@ -159,12 +159,12 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 
 		$active_class = '';
 		if ( in_array( 'current-menu-item', $classes ) ) {
-			$active_class = ' class="active"';
+			$active_class = 'active';
 		} elseif ( in_array( 'current-menu-parent', $classes ) && '/' !== $item->url ) {
 			// checking '/' because home menu should never be a parent menu
-			$active_class = ' class="active-parent"';
+			$active_class = 'active-parent';
 		} elseif ( in_array( 'current-menu-ancestor', $classes ) ) {
-			$active_class = ' class="active-ancestor"';
+			$active_class = 'active-ancestor';
 		}
 
 		// if we aren't on the main category, remove the active classes for other categories
@@ -199,6 +199,11 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 			}
 			if ( home_url() !== $url && substr( '/wp_logout_url()', 0, $length ) === $url ) {
 				$url = wp_logout_url();
+			}
+
+			if ( '/?s=' === $url ) {
+				$form     = get_search_form( false );
+				$has_form = true;
 			}
 
 			if ( rtrim( wp_login_url(), '/' ) === $url ) {
@@ -241,11 +246,28 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 			if ( '' !== $active_class ) {
 				$active_class .= ' ' . sanitize_title( $item->title );
 			} else {
-				$active_class = ' class="' . sanitize_title( $item->title ) . '"';
+				$active_class = sanitize_title( $item->title );
 			}
 		}
 
+		if ( ! isset( $args->item_classes ) || 'values' !== $args->item_classes ) {
+			$custom_classes = $this->get_custom_classes( $item->classes );
+			if ( '' !== $active_class ) {
+				$active_class .= ' ' . $custom_classes;
+			} else {
+				$active_class = $custom_classes;
+			}
+		}
+
+		if ( '' !== $active_class ) {
+			$active_class = ' class="' . $active_class . '"';
+		}
+
 		$output .= '<li' . $active_class . '><a href="' . $url . '">' . $item->title . '</a>';
+
+		if ( isset( $has_form ) && true === $has_form ) {
+			$output .= $form;
+		}
 
 		if ( 'Your MinnPost' === $item->title ) {
 			$output .= '<button class="menu-toggle" aria-controls="user-account-management" aria-expanded="false">' . esc_html( 'Sections', 'minnpost-largo' ) . '</button>';
@@ -255,6 +277,23 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 	// end item with a </li>
 	public function end_el( &$output, $item, $depth = 0, $args = array() ) {
 		$output .= '</li>';
+	}
+
+	/**
+	* Return the custom classes added in the admin by filtering out the default WordPress classes
+	*
+	* @param array $all_classes
+	* @return string $custom_classes
+	*
+	*/
+	private function get_custom_classes( $all_classes ) {
+		$custom_classes = array_filter(
+			$all_classes,
+			function( $value ) {
+				return ( str_replace( [ 'menu-', 'page_', 'page-' ], '', $value ) != $value ) ? false : true;
+			}
+		);
+		return implode( ' ', $custom_classes );
 	}
 }
 
@@ -326,22 +365,26 @@ if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
 			if ( array_key_exists( 'users', $wp_query->query_vars ) ) {
 				$wp_admin_bar->remove_menu( 'edit' );
 				if ( current_user_can( 'edit_user', $user_id ) && $edit_user_link = get_edit_user_link( $user_id ) ) {
-					$wp_admin_bar->add_menu( array(
-						'id'    => 'edit',
-						'title' => __( 'Edit User' ),
-						'href'  => $edit_user_link,
-					) );
+					$wp_admin_bar->add_menu(
+						array(
+							'id'    => 'edit',
+							'title' => __( 'Edit User' ),
+							'href'  => $edit_user_link,
+						)
+					);
 				}
 			}
 
 			if ( isset( $post ) && ( $post->post_parent === $user_parent_id || $post->ID === $user_parent_id )
 				&& current_user_can( 'edit_user', $user_id )
 				&& $edit_user_link = get_edit_user_link( $user_id ) ) {
-				$wp_admin_bar->add_menu( array(
-					'id'    => 'edit',
-					'title' => __( 'Edit User' ),
-					'href'  => $edit_user_link,
-				) );
+				$wp_admin_bar->add_menu(
+					array(
+						'id'    => 'edit',
+						'title' => __( 'Edit User' ),
+						'href'  => $edit_user_link,
+					)
+				);
 			}
 			if ( is_admin() ) {
 				$current_screen = get_current_screen();
@@ -349,11 +392,13 @@ if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
 					&& ( $user_object = get_userdata( $user_id ) )
 					&& $user_object->exists()
 					&& $view_link = site_url( '/users/' . $user_id . '/' ) ) {
-					$wp_admin_bar->add_menu( array(
-						'id'    => 'view',
-						'title' => __( 'View User' ),
-						'href'  => $view_link,
-					) );
+					$wp_admin_bar->add_menu(
+						array(
+							'id'    => 'view',
+							'title' => __( 'View User' ),
+							'href'  => $view_link,
+						)
+					);
 				}
 			}
 		}
