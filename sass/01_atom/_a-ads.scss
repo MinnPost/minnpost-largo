@@ -34,10 +34,6 @@
 	}*/
 }
 
-.ad-#{$top-ad-size} {
-	width: 100%;
-}
-
 main .ad-middle,
 main .ad-x100,
 main .ad-x101,
@@ -87,11 +83,6 @@ main .ad-x110 {
 			max-height: none;
 		}*/
 	}
-	.ad-#{$top-ad-size} {
-		width: $ad-top-width;
-		height: $ad-top-height;
-		margin: 0 auto;
-	}
 	main .ad-middle,
 	main .ad-x100,
 	main .ad-x101,
@@ -110,9 +101,6 @@ main .ad-x110 {
 }
 
 @media screen and (min-width: $max-width-page) {
-	.ad-#{$top-ad-size} {
-		float: left;
-	}
 	.ad-topright {
 		display: block;
 	}
