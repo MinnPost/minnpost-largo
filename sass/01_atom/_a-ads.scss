@@ -52,8 +52,8 @@ main .ad-x110 {
 
 .o-site-sidebar .acm-ad {
 	@include clearfix;
+	margin-bottom: $standard-page-margin;
 	&.acm-ad-placeholder {
-		margin-bottom: $standard-page-margin;
 		text-align: center;
 	}
 }
