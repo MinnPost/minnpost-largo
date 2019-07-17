@@ -21,7 +21,7 @@
 	}
 }
 
-main .ad-middle,
+main .ad-middle, main .ad-Middle,
 main .ad-x100,
 main .ad-x101,
 main .ad-x102,
@@ -43,8 +43,9 @@ main .ad-x110 {
 	}
 }
 
-.ad-middle3 {
+.ad-middle3, .ad-Middle3 {
 	margin-bottom: $standard-page-margin;
+	border-bottom: 1px solid $color__gray-lightest;
 	div {
 		@include clearfix;
 	}
