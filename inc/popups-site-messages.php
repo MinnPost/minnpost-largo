@@ -208,6 +208,11 @@ if ( ! function_exists( 'minnpost_site_message_conditionals' ) ) :
 			'method'     => 'minnpost_user_is_member',
 			'has_params' => false,
 		);
+		$conditionals['user'][] = array(
+			'name'       => 'is_sustaining_member',
+			'method'     => 'minnpost_user_is_sustaining_member',
+			'has_params' => false,
+		);
 		return $conditionals;
 	}
 endif;
