@@ -540,6 +540,7 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 		if ( 'on' === $prevent_lazy_load ) {
 			$lazy_load = false;
 		}
+		$attributes = array();
 		if ( false === $lazy_load ) {
 			if ( isset( $attributes['class'] ) ) {
 				$attributes['class'] .= ' ';
