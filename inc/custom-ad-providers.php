@@ -18,7 +18,8 @@
 if ( ! function_exists( 'minnpost_acm_whitelisted_conditionals' ) ) :
 	add_filter( 'acm_whitelisted_conditionals', 'minnpost_acm_whitelisted_conditionals' );
 	function minnpost_acm_whitelisted_conditionals( $conditionals ) {
-		$conditionals[] = 'minnpost_is_post_type';
+		$conditionals[] = 'has_primary_category';
+		$conditionals[] = 'is_post_type';
 		$conditionals[] = 'is_post_type_archive';
 		$conditionals[] = 'is_feed';
 		return $conditionals;
