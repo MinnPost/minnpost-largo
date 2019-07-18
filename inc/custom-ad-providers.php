@@ -22,6 +22,7 @@ if ( ! function_exists( 'minnpost_acm_whitelisted_conditionals' ) ) :
 		$conditionals[] = 'is_post_type';
 		$conditionals[] = 'is_post_type_archive';
 		$conditionals[] = 'is_feed';
+		sort( $conditionals );
 		return $conditionals;
 	}
 endif;
