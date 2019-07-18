@@ -46,7 +46,7 @@ main .ad-x110 {
 .ad-middle3, .ad-Middle3 {
 	margin-bottom: $standard-page-margin;
 	border-bottom: 1px solid $color__gray-lightest;
-	padding: 0.5em 0.5em 0 0.5em;
+	padding: 0.5em;
 	div {
 		@include clearfix;
 	}
@@ -56,6 +56,7 @@ main .ad-x110 {
 	margin-bottom: $standard-page-margin;
 	border-bottom: 1px solid $color__gray-lightest;
 	background-color: $color__minnpost-white;
+	padding-bottom: 0.5em;
 	.ad-middle3, .ad-Middle3 {
 		margin-bottom: 0;
 		border-bottom: 0;
