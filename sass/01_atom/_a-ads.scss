@@ -51,6 +51,25 @@ main .ad-x110 {
 	}
 }
 
+.acm-ad-wrapper.ad-middle3, .acm-ad-wrapper.ad-Middle3 {
+	margin-bottom: $standard-page-margin;
+	border-bottom: 1px solid $color__gray-lightest;
+	background-color: $color__minnpost-white;
+	padding: 0.5em;
+	.ad-middle3, .ad-Middle3 {
+		margin-bottom: 0;
+		border-bottom: 0;
+	}
+	header {
+		text-transform: uppercase;
+		font-family: $font__sans;
+	    font-size: $meta-font-size;
+	    padding: 0.5em;
+	    margin-bottom: 1em;
+	    color: palette(grey, light);
+	}
+}
+
 .o-site-sidebar .acm-ad {
 	@include clearfix;
 	margin-bottom: $standard-page-margin;
