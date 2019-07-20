@@ -40,6 +40,8 @@ get_header(); ?>
 				<?php endif; ?>
 			<?php endif; ?>
 
+			<?php do_action( 'wp_message_inserter', 'homepage_middle' ); ?>
+
 			<div class="m-ad-region m-ad-region-home">
 				<?php do_action( 'acm_tag', 'Middle3' ); ?>
 			</div>
