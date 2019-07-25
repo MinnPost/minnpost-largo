@@ -21,7 +21,7 @@ msgstr ""
 msgid "No comments yet"
 msgstr ""
 
-#: header.php:44
+#: header.php:37
 msgid "Menu"
 msgstr ""
 
@@ -385,7 +385,7 @@ msgstr ""
 msgid "Body"
 msgstr ""
 
-#: inc/custom-fields.php:769, inc/menus.php:19
+#: inc/custom-fields.php:769, inc/menus.php:18
 msgid "Featured Columns"
 msgstr ""
 
@@ -629,27 +629,23 @@ msgstr ""
 msgid "Footer Primary"
 msgstr ""
 
-#: inc/menus.php:18
-msgid "Footer Secondary"
-msgstr ""
-
-#: inc/menus.php:20
+#: inc/menus.php:19
 msgid "Network Menu"
 msgstr ""
 
-#: inc/menus.php:21
+#: inc/menus.php:20
 msgid "Primary"
 msgstr ""
 
-#: inc/menus.php:22
+#: inc/menus.php:21
 msgid "User Account Access Menu"
 msgstr ""
 
-#: inc/menus.php:23
+#: inc/menus.php:22
 msgid "User Account Management Menu"
 msgstr ""
 
-#: inc/menus.php:588
+#: inc/menus.php:596
 msgid "&#x1F6BD; Flush Object Cache"
 msgstr ""
 
@@ -796,6 +792,11 @@ msgstr ""
 
 #: inc/user-accounts.php:212
 msgid "You are not allowed to access this part of the site"
+msgstr ""
+
+#. translators: 1 is the site name
+#: template-parts/logo.php:5
+msgid "Return to %1$s Homepage"
 msgstr ""
 
 #: user-account-management-templates/front-end/account-preferences-form.php:30
