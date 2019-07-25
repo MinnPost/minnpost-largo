@@ -330,6 +330,35 @@ if ( ! function_exists( 'minnpost_user_is_sustaining_member' ) ) :
 	}
 endif;
 
+
+/**
+* Return additional conditional fields for message disply
+*
+* @param int $group_id
+* @param string $prefix
+* @return array $conditional_fields
+*/
+if ( ! function_exists( 'minnpost_largo_message_conditional_fields' ) ) :
+	add_filter( 'wp_message_inserter_add_group_conditional_fields', 'minnpost_largo_message_conditional_fields', 10, 2 );
+	function minnpost_largo_message_conditional_fields( $group_id, $prefix ) {
+		$conditional_fields   = array();
+		$conditional_fields[] = array(
+			'name'       => __( 'Emails to match', 'minnpost-largo' ),
+			'id'         => $prefix . 'emails_to_match',
+			'type'       => 'multicheck',
+			'desc'       => __( 'If you check values here, users who are subscribed to all of them will match. If you leave it unchecked, users who get ANY of the possible emails will match.', 'minnpost-largo' ),
+			'options'    => minnpost_email_options(),
+			'default'    => 'none',
+			'attributes' => array(
+				'required'               => false,
+				'data-conditional-id'    => wp_json_encode( array( $group_id, $prefix . 'conditional' ) ),
+				'data-conditional-value' => 'gets_emails',
+			),
+		);
+		return $conditional_fields;
+	}
+endif;
+
 /**
 * Check to see if the user's newsletters match any of the one(s) we're checking against from the settings.
 *
