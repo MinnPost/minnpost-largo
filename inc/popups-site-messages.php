@@ -507,9 +507,6 @@ if ( ! function_exists( 'minnpost_email_options' ) ) :
 				$resource_type     = $minnpost_form_processor_mailchimp->get_data->get_resource_type( $shortcode );
 				$resource_id       = $minnpost_form_processor_mailchimp->get_data->get_resource_id( $shortcode );
 				$mc_resource_items = $minnpost_form_processor_mailchimp->get_data->get_mc_resource_items( $resource_type, $resource_id );
-
-				//error_log( 'items is ' . print_r( $mc_resource_items, true ) );
-
 				foreach ( $mc_resource_items as $item ) {
 					$emails[ $item['id'] ] = $item['text'];
 				}
