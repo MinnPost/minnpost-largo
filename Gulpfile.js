@@ -129,7 +129,7 @@ function sasslint() {
 }
 
 function adminscripts() {
-  return gulp.src(config.scripts.admin_src)
+  return gulp.src(config.scripts.admin_src, { allowEmpty: true })
     .pipe(sourcemaps.init())
     .pipe(babel({
       presets: ['@babel/preset-env']
