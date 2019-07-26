@@ -40,6 +40,16 @@
 	    small {
 	    	font-size: 74%;
 	    }
+	    // hide honeypots
+		.m-form-user .m-user-field-shift {
+			left: -9999px;
+			position: absolute;
+		}
+		// if html is rtl, switch the honeypots
+		html[dir="rtl"] .m-form-user .m-user-field-shift {
+			right: -9999px;
+			left: auto;
+		}
     }
 }
 
