@@ -1102,10 +1102,12 @@ if ( ! function_exists( 'get_member_levels' ) ) :
 				return array();
 			}
 		}
-		$minnpost_membership = MinnPost_Membership::get_instance();
-		$member_values       = $minnpost_membership->member_levels->get_member_levels();
-		foreach ( $member_values as $key => $value ) {
-			$values[ $key + 1 ] = $value['name'];
+		if ( function_exists( 'minnpost_membership' ) ) {
+			$minnpost_membership = minnpost_membership();
+			$member_values       = $minnpost_membership->member_levels->get_member_levels();
+			foreach ( $member_values as $key => $value ) {
+				$values[ $key + 1 ] = $value['name'];
+			}
 		}
 		return $values;
 	}

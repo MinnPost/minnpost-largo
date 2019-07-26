@@ -77,43 +77,45 @@ if ( ! function_exists( 'minnpost_google_analytics_dimensions' ) ) :
 	add_action( 'wp_analytics_tracking_generator_custom_dimensions', 'minnpost_google_analytics_dimensions', 10, 1 );
 	function minnpost_google_analytics_dimensions( $dimensions ) {
 		// user dimension
-		$minnpost_membership = MinnPost_Membership::get_instance();
-		$user_id             = get_current_user_id();
-		if ( 0 !== $user_id ) {
-			$user_state = $minnpost_membership->user_info->user_member_level( $user_id )['name'];
-			if ( 'Non-member' === $user_state ) {
-				$value = 'Logged In Non-Member';
+		if ( function_exists( 'minnpost_membership' ) ) {
+			$minnpost_membership = minnpost_membership();
+			$user_id             = get_current_user_id();
+			if ( 0 !== $user_id ) {
+				$user_state = $minnpost_membership->user_info->user_member_level( $user_id )['name'];
+				if ( 'Non-member' === $user_state ) {
+					$value = 'Logged In Non-Member';
+				} else {
+					$value = get_bloginfo( 'name' ) . ' ' . $user_state;
+				}
 			} else {
-				$value = get_bloginfo( 'name' ) . ' ' . $user_state;
+				$value = 'Not Logged In';
 			}
-		} else {
-			$value = 'Not Logged In';
-		}
-		$dimensions['1'] = $value;
+			$dimensions['1'] = $value;
 
-		// remove id and post type dimensions if we're not on a singular post
-		if ( ! is_singular() ) {
-			unset( $dimensions['2'] );
-			unset( $dimensions['3'] );
-		}
-		if ( is_category() || is_tag() ) {
-			// categories and tags
-			$term            = get_queried_object();
-			$dimensions['2'] = $term->term_id;
-			$dimensions['3'] = $term->taxonomy;
-		} elseif ( is_author() ) {
-			// authors
-			$dimensions['2'] = get_queried_object_id();
-			$dimensions['3'] = 'author';
-		} elseif ( is_date() ) {
-			$dimensions['3'] = 'date';
-		} elseif ( is_post_type_archive() ) {
-			$dimensions['3'] = get_post_type();
-		}
+			// remove id and post type dimensions if we're not on a singular post
+			if ( ! is_singular() ) {
+				unset( $dimensions['2'] );
+				unset( $dimensions['3'] );
+			}
+			if ( is_category() || is_tag() ) {
+				// categories and tags
+				$term            = get_queried_object();
+				$dimensions['2'] = $term->term_id;
+				$dimensions['3'] = $term->taxonomy;
+			} elseif ( is_author() ) {
+				// authors
+				$dimensions['2'] = get_queried_object_id();
+				$dimensions['3'] = 'author';
+			} elseif ( is_date() ) {
+				$dimensions['3'] = 'date';
+			} elseif ( is_post_type_archive() ) {
+				$dimensions['3'] = get_post_type();
+			}
 
-		if ( is_single() && function_exists( 'minnpost_get_category_name' ) ) {
-			$post_id         = get_the_ID();
-			$dimensions['4'] = minnpost_get_category_name( $post_id );
+			if ( is_single() && function_exists( 'minnpost_get_category_name' ) ) {
+				$post_id         = get_the_ID();
+				$dimensions['4'] = minnpost_get_category_name( $post_id );
+			}
 		}
 
 		return $dimensions;
