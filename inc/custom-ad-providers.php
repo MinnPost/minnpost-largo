@@ -18,9 +18,11 @@
 if ( ! function_exists( 'minnpost_acm_whitelisted_conditionals' ) ) :
 	add_filter( 'acm_whitelisted_conditionals', 'minnpost_acm_whitelisted_conditionals' );
 	function minnpost_acm_whitelisted_conditionals( $conditionals ) {
-		$conditionals[] = 'minnpost_is_post_type';
+		$conditionals[] = 'has_primary_category';
+		$conditionals[] = 'is_post_type';
 		$conditionals[] = 'is_post_type_archive';
 		$conditionals[] = 'is_feed';
+		sort( $conditionals );
 		return $conditionals;
 	}
 endif;
@@ -42,10 +44,10 @@ if ( ! function_exists( 'acm_no_ad_users' ) ) :
 		if ( ! current_user_can( 'browse_without_ads' ) ) {
 			return $output_html;
 		} else {
-			if ( 'appnexus_head' === $tag_id ) {
+			if ( 'dfp_head' === $tag_id ) {
 				$output_html = '';
 			} else {
-				$output_html = '<div class="appnexus-ad appnexus-ad-placeholder ad-' . sanitize_title( $tag_id ) . '">AD: ' . $tag_id . '</div>';
+				$output_html = '<div class="acm-ad acm-ad-placeholder ad-' . sanitize_title( $tag_id ) . '">AD: ' . $tag_id . '</div>';
 			}
 		}
 		return $output_html;
@@ -68,7 +70,7 @@ if ( ! function_exists( 'minnpost_acm_ad_count' ) ) :
 endif;
 
 /**
-* Highest count available for the ad code table. This should always be set to a value higher than what we need.
+* Set the default ad provider for the theme.
 *
 * @param string $current_provider_slug
 * @return string $current_provider_slug
@@ -77,7 +79,7 @@ endif;
 if ( ! function_exists( 'minnpost_acm_default_provider' ) ) :
 	add_filter( 'acm_provider_slug', 'minnpost_acm_default_provider' );
 	function minnpost_acm_default_provider( $current_provider_slug ) {
-		$current_provider_slug = 'appnexus';
+		$current_provider_slug = 'arcads_dfp';
 		return $current_provider_slug;
 	}
 endif;

@@ -287,13 +287,17 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 	*
 	*/
 	private function get_custom_classes( $all_classes ) {
-		$custom_classes = array_filter(
-			$all_classes,
-			function( $value ) {
-				return ( str_replace( [ 'menu-', 'page_', 'page-' ], '', $value ) != $value ) ? false : true;
-			}
-		);
-		return implode( ' ', $custom_classes );
+		if ( is_array( $all_classes ) ) {
+			$custom_classes = array_filter(
+				$all_classes,
+				function( $value ) {
+					return ( str_replace( [ 'menu-', 'page_', 'page-' ], '', $value ) != $value ) ? false : true;
+				}
+			);
+			return implode( ' ', $custom_classes );
+		} else {
+			return '';
+		}
 	}
 }
 

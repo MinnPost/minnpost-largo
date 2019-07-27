@@ -6,9 +6,14 @@ figure, table, div.image {
 	break-inside: avoid;
 }
 
-.appnexus-ad, article .appnexus-ad {
+.acm-ad, article .acm-ad {
 	display: none;
 }
+
+.m-support-cta .a-support-button, .m-support-cta-bottom {
+	display: none;
+}
+
 header {
 	.a-site-branding {
 		float: none;

@@ -7,6 +7,31 @@
  */
 
 /**
+* Method for checking if a post has the supplied category as its primary
+*
+* @param int $category
+*
+* @return bool $has_primary_category
+*/
+if ( ! function_exists( 'has_primary_category' ) ) :
+	function has_primary_category( $category ) {
+		$has_primary_category = false;
+		if ( is_singular( 'post' ) ) {
+			$primary_category = get_post_meta( get_the_id(), '_category_permalink', true );
+			if ( isset( $primary_category['category'] ) && '' !== $primary_category['category'] ) {
+				//$has_primary_category = true;
+				$category_object = get_category_by_slug( $category );
+				$cat_id          = $category_object->term_id;
+				if ( (int) $cat_id === (int) $primary_category['category'] ) {
+					$has_primary_category = true;
+				}
+			}
+		}
+		return $has_primary_category;
+	}
+endif;
+
+/**
 * Method for checking if a type matches the type of the current post
 *
 * @param string $type
