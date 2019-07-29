@@ -22,7 +22,7 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 			echo $before_title . '<a href="' . esc_url( get_category_link( $category ) ) . '">' . $title . '</a>' . $after_title;
 		}
 		if ( '' !== $content ) {
-			echo $content;
+			echo wpautop( $content );
 		}
 
 		$glean_query_args = array(
@@ -39,6 +39,12 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 
 		<?php if ( $glean_query->have_posts() ) : ?>
 			<article id="<?php the_ID(); ?>" class="m-post m-post-glean">
+				<?php
+				$summary = get_term_meta( $category, '_mp_category_excerpt', true );
+				if ( '' !== $summary ) {
+					?>
+					<div class="a-glean-summary"><?php echo $summary; ?></div>
+				<?php } ?>
 				<!-- the loop -->
 				<?php $i = 0; while ( $glean_query->have_posts() ) : $glean_query->the_post(); ?>
 					<?php if ( 0 === $i ) : ?>
