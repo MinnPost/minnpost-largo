@@ -59,14 +59,13 @@ get_header(); ?>
 				<?php endif; ?>
 			<?php endif; ?>
 
-			<div class="m-ad-region m-ad-region-home">
-				<?php do_action( 'acm_tag', 'Middle3' ); ?>
-			</div>
-
 			<?php if ( function_exists( 'z_get_zone' ) ) : ?>
 				<?php $bottom_query = z_get_zone_query( 'homepage-bottom' ); ?>
 				<?php if ( $bottom_query->have_posts() ) : ?>
 					<section class="m-zone m-zone-homepage-bottom m-archive m-archive-excerpt">
+						<div class="m-ad-region m-ad-region-home">
+							<?php do_action( 'acm_tag', 'Middle3' ); ?>
+						</div>
 						<?php
 						while ( $bottom_query->have_posts() ) :
 							$bottom_query->the_post();

@@ -1,10 +1,17 @@
+.o-homepage-listing {
+	main {
+		display: flex;
+		flex-wrap: wrap;
+	}
+}
+
 // smallest screens just display as linear
 
 // media queries for homepage listing
 
 @media screen and (min-width: $more-than-logo-screen) {
 	.o-homepage-listing {
-		main {
+		.m-zone-homepage-bottom {
 			width: $size__main-smaller-screen;
 		}
 		.o-content-sidebar {
@@ -17,7 +24,7 @@
 
 @media screen and (min-width: $medium-screen) {
 	.o-homepage-listing {
-		main {
+		.m-zone-homepage-bottom {
 			width: $size__main-small-screen;
 		}
 		.o-content-sidebar {
@@ -30,7 +37,7 @@
 
 @media screen and (min-width: $medium-margins-too-small) {
 	.o-homepage-listing {
-		main {
+		.m-zone-homepage-bottom {
 			width: $size__main-large-screen;
 		}
 		.o-content-sidebar {
@@ -43,7 +50,7 @@
 
 @media screen and (min-width: $nav-breaks) {
 	.o-homepage-listing {
-		main {
+		.m-zone-homepage-bottom {
 			width: $size__main-small-screen;
 		}
 		.o-content-sidebar {
@@ -56,7 +63,7 @@
 
 @media screen and (min-width: $max-width-page) {
 	.o-homepage-listing {
-		main {
+		.m-zone-homepage-bottom {
 			width: $size__main-large-screen;
 		}
 		.o-content-sidebar {
