@@ -43,9 +43,6 @@
 					}
 				}
 				.m-form-container {
-					display: flex;
-					flex-wrap: wrap;
-					justify-content: space-around;
 					padding: 0 1.5em;
 				}
 				p {
@@ -58,3 +55,21 @@
 		}
 	}
 }
+
+// media queries for content message boxes
+@media screen and (min-width: $max-width-medium) {
+	.o-content-message {
+		&.o-content-message-homepage {
+			.o-content-message-homepage-body {
+				.m-form-frontpage.m-form-minnpost-form-processor-mailchimp {
+					.m-form-container {
+						display: flex;
+						flex-wrap: wrap;
+						justify-content: space-around;
+					}
+				}
+			}
+		}
+	}
+}
+
