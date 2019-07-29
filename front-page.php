@@ -74,13 +74,12 @@ get_header(); ?>
 						endwhile;
 						?>
 					</section>
+					<aside id="content-sidebar" class="o-content-sidebar" role="complementary">
+						<?php dynamic_sidebar( 'sidebar-2' ); ?>
+					</aside>
 				<?php endif; ?>
 			<?php endif; ?>
 		</main><!-- #main -->
-
-		<aside id="content-sidebar" class="o-content-sidebar" role="complementary">
-			<?php dynamic_sidebar( 'sidebar-2' ); ?>
-		</aside>
 
 	</div><!-- #primary -->
 
