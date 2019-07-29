@@ -77,7 +77,7 @@ if ( ! function_exists( 'minnpost_largo_widgets_init' ) ) :
 				'name'          => __( 'Homepage Glean', 'minnpost_largo' ),
 				'id'            => 'sidebar-4',
 				'description'   => __( 'This should only contain the Glean that sits within the homepage content flow.', 'minnpost_largo' ),
-				'before_widget' => '<section id="%1$s" class="o-sidebar-glean o-sidebar-glean-home-content %2$s">',
+				'before_widget' => '<section id="%1$s" class="m-widget-glean m-widget-glean-home-content %2$s">',
 				'after_widget'  => '</section>',
 				'before_title'  => '<h3 class="a-widget-title">',
 				'after_title'   => '</h3>',
