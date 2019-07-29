@@ -28,6 +28,7 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 			$image_id  = $image_data['image_id'];
 			$image_url = $image_data['image_url'];
 			$image     = $image_data['markup'];
+			$size      = $image_data['size'];
 		}
 
 		if ( post_password_required() || is_attachment() || ( ! isset( $image_id ) && ! isset( $image_url ) ) || empty( $image ) || false === $id ) {
@@ -54,7 +55,7 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 		<?php elseif ( is_singular( 'newsletter' ) ) : ?>
 			<?php echo $image; ?>
 		<?php else : ?>
-			<a class="m-post-image m-post-thumbnail" href="<?php the_permalink( $id ); ?>" aria-hidden="true">
+			<a class="m-post-image m-post-thumbnail m-post-thumbnail-<?php echo $size; ?>" href="<?php the_permalink( $id ); ?>" aria-hidden="true">
 				<?php
 				echo $image;
 				?>
@@ -86,6 +87,9 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 		// home has its own size field
 		if ( is_home() && 'feature' === $size ) {
 			$size = esc_html( get_post_meta( $id, '_mp_post_homepage_image_size', true ) );
+			if ( 'full' === $size ) {
+				$size = 'large';
+			}
 		} elseif ( is_home() && 'thumbnail' === $size ) {
 			$size = 'thumbnail';
 		} else {
@@ -175,6 +179,7 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 			'image_id'  => $image_id,
 			'image_url' => $image_url,
 			'markup'    => $image,
+			'size'      => $size,
 		);
 		return $image_data;
 	}

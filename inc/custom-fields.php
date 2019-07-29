@@ -337,6 +337,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 					'feature-medium' => __( 'Medium', 'minnpost-largo' ),
 					'none'           => __( 'Do not display image', 'minnpost-largo' ),
 					'feature-large'  => __( 'Large', 'minnpost-largo' ),
+					'full'           => __( 'Full size', 'minnpost-largo' ),
 				),
 			)
 		);
