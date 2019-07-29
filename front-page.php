@@ -59,6 +59,12 @@ get_header(); ?>
 				<?php endif; ?>
 			<?php endif; ?>
 
+			<aside class="o-content-message o-content-message-homepage">
+				<article class="o-content-message-body o-content-message-homepage-body">
+					<?php echo do_shortcode( '[newsletter_form placement="frontpage" content_before="<header><h3 class=\'a-signup-title-homepage\'>Stay informed</h3><h4>Sign up for our daily newsletter</h4></header>" content_after="<p>Or, see our <a href=\'/subscribe/\'>other newsletter options</a></p>" in_content_label="Enter your email" in_content_label_placement="after"]' ); ?>
+				</article>
+			</aside>
+
 			<?php if ( function_exists( 'z_get_zone' ) ) : ?>
 				<?php $bottom_query = z_get_zone_query( 'homepage-bottom' ); ?>
 				<?php if ( $bottom_query->have_posts() ) : ?>
