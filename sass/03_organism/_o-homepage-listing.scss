@@ -1,7 +1,10 @@
 .o-homepage-listing {
-	main {
-		display: flex;
-		flex-wrap: wrap;
+	//main {
+	display: flex;
+	flex-wrap: wrap;
+	//}
+	&#home-second {
+		order: 4;
 	}
 }
 
@@ -63,6 +66,9 @@
 
 @media screen and (min-width: $max-width-page) {
 	.o-homepage-listing {
+		&#home-second {
+			order: unset;
+		}
 		.m-zone-homepage-bottom {
 			width: $size__main-large-screen;
 		}

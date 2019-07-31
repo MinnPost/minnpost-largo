@@ -10,8 +10,8 @@
  */
 
 get_header(); ?>
-	<div id="primary" class="m-layout-primary o-homepage-listing">
-		<main id="main" class="site-main m-homepage-zones">
+	<main id="main" class="site-main m-homepage-zones">
+		<div id="home-first" class="m-layout-primary o-homepage-listing">
 			<?php if ( function_exists( 'z_get_zone' ) ) : ?>
 				<?php $top_query = z_get_zone_query( 'homepage-top' ); ?>
 				<?php if ( $top_query->have_posts() ) : ?>
@@ -58,13 +58,17 @@ get_header(); ?>
 					<?php endif; ?>
 				<?php endif; ?>
 			<?php endif; ?>
+		</div>
 
-			<aside class="o-content-message o-content-message-homepage">
-				<article class="o-content-message-body o-content-message-homepage-body">
-					<?php echo do_shortcode( '[newsletter_form placement="frontpage" content_before="<header><h3 class=\'a-signup-title-homepage\'>Stay informed</h3><h4>Sign up for our daily newsletter</h4></header>" content_after="<p>Or, see our <a href=\'/subscribe/\'>other free newsletter options</a></p>" in_content_label="Enter your email address" in_content_label_placement="after"]' ); ?>
-				</article>
-			</aside>
+		<?php get_sidebar( 'first' ); ?>
 
+		<aside class="o-content-message o-content-message-homepage">
+			<article class="o-content-message-body o-content-message-homepage-body">
+				<?php echo do_shortcode( '[newsletter_form placement="frontpage" content_before="<header><h3 class=\'a-signup-title-homepage\'>Stay informed</h3><h4>Sign up for our daily newsletter</h4></header>" content_after="<p>Or, see our <a href=\'/subscribe/\'>other free newsletter options</a></p>" in_content_label="Enter your email address" in_content_label_placement="after"]' ); ?>
+			</article>
+		</aside>
+
+		<div id="home-second" class="m-layout-primary o-homepage-listing">
 			<?php if ( function_exists( 'z_get_zone' ) ) : ?>
 				<?php $bottom_query = z_get_zone_query( 'homepage-bottom' ); ?>
 				<?php if ( $bottom_query->have_posts() ) : ?>
@@ -84,10 +88,11 @@ get_header(); ?>
 					</aside>
 				<?php endif; ?>
 			<?php endif; ?>
-		</main><!-- #main -->
+		</div>
 
-	</div><!-- #primary -->
+		<?php get_sidebar( 'second' ); ?>
+
+	</main>		
 
 <?php
-get_sidebar();
 get_footer();

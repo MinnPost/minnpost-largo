@@ -3,6 +3,7 @@
 		width: 100%;
 		margin-bottom: $standard-page-margin;
 		border-bottom: 1px solid $color__gray-lightest;
+		order: 1;
 		.o-content-message-homepage-body {
 			background: $_color-base-blue;
 			color: $color__white;
@@ -73,3 +74,10 @@
 	}
 }
 
+@media screen and (min-width: $max-width-page) {
+	.o-content-message {
+		&.o-content-message-homepage {
+			order: unset;
+		}
+	}
+}

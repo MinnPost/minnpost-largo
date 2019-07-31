@@ -13,14 +13,18 @@
 	margin: 0;
 }
 
-.m-zone-homepage-top.m-archive-top.m-archive-has-1-post .m-post-thumbnail-feature-large,
-.m-zone-homepage-top.m-archive-top.m-archive-has-1-post .m-post-thumbnail-feature-medium {
-	float: left;
-	margin-right: $standard-page-margin;
-}
 
+// media queries for post images
 @media screen and (min-width: 350px) {
 	.m-archive-top .m-post-image, .m-archive-excerpt .m-post-image {
 		float: left;
+	}
+}
+
+@media screen and (min-width: $medium-screen) {
+	.m-zone-homepage-top.m-archive-top.m-archive-has-1-post .m-post-thumbnail-feature-large,
+	.m-zone-homepage-top.m-archive-top.m-archive-has-1-post .m-post-thumbnail-feature-medium {
+		float: left;
+		margin-right: $standard-page-margin;
 	}
 }
