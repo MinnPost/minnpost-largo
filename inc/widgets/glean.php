@@ -26,7 +26,7 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 		}
 
 		$glean_query_args = array(
-			'posts_per_page' => 2,
+			'posts_per_page' => 1,
 			'cat'            => $category,
 			'orderby'        => 'date',
 		);
@@ -46,7 +46,11 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 					<div class="a-glean-summary"><?php echo $summary; ?></div>
 				<?php } ?>
 				<!-- the loop -->
-				<?php $i = 0; while ( $glean_query->have_posts() ) : $glean_query->the_post(); ?>
+				<?php
+				$i = 0;
+				while ( $glean_query->have_posts() ) :
+						$glean_query->the_post();
+					?>
 					<?php if ( 0 === $i ) : ?>
 						<header class="m-entry-header">
 							<?php the_title( '<h3 class="a-entry-title a-spill-entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
@@ -65,12 +69,13 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 							<?php the_excerpt(); ?>
 						</div><!-- .m-entry-excerpt -->
 					<?php else : ?>
-						<p><a href="<?php the_permalink(); ?>">Read <?php the_date('l A'); ?> edition</a></p>
+						<p><a href="<?php the_permalink(); ?>">Read <?php the_date( 'l A' ); ?> edition</a></p>
 					<?php endif; ?>
-				<?php $i++; endwhile; ?>
+					<?php
+					$i++;
+			endwhile;
+				?>
 				<!-- end of the loop -->
-				<p class="a-more a-glean-more"><a href="<?php echo esc_url( get_category_link( $category ) ); ?>">More</a></p>
-
 				<?php wp_reset_postdata(); ?>
 			</article>
 
