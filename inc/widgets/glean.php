@@ -19,10 +19,16 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 		}
 		if ( $title ) {
 			$before_title = str_replace( 'widget-title', 'a-widget-title', $before_title );
+			if ( '' !== $content ) {
+				$title = sprintf(
+					'<span>%1$s</span>: %2$s',
+					$title,
+					$content
+				);
+			} else {
+				$title = '<span>' . $title . '</span>';
+			}
 			echo $before_title . '<a href="' . esc_url( get_category_link( $category ) ) . '">' . $title . '</a>' . $after_title;
-		}
-		if ( '' !== $content ) {
-			echo wpautop( $content );
 		}
 
 		$glean_query_args = array(
@@ -39,12 +45,6 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 
 		<?php if ( $glean_query->have_posts() ) : ?>
 			<article id="<?php the_ID(); ?>" class="m-post m-post-glean">
-				<?php
-				$summary = get_term_meta( $category, '_mp_category_excerpt', true );
-				if ( '' !== $summary ) {
-					?>
-					<div class="a-glean-summary"><?php echo $summary; ?></div>
-				<?php } ?>
 				<!-- the loop -->
 				<?php
 				$i = 0;

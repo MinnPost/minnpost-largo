@@ -11,15 +11,17 @@
 		margin-bottom: $standard-page-margin;
 		.a-widget-title {
 			font-size: 123.1%;
-			text-transform: uppercase;
 			font-family: $font__headings;
 			font-weight: normal;
 			background: $color__minnpost-red;
 			margin-bottom: 0;
+			span {
+				text-transform: uppercase;
+			}
 			a {
 				display: block;
 				color: $color__white;
-				padding: 10px 16px 5px 16px;
+				padding: 10px 16px;
 			}
 		}
 		article.m-post-glean {
