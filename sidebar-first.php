@@ -20,16 +20,9 @@ if ( isset( $remove_sidebar ) && 'on' === $remove_sidebar ) {
 
 	<?php if ( is_home() && function_exists( 'z_get_zone' ) ) : ?>
 		<?php
-		$recommended_zone        = 'homepage-recommended';
-		$show_recommended_number = 4;
-		$zone                    = z_get_zone( $recommended_zone );
-		$recommended_query       = z_get_zone_query(
-			$recommended_zone,
-			array(
-				'posts_per_page' => $show_recommended_number,
-				'order'          => 'rand',
-			)
-		);
+		$recommended_zone  = 'homepage-recommended';
+		$zone              = z_get_zone( $recommended_zone );
+		$recommended_query = z_get_zone_query( $recommended_zone );
 		?>
 		<?php if ( $recommended_query->have_posts() ) : ?>
 			<section class="m-zone m-zone-sidebar m-zone-sidebar-recommended">
