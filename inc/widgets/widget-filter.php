@@ -132,7 +132,7 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 	// target most commented widget
 	if ( false !== strpos( $widget_output, 'class="m-widget m-widget-most-commented"' ) && 'most-commented' == $widget_type ) {
 		$widget_output = str_replace( '<div id="most-commented-', '<section id="most-commented-widget-', $widget_output );
-		$widget_output = str_replace( '</ul></div>', '</ul></section>', $widget_output );
+		$widget_output = str_replace( '</ul></div>', '</ul></div></section>', $widget_output );
 		$widget_output = str_replace( '<ul', '<div class="m-widget-contents"><ul', $widget_output );
 	}
 
