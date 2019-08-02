@@ -60,6 +60,14 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 	// target minnpost spill widget
 	if ( false !== strpos( $widget_output, 'm-widget m-minnpost-spills-widget' ) && 'minnpostspills_widget' == $widget_type ) {
 		$widget_output = str_replace( '<div id="minnpostspills_widget-', '<section id="minnpostspills_widget-', $widget_output );
+		$widget_output = str_replace(
+			'</div>
+
+		
+		</div>',
+			'</div></div>',
+			$widget_output
+		);
 		$widget_output = str_replace( '</div></div>', '</div></section>', $widget_output );
 		$widget_output = str_replace( '<div class="m-widget m-minnpost-spills-widget ', '<section class="m-widget m-minnpost-spills-widget ', $widget_output );
 	}
