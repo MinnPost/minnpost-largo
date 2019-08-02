@@ -30,6 +30,10 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 		if ( false !== strpos( $widget_output, 'a-sponsor-list' ) ) {
 			$widget_output = str_replace( 'class="m-widget m-widget-text m-widget-custom-html"', 'class="m-widget m-widget-text m-widget-custom-html m-widget-sponsor-list"', $widget_output );
 		}
+		// picked for you
+		if ( false !== strpos( $widget_output, '<h3 class="a-widget-title">Picked for you</h3>' ) ) {
+			$widget_output = str_replace( 'class="m-widget m-widget-text m-widget-custom-html"', 'class="m-widget m-widget-text m-widget-custom-html m-widget-picked-for-you"', $widget_output );
+		}
 		$widget_output = str_replace( '</div></div>', '</div></section>', $widget_output );
 
 		$html = '';
