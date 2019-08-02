@@ -53,6 +53,20 @@
 					}
 				}
 			}
+			.m-form-frontpage.m-form-minnpost-form-processor-mailchimp-submitted {
+				.m-form-message {
+					margin: 0;
+					padding: 1em;
+					width: 100%;
+					max-width: 100%;
+					color: $color__white;
+					font-size: $content-font-size;
+					line-height: $base-line-height;
+				}
+				fieldset {
+					display: none;
+				}
+			}
 		}
 	}
 }
@@ -63,6 +77,11 @@
 			.o-content-message-homepage-body {
 				.m-form-frontpage.m-form-minnpost-form-processor-mailchimp {
 					fieldset {
+						max-width: 75%;
+					}
+				}
+				.m-form-frontpage.m-form-minnpost-form-processor-mailchimp-submitted {
+					.m-form-message {
 						max-width: 75%;
 					}
 				}
@@ -84,6 +103,11 @@
 						fieldset {
 							max-width: 55%;
 						}
+					}
+				}
+				.m-form-frontpage.m-form-minnpost-form-processor-mailchimp-submitted {
+					.m-form-message {
+						max-width: 55%;
 					}
 				}
 			}
