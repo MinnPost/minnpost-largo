@@ -589,9 +589,12 @@ if ( function_exists( 'wp_cache_flush' ) ) :
 
 		if ( isset( $_GET['flush-cache-button'] ) && 'flush' === $_GET['flush-cache-button'] && wp_verify_nonce( $_GET['_wpnonce'], 'flush-cache-button' ) ) {
 			wp_cache_flush();
-			add_action( 'admin_notices', function () {
-				echo '<div class="notice notice-success is-dismissible"><p>Object Cache flushed.</p></div>';
-			} );
+			add_action(
+				'admin_notices',
+				function () {
+					echo '<div class="notice notice-success is-dismissible"><p>Object Cache flushed.</p></div>';
+				}
+			);
 		}
 
 		$dashboard_url = admin_url( add_query_arg( 'flush-cache-button', 'flush', 'index.php' ) );
