@@ -1,7 +1,4 @@
 .o-site-sidebar {
-	&#secondary-first, #secondary-second {
-		//display: flex;
-	}
 	&#secondary-first {
 		order: 2;
 	}
@@ -35,16 +32,11 @@
 		}
 	}
 }
-@media screen and (min-width: $large-screen) {
-	.o-site-sidebar {
-		
-	}
-}
 @media screen and (min-width: $max-width-page) {
 	.o-site-sidebar {
 	    width: $size__site-sidebar;
 	    margin-left: auto;
-	    &#secondary-first, #secondary-second {
+	    &#secondary-first, &#secondary-second {
 			order: unset;
 			display: block;
 		}
