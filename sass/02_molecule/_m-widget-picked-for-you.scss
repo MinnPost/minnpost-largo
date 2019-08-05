@@ -1,0 +1,13 @@
+.o-site-sidebar section.m-widget-picked-for-you {
+	.a-widget-title {
+		text-transform: uppercase;
+		font-family: $font__headings;
+		font-weight: normal;
+		a {
+			color: $color__minnpost-red;
+		}
+	}
+	.m-widget-contents.m-custom-html-widget {
+		margin: .75em 0;
+	}
+}

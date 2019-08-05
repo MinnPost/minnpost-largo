@@ -1,16 +1,57 @@
-
-
-
-// media queries for sidebars
-@media screen and (min-width: $more-than-logo-screen) {
-	.o-content-sidebar {
-		margin-top: 0.5em; // this might be universally good but i am not sure yet
+.o-site-sidebar {
+	&#secondary-first, #secondary-second {
+		//display: flex;
+	}
+	&#secondary-first {
+		order: 2;
+	}
+	&#secondary-second {
+		order: 3;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		section {
+			width: 100%;
+		}
 	}
 }
 
+
+// media queries for sidebars
+
+@media screen and (min-width: $more-than-logo-screen) {
+	.o-site-sidebar {
+		&#secondary-second {
+			section {
+				width: calc(50% - 1em);
+			}
+		}
+	}
+}
+@media screen and (min-width: $size__ad-flexing) {
+	.o-site-sidebar {
+		&#secondary-first {
+			display: flex;
+		}
+	}
+}
+@media screen and (min-width: $large-screen) {
+	.o-site-sidebar {
+		
+	}
+}
 @media screen and (min-width: $max-width-page) {
 	.o-site-sidebar {
 	    width: $size__site-sidebar;
 	    margin-left: auto;
+	    &#secondary-first, #secondary-second {
+			order: unset;
+			display: block;
+		}
+		&#secondary-second {
+			section {
+				width: 100%;
+			}
+		}
 	}
 }

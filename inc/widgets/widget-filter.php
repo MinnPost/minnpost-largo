@@ -30,6 +30,10 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 		if ( false !== strpos( $widget_output, 'a-sponsor-list' ) ) {
 			$widget_output = str_replace( 'class="m-widget m-widget-text m-widget-custom-html"', 'class="m-widget m-widget-text m-widget-custom-html m-widget-sponsor-list"', $widget_output );
 		}
+		// picked for you
+		if ( false !== strpos( $widget_output, '<h3 class="a-widget-title">Picked for you</h3>' ) ) {
+			$widget_output = str_replace( 'class="m-widget m-widget-text m-widget-custom-html"', 'class="m-widget m-widget-text m-widget-custom-html m-widget-picked-for-you"', $widget_output );
+		}
 		$widget_output = str_replace( '</div></div>', '</div></section>', $widget_output );
 
 		$html = '';
@@ -60,6 +64,14 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 	// target minnpost spill widget
 	if ( false !== strpos( $widget_output, 'm-widget m-minnpost-spills-widget' ) && 'minnpostspills_widget' == $widget_type ) {
 		$widget_output = str_replace( '<div id="minnpostspills_widget-', '<section id="minnpostspills_widget-', $widget_output );
+		$widget_output = str_replace(
+			'</div>
+
+		
+		</div>',
+			'</div></div>',
+			$widget_output
+		);
 		$widget_output = str_replace( '</div></div>', '</div></section>', $widget_output );
 		$widget_output = str_replace( '<div class="m-widget m-minnpost-spills-widget ', '<section class="m-widget m-minnpost-spills-widget ', $widget_output );
 	}
@@ -124,7 +136,7 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 	// target most commented widget
 	if ( false !== strpos( $widget_output, 'class="m-widget m-widget-most-commented"' ) && 'most-commented' == $widget_type ) {
 		$widget_output = str_replace( '<div id="most-commented-', '<section id="most-commented-widget-', $widget_output );
-		$widget_output = str_replace( '</ul></div>', '</ul></section>', $widget_output );
+		$widget_output = str_replace( '</ul></div>', '</ul></div></section>', $widget_output );
 		$widget_output = str_replace( '<ul', '<div class="m-widget-contents"><ul', $widget_output );
 	}
 
