@@ -48,7 +48,7 @@
 	}
 }
 
-.m-membership-fast-select {
+.m-membership-choose-frequency, .m-membership-choose-amount {
 	#amount-item #amount {
 		border: 1px solid $color__border-input;
 	}
@@ -63,8 +63,9 @@
 		label {
 			background: $_color-base-gray;
 			color: $color__white;
-			font-family: $font__serif;
+			font-family: $font__sans;
 			border: 0;
+			border-radius: 1em;
 		}
 		input:checked + label {
 			background: $_color-base-blue;
