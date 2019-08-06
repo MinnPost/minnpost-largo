@@ -28,3 +28,11 @@
 		}
 	}
 }
+
+// media queries for sidebar zones
+@media screen and (min-width: $max-width-page) {
+	.m-zone-contents {
+		font-size: 84.6153846153846%;
+		line-height: 1;
+	}
+}
