@@ -98,6 +98,9 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 
 		if ( 'large' === $size ) {
 			$image_url = get_post_meta( $id, '_mp_post_main_image', true );
+			if ( is_home() && '' === $image_url ) {
+				$image_url = get_post_meta( $id, '_mp_post_thumbnail_image', true );
+			}
 		} elseif ( 'thumbnail' !== $size ) {
 			$image_url = get_post_meta( $id, '_mp_post_thumbnail_image_' . $size, true );
 		} else {
@@ -110,6 +113,8 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 		if ( 'large' === $size ) {
 			if ( '' !== $main_image_id ) {
 				$image_id = $main_image_id;
+			} elseif ( is_home() && '' !== $thumbnail_image_id ) {
+				$image_id = $thumbnail_image_id;
 			}
 		} else {
 			if ( '' !== $thumbnail_image_id ) {
