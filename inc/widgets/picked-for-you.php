@@ -11,7 +11,7 @@ if ( ! function_exists( 'minnpost_largo_user_has_topics' ) ) :
 		if ( 0 === $user_id ) {
 			return false;
 		}
-		$user_topics = get_user_meta( $user_id, '_reading_topics', true );
+		$user_topics = maybe_unserialize( get_user_meta( $user_id, '_reading_topics', true ) );
 		if ( '' === $user_topics || ! is_array( $user_topics ) ) {
 			return false;
 		} else {
@@ -37,10 +37,13 @@ if ( ! function_exists( 'minnpost_largo_picked_for_you' ) ) :
 			}
 		}
 
-		$user_topics = get_user_meta( $user_id, '_reading_topics', true );
-		foreach ( $user_topics as $name ) {
-			$category_id        = get_cat_ID( $name );
-			$query_categories[] = $category_id;
+		$user_topics = maybe_unserialize( get_user_meta( $user_id, '_reading_topics', true ) );
+		foreach ( $user_topics as $topic ) {
+			$term = get_term_by( 'slug', sanitize_title( $topic ), 'category' );
+			if ( false !== $term ) {
+				$cat_id             = $term->term_id;
+				$query_categories[] = $cat_id;
+			}
 		}
 
 		if ( $title ) {
