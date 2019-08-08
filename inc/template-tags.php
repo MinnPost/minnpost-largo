@@ -28,6 +28,7 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 			$image_id  = $image_data['image_id'];
 			$image_url = $image_data['image_url'];
 			$image     = $image_data['markup'];
+			$size      = $image_data['size'];
 		}
 
 		if ( post_password_required() || is_attachment() || ( ! isset( $image_id ) && ! isset( $image_url ) ) || empty( $image ) || false === $id ) {
@@ -54,12 +55,12 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 		<?php elseif ( is_singular( 'newsletter' ) ) : ?>
 			<?php echo $image; ?>
 		<?php else : ?>
-			<a class="m-post-image m-post-thumbnail" href="<?php the_permalink( $id ); ?>" aria-hidden="true">
+			<a class="m-post-image m-post-thumbnail m-post-thumbnail-<?php echo $size; ?>" href="<?php the_permalink( $id ); ?>" aria-hidden="true">
 				<?php
 				echo $image;
 				?>
 			</a>
-		<?php
+			<?php
 		endif; // End is_singular()
 	}
 endif;
@@ -86,6 +87,9 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 		// home has its own size field
 		if ( is_home() && 'feature' === $size ) {
 			$size = esc_html( get_post_meta( $id, '_mp_post_homepage_image_size', true ) );
+			if ( 'full' === $size ) {
+				$size = 'large';
+			}
 		} elseif ( is_home() && 'thumbnail' === $size ) {
 			$size = 'thumbnail';
 		} else {
@@ -94,6 +98,9 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 
 		if ( 'large' === $size ) {
 			$image_url = get_post_meta( $id, '_mp_post_main_image', true );
+			if ( is_home() && '' === $image_url ) {
+				$image_url = get_post_meta( $id, '_mp_post_thumbnail_image', true );
+			}
 		} elseif ( 'thumbnail' !== $size ) {
 			$image_url = get_post_meta( $id, '_mp_post_thumbnail_image_' . $size, true );
 		} else {
@@ -106,6 +113,8 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 		if ( 'large' === $size ) {
 			if ( '' !== $main_image_id ) {
 				$image_id = $main_image_id;
+			} elseif ( is_home() && '' !== $thumbnail_image_id ) {
+				$image_id = $thumbnail_image_id;
 			}
 		} else {
 			if ( '' !== $thumbnail_image_id ) {
@@ -118,6 +127,18 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 		if ( ! isset( $image_id ) ) {
 			$image_id  = '';
 			$image_url = '';
+		}
+
+		// handle prevention of lazy loading
+		$prevent_lazy_load = get_post_meta( $id, '_mp_prevent_lazyload', true );
+		if ( 'on' === $prevent_lazy_load ) {
+			$lazy_load = false;
+		}
+		if ( false === $lazy_load ) {
+			if ( isset( $attributes['class'] ) ) {
+				$attributes['class'] .= ' ';
+			}
+			$attributes['class'] .= 'no-lazy';
 		}
 
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
@@ -159,14 +180,11 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 			return;
 		}
 
-		if ( array_key_exists( 'wp_lozad_lazyload_convert_html', $GLOBALS['wp_filter'] ) && true === $lazy_load ) {
-			$image = apply_filters( 'wp_lozad_lazyload_convert_html', $image, array( 'html_tag' => 'img' ) );
-		}
-
 		$image_data = array(
 			'image_id'  => $image_id,
 			'image_url' => $image_url,
 			'markup'    => $image,
+			'size'      => $size,
 		);
 		return $image_data;
 	}
@@ -527,17 +545,31 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 			return '';
 		}
 
-		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
-			// this requires that the custom image sizes in custom-fields.php work correctly
-			$image     = wp_get_attachment_image( $image_id, $size );
-			$image_url = wp_get_attachment_url( $image_id );
-		} else {
-			$alt   = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
-			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
+		// handle prevention of lazy loading
+		$prevent_lazy_load = get_post_meta( $author_id, '_mp_prevent_lazyload', true );
+		if ( 'on' === $prevent_lazy_load ) {
+			$lazy_load = false;
+		}
+		$attributes = array();
+		if ( false === $lazy_load ) {
+			if ( isset( $attributes['class'] ) ) {
+				$attributes['class'] .= ' ';
+			}
+			$attributes['class'] .= 'no-lazy';
 		}
 
-		if ( array_key_exists( 'wp_lozad_lazyload_convert_html', $GLOBALS['wp_filter'] ) && true === $lazy_load ) {
-			$image = apply_filters( 'wp_lozad_lazyload_convert_html', $image, array( 'html_tag' => 'img' ) );
+		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
+			// this requires that the custom image sizes in custom-fields.php work correctly
+			$image     = wp_get_attachment_image( $image_id, $size, false, $attributes );
+			$image_url = wp_get_attachment_url( $image_id );
+		} else {
+			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+			if ( isset( $attributes['class'] ) ) {
+				$class = ' class="' . $attributes['class'] . '"';
+			} else {
+				$class = '';
+			}
+			$image = '<img src="' . $image_url . '" alt="' . $alt . $class . '">';
 		}
 
 		$image_data = array(
@@ -654,17 +686,30 @@ if ( ! function_exists( 'minnpost_get_term_image' ) ) :
 			return '';
 		}
 
-		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
-			// this requires that the custom image sizes in custom-fields.php work correctly
-			$image     = wp_get_attachment_image( $image_id, $size );
-			$image_url = wp_get_attachment_url( $image_id );
-		} else {
-			$alt   = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
-			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
+		// handle prevention of lazy loading
+		$prevent_lazy_load = get_term_meta( $category_id, '_mp_prevent_lazyload', true );
+		if ( 'on' === $prevent_lazy_load ) {
+			$lazy_load = false;
+		}
+		if ( false === $lazy_load ) {
+			if ( isset( $attributes['class'] ) ) {
+				$attributes['class'] .= ' ';
+			}
+			$attributes['class'] .= 'no-lazy';
 		}
 
-		if ( array_key_exists( 'wp_lozad_lazyload_convert_html', $GLOBALS['wp_filter'] ) && true === $lazy_load ) {
-			$image = apply_filters( 'wp_lozad_lazyload_convert_html', $image, array( 'html_tag' => 'img' ) );
+		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
+			// this requires that the custom image sizes in custom-fields.php work correctly
+			$image     = wp_get_attachment_image( $image_id, $size, false, $attributes );
+			$image_url = wp_get_attachment_url( $image_id );
+		} else {
+			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+			if ( isset( $attributes['class'] ) ) {
+				$class = ' class="' . $attributes['class'] . '"';
+			} else {
+				$class = '';
+			}
+			$image = '<img src="' . $image_url . '" alt="' . $alt . $class . '">';
 		}
 
 		$image_data = array(
@@ -1071,11 +1116,19 @@ if ( ! function_exists( 'minnpost_plus_icon' ) ) :
 				}
 			}
 
-			$image = '<img src="' . get_theme_file_uri() . '/assets/img/MinnPostPlusLogo.png' . '" alt="MinnPostPlus">';
-
-			if ( array_key_exists( 'wp_lozad_lazyload_convert_html', $GLOBALS['wp_filter'] ) && true === $lazy_load ) {
-				$image = apply_filters( 'wp_lozad_lazyload_convert_html', $image, array( 'html_tag' => 'img' ) );
+			// handle prevention of lazy loading
+			$prevent_lazy_load = get_post_meta( $post_id, '_mp_prevent_lazyload', true );
+			if ( 'on' === $prevent_lazy_load ) {
+				$lazy_load = false;
 			}
+
+			if ( false === $lazy_load ) {
+				$class = 'no-lazy';
+			} else {
+				$class = '';
+			}
+
+			$image = '<img src="' . get_theme_file_uri() . '/assets/img/MinnPostPlusLogo.png' . '" alt="MinnPostPlus"' . $class . '>';
 
 			echo '<div class="a-minnpost-plus">' . $image . '</div>';
 		}
@@ -1089,16 +1142,19 @@ endif;
 * @return string $title
 *
 */
-add_filter( 'get_the_archive_title', function ( $title ) {
-	if ( is_category() ) {
-		$title = single_cat_title( '', false );
-	} elseif ( is_tag() ) {
-		$title = single_tag_title( '', false );
-	} elseif ( is_author() ) {
-		$title = '<span class="vcard">' . get_the_author() . '</span>';
+add_filter(
+	'get_the_archive_title',
+	function( $title ) {
+		if ( is_category() ) {
+			$title = single_cat_title( '', false );
+		} elseif ( is_tag() ) {
+			$title = single_tag_title( '', false );
+		} elseif ( is_author() ) {
+			$title = '<span class="vcard">' . get_the_author() . '</span>';
+		}
+		return $title;
 	}
-	return $title;
-});
+);
 
 /**
 * Outputs HTML for numeric pagination on archive pages

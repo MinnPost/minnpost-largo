@@ -1,8 +1,10 @@
-main.m-homepage-zones {
+.m-homepage-zones {
 	margin-top: 0.5em;
+	flex-wrap: wrap;
+	display: flex;
 	.m-zone {
 		//padding-bottom: 20px;
-		margin-bottom: 20px;
+		margin-bottom: $standard-page-margin;
 		border-bottom: 1px solid $color__gray-lightest;
 		&.m-zone-homepage-top { // no margin or border because the article already has it
 			border-bottom: 0;
@@ -19,7 +21,27 @@ main.m-homepage-zones {
 		}
 		&.m-zone-homepage-middle article {
 			width: 47.5%;
-			margin-bottom: 20px;
+			margin-bottom: $standard-page-margin;
+		}
+	}
+}
+
+// media queries for zones
+@media screen and (min-width: $size__ad-flexing) {
+	.m-homepage-zones {
+		.m-zone {
+			&.m-zone-sidebar-recommended {
+				margin-left: $standard-page-margin;
+			}
+		}
+	}
+}
+@media screen and (min-width: $max-width-page) {
+	.m-homepage-zones {
+		.m-zone {
+			&.m-zone-sidebar-recommended {
+				margin-left: 0;
+			}
 		}
 	}
 }

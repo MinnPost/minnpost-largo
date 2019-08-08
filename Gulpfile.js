@@ -5,6 +5,7 @@ const bourbon = require( 'bourbon' ).includePaths;
 const browserSync = require('browser-sync').create();
 const concat = require('gulp-concat');
 const cssnano = require('cssnano');
+const eslint = require('gulp-eslint');
 const fs = require('fs');
 const gulp = require('gulp');
 const imagemin = require('gulp-imagemin');
@@ -16,6 +17,7 @@ const rename = require('gulp-rename');
 const sass = require('gulp-sass');
 const sassGlob = require('gulp-sass-glob');
 const sort = require( 'gulp-sort' );
+const gulpStylelint = require('gulp-stylelint');
 const sourcemaps = require('gulp-sourcemaps');
 const svgmin = require( 'gulp-svgmin' );
 const uglify = require('gulp-uglify');
@@ -27,11 +29,14 @@ const config = {
     front_end: 'assets/sass/*.scss',
     main: 'sass/**/*.scss',
     srcDir: 'assets/sass',
+    lint_src: [ 'assets/sass/**/*.scss', 'sass/**/*.scss' ],
+    lint_dest: 'assets/sass/',
     front_end_dest: 'assets/css',
     main_dest: './'
   },
   scripts: {
-    main: './assets/js/src/**/*.js',
+    admin_src: './assets/js/src/admin/**/*.js',
+    main: './assets/js/src/front-end/**/*.js',
     uglify: [ 'assets/js/*.js', '!assets/js/*.min.js', '!assets/js/customizer.js' ],
     dest: './assets/js'
   },
@@ -50,7 +55,7 @@ const config = {
 };
 
 function adminstyles() {
-  return gulp.src(config.styles.admin)
+  return gulp.src(config.styles.admin, { allowEmpty: true })
     .pipe(sourcemaps.init()) // Sourcemaps need to init before compilation
     .pipe(sassGlob()) // Allow for globbed @import statements in SCSS
     .pipe(sass()) // Compile
@@ -61,8 +66,11 @@ function adminstyles() {
       } ),
       cssnano( {
         'safe': true // Use safe optimizations.
-		} ) // Minify
+      } ) // Minify
     ]))
+    .pipe(rename({ // Rename to .min.css
+      suffix: '.min'
+    }))
     .pipe(sourcemaps.write()) // Write the sourcemap files
     .pipe(gulp.dest(config.styles.dest)) // Drop the resulting CSS file in the specified dir
     .pipe(browserSync.stream());
@@ -112,18 +120,23 @@ function mainstyles() {
     .pipe(browserSync.stream());
 }
 
+function sasslint() {
+  return gulp.src(config.styles.lint_src)
+    .pipe(gulpStylelint({
+      fix: true
+    }))
+    .pipe(gulp.dest(config.styles.lint_dest));
+}
+
 function adminscripts() {
-  return gulp.src(config.scripts.admin)
+  return gulp.src(config.scripts.admin_src, { allowEmpty: true })
     .pipe(sourcemaps.init())
     .pipe(babel({
       presets: ['@babel/preset-env']
     }))
-    .pipe(concat('admin.js')) // Concatenate
-    .pipe(uglify()) // Minify + compress
-    .pipe(rename({
-      suffix: '.min'
-    }))
+    .pipe(concat(packagejson.name + '-admin.js')) // Concatenate
     .pipe(sourcemaps.write())
+    .pipe(eslint())
     .pipe(gulp.dest(config.scripts.dest))
     .pipe(browserSync.stream());
 }
@@ -220,31 +233,16 @@ function watch() {
   }
 }
 
+// define complex gulp tasks
+const styles  = gulp.series(gulp.parallel(frontendstyles, mainstyles));
+const scripts = gulp.series(gulp.parallel(mainscripts, adminscripts), uglifyscripts);
+const build   = gulp.series(gulp.parallel(styles, scripts, images, svgminify, translate));
+
 // export tasks
-exports.adminstyles    = adminstyles;
-exports.frontendstyles = frontendstyles;
-exports.mainstyles     = mainstyles;
-exports.adminscripts   = adminscripts;
-exports.mainscripts    = mainscripts;
-exports.uglifyscripts  = uglifyscripts;
-exports.images         = images;
-exports.svgminify      = svgminify;
-exports.translate      = translate;
-exports.watch          = watch;
-
-// What happens when we run gulp?
-gulp.task('default',
-  gulp.series(
-    gulp.parallel(frontendstyles, mainstyles, mainscripts, uglifyscripts, images, translate) // run these tasks asynchronously
-  )
-);
-
-gulp.task('styles',
-  gulp.series(
-    gulp.parallel(frontendstyles, mainstyles) // run these tasks asynchronously
-  )
-);
-
-gulp.task('scripts',
-  gulp.series(mainscripts, uglifyscripts) // run these tasks in a series
-);
+exports.styles    = styles;
+exports.scripts   = scripts;
+exports.images    = images;
+exports.svgminify = svgminify;
+exports.translate = translate;
+exports.watch     = watch;
+exports.default   = build;

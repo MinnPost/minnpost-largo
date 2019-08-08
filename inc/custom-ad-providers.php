@@ -18,9 +18,11 @@
 if ( ! function_exists( 'minnpost_acm_whitelisted_conditionals' ) ) :
 	add_filter( 'acm_whitelisted_conditionals', 'minnpost_acm_whitelisted_conditionals' );
 	function minnpost_acm_whitelisted_conditionals( $conditionals ) {
-		$conditionals[] = 'minnpost_is_post_type';
+		$conditionals[] = 'has_primary_category';
+		$conditionals[] = 'is_post_type';
 		$conditionals[] = 'is_post_type_archive';
 		$conditionals[] = 'is_feed';
+		sort( $conditionals );
 		return $conditionals;
 	}
 endif;
@@ -28,27 +30,34 @@ endif;
 /**
 * Placeholders for ads; these are shown to users who have the capability to browse without ads
 *
-* @param string $output_html
+* @param array $output
 * @param int $tag_id
-* @return string $output_html
+* @return string $output
 *
 */
 if ( ! function_exists( 'acm_no_ad_users' ) ) :
 	add_filter( 'acm_output_html_after_tokens_processed', 'acm_no_ad_users', 10, 2 );
-	function acm_no_ad_users( $output_html, $tag_id = null ) {
+	function acm_no_ad_users( $output, $tag_id = null ) {
+		if ( is_array( $output ) ) {
+			$output_html   = isset( $output['html'] ) ? $output['html'] : '';
+			$output_script = isset( $output['script'] ) ? $output['script'] : '';
+		} else {
+			$output_html   = $output;
+			$output_script = '';
+		}
 		if ( is_feed() ) {
-			return $output_html;
+			$output = $output_html;
 		}
 		if ( ! current_user_can( 'browse_without_ads' ) ) {
-			return $output_html;
+			$output = $output_html . $output_script;
 		} else {
-			if ( 'appnexus_head' === $tag_id ) {
-				$output_html = '';
+			if ( 'dfp_head' === $tag_id ) {
+				$output = '';
 			} else {
-				$output_html = '<div class="appnexus-ad appnexus-ad-placeholder ad-' . sanitize_title( $tag_id ) . '">AD: ' . $tag_id . '</div>';
+				$output = '<div class="acm-ad acm-ad-placeholder ad-' . sanitize_title( $tag_id ) . '">AD: ' . $tag_id . '</div>';
 			}
 		}
-		return $output_html;
+		return $output;
 	}
 endif;
 
@@ -68,7 +77,7 @@ if ( ! function_exists( 'minnpost_acm_ad_count' ) ) :
 endif;
 
 /**
-* Highest count available for the ad code table. This should always be set to a value higher than what we need.
+* Set the default ad provider for the theme.
 *
 * @param string $current_provider_slug
 * @return string $current_provider_slug
@@ -77,7 +86,7 @@ endif;
 if ( ! function_exists( 'minnpost_acm_default_provider' ) ) :
 	add_filter( 'acm_provider_slug', 'minnpost_acm_default_provider' );
 	function minnpost_acm_default_provider( $current_provider_slug ) {
-		$current_provider_slug = 'appnexus';
+		$current_provider_slug = 'arcads_dfp';
 		return $current_provider_slug;
 	}
 endif;
