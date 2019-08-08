@@ -831,15 +831,15 @@ msgstr ""
 msgid "Return to %1$s Homepage"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-preferences-form.php:30
+#: user-account-management-templates/front-end/account-preferences-form.php:31
 msgid "Your preferences were successfully updated."
 msgstr ""
 
-#: user-account-management-templates/front-end/account-preferences-form.php:38
+#: user-account-management-templates/front-end/account-preferences-form.php:39
 msgid "Reading Preferences:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-preferences-form.php:60
+#: user-account-management-templates/front-end/account-preferences-form.php:61
 msgid "Save Reading Preferences"
 msgstr ""
 
