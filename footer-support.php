@@ -17,10 +17,6 @@
 
 		<div class="o-wrapper o-wrapper-site-footer">
 
-			<aside class="o-footer-hat">
-				<?php dynamic_sidebar( 'sidebar-3' ); ?>
-			</aside>
-
 			<aside class="o-footer-links">
 				<nav id="footer-primary" class="m-secondary-navigation">
 					<?php
