@@ -1,16 +1,11 @@
 <?php
 /**
- * The sidebar containing the main widget area
+ * The first sidebar area for the homepage
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
  * @package MinnPost Largo
  */
-
-$remove_sidebar = get_post_meta( get_the_ID(), '_mp_remove_right_sidebar', true );
-if ( isset( $remove_sidebar ) && 'on' === $remove_sidebar ) {
-	return;
-}
 ?>
 
 <aside id="secondary-first" class="o-site-sidebar" role="complementary">
@@ -39,4 +34,3 @@ if ( isset( $remove_sidebar ) && 'on' === $remove_sidebar ) {
 		<?php endif; ?>
 	<?php endif; ?>
 </aside>
-

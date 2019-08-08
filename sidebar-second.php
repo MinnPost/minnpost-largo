@@ -1,3 +1,13 @@
+<?php
+/**
+ * The second sidebar area for the homepage
+ *
+ * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
+ *
+ * @package MinnPost Largo
+ */
+?>
+
 <aside id="secondary-second" class="o-site-sidebar" role="complementary">
 
 	<?php if ( is_archive() || is_single() ) : ?>
