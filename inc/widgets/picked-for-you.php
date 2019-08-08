@@ -12,7 +12,7 @@ if ( ! function_exists( 'minnpost_largo_user_has_topics' ) ) :
 			return false;
 		}
 		$user_topics = maybe_unserialize( get_user_meta( $user_id, '_reading_topics', true ) );
-		if ( '' === $user_topics || ! is_array( $user_topics ) ) {
+		if ( empty( $user_topics ) || ! is_array( $user_topics ) ) {
 			return false;
 		} else {
 			return true;
