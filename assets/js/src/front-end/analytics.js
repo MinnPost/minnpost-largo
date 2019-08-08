@@ -55,11 +55,12 @@ function trackShare( text, position ) {
 
 	$( 'a', $( '.o-site-sidebar' ) ).click( function( e ) {
 		var widget_title = $(this).closest('.m-widget').find('h3').text();
+		var zone_title   = $(this).closest('.m-zone').find('.a-zone-title').text();
 		var sidebar_section_title = '';
-		if (widget_title === '') {
-			//sidebar_section_title = $(this).closest('.node-type-spill').find('.node-title a').text();
-		} else {
+		if ( '' !== widget_title ) {
 			sidebar_section_title = widget_title;
+		} else if ( '' !== zone_title ) {
+			sidebar_section_title = zone_title;
 		}
 		mp_analytics_tracking_event('event', 'Sidebar Link', 'Click', sidebar_section_title);
 	});
