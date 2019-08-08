@@ -21,7 +21,10 @@ if ( ! function_exists( 'has_primary_category' ) ) :
 			if ( isset( $primary_category['category'] ) && '' !== $primary_category['category'] ) {
 				//$has_primary_category = true;
 				$category_object = get_category_by_slug( $category );
-				$cat_id          = $category_object->term_id;
+				if ( ! is_object( $category_object ) ) {
+					return $has_primary_category;
+				}
+				$cat_id = $category_object->term_id;
 				if ( (int) $cat_id === (int) $primary_category['category'] ) {
 					$has_primary_category = true;
 				}
