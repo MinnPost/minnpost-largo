@@ -48,7 +48,7 @@
 	}
 }
 
-.m-membership-choose-frequency, .m-membership-choose-amount, .m-membership-choose-gift {
+.m-membership-choice-group {
 	#amount-item #amount {
 		border: 1px solid $color__border-input;
 	}
@@ -59,7 +59,7 @@
 		font-style: normal;
 		font-variant: normal;
 	}
-	.m-form-radios {
+	.m-form-radios, .m-form-checkboxes {
 		label {
 			background: $_color-base-gray;
 			color: $color__white;
@@ -69,6 +69,38 @@
 		}
 		input:checked + label {
 			background: $_color-base-blue;
+		}
+	}
+}
+
+
+.m-membership-choice-group.m-membership-gift-selector {
+	.m-form-radios, .m-form-checkboxes {
+		label {
+			display: flex;
+			flex-flow: column nowrap;
+			justify-content: space-around;
+			background: transparent;
+			color: inherit;
+			border: 0;
+
+			figure {
+				margin: 0;
+				height: 126px;
+
+				figcaption {
+					text-align: left;
+					font-weight: normal;
+					font-size: 0.8em;
+					line-height: 1.2em;
+					margin-bottom: 1.2em;
+				}
+			}
+		}
+		input:checked + label {
+			background: transparent;
+			border: 3px solid $_color-base-blue;
+			padding: 0.57em;
 		}
 	}
 }
