@@ -80,6 +80,7 @@
 
 	.m-form-radios, .m-form-checkboxes {
 		label {
+			position: relative;
 			display: flex;
 			flex-flow: column nowrap;
 			justify-content: space-around;
@@ -99,11 +100,21 @@
 					margin-bottom: 1.2em;
 				}
 			}
+
+			.support-tooltip {
+				bottom: 0.75em;
+				right: 0.75em;
+			}
 		}
 		input:checked + label {
 			background: transparent;
 			border: 3px solid $_color-base-blue;
 			padding: 0.57em;
+
+			.support-tooltip {
+				bottom: 0.57em;
+				right: 0.57em;
+			}
 		}
 		input:disabled + label, input:checked:disabled + label {
 			border-color: $color__gray-light;
