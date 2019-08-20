@@ -134,6 +134,14 @@
 				right: 0.57em;
 			}
 		}
+		input:disabled + label::after {
+			border-radius: 1em;
+			background-color: $color__gray-lightest;
+		}
+		input:checked:disabled + label {
+			padding: 0.75em;
+			border-width: 0;
+		}
 	}
 }
 
