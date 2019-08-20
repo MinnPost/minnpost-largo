@@ -78,7 +78,7 @@
 	border: 1px solid $color__border-light;
 	padding: 0.5em;
 
-	.m-form-radios, .m-form-checkboxes {
+	.m-form-radios .m-form-item, .m-form-checkboxes .m-form-item {
 		label {
 			display: flex;
 			flex-flow: column nowrap;
@@ -102,6 +102,7 @@
 
 			.support-tooltip {
 				bottom: 0.75em;
+				left: unset;
 				right: 0.75em;
 
 				.tooltip-text {
