@@ -105,6 +105,9 @@
 			border: 3px solid $_color-base-blue;
 			padding: 0.57em;
 		}
+		input:disabled + label, input:checked:disabled + label {
+			border-color: $color__gray-light;
+		}
 	}
 }
 
