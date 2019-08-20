@@ -75,7 +75,7 @@
 
 
 .m-membership-choice-group.m-membership-gift-selector {
-	border: 1px solid $_color-base-gray;
+	border: 1px solid $color__border-light;
 	padding: 0.5em;
 
 	.m-form-radios, .m-form-checkboxes {
@@ -104,20 +104,35 @@
 			.support-tooltip {
 				bottom: 0.75em;
 				right: 0.75em;
+
+				.tooltip-text {
+					background-color: white;
+					border: 1px solid $color__border-abbr;
+					padding: 0.5em;
+					font-weight: normal;
+					text-align: center;
+				}
+				.tooltip-text::after {
+					content: "";
+					position: absolute;
+					bottom: 100%;
+					left: 50%;
+					margin-left: -5px;
+					border-width: 5px;
+					border-style: solid;
+					border-color: transparent transparent $color__border-abbr transparent;
+				}
 			}
 		}
 		input:checked + label {
 			background: transparent;
-			border: 3px solid $_color-base-blue;
+			border: 3px solid $color__border-button-focus;
 			padding: 0.57em;
 
 			.support-tooltip {
 				bottom: 0.57em;
 				right: 0.57em;
 			}
-		}
-		input:disabled + label, input:checked:disabled + label {
-			border-color: $color__gray-light;
 		}
 	}
 }
