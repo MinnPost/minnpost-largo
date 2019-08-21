@@ -233,7 +233,9 @@ if ( ! function_exists( 'add_to_user_data' ) ) :
 		if ( isset( $posted['_consolidated_emails_array'] ) && is_array( $posted['_consolidated_emails_array'] ) ) {
 			$user_data['_consolidated_emails_array'] = array_map( 'sanitize_email', wp_unslash( $posted['_consolidated_emails_array'] ) );
 		}
-		$all_emails[] = $user_data['user_email'];
+		if ( isset( $user_data['user_email'] ) ) {
+			$all_emails[] = $user_data['user_email'];
+		}
 		// combine all consolidated emails
 		if ( isset( $posted['_consolidated_emails'] ) && ! empty( $posted['_consolidated_emails'] ) ) {
 			// this is a cmb2 field or a rest api field
@@ -259,18 +261,24 @@ if ( ! function_exists( 'add_to_user_data' ) ) :
 		}
 
 		// make sure the array of emails is unique, and put it together in a string to pass on
-		$all_emails                        = array_unique( $all_emails );
-		$posted['_consolidated_emails']    = implode( ',', $all_emails );
-		$user_data['_consolidated_emails'] = $posted['_consolidated_emails'];
+		if ( isset( $all_emails ) ) {
+			$all_emails                        = array_unique( $all_emails );
+			$posted['_consolidated_emails']    = implode( ',', $all_emails );
+			$user_data['_consolidated_emails'] = $posted['_consolidated_emails'];
+		}
 
 		// reading preferences field
-		if ( isset( $posted['_reading_topics'] ) && ! empty( $posted['_reading_topics'] ) ) {
+		if ( array_key_exists( '_reading_topics', $posted ) && ! empty( $posted['_reading_topics'] ) ) {
 			$user_data['_reading_topics'] = $posted['_reading_topics'];
+		} elseif ( array_key_exists( '_reading_topics', $posted ) && empty( $posted['_reading_topics'] ) ) {
+			$user_data['_reading_topics'] = '';
 		}
 
 		// street address field
-		if ( isset( $posted['street_address'] ) && ! empty( $posted['street_address'] ) ) {
+		if ( array_key_exists( 'street_address', $posted ) && ! empty( $posted['street_address'] ) ) {
 			$user_data['_street_address'] = $posted['street_address'];
+		} elseif ( array_key_exists( 'street_address', $posted ) && empty( $posted['street_address'] ) ) {
+			$user_data['_street_address'] = '';
 		}
 
 		return $user_data;
@@ -316,7 +324,7 @@ if ( ! function_exists( 'save_minnpost_user_data' ) ) :
 	add_action( 'user_account_management_post_user_data_save', 'save_minnpost_user_data', 10, 2 );
 	function save_minnpost_user_data( $user_data, $existing_user_data ) {
 		// handle consolidated email addresses
-		if ( isset( $user_data['ID'] ) && isset( $user_data['_consolidated_emails'] ) && '' !== $user_data['_consolidated_emails'] ) {
+		if ( isset( $user_data['ID'] ) && array_key_exists( '_consolidated_emails', $user_data ) && '' !== $user_data['_consolidated_emails'] ) {
 			$all_emails = array_map( 'trim', explode( ',', $user_data['_consolidated_emails'] ) );
 		}
 
@@ -332,14 +340,18 @@ if ( ! function_exists( 'save_minnpost_user_data' ) ) :
 			update_user_meta( $user_data['ID'], '_consolidated_emails', $all_emails );
 		}
 
-		// reading preferences field
-		if ( isset( $user_data['ID'] ) && isset( $user_data['_reading_topics'] ) && '' !== $user_data['_reading_topics'] ) {
+		// reading preferences field. allow it to be emptied.
+		if ( isset( $user_data['ID'] ) && array_key_exists( '_reading_topics', $user_data ) && '' !== $user_data['_reading_topics'] ) {
 			update_user_meta( $user_data['ID'], '_reading_topics', $user_data['_reading_topics'] );
+		} elseif ( isset( $user_data['ID'] ) && array_key_exists( '_reading_topics', $user_data ) && '' === $user_data['_reading_topics'] ) {
+			update_user_meta( $user_data['ID'], '_reading_topics', array() );
 		}
 
-		// street address field
-		if ( isset( $user_data['_street_address'] ) ) {
+		// street address field. allow it to be emptied.
+		if ( isset( $user_data['ID'] ) && array_key_exists( '_street_address', $user_data ) && '' !== $user_data['_street_address'] ) {
 			update_user_meta( $user_data['ID'], '_street_address', $user_data['_street_address'] );
+		} elseif ( isset( $user_data['ID'] ) && array_key_exists( '_street_address', $user_data ) && '' === $user_data['_street_address'] ) {
+			update_user_meta( $user_data['ID'], '_street_address', '' );
 		}
 	}
 endif;

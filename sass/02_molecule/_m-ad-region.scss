@@ -15,7 +15,24 @@
    display: none;
 }
 
+#secondary-first, #secondary-second {
+	.m-ad-region-sidebar {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+	}
+}
+
 // media queries for ad regions
+
+@media screen and (min-width: $size__ad-flexing) {
+	#secondary-first {
+		.m-ad-region-sidebar {
+			display: block;
+			width: auto;
+		}
+	}
+}
 
 @media screen and (min-width: $ad-top-width) {
 	.m-ad-region {
@@ -30,5 +47,9 @@
 		.o-wrapper {
 			@include outer-container($max-width-page);
 		}
+	}
+	.m-ad-region-sidebar {
+		display: block;
+		width: auto;
 	}
 }

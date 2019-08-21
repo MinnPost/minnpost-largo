@@ -55,6 +55,13 @@ main .ad-x110 {
 	}
 }
 
+.acm-ad.ad-halfpage {
+	&.acm-ad-placeholder {
+		width: $ad-halfpage-width;
+		height: $ad-halfpage-height;
+	}
+}
+
 .acm-ad-wrapper.ad-middle3, .acm-ad-wrapper.ad-Middle3 {
 	margin-bottom: $standard-page-margin;
 	border-bottom: 1px solid $color__gray-lightest;
