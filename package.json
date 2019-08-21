@@ -1,6 +1,6 @@
 {
   "name": "minnpost-largo",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "",
   "main": "Gulpfile.js",
   "repository": {
@@ -27,7 +27,7 @@
     "gulp-babel": "^8.0.0",
     "gulp-concat": "^2.6.1",
     "gulp-eslint": "^6.0.0",
-    "gulp-imagemin": "^6.0.0",
+    "gulp-imagemin": "^6.1.0",
     "gulp-plumber": "^1.2.1",
     "gulp-postcss": "^8.0.0",
     "gulp-rename": "^1.4.0",
@@ -39,7 +39,7 @@
     "gulp-svgmin": "^2.2.0",
     "gulp-uglify": "^3.0.2",
     "gulp-wp-pot": "^2.3.5",
-    "npm-check-updates": "^3.1.20",
+    "npm-check-updates": "^3.1.21",
     "stylelint": "^10.1.0",
     "stylelint-config-wordpress": "^14.0.0"
   },
