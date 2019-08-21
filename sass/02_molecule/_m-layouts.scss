@@ -14,6 +14,19 @@ body.post main, body.page main {
 	flex: 0 0 100%;
 }
 
+.m-layout-membership .m-membership-support-wrapper {
+	display: flex;
+	justify-content: space-between;
+	flex-flow: row wrap;
+
+	.m-form-membership {
+		width: 100%;
+	}
+	.a-finish-strong {
+		width: 100%;
+	}
+}
+
 // media queries for layouts
 
 @media screen and (min-width: $more-than-logo-screen) {
@@ -25,5 +38,30 @@ body.post main, body.page main {
 @media screen and (min-width: $max-width-page) {
 	.m-layout-primary {
 		max-width: $medium-screen;
+	}
+
+	.m-layout-membership .m-membership-support-wrapper {
+		.m-form-membership {
+			max-width: 470px;
+			order: -1;
+		}
+		.m-membership-summary {
+			max-width: 470px;
+			margin-top: 1em;
+		}
+		.m-membership-choose-frequency {
+			.m-form-radios {
+				.m-form-item {
+					max-width: 150px;
+				}
+			}
+		}
+		.m-membership-choose-gift {
+			.m-form-radios {
+				.m-form-item {
+					max-width: 230px;
+				}
+			}
+		}
 	}
 }
