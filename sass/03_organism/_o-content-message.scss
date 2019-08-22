@@ -3,6 +3,8 @@
 		width: 100%;
 		margin-bottom: $standard-page-margin;
 		border-bottom: 1px solid $color__gray-lightest;
+		padding-top: $standard-page-margin;
+		border-top: 1px solid $color__gray-lightest;
 		order: 1;
 		.o-content-message-homepage-body {
 			background: $_color-base-blue;

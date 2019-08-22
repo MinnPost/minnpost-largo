@@ -14,6 +14,8 @@
 			display: flex;
 			justify-content: space-between;
 			flex-flow: row wrap;
+			border-bottom: 0;
+			margin-bottom: 0;
 		}
 		&.m-zone-homepage-bottom {
 			margin-bottom: 0;
