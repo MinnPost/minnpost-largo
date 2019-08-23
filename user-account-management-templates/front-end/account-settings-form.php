@@ -72,7 +72,7 @@
 									<input type="radio" name="primary_email" id="primary_email_<?php echo esc_attr( $key ); ?>" value="<?php echo esc_html( $other_email ); ?>">
 									<label for="primary_email_<?php echo esc_attr( $key ); ?>"><small><?php echo esc_html( 'Make Primary', 'minnpost-largo' ); ?></small></label>
 								</li>
-								<li class="a-form-caption a-pre-confirm a-email-preferences"><a href="<?php echo site_url( '/subscribe/?email=' . urlencode( trim( $other_email ) ) ); ?>"><small><?php echo esc_html( 'Email Preferences', 'minnpost-largo' ); ?></small></a></li>
+								<li class="a-form-caption a-pre-confirm a-email-preferences"><a href="<?php echo site_url( '/newsletters/?email=' . urlencode( trim( $other_email ) ) ); ?>"><small><?php echo esc_html( 'Email Preferences', 'minnpost-largo' ); ?></small></a></li>
 								<li class="a-form-caption a-pre-confirm a-remove-email">
 									<input type="checkbox" name="remove_email[<?php echo esc_attr( $key ); ?>]" id="remove_email_<?php echo esc_attr( $key ); ?>" value="<?php echo esc_html( $other_email ); ?>">
 									<label for="remove_email_<?php echo esc_attr( $key ); ?>"><small><?php echo esc_html( 'Remove', 'minnpost-largo' ); ?></small></label>
