@@ -21,6 +21,20 @@ if ( ! function_exists( 'jptweak_remove_share' ) ) :
 endif;
 
 /**
+* Force removal of share buttons from non post types
+*
+*/
+if ( ! function_exists( 'minnpost_largo_remove_share_non_posts' ) ) :
+	add_filter( 'sharing_show', 'minnpost_largo_remove_share_non_posts', 10, 2 );
+	function minnpost_largo_remove_share_non_posts( $show, $post ) {
+		if ( isset( $post->post_type ) && 'post' !== $post->post_type ) {
+			$show = false;
+		}
+		return $show;
+	}
+endif;
+
+/**
 * Remove count from share buttons
 *
 */
