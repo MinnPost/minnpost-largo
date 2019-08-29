@@ -10,7 +10,7 @@ main {
 	@include clearfix;
 	max-width: 100%;
 }
-body.post main, body.page main {
+body.single-post main, body.single-page main {
 	flex: 0 0 100%;
 }
 
