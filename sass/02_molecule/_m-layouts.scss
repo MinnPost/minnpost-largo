@@ -1,7 +1,7 @@
 .o-wrapper-content-full .m-layout-primary {
 	@include outer-container($max-width-page);
 }
-body.post .m-layout-primary, body.page .m-layout-primary {
+body.single-post .m-layout-primary, body.single-page .m-layout-primary {
 	flex: 0 0 100%;
 }
 

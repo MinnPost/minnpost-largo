@@ -4,13 +4,9 @@
 	height: auto;
 	position: relative;
 	margin: 10px auto 5px auto;
-	//height: $header-height-smaller-screen;
 	.a-logo-svg {
 		width: 102%;
-		//height: 43px;
 		display: block;
-		//position: absolute;
-		//bottom: 0;
 	}
 }
 
@@ -39,29 +35,5 @@
 		width: 330px;
 		margin-left: 0;
 		margin-right: 0;
-		//height: $header-height-small-screen;
-		.a-logo-svg {
-			//height: 45px;
-		}
 	}
 }
-
-@media screen and (min-width: $medium-screen) {
-	.a-site-branding {
-		//height: $header-height-before-nav-breaks;
-	}
-}
-
-@media screen and (min-width: $max-width-medium-plus-margins) {
-	.a-site-branding {
-		//height: $header-height-before-nav-breaks;
-	}
-}
-
-@media screen and (min-width: $nav-breaks) {
-	.a-site-branding {
-		//float: left;
-		//height: $header-height-after-nav-breaks;
-	}
-}
-

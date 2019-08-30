@@ -1,6 +1,6 @@
 // all sizes for ie 11 and 10
 @media only screen and (-ms-high-contrast:active), (-ms-high-contrast:none) {
-	.a-site-branding {
+	/*.a-site-branding {
 		.a-logo-svg {
 			z-index: 1;
 			img {
@@ -8,6 +8,9 @@
 				margin-top: 1px;
 			}
 		}
+	}*/
+	.m-layout-primary {
+		display: block;
 	}
 }
 
