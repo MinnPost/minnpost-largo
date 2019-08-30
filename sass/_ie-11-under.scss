@@ -9,7 +9,7 @@
 			}
 		}
 	}*/
-	.m-layout-primary {
+	body.single-post .m-layout-primary, body.single-page .m-layout-primary {
 		display: block;
 	}
 }
