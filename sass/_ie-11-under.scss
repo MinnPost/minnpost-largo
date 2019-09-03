@@ -1,15 +1,6 @@
 // all sizes for ie 11 and 10
 @media only screen and (-ms-high-contrast:active), (-ms-high-contrast:none) {
-	/*.a-site-branding {
-		.a-logo-svg {
-			z-index: 1;
-			img {
-				display: block;
-				margin-top: 1px;
-			}
-		}
-	}*/
-	body.single-post .m-layout-primary, body.single-page .m-layout-primary {
+	body.single-post .m-layout-primary, body.page .m-layout-primary {
 		display: block;
 	}
 }
