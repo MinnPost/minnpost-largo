@@ -3,6 +3,8 @@
 		width: 100%;
 		margin-bottom: $standard-page-margin;
 		border-bottom: 1px solid $color__gray-lightest;
+		padding-top: $standard-page-margin;
+		border-top: 1px solid $color__gray-lightest;
 		order: 1;
 		.o-content-message-homepage-body {
 			background: $_color-base-blue;
@@ -39,18 +41,15 @@
 						width: 100%;
 						max-width: 100%;
 					}
-					label, a, a:visited {
+					label {
 						color: $color__white;
+						a, a:visited {
+							color: $color__border-light;
+						}
 					}
 				}
 				.m-form-container {
 					padding: 0 1.5em;
-				}
-				p {
-					width: 100%;
-					a {
-						color: $color__border-light;
-					}
 				}
 			}
 			.m-form-frontpage.m-form-minnpost-form-processor-mailchimp-submitted {

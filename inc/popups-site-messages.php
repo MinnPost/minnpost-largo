@@ -725,7 +725,9 @@ endif;
 if ( ! function_exists( 'minnpost_popup_content_filter' ) ) :
 	add_filter( 'pum_popup_content', 'minnpost_popup_content_filter', 10, 2 );
 	function minnpost_popup_content_filter( $content, $id ) {
+		remove_filter( 'the_content', 'sharing_display', 19 ); // Prevent Jetpack share buttons from being added.
 		$content = apply_filters( 'the_content', $content );
+		add_filter( 'the_content', 'sharing_display', 19 ); // Re-add the Jetpack filter in case it's needed later on in the page load.
 		return $content;
 	}
 endif;

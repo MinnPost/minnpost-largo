@@ -26,11 +26,12 @@
   max-width: 960px;
 }
 .mp .navigation ul > li {
-  font-size: 1.05em;
+  font-size: 1em;
 }
 
 .mp .navigation nav {
   position: relative;
+  display: flex;
 }
 
 .mp .navigation nav ul {
@@ -38,16 +39,19 @@
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  height: 3em;
+  height: 2.5em;
   overflow: hidden;
-  -webkit-flex-wrap: wrap;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap;
+  flex-wrap: wrap;
   list-style: none;
   padding: 0;
+  width: 100%;
+  justify-content: space-between;
 }
 .mp .navigation.horizontal nav ul li {
   float: none;
+}
+.mp .navigation.horizontal ul li + li {
+  margin-left: 0;
 }
 .mp .navigation nav.open ul {
   height: auto;
@@ -62,13 +66,13 @@
 .mp .navigation a:hover, .mp .navigation a:focus, .mp .navigation a:active, .mp .navigation nav .x:hover, .mp .navigation nav .x:focus {
   color: rgba(176, 89, 89, 0.5);
 }
-.x {
+.mp .navigation .x {
   display: none;
-  position: absolute;
-  top: 0.25em;
-  right: 0.75em;
   cursor: pointer;
   color: #b05959;
+  min-width: 75px;
+  padding: 0.25em 0.5em;
+  margin-left: 15px;
 }
 
 .mp .navigation a.selected, .mp .navigation nav.open .x {
@@ -209,9 +213,9 @@ div.image.video-grid p {
   float: right;
 }
 
-@media (max-width: 880px) {
-  .x {
-    display: block;
+@media (max-width: 950px) {
+  .mp .navigation .x {
+    display: inline-block;
   }
 }
 

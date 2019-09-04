@@ -48,7 +48,7 @@
 	}
 }
 
-.m-membership-fast-select {
+.m-membership-choice-group {
 	#amount-item #amount {
 		border: 1px solid $color__border-input;
 	}
@@ -59,15 +59,81 @@
 		font-style: normal;
 		font-variant: normal;
 	}
-	.m-form-radios {
+	.m-form-radios, .m-form-checkboxes {
 		label {
 			background: $_color-base-gray;
 			color: $color__white;
-			font-family: $font__serif;
+			font-family: $font__sans;
 			border: 0;
+			border-radius: 1em;
 		}
 		input:checked + label {
 			background: $_color-base-blue;
+		}
+	}
+}
+
+
+.m-membership-choice-group.m-membership-gift-selector {
+	border: 1px solid $color__border-light;
+	padding: 0.5em;
+
+	.m-form-radios .m-form-item, .m-form-checkboxes .m-form-item {
+		label {
+			display: flex;
+			flex-flow: column nowrap;
+			justify-content: space-around;
+			background: transparent;
+			color: inherit;
+			border: 3px solid transparent;
+
+			figure {
+				margin: 0;
+				height: 126px;
+
+				figcaption {
+					text-align: left;
+					font-weight: normal;
+					font-size: 0.8em;
+					line-height: 1.2em;
+					margin-bottom: 1.2em;
+				}
+			}
+
+			.support-tooltip {
+				bottom: 0.75em;
+				left: unset;
+				right: 0.75em;
+
+				.tooltip-text {
+					background-color: white;
+					border: 1px solid $color__border-abbr;
+					padding: 0.5em;
+					font-weight: normal;
+					text-align: center;
+				}
+				.tooltip-text::after {
+					content: "";
+					position: absolute;
+					bottom: 100%;
+					left: 50%;
+					margin-left: -5px;
+					border-width: 5px;
+					border-style: solid;
+					border-color: transparent transparent $color__border-abbr transparent;
+				}
+			}
+		}
+		input:checked + label {
+			background: transparent;
+			border: 3px solid $color__border-button-focus;
+		}
+		input:disabled + label::after {
+			border-radius: 1em;
+			background-color: $color__gray-lightest;
+		}
+		input:checked:disabled + label {
+			border: 3px solid transparent;
 		}
 	}
 }
