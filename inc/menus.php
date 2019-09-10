@@ -334,15 +334,6 @@ if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
 	add_action( 'wp_before_admin_bar_render', 'minnpost_largo_admin_bar_render' );
 	function minnpost_largo_admin_bar_render() {
 		global $wp_admin_bar;
-		// remove security from non admins
-		if ( ! current_user_can( 'manage_options' ) ) {
-			$wp_admin_bar->remove_menu( 'itsec_admin_bar_menu' );
-		}
-
-		// remove autoptimize from non admins
-		if ( ! current_user_can( 'administrator' ) ) {
-			$wp_admin_bar->remove_menu( 'autoptimize' );
-		}
 
 		// remove comment count from users who cannot moderate
 		if ( ! current_user_can( 'moderate_comments' ) ) {
@@ -545,6 +536,8 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 			remove_submenu_page( 'edit.php?post_type=popup', 'pum-support' );
 			remove_submenu_page( 'edit.php?post_type=popup', 'pum-settings' );
 			remove_submenu_page( 'edit.php?post_type=popup', 'pum-tools' );
+			// stop spammers
+			remove_menu_page( 'stop_spammers' );
 		}
 
 	}
