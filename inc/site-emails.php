@@ -13,7 +13,7 @@
 * @return string $email
 *
 */
-if ( ! has_filter( 'wp_mail_from' ) && ! function_exists( 'minnpost_largo_mail_from' ) ) :
+if ( ! function_exists( 'minnpost_largo_mail_from' ) ) :
 	add_filter( 'wp_mail_from', 'minnpost_largo_mail_from' );
 	function minnpost_largo_mail_from( $old ) {
 		$email = get_option( 'site_email_from', get_option( 'admin_email' ) );
@@ -29,7 +29,7 @@ endif;
 * @return string $site_name
 *
 */
-if ( ! has_filter( 'wp_mail_from_name' ) && ! function_exists( 'minnpost_largo_mail_from_name' ) ) :
+if ( ! function_exists( 'minnpost_largo_mail_from_name' ) ) :
 	add_filter( 'wp_mail_from_name', 'minnpost_largo_mail_from_name' );
 	function minnpost_largo_mail_from_name( $old ) {
 		$site_name = get_option( 'site_email_from_name', get_option( 'blogname' ) );
