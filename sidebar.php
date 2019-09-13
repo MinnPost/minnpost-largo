@@ -6,12 +6,16 @@
  *
  * @package MinnPost Largo
  */
-
-$remove_sidebar = get_post_meta( get_the_ID(), '_mp_remove_right_sidebar', true );
-if ( isset( $remove_sidebar ) && 'on' === $remove_sidebar ) {
-	return;
-}
 ?>
+
+<?php if ( is_singular() ) : ?>
+	<?php
+	$remove_sidebar = get_post_meta( get_the_ID(), '_mp_remove_right_sidebar', true );
+	if ( isset( $remove_sidebar ) && 'on' === $remove_sidebar ) {
+		return;
+	}
+	?>
+<?php endif; ?>
 
 <aside id="secondary" class="o-site-sidebar" role="complementary">
 	<div class="m-ad-region m-ad-region-sidebar">

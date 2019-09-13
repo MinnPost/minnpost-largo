@@ -137,6 +137,8 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 		if ( false === $lazy_load ) {
 			if ( isset( $attributes['class'] ) ) {
 				$attributes['class'] .= ' ';
+			} else {
+				$attributes['class'] = '';
 			}
 			$attributes['class'] .= 'no-lazy';
 		}
