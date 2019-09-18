@@ -155,14 +155,16 @@
 			'post__in'       => $top_stories,
 			'posts_per_page' => $top_offset,
 			'orderby'        => 'post__in',
+			'post_status'    => 'any',
 		);
 		$top_query      = new WP_Query( $top_query_args );
 
 		$second_query_args = array(
-			'post__in' => $top_stories,
-			'paged'    => 1,
-			'offset'   => $top_offset,
-			'orderby'  => 'post__in',
+			'post__in'    => $top_stories,
+			'paged'       => 1,
+			'offset'      => $top_offset,
+			'orderby'     => 'post__in',
+			'post_status' => 'any',
 		);
 		$second_query      = new WP_Query( $second_query_args );
 		// the total does not stop at posts_per_page
@@ -176,6 +178,7 @@
 				'post__in'       => $more_stories,
 				'posts_per_page' => -1,
 				'orderby'        => 'post__in',
+				'post_status'    => 'any',
 			);
 			$more_query      = new WP_Query( $more_query_args );
 		}
@@ -277,7 +280,7 @@
 														<?php
 													endwhile;
 													wp_reset_postdata();
-?>
+													?>
 												</div> <!-- end .inner -->
 											</td>
 										</tr>
