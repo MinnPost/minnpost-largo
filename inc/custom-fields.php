@@ -1383,7 +1383,7 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 				$args
 			);
 			if ( 'production' === VIP_GO_ENV ) {
-				$args['es'] = true; // elasticsearch on production only
+				$args['query_args']['es'] = true; // elasticsearch on production only
 			}
 			return $args;
 		}
@@ -1406,7 +1406,7 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 				$args
 			);
 			if ( 'production' === VIP_GO_ENV ) {
-				$args['es'] = true; // elasticsearch on production only
+				$args['query_args']['es'] = true; // elasticsearch on production only
 			}
 			return $args;
 		}
@@ -1427,7 +1427,7 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 			$args
 		);
 		if ( 'production' === VIP_GO_ENV ) {
-			$args['es'] = true; // elasticsearch on production only
+			$args['query_args']['es'] = true; // elasticsearch on production only
 		}
 		return $args;
 
