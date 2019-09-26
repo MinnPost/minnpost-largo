@@ -339,9 +339,8 @@ endif;
 * @return array $conditional_fields
 */
 if ( ! function_exists( 'minnpost_largo_message_conditional_fields' ) ) :
-	add_filter( 'wp_message_inserter_add_group_conditional_fields', 'minnpost_largo_message_conditional_fields', 10, 2 );
-	function minnpost_largo_message_conditional_fields( $group_id, $prefix ) {
-		$conditional_fields   = array();
+	add_filter( 'wp_message_inserter_add_group_conditional_fields', 'minnpost_largo_message_conditional_fields', 10, 3 );
+	function minnpost_largo_message_conditional_fields( $conditional_fields, $group_id, $prefix ) {
 		$conditional_fields[] = array(
 			'name'       => __( 'Emails to match', 'minnpost-largo' ),
 			'id'         => $prefix . 'emails_to_match',
