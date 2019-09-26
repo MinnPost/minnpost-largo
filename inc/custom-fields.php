@@ -98,7 +98,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 			'orderby'        => 'modified',
 			'order'          => 'DESC',
 			'post_type'      => $object_type,
-			'post_status'    => 'publish',
+			'post_status'    => 'any',
 		);
 		$most_recent_newsletter = wp_get_recent_posts( $recent_newsletter_args, OBJECT );
 		if ( is_object( $most_recent_newsletter[0] ) ) {
@@ -111,6 +111,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 			'post_type'      => array( 'post' ),
 			'orderby'        => 'modified',
 			'order'          => 'DESC',
+			'post_status'    => 'any',
 			'date_query'     => array(
 				array(
 					'column' => 'post_modified',
@@ -138,8 +139,9 @@ if ( function_exists( 'create_newsletter' ) ) :
 					'desc'       => __( 'Search for a post here', 'minnpost-largo' ),
 					'id'         => $prefix . 'top_posts',
 					'query_args' => array(
-						'orderby' => 'modified',
-						'order'   => 'DESC',
+						'orderby'     => 'modified',
+						'order'       => 'DESC',
+						'post_status' => 'any',
 					),
 				),
 				'post_search_ajax'
@@ -170,8 +172,9 @@ if ( function_exists( 'create_newsletter' ) ) :
 					'desc'       => __( 'Search for a post here', 'minnpost-largo' ),
 					'id'         => $prefix . 'more_posts',
 					'query_args' => array(
-						'orderby' => 'modified',
-						'order'   => 'DESC',
+						'orderby'     => 'modified',
+						'order'       => 'DESC',
+						'post_status' => 'any',
 					),
 				)
 			)
@@ -1383,7 +1386,7 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 				$args
 			);
 			if ( 'production' === VIP_GO_ENV ) {
-				$args['es'] = true; // elasticsearch on production only
+				$args['query_args']['es'] = true; // elasticsearch on production only
 			}
 			return $args;
 		}
@@ -1406,7 +1409,7 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 				$args
 			);
 			if ( 'production' === VIP_GO_ENV ) {
-				$args['es'] = true; // elasticsearch on production only
+				$args['query_args']['es'] = true; // elasticsearch on production only
 			}
 			return $args;
 		}
@@ -1427,7 +1430,7 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 			$args
 		);
 		if ( 'production' === VIP_GO_ENV ) {
-			$args['es'] = true; // elasticsearch on production only
+			$args['query_args']['es'] = true; // elasticsearch on production only
 		}
 		return $args;
 
