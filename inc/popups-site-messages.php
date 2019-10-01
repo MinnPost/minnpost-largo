@@ -10,7 +10,7 @@
 
 /**
 * Allows us to determine if a popup can be loaded, after the conditions have been processed.
-* We use this to prevent popups on /user and /support urls
+* We use this to prevent popups on /support, /user, /account urls
 *
 * @param bool $loadable
 * @return int $id
@@ -25,6 +25,9 @@ if ( ! function_exists( 'minnpost_popup_is_loadable' ) ) :
 				$loadable = false;
 			}
 			if ( substr( $path, 0, strlen( '/user' ) ) === '/user' ) {
+				$loadable = false;
+			}
+			if ( substr( $path, 0, strlen( '/account' ) ) === '/account' ) {
 				$loadable = false;
 			}
 		}
