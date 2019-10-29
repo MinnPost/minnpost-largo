@@ -22,6 +22,9 @@ header {
 			height: 100%;
 		}
 	}
+	.m-support-cta.m-support-cta-top .a-support-button {
+		display: none;
+	}
 	nav {
 		display: none;
 		&#navigation-ext {
@@ -50,12 +53,24 @@ header {
 	.m-entry-share {
 		display: none;
 	}
+	.m-form-instory {
+		display: none;
+	}
+	.m-related {
+		display: none;
+	}
+	.a-related-tags {
+		display: none;
+	}
+	.m-author-info {
+		page-break-after: always;
+	}
 }
 .o-site-sidebar {
 	.m-minnpost-spills-widget {
 		display: none;
 	}
-	.m-widget-popular-widget {
+	.m-widget-most-commented {
 		display: none;
 	}
 	.m-widget-rpwe-widget {
@@ -69,4 +84,12 @@ footer {
 	.o-footer .o-footer-hat {
 		display: block;
 	}
+	.powered-by-wpcom {
+		display: none;
+	}
+}
+
+// don't print popups
+.pum {
+	display: none !important;
 }

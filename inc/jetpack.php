@@ -88,3 +88,20 @@ if ( ! function_exists( 'minnpost_largo_exclude_post_from_lazy_load' ) ) :
 		return $enabled;
 	}
 endif;
+
+/**
+* ES Query arguments for Jetpack
+*
+* @param array $args The Elasticsearch query args
+* @param WP_Query $query The WP_Query object
+* @return array The modified array
+*/
+if ( ! function_exists( 'minnpost_largo_es_query_args' ) ) :
+	add_filter( 'jetpack_search_es_query_args', 'minnpost_largo_es_query_args', 10, 2 );
+	function minnpost_largo_es_query_args( $args, $query ) {
+		if ( is_array( $args ) ) {
+			$args['authenticated_request'] = true;
+		}
+		return $args;
+	}
+endif;
