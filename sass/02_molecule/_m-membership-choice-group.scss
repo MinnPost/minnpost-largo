@@ -1,4 +1,6 @@
 .m-membership-choice-group {
+	// all membership choice group syles
+	margin-bottom: $standard-page-margin;
 	#amount-item #amount {
 		font-family: $font__sans;
 		font-weight: normal;
@@ -23,43 +25,42 @@
 			color: $color__white;
 		}
 	}
-}
-
-.m-membership-choice-group.m-membership-choose-amount {
-	.a-fast-select-intro {
-		font-family: $font__sans;
-	}
-	#amount-item {
-		#amount {
-			border: 2px solid $_color-base-gray;
-			border-radius: 0;
-		}
-		.a-frequency-text-label {
-			margin: 0.9em 0;
+	// specific to choosing amount
+	&.m-membership-choose-amount {
+		.a-fast-select-intro {
 			font-family: $font__sans;
 		}
-	}
-}
-
-.m-membership-choice-group.m-membership-gift-selector {
-	border: 1px solid $color__border-light;
-
-	.m-form-radios .m-form-item, .m-form-checkboxes .m-form-item {
-		label {
-			.support-tooltip {
-				.tooltip-text {
-					border: 1px solid $color__border-abbr;
-				}
-				.tooltip-text::after {
-					border-color: transparent transparent $color__border-abbr transparent;
-				}
+		#amount-item {
+			#amount {
+				border: 2px solid $_color-base-gray;
+				border-radius: 0;
+			}
+			.a-frequency-text-label {
+				margin: 0.9em 0;
+				font-family: $font__sans;
 			}
 		}
-		input:checked + label {
-			border: 3px solid $color__border-button-focus;
-		}
-		input:disabled + label::after {
-			background-color: $color__gray-lightest;
+	}
+	// specific to choosing thank you gift
+	&.m-membership-gift-selector {
+		border: 1px solid $color__border-light;
+		.m-form-radios .m-form-item, .m-form-checkboxes .m-form-item {
+			label {
+				.support-tooltip {
+					.tooltip-text {
+						border: 1px solid $color__border-abbr;
+					}
+					.tooltip-text::after {
+						border-color: transparent transparent $color__border-abbr transparent;
+					}
+				}
+			}
+			input:checked + label {
+				border: 3px solid $color__border-button-focus;
+			}
+			input:disabled + label::after {
+				background-color: $color__gray-lightest;
+			}
 		}
 	}
 }
