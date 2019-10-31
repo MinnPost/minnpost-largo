@@ -39,22 +39,4 @@ body.single-post main, body.page main {
 	.m-layout-primary {
 		max-width: $medium-screen;
 	}
-
-	.m-layout-membership .m-membership-support-wrapper {
-		.m-form-membership {
-			max-width: 470px;
-			order: -1;
-		}
-		.m-membership-summary {
-			max-width: 470px;
-			margin-top: 1em;
-		}
-		.m-membership-choose-frequency {
-			.m-form-radios {
-				.m-form-item {
-					max-width: 150px;
-				}
-			}
-		}
-	}
 }
