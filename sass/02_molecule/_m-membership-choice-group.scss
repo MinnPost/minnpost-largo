@@ -1,6 +1,5 @@
 .m-membership-choice-group {
 	#amount-item #amount {
-		border: 1px solid $color__border-input;
 		font-family: $font__sans;
 		font-weight: normal;
 	}
@@ -14,7 +13,10 @@
 	.m-form-radios, .m-form-checkboxes {
 		label {
 			font-family: $font__sans;
+			font-weight: normal;
 			border: 0;
+			background: $color__gray-membership;
+			color: $color__black;
 		}
 		input:checked + label {
 			background: $_color-base-blue;
@@ -26,6 +28,16 @@
 .m-membership-choice-group.m-membership-choose-amount {
 	.a-fast-select-intro {
 		font-family: $font__sans;
+	}
+	#amount-item {
+		#amount {
+			border: 2px solid $_color-base-gray;
+			border-radius: 0;
+		}
+		.a-frequency-text-label {
+			margin: 0.9em 0;
+			font-family: $font__sans;
+		}
 	}
 }
 
