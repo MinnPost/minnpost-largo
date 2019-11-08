@@ -64,7 +64,7 @@ get_header(); ?>
 
 		<aside class="o-content-message o-content-message-homepage">
 			<article class="o-content-message-body o-content-message-homepage-body">
-				<?php echo do_shortcode( '[newsletter_form placement="frontpage" content_before="<header><h3 class=\'a-signup-title-homepage\'>Stay informed</h3><h4>Sign up for our daily newsletter</h4></header>" in_content_label="Enter your email address or see our <a href=\'/newsletters/\'>other free newsletter options</a>" in_content_label_placement="after"]' ); ?>
+				<?php do_action( 'wp_message_inserter', 'homepage_middle' ); ?>
 			</article>
 		</aside>
 
