@@ -1,18 +1,29 @@
 // default styles for wp messages from the message plugin
 .wp-message-inserter-message {
-	// instory email form message
-	border: 1px solid $color__border-light;
-	padding: 0.5em 0 1.5em 0;
-	h3, p {
-		padding: 0 0.5em;
-		margin-bottom: 1em;
-	}
-	h3:last-child, p:last-child {
-		margin-bottom: 0;
-	}
-	&.wp-message-inserter-message-email-form-instory {
+	// bottom of story email form message
+	&.wp-message-inserter-message-email-form-story-bottom {
+		border: 1px solid $color__border-light;
+		padding: 0.5em 0.5em 1.5em 0.5em;
+		h3, p {
+			padding: 0 0.5em;
+			margin-bottom: 1em;
+		}
+		form {
+			margin-bottom: 1em;
+		}
+		h3:last-child, p:last-child {
+			margin-bottom: 0;
+		}
+		h3 {
+			font-size: 138.5%;
+	    	line-height: 1.15em;
+	    	margin: 0.5em 0 1em 0;
+		}
 		form {
 			border: 0;
+			padding: 0;
+		}
+		.m-form-container {
 			padding: 0;
 		}
 	}
