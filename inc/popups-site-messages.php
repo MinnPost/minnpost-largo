@@ -69,6 +69,7 @@ endif;
 
 /**
 * Modify the conditions that control when users see popups
+* todo: we could move the membership focused methods into the membership plugin
 *
 * @param array $conditions
 * @return array $conditions
@@ -98,13 +99,13 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 			'group'    => __( 'User', 'minnpost-largo' ),
 			'name'     => __( 'User: Is Sustaining Member', 'minnpost-largo' ),
 			'callback' => 'minnpost_user_is_sustaining_member',
-			'priority' => 2,
+			'priority' => 3,
 		);
 		$conditions['is_in_campaign']       = array(
 			'group'    => __( 'User', 'minnpost-largo' ),
 			'name'     => __( 'User: In This Campaign', 'minnpost-largo' ),
 			'callback' => 'minnpost_user_is_in_campaign',
-			'priority' => 2,
+			'priority' => 4,
 		);
 		$conditions['has_role']             = array(
 			'group'    => __( 'User', 'minnpost-largo' ),
@@ -120,7 +121,7 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 				),
 			),
 			'callback' => 'minnpost_user_has_role',
-			'priority' => 2,
+			'priority' => 5,
 		);
 		$conditions['benefit_eligible']     = array(
 			'group'    => __( 'User', 'minnpost-largo' ),
@@ -136,7 +137,23 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 				),
 			),
 			'callback' => 'minnpost_user_eligible_for_benefit',
-			'priority' => 2,
+			'priority' => 6,
+		);
+		$conditions['gets_emails']          = array(
+			'group'    => __( 'User', 'minnpost-largo' ),
+			'name'     => __( 'User: Gets Emails', 'minnpost-largo' ),
+			'fields'   => array(
+				'selected' => array(
+					'placeholder' => __( 'Select Email', 'minnpost-largo' ),
+					'type'        => 'select',
+					'multiple'    => true,
+					//'select2'     => true,
+					'as_array'    => true,
+					'options'     => minnpost_email_options(),
+				),
+			),
+			'callback' => 'minnpost_user_gets_emails',
+			'priority' => 7,
 		);
 		$conditions['url_is']               = array(
 			'group'    => __( 'URL', 'minnpost-largo' ),
@@ -199,11 +216,12 @@ endif;
 
 /**
 * Modify the conditions that control when users see site messages
+* todo: we could move the membership focused methods into the membership plugin
 *
 * @param array $conditionals
 * @return array $conditionals
 */
-/*if ( ! function_exists( 'minnpost_site_message_conditionals' ) ) :
+if ( ! function_exists( 'minnpost_site_message_conditionals' ) ) :
 	add_filter( 'wp_message_inserter_conditionals', 'minnpost_site_message_conditionals', 10, 1 );
 	function minnpost_site_message_conditionals( $conditionals ) {
 		$conditionals['user'][] = array(
@@ -211,9 +229,55 @@ endif;
 			'method'     => 'minnpost_user_is_member',
 			'has_params' => false,
 		);
+		$conditionals['user'][] = array(
+			'name'       => 'is_sustaining_member',
+			'method'     => 'minnpost_user_is_sustaining_member',
+			'has_params' => false,
+		);
+		$conditionals['user'][] = array(
+			'name'       => 'is_in_campaign',
+			'method'     => 'minnpost_user_is_in_campaign',
+			'has_params' => false,
+		);
+		$conditionals['user'][] = array(
+			'name'       => 'has_role',
+			'method'     => 'minnpost_user_has_role',
+			'has_params' => true,
+			'params'     => array(
+				'role',
+			),
+		);
+		$conditionals['user'][] = array(
+			'name'       => 'gets_emails',
+			'method'     => 'minnpost_user_gets_emails',
+			'has_params' => true,
+			'params'     => array(
+				'list',
+			),
+		);
+		/*$conditionals['benefit_eligible']     = array(
+			'group'    => __( 'User', 'minnpost-largo' ),
+			'name'     => __( 'User: Eligible For Benefit', 'minnpost-largo' ),
+			'fields'   => array(
+				'selected' => array(
+					'placeholder' => __( 'Select Benefit', 'minnpost-largo' ),
+					'type'        => 'select',
+					'multiple'    => true,
+					//'select2'     => true,
+					'as_array'    => true,
+					'options'     => minnpost_popup_benefits(),
+				),
+			),
+			'callback' => 'minnpost_user_eligible_for_benefit',
+			'priority' => 6,
+		);*/
+		
+
+
+
 		return $conditionals;
 	}
-endif;*/
+endif;
 
 /**
 * Check to see if the user has any membership level role
@@ -263,6 +327,93 @@ if ( ! function_exists( 'minnpost_user_is_sustaining_member' ) ) :
 			return true;
 		}
 
+		// otherwise, return false
+		return false;
+
+	}
+endif;
+
+
+/**
+* Return additional conditional fields for message disply
+*
+* @param int $group_id
+* @param string $prefix
+* @return array $conditional_fields
+*/
+if ( ! function_exists( 'minnpost_largo_message_conditional_fields' ) ) :
+	add_filter( 'wp_message_inserter_add_group_conditional_fields', 'minnpost_largo_message_conditional_fields', 10, 3 );
+	function minnpost_largo_message_conditional_fields( $conditional_fields, $group_id, $prefix ) {
+		$conditional_fields[] = array(
+			'name'       => __( 'Emails to match', 'minnpost-largo' ),
+			'id'         => $prefix . 'emails_to_match',
+			'type'       => 'multicheck',
+			'desc'       => __( 'If you check values here, users who are subscribed to all of them will match. If you leave it unchecked, users who get ANY of the possible emails will match.', 'minnpost-largo' ),
+			'options'    => minnpost_email_options(),
+			'default'    => 'none',
+			'attributes' => array(
+				'required'               => false,
+				'data-conditional-id'    => wp_json_encode( array( $group_id, $prefix . 'conditional' ) ),
+				'data-conditional-value' => 'gets_emails',
+			),
+		);
+		return $conditional_fields;
+	}
+endif;
+
+/**
+* Check to see if the user's newsletters match any of the one(s) we're checking against from the settings.
+*
+* @return bool
+*/
+if ( ! function_exists( 'minnpost_user_gets_emails' ) ) :
+	function minnpost_user_gets_emails( $lists_to_check = array() ) {
+		$user = wp_get_current_user();
+		if ( 0 === $user ) {
+			return false;
+		}
+
+		$lists_to_check = explode( ',', $lists_to_check );
+		if ( ! is_array( $lists_to_check ) ) {
+			$emails_to_check   = array();
+			$emails_to_check[] = $lists_to_check;
+		} else {
+			$emails_to_check = $lists_to_check;
+		}
+
+		// populate values we need for the mc call
+		if ( function_exists( 'minnpost_form_processor_mailchimp' ) ) {
+			$minnpost_form_processor_mailchimp = minnpost_form_processor_mailchimp();
+
+			$shortcode     = 'newsletter_form';
+			$resource_type = $minnpost_form_processor_mailchimp->get_data->get_resource_type( $shortcode );
+			$resource_id   = $minnpost_form_processor_mailchimp->get_data->get_resource_id( $shortcode );
+
+			$user_email      = $user->user_email;
+			$reset_user_info = false;
+			$message_code    = get_query_var( 'newsletter_message_code' );
+			if ( '' !== $message_code ) {
+				$reset_user_info = true;
+			}
+
+			$user_mailchimp_groups = get_option( $minnpost_form_processor_mailchimp->option_prefix . $shortcode . '_mc_resource_item_type', '' );
+			$user_mailchimp_info   = $minnpost_form_processor_mailchimp->get_data->get_user_info( $shortcode, $resource_type, $resource_id, $user_email, $reset_user_info );
+
+			if ( ! is_wp_error( $user_mailchimp_info ) ) {
+				$mailchimp_user_id = $user_mailchimp_info['id'];
+				$groups            = $user_mailchimp_info[ $user_mailchimp_groups ];
+				$mailchimp_status  = $user_mailchimp_info['status'];
+				if ( 'subscribed' === $mailchimp_status ) {
+					$mc_resource_items = $minnpost_form_processor_mailchimp->get_data->get_mc_resource_items( $resource_type, $resource_id );
+					foreach ( $mc_resource_items as $item ) {
+						// check until there's a match for the list we're checking against on the user's groups
+						if ( in_array( $item['text'], $lists_to_check ) ) {
+							error_log( 'yep' );
+						}
+					}
+				}
+			}
+		}
 		// otherwise, return false
 		return false;
 
@@ -366,6 +517,33 @@ if ( ! function_exists( 'minnpost_popup_benefits' ) ) :
 			);
 		}
 		return $benefits;
+	}
+endif;
+
+/**
+* Get emails as options for the <select>
+*
+* @return array $emails
+*/
+if ( ! function_exists( 'minnpost_email_options' ) ) :
+	function minnpost_email_options() {
+		static $emails = null;
+		if ( null === $emails ) {
+			$emails = array();
+			// populate values we need for the mc call
+			if ( function_exists( 'minnpost_form_processor_mailchimp' ) ) {
+				$minnpost_form_processor_mailchimp = minnpost_form_processor_mailchimp();
+
+				$shortcode         = 'newsletter_form';
+				$resource_type     = $minnpost_form_processor_mailchimp->get_data->get_resource_type( $shortcode );
+				$resource_id       = $minnpost_form_processor_mailchimp->get_data->get_resource_id( $shortcode );
+				$mc_resource_items = $minnpost_form_processor_mailchimp->get_data->get_mc_resource_items( $resource_type, $resource_id );
+				foreach ( $mc_resource_items as $item ) {
+					$emails[ $item['id'] ] = $item['text'];
+				}
+			}
+		}
+		return $emails;
 	}
 endif;
 
