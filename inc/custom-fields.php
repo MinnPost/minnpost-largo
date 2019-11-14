@@ -269,6 +269,46 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		);
 
 		/**
+		 * SEO and social meta settings
+		 */
+		$seo_settings = new_cmb2_box(
+			array(
+				'id'           => 'seo_settings',
+				'title'        => 'SEO &amp; Social Settings',
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'closed'       => true,
+			)
+		);
+		$seo_settings->add_field(
+			array(
+				'name'       => 'Title',
+				'id'         => '_mp_seo_title',
+				'type'       => 'text',
+				'desc'       => sprintf(
+					// translators: 1) the sitename
+					esc_html__( 'If you do not fill this out, the post title will be used. If you do fill it out and do not include %1$s in the value, it will be placed at the end in this way: Your Title | %1$s' ),
+					get_bloginfo( 'name' )
+				),
+				'attributes' => array(
+					'maxlength' => 78, // retrieved from https://seopressor.com/blog/google-title-meta-descriptions-length/ on 9/27/2018
+				),
+			)
+		);
+		$seo_settings->add_field(
+			array(
+				'name'       => 'Description',
+				'id'         => '_mp_seo_description',
+				'type'       => 'textarea_small',
+				'attributes' => array(
+					'maxlength' => 300, // retrieved from https://moz.com/blog/how-long-should-your-meta-description-be-2018 on 9/27/2018
+				),
+				'desc'       => esc_html__( 'If you do not fill this out, the post excerpt will be used.' ),
+			)
+		);
+
+		/**
 		 * Subtitle settings
 		 */
 		$subtitle_settings = new_cmb2_box(
