@@ -149,8 +149,15 @@
 		</tr> <!-- end row -->
 			<?php
 		}
-		$top_offset     = 2;
-		$top_stories    = get_post_meta( get_the_ID(), '_mp_newsletter_top_posts', true );
+		$top_offset  = 2;
+		$top_stories = get_post_meta( get_the_ID(), '_mp_newsletter_top_posts', true );
+
+		$top_stories_override = get_post_meta( get_the_ID(), '_mp_newsletter_top_posts_override', true );
+		if ( '' !== $top_stories_override ) {
+			$top_stories_override = explode( ',', $top_stories_override );
+			$top_stories          = array_map( 'trim', $top_stories_override );
+		}
+
 		$top_query_args = array(
 			'post__in'       => $top_stories,
 			'posts_per_page' => $top_offset,
@@ -173,6 +180,13 @@
 		$newsletter_type = get_post_meta( get_the_ID(), '_mp_newsletter_type', true );
 
 		$more_stories = get_post_meta( get_the_ID(), '_mp_newsletter_more_posts', true );
+
+		$more_stories_override = get_post_meta( get_the_ID(), '_mp_newsletter_more_posts_override', true );
+		if ( '' !== $more_stories_override ) {
+			$more_stories_override = explode( ',', $more_stories_override );
+			$more_stories          = array_map( 'trim', $more_stories_override );
+		}
+
 		if ( '' !== $more_stories ) {
 			$more_query_args = array(
 				'post__in'       => $more_stories,
