@@ -147,14 +147,6 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'post_search_ajax'
 			)
 		);
-		$newsletter_top_posts->add_field(
-			array(
-				'name' => __( 'Show Department for Top Stories', 'minnpost-largo' ),
-				'desc' => __( 'If checked, top stories will also display their department name.', 'minnpost-largo' ),
-				'id'   => 'top_posts_show_department',
-				'type' => 'checkbox',
-			)
-		);
 		$newsletter_more_posts = new_cmb2_box(
 			array(
 				'id'           => $prefix . 'more_posts',
