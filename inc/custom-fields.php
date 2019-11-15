@@ -129,7 +129,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'object_types' => array( $object_type ), // Post type
 				'context'      => 'normal',
 				'priority'     => 'high',
-				'show_names'   => false, // Show field names on the left
+				'show_names'   => true, // Show field names on the left
 			)
 		);
 		$newsletter_top_posts->add_field(
@@ -149,10 +149,10 @@ if ( function_exists( 'create_newsletter' ) ) :
 		);
 		$newsletter_top_posts->add_field(
 			array(
-				'name' => __( 'Show Department for Top Stories', 'minnpost-largo' ),
-				'desc' => __( 'If checked, top stories will also display their department name.', 'minnpost-largo' ),
-				'id'   => 'top_posts_show_department',
-				'type' => 'checkbox',
+				'name' => __( 'Top Stories Manual Override', 'minnpost-largo' ),
+				'id'   => $prefix . 'top_posts_override',
+				'type' => 'text',
+				'desc' => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them in the order they are entered instead of the search field value.', 'minnpost-largo' ),
 			)
 		);
 		$newsletter_more_posts = new_cmb2_box(
@@ -162,7 +162,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'object_types' => array( $object_type ), // Post type
 				'context'      => 'normal',
 				'priority'     => 'high',
-				'show_names'   => false, // Show field names on the left
+				'show_names'   => true, // Show field names on the left
 			)
 		);
 		$newsletter_more_posts->add_field(
@@ -177,6 +177,14 @@ if ( function_exists( 'create_newsletter' ) ) :
 						'post_status' => 'any',
 					),
 				)
+			)
+		);
+		$newsletter_more_posts->add_field(
+			array(
+				'name' => __( 'More Stories Manual Override', 'minnpost-largo' ),
+				'id'   => $prefix . 'more_posts_override',
+				'type' => 'text',
+				'desc' => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them in the order they are entered instead of the search field value.', 'minnpost-largo' ),
 			)
 		);
 	}
