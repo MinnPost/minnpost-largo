@@ -155,7 +155,7 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 			'callback' => 'minnpost_user_gets_emails',
 			'priority' => 7,
 		);
-		$conditions['session_count']          = array(
+		$conditions['session_count']        = array(
 			'group'    => __( 'User', 'minnpost-largo' ),
 			'name'     => __( 'User: Session Count', 'minnpost-largo' ),
 			'fields'   => array(
@@ -751,27 +751,36 @@ if ( ! function_exists( 'minnpost_popup_content_filter' ) ) :
 	}
 endif;
 
-function faux_session_checking() {
-	// If we don't have a count cookie set it to first visit. Expire it in a year
-	if ( ! isset( $_COOKIE['count'] ) ) {
-		// Set our count to one and let it sit for a year
-		setcookie( 'count', 1, time() + 31556926, '/' );
-		$_COOKIE['count'] = 1;
+/**
+ * Faux session counting
+ * wp_loaded doesn't fire 800 times like some of the other hooks
+ *
+ * @param    string    $content
+ * @param    int       $id
+ * @return   string    $content
+ */
+if ( ! function_exists( 'faux_session_checking' ) ) :
+	add_action( 'wp_loaded', 'faux_session_checking' );
+	function faux_session_checking() {
+		// If we don't have a count cookie set it to first visit. Expire it in a year
+		if ( ! isset( $_COOKIE['count'] ) ) {
+			// Set our count to one and let it sit for a year
+			setcookie( 'count', 1, time() + 31556926, '/' );
+			$_COOKIE['count'] = 1;
 
-		setcookie( 'timecheck', time() + 3600, time() + 31556926, '/' );
-		$_COOKIE['timecheck'] = time() + 3600; // setcookie does not update the superglobal $_COOKIE
-	} else {
-
-		if ( time() > $_COOKIE['timecheck'] ) {
-			// Update Timecheck to new value
 			setcookie( 'timecheck', time() + 3600, time() + 31556926, '/' );
-			$_COOKIE['timecheck'] = time() + 3600;
+			$_COOKIE['timecheck'] = time() + 3600; // setcookie does not update the superglobal $_COOKIE
+		} else {
 
-			// Count exists already and it has been an hour. Update count
-			setcookie( 'count', $_COOKIE['count'] + 1, time() + 31556926, '/' );
-			$_COOKIE['count'] + 1;
+			if ( time() > $_COOKIE['timecheck'] ) {
+				// Update Timecheck to new value
+				setcookie( 'timecheck', time() + 3600, time() + 31556926, '/' );
+				$_COOKIE['timecheck'] = time() + 3600;
+
+				// Count exists already and it has been an hour. Update count
+				setcookie( 'count', $_COOKIE['count'] + 1, time() + 31556926, '/' );
+				$_COOKIE['count'] + 1;
+			}
 		}
 	}
-}
-// wp_loaded doesn't fire 800 times like some of the other hooks
-add_action( 'wp_loaded', 'faux_session_checking' );
+endif;
