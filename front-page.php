@@ -62,11 +62,7 @@ get_header(); ?>
 
 		<?php get_sidebar( 'first' ); ?>
 
-		<aside class="o-content-message o-content-message-homepage">
-			<article class="o-content-message-body o-content-message-homepage-body">
-				<?php do_action( 'wp_message_inserter', 'homepage_middle' ); ?>
-			</article>
-		</aside>
+		<?php do_action( 'wp_message_inserter', 'homepage_middle' ); ?>
 
 		<div id="home-second" class="m-layout-primary o-homepage-listing">
 			<?php if ( function_exists( 'z_get_zone' ) ) : ?>
@@ -92,7 +88,7 @@ get_header(); ?>
 
 		<?php get_sidebar( 'second' ); ?>
 
-	</main>		
+	</main>
 
 <?php
 get_footer();

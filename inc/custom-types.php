@@ -221,6 +221,7 @@ if ( ! function_exists( 'minnpost_message_regions' ) ) :
 			//'article_middle'  => __( 'Article Middle', 'minnpost-largo' ),
 			'archive_middle'  => __( 'Archive Middle', 'minnpost-largo' ),
 			'user_account'    => __( 'User Account', 'minnpost-largo' ),
+			'popup'           => __( 'Popup', 'minnpost-largo' ),
 			'email_header'    => __( 'Email Header', 'minnpost-largo' ),
 			'email_middle'    => __( 'Email Middle', 'minnpost-largo' ),
 			'email_footer'    => __( 'Email Footer', 'minnpost-largo' ),
