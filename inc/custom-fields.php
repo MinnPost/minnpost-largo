@@ -69,6 +69,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 					'greater_mn'    => __( 'Greater MN', 'minnpost-largo' ),
 					'sunday_review' => __( 'Sunday Review', 'minnpost-largo' ),
 					'dc_memo'       => __( 'D.C. Memo', 'minnpost-largo' ),
+					'republication' => __( 'Republication', 'minnpost-largo' ),
 				),
 			)
 		);
