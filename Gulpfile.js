@@ -1,13 +1,13 @@
 // Require our dependencies
 const autoprefixer = require('autoprefixer');
 const babel = require('gulp-babel');
-const bourbon = require( 'bourbon' ).includePaths;
 const browserSync = require('browser-sync').create();
 const concat = require('gulp-concat');
 const cssnano = require('cssnano');
 const eslint = require('gulp-eslint');
 const fs = require('fs');
 const gulp = require('gulp');
+const iife = require('gulp-iife');
 const imagemin = require('gulp-imagemin');
 const packagejson = JSON.parse(fs.readFileSync('./package.json'));
 const mqpacker = require( 'css-mqpacker' );
@@ -55,69 +55,75 @@ const config = {
 };
 
 function adminstyles() {
-  return gulp.src(config.styles.admin, { allowEmpty: true })
+  return gulp
+    .src(config.styles.admin, { allowEmpty: true })
     .pipe(sourcemaps.init()) // Sourcemaps need to init before compilation
     .pipe(sassGlob()) // Allow for globbed @import statements in SCSS
     .pipe(sass()) // Compile
-    .on('error', sass.logError) // Error reporting
-    .pipe(postcss([
-      mqpacker( {
-        'sort': true
-      } ),
-      autoprefixer(),
-      cssnano( {
-        'safe': true // Use safe optimizations.
-      } ) // Minify
-    ]))
-    .pipe(rename({ // Rename to .min.css
-      suffix: '.min'
-    }))
+    .on("error", sass.logError) // Error reporting
+    .pipe(
+      postcss([
+        mqpacker({
+          sort: true
+        }),
+        autoprefixer(),
+        cssnano({
+          safe: true // Use safe optimizations.
+        }) // Minify
+      ])
+    )
+    .pipe(
+      rename({
+        // Rename to .min.css
+        suffix: ".min"
+      })
+    )
     .pipe(sourcemaps.write()) // Write the sourcemap files
     .pipe(gulp.dest(config.styles.dest)) // Drop the resulting CSS file in the specified dir
     .pipe(browserSync.stream());
 }
 
 function frontendstyles() {
-  return gulp.src(config.styles.front_end)
+  return gulp
+    .src(config.styles.front_end, { allowEmpty: true })
     .pipe(sourcemaps.init()) // Sourcemaps need to init before compilation
     .pipe(sassGlob()) // Allow for globbed @import statements in SCSS
-    .pipe(sass( {
-    		'includePaths': bourbon
-    	}
-    )) // Compile
-    .on('error', sass.logError) // Error reporting
-    .pipe(postcss([
-      mqpacker( {
-        'sort': true
-      } ),
-      autoprefixer(),
-      cssnano( {
-        'safe': true // Use safe optimizations.
-		} ) // Minify
-    ]))
+    .pipe(sass()) // Compile
+    .on("error", sass.logError) // Error reporting
+    .pipe(
+      postcss([
+        mqpacker({
+          sort: true
+        }),
+        autoprefixer(),
+        cssnano({
+          safe: true // Use safe optimizations.
+        }) // Minify
+      ])
+    )
     .pipe(sourcemaps.write()) // Write the sourcemap files
     .pipe(gulp.dest(config.styles.front_end_dest)) // Drop the resulting CSS file in the specified dir
     .pipe(browserSync.stream());
 }
 
 function mainstyles() {
-  return gulp.src(config.styles.main)
+  return gulp
+    .src(config.styles.main, { allowEmpty: true })
     .pipe(sourcemaps.init()) // Sourcemaps need to init before compilation
     .pipe(sassGlob()) // Allow for globbed @import statements in SCSS
-    .pipe(sass( {
-    		'includePaths': bourbon
-    	}
-    )) // Compile
-    .on('error', sass.logError) // Error reporting
-    .pipe(postcss([
-      mqpacker( {
-        'sort': true
-      } ),
-      autoprefixer(),
-      cssnano( {
-        'safe': true // Use safe optimizations.
-		} ) // Minify
-    ]))
+    .pipe(sass()) // Compile
+    .on("error", sass.logError) // Error reporting
+    .pipe(
+      postcss([
+        mqpacker({
+          sort: true
+        }),
+        autoprefixer(),
+        cssnano({
+          safe: true // Use safe optimizations.
+        }) // Minify
+      ])
+    )
     .pipe(sourcemaps.write()) // Write the sourcemap files
     .pipe(gulp.dest(config.styles.main_dest)) // Drop the resulting CSS file in the specified dir
     .pipe(browserSync.stream());
@@ -237,7 +243,8 @@ function watch() {
 }
 
 // define complex gulp tasks
-const styles  = gulp.series(gulp.parallel(frontendstyles, mainstyles));
+//const styles = gulp.series(sasslint, gulp.parallel(frontendstyles, mainstyles));
+const styles = gulp.series(gulp.parallel(frontendstyles, mainstyles));
 const scripts = gulp.series(gulp.parallel(mainscripts, adminscripts), uglifyscripts);
 const build   = gulp.series(gulp.parallel(styles, scripts, images, svgminify, translate));
 

@@ -6,6 +6,18 @@
 }
 // @include hide-text;
 
+// clearfix
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+.clearfix {
+	@include clearfix;
+}
+
 
 @mixin gi-nums($n, $max) {
 	%num-#{$n} {
@@ -32,10 +44,6 @@
     right: auto;
   }
   flex: 0 0 100%;
-}
-
-.clearfix {
-	@include clearfix;
 }
 
 // responsive iframes by ratio
