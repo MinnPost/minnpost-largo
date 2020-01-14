@@ -1080,6 +1080,26 @@ if ( ! function_exists( 'cmb2_user_fields' ) ) :
 			)
 		);
 
+		// site preferences
+		$site_preferences = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_site_preferences',
+				'title'        => __( 'Site Preferences', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'low',
+			)
+		);
+		$site_preferences->add_field(
+			array(
+				'name' => __( 'Always load comments', 'minnpost-largo' ),
+				'id'   => 'always_load_comments',
+				'type' => 'checkbox',
+				'desc' => '',
+			)
+		);
+
+		// donation fields
 		$user_donation_info = new_cmb2_box(
 			array(
 				'id'           => $object_type . '_donation_info',
