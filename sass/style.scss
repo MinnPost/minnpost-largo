@@ -32,6 +32,8 @@ Nicolas Gallagher and Jonathan Neal http://necolas.github.com/normalize.css/
 --------------------------------------------------------------*/
 
 @import "00_base/*";
+@import "column-settings";
+@import "column-setter";
 @import "01_atom/*";
 @import "02_molecule/*";
 @import "03_organism/*";
