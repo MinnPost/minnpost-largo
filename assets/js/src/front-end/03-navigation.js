@@ -150,6 +150,26 @@ function toggleFocus() {
 	}
 }
 
+$( '#navigation-featured a' ).click( function( e ) {
+	mp_analytics_tracking_event( 'event', 'Featured Bar Link', 'Click', this.href );
+});
+
+$( 'a.glean-sidebar' ).click( function( e ) {
+	mp_analytics_tracking_event( 'event', 'Sidebar Support Link', 'Click', this.href );
+});
+
+$( 'a', $( '.o-site-sidebar' ) ).click( function( e ) {
+	var widget_title = $(this).closest('.m-widget').find('h3').text();
+	var zone_title   = $(this).closest('.m-zone').find('.a-zone-title').text();
+	var sidebar_section_title = '';
+	if ( '' !== widget_title ) {
+		sidebar_section_title = widget_title;
+	} else if ( '' !== zone_title ) {
+		sidebar_section_title = zone_title;
+	}
+	mp_analytics_tracking_event('event', 'Sidebar Link', 'Click', sidebar_section_title);
+});
+
 // user account navigation can be a dropdown
 $( document ).ready(function() {
 	// hide menu
