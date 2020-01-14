@@ -327,3 +327,22 @@ endif;
 add_filter( 'thread_comments_depth_max', function( $max ) {
 	return 99;
 } );
+/**
+* When lazy loading comments, allow users to indicate they always want to load comments.
+* @param bool $can_lazyload
+* @return bool $can_lazyload
+*
+*/
+if ( ! function_exists( 'minnpost_largo_always_load_comments_for_user' ) ) :
+	add_filter( 'llc_can_lazy_load', 'minnpost_largo_always_load_comments_for_user' );
+	function minnpost_largo_always_load_comments_for_user( $can_lazyload ) {
+		$user_id = get_current_user_id();
+		if ( 0 !== $user_id ) {
+			$always_load_comments = get_user_meta( $user_id, 'always_load_comments', true );
+			if ( true === filter_var( $always_load_comments, FILTER_VALIDATE_BOOLEAN ) ) {
+				$can_lazyload = false;
+			}
+		}
+		return $can_lazyload;
+	}
+endif;
