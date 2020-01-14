@@ -8,6 +8,7 @@ const cssnano = require('cssnano');
 const eslint = require('gulp-eslint');
 const fs = require('fs');
 const gulp = require('gulp');
+const iife = require('gulp-iife');
 const imagemin = require('gulp-imagemin');
 const packagejson = JSON.parse(fs.readFileSync('./package.json'));
 const mqpacker = require( 'css-mqpacker' );
