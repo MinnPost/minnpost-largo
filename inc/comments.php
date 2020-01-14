@@ -359,3 +359,9 @@ add_filter(
 	}
 );
 
+add_filter(
+	'llc_enable_loader_center',
+	function() {
+		return false;
+	}
+);
