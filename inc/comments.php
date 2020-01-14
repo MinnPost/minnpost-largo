@@ -66,10 +66,11 @@ endif;
 if ( ! function_exists( 'minnpost_largo_comment_date_column' ) ) :
 	add_action( 'manage_comments_custom_column', 'minnpost_largo_comment_date_column', 10, 2 );
 	function minnpost_largo_comment_date_column( $column, $comment_id ) {
-		if ( 'custom_date' == $column ) {
-			$comment = get_comment( $comment_id );
-			/* translators: 1: comment date, 2: comment time */
-			$submitted = sprintf( __( 'Submitted on %1$s at %2$s' ),
+		if ( 'custom_date' === $column ) {
+			$comment   = get_comment( $comment_id );
+			$submitted = sprintf(
+				/* translators: 1: comment date, 2: comment time */
+				__( 'Submitted on %1$s at %2$s' ),
 				/* translators: comment date format. See https://secure.php.net/date */
 				get_comment_date( __( 'Y/m/d' ), $comment ),
 				get_comment_date( __( 'g:i a' ), $comment )
@@ -324,9 +325,13 @@ endif;
 * @param int $max
 * @return int $max
 */
-add_filter( 'thread_comments_depth_max', function( $max ) {
-	return 99;
-} );
+add_filter(
+	'thread_comments_depth_max',
+	function( $max ) {
+		return 99;
+	}
+);
+
 /**
 * When lazy loading comments, allow users to indicate they always want to load comments.
 * @param bool $can_lazyload
