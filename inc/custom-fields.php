@@ -1050,7 +1050,7 @@ if ( ! function_exists( 'cmb2_user_fields' ) ) :
 		);
 
 		// reading preferences
-		$user_preferences = new_cmb2_box(
+		$reading_preferences = new_cmb2_box(
 			array(
 				'id'           => $object_type . '_reading_preferences',
 				'title'        => __( 'Reading Preferences', 'minnpost-largo' ),
@@ -1059,7 +1059,7 @@ if ( ! function_exists( 'cmb2_user_fields' ) ) :
 				'priority'     => 'low',
 			)
 		);
-		$user_preferences->add_field(
+		$reading_preferences->add_field(
 			array(
 				'name'    => __( 'Reading preferences:', 'minnpost-largo' ),
 				'desc'    => '',
