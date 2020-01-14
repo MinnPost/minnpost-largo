@@ -352,16 +352,64 @@ if ( ! function_exists( 'minnpost_largo_always_load_comments_for_user' ) ) :
 	}
 endif;
 
-add_filter(
-	'llc_button_class',
-	function () {
-		return 'a-button a-button-next a-button-choose a-button-show-comments';
+/**
+* Class for show comments button
+* @param string $class
+* @return string $class
+*
+*/
+if ( ! function_exists( 'minnpost_largo_load_comments_button_class' ) ) :
+	add_filter( 'llc_button_class', 'minnpost_largo_load_comments_button_class' );
+	function minnpost_largo_load_comments_button_class( $class ) {
+		$class = 'a-button a-button-next a-button-choose a-button-show-comments';
+		return $class;
 	}
-);
+endif;
 
-add_filter(
-	'llc_enable_loader_center',
-	function() {
-		return false;
+/**
+* Don't center the comments div because why would anyone even do that
+* @param bool $center
+* @return bool $center
+*
+*/
+if ( ! function_exists( 'minnpost_largo_load_comments_button_center' ) ) :
+	add_filter( 'llc_enable_loader_center', 'minnpost_largo_load_comments_button_center' );
+	function minnpost_largo_load_comments_button_center( $center ) {
+		$center = false;
+		return $center;
 	}
-);
+endif;
+
+/**
+* Ajax method to set user comment load preference
+*
+*/
+if ( ! function_exists( 'minnpost_largo_load_comments_set_user_meta' ) ) :
+	add_action( 'wp_ajax_minnpost_largo_load_comments_set_user_meta', 'minnpost_largo_load_comments_set_user_meta' );
+	add_action( 'wp_ajax_nopriv_minnpost_largo_load_comments_set_user_meta', 'minnpost_largo_load_comments_set_user_meta' );
+	function minnpost_largo_load_comments_set_user_meta() {
+		// if there is no logged in user, don't do anything
+		$user_id = get_current_user_id();
+		if ( 0 === $user_id ) {
+			die();
+		}
+
+		$always_show = isset( $_POST['value'] ) ? intval( $_POST['value'] ) : 0;
+		error_log( 'always show is ' . $always_show );
+		$update      = update_user_meta( $user_id, 'always_load_comments', $always_show );
+
+		if ( 1 === $always_show ) {
+			$return = array(
+				'show'    => true,
+			    'message' => __( 'You will always see comments loaded when you are logged in', LLC_DOMAIN ),
+			);
+		} else {
+			$return = array(
+				'show'    => false,
+			    'message' => __( 'You will not see comments loaded when you are logged in unless you click the button.', LLC_DOMAIN ),
+			);
+		}
+		error_log( 'return is ' . print_r( $return, true ) );
+		wp_send_json_success( $return );
+	}
+endif;

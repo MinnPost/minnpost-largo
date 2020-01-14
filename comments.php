@@ -18,6 +18,13 @@
 if ( post_password_required() ) {
 	return;
 }
+
+$always_load_comments = false;
+$user_id = get_current_user_id();
+if ( 0 !== $user_id ) {
+	$always_load_comments = filter_var( get_user_meta( $user_id, 'always_load_comments', true ), FILTER_VALIDATE_BOOLEAN );
+}
+
 ?>
 
 <section id="comments" class="o-comments-area o-comments-area-post">
@@ -46,6 +53,13 @@ if ( post_password_required() ) {
 	?>
 	<?php if ( 0 < $count_visible_comments ) : ?>
 		<h3 class="a-comments-title">Comments (<?php echo $count_visible_comments; ?>)</h3>
+		<?php if ( class_exists( 'Lazy_Load_Comments' ) ) : ?>
+			<div class="m-user-always-show-comments">
+				<div class="a-always-show-comments-result"></div>
+				<input type="checkbox" class="a-checkbox-switch a-checkbox-always-show-comments" name="always-show-comments" id="always-show-comments-before"<?php echo ( true === $always_load_comments ) ? ' value="0" checked' : ' value="1"'; ?>>
+				<label class="a-label-always-show-comments" for="always-show-comments-before">Always show comments</label>
+			</div>
+		<?php endif; ?>
 		<ol>
 			<?php
 			$comments_query = new WP_Comment_Query;
@@ -92,5 +106,13 @@ if ( post_password_required() ) {
 		);
 		comment_form( $comment_form_args );
 	}
+
+	if ( class_exists( 'Lazy_Load_Comments' ) ) :
 	?>
+	<div class="m-user-always-show-comments">
+		<div class="a-always-show-comments-result"></div>
+		<input type="checkbox" class="a-checkbox-switch a-checkbox-always-show-comments" name="always-show-comments" id="always-show-comments-after"<?php echo ( true === $always_load_comments ) ? ' value="0" checked' : ' value="1"'; ?>>
+		<label class="a-label-always-show-comments" for="always-show-comments-after">Always show comments</label>
+	</div>
+	<?php endif; ?>
 </section><!-- #comments -->
