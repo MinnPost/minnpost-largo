@@ -351,3 +351,11 @@ if ( ! function_exists( 'minnpost_largo_always_load_comments_for_user' ) ) :
 		return $can_lazyload;
 	}
 endif;
+
+add_filter(
+	'llc_button_class',
+	function () {
+		return 'a-button a-button-next a-button-choose a-button-show-comments';
+	}
+);
+
