@@ -453,3 +453,54 @@ if ( ! function_exists( 'minnpost_largo_load_comments_switch' ) ) :
 		<?php
 	}
 endif;
+
+/**
+* Text for the edit button on comments
+* @param string $translated_text
+*
+*/
+add_filter( 'sce_text_edit', function( $translated_text ) {
+	return esc_html__( 'Edit', 'minnpost-largo' );
+} );
+
+/**
+* Text for the save button on comments
+* @param string $translated_text
+*
+*/
+add_filter( 'sce_text_save', function( $translated_text ) {
+	return esc_html__( 'Save Changes', 'minnpost-largo' );
+} );
+
+/**
+* Text for the cancel edit button on comments
+* @param string $translated_text
+*
+*/
+add_filter( 'sce_text_cancel', function( $translated_text ) {
+	return esc_html__( 'Cancel Changes', 'minnpost-largo' );
+} );
+
+/**
+* Text for the delete button on comments
+* @param string $translated_text
+*
+*/
+add_filter( 'sce_text_delete', function( $translated_text ) {
+	return esc_html__( 'Delete Comment', 'minnpost-largo' );
+} );
+
+/**
+* Filter: sce_content
+* Filter to overral simple comment edit output
+*
+* @param string  $sce_content SCE content 
+* @param int     $comment_id Comment ID of the comment
+*/
+if ( ! function_exists( 'minnpost_largo_sce_output' ) ) :
+	add_filter( 'sce_content', 'minnpost_largo_sce_output', 10, 2 );
+	function minnpost_largo_sce_output( $sce_content, $comment_id ) {
+		$sce_content = '<div class="m-form-standalone m-form-comment-edit"><div class="m-form-item">' . $sce_content . '</div></div>';
+		return $sce_content;
+	}
+endif;
