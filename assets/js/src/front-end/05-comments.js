@@ -18,10 +18,8 @@ $( document ).on( 'click', '.a-checkbox-always-show-comments', function() {
         success: function( response ) {
         	$( '.a-always-show-comments-result', that.parent() ).html( response.data.message );
         	if ( true === response.data.show ) {
-				//that.text( that.data( 'toggle-text' ) );
 				$( '.a-checkbox-always-show-comments' ).val( 0 );
 			} else {
-				//that.text( that.data( 'default-text' ) );
 				$( '.a-checkbox-always-show-comments' ).val( 1 );
 			}
         }

@@ -367,6 +367,20 @@ if ( ! function_exists( 'minnpost_largo_load_comments_button_class' ) ) :
 endif;
 
 /**
+* Text for show comments button
+* @param string $text
+* @return string $text
+*
+*/
+if ( ! function_exists( 'minnpost_largo_load_comments_button_text' ) ) :
+	add_filter( 'llc_button_text', 'minnpost_largo_load_comments_button_text' );
+	function minnpost_largo_load_comments_button_text( $text ) {
+		$text = esc_html__( 'Show comments or leave a comment', 'minnpost-largo' );
+		return $text;
+	}
+endif;
+
+/**
 * Don't center the comments div because why would anyone even do that
 * @param bool $center
 * @return bool $center
@@ -395,7 +409,6 @@ if ( ! function_exists( 'minnpost_largo_load_comments_set_user_meta' ) ) :
 		}
 
 		$always_show = isset( $_POST['value'] ) ? intval( $_POST['value'] ) : 0;
-		error_log( 'always show is ' . $always_show );
 		$update      = update_user_meta( $user_id, 'always_load_comments', $always_show );
 
 		if ( 1 === $always_show ) {
@@ -409,7 +422,34 @@ if ( ! function_exists( 'minnpost_largo_load_comments_set_user_meta' ) ) :
 			    'message' => __( 'You will not see comments loaded when you are logged in unless you click the button.', LLC_DOMAIN ),
 			);
 		}
-		error_log( 'return is ' . print_r( $return, true ) );
 		wp_send_json_success( $return );
+	}
+endif;
+
+/**
+* HTML for the toggle switch used to always load comments
+* @param string $position
+*
+*/
+if ( ! function_exists( 'minnpost_largo_load_comments_switch' ) ) :
+	function minnpost_largo_load_comments_switch( $position ) {
+		$always_load_comments = false;
+		$user_id = get_current_user_id();
+		if ( 0 === $user_id ) {
+			return;
+		}
+		if ( ! class_exists( 'Lazy_Load_Comments' ) ) {
+			return;
+		}
+		$always_load_comments = filter_var( get_user_meta( $user_id, 'always_load_comments', true ), FILTER_VALIDATE_BOOLEAN );
+		?>
+		<div class="m-user-always-show-comments">
+			<label class="always-show-comments" for="always-show-comments-<?php echo $position; ?>"><?php echo esc_html__( 'Always show comments when you are logged in', 'minnpost-largo' ); ?></label>
+			<label class="a-switch a-switch-always-show-comments a-switch-always-show-comments-<?php echo $position; ?>">
+				<input type="checkbox" class="a-checkbox-always-show-comments" id="always-show-comments-<?php echo $position; ?>"<?php echo ( true === $always_load_comments ) ? ' value="0" checked' : ' value="1"'; ?>>
+				<span class="slider round"></span>
+			</label>
+		</div>
+		<?php
 	}
 endif;
