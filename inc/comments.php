@@ -414,12 +414,12 @@ if ( ! function_exists( 'minnpost_largo_load_comments_set_user_meta' ) ) :
 		if ( 1 === $always_show ) {
 			$return = array(
 				'show'    => true,
-			    'message' => __( 'You will always see comments loaded when you are logged in', LLC_DOMAIN ),
+				'message' => __( 'You will always see comments loaded when you are logged in', 'minnpost-largo' ),
 			);
 		} else {
 			$return = array(
 				'show'    => false,
-			    'message' => __( 'You will not see comments loaded when you are logged in unless you click the button.', LLC_DOMAIN ),
+				'message' => __( 'You will not see comments loaded when you are logged in unless you click the button.', 'minnpost-largo' ),
 			);
 		}
 		wp_send_json_success( $return );
@@ -434,7 +434,7 @@ endif;
 if ( ! function_exists( 'minnpost_largo_load_comments_switch' ) ) :
 	function minnpost_largo_load_comments_switch( $position ) {
 		$always_load_comments = false;
-		$user_id = get_current_user_id();
+		$user_id              = get_current_user_id();
 		if ( 0 === $user_id ) {
 			return;
 		}
@@ -459,42 +459,54 @@ endif;
 * @param string $translated_text
 *
 */
-add_filter( 'sce_text_edit', function( $translated_text ) {
-	return esc_html__( 'Edit', 'minnpost-largo' );
-} );
+add_filter(
+	'sce_text_edit',
+	function( $translated_text ) {
+		return esc_html__( 'Edit', 'minnpost-largo' );
+	}
+);
 
 /**
 * Text for the save button on comments
 * @param string $translated_text
 *
 */
-add_filter( 'sce_text_save', function( $translated_text ) {
-	return esc_html__( 'Save Changes', 'minnpost-largo' );
-} );
+add_filter(
+	'sce_text_save',
+	function( $translated_text ) {
+		return esc_html__( 'Save Changes', 'minnpost-largo' );
+	}
+);
 
 /**
 * Text for the cancel edit button on comments
 * @param string $translated_text
 *
 */
-add_filter( 'sce_text_cancel', function( $translated_text ) {
-	return esc_html__( 'Cancel Changes', 'minnpost-largo' );
-} );
+add_filter(
+	'sce_text_cancel',
+	function( $translated_text ) {
+		return esc_html__( 'Cancel Changes', 'minnpost-largo' );
+	}
+);
 
 /**
 * Text for the delete button on comments
 * @param string $translated_text
 *
 */
-add_filter( 'sce_text_delete', function( $translated_text ) {
-	return esc_html__( 'Delete Comment', 'minnpost-largo' );
-} );
+add_filter(
+	'sce_text_delete',
+	function( $translated_text ) {
+		return esc_html__( 'Delete Comment', 'minnpost-largo' );
+	}
+);
 
 /**
 * Filter: sce_content
 * Filter to overral simple comment edit output
 *
-* @param string  $sce_content SCE content 
+* @param string  $sce_content SCE content
 * @param int     $comment_id Comment ID of the comment
 */
 if ( ! function_exists( 'minnpost_largo_sce_output' ) ) :
