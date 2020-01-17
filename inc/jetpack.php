@@ -125,13 +125,94 @@ endif;
  *
  * @return string $context Context, including information about the post author.
  */
-add_filter( 'jetpack_relatedposts_filter_post_context', 'jetpackme_related_authors', 10, 2 );
-function jetpackme_related_authors( $context, $post_id ) {
-	$byline = minnpost_get_posted_by( $post_id );
-	// Add the author name after the existing context.
-	if ( ! empty( $byline ) ) {
-		return $context . $byline;
+if ( ! function_exists( 'minnpost_largo_jetpack_remove' ) ) :
+	add_filter( 'jetpack_relatedposts_filter_post_context', 'jetpackme_related_authors', 10, 2 );
+	function jetpackme_related_authors( $context, $post_id ) {
+		$byline = minnpost_get_posted_by( $post_id );
+		// Add the author name after the existing context.
+		if ( ! empty( $byline ) ) {
+			return $context . $byline;
+		}
+		// Final fallback.
+		return $context;
 	}
-	// Final fallback.
-	return $context;
-}
+endif;
+
+/**
+ * Display automated related posts based on the Jetpack query
+ *
+ */
+if ( ! function_exists( 'minnpost_largo_jetpack_results' ) ) :
+	function minnpost_largo_jetpack_results() {
+		$related_query = minnpost_largo_get_jetpack_results();
+		if ( ! empty( $related_query ) ) : ?>
+			<aside class="m-related m-related-automated">
+				<h3 class="a-related-title a-related-title-automated"><?php echo esc_html__( 'Read these next', 'minnpost-largo' ); ?></h3>
+				<ul class="a-related-list a-related-list-automated">
+					<?php
+					while ( $related_query->have_posts() ) :
+						$related_query->the_post();
+						?>
+						<li>
+							<p class="a-post-category a-zone-item-category"><?php echo minnpost_get_category_name( get_the_ID() ); ?></p>
+							<header class="m-entry-header">
+								<h3 class="a-entry-title"><a href="<?php echo get_permalink( get_the_ID() ); ?>"><?php echo get_the_title( get_the_ID() ); ?></a></h3>
+								<?php if ( 'post' === get_post_type( get_the_ID() ) ) : ?>
+									<div class="m-entry-meta">
+										<?php minnpost_posted_by( get_the_ID() ); ?> | <?php minnpost_posted_on( get_the_ID() ); ?> <?php minnpost_edit_link( get_the_ID() ); ?>
+									</div>
+									<?php endif; ?>
+							</header>
+							<div class="m-entry-excerpt"><?php echo wpautop( get_the_excerpt( get_the_ID() ) ); ?></div>
+						</li>
+						<?php
+					endwhile;
+					wp_reset_query();
+					?>
+				</ul>
+			</aside>
+			<?php
+	endif;
+	}
+endif;
+
+/**
+ * Generate a WP query object for jetpack related posts
+ *
+ * @return object $related_query
+ */
+if ( ! function_exists( 'minnpost_largo_get_jetpack_results' ) ) :
+	function minnpost_largo_get_jetpack_results() {
+		$related_posts = array();
+		$query         = array();
+
+		// Number of posts to show
+		$query['showposts'] = 3;
+
+		// Fetches related post IDs if JetPack Related Posts is active
+		if ( class_exists( 'Jetpack_RelatedPosts' ) && method_exists( 'Jetpack_RelatedPosts', 'init_raw' ) ) :
+			$related = Jetpack_RelatedPosts::init_raw()
+				->set_query_name( 'theme-custom' ) // optional, name can be anything
+				->get_for_post_id(
+					get_the_ID(),
+					array( 'size' => $query['showposts'] )
+				);
+			if ( $related ) :
+				foreach ( $related as $result ) :
+					$related_posts[] = $result['id'];
+				endforeach;
+			endif;
+		endif;
+
+		// Sets query to related posts, falls back to recent posts
+		if ( $related_posts ) {
+			$query['post__in'] = $related_posts;
+			$query['orderby']  = 'post__in';
+			$title             = __( 'Related Posts', 'minnpost-largo' );
+			$related_query     = new WP_Query( $query );
+			return $related_query;
+		} else {
+			return;
+		}
+	}
+endif;
