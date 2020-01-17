@@ -1,22 +1,10 @@
-// button click for showing comments one time
-$( document ).on( 'click', '.a-button-show-comments', function() {
-	trackShowComments( false, '', '' );
-});
-
-// button click for always showing comments displayed before the comment list
-$( document ).on( 'click', '#always-show-comments-before', function() {
-	trackShowComments( true, 'Before', $( this ).val() );
-});
-
-// button click for always showing comments displayed after the comment list
-$( document ).on( 'click', '#always-show-comments-after', function() {
-	trackShowComments( true, 'After', $( this ).val() );
-});
-
-function trackShowComments( always, position, click_value ) {
+// based on which button was clicked, set the values for the analytics event and create it
+function trackShowComments( always, id, click_value ) {
 	var action          = '';
 	var category_prefix = '';
 	var category_suffix = '';
+	var position        = '';
+	position = id.replace( 'always-show-comments-', '' );
 	if ( '1' === click_value ) {
 		action = 'On';
 	} else if ( '0' === click_value ) {
@@ -28,10 +16,16 @@ function trackShowComments( always, position, click_value ) {
 		category_prefix = 'Always ';
 	}
 	if ( '' !== position ) {
+		position = position.charAt( 0 ).toUpperCase() + position.slice( 1 ); 
 		category_suffix = ' - ' + position;
 	}
 	mp_analytics_tracking_event( 'event', category_prefix + 'Show Comments' + category_suffix, action, location.pathname );
 }
+
+// when showing comments once, track it as an analytics event
+$( document ).on( 'click', '.a-button-show-comments', function() {
+	trackShowComments( false, '', '' );
+});
 
 // Set user meta value for always showing comments if that button is clicked
 $( document ).on( 'click', '.a-checkbox-always-show-comments', function() {
@@ -41,6 +35,9 @@ $( document ).on( 'click', '.a-checkbox-always-show-comments', function() {
 	} else {
 		$( '.a-checkbox-always-show-comments' ).prop( 'checked', false );
 	}
+
+	// track it as an analytics event
+	trackShowComments( true, that.attr( 'id' ), that.val() );
 
 	// we already have ajaxurl from the theme
 	$.ajax( {
