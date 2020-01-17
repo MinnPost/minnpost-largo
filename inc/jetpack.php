@@ -105,3 +105,33 @@ if ( ! function_exists( 'minnpost_largo_es_query_args' ) ) :
 		return $args;
 	}
 endif;
+
+if ( ! function_exists( 'minnpost_largo_jetpack_remove' ) ) :
+	add_action( 'wp', 'minnpost_largo_jetpack_remove', 20 );
+	function minnpost_largo_jetpack_remove() {
+		if ( class_exists( 'Jetpack_RelatedPosts' ) ) {
+			$jprp     = Jetpack_RelatedPosts::init();
+			$callback = array( $jprp, 'filter_add_target_to_dom' );
+			remove_filter( 'the_content', $callback, 40 );
+		}
+	}
+endif;
+
+/**
+ * Display the post author after the Related Posts context.
+ *
+ * @param string $context Context displayed below each related post.
+ * @param string $post_id Post ID of the post for which we are retrieving Related Posts.
+ *
+ * @return string $context Context, including information about the post author.
+ */
+add_filter( 'jetpack_relatedposts_filter_post_context', 'jetpackme_related_authors', 10, 2 );
+function jetpackme_related_authors( $context, $post_id ) {
+	$byline = minnpost_get_posted_by( $post_id );
+	// Add the author name after the existing context.
+	if ( ! empty( $byline ) ) {
+		return $context . $byline;
+	}
+	// Final fallback.
+	return $context;
+}

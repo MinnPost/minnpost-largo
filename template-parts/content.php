@@ -78,8 +78,16 @@
 	<?php endif; ?>
 
 	<?php
-	minnpost_related( 'multimedia' );
-	minnpost_related( 'content' );
+	$related_multimedia_ids = minnpost_get_related( 'multimedia' );
+	$related_content_ids    = minnpost_get_related( 'content' );
+	if ( empty( $related_multimedia_ids ) && empty( $related_content_ids ) ) {
+		if ( class_exists( 'Jetpack_RelatedPosts' ) ) {
+			echo do_shortcode( '[jetpack-related-posts]' );
+		}
+	} else {
+		minnpost_related( 'multimedia' );
+		minnpost_related( 'content' );
+	}
 	?>
 
 	<?php

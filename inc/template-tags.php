@@ -364,18 +364,15 @@ endif;
 */
 if ( ! function_exists( 'minnpost_related' ) ) :
 	function minnpost_related( $type = 'content' ) {
-		if ( ! empty( get_post_meta( get_the_ID(), '_mp_related_' . $type, true ) ) ) :
+		$related_ids = minnpost_get_related( $type );
+		if ( ! empty( $related_ids ) ) :
 			?>
 		<aside class="m-related m-related-<?php echo $type; ?>">
 			<h3 class="a-related-title a-related-title-<?php echo $type; ?>">Related <?php echo ucfirst( $type ); ?>:</h3>
 			<ul class="a-related-list a-related-list-<?php echo $type; ?>">
 				<?php
-				$ids = get_post_meta( get_the_ID(), '_mp_related_' . $type, true );
-				if ( ! is_array( $ids ) ) {
-					$ids = explode( ',', esc_html( $ids ) );
-				}
 				global $post;
-				foreach ( $ids as $id ) :
+				foreach ( $related_ids as $id ) :
 					$post = get_post( $id );
 					setup_postdata( $post );
 					?>
@@ -408,6 +405,26 @@ if ( ! function_exists( 'minnpost_related' ) ) :
 		</aside>
 			<?php
 	endif;
+	}
+endif;
+
+/**
+* Get the related stories for a post
+*
+* @param string $type
+* @return array $related
+*
+*/
+if ( ! function_exists( 'minnpost_get_related' ) ) :
+	function minnpost_get_related( $type = 'content' ) {
+		$related = array();
+		if ( ! empty( get_post_meta( get_the_ID(), '_mp_related_' . $type, true ) ) ) {
+			$ids = get_post_meta( get_the_ID(), '_mp_related_' . $type, true );
+			if ( ! is_array( $ids ) ) {
+				$related = explode( ',', esc_html( $ids ) );
+			}
+		}
+		return $related;
 	}
 endif;
 
