@@ -333,6 +333,34 @@ add_filter(
 );
 
 /**
+* Use a spinner image from Core instead of the one from the lazy load comments plugin
+* @param string $image_tag
+* @return string $image_tag
+*
+*/
+if ( ! function_exists( 'minnpost_largo_lazy_load_loading_image' ) ) :
+	add_filter( 'llc_loader_element_content', 'minnpost_largo_lazy_load_loading_image' );
+	function minnpost_largo_lazy_load_loading_image( $image_tag ) {
+		$image_tag = '<img src="' . admin_url( '/images/spinner.gif' ) . '" srcset="' . admin_url( '/images/spinner.gif' ) . ' 1x, ' . admin_url( 'images/spinner-2x.gif' ) . ' 2x,">';
+		return $image_tag;
+	}
+endif;
+
+/**
+* Use the 1x spinner image from Core instead of the one from the simple comment editing plugin
+* @param string $image_url
+* @return string $image_url
+*
+*/
+if ( ! function_exists( 'minnpost_largo_comment_edit_loading_image' ) ) :
+	add_filter( 'sce_loading_img', 'minnpost_largo_comment_edit_loading_image' );
+	function minnpost_largo_comment_edit_loading_image( $image_url ) {
+		$image_url = admin_url( '/images/spinner.gif' );
+		return $image_url;
+	}
+endif;
+
+/**
 * When lazy loading comments, allow users to indicate they always want to load comments.
 * @param bool $can_lazyload
 * @return bool $can_lazyload
