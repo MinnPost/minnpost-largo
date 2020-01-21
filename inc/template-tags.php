@@ -422,6 +422,8 @@ if ( ! function_exists( 'minnpost_get_related' ) ) :
 			$ids = get_post_meta( get_the_ID(), '_mp_related_' . $type, true );
 			if ( ! is_array( $ids ) ) {
 				$related = explode( ',', esc_html( $ids ) );
+			} else {
+				$related = $ids;
 			}
 		}
 		return $related;
