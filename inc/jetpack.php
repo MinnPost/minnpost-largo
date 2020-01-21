@@ -146,37 +146,35 @@ if ( ! function_exists( 'minnpost_largo_jetpack_results' ) ) :
 	function minnpost_largo_jetpack_results() {
 		$related_query = minnpost_largo_get_jetpack_results();
 		if ( ! empty( $related_query ) ) : ?>
-			<aside class="m-related m-related-automated">
-				<h3 class="a-related-title a-related-title-automated">
-					<?php if ( '' !== get_post_meta( get_the_ID(), '_mp_related_content_label', true ) ) : ?>
-						<?php echo get_post_meta( get_the_ID(), '_mp_related_content_label', true ); ?>
-					<?php else : ?>
-						<?php echo esc_html__( 'Read these stories next', 'minnpost-largo' ); ?>
-					<?php endif; ?>
-				</h3>
-				<ul class="a-related-list a-related-list-automated">
-					<?php
-					while ( $related_query->have_posts() ) :
-						$related_query->the_post();
-						?>
-						<li>
-							<p class="a-post-category a-zone-item-category"><?php echo minnpost_get_category_name( get_the_ID() ); ?></p>
-							<header class="m-entry-header">
-								<h3 class="a-entry-title"><a href="<?php echo get_permalink( get_the_ID() ); ?>"><?php echo get_the_title( get_the_ID() ); ?></a></h3>
-								<?php if ( 'post' === get_post_type( get_the_ID() ) ) : ?>
-									<div class="m-entry-meta">
-										<?php minnpost_posted_by( get_the_ID() ); ?> | <?php minnpost_posted_on( get_the_ID() ); ?> <?php minnpost_edit_link( get_the_ID() ); ?>
-									</div>
-									<?php endif; ?>
-							</header>
-							<div class="m-entry-excerpt"><?php echo wpautop( get_the_excerpt( get_the_ID() ) ); ?></div>
-						</li>
-						<?php
-					endwhile;
-					wp_reset_query();
+			<h3 class="a-related-title a-related-title-automated">
+				<?php if ( '' !== get_post_meta( get_the_ID(), '_mp_related_content_label', true ) ) : ?>
+					<?php echo get_post_meta( get_the_ID(), '_mp_related_content_label', true ); ?>
+				<?php else : ?>
+					<?php echo esc_html__( 'Read these stories next', 'minnpost-largo' ); ?>
+				<?php endif; ?>
+			</h3>
+			<ul class="a-related-list a-related-list-automated">
+				<?php
+				while ( $related_query->have_posts() ) :
+					$related_query->the_post();
 					?>
-				</ul>
-			</aside>
+					<li>
+						<p class="a-post-category a-zone-item-category"><?php echo minnpost_get_category_name( get_the_ID() ); ?></p>
+						<header class="m-entry-header">
+							<h3 class="a-entry-title"><a href="<?php echo get_permalink( get_the_ID() ); ?>"><?php echo get_the_title( get_the_ID() ); ?></a></h3>
+							<?php if ( 'post' === get_post_type( get_the_ID() ) ) : ?>
+								<div class="m-entry-meta">
+									<?php minnpost_posted_by( get_the_ID() ); ?> | <?php minnpost_posted_on( get_the_ID() ); ?> <?php minnpost_edit_link( get_the_ID() ); ?>
+								</div>
+								<?php endif; ?>
+						</header>
+						<div class="m-entry-excerpt"><?php echo wpautop( get_the_excerpt( get_the_ID() ) ); ?></div>
+					</li>
+					<?php
+				endwhile;
+				wp_reset_query();
+				?>
+			</ul>
 			<?php
 	endif;
 	}

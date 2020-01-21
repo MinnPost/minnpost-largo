@@ -367,48 +367,46 @@ if ( ! function_exists( 'minnpost_related' ) ) :
 		$related_ids = minnpost_get_related( $type );
 		if ( ! empty( $related_ids ) ) :
 			?>
-		<aside class="m-related m-related-<?php echo $type; ?>">
-			<h3 class="a-related-title a-related-title-<?php echo $type; ?>">
-				<?php if ( '' !== get_post_meta( get_the_ID(), '_mp_related_content_label', true ) ) : ?>
-					<?php echo get_post_meta( get_the_ID(), '_mp_related_content_label', true ); ?>
-				<?php else : ?>
-					<?php echo esc_html__( 'Read these stories next', 'minnpost-largo' ); ?>
-				<?php endif; ?>
-			</h3>
-			<ul class="a-related-list a-related-list-<?php echo $type; ?>">
-				<?php
-				global $post;
-				foreach ( $related_ids as $id ) :
-					$post = get_post( $id );
-					setup_postdata( $post );
-					?>
-					<li>
-						<?php
-							minnpost_post_image(
-								'thumbnail',
-								array(
-									'location' => 'related',
-								),
-								$id
-							);
-						?>
-						<p class="a-post-category a-zone-item-category"><?php echo minnpost_get_category_name( $id ); ?></p>
-						<header class="m-entry-header">
-							<h3 class="a-entry-title"><a href="<?php echo get_permalink( $id ); ?>"><?php echo get_the_title( $id ); ?></a></h3>
-							<?php if ( 'post' === get_post_type( $id ) ) : ?>
-								<div class="m-entry-meta">
-									<?php minnpost_posted_by( $id ); ?> | <?php minnpost_posted_on( $id ); ?> <?php minnpost_edit_link( $id ); ?>
-								</div>
-								<?php endif; ?>
-						</header>
-						<div class="m-entry-excerpt"><?php echo wpautop( get_the_excerpt( $id ) ); ?></div>
-					</li>
-					<?php
-				endforeach;
-				wp_reset_postdata();
+		<h3 class="a-related-title a-related-title-<?php echo $type; ?>">
+			<?php if ( '' !== get_post_meta( get_the_ID(), '_mp_related_content_label', true ) ) : ?>
+				<?php echo get_post_meta( get_the_ID(), '_mp_related_content_label', true ); ?>
+			<?php else : ?>
+				<?php echo esc_html__( 'Read these stories next', 'minnpost-largo' ); ?>
+			<?php endif; ?>
+		</h3>
+		<ul class="a-related-list a-related-list-<?php echo $type; ?>">
+			<?php
+			global $post;
+			foreach ( $related_ids as $id ) :
+				$post = get_post( $id );
+				setup_postdata( $post );
 				?>
-			</ul>
-		</aside>
+				<li>
+					<?php
+						minnpost_post_image(
+							'thumbnail',
+							array(
+								'location' => 'related',
+							),
+							$id
+						);
+					?>
+					<p class="a-post-category a-zone-item-category"><?php echo minnpost_get_category_name( $id ); ?></p>
+					<header class="m-entry-header">
+						<h3 class="a-entry-title"><a href="<?php echo get_permalink( $id ); ?>"><?php echo get_the_title( $id ); ?></a></h3>
+						<?php if ( 'post' === get_post_type( $id ) ) : ?>
+							<div class="m-entry-meta">
+								<?php minnpost_posted_by( $id ); ?> | <?php minnpost_posted_on( $id ); ?> <?php minnpost_edit_link( $id ); ?>
+							</div>
+							<?php endif; ?>
+					</header>
+					<div class="m-entry-excerpt"><?php echo wpautop( get_the_excerpt( $id ) ); ?></div>
+				</li>
+				<?php
+			endforeach;
+			wp_reset_postdata();
+			?>
+		</ul>
 			<?php
 		endif;
 	}
@@ -444,36 +442,33 @@ if ( ! function_exists( 'minnpost_related_terms' ) ) :
 	function minnpost_related_terms() {
 		$related_terms = minnpost_get_related_terms();
 		if ( isset( $related_terms['category'] ) || isset( $related_terms['tag'] ) ) :
-			error_log( 'category is not empty' );
 			?>
-			<aside class="m-related-links">
-				<?php if ( isset( $related_terms['category'] ) ) : ?>
-					<h3 class="a-related-title a-related-title-category">
-						<a href="<?php echo esc_url( get_category_link( $related_terms['category']['term_id'] ) ); ?>">
-							<?php
-							echo sprintf(
-								// translators: 1 is the category name
-								esc_html__( 'More %1$s articles' ),
-								$related_terms['category']['name']
-							);
-							?>
-						</a>
-					</h3>
-				<?php endif; ?>
-				<?php if ( isset( $related_terms['tag'] ) ) : ?>
-					<h3 class="a-related-title a-related-title-tag">
-						<a href="<?php echo esc_url( get_tag_link( $related_terms['tag']['term_id'] ) ); ?>">
-							<?php
-							echo sprintf(
-								// translators: 1 is the tag name
-								esc_html__( 'More %1$s articles' ),
-								$related_terms['tag']['name']
-							);
-							?>
-						</a>
-					</h3>
-				<?php endif; ?>
-			</aside>
+			<?php if ( isset( $related_terms['category'] ) ) : ?>
+				<h3 class="a-related-title a-related-title-category">
+					<a href="<?php echo esc_url( get_category_link( $related_terms['category']['term_id'] ) ); ?>">
+						<?php
+						echo sprintf(
+							// translators: 1 is the category name
+							esc_html__( 'More %1$s articles' ),
+							$related_terms['category']['name']
+						);
+						?>
+					</a>
+				</h3>
+			<?php endif; ?>
+			<?php if ( isset( $related_terms['tag'] ) ) : ?>
+				<h3 class="a-related-title a-related-title-tag">
+					<a href="<?php echo esc_url( get_tag_link( $related_terms['tag']['term_id'] ) ); ?>">
+						<?php
+						echo sprintf(
+							// translators: 1 is the tag name
+							esc_html__( 'More %1$s articles' ),
+							$related_terms['tag']['name']
+						);
+						?>
+					</a>
+				</h3>
+			<?php endif; ?>
 			<?php
 		endif;
 	}
