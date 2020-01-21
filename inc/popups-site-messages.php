@@ -155,18 +155,6 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 			'callback' => 'minnpost_user_gets_emails',
 			'priority' => 7,
 		);
-		$conditions['session_count']        = array(
-			'group'    => __( 'User', 'minnpost-largo' ),
-			'name'     => __( 'User: Session Count', 'minnpost-largo' ),
-			'fields'   => array(
-				'selected' => array(
-					'placeholder' => __( 'Session Count', 'minnpost-largo' ),
-					'type'        => 'text',
-				),
-			),
-			'callback' => 'minnpost_user_session_count',
-			'priority' => 7,
-		);
 		$conditions['url_is']               = array(
 			'group'    => __( 'URL', 'minnpost-largo' ),
 			'name'     => __( 'URL: Is', 'minnpost-largo' ),
@@ -257,14 +245,6 @@ if ( ! function_exists( 'minnpost_site_message_conditionals' ) ) :
 			'has_params' => true,
 			'params'     => array(
 				'role',
-			),
-		);
-		$conditionals['user'][] = array(
-			'name'       => 'session_count',
-			'method'     => 'minnpost_user_session_count',
-			'has_params' => true,
-			'params'     => array(
-				'list',
 			),
 		);
 		$conditionals['user'][] = array(
