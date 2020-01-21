@@ -106,6 +106,10 @@ if ( ! function_exists( 'minnpost_largo_es_query_args' ) ) :
 	}
 endif;
 
+/**
+ * Remove the default Jetpack Related Posts output
+ * Because we're going to use WP Query instead
+ */
 if ( ! function_exists( 'minnpost_largo_jetpack_remove' ) ) :
 	add_action( 'wp', 'minnpost_largo_jetpack_remove', 20 );
 	function minnpost_largo_jetpack_remove() {
@@ -157,20 +161,7 @@ if ( ! function_exists( 'minnpost_largo_jetpack_results' ) ) :
 				<?php
 				while ( $related_query->have_posts() ) :
 					$related_query->the_post();
-					?>
-					<li>
-						<p class="a-post-category a-zone-item-category"><?php echo minnpost_get_category_name( get_the_ID() ); ?></p>
-						<header class="m-entry-header">
-							<h3 class="a-entry-title"><a href="<?php echo get_permalink( get_the_ID() ); ?>"><?php echo get_the_title( get_the_ID() ); ?></a></h3>
-							<?php if ( 'post' === get_post_type( get_the_ID() ) ) : ?>
-								<div class="m-entry-meta">
-									<?php minnpost_posted_by( get_the_ID() ); ?> | <?php minnpost_posted_on( get_the_ID() ); ?> <?php minnpost_edit_link( get_the_ID() ); ?>
-								</div>
-								<?php endif; ?>
-						</header>
-						<div class="m-entry-excerpt"><?php echo wpautop( get_the_excerpt( get_the_ID() ) ); ?></div>
-					</li>
-					<?php
+					get_template_part( 'template-parts/related-post', 'automated' );
 				endwhile;
 				wp_reset_query();
 				?>
@@ -191,12 +182,12 @@ if ( ! function_exists( 'minnpost_largo_get_jetpack_results' ) ) :
 		$query         = array();
 
 		// Number of posts to show
-		$query['showposts'] = 3;
+		$query['showposts'] = 4;
 
 		// Fetches related post IDs if JetPack Related Posts is active
 		if ( class_exists( 'Jetpack_RelatedPosts' ) && method_exists( 'Jetpack_RelatedPosts', 'init_raw' ) ) :
 			$related = Jetpack_RelatedPosts::init_raw()
-				->set_query_name( 'theme-custom' ) // optional, name can be anything
+				->set_query_name( 'minnpost-largo-related-automated' ) // optional, name can be anything
 				->get_for_post_id(
 					get_the_ID(),
 					array( 'size' => $query['showposts'] )
@@ -218,5 +209,30 @@ if ( ! function_exists( 'minnpost_largo_get_jetpack_results' ) ) :
 		} else {
 			return;
 		}
+	}
+endif;
+
+/**
+ * Exclude categories from Jetpack related posts
+ *
+ * @param array $filters
+ * @return array $filters
+ *
+ */
+if ( ! function_exists( 'minnpost_largo_get_jetpack_results' ) ) :
+	add_filter( 'jetpack_relatedposts_filter_filters', 'minnpost_largo_jetpack_exclude_category' );
+	function minnpost_largo_jetpack_exclude_category( $filters ) {
+		$filters[] = array(
+			'not' => array(
+				'terms' => array(
+					'category.term_id' => array(
+						55575,
+						55630,
+						55628,
+					),
+				),
+			),
+		);
+		return $filters;
 	}
 endif;
