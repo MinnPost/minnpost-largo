@@ -583,13 +583,21 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		);
 		$related_settings->add_field(
 			array(
+				'name' => __( 'Prevent related content?', 'minnpost-largo' ),
+				'id'   => '_mp_prevent_related_content',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not contain any related content. This prevents both manual and automated recommendations.', 'minnpost-largo' ),
+			)
+		);
+		$related_settings->add_field(
+			array(
 				'name' => __( 'Related Content Label', 'minnpost-largo' ),
 				'id'   => '_mp_related_content_label',
 				'type' => 'text',
 				'desc' => sprintf(
 					// translators: 1) the default label for related items
 					esc_html__( 'This text will show as a heading above the Related Content items. If you leave it blank, it will say %1$s.', 'minnpost-largo' ),
-					esc_html__( 'Read These Next', 'minnpost-largo' )
+					esc_html__( 'Read these stories next', 'minnpost-largo' )
 				),
 			)
 		);
@@ -597,7 +605,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			minnpost_post_search_field(
 				array(
 					'name'       => __( 'Related Content', 'minnpost-largo' ),
-					'desc'       => __( 'Search for a post here', 'minnpost-largo' ),
+					'desc'       => __( 'Search for a post here. If any posts are selected, they will override automated recommendations.', 'minnpost-largo' ),
 					'id'         => '_mp_related_content',
 					'query_args' => array(
 						'nopaging' => true,
@@ -609,7 +617,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			minnpost_post_search_field(
 				array(
 					'name'       => __( 'Related Multimedia', 'minnpost-largo' ),
-					'desc'       => __( 'Search for a post here', 'minnpost-largo' ),
+					'desc'       => __( 'Search for a post here. If any posts are selected, they will override automated recommendations.', 'minnpost-largo' ),
 					'id'         => '_mp_related_multimedia',
 					'query_args' => array(
 						'nopaging' => true,
