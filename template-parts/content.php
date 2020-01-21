@@ -93,11 +93,6 @@
 	?>
 
 	<?php
-	$tags = get_the_tag_list( '<aside class="a-related-tags"><h4>Related Tags:</h4><ul><li>', '</li><li>', '</li></ul></aside>' );
-	echo $tags;
-	?>
-
-	<?php
 	$hide_author = get_post_meta( $id, '_mp_remove_author_from_display', true );
 	$coauthors   = get_coauthors( get_the_ID() );
 	$author_info = '';
