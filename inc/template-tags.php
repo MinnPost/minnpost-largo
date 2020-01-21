@@ -410,7 +410,7 @@ if ( ! function_exists( 'minnpost_related' ) ) :
 			</ul>
 		</aside>
 			<?php
-	endif;
+		endif;
 	}
 endif;
 
@@ -433,6 +433,72 @@ if ( ! function_exists( 'minnpost_get_related' ) ) :
 			}
 		}
 		return $related;
+	}
+endif;
+
+/**
+* Display the related terms a post should link to
+*
+*/
+if ( ! function_exists( 'minnpost_related_terms' ) ) :
+	function minnpost_related_terms() {
+		$related_terms = minnpost_get_related_terms();
+		if ( isset( $related_terms['category'] ) || isset( $related_terms['tag'] ) ) :
+			error_log( 'category is not empty' );
+			?>
+			<aside class="m-related-links">
+				<?php if ( isset( $related_terms['category'] ) ) : ?>
+					<h3 class="a-related-title a-related-title-category">
+						<a href="<?php echo esc_url( get_category_link( $related_terms['category']['term_id'] ) ); ?>">
+							<?php
+							echo sprintf(
+								// translators: 1 is the category name
+								esc_html__( 'More %1$s articles' ),
+								$related_terms['category']['name']
+							);
+							?>
+						</a>
+					</h3>
+				<?php endif; ?>
+				<?php if ( isset( $related_terms['tag'] ) ) : ?>
+					<h3 class="a-related-title a-related-title-tag">
+						<a href="<?php echo esc_url( get_tag_link( $related_terms['tag']['term_id'] ) ); ?>">
+							<?php
+							echo sprintf(
+								// translators: 1 is the tag name
+								esc_html__( 'More %1$s articles' ),
+								$related_terms['tag']['name']
+							);
+							?>
+						</a>
+					</h3>
+				<?php endif; ?>
+			</aside>
+			<?php
+		endif;
+	}
+endif;
+
+/**
+* Get the related terms a post should link to
+*
+* @return array $related_terms
+*
+*/
+if ( ! function_exists( 'minnpost_get_related_terms' ) ) :
+	function minnpost_get_related_terms() {
+		$related_terms    = array();
+		$related_category = get_post_meta( get_the_ID(), '_mp_related_category', true );
+		$related_tag      = get_post_meta( get_the_ID(), '_mp_related_tag', true );
+		if ( '' !== $related_category || '' !== $related_tag ) {
+			if ( '' !== $related_category ) {
+				$related_terms['category'] = get_category( $related_category, ARRAY_A );
+			}
+			if ( '' !== $related_tag ) {
+				$related_terms['tag'] = get_tag( $related_tag, ARRAY_A );
+			}
+		}
+		return $related_terms;
 	}
 endif;
 

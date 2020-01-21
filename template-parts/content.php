@@ -91,6 +91,11 @@
 			minnpost_related( 'multimedia' );
 			minnpost_related( 'content' );
 		}
+		$related_terms = minnpost_get_related_terms();
+		if ( ! empty( $related_terms ) ) {
+			error_log( 'not empty' );
+			minnpost_related_terms();
+		}
 		?>
 	<?php endif; ?>
 

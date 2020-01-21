@@ -586,7 +586,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'name' => __( 'Prevent related content?', 'minnpost-largo' ),
 				'id'   => '_mp_prevent_related_content',
 				'type' => 'checkbox',
-				'desc' => __( 'If checked, this post will not contain any related content. This prevents both manual and automated recommendations.', 'minnpost-largo' ),
+				'desc' => __( 'If checked, this post will not contain any related content. This prevents manual and automated recommendations, as well as "more ___ articles" links.', 'minnpost-largo' ),
 			)
 		);
 		$related_settings->add_field(
@@ -625,7 +625,30 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				)
 			)
 		);
-		// todo: put fields related to automatic related content here
+		$related_settings->add_field(
+			array(
+				'name'       => __( 'Link to a related category', 'minnpost-largo' ),
+				'desc'       => __( 'This post will contain a link to "More ___ articles" if there is a value.', 'minnpost-largo' ),
+				'id'         => '_mp_related_category',
+				'taxonomy'   => 'category', //Enter Taxonomy Slug
+				'type'       => 'term_ajax_search',
+				'query_args' => array(
+					'default' => '',
+				),
+			)
+		);
+		$related_settings->add_field(
+			array(
+				'name'       => __( 'Link to a related tag', 'minnpost-largo' ),
+				'desc'       => __( 'This post will contain a link to "More ___ articles" if there is a value.', 'minnpost-largo' ),
+				'id'         => '_mp_related_tag',
+				'taxonomy'   => 'post_tag', //Enter Taxonomy Slug
+				'type'       => 'term_ajax_search',
+				'query_args' => array(
+					'default' => '',
+				),
+			)
+		);
 
 		/**
 		 * Membership content settings
