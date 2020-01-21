@@ -28,7 +28,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 		}
 	}
 	function newsletter_pre_get_posts( WP_Query $wp_query ) {
-		if ( in_array( $wp_query->get( 'post_type' ), array( 'post' ) ) ) {
+		if ( in_array( $wp_query->get( 'post_type' ), array( 'post' ), true ) ) {
 			$wp_query->set( 'update_post_meta_cache', false );
 		}
 	}
