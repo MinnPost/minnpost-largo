@@ -147,7 +147,13 @@ if ( ! function_exists( 'minnpost_largo_jetpack_results' ) ) :
 		$related_query = minnpost_largo_get_jetpack_results();
 		if ( ! empty( $related_query ) ) : ?>
 			<aside class="m-related m-related-automated">
-				<h3 class="a-related-title a-related-title-automated"><?php echo esc_html__( 'Read these next', 'minnpost-largo' ); ?></h3>
+				<h3 class="a-related-title a-related-title-automated">
+					<?php if ( '' !== get_post_meta( get_the_ID(), '_mp_related_content_label', true ) ) : ?>
+						<?php echo get_post_meta( get_the_ID(), '_mp_related_content_label', true ); ?>
+					<?php else : ?>
+						<?php echo esc_html__( 'Read these stories next', 'minnpost-largo' ); ?>
+					<?php endif; ?>
+				</h3>
 				<ul class="a-related-list a-related-list-automated">
 					<?php
 					while ( $related_query->have_posts() ) :

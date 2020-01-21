@@ -368,7 +368,13 @@ if ( ! function_exists( 'minnpost_related' ) ) :
 		if ( ! empty( $related_ids ) ) :
 			?>
 		<aside class="m-related m-related-<?php echo $type; ?>">
-			<h3 class="a-related-title a-related-title-<?php echo $type; ?>">Related <?php echo ucfirst( $type ); ?>:</h3>
+			<h3 class="a-related-title a-related-title-<?php echo $type; ?>">
+				<?php if ( '' !== get_post_meta( get_the_ID(), '_mp_related_content_label', true ) ) : ?>
+					<?php echo get_post_meta( get_the_ID(), '_mp_related_content_label', true ); ?>
+				<?php else : ?>
+					<?php echo esc_html__( 'Read these stories next', 'minnpost-largo' ); ?>
+				<?php endif; ?>
+			</h3>
 			<ul class="a-related-list a-related-list-<?php echo $type; ?>">
 				<?php
 				global $post;

@@ -582,6 +582,18 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			)
 		);
 		$related_settings->add_field(
+			array(
+				'name' => __( 'Related Content Label', 'minnpost-largo' ),
+				'id'   => '_mp_related_content_label',
+				'type' => 'text',
+				'desc' => sprintf(
+					// translators: 1) the default label for related items
+					esc_html__( 'This text will show as a heading above the Related Content items. If you leave it blank, it will say %1$s.', 'minnpost-largo' ),
+					esc_html__( 'Read These Next', 'minnpost-largo' )
+				),
+			)
+		);
+		$related_settings->add_field(
 			minnpost_post_search_field(
 				array(
 					'name'       => __( 'Related Content', 'minnpost-largo' ),
