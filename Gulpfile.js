@@ -141,6 +141,13 @@ function adminscripts() {
     .pipe(concat(packagejson.name + '-admin.js')) // Concatenate
     .pipe(sourcemaps.write())
     .pipe(eslint())
+    .pipe(
+      iife({
+        useStrict: false,
+        params: ['$'],
+        args: ['jQuery']
+      })
+    )
     .pipe(gulp.dest(config.scripts.dest))
     .pipe(browserSync.stream());
 }
@@ -157,6 +164,14 @@ function mainscripts() {
       suffix: '.min'
     }))*/
     .pipe(sourcemaps.write())
+    .pipe(eslint())
+    .pipe(
+      iife({
+        useStrict: false,
+        params: ['$'],
+        args: ['jQuery']
+      })
+    )
     .pipe(gulp.dest(config.scripts.dest))
     .pipe(browserSync.stream());
 }
