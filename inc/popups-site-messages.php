@@ -11,6 +11,7 @@
 /**
 * Allows us to determine if a popup can be loaded, after the conditions have been processed.
 * We use this to prevent popups on /support, /user, /account urls
+* we need to duplicate this for the popups coming from the site messages plugin
 *
 * @param bool $loadable
 * @return int $id
@@ -164,7 +165,7 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 					'type'        => 'text',
 				),
 			),
-			'callback' => 'minnpost_popup_url_matches',
+			'callback' => 'minnpost_url_matches',
 			'priority' => 1,
 		);
 		$conditions['url_contains']         = array(
@@ -176,7 +177,7 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 					'type'        => 'text',
 				),
 			),
-			'callback' => 'minnpost_popup_url_matches',
+			'callback' => 'minnpost_url_matches',
 			'priority' => 2,
 		);
 		$conditions['url_begins_with']      = array(
@@ -188,7 +189,7 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 					'type'        => 'text',
 				),
 			),
-			'callback' => 'minnpost_popup_url_matches',
+			'callback' => 'minnpost_url_matches',
 			'priority' => 2,
 		);
 		$conditions['url_ends_with']        = array(
@@ -200,7 +201,7 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 					'type'        => 'text',
 				),
 			),
-			'callback' => 'minnpost_popup_url_matches',
+			'callback' => 'minnpost_url_matches',
 			'priority' => 2,
 		);
 		/*$conditions['using_ad_blocker'] = array(
@@ -255,6 +256,38 @@ if ( ! function_exists( 'minnpost_site_message_conditionals' ) ) :
 				'list',
 			),
 		);
+		$conditionals['url'][]  = array(
+			'name'       => 'url_is',
+			'method'     => 'minnpost_url_matches',
+			'has_params' => true,
+			'params'     => array(
+				'target',
+			),
+		);
+		$conditionals['url'][]  = array(
+			'name'       => 'url_contains',
+			'method'     => 'minnpost_url_matches',
+			'has_params' => true,
+			'params'     => array(
+				'target',
+			),
+		);
+		$conditionals['url'][]  = array(
+			'name'       => 'url_begins_with',
+			'method'     => 'minnpost_url_matches',
+			'has_params' => true,
+			'params'     => array(
+				'target',
+			),
+		);
+		$conditionals['url'][]  = array(
+			'name'       => 'url_ends_with',
+			'method'     => 'minnpost_url_matches',
+			'has_params' => true,
+			'params'     => array(
+				'target',
+			),
+		);
 		/*$conditionals['benefit_eligible']     = array(
 			'group'    => __( 'User', 'minnpost-largo' ),
 			'name'     => __( 'User: Eligible For Benefit', 'minnpost-largo' ),
@@ -294,7 +327,7 @@ if ( ! function_exists( 'minnpost_user_is_member' ) ) :
 		// Check each selected role against the user's roles
 		foreach ( $member_levels as $level ) {
 			// If the selected role matches, return true
-			if ( in_array( $level, (array) $user->roles ) ) {
+			if ( in_array( $level, (array) $user->roles, true ) ) {
 				return true;
 			}
 		}
@@ -404,7 +437,7 @@ if ( ! function_exists( 'minnpost_user_gets_emails' ) ) :
 					$mc_resource_items = $minnpost_form_processor_mailchimp->get_data->get_mc_resource_items( $resource_type, $resource_id );
 					foreach ( $mc_resource_items as $item ) {
 						// check until there's a match for the list we're checking against on the user's groups
-						if ( in_array( $item['text'], $lists_to_check ) ) {
+						if ( in_array( $item['text'], $lists_to_check, true ) ) {
 							error_log( 'yep' );
 						}
 					}
@@ -623,12 +656,14 @@ endif;
 * @param array $settings
 * @return bool
 */
-if ( ! function_exists( 'minnpost_popup_url_matches' ) ) :
-	function minnpost_popup_url_matches( $settings = array() ) {
+if ( ! function_exists( 'minnpost_url_matches' ) ) :
+	function minnpost_url_matches( $settings = array() ) {
 		$is_match = false;
 		$target   = $settings['target'];
 		$selected = isset( $settings['selected'] ) ? $settings['selected'] : '';
 		$url      = $_SERVER['REQUEST_URI'];
+
+		error_log( 'settings array is ' . print_r( $settings, true ) );
 
 		if ( '' !== $selected ) {
 			switch ( $target ) {
