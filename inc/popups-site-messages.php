@@ -37,6 +37,35 @@ if ( ! function_exists( 'minnpost_popup_is_loadable' ) ) :
 endif;
 
 /**
+* Allows us to determine if a popup should be shown to the user, after the conditions have been processed.
+* We use this to prevent popups on /support, /user, /account urls
+*
+* @param bool $show_message
+* @return string $region
+*/
+if ( ! function_exists( 'minnpost_message_show' ) ) :
+	add_filter( 'wp_message_inserter_show_message', 'minnpost_message_show', 10, 2 );
+	function minnpost_message_show( $show_message, $region ) {
+		if ( 'popup' === $region ) {
+			$url = wp_parse_url( $_SERVER['REQUEST_URI'] );
+			if ( isset( $url['path'] ) ) {
+				$path = $url['path'];
+				if ( substr( $path, 0, strlen( '/support' ) ) === '/support' ) {
+					$show_message = false;
+				}
+				if ( substr( $path, 0, strlen( '/user' ) ) === '/user' ) {
+					$show_message = false;
+				}
+				if ( substr( $path, 0, strlen( '/account' ) ) === '/account' ) {
+					$show_message = false;
+				}
+			}
+		}
+		return $show_message;
+	}
+endif;
+
+/**
 * Modify the pages that show on the admin side of the popup manager
 *
 * @param array $admin_pages
