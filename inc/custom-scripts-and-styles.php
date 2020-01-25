@@ -66,6 +66,7 @@ if ( ! function_exists( 'minnpost_admin_style' ) ) :
 	add_action( 'admin_enqueue_scripts', 'minnpost_admin_style' );
 	function minnpost_admin_style( $hook ) {
 		wp_enqueue_style( 'custom_wp_admin_css', get_theme_file_uri() . '/admin-style.css', array(), filemtime( get_theme_file_path() . '/admin-style.css' ) );
+		wp_enqueue_script( 'minnpost-largo-admin', get_theme_file_uri() . '/assets/js/minnpost-largo-admin.min.js', array( 'jquery' ), filemtime( get_theme_file_path() . '/assets/js/minnpost-largo-admin.min.js' ), true );
 	}
 endif;
 
