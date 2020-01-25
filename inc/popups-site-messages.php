@@ -653,37 +653,35 @@ endif;
 /**
 * Check to see if the URL matches
 *
-* @param array $settings
+* @param string $name
+* @param string $value
 * @return bool
 */
 if ( ! function_exists( 'minnpost_url_matches' ) ) :
-	function minnpost_url_matches( $settings = array() ) {
+	function minnpost_url_matches( $name, $value = '' ) {
 		$is_match = false;
-		$target   = $settings['target'];
-		$selected = isset( $settings['selected'] ) ? $settings['selected'] : '';
+		$target   = $value;
 		$url      = $_SERVER['REQUEST_URI'];
 
-		error_log( 'settings array is ' . print_r( $settings, true ) );
-
-		if ( '' !== $selected ) {
-			switch ( $target ) {
+		if ( '' !== $value ) {
+			switch ( $name ) {
 				case 'url_is':
-					if ( $url === $selected || site_url( $url ) === $selected ) {
+					if ( $url === $value || site_url( $url ) === site_url( $value ) ) {
 						$is_match = true;
 					}
 					break;
 				case 'url_contains':
-					if ( false !== strpos( $url, $selected ) ) {
+					if ( false !== strpos( $url, $value ) ) {
 						$is_match = true;
 					}
 					break;
 				case 'url_begins_with':
-					if ( substr( $url, 0, strlen( $selected ) ) === $selected ) {
+					if ( substr( $url, 0, strlen( $value ) ) === $value ) {
 						$is_match = true;
 					}
 					break;
 				case 'url_ends_with':
-					if ( substr( $url, -strlen( $selected ) ) === $selected ) {
+					if ( substr( $url, -strlen( $value ) ) === $value ) {
 						$is_match = true;
 					}
 					break;
