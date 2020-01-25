@@ -1,8 +1,6 @@
 function showHideConditionalValue( value ) {
 	if ( 'gets_emails' === value ) {
 		$( '.cmb2-message-conditional-value' ).hide();
-	} else {
-		$( '.cmb2-message-conditional-value' ).show();
 	}
 }
 
