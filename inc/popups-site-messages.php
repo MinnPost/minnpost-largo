@@ -407,7 +407,7 @@ if ( ! function_exists( 'minnpost_largo_message_conditional_fields' ) ) :
 			'name'       => __( 'Emails to match', 'minnpost-largo' ),
 			'id'         => $prefix . 'emails_to_match',
 			'type'       => 'multicheck',
-			'desc'       => __( 'If you check values here, users who are subscribed to all of them will match. If you leave it unchecked, users who get ANY of the possible emails will match.', 'minnpost-largo' ),
+			'desc'       => __( 'If you check values here, users who are subscribed to all of them will match. If you leave all the boxes unchecked, users who get ANY of the possible emails will match.', 'minnpost-largo' ),
 			'options'    => minnpost_email_options(),
 			'default'    => 'none',
 			'attributes' => array(
