@@ -406,8 +406,8 @@ if ( ! function_exists( 'minnpost_largo_message_conditional_fields' ) ) :
 		$conditional_fields[] = array(
 			'name'       => __( 'Emails to match', 'minnpost-largo' ),
 			'id'         => $prefix . 'emails_to_match',
-			'type'       => 'multicheck',
-			'desc'       => __( 'If you check values here, users who are subscribed to all of them will match. If you leave all the boxes unchecked, users who get ANY of the possible emails will match.', 'minnpost-largo' ),
+			'type'       => 'select_multiple', // this is nicer as a multicheck, but the javascript clears out the existing values.
+			'desc'       => __( 'This will match users who get ANY of the checked emails. If you want to require that the user gets multiple email addresses, use another conditional with an AND operator.', 'minnpost-largo' ),
 			'options'    => minnpost_email_options(),
 			'default'    => 'none',
 			'attributes' => array(
@@ -421,18 +421,37 @@ if ( ! function_exists( 'minnpost_largo_message_conditional_fields' ) ) :
 endif;
 
 /**
+* Change the conditional value we expect when it is being replaced in the admin UI
+*
+* @param string $value
+* @param string $method
+* @return string $key
+*/
+if ( ! function_exists( 'minnpost_largo_message_conditional_value' ) ) :
+	add_filter( 'wp_message_inserter_add_conditional_value', 'minnpost_largo_message_conditional_value', 10, 2 );
+	function minnpost_largo_message_conditional_value( $value, $conditional ) {
+		$method = isset( $conditional['_wp_inserted_message_conditional'] ) ? $conditional['_wp_inserted_message_conditional'] : '';
+		if ( 'gets_emails' === $method ) {
+			// these are the emails we want to check and see if the user is getting
+			$value = $conditional['_wp_inserted_message_emails_to_match'];
+		}
+		return $value;
+	}
+endif;
+
+/**
 * Check to see if the user's newsletters match any of the one(s) we're checking against from the settings.
 *
-* @return bool
+* @param array $lists_to_check
+* @return bool $user_is_match
 */
 if ( ! function_exists( 'minnpost_user_gets_emails' ) ) :
 	function minnpost_user_gets_emails( $lists_to_check = array() ) {
-		$user = wp_get_current_user();
+		$user_is_match = false;
+		$user          = wp_get_current_user();
 		if ( 0 === $user ) {
-			return false;
+			return $user_is_match;
 		}
-
-		$lists_to_check = explode( ',', $lists_to_check );
 		if ( ! is_array( $lists_to_check ) ) {
 			$emails_to_check   = array();
 			$emails_to_check[] = $lists_to_check;
@@ -443,10 +462,9 @@ if ( ! function_exists( 'minnpost_user_gets_emails' ) ) :
 		// populate values we need for the mc call
 		if ( function_exists( 'minnpost_form_processor_mailchimp' ) ) {
 			$minnpost_form_processor_mailchimp = minnpost_form_processor_mailchimp();
-
-			$shortcode     = 'newsletter_form';
-			$resource_type = $minnpost_form_processor_mailchimp->get_data->get_resource_type( $shortcode );
-			$resource_id   = $minnpost_form_processor_mailchimp->get_data->get_resource_id( $shortcode );
+			$shortcode                         = 'newsletter_form';
+			$resource_type                     = $minnpost_form_processor_mailchimp->get_data->get_resource_type( $shortcode );
+			$resource_id                       = $minnpost_form_processor_mailchimp->get_data->get_resource_id( $shortcode );
 
 			$user_email      = $user->user_email;
 			$reset_user_info = false;
@@ -465,17 +483,16 @@ if ( ! function_exists( 'minnpost_user_gets_emails' ) ) :
 				if ( 'subscribed' === $mailchimp_status ) {
 					$mc_resource_items = $minnpost_form_processor_mailchimp->get_data->get_mc_resource_items( $resource_type, $resource_id );
 					foreach ( $mc_resource_items as $item ) {
-						// check until there's a match for the list we're checking against on the user's groups
-						if ( in_array( $item['text'], $lists_to_check, true ) ) {
-							error_log( 'yep' );
+						// check until there's a match for the list we're checking against on the user's groups. if there's at least one match, it's a true result.
+						if ( in_array( $item['value'], $emails_to_check, true ) ) {
+							$user_is_match = true;
+							break;
 						}
 					}
 				}
 			}
 		}
-		// otherwise, return false
-		return false;
-
+		return $user_is_match;
 	}
 endif;
 
