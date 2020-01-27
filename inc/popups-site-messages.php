@@ -194,7 +194,7 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 					'type'        => 'text',
 				),
 			),
-			'callback' => 'minnpost_url_matches',
+			'callback' => 'minnpost_popup_url_matches',
 			'priority' => 1,
 		);
 		$conditions['url_contains']         = array(
@@ -206,7 +206,7 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 					'type'        => 'text',
 				),
 			),
-			'callback' => 'minnpost_url_matches',
+			'callback' => 'minnpost_popup_url_matches',
 			'priority' => 2,
 		);
 		$conditions['url_begins_with']      = array(
@@ -218,7 +218,7 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 					'type'        => 'text',
 				),
 			),
-			'callback' => 'minnpost_url_matches',
+			'callback' => 'minnpost_popup_url_matches',
 			'priority' => 2,
 		);
 		$conditions['url_ends_with']        = array(
@@ -230,7 +230,7 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 					'type'        => 'text',
 				),
 			),
-			'callback' => 'minnpost_url_matches',
+			'callback' => 'minnpost_popup_url_matches',
 			'priority' => 2,
 		);
 		/*$conditions['using_ad_blocker'] = array(
@@ -738,6 +738,47 @@ if ( ! function_exists( 'minnpost_url_matches' ) ) :
 	}
 endif;
 
+/**
+* Check to see if the URL matches
+*
+* @param array $settings
+* @return bool
+*/
+if ( ! function_exists( 'minnpost_popup_url_matches' ) ) :
+	function minnpost_popup_url_matches( $settings = array() ) {
+		$is_match = false;
+		$target   = $settings['target'];
+		$selected = isset( $settings['selected'] ) ? $settings['selected'] : '';
+		$url      = $_SERVER['REQUEST_URI'];
+
+		if ( '' !== $selected ) {
+			switch ( $target ) {
+				case 'url_is':
+					if ( $url === $selected || site_url( $url ) === $selected ) {
+						$is_match = true;
+					}
+					break;
+				case 'url_contains':
+					if ( false !== strpos( $url, $selected ) ) {
+						$is_match = true;
+					}
+					break;
+				case 'url_begins_with':
+					if ( substr( $url, 0, strlen( $selected ) ) === $selected ) {
+						$is_match = true;
+					}
+					break;
+				case 'url_ends_with':
+					if ( substr( $url, -strlen( $selected ) ) === $selected ) {
+						$is_match = true;
+					}
+					break;
+			}
+		}
+
+		return $is_match;
+	}
+endif;
 
 // Checks preloaded popups in the head for which assets to enqueue.
 if ( ! function_exists( 'minnpost_popup_assets' ) ) :
