@@ -11,7 +11,7 @@
 /**
 * Allows us to determine if a popup can be loaded, after the conditions have been processed.
 * We use this to prevent popups on /support, /user, /account urls
-* we need to duplicate this for the popups coming from the site messages plugin
+* popups coming from the site messages plugin use the following method instead
 *
 * @param bool $loadable
 * @return int $id
