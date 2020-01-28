@@ -329,3 +329,15 @@ if ( ! function_exists( 'is_membership' ) ) :
 		return ( isset( $wp_query->query['is_membership'] ) && true === $wp_query->query['is_membership'] );
 	}
 endif;
+
+/**
+ * Allow the url to set if we should overlay the grid
+ * @return array $vars
+ */
+if ( ! function_exists( 'minnpost_largo_grid_overlay_var' ) ) :
+	add_filter( 'query_vars', 'minnpost_largo_grid_overlay_var' );
+	function minnpost_largo_grid_overlay_var( $vars ) {
+		$vars[] = 'grid';
+		return $vars;
+	}
+endif;
