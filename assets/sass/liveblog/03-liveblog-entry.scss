@@ -5,26 +5,31 @@
 }
 
 .liveblog-entry-aside {
+
 	a {
 		text-decoration: none;
 		font-family: $font__sans;
+		cursor: text;
+
 		span {
 			font-size: 11px;
+
+			&:nth-of-type(2) {
+				display: none;
+			}
 		}
-		span:nth-of-type(2) {
-			display: none;
-		}
-		cursor: text;
 	}
 }
 
 .liveblog-meta-author {
+
 	.liveblog-meta-author-name {
 		margin-left: 0;
 		font-size: $base-font-size;
 		font-family: $font__sans;
 		line-height: normal;
 		border-bottom: 1px solid $color__gray-lightest;
+
 		&:after {
 			content: ":";
 			margin-left: 0.15em;
@@ -33,6 +38,7 @@
 }
 
 .liveblog-entry-content {
+
 	* {
 		word-break: normal;
 	}
