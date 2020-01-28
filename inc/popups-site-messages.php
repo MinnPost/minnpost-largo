@@ -406,7 +406,7 @@ if ( ! function_exists( 'minnpost_largo_message_conditional_fields' ) ) :
 		$conditional_fields[] = array(
 			'name'       => __( 'Emails to match', 'minnpost-largo' ),
 			'id'         => $prefix . 'emails_to_match',
-			'type'       => 'select_multiple', // this is nicer as a multicheck, but the javascript clears out the existing values.
+			'type'       => 'multicheck', // this is nicer as a multicheck, but the javascript clears out the existing values.
 			'desc'       => __( 'This will match users who get ANY of the checked emails. If you want to require that the user gets multiple email addresses, use another conditional with an AND operator.', 'minnpost-largo' ),
 			'options'    => minnpost_email_options(),
 			'classes'    => 'cmb2-message-conditional-emails-value',
