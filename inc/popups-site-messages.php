@@ -11,6 +11,7 @@
 /**
 * Allows us to determine if a popup can be loaded, after the conditions have been processed.
 * We use this to prevent popups on /support, /user, /account urls
+* popups coming from the site messages plugin use the following method instead
 *
 * @param bool $loadable
 * @return int $id
@@ -32,6 +33,35 @@ if ( ! function_exists( 'minnpost_popup_is_loadable' ) ) :
 			}
 		}
 		return $loadable;
+	}
+endif;
+
+/**
+* Allows us to determine if a popup should be shown to the user, after the conditions have been processed.
+* We use this to prevent popups on /support, /user, /account urls
+*
+* @param bool $show_message
+* @return string $region
+*/
+if ( ! function_exists( 'minnpost_message_show' ) ) :
+	add_filter( 'wp_message_inserter_show_message', 'minnpost_message_show', 10, 2 );
+	function minnpost_message_show( $show_message, $region ) {
+		if ( 'popup' === $region ) {
+			$url = wp_parse_url( $_SERVER['REQUEST_URI'] );
+			if ( isset( $url['path'] ) ) {
+				$path = $url['path'];
+				if ( substr( $path, 0, strlen( '/support' ) ) === '/support' ) {
+					$show_message = false;
+				}
+				if ( substr( $path, 0, strlen( '/user' ) ) === '/user' ) {
+					$show_message = false;
+				}
+				if ( substr( $path, 0, strlen( '/account' ) ) === '/account' ) {
+					$show_message = false;
+				}
+			}
+		}
+		return $show_message;
 	}
 endif;
 
@@ -152,19 +182,7 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 					'options'     => minnpost_email_options(),
 				),
 			),
-			'callback' => 'minnpost_user_gets_emails',
-			'priority' => 7,
-		);
-		$conditions['session_count']        = array(
-			'group'    => __( 'User', 'minnpost-largo' ),
-			'name'     => __( 'User: Session Count', 'minnpost-largo' ),
-			'fields'   => array(
-				'selected' => array(
-					'placeholder' => __( 'Session Count', 'minnpost-largo' ),
-					'type'        => 'text',
-				),
-			),
-			'callback' => 'minnpost_user_session_count',
+			'callback' => 'minnpost_popup_user_gets_emails',
 			'priority' => 7,
 		);
 		$conditions['url_is']               = array(
@@ -260,19 +278,43 @@ if ( ! function_exists( 'minnpost_site_message_conditionals' ) ) :
 			),
 		);
 		$conditionals['user'][] = array(
-			'name'       => 'session_count',
-			'method'     => 'minnpost_user_session_count',
-			'has_params' => true,
-			'params'     => array(
-				'list',
-			),
-		);
-		$conditionals['user'][] = array(
 			'name'       => 'gets_emails',
 			'method'     => 'minnpost_user_gets_emails',
 			'has_params' => true,
 			'params'     => array(
 				'list',
+			),
+		);
+		$conditionals['url'][]  = array(
+			'name'       => 'url_is',
+			'method'     => 'minnpost_url_matches',
+			'has_params' => true,
+			'params'     => array(
+				'target',
+			),
+		);
+		$conditionals['url'][]  = array(
+			'name'       => 'url_contains',
+			'method'     => 'minnpost_url_matches',
+			'has_params' => true,
+			'params'     => array(
+				'target',
+			),
+		);
+		$conditionals['url'][]  = array(
+			'name'       => 'url_begins_with',
+			'method'     => 'minnpost_url_matches',
+			'has_params' => true,
+			'params'     => array(
+				'target',
+			),
+		);
+		$conditionals['url'][]  = array(
+			'name'       => 'url_ends_with',
+			'method'     => 'minnpost_url_matches',
+			'has_params' => true,
+			'params'     => array(
+				'target',
 			),
 		);
 		/*$conditionals['benefit_eligible']     = array(
@@ -314,7 +356,7 @@ if ( ! function_exists( 'minnpost_user_is_member' ) ) :
 		// Check each selected role against the user's roles
 		foreach ( $member_levels as $level ) {
 			// If the selected role matches, return true
-			if ( in_array( $level, (array) $user->roles ) ) {
+			if ( in_array( $level, (array) $user->roles, true ) ) {
 				return true;
 			}
 		}
@@ -364,9 +406,10 @@ if ( ! function_exists( 'minnpost_largo_message_conditional_fields' ) ) :
 		$conditional_fields[] = array(
 			'name'       => __( 'Emails to match', 'minnpost-largo' ),
 			'id'         => $prefix . 'emails_to_match',
-			'type'       => 'multicheck',
-			'desc'       => __( 'If you check values here, users who are subscribed to all of them will match. If you leave it unchecked, users who get ANY of the possible emails will match.', 'minnpost-largo' ),
+			'type'       => 'multicheck', // this is nicer as a multicheck, but the javascript clears out the existing values.
+			'desc'       => __( 'This will match users who get ANY of the checked emails. If you want to require that the user gets multiple email addresses, use another conditional with an AND operator.', 'minnpost-largo' ),
 			'options'    => minnpost_email_options(),
+			'classes'    => 'cmb2-message-conditional-emails-value',
 			'default'    => 'none',
 			'attributes' => array(
 				'required'               => false,
@@ -379,12 +422,88 @@ if ( ! function_exists( 'minnpost_largo_message_conditional_fields' ) ) :
 endif;
 
 /**
+* Change the conditional value we expect when it is being replaced in the admin UI
+*
+* @param string $value
+* @param string $method
+* @return string $key
+*/
+if ( ! function_exists( 'minnpost_largo_message_conditional_value' ) ) :
+	add_filter( 'wp_message_inserter_add_conditional_value', 'minnpost_largo_message_conditional_value', 10, 2 );
+	function minnpost_largo_message_conditional_value( $value, $conditional ) {
+		$method = isset( $conditional['_wp_inserted_message_conditional'] ) ? $conditional['_wp_inserted_message_conditional'] : '';
+		if ( 'gets_emails' === $method ) {
+			// these are the emails we want to check and see if the user is getting
+			$value = $conditional['_wp_inserted_message_emails_to_match'];
+		}
+		return $value;
+	}
+endif;
+
+/**
+* Check to see if the user's newsletters match any of the one(s) we're checking against from the settings.
+*
+* @param array $lists_to_check
+* @return bool $user_is_match
+*/
+if ( ! function_exists( 'minnpost_user_gets_emails' ) ) :
+	function minnpost_user_gets_emails( $lists_to_check = array() ) {
+		$user_is_match = false;
+		$user          = wp_get_current_user();
+		if ( 0 === $user ) {
+			return $user_is_match;
+		}
+		if ( ! is_array( $lists_to_check ) ) {
+			$emails_to_check   = array();
+			$emails_to_check[] = $lists_to_check;
+		} else {
+			$emails_to_check = $lists_to_check;
+		}
+
+		// populate values we need for the mc call
+		if ( function_exists( 'minnpost_form_processor_mailchimp' ) ) {
+			$minnpost_form_processor_mailchimp = minnpost_form_processor_mailchimp();
+			$shortcode                         = 'newsletter_form';
+			$resource_type                     = $minnpost_form_processor_mailchimp->get_data->get_resource_type( $shortcode );
+			$resource_id                       = $minnpost_form_processor_mailchimp->get_data->get_resource_id( $shortcode );
+
+			$user_email      = $user->user_email;
+			$reset_user_info = false;
+			$message_code    = get_query_var( 'newsletter_message_code' );
+			if ( '' !== $message_code ) {
+				$reset_user_info = true;
+			}
+
+			$user_mailchimp_groups = get_option( $minnpost_form_processor_mailchimp->option_prefix . $shortcode . '_mc_resource_item_type', '' );
+			$user_mailchimp_info   = $minnpost_form_processor_mailchimp->get_data->get_user_info( $shortcode, $resource_type, $resource_id, $user_email, $reset_user_info );
+
+			if ( ! is_wp_error( $user_mailchimp_info ) ) {
+				$mailchimp_user_id = $user_mailchimp_info['id'];
+				$groups            = $user_mailchimp_info[ $user_mailchimp_groups ];
+				$mailchimp_status  = $user_mailchimp_info['status'];
+				if ( 'subscribed' === $mailchimp_status ) {
+					$mc_resource_items = $minnpost_form_processor_mailchimp->get_data->get_mc_resource_items( $resource_type, $resource_id );
+					foreach ( $mc_resource_items as $item ) {
+						// check until there's a match for the list we're checking against on the user's groups. if there's at least one match, it's a true result.
+						if ( in_array( $item['value'], $emails_to_check, true ) ) {
+							$user_is_match = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+		return $user_is_match;
+	}
+endif;
+
+/**
 * Check to see if the user's newsletters match any of the one(s) we're checking against from the settings.
 *
 * @return bool
 */
 if ( ! function_exists( 'minnpost_user_gets_emails' ) ) :
-	function minnpost_user_gets_emails( $lists_to_check = array() ) {
+	function minnpost_popup_user_gets_emails( $lists_to_check = array() ) {
 		$user = wp_get_current_user();
 		if ( 0 === $user ) {
 			return false;
@@ -640,6 +759,48 @@ endif;
 /**
 * Check to see if the URL matches
 *
+* @param string $name
+* @param string $value
+* @return bool
+*/
+if ( ! function_exists( 'minnpost_url_matches' ) ) :
+	function minnpost_url_matches( $name, $value = '' ) {
+		$is_match = false;
+		$target   = $value;
+		$url      = $_SERVER['REQUEST_URI'];
+
+		if ( '' !== $value ) {
+			switch ( $name ) {
+				case 'url_is':
+					if ( $url === $value || site_url( $url ) === site_url( $value ) ) {
+						$is_match = true;
+					}
+					break;
+				case 'url_contains':
+					if ( false !== strpos( $url, $value ) ) {
+						$is_match = true;
+					}
+					break;
+				case 'url_begins_with':
+					if ( substr( $url, 0, strlen( $value ) ) === $value ) {
+						$is_match = true;
+					}
+					break;
+				case 'url_ends_with':
+					if ( substr( $url, -strlen( $value ) ) === $value ) {
+						$is_match = true;
+					}
+					break;
+			}
+		}
+
+		return $is_match;
+	}
+endif;
+
+/**
+* Check to see if the URL matches
+*
 * @param array $settings
 * @return bool
 */
@@ -678,7 +839,6 @@ if ( ! function_exists( 'minnpost_popup_url_matches' ) ) :
 		return $is_match;
 	}
 endif;
-
 
 // Checks preloaded popups in the head for which assets to enqueue.
 if ( ! function_exists( 'minnpost_popup_assets' ) ) :
