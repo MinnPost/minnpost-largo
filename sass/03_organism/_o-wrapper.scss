@@ -1,4 +1,4 @@
-.o-wrapper {
+/*.o-wrapper {
 	max-width: 100%;
 	margin-left: $standard-page-margin / 2;
 	margin-right: $standard-page-margin / 2;
@@ -64,4 +64,13 @@ body.post .o-wrapper-content, body.page .o-wrapper-content {
 	.o-wrapper.o-wrapper-content {
 		flex-direction: row;
 	}
+}*/
+
+@include grid( o-wrapper );
+@include grid( o-wrapper-grid-overlay, overlay );
+
+.o-wrapper {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
 }

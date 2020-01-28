@@ -1,4 +1,4 @@
-.o-site-sidebar {
+/*.o-site-sidebar {
 	&#secondary-first {
 		order: 2;
 	}
@@ -46,4 +46,10 @@
 			}
 		}
 	}
+}
+*/
+
+.o-site-sidebar {
+	width: colspan( 4, 12 );
+	//margin-left: colspan( g, 12 );
 }

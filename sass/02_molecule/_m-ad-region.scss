@@ -3,12 +3,12 @@
 		text-align: center;
 		background: $color__gray-lightest;
 	}
-	.o-wrapper {
+	/*.o-wrapper {
 		@include clearfix;
 		margin: 0;
 		width: inherit;
 		max-width: none;
-	}
+	}*/
 }
 
 .m-ad-region:empty {
@@ -44,9 +44,9 @@
 
 @media screen and (min-width: $max-width-page) {
 	.m-ad-region {
-		.o-wrapper {
+		/*.o-wrapper {
 			@include outer-container($max-width-page);
-		}
+		}*/
 	}
 	.m-ad-region-sidebar {
 		display: block;

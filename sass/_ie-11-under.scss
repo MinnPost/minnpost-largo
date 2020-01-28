@@ -26,9 +26,9 @@
 // ie 10 and under only - dependent on modernizr
 @media screen and (min-width: $medium-margins-too-small) and (max-width: $max-width-page) {
 	.no-borderimage .archive {
-		.o-wrapper-content {
+		/*.o-wrapper-content {
 			padding-right: $size__site-sidebar + $archive-content-sidebar-padding;
-		}
+		}*/
 		.o-archive-listing {
 			&.m-layout-primary {
 				display: block;

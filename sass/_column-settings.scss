@@ -35,7 +35,7 @@ $breakpoints: (
 	sm: (cols:  6, min-width: 30em, margin: $gut), // Includes optional custom margin
 	md: (cols:  8, min-width: 40em),
 	lg: (cols: 12, min-width: 50em),
-	xl: (cols: 16, min-width: 60em)
+	//xl: (cols: 16, min-width: 60em)
 );
 
 $max-width: 70em; // For no max-width, use $max-width: null;
