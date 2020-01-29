@@ -3,7 +3,6 @@ function showHideConditionalValue( value ) {
 		$( '.cmb2-message-conditional-value' ).hide();
 		$( '.cmb2-message-conditional-emails-value' ).show();
 	} else {
-		$( '.cmb2-message-conditional-value' ).show();
 		$( '.cmb2-message-conditional-emails-value' ).hide();
 	}
 }
