@@ -150,7 +150,7 @@ function mainstyles() {
       ])
     )
     .pipe(sourcemaps.write()) // Write the sourcemap files
-    .pipe(gulp.dest(config.styles.front_end_dest)) // Drop the resulting CSS file in the specified dir
+    .pipe(gulp.dest(config.styles.main_dest)) // Drop the resulting CSS file in the specified dir
     .pipe(browserSync.stream());
 }
 
