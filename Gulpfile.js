@@ -37,7 +37,9 @@ const config = {
   },
   scripts: {
     admin_src: './assets/js/src/admin/**/*.js',
+    admin_lint: "./assets/js/src/admin/",
     main: './assets/js/src/front-end/**/*.js',
+    main_lint: "./assets/js/src/front-end/",
     uglify: [ 'assets/js/*.js', '!assets/js/*.min.js', '!assets/js/customizer.js' ],
     dest: './assets/js'
   },
@@ -56,76 +58,104 @@ const config = {
 };
 
 function adminstyles() {
-  return gulp.src(config.styles.admin, { allowEmpty: true })
+  return gulp
+    .src(config.styles.admin, { allowEmpty: true })
     .pipe(sourcemaps.init()) // Sourcemaps need to init before compilation
     .pipe(sassGlob()) // Allow for globbed @import statements in SCSS
     .pipe(sass()) // Compile
-    .on('error', sass.logError) // Error reporting
-    .pipe(postcss([
-      mqpacker( {
-        'sort': true
-      } ),
-      autoprefixer(),
-      cssnano( {
-        'safe': true // Use safe optimizations.
-      } ) // Minify
-    ]))
-    .pipe(rename({ // Rename to .min.css
-      suffix: '.min'
-    }))
+    .on("error", sass.logError) // Error reporting
+    .pipe(
+      postcss([
+        mqpacker({
+          sort: true
+        }),
+        autoprefixer(),
+        cssnano({
+          safe: true // Use safe optimizations.
+        }) // Minify
+      ])
+    )
+    .pipe(
+      rename({
+        // Rename to .min.css
+        suffix: ".min"
+      })
+    )
     .pipe(sourcemaps.write()) // Write the sourcemap files
     .pipe(gulp.dest(config.styles.dest)) // Drop the resulting CSS file in the specified dir
     .pipe(browserSync.stream());
 }
 
+function adminsasslint() {
+  return gulp.src(config.styles.admin)
+    .pipe(gulpStylelint({
+      fix: true
+    }))
+    .pipe(gulp.dest(config.styles.lint_dest));
+}
+
 function frontendstyles() {
-  return gulp.src(config.styles.front_end)
+  return gulp
+    .src(config.styles.front_end, { allowEmpty: true })
     .pipe(sourcemaps.init()) // Sourcemaps need to init before compilation
     .pipe(sassGlob()) // Allow for globbed @import statements in SCSS
     .pipe(sass( {
-    		'includePaths': bourbon
-    	}
+        'includePaths': bourbon
+      }
     )) // Compile
-    .on('error', sass.logError) // Error reporting
-    .pipe(postcss([
-      mqpacker( {
-        'sort': true
-      } ),
-      autoprefixer(),
-      cssnano( {
-        'safe': true // Use safe optimizations.
-		} ) // Minify
-    ]))
+    .on("error", sass.logError) // Error reporting
+    .pipe(
+      postcss([
+        mqpacker({
+          sort: true
+        }),
+        autoprefixer(),
+        cssnano({
+          safe: true // Use safe optimizations.
+        }) // Minify
+      ])
+    )
     .pipe(sourcemaps.write()) // Write the sourcemap files
     .pipe(gulp.dest(config.styles.front_end_dest)) // Drop the resulting CSS file in the specified dir
     .pipe(browserSync.stream());
 }
 
+function frontendsasslint() {
+  return gulp.src(config.styles.front_end)
+    .pipe(gulpStylelint({
+      fix: true
+    }))
+    .pipe(gulp.dest(config.styles.lint_dest));
+}
+
 function mainstyles() {
-  return gulp.src(config.styles.main)
+  return gulp
+    .src(config.styles.main, { allowEmpty: true })
     .pipe(sourcemaps.init()) // Sourcemaps need to init before compilation
     .pipe(sassGlob()) // Allow for globbed @import statements in SCSS
     .pipe(sass( {
-    		'includePaths': bourbon
-    	}
+        'includePaths': bourbon
+      }
     )) // Compile
-    .on('error', sass.logError) // Error reporting
-    .pipe(postcss([
-      mqpacker( {
-        'sort': true
-      } ),
-      autoprefixer(),
-      cssnano( {
-        'safe': true // Use safe optimizations.
-		} ) // Minify
-    ]))
+    .on("error", sass.logError) // Error reporting
+    .pipe(
+      postcss([
+        mqpacker({
+          sort: true
+        }),
+        autoprefixer(),
+        cssnano({
+          safe: true // Use safe optimizations.
+        }) // Minify
+      ])
+    )
     .pipe(sourcemaps.write()) // Write the sourcemap files
-    .pipe(gulp.dest(config.styles.main_dest)) // Drop the resulting CSS file in the specified dir
+    .pipe(gulp.dest(config.styles.front_end_dest)) // Drop the resulting CSS file in the specified dir
     .pipe(browserSync.stream());
 }
 
-function sasslint() {
-  return gulp.src(config.styles.lint_src)
+function mainsasslint() {
+  return gulp.src(config.styles.main)
     .pipe(gulpStylelint({
       fix: true
     }))
@@ -133,58 +163,81 @@ function sasslint() {
 }
 
 function adminscripts() {
-  return gulp.src(config.scripts.admin_src, { allowEmpty: true })
+  return gulp
+    .src(config.scripts.admin_src, { allowEmpty: true })
     .pipe(sourcemaps.init())
-    .pipe(babel({
-      presets: ['@babel/preset-env']
-    }))
-    .pipe(concat(packagejson.name + '-admin.js')) // Concatenate
+    .pipe(
+      babel({
+        presets: ["@babel/preset-env"]
+      })
+    )
+    .pipe(concat(packagejson.name + "-admin.js")) // Concatenate
     .pipe(sourcemaps.write())
     .pipe(eslint())
-    .pipe(
-      iife({
+    .pipe(iife({
         useStrict: false,
         params: ['$'],
         args: ['jQuery']
-      })
-    )
+      }))
     .pipe(gulp.dest(config.scripts.dest))
     .pipe(browserSync.stream());
 }
 
 function mainscripts() {
-  return gulp.src(config.scripts.main)
+  return gulp
+    .src(config.scripts.main)
     .pipe(sourcemaps.init())
-    .pipe(babel({
-      presets: ['@babel/preset-env']
-    }))
+    .pipe(
+      babel({
+        presets: ["@babel/preset-env"]
+      })
+    )
     .pipe(concat('minnpost.js')) // Concatenate
-    /*.pipe(uglify()) // Minify + compress
-    .pipe(rename({
-      suffix: '.min'
-    }))*/
     .pipe(sourcemaps.write())
     .pipe(eslint())
-    .pipe(
-      iife({
+    .pipe(iife({
         useStrict: false,
         params: ['$'],
         args: ['jQuery']
-      })
-    )
+      }))
     .pipe(gulp.dest(config.scripts.dest))
     .pipe(browserSync.stream());
 }
 
+function adminscriptlint() {
+  return gulp
+    .src(config.scripts.admin)
+    .pipe(eslint({fix:true}))
+    .pipe(eslint.format())
+    .pipe(gulp.dest(config.scripts.admin_lint))
+    // Brick on failure to be super strict
+    //.pipe(eslint.failOnError());
+};
+
+function mainscriptlint() {
+  return gulp
+    .src(config.scripts.main)
+    .pipe(eslint({fix:true}))
+    .pipe(eslint.format())
+    .pipe(gulp.dest(config.scripts.main_lint))
+    // Brick on failure to be super strict
+    //.pipe(eslint.failOnError());
+};
+
 function uglifyscripts() {
-  return gulp.src(config.scripts.uglify)
-    .pipe(uglify()) // Minify + compress
-    .pipe(rename({
-      suffix: '.min'
-    }))
-    //.pipe(sourcemaps.write())
-    .pipe(gulp.dest(config.scripts.dest))
-    .pipe(browserSync.stream());
+  return (
+    gulp
+      .src(config.scripts.uglify)
+      .pipe(uglify()) // Minify + compress
+      .pipe(
+        rename({
+          suffix: ".min"
+        })
+      )
+      .pipe(sourcemaps.write())
+      .pipe(gulp.dest(config.scripts.dest))
+      .pipe(browserSync.stream())
+  );
 }
 
 // Optimize Images
@@ -217,13 +270,15 @@ function svgminify() {
 
 // Generates translation file.
 function translate() {
-    return gulp
-      .src( config.languages.src )
-      .pipe( wpPot( {
+  return gulp
+    .src(config.languages.src)
+    .pipe(
+      wpPot({
         domain: packagejson.name,
         package: packagejson.name
-      } ) )
-      .pipe( gulp.dest( config.languages.dest ) );
+      })
+    )
+    .pipe(gulp.dest(config.languages.dest));
 }
 
 // Injects changes into browser
@@ -253,11 +308,13 @@ function watch() {
 }
 
 // define complex gulp tasks
+const lint = gulp.series(gulp.parallel(frontendsasslint, mainsasslint, adminscriptlint, mainscriptlint));
 const styles  = gulp.series(gulp.parallel(frontendstyles, mainstyles));
 const scripts = gulp.series(gulp.parallel(mainscripts, adminscripts), uglifyscripts);
 const build   = gulp.series(gulp.parallel(styles, scripts, images, svgminify, translate));
 
 // export tasks
+exports.lint      = lint;
 exports.styles    = styles;
 exports.scripts   = scripts;
 exports.images    = images;
