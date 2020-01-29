@@ -21,17 +21,17 @@
 <body <?php body_class(); ?>>
 
 	<div class="m-ad-region m-ad-region-leaderboard">
-		<div class="o-wrapper">
+		<div class="o-wrapper<?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">
 			<?php do_action( 'acm_tag', 'leaderboard' ); ?>
 		</div>
 	</div>
 
 	<header id="masthead" class="o-header">
-		<div class="o-wrapper o-wrapper-site-header">
+		<div class="o-wrapper o-wrapper-site-header<?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">
 			<?php get_template_part( 'template-parts/logo', 'top' ); ?>
 			<?php do_action( 'minnpost_membership_site_header', true ); ?>
 		</div>
-		<div class="o-wrapper o-wrapper-site-navigation">
+		<div class="o-wrapper o-wrapper-site-navigation<?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">
 			<nav id="navigation-primary" class="m-main-navigation">
 				<button class="menu-toggle" aria-controls="primary-links" aria-expanded="false">
 					<span><?php esc_html_e( 'Menu', 'minnpost-largo' ); ?></span>

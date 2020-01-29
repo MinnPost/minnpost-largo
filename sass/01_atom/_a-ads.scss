@@ -22,6 +22,7 @@
 	}
 }
 
+// we center the embed ads this way because they don't have a region container like the other ads
 main .ad-middle, main .ad-Middle,
 main .ad-x100,
 main .ad-x101,
@@ -82,7 +83,7 @@ main .ad-x110 {
 }
 
 .o-site-sidebar .acm-ad {
-	@include clearfix;
+	//@include clearfix;
 	margin-bottom: $standard-page-margin;
 	&.acm-ad-placeholder {
 		text-align: center;

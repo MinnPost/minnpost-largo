@@ -1,7 +1,13 @@
 .m-ad-region {
+	display: flex;
+	justify-content: center;
+
 	&.m-ad-region-leaderboard {
 		text-align: center;
 		background: $color__gray-lightest;
+	}
+	&.m-ad-region-sidebar {
+		justify-content: flex-end;
 	}
 	/*.o-wrapper {
 		@include clearfix;
@@ -26,12 +32,12 @@
 // media queries for ad regions
 
 @media screen and (min-width: $size__ad-flexing) {
-	#secondary-first {
+	/*#secondary-first {
 		.m-ad-region-sidebar {
 			display: block;
 			width: auto;
 		}
-	}
+	}*/
 }
 
 @media screen and (min-width: $ad-top-width) {
@@ -43,13 +49,13 @@
 }
 
 @media screen and (min-width: $max-width-page) {
-	.m-ad-region {
-		/*.o-wrapper {
+	/*.m-ad-region {
+		.o-wrapper {
 			@include outer-container($max-width-page);
-		}*/
-	}
-	.m-ad-region-sidebar {
+		}
+	}*/
+	/*.m-ad-region-sidebar {
 		display: block;
 		width: auto;
-	}
+	}*/
 }

@@ -9,7 +9,7 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class( array( 'm-post', 'm-post-paywalled' ) ); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class( array( 'o-content o-post', 'o-post-paywalled' ) ); ?>>
 
 	<div class="m-post-classification">
 		<?php minnpost_category_breadcrumb(); ?>

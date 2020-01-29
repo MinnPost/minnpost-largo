@@ -9,7 +9,7 @@
 
 ?>
 
-<article id="page-<?php the_ID(); ?>" <?php post_class( 'm-page' ); ?>>
+<article id="page-<?php the_ID(); ?>" <?php post_class( 'o-content o-page' ); ?>>
 
 	<?php
 	global $post;

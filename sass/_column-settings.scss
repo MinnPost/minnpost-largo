@@ -9,7 +9,7 @@
 
 $mar: 4; // Margin width
 $col: 4; // Column width
-$gut: 2; // Gutter width
+$gut: 1; // Gutter width
 $pad: 1; // Padding width
 
 $grid-color: red; // Grid overlay color
@@ -34,7 +34,7 @@ $breakpoints: (
 	xs: (cols:  4, min-width:  0,   margin: $pad), // Includes optional custom margin
 	sm: (cols:  6, min-width: 30em, margin: $gut), // Includes optional custom margin
 	md: (cols:  8, min-width: 40em),
-	lg: (cols: 12, min-width: 50em),
+	lg: (cols: 16, min-width: 50em),
 	//xl: (cols: 16, min-width: 60em)
 );
 
