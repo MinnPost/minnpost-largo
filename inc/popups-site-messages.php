@@ -339,6 +339,22 @@ if ( ! function_exists( 'minnpost_site_message_conditionals' ) ) :
 endif;
 
 /**
+* Modify the site message cache flag
+*
+* @param bool $cache
+* @return bool $cache
+*/
+if ( ! function_exists( 'minnpost_site_message_cache' ) ) :
+	add_filter( 'wp_message_inserter_cache', 'minnpost_site_message_cache', 10, 1 );
+	function minnpost_site_message_cache( $cache ) {
+		if ( current_user_can( 'edit_messages' ) ) {
+			$cache = false;
+		}
+		return $cache;
+	}
+endif;
+
+/**
 * Check to see if the user has any membership level role
 *
 * @return bool
