@@ -147,10 +147,10 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 					'multiple'    => true,
 					//'select2'     => true,
 					'as_array'    => true,
-					'options'     => minnpost_popup_roles(),
+					'options'     => minnpost_role_options(),
 				),
 			),
-			'callback' => 'minnpost_user_has_role',
+			'callback' => 'minnpost_popup_user_has_role',
 			'priority' => 5,
 		);
 		$conditions['benefit_eligible']     = array(
@@ -420,9 +420,9 @@ if ( ! function_exists( 'minnpost_largo_message_conditional_fields' ) ) :
 	add_filter( 'wp_message_inserter_add_group_conditional_fields', 'minnpost_largo_message_conditional_fields', 10, 3 );
 	function minnpost_largo_message_conditional_fields( $conditional_fields, $group_id, $prefix ) {
 		$conditional_fields[] = array(
-			'name'       => __( 'Emails to match', 'minnpost-largo' ),
+			'name'       => __( 'Emails to Match', 'minnpost-largo' ),
 			'id'         => $prefix . 'emails_to_match',
-			'type'       => 'multicheck', // this is nicer as a multicheck, but the javascript clears out the existing values.
+			'type'       => 'multicheck',
 			'desc'       => __( 'This will match users who get ANY of the checked emails. If you want to require that the user gets multiple email addresses, use another conditional with an AND operator.', 'minnpost-largo' ),
 			'options'    => minnpost_email_options(),
 			'classes'    => 'cmb2-message-conditional-emails-value',
@@ -431,6 +431,20 @@ if ( ! function_exists( 'minnpost_largo_message_conditional_fields' ) ) :
 				'required'               => false,
 				'data-conditional-id'    => wp_json_encode( array( $group_id, $prefix . 'conditional' ) ),
 				'data-conditional-value' => 'gets_emails',
+			),
+		);
+		$conditional_fields[] = array(
+			'name'       => __( 'Roles to Match', 'minnpost-largo' ),
+			'id'         => $prefix . 'roles_to_match',
+			'type'       => 'multicheck',
+			'desc'       => __( 'This will match users who have ANY of the checked roles. If you want to require that the user has multiple roles, use another conditional with an AND operator.', 'minnpost-largo' ),
+			'options'    => minnpost_role_options(),
+			'classes'    => 'cmb2-message-conditional-roles-value',
+			'default'    => 'none',
+			'attributes' => array(
+				'required'               => false,
+				'data-conditional-id'    => wp_json_encode( array( $group_id, $prefix . 'conditional' ) ),
+				'data-conditional-value' => 'has_role',
 			),
 		);
 		return $conditional_fields;
@@ -451,6 +465,10 @@ if ( ! function_exists( 'minnpost_largo_message_conditional_value' ) ) :
 		if ( 'gets_emails' === $method ) {
 			// these are the emails we want to check and see if the user is getting
 			$value = $conditional['_wp_inserted_message_emails_to_match'];
+		}
+		if ( 'has_role' === $method ) {
+			// these are the roles we want to check and see if the user has
+			$value = $conditional['_wp_inserted_message_roles_to_match'];
 		}
 		return $value;
 	}
@@ -603,8 +621,8 @@ endif;
 *
 * @return array $roles
 */
-if ( ! function_exists( 'minnpost_popup_roles' ) ) :
-	function minnpost_popup_roles() {
+if ( ! function_exists( 'minnpost_role_options' ) ) :
+	function minnpost_role_options() {
 		static $roles = null;
 
 		if ( null === $roles ) {
@@ -625,11 +643,40 @@ endif;
 /**
 * Check to see if the user has any of the selected roles
 *
-* @param array $settings
+* @param array $roles
 * @return bool
 */
 if ( ! function_exists( 'minnpost_user_has_role' ) ) :
-	function minnpost_user_has_role( $settings = array() ) {
+	function minnpost_user_has_role( $roles = array() ) {
+		$user = wp_get_current_user();
+		if ( 0 === $user ) {
+			return false;
+		}
+
+		if ( ! is_array( $roles ) ) {
+			$roles_to_check   = array();
+			$roles_to_check[] = $roles;
+		} else {
+			$roles_to_check = $roles;
+		}
+
+		$user_has_role = array_intersect( $roles_to_check, (array) $user->roles );
+		if ( false !== $user_has_role ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+endif;
+
+/**
+* Check to see if the user has any of the selected roles
+*
+* @param array $settings
+* @return bool
+*/
+if ( ! function_exists( 'minnpost_popup_user_has_role' ) ) :
+	function minnpost_popup_user_has_role( $settings = array() ) {
 		$user = wp_get_current_user();
 		if ( 0 === $user ) {
 			return false;
