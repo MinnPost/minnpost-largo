@@ -173,20 +173,29 @@ endif;
 * @return array $headers
 *
 */
-add_filter('wp_headers', function( $headers, $wp_query ) {
-	if ( array_key_exists( 'X-Pingback', $headers ) ) {
-		unset( $headers['X-Pingback'] );
-	}
-	return $headers;
-}, 11, 2 );
+add_filter(
+	'wp_headers',
+	function( $headers, $wp_query ) {
+		if ( array_key_exists( 'X-Pingback', $headers ) ) {
+			unset( $headers['X-Pingback'] );
+		}
+		return $headers;
+	},
+	11,
+	2
+);
 
 /**
 * Remove the RSD link from <head>
 *
 */
-add_action( 'wp', function() {
-	remove_action( 'wp_head', 'rsd_link' );
-}, 11 );
+add_action(
+	'wp',
+	function() {
+		remove_action( 'wp_head', 'rsd_link' );
+	},
+	11
+);
 
 /**
 * Easy method to highlight the search string in the search result
@@ -294,12 +303,15 @@ endif;
  * @param array $hosts
  * @return array $hosts
  */
-add_filter( 'allowed_redirect_hosts', function( $hosts ) {
-	$hosts[] = 'members.minnpost.com';
-	$hosts[] = 'support.minnpost.com';
-	$hosts[] = 'givemn.org';
-	return $hosts;
-});
+add_filter(
+	'allowed_redirect_hosts',
+	function( $hosts ) {
+		$hosts[] = 'members.minnpost.com';
+		$hosts[] = 'support.minnpost.com';
+		$hosts[] = 'givemn.org';
+		return $hosts;
+	}
+);
 
 wpcom_vip_load_gutenberg( false );
 

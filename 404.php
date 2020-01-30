@@ -19,7 +19,8 @@ get_header(); ?>
 					'pagename'  => 'page-not-found',
 				)
 			);
-			while ( $query->have_posts() ) : $query->the_post();
+			while ( $query->have_posts() ) :
+				$query->the_post();
 				get_template_part( 'template-parts/content', 'page' );
 			endwhile; // End of the loop.
 			wp_reset_postdata();
