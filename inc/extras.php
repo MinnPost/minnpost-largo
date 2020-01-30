@@ -353,3 +353,92 @@ if ( ! function_exists( 'minnpost_largo_grid_overlay_var' ) ) :
 		return $vars;
 	}
 endif;
+
+/**
+ * Try to fix broken pre-Drupal urls with special characters if we have saved their posts
+ * @return array $vars
+ */
+if ( ! function_exists( 'minnpost_largo_special_character_url_redirect' ) ) :
+	add_action( 'template_redirect', 'minnpost_largo_special_character_url_redirect' );
+	function minnpost_largo_special_character_url_redirect() {
+		// check if is a 404 error
+		if ( is_404() ) {
+			$option    = 'minnpost_urls_to_redirect';
+			$full      = $_SERVER['REQUEST_URI'];
+			$requested = basename( parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH ) );
+			$fixed     = sanitize_title( $requested );
+			if ( $requested !== $fixed ) {
+				$replaced = str_replace( $requested, $fixed, $full );
+				//wp_safe_redirect( site_url( $replaced ) );
+				//exit();
+				if ( class_exists( 'WPCOM_Legacy_Redirector' ) ) {
+					$urls     = get_option( $option, array() );
+					$this_url = array(
+						'from'       => $full,
+						'to'         => site_url( $replaced ),
+						'redirected' => false,
+						'updated'    => false,
+					);
+					$urls[]   = $this_url;
+					update_option( $option, $urls, false );
+				}
+			}
+		}
+	}
+endif;
+
+/**
+ * When admin loads, parse any special character redirects and try to create them
+ *
+ */
+if ( ! function_exists( 'minnpost_largo_admin_special_character_url_redirect' ) ) :
+	add_action( 'admin_init', 'minnpost_largo_admin_special_character_url_redirect' );
+	function minnpost_largo_admin_special_character_url_redirect() {
+		if ( is_admin() && class_exists( 'WPCOM_Legacy_Redirector' ) ) {
+			$option = 'minnpost_urls_to_redirect';
+			$urls   = get_option( $option, array() );
+			if ( ! empty( $urls ) ) {
+				foreach ( $urls as $key => $url ) {
+					if ( ! isset( $url['updated'] ) || ! isset( $url['redirected'] ) ) {
+						unset( $urls[ $key ] );
+						continue;
+					}
+					$redirect_inserted = false;
+					$post_updated      = 0;
+					if ( true !== $url['updated'] ) {
+						$post_name = urldecode( basename( parse_url( $url['from'], PHP_URL_PATH ) ) );
+						global $wpdb;
+						$posts = $wpdb->get_results( 'SELECT ID FROM ' . $wpdb->prefix . 'posts' . ' WHERE post_name = "' . $post_name . '"', ARRAY_A );
+						if ( empty( $posts ) ) {
+							continue;
+						}
+						$post    = $posts[0];
+						$post_id = $post['ID'];
+						$post_updated = wp_update_post(
+							array(
+								'ID'        => $post_id,
+								'post_name' => basename( parse_url( $url['to'], PHP_URL_PATH ) ),
+							)
+						);
+						if ( 0 !== $post_updated ) {
+							$url['updated'] = true;
+						}
+					}
+					if ( true !== $url['redirected'] ) {
+						$redirect_inserted = WPCOM_Legacy_Redirector::insert_legacy_redirect( $url['from'], $url['to'] );
+						if ( true === filter_var( $redirect_inserted, FILTER_VALIDATE_BOOLEAN ) ) {
+							$url['redirected'] = true;
+						}
+					}
+					$urls[ $key ] = $url;
+					if ( true === filter_var( $redirect_inserted, FILTER_VALIDATE_BOOLEAN ) && 0 !== $post_updated ) {
+						unset( $urls[ $key ] );
+					}
+				}
+				update_option( $option, $urls, false );
+			} else {
+				return;
+			}
+		}
+	}
+endif;
