@@ -362,7 +362,7 @@ endif;
 if ( ! function_exists( 'minnpost_user_is_member' ) ) :
 	function minnpost_user_is_member() {
 		$user = wp_get_current_user();
-		if ( 0 === $user ) {
+		if ( 0 === $user->ID ) {
 			return false;
 		}
 
@@ -484,7 +484,7 @@ if ( ! function_exists( 'minnpost_user_gets_emails' ) ) :
 	function minnpost_user_gets_emails( $lists_to_check = array() ) {
 		$user_is_match = false;
 		$user          = wp_get_current_user();
-		if ( 0 === $user ) {
+		if ( 0 === $user->ID ) {
 			return $user_is_match;
 		}
 		if ( ! is_array( $lists_to_check ) ) {
@@ -539,7 +539,7 @@ endif;
 if ( ! function_exists( 'minnpost_user_gets_emails' ) ) :
 	function minnpost_popup_user_gets_emails( $lists_to_check = array() ) {
 		$user = wp_get_current_user();
-		if ( 0 === $user ) {
+		if ( 0 === $user->ID ) {
 			return false;
 		}
 
@@ -649,7 +649,7 @@ endif;
 if ( ! function_exists( 'minnpost_user_has_role' ) ) :
 	function minnpost_user_has_role( $roles = array() ) {
 		$user = wp_get_current_user();
-		if ( 0 === $user ) {
+		if ( 0 === $user->ID ) {
 			return false;
 		}
 
@@ -678,7 +678,7 @@ endif;
 if ( ! function_exists( 'minnpost_popup_user_has_role' ) ) :
 	function minnpost_popup_user_has_role( $settings = array() ) {
 		$user = wp_get_current_user();
-		if ( 0 === $user ) {
+		if ( 0 === $user->ID ) {
 			return false;
 		}
 
