@@ -53,7 +53,7 @@
 		<body style="background: #ffffff; Margin: 0; min-width: 100%; padding: 0" bgcolor="#ffffff">
 
 		<?php
-		$preview_text = get_term_meta( get_the_ID(), '_mp_newsletter_preview_text', true );
+		$preview_text = get_post_meta( get_the_ID(), '_mp_newsletter_preview_text', true );
 		if ( '' !== $preview_text ) {
 			?>
 		<!-- limit to 50 characters; only display if there is a value -->
