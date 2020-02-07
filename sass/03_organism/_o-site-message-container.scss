@@ -1,6 +1,6 @@
 .o-site-message-container {
 
-	&.wp-message-inserter-message-homepage_middle,
+	&.wp-message-inserter-message-region-homepage_middle,
 	&.wp-message-inserter-message-header {
 		header {
 			font-size: 1.2em;
@@ -26,7 +26,7 @@
 		}
 	}
 
-	&.wp-message-inserter-message-homepage_middle {
+	&.wp-message-inserter-message-region-homepage_middle {
 		width: 100%;
 
 		.m-wp-insert-message-item {
@@ -37,7 +37,7 @@
 		}
 	}
 
-	&.wp-message-inserter-message-homepage_middle {
+	&.wp-message-inserter-message-region-homepage_middle {
 		order: 1;
 		padding-top: $standard-page-margin;
 		border-top: 1px solid $color__gray-lightest;
@@ -97,7 +97,7 @@
 
 	.o-site-message-container {
 
-		&.wp-message-inserter-message-homepage_middle {
+		&.wp-message-inserter-message-region-homepage_middle {
 
 			.m-wp-insert-message-item {
 
@@ -124,7 +124,7 @@
 
 	.o-site-message-container {
 
-		&.wp-message-inserter-message-homepage_middle {
+		&.wp-message-inserter-message-region-homepage_middle {
 
 			.m-wp-insert-message-item {
 
@@ -156,7 +156,7 @@
 
 	.o-site-message-container {
 
-		&.wp-message-inserter-message-homepage_middle {
+		&.wp-message-inserter-message-region-homepage_middle {
 			order: unset;
 		}
 	}
