@@ -797,12 +797,20 @@ msgstr ""
 msgid "Check for text at the end of the URL"
 msgstr ""
 
-#: inc/popups-site-messages.php:407
-msgid "Emails to match"
+#: inc/popups-site-messages.php:423
+msgid "Emails to Match"
 msgstr ""
 
-#: inc/popups-site-messages.php:410
+#: inc/popups-site-messages.php:426
 msgid "This will match users who get ANY of the checked emails. If you want to require that the user gets multiple email addresses, use another conditional with an AND operator."
+msgstr ""
+
+#: inc/popups-site-messages.php:437
+msgid "Roles to Match"
+msgstr ""
+
+#: inc/popups-site-messages.php:440
+msgid "This will match users who have ANY of the checked roles. If you want to require that the user has multiple roles, use another conditional with an AND operator."
 msgstr ""
 
 #. translators: the placeholder is the time string, which can be translated
