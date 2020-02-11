@@ -717,100 +717,100 @@ msgstr ""
 msgid "Unpublished"
 msgstr ""
 
-#: inc/popups-site-messages.php:87, inc/popups-site-messages.php:93, inc/popups-site-messages.php:99, inc/popups-site-messages.php:105, inc/popups-site-messages.php:111, inc/popups-site-messages.php:127, inc/popups-site-messages.php:143, inc/popups-site-messages.php:159
+#: inc/popups-site-messages.php:117, inc/popups-site-messages.php:123, inc/popups-site-messages.php:129, inc/popups-site-messages.php:135, inc/popups-site-messages.php:141, inc/popups-site-messages.php:157, inc/popups-site-messages.php:173
 msgid "User"
 msgstr ""
 
-#: inc/popups-site-messages.php:88
+#: inc/popups-site-messages.php:118
 msgid "User: Is Logged In"
 msgstr ""
 
-#: inc/popups-site-messages.php:94
+#: inc/popups-site-messages.php:124
 msgid "User: Is Member"
 msgstr ""
 
-#: inc/popups-site-messages.php:100
+#: inc/popups-site-messages.php:130
 msgid "User: Is Sustaining Member"
 msgstr ""
 
-#: inc/popups-site-messages.php:106
+#: inc/popups-site-messages.php:136
 msgid "User: In This Campaign"
 msgstr ""
 
-#: inc/popups-site-messages.php:112
+#: inc/popups-site-messages.php:142
 msgid "User: Has Role"
 msgstr ""
 
-#: inc/popups-site-messages.php:115
+#: inc/popups-site-messages.php:145
 msgid "Select Role"
 msgstr ""
 
-#: inc/popups-site-messages.php:128
+#: inc/popups-site-messages.php:158
 msgid "User: Eligible For Benefit"
 msgstr ""
 
-#: inc/popups-site-messages.php:131
+#: inc/popups-site-messages.php:161
 msgid "Select Benefit"
 msgstr ""
 
-#: inc/popups-site-messages.php:144
+#: inc/popups-site-messages.php:174
 msgid "User: Gets Emails"
 msgstr ""
 
-#: inc/popups-site-messages.php:147
+#: inc/popups-site-messages.php:177
 msgid "Select Email"
 msgstr ""
 
-#: inc/popups-site-messages.php:160
-msgid "User: Session Count"
-msgstr ""
-
-#: inc/popups-site-messages.php:163
-msgid "Session Count"
-msgstr ""
-
-#: inc/popups-site-messages.php:171, inc/popups-site-messages.php:183, inc/popups-site-messages.php:195, inc/popups-site-messages.php:207
+#: inc/popups-site-messages.php:189, inc/popups-site-messages.php:201, inc/popups-site-messages.php:213, inc/popups-site-messages.php:225
 msgid "URL"
 msgstr ""
 
-#: inc/popups-site-messages.php:172
+#: inc/popups-site-messages.php:190
 msgid "URL: Is"
 msgstr ""
 
-#: inc/popups-site-messages.php:175
+#: inc/popups-site-messages.php:193
 msgid "Enter the exact URL"
 msgstr ""
 
-#: inc/popups-site-messages.php:184
+#: inc/popups-site-messages.php:202
 msgid "URL: Contains"
 msgstr ""
 
-#: inc/popups-site-messages.php:187
+#: inc/popups-site-messages.php:205
 msgid "Check for text in the URL"
 msgstr ""
 
-#: inc/popups-site-messages.php:196
+#: inc/popups-site-messages.php:214
 msgid "URL: Begins With"
 msgstr ""
 
-#: inc/popups-site-messages.php:199
+#: inc/popups-site-messages.php:217
 msgid "Check for text at the beginning of the URL"
 msgstr ""
 
-#: inc/popups-site-messages.php:208
+#: inc/popups-site-messages.php:226
 msgid "URL: Ends With"
 msgstr ""
 
-#: inc/popups-site-messages.php:211
+#: inc/popups-site-messages.php:229
 msgid "Check for text at the end of the URL"
 msgstr ""
 
-#: inc/popups-site-messages.php:365
-msgid "Emails to match"
+#: inc/popups-site-messages.php:423
+msgid "Emails to Match"
 msgstr ""
 
-#: inc/popups-site-messages.php:368
-msgid "If you check values here, users who are subscribed to all of them will match. If you leave it unchecked, users who get ANY of the possible emails will match."
+#: inc/popups-site-messages.php:426
+msgid "This will match users who get ANY of the checked emails. If you want to require that the user gets multiple email addresses, use another conditional with an AND operator."
+msgstr ""
+
+#: inc/popups-site-messages.php:437
+msgid "Roles to Match"
+msgstr ""
+
+#: inc/popups-site-messages.php:440
+msgid "This will match users who have ANY of the checked roles. If you want to require that the user has multiple roles, use another conditional with an AND operator."
 msgstr ""
 
 #. translators: the placeholder is the time string, which can be translated

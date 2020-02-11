@@ -1,18 +1,42 @@
 // theme-specific styles for site messages that aren't styled elsewhere
 
-// banner type theming
-.m-wp-insert-message-item-banner {
+.o-site-message-container {
 
-	h3 {
-		font-family: $font__headings;
-		font-size: $large-title-font-size;
-		font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
-		font-weight: normal;
-		font-style: normal;
-		font-variant: normal;
+	// banner type theming
+	.m-wp-insert-message-item-banner {
+
+		h3 {
+			font-family: $font__headings;
+			font-size: $large-title-font-size;
+			font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
+			font-weight: normal;
+			font-style: normal;
+			font-variant: normal;
+		}
+
+		p {
+			font-family: $font__sans;
+		}
+
+		a.a-button {
+			font-size: $large-title-font-size;
+		}
 	}
 
-	a.a-button {
-		font-size: $large-title-font-size;
+	// Popup specifics
+	&.wp-message-inserter-message-region-popup {
+
+		// theme styles for the banner type
+		.m-wp-insert-message-item-banner {
+			font-family: $font__sans;
+		}
+
+		// theme styles for the editor type
+		&.wp-message-inserter-message-editor {
+
+			.m-wp-insert-message-item {
+				font-family: $font__sans;
+			}
+		}
 	}
 }
