@@ -1,103 +1,53 @@
-// color config
-$_color-base-gray: rgb(122,122,122); // 7a7a7a
-$_color-base-red: rgb(128,16,25); // 801018
-$_color-base-blue: rgb(0,128,163); // 0080A3
-$_color-base-yellow: rgb(251, 211, 65); // FBD341
-$palettes: (
-    grey: (
-        base:  $_color-base-gray,
-        light: lighten($_color-base-gray, 10%), // 949494
-        dark: darken($_color-base-gray, 10%) // 616161
-    ),
+/*------------------------------------*\
+    #Colors
+\*------------------------------------*/
+
+// brand colors
+$brand-colors: (
     red: (
-        base:  $_color-base-red,
-        light: lighten($_color-base-red, 10%),
-        dark: darken($_color-base-red, 10%)
-    ),
-    blue: (
-        base:  $_color-base-blue,
-        light: lighten($_color-base-blue, 10%),
-        dark: darken($_color-base-blue, 10%)
-    ),
-    purple: (
-        base:   rgb(42,40,80),
-        light:  rgb(51,46,140),
-        dark:   rgb(40,38,65)
+        dark: #4C1016,
+        medium: #7F121C, // logo
+        highlight: #D7757E
     ),
 );
 
-// Brand colors
-$color__minnpost-red: palette(red);
-$color__minnpost-black: #1a1818;
-$color__minnpost-white: #f0f0f5;
-$color__minnpost-blue: palette(blue);
+// utility colors
+$utility-colors: (
+    green: (
+        dark: #24613B,
+        medium: #1C8745, // donate
+        highlight: #609F78,
+        background: #DDF8E7,
+    ),
+    blue: (
+        dark: #135B7E, // link
+        medium: #0C7BB0,
+        highlight: #5E99B5,
+        background: #DCF0FA
+    ),
+    purple: (
+        dark: #635077, // opinion
+        medium: #8C64B4,
+        highlight: #A880D0,
+        background: #EBE7EF
+    ),
+);
 
-// more minnpost colors
-$color__minnpost-green: #1C8745;
-$color__minnpost-yellow: #FBD341; // 251, 211, 65
-$color__minnpost-red-error: #c00; // probably?
-$color__minnpost-red-required: #c00;
-
-// Color Names
-$color__black: #000;
-$color__white: #fff;
-$color__dark-gray: #333;
-
-// Font Colors
-$color__base-background-color: #fff;
-$color__base-font-color: $color__dark-gray;
-$color__heading-font-color: $color__dark-gray;
-$color__action-color: $color__minnpost-red;
-$color__text-main: #404040; // this is not used anywhere, i think
-
-// Grays
-$color__gray-lightest: #cdcdd0;
-$color__gray-light: #ababab;
-$color__gray-med: palette(gray);
-$color__gray-dark: #404040;
-$color__gray-darkest: #282828;
-$color__gray-meta: #555556;
-$color__gray-sub-menu: #ddd;
-$color__gray-membership: #d8d8d8;
-
-// Membership levels
-$color__minnpost-bronze: #cd7f32;
-$color__minnpost-silver: #c0c0c0;
-$color__minnpost-gold: #ffd700;
-$color__minnpost-platinum: #e5e4e2;
-
-// background colors
-$color__background-body: #fff;
-$color__background-screen: #f1f1f1;
-$color__background-hr: #ccc;
-$color__background-button: $color__minnpost-white;
-$color__background-pre: #eee;
-$color__background-ins: #fff9c0;
-
-// form colors
-$color__text-screen: #21759b;
-$color__text-input: #666;
-$color__text-input-focus: #111;
-$color__form-text: #504949;
-
-// link colors
-$color__link: $color__minnpost-red;
-$color__link-visited: $color__minnpost-red;
-$color__link-hover: $color__minnpost-red;
-$color__link-active: $color__black;
-
-// border colors
-$color__border-light: #c8c8c8;
-$color__border-button: #ccc #ccc #bbb;
-$color__border-button-hover: #ccc #bbb #aaa;
-$color__border-button-focus: #aaa #bbb #bbb;
-$color__border-input: #ccc;
-$color__border-abbr: #666;
+// neutral colors
+$neutral-colors: (
+    black: #1a1818, // logo
+    dark: #5E6E76,
+    medium: #869298,
+    border: #D6D6DA,
+    highlight: #EBEBFB,
+    white: #ffffff
+);
+$background-unpublished: neutral-color( white ) url('/wp-content/themes/minnpost-largo/assets/img/unpublished.png');
 
 
-
-
-// type
+/*------------------------------------*\
+    #TYPOGRAPHY
+\*------------------------------------*/
 $font__main: sans-serif;
 $font__code: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
 $font__pre: "Courier 10 Pitch", Courier, monospace;
@@ -167,6 +117,10 @@ $archive-content-sidebar-padding: 15px;
 $footer-box-spacing: 15px;
 $form-text-indent: 6px;
 
+/*------------------------------------*\
+    #Fixed Sizes
+\*------------------------------------*/
+
 // ads
 $ad-top-width: 728px;
 $ad-top-height: 90px;
@@ -176,6 +130,3 @@ $ad-embed-width: 300px;
 $ad-embed-height: 250px;
 $ad-halfpage-width: 300px;
 $ad-halfpage-height: 600px;
-
-// backgrounds
-$background-unpublished: #fff url('/wp-content/themes/minnpost-largo/assets/img/unpublished.png');
