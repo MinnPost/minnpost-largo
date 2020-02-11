@@ -799,7 +799,7 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 		$category_setup->add_field(
 			array(
 				'name'    => __( 'News or Opinion', 'minnpost-largo' ),
-				'id'      => '_mp_category_news_opinion',
+				'id'      => '_mp_category_group',
 				'type'    => 'radio_inline',
 				'desc'    => __( 'If a value is selected, this value will show before the category name. If Opinion is selected, this category will be excluded from automated story recommendations.', 'minnpost-largo' ),
 				'classes' => 'cmb2-match-admin-width',
