@@ -113,6 +113,9 @@ if ( ! function_exists( 'minnpost_largo_user_child_template' ) ) :
 	add_filter( 'page_template', 'minnpost_largo_user_child_template', 10, 1 );
 	function minnpost_largo_user_child_template( $template ) {
 		global $post;
+		if ( ! is_object( $post ) ) {
+			return $template;
+		}
 		$page = get_page_by_path( 'user' );
 		$id   = $page->ID;
 
