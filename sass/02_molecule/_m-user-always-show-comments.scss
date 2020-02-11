@@ -1,0 +1,17 @@
+.m-user-always-show-comments {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	font-size: 123.1%;
+	font-family: $font__sans;
+	border: 1px solid $color__gray-lightest;
+	border-left: 0;
+	border-right: 0;
+	margin-bottom: $standard-page-margin;
+	padding: 0.25em 0.5em;
+
+	label.always-show-comments {
+		cursor: pointer;
+		max-width: 60%
+	}
+}

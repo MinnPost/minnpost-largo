@@ -18,6 +18,7 @@
 if ( post_password_required() ) {
 	return;
 }
+
 ?>
 
 <section id="comments" class="o-comments-area o-comments-area-post">
@@ -46,6 +47,7 @@ if ( post_password_required() ) {
 	?>
 	<?php if ( 0 < $count_visible_comments ) : ?>
 		<h3 class="a-comments-title">Comments (<?php echo $count_visible_comments; ?>)</h3>
+		<?php minnpost_largo_load_comments_switch( 'before' ); ?>
 		<ol>
 			<?php
 			$comments_query = new WP_Comment_Query;
@@ -81,6 +83,8 @@ if ( post_password_required() ) {
 		$user_identity
 	) . '</p>';
 
+	minnpost_largo_load_comments_switch( 'after' );
+
 	// if the user is allowed to comment, show them the comment form
 	if ( ! current_user_can( 'not_comment', get_the_ID() ) ) {
 		$comment_form_args = array(
@@ -92,5 +96,6 @@ if ( post_password_required() ) {
 		);
 		comment_form( $comment_form_args );
 	}
+
 	?>
 </section><!-- #comments -->
