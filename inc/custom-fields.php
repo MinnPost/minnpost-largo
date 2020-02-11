@@ -28,7 +28,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 		}
 	}
 	function newsletter_pre_get_posts( WP_Query $wp_query ) {
-		if ( in_array( $wp_query->get( 'post_type' ), array( 'post' ) ) ) {
+		if ( in_array( $wp_query->get( 'post_type' ), array( 'post' ), true ) ) {
 			$wp_query->set( 'update_post_meta_cache', false );
 		}
 	}
@@ -582,10 +582,30 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			)
 		);
 		$related_settings->add_field(
+			array(
+				'name' => __( 'Prevent related content?', 'minnpost-largo' ),
+				'id'   => '_mp_prevent_related_content',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not contain any related content. This prevents manual and automated recommendations, as well as "more ___ articles" links.', 'minnpost-largo' ),
+			)
+		);
+		$related_settings->add_field(
+			array(
+				'name' => __( 'Related Content Label', 'minnpost-largo' ),
+				'id'   => '_mp_related_content_label',
+				'type' => 'text',
+				'desc' => sprintf(
+					// translators: 1) the default label for related items
+					esc_html__( 'This text will show as a heading above the Related Content items. If you leave it blank, it will say %1$s.', 'minnpost-largo' ),
+					esc_html__( 'Read these stories next', 'minnpost-largo' )
+				),
+			)
+		);
+		$related_settings->add_field(
 			minnpost_post_search_field(
 				array(
 					'name'       => __( 'Related Content', 'minnpost-largo' ),
-					'desc'       => __( 'Search for a post here', 'minnpost-largo' ),
+					'desc'       => __( 'Search for a post here. If any posts are selected, they will override automated recommendations.', 'minnpost-largo' ),
 					'id'         => '_mp_related_content',
 					'query_args' => array(
 						'nopaging' => true,
@@ -597,7 +617,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			minnpost_post_search_field(
 				array(
 					'name'       => __( 'Related Multimedia', 'minnpost-largo' ),
-					'desc'       => __( 'Search for a post here', 'minnpost-largo' ),
+					'desc'       => __( 'Search for a post here. If any posts are selected, they will override automated recommendations.', 'minnpost-largo' ),
 					'id'         => '_mp_related_multimedia',
 					'query_args' => array(
 						'nopaging' => true,
@@ -605,7 +625,30 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				)
 			)
 		);
-		// todo: put fields related to automatic related content here
+		$related_settings->add_field(
+			array(
+				'name'       => __( 'Link to a related category', 'minnpost-largo' ),
+				'desc'       => __( 'This post will contain a link to "More ___ articles" if there is a value.', 'minnpost-largo' ),
+				'id'         => '_mp_related_category',
+				'type'       => 'term_ajax_search',
+				'query_args' => array(
+					'taxonomy' => 'category', //Enter Taxonomy Slug
+					'default'  => '',
+				),
+			)
+		);
+		$related_settings->add_field(
+			array(
+				'name'       => __( 'Link to a related tag', 'minnpost-largo' ),
+				'desc'       => __( 'This post will contain a link to "More ___ articles" if there is a value.', 'minnpost-largo' ),
+				'id'         => '_mp_related_tag',
+				'type'       => 'term_ajax_search',
+				'query_args' => array(
+					'taxonomy' => 'post_tag', //Enter Taxonomy Slug
+					'default'  => '',
+				),
+			)
+		);
 
 		/**
 		 * Membership content settings

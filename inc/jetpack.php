@@ -105,3 +105,134 @@ if ( ! function_exists( 'minnpost_largo_es_query_args' ) ) :
 		return $args;
 	}
 endif;
+
+/**
+ * Remove the default Jetpack Related Posts output
+ * Because we're going to use WP Query instead
+ */
+if ( ! function_exists( 'minnpost_largo_jetpack_remove' ) ) :
+	add_action( 'wp', 'minnpost_largo_jetpack_remove', 20 );
+	function minnpost_largo_jetpack_remove() {
+		if ( class_exists( 'Jetpack_RelatedPosts' ) ) {
+			$jprp     = Jetpack_RelatedPosts::init();
+			$callback = array( $jprp, 'filter_add_target_to_dom' );
+			remove_filter( 'the_content', $callback, 40 );
+		}
+	}
+endif;
+
+/**
+ * Display the post author after the Related Posts context.
+ *
+ * @param string $context Context displayed below each related post.
+ * @param string $post_id Post ID of the post for which we are retrieving Related Posts.
+ *
+ * @return string $context Context, including information about the post author.
+ */
+if ( ! function_exists( 'minnpost_largo_jetpack_remove' ) ) :
+	add_filter( 'jetpack_relatedposts_filter_post_context', 'jetpackme_related_authors', 10, 2 );
+	function jetpackme_related_authors( $context, $post_id ) {
+		$byline = minnpost_get_posted_by( $post_id );
+		// Add the author name after the existing context.
+		if ( ! empty( $byline ) ) {
+			return $context . $byline;
+		}
+		// Final fallback.
+		return $context;
+	}
+endif;
+
+/**
+ * Display automated related posts based on the Jetpack query
+ *
+ */
+if ( ! function_exists( 'minnpost_largo_jetpack_results' ) ) :
+	function minnpost_largo_jetpack_results() {
+		$related_query = minnpost_largo_get_jetpack_results();
+		if ( ! empty( $related_query ) ) : ?>
+			<h3 class="a-related-title a-related-title-automated">
+				<?php if ( '' !== get_post_meta( get_the_ID(), '_mp_related_content_label', true ) ) : ?>
+					<?php echo get_post_meta( get_the_ID(), '_mp_related_content_label', true ); ?>
+				<?php else : ?>
+					<?php echo esc_html__( 'Read these stories next', 'minnpost-largo' ); ?>
+				<?php endif; ?>
+			</h3>
+			<ul class="a-related-list a-related-list-automated">
+				<?php
+				while ( $related_query->have_posts() ) :
+					$related_query->the_post();
+					get_template_part( 'template-parts/related-post', 'automated' );
+				endwhile;
+				wp_reset_query();
+				?>
+			</ul>
+			<?php
+	endif;
+	}
+endif;
+
+/**
+ * Generate a WP query object for jetpack related posts
+ *
+ * @return object $related_query
+ */
+if ( ! function_exists( 'minnpost_largo_get_jetpack_results' ) ) :
+	function minnpost_largo_get_jetpack_results() {
+		$related_posts = array();
+		$query         = array();
+
+		// Number of posts to show
+		$query['showposts'] = 4;
+
+		// Fetches related post IDs if JetPack Related Posts is active
+		if ( class_exists( 'Jetpack_RelatedPosts' ) && method_exists( 'Jetpack_RelatedPosts', 'init_raw' ) ) :
+			$related = Jetpack_RelatedPosts::init_raw()
+				->set_query_name( 'minnpost-largo-related-automated' ) // optional, name can be anything
+				->get_for_post_id(
+					get_the_ID(),
+					array( 'size' => $query['showposts'] )
+				);
+			if ( $related ) :
+				foreach ( $related as $result ) :
+					$related_posts[] = $result['id'];
+				endforeach;
+			endif;
+		endif;
+
+		// Sets query to related posts, falls back to recent posts
+		if ( $related_posts ) {
+			$query['post__in'] = $related_posts;
+			$query['orderby']  = 'post__in';
+			$title             = __( 'Related Posts', 'minnpost-largo' );
+			$related_query     = new WP_Query( $query );
+			return $related_query;
+		} else {
+			return;
+		}
+	}
+endif;
+
+/**
+ * Exclude categories from Jetpack related posts
+ *
+ * @param array $filters
+ * @return array $filters
+ *
+ */
+if ( ! function_exists( 'minnpost_largo_get_jetpack_results' ) ) :
+	add_filter( 'jetpack_relatedposts_filter_filters', 'minnpost_largo_jetpack_exclude_category' );
+	function minnpost_largo_jetpack_exclude_category( $filters ) {
+		$filters[] = array(
+			'not' => array(
+				'terms' => array(
+					'category.term_id' => array(
+						55575,
+						55630,
+						55628,
+					),
+				),
+			),
+		);
+		return $filters;
+	}
+endif;
