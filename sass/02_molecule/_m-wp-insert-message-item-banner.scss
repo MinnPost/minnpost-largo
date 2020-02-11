@@ -14,8 +14,29 @@
 			font-variant: normal;
 		}
 
+		p {
+			font-family: $font__sans;
+		}
+
 		a.a-button {
 			font-size: $large-title-font-size;
+		}
+	}
+
+	// Popup specifics
+	&.wp-message-inserter-message-region-popup {
+
+		// theme styles for the banner type
+		.m-wp-insert-message-item-banner {
+			font-family: $font__sans;
+		}
+
+		// theme styles for the editor type
+		&.wp-message-inserter-message-editor {
+
+			.m-wp-insert-message-item {
+				font-family: $font__sans;
+			}
 		}
 	}
 }
