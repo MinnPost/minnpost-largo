@@ -50,3 +50,9 @@
 // used like this
 //@include generateRatios(16,9); // 16x9
 //@include generateRatios(4,3);  // 4x3
+
+// background colors
+@mixin rgba-background( $hexcolor, $opacity ) {
+  background-color: $hexcolor;
+  background-color: rgba( $hexcolor, $opacity ); 
+}
