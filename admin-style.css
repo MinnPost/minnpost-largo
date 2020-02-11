@@ -48,9 +48,9 @@
 }
 
 /* cmb2 category fields */
-/* this media query comes from wp-admin/css/forms.css */
+/* this media query pixel value comes from wp-admin/css/forms.css */
 @media screen and (min-width: 782px) {
-	.cmb2-match-admin-width .cmb-td {
+	.term-php .cmb2-match-admin-width .cmb-td {
 		width: calc(100% - 240px);
 	}
 }
