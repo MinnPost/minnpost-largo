@@ -219,17 +219,32 @@ endif;
  * @return array $filters
  *
  */
-if ( ! function_exists( 'minnpost_largo_get_jetpack_results' ) ) :
+if ( ! function_exists( 'minnpost_largo_jetpack_exclude_category' ) ) :
 	add_filter( 'jetpack_relatedposts_filter_filters', 'minnpost_largo_jetpack_exclude_category' );
 	function minnpost_largo_jetpack_exclude_category( $filters ) {
+		// glean, fonm, mp-picks
+		$exclude_ids = array(
+			55575,
+			55630,
+			55628,
+		);
+		// also exclude categories that are grouped as opinion
+		$terms = get_terms(
+			array(
+				'taxonomy'   => 'category',
+				'meta_key'   => '_mp_category_group',
+				'meta_value' => 'opinion',
+			)
+		);
+
+		foreach ( $terms as $term ) {
+			$exclude_ids[] = $term->term_id;
+		}
+
 		$filters[] = array(
 			'not' => array(
 				'terms' => array(
-					'category.term_id' => array(
-						55575,
-						55630,
-						55628,
-					),
+					'category.term_id' => $exclude_ids,
 				),
 			),
 		);
