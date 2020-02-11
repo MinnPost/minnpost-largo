@@ -976,10 +976,14 @@ if ( ! function_exists( 'minnpost_category_breadcrumb' ) ) :
 
 		$category_id = minnpost_get_permalink_category_id( $post_id );
 		if ( '' !== $category_id ) {
-			$category      = get_category( $category_id );
-			$category_link = get_category_link( $category );
+			$category       = get_category( $category_id );
+			$category_link  = get_category_link( $category );
+			$category_group = get_term_meta( $category_id, '_mp_category_group', true );
+			if ( '' !== $category_group ) {
+				echo '<div class="a-breadcrumb a-category-group a-category-group-' . sanitize_title( $category_group ) . '">' . $category_group . '</div>';
+			}
 			$category_name = $category->name;
-			echo '<div class="a-breadcrumb"><a href="' . $category_link . '">' . $category_name . '</a></div>';
+			echo '<div class="a-breadcrumb a-category-name"><a href="' . $category_link . '">' . $category_name . '</a></div>';
 		}
 	}
 endif;

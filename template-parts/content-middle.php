@@ -11,9 +11,15 @@
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post' ); ?>>
 
-	<?php minnpost_post_image( 'feature-large' ); ?>
-
-	<p class="a-post-category a-zone-item-category"><?php echo minnpost_get_category_name(); ?></p>
+	<?php if ( '' !== minnpost_get_category_name() || '' !== minnpost_get_replace_category_text() ) : ?>
+		<div class="m-post-classification">
+			<?php if ( '' === minnpost_get_replace_category_text() ) : ?>
+				<?php minnpost_category_breadcrumb(); ?>
+			<?php else : ?>
+				<?php minnpost_replace_category_text(); ?>
+			<?php endif; ?>
+		</div>
+	<?php endif; ?>
 
 	<header class="m-entry-header">
 		<?php the_title( '<h3 class="a-entry-title a-entry-title-largeimage"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
@@ -27,5 +33,7 @@
 		<?php endif; ?>
 
 	</header><!-- .m-entry-header -->
+
+	<?php minnpost_post_image( 'feature-large' ); ?>
 
 </article><!-- #post-## -->

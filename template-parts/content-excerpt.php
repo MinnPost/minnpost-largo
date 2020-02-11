@@ -11,12 +11,16 @@
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post' ); ?>>
 
-	<?php minnpost_post_image( 'thumbnail' ); ?>
-
 	<?php $is_spill = get_query_var( 'is_spill', false ); ?>
 
 	<?php if ( is_home() || true === $is_spill || is_tag() || is_author() || ( is_category() && isset( $featured_columns ) && '' !== $featured_columns ) ) : ?>
-		<p class="a-post-category a-zone-item-category"><?php echo minnpost_get_category_name(); ?></p>
+		<div class="m-post-classification">
+			<?php if ( '' === minnpost_get_replace_category_text() ) : ?>
+				<?php minnpost_category_breadcrumb(); ?>
+			<?php else : ?>
+				<?php minnpost_replace_category_text(); ?>
+			<?php endif; ?>
+		</div>
 	<?php endif; ?>
 
 	<header class="m-entry-header">
@@ -31,6 +35,8 @@
 		<?php endif; ?>
 
 	</header><!-- .m-entry-header -->
+
+	<?php minnpost_post_image( 'thumbnail' ); ?>
 
 	<div class="m-entry-excerpt">
 		<?php the_excerpt(); ?>
