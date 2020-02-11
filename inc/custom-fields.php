@@ -630,10 +630,10 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'name'       => __( 'Link to a related category', 'minnpost-largo' ),
 				'desc'       => __( 'This post will contain a link to "More ___ articles" if there is a value.', 'minnpost-largo' ),
 				'id'         => '_mp_related_category',
-				'taxonomy'   => 'category', //Enter Taxonomy Slug
 				'type'       => 'term_ajax_search',
 				'query_args' => array(
-					'default' => '',
+					'taxonomy' => 'category', //Enter Taxonomy Slug
+					'default'  => '',
 				),
 			)
 		);
@@ -642,10 +642,10 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'name'       => __( 'Link to a related tag', 'minnpost-largo' ),
 				'desc'       => __( 'This post will contain a link to "More ___ articles" if there is a value.', 'minnpost-largo' ),
 				'id'         => '_mp_related_tag',
-				'taxonomy'   => 'post_tag', //Enter Taxonomy Slug
 				'type'       => 'term_ajax_search',
 				'query_args' => array(
-					'default' => '',
+					'taxonomy' => 'post_tag', //Enter Taxonomy Slug
+					'default'  => '',
 				),
 			)
 		);
