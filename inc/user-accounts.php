@@ -113,10 +113,13 @@ if ( ! function_exists( 'minnpost_largo_user_child_template' ) ) :
 	add_filter( 'page_template', 'minnpost_largo_user_child_template', 10, 1 );
 	function minnpost_largo_user_child_template( $template ) {
 		global $post;
+		if ( ! is_object( $post ) || ! is_singular() ) {
+			return $template;
+		}
 		$page = get_page_by_path( 'user' );
 		$id   = $page->ID;
 
-		if ( $post->post_parent === $id || $post->ID === $id ) {
+		if ( ( isset( $post->post_parent ) && $post->post_parent === $id ) || ( isset( $post->ID ) && $post->ID === $id ) ) {
 			// get top level parent page
 			//$parent = get_post( reset( array_reverse( get_post_ancestors( $post->ID ) ) ) );
 			// or ...
