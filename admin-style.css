@@ -46,3 +46,11 @@
 .cmb-type-post-search-ajax input.cmb-post-search-ajax {
 	width: 50em;
 }
+
+/* cmb2 category fields */
+/* this media query comes from wp-admin/css/forms.css */
+@media screen and (min-width: 782px) {
+	.cmb2-match-admin-width .cmb-td {
+		width: calc(100% - 240px);
+	}
+}
