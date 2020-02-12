@@ -317,6 +317,7 @@ const build      = gulp.series(gulp.parallel(styles, scripts, images, svgminify,
 
 // export tasks
 exports.lint       = lint;
+exports.stylelint  = stylelint;
 exports.styles     = styles;
 exports.scriptlint = scriptlint;
 exports.scripts    = scripts;
