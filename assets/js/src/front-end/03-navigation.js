@@ -26,14 +26,14 @@ function setupNavSearch( container ) {
 		return;
 	}
 
-	if ( $( navsearchform ).length > 0 ) {
+	if ( 0 < $( navsearchform ).length ) {
 		$( document ).click( function( event ) {
 			var $target = $( event.target );
 			if ( ! $target.closest( navsearchcontainer ).length && $( navsearchform ).is( ':visible' ) ) {
 				navsearchform.className = navsearchform.className.replace( ' toggled-form', '' );
 				$( navsearchtoggle ).prop( 'aria-expanded', false );
 				$( navsearchtoggle ).removeClass( 'toggled-form' );
-			}        
+			}
 		});
 		$( navsearchtoggle ).on( 'click', function( event ) {
 			event.preventDefault();
@@ -105,12 +105,13 @@ function setupMenu( container ) {
 
 		if ( 'ontouchstart' in window ) {
 			touchStartFn = function( e ) {
-				var menuItem = this.parentNode, i;
+				var menuItem = this.parentNode,
+					i;
 
 				if ( ! menuItem.classList.contains( 'focus' ) ) {
 					e.preventDefault();
 					for ( i = 0; i < menuItem.parentNode.children.length; ++i ) {
-						if ( menuItem === menuItem.parentNode.children[i] ) {
+						if ( menuItem === menuItem.parentNode.children[i]) {
 							continue;
 						}
 						menuItem.parentNode.children[i].classList.remove( 'focus' );
@@ -159,23 +160,24 @@ $( 'a.glean-sidebar' ).click( function( e ) {
 });
 
 $( 'a', $( '.o-site-sidebar' ) ).click( function( e ) {
-	var widget_title = $(this).closest('.m-widget').find('h3').text();
-	var zone_title   = $(this).closest('.m-zone').find('.a-zone-title').text();
+	var widget_title = $( this ).closest( '.m-widget' ).find( 'h3' ).text();
+	var zone_title   = $( this ).closest( '.m-zone' ).find( '.a-zone-title' ).text();
 	var sidebar_section_title = '';
 	if ( '' !== widget_title ) {
 		sidebar_section_title = widget_title;
 	} else if ( '' !== zone_title ) {
 		sidebar_section_title = zone_title;
 	}
-	mp_analytics_tracking_event('event', 'Sidebar Link', 'Click', sidebar_section_title);
+	mp_analytics_tracking_event( 'event', 'Sidebar Link', 'Click', sidebar_section_title );
 });
 
 // user account navigation can be a dropdown
-$( document ).ready(function() {
+$( document ).ready( function() {
+
 	// hide menu
-	if ($('#user-account-access ul').length > 0 ) {
-		$('#user-account-access > li > a').on( 'click', function(event) {
-			$('#user-account-access ul').toggleClass( 'visible' );
+	if ( 0 < $( '#user-account-access ul' ).length ) {
+		$( '#user-account-access > li > a' ).on( 'click', function( event ) {
+			$( '#user-account-access ul' ).toggleClass( 'visible' );
 			event.preventDefault();
 		});
 	}

@@ -206,7 +206,7 @@ function mainscripts() {
 
 function adminscriptlint() {
   return gulp
-    .src(config.scripts.admin)
+    .src(config.scripts.admin_src)
     .pipe(eslint({fix:true}))
     .pipe(eslint.format())
     .pipe(gulp.dest(config.scripts.admin_lint))
@@ -299,7 +299,7 @@ function browserSyncReload(done) {
 // Watch directories, and run specific tasks on file changes
 function watch() {
   gulp.watch(config.styles.srcDir, styles);
-  gulp.watch(config.scripts.admin, adminscripts);
+  gulp.watch(config.scripts.admin_src, adminscripts);
   
   // Reload browsersync when PHP files change, if active
   if (config.browserSync.active) {
@@ -308,17 +308,20 @@ function watch() {
 }
 
 // define complex gulp tasks
-const lint = gulp.series(gulp.parallel(frontendsasslint, mainsasslint, adminscriptlint, mainscriptlint));
-const styles  = gulp.series(gulp.parallel(frontendstyles, mainstyles));
-const scripts = gulp.series(gulp.parallel(mainscripts, adminscripts), uglifyscripts);
-const build   = gulp.series(gulp.parallel(styles, scripts, images, svgminify, translate));
+const lint       = gulp.series(gulp.parallel(frontendsasslint, mainsasslint, adminscriptlint, mainscriptlint));
+const stylelint  = gulp.series(gulp.parallel(frontendsasslint, mainsasslint));
+const scriptlint = gulp.series(gulp.parallel(adminscriptlint, mainscriptlint));
+const styles     = gulp.series(gulp.parallel(frontendstyles, mainstyles));
+const scripts    = gulp.series(gulp.parallel(mainscripts, adminscripts), uglifyscripts);
+const build      = gulp.series(gulp.parallel(styles, scripts, images, svgminify, translate));
 
 // export tasks
-exports.lint      = lint;
-exports.styles    = styles;
-exports.scripts   = scripts;
-exports.images    = images;
-exports.svgminify = svgminify;
-exports.translate = translate;
-exports.watch     = watch;
-exports.default   = build;
+exports.lint       = lint;
+exports.styles     = styles;
+exports.scriptlint = scriptlint;
+exports.scripts    = scripts;
+exports.images     = images;
+exports.svgminify  = svgminify;
+exports.translate  = translate;
+exports.watch      = watch;
+exports.default    = build;
