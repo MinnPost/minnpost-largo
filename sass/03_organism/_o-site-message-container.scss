@@ -2,6 +2,7 @@
 
 	&.wp-message-inserter-message-region-homepage_middle,
 	&.wp-message-inserter-message-header {
+
 		header {
 			font-size: 1.2em;
 			margin-right: 1em;
@@ -11,7 +12,7 @@
 		h3,
 		h4 {
 			font-family: $font__headings;
-			font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
+			font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
 			font-weight: normal;
 			font-style: normal;
 			font-variant: normal;
@@ -46,50 +47,50 @@
 
 		.m-form-frontpage.m-form-minnpost-form-processor-mailchimp {
 
-				fieldset {
-					border: 0;
-					margin: 0;
-					padding: 2.5em 0 1em 0;
+			fieldset {
+				border: 0;
+				margin: 0;
+				padding: 2.5em 0 1em 0;
+				width: 100%;
+				max-width: 100%;
+
+				input {
+					color: $color__dark-gray;
 					width: 100%;
 					max-width: 100%;
-
-					input {
-						color: $color__dark-gray;
-						width: 100%;
-						max-width: 100%;
-					}
-
-					label {
-						color: $color__white;
-
-						a,
-						a:visited {
-							color: $color__border-light;
-						}
-					}
 				}
 
-				.m-form-container {
-					padding: 0 1.5em;
-				}
-			}
-
-			.m-form-frontpage.m-form-minnpost-form-processor-mailchimp-submitted {
-
-				.m-form-message {
-					margin: 0;
-					padding: 1em;
-					width: 100%;
-					max-width: 100%;
+				label {
 					color: $color__white;
-					font-size: $content-font-size;
-					line-height: $base-line-height;
-				}
 
-				fieldset {
-					display: none;
+					a,
+					a:visited {
+						color: $color__border-light;
+					}
 				}
 			}
+
+			.m-form-container {
+				padding: 0 1.5em;
+			}
+		}
+
+		.m-form-frontpage.m-form-minnpost-form-processor-mailchimp-submitted {
+
+			.m-form-message {
+				margin: 0;
+				padding: 1em;
+				width: 100%;
+				max-width: 100%;
+				color: $color__white;
+				font-size: $content-font-size;
+				line-height: $base-line-height;
+			}
+
+			fieldset {
+				display: none;
+			}
+		}
 	}
 }
 

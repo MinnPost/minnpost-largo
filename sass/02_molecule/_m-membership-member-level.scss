@@ -1,42 +1,57 @@
 .m-membership-member-level {
+
 	.m-member-level-brief {
-		h2, h3, select {
+
+		h2,
+		h3,
+		select {
 			color: $color__minnpost-black;
 			font-family: $font__headings;
-			font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
+			font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
 			font-style: normal;
 			font-variant: normal;
 			font-weight: normal;
 		}
+
 		h2 {
 			font-size: 1em;
 		}
+
 		select {
 			color: $_color-base-gray;
 			display: block;
 			margin: 0 auto 0.75em auto;
 			text-align: center;
 		}
+
 		.enter .m-form-item input {
 			font-family: $font__headings;
 		}
 	}
+
 	&.m-membership-member-level-member_bronze .m-member-level-brief {
+
 		h2 {
 			background: $color__minnpost-bronze;
 		}
 	}
+
 	&.m-membership-member-level-member_silver .m-member-level-brief {
+
 		h2 {
 			background: $color__minnpost-silver;
 		}
 	}
+
 	&.m-membership-member-level-member_gold .m-member-level-brief {
+
 		h2 {
 			background: $color__minnpost-gold;
 		}
 	}
+
 	&.m-membership-member-level-member_platinum .m-member-level-brief {
+
 		h2 {
 			background: $color__minnpost-platinum;
 		}

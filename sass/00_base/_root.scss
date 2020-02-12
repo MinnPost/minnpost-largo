@@ -6,8 +6,8 @@ html {
 }
 
 *,
-*:before,
-*:after { /* Inherit box-sizing to make it easier to change the property for components that leverage other behavior; see http://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
+*::before,
+*::after { /* Inherit box-sizing to make it easier to change the property for components that leverage other behavior; see http://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
 	box-sizing: inherit;
 }
 
@@ -22,11 +22,12 @@ body {
 	background: $color__base-background-color;
 }
 
-blockquote, q {
+blockquote,
+q {
 	quotes: "" "";
 
-	&:before,
-	&:after {
+	&::before,
+	&::after {
 		content: "";
 	}
 }
@@ -52,7 +53,9 @@ label {
 	display: inline-block;
 }
 
-input, select, textarea {
+input,
+select,
+textarea {
 	max-width: 100%; // sometimes there'll be more specific sizes, but we should never go over 100% here
 	font-family: $font__sans;
 	font-size: 99%;

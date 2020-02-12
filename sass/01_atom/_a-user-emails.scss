@@ -2,13 +2,16 @@
 	position: relative;
 	margin: 0 0 1.5em 0;
 	columns: 2 auto;
+
 	dt {
 		margin: 0 0 0.2em 0;
 		font-weight: bold;
-		&:after {
-			content: ':';
+
+		&::after {
+			content: ":";
 		}
 	}
+
 	dd {
 		margin: 0 0 1em 0;
 		break-inside: avoid;

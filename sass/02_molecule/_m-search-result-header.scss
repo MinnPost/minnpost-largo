@@ -1,5 +1,6 @@
 .m-search-result-header {
 	font-family: $font__sans;
+
 	.a-search-result-title {
 		font-family: $font__headings;
 		font-size: 338.5%;
@@ -8,14 +9,17 @@
 		font-style: normal;
 		font-variant: normal;
 	}
+
 	.m-search-result-meta {
 		font-size: 76.9%;
 		text-transform: uppercase;
 		font-weight: bold;
 		line-height: 1.3em;
-		margin: .25em 0;
+		margin: 0.25em 0;
 	}
-	&.m-search-result-header-spill, &.m-search-result-header-time {
+
+	&.m-search-result-header-spill,
+	&.m-search-result-header-time {
 		margin-bottom: $standard-page-margin;
 	}
 }

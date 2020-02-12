@@ -13,10 +13,13 @@
 // media queries for homepage listing
 
 @media screen and (min-width: $more-than-logo-screen) {
+
 	.o-homepage-listing {
+
 		.m-zone-homepage-bottom {
 			width: $size__main-smaller-screen;
 		}
+
 		.o-content-sidebar {
 			padding-left: $standard-page-margin;
 			margin-left: 0;
@@ -26,10 +29,13 @@
 }
 
 @media screen and (min-width: $medium-screen) {
+
 	.o-homepage-listing {
+
 		.m-zone-homepage-bottom {
 			width: $size__main-small-screen;
 		}
+
 		.o-content-sidebar {
 			padding-left: $standard-page-margin;
 			margin-left: 0;
@@ -39,10 +45,13 @@
 }
 
 @media screen and (min-width: $medium-margins-too-small) {
+
 	.o-homepage-listing {
+
 		.m-zone-homepage-bottom {
 			width: $size__main-large-screen;
 		}
+
 		.o-content-sidebar {
 			margin-left: 0;
 			padding-left: $home-content-sidebar-padding;
@@ -52,10 +61,13 @@
 }
 
 @media screen and (min-width: $nav-breaks) {
+
 	.o-homepage-listing {
+
 		.m-zone-homepage-bottom {
 			width: $size__main-small-screen;
 		}
+
 		.o-content-sidebar {
 			margin-left: 0;
 			padding-left: $home-content-sidebar-padding;
@@ -65,13 +77,17 @@
 }
 
 @media screen and (min-width: $max-width-page) {
+
 	.o-homepage-listing {
+
 		&#home-second {
 			order: unset;
 		}
+
 		.m-zone-homepage-bottom {
 			width: $size__main-large-screen;
 		}
+
 		.o-content-sidebar {
 			padding-left: 0;
 			margin-left: $home-content-sidebar-padding;

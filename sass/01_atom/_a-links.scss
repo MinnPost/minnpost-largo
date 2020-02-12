@@ -24,8 +24,9 @@ a {
 
 	&.a-more {
 		font-family: $font__sans;
-		&:after {
-			content: ' ▸'
+
+		&::after {
+			content: " ▸";
 		}
 	}
 
@@ -34,7 +35,8 @@ a {
 // sometimes it can be the link container instead
 p.a-more {
 	font-family: $font__sans;
-	a:after {
-		content: ' ▸'
+
+	a::after {
+		content: " ▸";
 	}
 }

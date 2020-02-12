@@ -1,14 +1,18 @@
 .m-support-progress {
 	font-size: $content-font-size;
 	line-height: $base-line-height;
-	a, span {
+
+	a,
+	span {
 		font-family: $font__sans;
 		color: $color__white;
 		border-right: 1px solid $color__gray-lightest;
 	}
-	a:before, span:before {
+
+	a::before,
+	span::before {
 		font-family: $font__headings;
-		font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
+		font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
 		font-weight: normal;
 		font-style: normal;
 		font-variant: normal;

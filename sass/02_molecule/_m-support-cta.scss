@@ -1,32 +1,42 @@
 .m-support-cta {
+
 	&.m-support-cta-bottom {
+
 		.m-membership-fast-select {
 			padding-top: $footer-box-spacing;
-			button, input#amount, input.a-button {
+
+			button,
+			input#amount,
+			input.a-button {
 				font-family: $font__headings;
-				font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
+				font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
 				font-weight: 400;
 				font-style: normal;
 				font-variant: normal;
 			}
+
 			.m-form-radios {
+
 				input[type="radio"] {
-				    left: 0;
-				    opacity: 0;
-				    position: absolute;
-				    top: 0;
+					left: 0;
+					opacity: 0;
+					position: absolute;
+					top: 0;
 				}
+
 				label {
 					background: $_color-base-gray;
 					color: $color__white;
 					font-family: $font__serif;
 					border: 0;
 				}
+
 				input:checked + label {
 					background: $_color-base-blue;
 				}
 			}
 		}
+
 		.m-form-actions {
 			text-align: center;
 		}

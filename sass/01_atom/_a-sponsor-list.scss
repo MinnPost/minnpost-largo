@@ -2,16 +2,20 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-around;
+
 	li.a-sponsor {
 		//border-bottom: 1px solid $color__gray-lightest;
 		margin-bottom: $standard-page-margin;
 		padding-bottom: $standard-page-margin;
+
 		figure {
 			margin: 0;
 			display: flex;
+
 			a {
 				display: block;
 			}
+
 			img {
 				display: block;
 				align-self: flex-start;

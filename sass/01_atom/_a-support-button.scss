@@ -1,13 +1,18 @@
 .m-support-cta {
+
 	&.m-support-cta-top {
+
 		.a-support-button {
 			background: $color__minnpost-green;
 			color: $color__white;
 			font-size: 1.5em;
 			font-family: $font__headings;
 			letter-spacing: 0.02em;
-			&:hover, &:focus, &:active {
-				background: darken( $color__minnpost-green, 10% );
+
+			&:hover,
+			&:focus,
+			&:active {
+				background: darken($color__minnpost-green, 10%);
 				text-decoration: none;
 			}
 		}

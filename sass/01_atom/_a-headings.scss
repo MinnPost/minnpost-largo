@@ -1,11 +1,24 @@
-h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
 	font-family: $font__sans;
 	font-weight: bold;
 	font-size: 100%;
 	margin: 0;
 	padding: 0;
+
 	a {
 		color: inherit;
+
 		&:visited,
 		&:active,
 		&:focus,
@@ -16,69 +29,106 @@ h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
 	}
 }
 
-h1, .h1, h2, .h2, h3, .h3 {
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3 {
 	margin-top: 0;
 }
 
-h1, .h1 {
+h1,
+.h1 {
 
 }
-h2, .h2 {
+
+h2,
+.h2 {
 	font-size: 123.1%;
 }
-h3, .h3 {
-	
+
+h3,
+.h3 {
+
 }
-h4, .h4 {
-	
+
+h4,
+.h4 {
+
 }
-h5, .h5 {
-	
+
+h5,
+.h5 {
+
 }
-h6, .h6 {
-	
+
+h6,
+.h6 {
+
 }
 
 .a-archive-title {
 	font-size: 123.1%;
 	text-transform: none;
 }
+
 .a-archive-subtitle {
 	font-size: 123.1%;
 	text-transform: uppercase;
 	font-family: $font__headings;
-	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
+	font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
 	font-weight: normal;
 	font-style: normal;
 	font-variant: normal;
 	margin-bottom: 12px;
 }
-.a-author-title, .a-about-author, .a-related-title, .a-comments-title, .a-comment-reply-title, .a-signup-title, .a-newsletter-title {
+
+.a-author-title,
+.a-about-author,
+.a-related-title,
+.a-comments-title,
+.a-comment-reply-title,
+.a-signup-title,
+.a-newsletter-title {
 	font-size: 123.1%;
 }
-.a-about-author, .a-related-title, .a-comments-title, .a-comment-reply-title, .a-signup-title, .a-newsletter-title {
+
+.a-about-author,
+.a-related-title,
+.a-comments-title,
+.a-comment-reply-title,
+.a-signup-title,
+.a-newsletter-title {
 	text-transform: uppercase;
 	font-family: $font__headings;
-	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
+	font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
 	font-weight: normal;
 	font-style: normal;
 	font-variant: normal;
 	margin-top: 20px;
 }
+
 .a-author-title {
 	text-transform: none;
-    margin: 0;
-    font-weight: bold;
+	margin: 0;
+	font-weight: bold;
 }
+
 .a-related-title {
 	margin-bottom: 0.75em;
 }
-.a-comments-title, .a-comment-reply-title {
+
+.a-comments-title,
+.a-comment-reply-title {
 	margin-bottom: 0.75em;
 }
+
 .a-comment-reply-title {
+
 	a {
 		color: $color__link;
+
 		&:visited,
 		&:active,
 		&:focus,
@@ -87,20 +137,22 @@ h6, .h6 {
 			color: $color__link-hover;
 		}
 	}
+
 	small a {
 		background: $color__background-button;
 		padding: 1px 8px 0 5px;
 		font-size: 12px;
 		color: #777;
 		font-family: $font__headings;
-		font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
+		font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
 		font-weight: normal;
 		font-style: normal;
 		font-variant: normal;
 		border: 1px solid $color__gray-sub-menu;
 		display: inline-block;
 		line-height: 1.75em;
-		box-shadow: 0 1px 0 rgba(0, 0, 0, .08);
+		box-shadow: 0 1px 0 rgba(0, 0, 0, 0.08);
+
 		&:visited,
 		&:active,
 		&:focus,
@@ -120,32 +172,39 @@ h6, .h6 {
 	font-weight: bold;
 }
 
-.a-entry-title, .a-user-title {
+.a-entry-title,
+.a-user-title {
 	font-size: 123.1%;
 	text-transform: none;
 	color: $color__minnpost-black;
 }
+
 .a-entry-title-largeimage {
 	font-size: 138.5%;
 	font-weight: bold;
 	line-height: 1.15em;
 }
-.m-category-top .a-entry-title-largeimage, .m-zone-homepage-top .a-entry-title-largeimage {
+
+.m-category-top .a-entry-title-largeimage,
+.m-zone-homepage-top .a-entry-title-largeimage {
 	font-size: $large-title-font-size;
 	line-height: 1.15em;
 	font-family: $font__headings;
-	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
+	font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
 	font-weight: normal;
 	font-style: normal;
 	font-variant: normal;
 }
+
 .m-zone-homepage-top .a-entry-title-largeimage {
 	line-height: 1em;
 }
 
-.m-entry-header-singular .a-entry-title, .m-user-profile .a-user-title, .a-standalone-title {
+.m-entry-header-singular .a-entry-title,
+.m-user-profile .a-user-title,
+.a-standalone-title {
 	font-family: $font__headings;
-	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
+	font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
 	font-weight: normal;
 	font-style: normal;
 	font-variant: normal;
@@ -157,7 +216,7 @@ h6, .h6 {
 
 .m-interest-posts .a-entry-title {
 	font-family: $font__headings;
-	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
+	font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
 	font-weight: normal;
 	font-style: normal;
 	font-variant: normal;
@@ -169,14 +228,34 @@ h6, .h6 {
 	margin-bottom: 15px;
 }
 
-.m-entry-content h1, .m-entry-content .h1, .m-post-sidebar h1, .m-post-sidebar .h1,
-.m-entry-content h2, .m-entry-content .h2, .m-post-sidebar h2, .m-post-sidebar .h2,
-.m-entry-content h3, .m-entry-content .h3, .m-post-sidebar h3, .m-post-sidebar .h3,
-.m-entry-content h4, .m-entry-content .h4, .m-post-sidebar h4, .m-post-sidebar .h4,
-.m-entry-content h5, .m-entry-content .h5, .m-post-sidebar h5, .m-post-sidebar .h5,
-.m-entry-content h6, .m-entry-content .h6, .m-post-sidebar h6, .m-post-sidebar .h6 {
+.m-entry-content h1,
+.m-entry-content .h1,
+.m-post-sidebar h1,
+.m-post-sidebar .h1,
+.m-entry-content h2,
+.m-entry-content .h2,
+.m-post-sidebar h2,
+.m-post-sidebar .h2,
+.m-entry-content h3,
+.m-entry-content .h3,
+.m-post-sidebar h3,
+.m-post-sidebar .h3,
+.m-entry-content h4,
+.m-entry-content .h4,
+.m-post-sidebar h4,
+.m-post-sidebar .h4,
+.m-entry-content h5,
+.m-entry-content .h5,
+.m-post-sidebar h5,
+.m-post-sidebar .h5,
+.m-entry-content h6,
+.m-entry-content .h6,
+.m-post-sidebar h6,
+.m-post-sidebar .h6 {
+
 	a {
 		color: $color__link;
+
 		&:visited,
 		&:active,
 		&:focus,
@@ -187,22 +266,27 @@ h6, .h6 {
 	}
 }
 
-.m-entry-content h3, .m-entry-content .h3, .m-partner-offer-content h1, .m-partner-offer-content .h1 {
+.m-entry-content h3,
+.m-entry-content .h3,
+.m-partner-offer-content h1,
+.m-partner-offer-content .h1 {
 	font-size: $large-title-font-size;
 	line-height: 1.15em;
 	font-family: $font__headings;
-	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
+	font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
 	font-weight: normal;
 	font-style: normal;
 	font-variant: normal;
 }
 
-.m-entry-content h4, .m-entry-content .h4 {
+.m-entry-content h4,
+.m-entry-content .h4 {
 	font-size: 138.5%;
 	line-height: 1.15em;
 }
 
-.m-entry-content h5, .m-entry-content .h5 {
+.m-entry-content h5,
+.m-entry-content .h5 {
 	font-size: 92.3%;
 	text-transform: uppercase;
 	line-height: 1.4em;
@@ -217,6 +301,7 @@ h2.a-membership-choose {
 	font-size: 138.5%;
 	margin-bottom: $standard-page-margin / 2;
 }
+
 h2.a-membership-reasons {
 	margin: 2em 0 1em 0;
 	font-family: $font__sans;
@@ -230,7 +315,7 @@ h3.a-finish-strong {
 	padding: 0.5em;
 	margin-bottom: 0.5em;
 	font-family: $font__headings;
-	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
+	font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
 	font-weight: normal;
 	font-style: normal;
 	font-variant: normal;

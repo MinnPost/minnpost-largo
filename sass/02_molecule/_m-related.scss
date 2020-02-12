@@ -18,7 +18,10 @@ $minimum-width: 130px;
 			.m-post-image {
 				margin: 0;
 
-				a, a:hover, a:focus, a:active {
+				a,
+				a:hover,
+				a:focus,
+				a:active {
 					text-decoration: none;
 					color: $color__base-font-color;
 				}
@@ -39,6 +42,7 @@ $minimum-width: 130px;
 
 // media queries for related content
 @media screen and (min-width: $size__ad-flexing) {
+
 	.m-related {
 		display: flex;
 		flex-wrap: wrap;

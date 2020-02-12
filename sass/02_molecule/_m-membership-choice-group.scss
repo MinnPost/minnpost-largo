@@ -1,18 +1,25 @@
 .m-membership-choice-group {
 	// all membership choice group syles
 	margin-bottom: $standard-page-margin;
+
 	#amount-item #amount {
 		font-family: $font__sans;
 		font-weight: normal;
 	}
-	select, button, input.a-button {
+
+	select,
+	button,
+	input.a-button {
 		font-family: $font__headings;
-		font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
+		font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
 		font-weight: normal;
 		font-style: normal;
 		font-variant: normal;
 	}
-	.m-form-radios, .m-form-checkboxes {
+
+	.m-form-radios,
+	.m-form-checkboxes {
+
 		label {
 			font-family: $font__sans;
 			font-weight: normal;
@@ -20,6 +27,7 @@
 			background: $color__gray-membership;
 			color: $color__black;
 		}
+
 		input:checked + label {
 			background: $_color-base-blue;
 			color: $color__white;
@@ -27,14 +35,18 @@
 	}
 	// specific to choosing amount
 	&.m-membership-choose-amount {
+
 		.a-fast-select-intro {
 			font-family: $font__sans;
 		}
+
 		#amount-item {
+
 			#amount {
 				border: 2px solid $_color-base-gray;
 				border-radius: 0;
 			}
+
 			.a-frequency-text-label {
 				margin: 0.9em 0;
 				font-family: $font__sans;
@@ -44,20 +56,28 @@
 	// specific to choosing thank you gift
 	&.m-membership-gift-selector {
 		border: 1px solid $color__border-light;
-		.m-form-radios .m-form-item, .m-form-checkboxes .m-form-item {
+
+		.m-form-radios .m-form-item,
+		.m-form-checkboxes .m-form-item {
+
 			label {
+
 				.support-tooltip {
+
 					.tooltip-text {
 						border: 1px solid $color__border-abbr;
 					}
+
 					.tooltip-text::after {
 						border-color: transparent transparent $color__border-abbr transparent;
 					}
 				}
 			}
+
 			input:checked + label {
 				border: 3px solid $color__border-button-focus;
 			}
+
 			input:disabled + label::after {
 				background-color: $color__gray-lightest;
 			}

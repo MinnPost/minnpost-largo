@@ -5,47 +5,58 @@
 	flex-wrap: wrap;
 	margin-bottom: $standard-page-margin;
 	border-bottom: 1px solid $color__gray-lightest;
+
 	&:last-of-type {
 		border-bottom: none;
 	}
+
 	section {
 		text-align: center;
 		padding: 0.5em;
 		width: 100%;
 		margin-bottom: 1.5em;
+
 		&.m-donation-actions {
 			padding-left: 1em;
 			padding-right: 1em;
 		}
 	}
+
 	.m-donation {
 		background: $color__gray-lightest;
 	}
+
 	.a-donation-amount {
 		font-size: 3em;
 		width: 4em;
 		margin-left: auto;
 		margin-right: auto;
 		line-height: normal;
-		padding: 0 0 .25em;
+		padding: 0 0 0.25em;
 	}
-	.a-donation-frequency, .a-next-transaction-date {
+
+	.a-donation-frequency,
+	.a-next-transaction-date {
 		font-size: 1.5em;
 		line-height: normal;
 	}
+
 	.a-button {
 		font-size: 1em;
 		margin-right: 0;
 		padding: 0.25em 0.5em;
 	}
+
 	.a-button-update-payment {
 		margin-bottom: 0.5em;
 		display: block;
 	}
+
 	.a-button-sentence {
 		display: flex;
 		justify-content: space-between;
 	}
+
 	.a-form-caption {
 		display: block;
 		text-align: left;
@@ -55,9 +66,11 @@
 	}
 }
 
-.a-donation-amount, .a-donation-frequency, .a-next-transaction-date {
+.a-donation-amount,
+.a-donation-frequency,
+.a-next-transaction-date {
 	font-family: $font__headings;
-	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
+	font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
 	font-weight: normal;
 	font-style: normal;
 	font-variant: normal;
@@ -65,11 +78,14 @@
 
 // media queries
 @media screen and (min-width: $medium-screen) {
+
 	.m-donation-message {
+
 		section {
 			width: auto;
+
 			&.m-donation-actions {
-				max-width: $medium-screen * 0.30;
+				max-width: $medium-screen * 0.3;
 			}
 		}
 	}

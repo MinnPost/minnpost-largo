@@ -1,7 +1,9 @@
 .m-entry-content .m-user-email-list {
 	list-style: none;
 	padding-left: 0;
+
 	> li {
+
 		@include clearfix;
 		font-family: $font__sans;
 		font-size: 92.3%;
@@ -9,11 +11,13 @@
 		border-bottom: 1px solid $color__border-input;
 		margin-bottom: 0.375em;
 		padding: 0.25em 0.5em;
+
 		ul {
 			margin: 0;
 			padding: 0;
 			float: right;
 			list-style: none;
+
 			li {
 				line-height: normal;
 				float: left;
@@ -22,6 +26,7 @@
 				margin: 0 0.5em 0 0;
 				padding: 0 0.5em 0 0;
 				position: relative;
+
 				label {
 					margin-bottom: 0;
 					line-height: normal;
@@ -29,15 +34,18 @@
 					color: $color__link;
 					text-decoration: none;
 					cursor: pointer;
+
 					&:hover {
 						color: $color__link-hover;
 						text-decoration: underline;
 					}
 				}
+
 				input:focus + label {
 					color: $color__link-hover;
 					text-decoration: underline;
 				}
+
 				&:last-child {
 					border-right: 0;
 					margin-right: 0;
@@ -45,6 +53,7 @@
 				}
 			}
 		}
+
 		&.a-user-email-primary small {
 			font-weight: bold;
 		}
@@ -52,24 +61,32 @@
 }
 
 .js .m-entry-content .m-user-email-list {
+
 	> li {
+
 		ul li {
+
 			&.a-form-confirm label {
 				text-decoration: none;
 				cursor: text;
 				color: $color__minnpost-black;
+
 				a {
 					cursor: pointer;
 				}
 			}
-			input[type="radio"], input[type="checkbox"] {
+
+			input[type="radio"],
+			input[type="checkbox"] {
 				left: 0;
-			    opacity: 0;
-			    position: absolute;
-			    top: 0;
+				opacity: 0;
+				position: absolute;
+				top: 0;
 			}
 		}
-		#a-confirm-primary-change, #a-confirm-removal {
+
+		#a-confirm-primary-change,
+		#a-confirm-removal {
 			font-weight: bold;
 		}
 	}
