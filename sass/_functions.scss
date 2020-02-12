@@ -1,30 +1,35 @@
 // Color functions
-@function palette( $palette, $tone: 'base' ) {
-    @return map-get( map-get( $palettes, $palette ), $tone );
+@function palette( $palette, $tone: "base" ) {
+
+	@return map-get( map-get( $palettes, $palette ), $tone );
 }
 
-@function brand-color( $brand-color, $tone: 'medium' ) {
-    @return map-get( map-get( $brand-colors, $brand-color), $tone );
+@function brand-color( $brand-color, $tone: "medium" ) {
+
+	@return map-get( map-get( $brand-colors, $brand-color), $tone );
 }
 
-@function utility-color( $utility-color, $tone: 'medium' ) {
-    @return map-get( map-get( $utility-colors, $utility-color), $tone );
+@function utility-color( $utility-color, $tone: "medium" ) {
+
+	@return map-get( map-get( $utility-colors, $utility-color), $tone );
 }
 
-@function neutral-color( $tone: 'medium' ) {
-    @return map-get( $neutral-colors, $tone );
+@function neutral-color( $tone: "medium" ) {
+
+	@return map-get( $neutral-colors, $tone );
 }
 
 // used this way
 //a {
-    //color: palette(purple);
-    //&:hover {
-        //color: palette(purple, light);
-    //}
+//color: palette(purple);
+//&:hover {
+//color: palette(purple, light);
+//}
 //}
 
 // rgba function
 @function rgba_color($base, $alpha) {
+
 	@return rgba($base, $alpha);
 }
 
@@ -33,10 +38,11 @@
  * Returns the ratio for specified dimensions.
  */
 @function ratio($width, $height) {
-  @return percentage( $height / $width);
+
+	@return percentage( $height / $width);
 }
 
 // used this way
 //iframe {
-	//padding-bottom: ratio(728,90);
+//padding-bottom: ratio(728,90);
 //}

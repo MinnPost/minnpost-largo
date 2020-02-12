@@ -3,15 +3,19 @@ p {
 	widows: 2;
 }
 
-figure, table, div.image {
+figure,
+table,
+div.image {
 	break-inside: avoid;
 }
 
-.acm-ad, article .acm-ad {
+.acm-ad,
+article .acm-ad {
 	display: none;
 }
 
-.m-support-cta .a-support-button, .m-support-cta-bottom {
+.m-support-cta .a-support-button,
+.m-support-cta-bottom {
 	display: none;
 }
 

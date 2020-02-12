@@ -4,48 +4,52 @@
 	white-space: nowrap;
 	overflow: hidden;
 }
+// used like this
 // @include hide-text;
 
 
-@mixin gi-nums($n, $max) {
+@mixin gi-nums( $n, $max ) {
+
 	%num-#{$n} {
-	    @content;
+		@content;
 	}
 	$i: $n;
+
 	@while $i <= $max {
-	    .gi-#{$i} {
-	        grid-column: col-start / span $i;
-	    }
-	    $i: $i+$n;
+
+		.gi-#{$i} {
+			grid-column: col-start / span $i;
+		}
+		$i: $i+$n;
 	}
 }
-
 // used like this
 // @include gi-nums(1, 12);
 
+@mixin outer-container( $local-max-width: $max-width ) {
 
-@mixin outer-container($local-max-width: $max-width) {
-  @include clearfix;
-  max-width: $local-max-width;
-  margin: {
-    left: auto;
-    right: auto;
-  }
-  flex: 0 0 100%;
+	@include clearfix;
+	max-width: $local-max-width;
+	margin: {
+		left: auto;
+		right: auto;
+	}
+	flex: 0 0 100%;
 }
-
+// used like this
 .clearfix {
+
 	@include clearfix;
 }
 
 // responsive iframes by ratio
-@mixin generateRatios($width, $height, $prefix: "ratio-") {
-  $class-name: $prefix + $width + "x" + $height;
- 
-  .#{$class-name} {
-    padding-bottom: ratio($width, $height);
-  }
-  // Output example: .ratio-16x9 {}
+@mixin generateRatios( $width, $height, $prefix: "ratio-" ) {
+	$class-name: $prefix + $width + "x" + $height;
+
+	.#{$class-name} {
+		padding-bottom: ratio($width, $height);
+	}
+	// Output example: .ratio-16x9 {}
 }
 // used like this
 //@include generateRatios(16,9); // 16x9
@@ -53,6 +57,6 @@
 
 // background colors
 @mixin rgba-background( $hexcolor, $opacity ) {
-  background-color: $hexcolor;
-  background-color: rgba( $hexcolor, $opacity ); 
+	background-color: $hexcolor;
+	background-color: rgba($hexcolor, $opacity);
 }

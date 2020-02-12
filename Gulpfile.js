@@ -30,9 +30,9 @@ const config = {
     front_end: 'assets/sass/*.scss',
     main: 'sass/**/*.scss',
     srcDir: 'assets/sass',
-    lint_src: [ 'assets/sass/**/*.scss', 'sass/**/*.scss' ],
-    lint_dest: 'assets/sass/',
+    front_end_lint_dest: 'assets/sass/',
     front_end_dest: 'assets/css',
+    main_lint_dest: './sass',
     main_dest: './'
   },
   scripts: {
@@ -125,7 +125,7 @@ function frontendsasslint() {
     .pipe(gulpStylelint({
       fix: true
     }))
-    .pipe(gulp.dest(config.styles.lint_dest));
+    .pipe(gulp.dest(config.styles.front_end_lint_dest));
 }
 
 function mainstyles() {
@@ -159,7 +159,7 @@ function mainsasslint() {
     .pipe(gulpStylelint({
       fix: true
     }))
-    .pipe(gulp.dest(config.styles.lint_dest));
+    .pipe(gulp.dest(config.styles.main_lint_dest));
 }
 
 function adminscripts() {
