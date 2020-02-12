@@ -1,8 +1,9 @@
 .a-breadcrumb {
-	font-weight: bold;
+	font-weight: 700;
 	font-size: $content-font-size;
 	line-height: $base-line-height-em;
 	font-family: $font__sans;
+
 	&.a-category-group {
 		color: $color__white;
 	}

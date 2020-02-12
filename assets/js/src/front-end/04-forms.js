@@ -1,9 +1,9 @@
 
 jQuery.fn.textNodes = function() {
-	return this.contents().filter(function() {
-		return (this.nodeType === Node.TEXT_NODE && this.nodeValue.trim() !== "");
+	return this.contents().filter( function() {
+		return ( this.nodeType === Node.TEXT_NODE && '' !== this.nodeValue.trim() );
 	});
-}
+};
 
 function getConfirmChangeMarkup( action ) {
 	var markup = '<li class="a-form-caption a-form-confirm"><label>Are you sure? <a id="a-confirm-' + action + '" href="#">Yes</a> | <a id="a-stop-' + action + '" href="#">No</a></label></li>';
@@ -11,7 +11,7 @@ function getConfirmChangeMarkup( action ) {
 }
 
 function manageEmails() {
-	var form               = $('#account-settings-form');
+	var form               = $( '#account-settings-form' );
 	var rest_root          = user_account_management_rest.site_url + user_account_management_rest.rest_namespace;
 	var full_url           = rest_root + '/' + 'update-user/';
 	var confirmChange      = '';
@@ -24,15 +24,18 @@ function manageEmails() {
 	var newEmails          = [];
 	var ajax_form_data     = '';
 	var that               = '';
+
 	// start out with no primary/removals checked
 	$( '.a-form-caption.a-make-primary-email input[type="radio"]' ).prop( 'checked', false );
 	$( '.a-form-caption.a-remove-email input[type="checkbox"]' ).prop( 'checked', false );
+
 	// if there is a list of emails (not just a single form field)
-	if ( $( '.m-user-email-list' ).length > 0 ) {
+	if ( 0 < $( '.m-user-email-list' ).length ) {
 		nextEmailCount = $( '.m-user-email-list > li' ).length;
+
 		// if a user selects a new primary, move it into that position
 		$( '.m-user-email-list' ).on( 'click', '.a-form-caption.a-make-primary-email input[type="radio"]', function( event ) {
-			
+
 			newPrimaryEmail = $( this ).val();
 			oldPrimaryEmail = $( '#email' ).val();
 			primaryId       = $( this ).prop( 'id' ).replace( 'primary_email_', '' );
@@ -44,23 +47,30 @@ function manageEmails() {
 			$( '.a-form-confirm', that ).show();
 			$( this ).parent().parent().addClass( 'a-pre-confirm' );
 			$( this ).parent().parent().removeClass( 'a-stop-confirm' );
+
 			//$( this ).parent().after( confirmChange );
 			$( this ).parent().parent().append( confirmChange );
 
 			$( '.m-user-email-list' ).on( 'click', '#a-confirm-primary-change', function( event ) {
 				event.preventDefault();
+
 				// change the user facing values
 				$( '.m-user-email-list > li' ).textNodes().first().replaceWith( newPrimaryEmail );
 				$( '#user-email-' + primaryId ).textNodes().first().replaceWith( oldPrimaryEmail );
+
 				// change the main hidden form value
 				$( '#email' ).val( newPrimaryEmail );
+
 				// submit form values.
 				form.submit();
+
 				// uncheck the radio button
 				$( '.a-form-caption.a-make-primary-email input[type="radio"]' ).prop( 'checked', false );
+
 				// change the form values to the old primary email
 				$( '#primary_email_' + primaryId ).val( oldPrimaryEmail );
 				$( '#remove_email_' + primaryId ).val( oldPrimaryEmail );
+
 				// remove the confirm message
 				$( '.a-form-confirm', that.parent() ).remove();
 				$( '.a-pre-confirm', that.parent() ).show();
@@ -81,6 +91,7 @@ function manageEmails() {
 					consolidatedEmails.push( $( this ).contents().get( 0 ).nodeValue );
 				}
 			});
+
 			// get or don't get confirmation from user for removal
 			that = $( this ).parent().parent();
 			$( '.a-pre-confirm', that ).hide();
@@ -88,6 +99,7 @@ function manageEmails() {
 			$( this ).parent().parent().addClass( 'a-pre-confirm' );
 			$( this ).parent().parent().removeClass( 'a-stop-confirm' );
 			$( this ).parent().parent().append( confirmChange );
+
 			// if confirmed, remove the email and submit the form
 			$( '.m-user-email-list' ).on( 'click', '#a-confirm-removal', function( event ) {
 				event.preventDefault();
@@ -111,11 +123,11 @@ function manageEmails() {
 	// if a user wants to add an email, give them a properly numbered field
 	$( '.m-form-email' ).on( 'click', '.a-form-caption.a-add-email', function( event ) {
 		event.preventDefault();
-		$('.a-form-caption.a-add-email').before( '<div class="a-input-with-button a-button-sentence"><input type="email" name="_consolidated_emails_array[]" id="_consolidated_emails_array[]" value=""><button type="submit" name="a-add-email-' + nextEmailCount + '" id="a-add-email-' + nextEmailCount + '" class="a-button a-button-add-user-email">Add</button></div>' );
+		$( '.a-form-caption.a-add-email' ).before( '<div class="a-input-with-button a-button-sentence"><input type="email" name="_consolidated_emails_array[]" id="_consolidated_emails_array[]" value=""><button type="submit" name="a-add-email-' + nextEmailCount + '" id="a-add-email-' + nextEmailCount + '" class="a-button a-button-add-user-email">Add</button></div>' );
 		nextEmailCount++;
 	});
 
-	$( 'input[type=submit]' ).click( function ( e ) {
+	$( 'input[type=submit]' ).click( function( e ) {
 		var button = $( this );
 		var button_form = button.closest( 'form' );
 		button_form.data( 'submitting_button', button.val() );
@@ -124,6 +136,7 @@ function manageEmails() {
 	$( '.m-entry-content' ).on( 'submit', '#account-settings-form', function( event ) {
 		var form = $( this );
 		var submitting_button = form.data( 'submitting_button' ) || '';
+
 		// if there is no submitting button, pass it by Ajax
 		if ( '' === submitting_button || 'Save Changes' !== submitting_button ) {
 			event.preventDefault();
@@ -132,14 +145,14 @@ function manageEmails() {
 			$.ajax({
 				url: full_url,
 				type: 'post',
-				beforeSend: function ( xhr ) {
+				beforeSend: function( xhr ) {
 			        xhr.setRequestHeader( 'X-WP-Nonce', user_account_management_rest.nonce );
 			    },
 				dataType: 'json',
 				data: ajax_form_data
 			}).done( function( data ) {
 				newEmails = $( 'input[name="_consolidated_emails_array[]"]' ).map( function() {
-					return $(this).val();
+					return $( this ).val();
 				}).get();
 				$.each( newEmails, function( index, value ) {
 					nextEmailCount = nextEmailCount + index;
@@ -147,8 +160,9 @@ function manageEmails() {
 					$( '#_consolidated_emails' ).val( $( '#_consolidated_emails' ).val() + ',' + value );
 				});
 				$( '.m-form-change-email .a-input-with-button' ).remove();
-				if ( $( '.m-user-email-list' ).length === 0 ) {
+				if ( 0 === $( '.m-user-email-list' ).length ) {
 					if ( $( 'input[name="_consolidated_emails_array[]"]' ) !== $( 'input[name="email"]' ) ) {
+
 						// it would be nice to only load the form, but then click events still don't work
 						location.reload();
 					}
@@ -158,9 +172,9 @@ function manageEmails() {
 	});
 }
 
-$( document ).ready( function ( $ ) {
-	"use strict";
-	if ( $('.m-form-email').length > 0 ) {
+$( document ).ready( function( $ ) {
+	'use strict';
+	if ( 0 < $( '.m-form-email' ).length ) {
 		manageEmails();
 	}
 });

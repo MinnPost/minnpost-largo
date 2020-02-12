@@ -1,13 +1,17 @@
 .m-post-image {
 	display: block;
+
 	&.m-post-image-large {
 		font-size: $content-font-size;
 	}
 }
-.m-archive-top .m-post-image, .m-archive-excerpt .m-post-image {
+
+.m-archive-top .m-post-image,
+.m-archive-excerpt .m-post-image {
 	margin-bottom: $standard-page-margin;
 	margin-right: $standard-page-margin;
 }
+
 .m-archive-top.m-archive-has-1-post .m-post-image {
 	float: none;
 	margin: 0;
@@ -16,12 +20,15 @@
 
 // media queries for post images
 @media screen and (min-width: 350px) {
-	.m-archive-top .m-post-image, .m-archive-excerpt .m-post-image {
+
+	.m-archive-top .m-post-image,
+	.m-archive-excerpt .m-post-image {
 		float: left;
 	}
 }
 
 @media screen and (min-width: $medium-screen) {
+
 	.m-zone-homepage-top.m-archive-top.m-archive-has-1-post .m-post-thumbnail-feature-large,
 	.m-zone-homepage-top.m-archive-top.m-archive-has-1-post .m-post-thumbnail-feature-medium {
 		float: left;

@@ -30,9 +30,9 @@ const config = {
     front_end: 'assets/sass/*.scss',
     main: 'sass/**/*.scss',
     srcDir: 'assets/sass',
-    lint_src: [ 'assets/sass/**/*.scss', 'sass/**/*.scss' ],
-    lint_dest: 'assets/sass/',
+    front_end_lint_dest: 'assets/sass/',
     front_end_dest: 'assets/css',
+    main_lint_dest: './sass',
     main_dest: './'
   },
   scripts: {
@@ -125,7 +125,7 @@ function frontendsasslint() {
     .pipe(gulpStylelint({
       fix: true
     }))
-    .pipe(gulp.dest(config.styles.lint_dest));
+    .pipe(gulp.dest(config.styles.front_end_lint_dest));
 }
 
 function mainstyles() {
@@ -159,7 +159,7 @@ function mainsasslint() {
     .pipe(gulpStylelint({
       fix: true
     }))
-    .pipe(gulp.dest(config.styles.lint_dest));
+    .pipe(gulp.dest(config.styles.main_lint_dest));
 }
 
 function adminscripts() {
@@ -206,7 +206,7 @@ function mainscripts() {
 
 function adminscriptlint() {
   return gulp
-    .src(config.scripts.admin)
+    .src(config.scripts.admin_src)
     .pipe(eslint({fix:true}))
     .pipe(eslint.format())
     .pipe(gulp.dest(config.scripts.admin_lint))
@@ -299,7 +299,7 @@ function browserSyncReload(done) {
 // Watch directories, and run specific tasks on file changes
 function watch() {
   gulp.watch(config.styles.srcDir, styles);
-  gulp.watch(config.scripts.admin, adminscripts);
+  gulp.watch(config.scripts.admin_src, adminscripts);
   
   // Reload browsersync when PHP files change, if active
   if (config.browserSync.active) {
@@ -308,17 +308,21 @@ function watch() {
 }
 
 // define complex gulp tasks
-const lint = gulp.series(gulp.parallel(frontendsasslint, mainsasslint, adminscriptlint, mainscriptlint));
-const styles  = gulp.series(gulp.parallel(frontendstyles, mainstyles));
-const scripts = gulp.series(gulp.parallel(mainscripts, adminscripts), uglifyscripts);
-const build   = gulp.series(gulp.parallel(styles, scripts, images, svgminify, translate));
+const lint       = gulp.series(gulp.parallel(frontendsasslint, mainsasslint, adminscriptlint, mainscriptlint));
+const stylelint  = gulp.series(gulp.parallel(frontendsasslint, mainsasslint));
+const scriptlint = gulp.series(gulp.parallel(adminscriptlint, mainscriptlint));
+const styles     = gulp.series(gulp.parallel(frontendstyles, mainstyles));
+const scripts    = gulp.series(gulp.parallel(mainscripts, adminscripts), uglifyscripts);
+const build      = gulp.series(gulp.parallel(styles, scripts, images, svgminify, translate));
 
 // export tasks
-exports.lint      = lint;
-exports.styles    = styles;
-exports.scripts   = scripts;
-exports.images    = images;
-exports.svgminify = svgminify;
-exports.translate = translate;
-exports.watch     = watch;
-exports.default   = build;
+exports.lint       = lint;
+exports.stylelint  = stylelint;
+exports.styles     = styles;
+exports.scriptlint = scriptlint;
+exports.scripts    = scripts;
+exports.images     = images;
+exports.svgminify  = svgminify;
+exports.translate  = translate;
+exports.watch      = watch;
+exports.default    = build;

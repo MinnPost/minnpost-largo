@@ -1,22 +1,29 @@
 .o-content-sidebar .m-featured-columns {
 	background: $color__minnpost-white;
+
 	li {
+
 		@include clearfix;
 		margin-bottom: 20px;
+
 		a {
 			color: $color__minnpost-black;
 		}
+
 		a h3 {
 			color: $color__link;
 		}
+
 		figure {
 			float: right;
 			margin: 0 0 0 10px;
+
 			img {
 				margin: 0;
 				float: none;
 			}
 		}
+
 		p {
 			color: $color__minnpost-black;
 		}

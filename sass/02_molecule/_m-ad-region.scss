@@ -1,9 +1,12 @@
 .m-ad-region {
+
 	&.m-ad-region-leaderboard {
 		text-align: center;
 		background: $color__gray-lightest;
 	}
+
 	.o-wrapper {
+
 		@include clearfix;
 		margin: 0;
 		width: inherit;
@@ -12,10 +15,12 @@
 }
 
 .m-ad-region:empty {
-   display: none;
+	display: none;
 }
 
-#secondary-first, #secondary-second {
+#secondary-first,
+#secondary-second {
+
 	.m-ad-region-sidebar {
 		display: flex;
 		justify-content: center;
@@ -26,7 +31,9 @@
 // media queries for ad regions
 
 @media screen and (min-width: $size__ad-flexing) {
+
 	#secondary-first {
+
 		.m-ad-region-sidebar {
 			display: block;
 			width: auto;
@@ -35,7 +42,9 @@
 }
 
 @media screen and (min-width: $ad-top-width) {
+
 	.m-ad-region {
+
 		&.m-ad-region-leaderboard {
 			padding: 10px 0;
 		}
@@ -43,11 +52,15 @@
 }
 
 @media screen and (min-width: $max-width-page) {
+
 	.m-ad-region {
+
 		.o-wrapper {
+
 			@include outer-container($max-width-page);
 		}
 	}
+
 	.m-ad-region-sidebar {
 		display: block;
 		width: auto;

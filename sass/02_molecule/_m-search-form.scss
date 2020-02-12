@@ -1,13 +1,16 @@
 .m-search-form {
-    &.m-search-page-form {
-        margin: $base-line-height-em / 2 0;
-        fieldset {
-            margin: 0;
-            padding: 0;
-            border: 0;
-            input[type="search"] {
-                width: 100%;
-            }
-        }
-    }
+
+	&.m-search-page-form {
+		margin: $base-line-height-em / 2 0;
+
+		fieldset {
+			margin: 0;
+			padding: 0;
+			border: 0;
+
+			input[type="search"] {
+				width: 100%;
+			}
+		}
+	}
 }

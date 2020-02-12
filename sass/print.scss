@@ -2,94 +2,125 @@ p {
 	orphans: 2;
 	widows: 2;
 }
-figure, table, div.image {
+
+figure,
+table,
+div.image {
 	break-inside: avoid;
 }
 
-.acm-ad, article .acm-ad {
+.acm-ad,
+article .acm-ad {
 	display: none;
 }
 
-.m-support-cta .a-support-button, .m-support-cta-bottom {
+.m-support-cta .a-support-button,
+.m-support-cta-bottom {
 	display: none;
 }
 
 header {
+
 	.a-site-branding {
 		float: none;
 		height: 51px;
+
 		.a-logo {
 			height: 100%;
 		}
 	}
+
 	.m-support-cta.m-support-cta-top .a-support-button {
 		display: none;
 	}
+
 	nav {
 		display: none;
+
 		&#navigation-ext {
 			display: none;
 		}
 	}
+
 	#navigation-featured-account-access {
 		display: none;
 	}
+
 	form {
 		display: none;
 	}
 }
+
 #content {
 	display: block;
+
 	article {
+
 		.m-form-newsletter-shortcode {
 			display: none;
 		}
 	}
+
 	#comments {
+
 		#respond {
 			display: none;
 		}
 	}
+
 	.m-entry-share {
 		display: none;
 	}
+
 	.m-form-instory {
 		display: none;
 	}
+
 	.m-related {
 		display: none;
 	}
+
 	.a-related-tags {
 		display: none;
 	}
+
 	.m-author-info {
 		page-break-after: always;
 	}
 }
+
 .o-site-sidebar {
+
 	.m-minnpost-spills-widget {
 		display: none;
 	}
+
 	.m-widget-most-commented {
 		display: none;
 	}
+
 	.m-widget-rpwe-widget {
 		display: none;
 	}
 }
+
 footer {
+
 	nav {
 		display: none;
 	}
+
 	.o-footer .o-footer-hat {
 		display: block;
 	}
+
 	.powered-by-wpcom {
 		display: none;
 	}
 }
 
 // don't print popups
-.pum {
+.pum,
+.wp-message-inserter-message-region-popup {
 	display: none !important;
 }

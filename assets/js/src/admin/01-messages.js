@@ -18,7 +18,7 @@ function showHideConditionalValue( value, parent = '' ) {
 
 function setupMessageConditional() {
 	var conditional_selector = '.cmb2-message-conditional select';
-	if ( $( conditional_selector ).length > 0 ) {
+	if ( 0 < $( conditional_selector ).length ) {
 		showHideConditionalValue( $( conditional_selector ).val() );
 		$( document ).on( 'change', conditional_selector, function( event ) {
 			showHideConditionalValue( $( this ).val(), $( event.target ).closest( '.cmb-field-list' ) );
@@ -26,6 +26,6 @@ function setupMessageConditional() {
 	}
 }
 
-$( document ).ready( function ( e ) {
+$( document ).ready( function( e ) {
 	setupMessageConditional();
 });

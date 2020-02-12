@@ -1,16 +1,22 @@
 .o-wrapper-content-full .m-layout-primary {
+
 	@include outer-container($max-width-page);
 }
-body.single-post .m-layout-primary, body.page .m-layout-primary {
+
+body.single-post .m-layout-primary,
+body.page .m-layout-primary {
 	flex: 0 0 100%;
 }
 
 main {
 	position: relative;
+
 	@include clearfix;
 	max-width: 100%;
 }
-body.single-post main, body.page main {
+
+body.single-post main,
+body.page main {
 	flex: 0 0 100%;
 }
 
@@ -22,6 +28,7 @@ body.single-post main, body.page main {
 	.m-form-membership {
 		width: 100%;
 	}
+
 	.a-finish-strong {
 		width: 100%;
 	}
@@ -30,12 +37,14 @@ body.single-post main, body.page main {
 // media queries for layouts
 
 @media screen and (min-width: $more-than-logo-screen) {
+
 	.m-layout-primary {
 		display: flex;
 	}
 }
 
 @media screen and (min-width: $max-width-page) {
+
 	.m-layout-primary {
 		max-width: $medium-screen;
 	}

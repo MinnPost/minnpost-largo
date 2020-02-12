@@ -16,7 +16,7 @@ function trackShowComments( always, id, click_value ) {
 		category_prefix = 'Always ';
 	}
 	if ( '' !== position ) {
-		position = position.charAt( 0 ).toUpperCase() + position.slice( 1 ); 
+		position = position.charAt( 0 ).toUpperCase() + position.slice( 1 );
 		category_suffix = ' - ' + position;
 	}
 	mp_analytics_tracking_event( 'event', category_prefix + 'Show Comments' + category_suffix, action, location.pathname );
@@ -40,20 +40,20 @@ $( document ).on( 'click', '.a-checkbox-always-show-comments', function() {
 	trackShowComments( true, that.attr( 'id' ), that.val() );
 
 	// we already have ajaxurl from the theme
-	$.ajax( {
+	$.ajax({
 		type: 'POST',
 		url: ajaxurl,
-        data: {
+		data: {
         	'action': 'minnpost_largo_load_comments_set_user_meta',
         	'value': that.val()
-        },
-        success: function( response ) {
+		},
+		success: function( response ) {
         	$( '.a-always-show-comments-result', that.parent() ).html( response.data.message );
         	if ( true === response.data.show ) {
 				$( '.a-checkbox-always-show-comments' ).val( 0 );
 			} else {
 				$( '.a-checkbox-always-show-comments' ).val( 1 );
 			}
-        }
-    } );
-} );
+		}
+	});
+});

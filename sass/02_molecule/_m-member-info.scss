@@ -3,28 +3,37 @@
 	padding: 1em;
 	position: relative;
 	margin: 0 0 1.5em 0;
+
 	&.m-member-info-platinum {
 		background: $color__minnpost-platinum;
 	}
+
 	&.m-member-info-gold {
 		background: $color__minnpost-gold;
 	}
+
 	&.m-member-info-silver {
 		background: $color__minnpost-silver;
 	}
+
 	&.m-member-info-bronze {
 		background: $color__minnpost-bronze;
 	}
-	dt.a-member-level, dd.a-member-level {
+
+	dt.a-member-level,
+	dd.a-member-level {
 		display: inline-block;
 	}
+
 	dt.a-member-level {
 		margin: 0 0 0.2em 0;
 		font-weight: bold;
-		&:after {
-			content: ':';
+
+		&::after {
+			content: ":";
 		}
 	}
+
 	dd {
 		margin: 0 0 1em 0;
 	}

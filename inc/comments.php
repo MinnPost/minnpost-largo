@@ -470,15 +470,17 @@ if ( ! function_exists( 'minnpost_largo_load_comments_switch' ) ) :
 			return;
 		}
 		$always_load_comments = filter_var( get_user_meta( $user_id, 'always_load_comments', true ), FILTER_VALIDATE_BOOLEAN );
-		?>
-		<div class="m-user-always-show-comments">
-			<label class="always-show-comments" for="always-show-comments-<?php echo $position; ?>"><?php echo esc_html__( 'Always show comments when you are logged in', 'minnpost-largo' ); ?></label>
-			<label class="a-switch a-switch-always-show-comments a-switch-always-show-comments-<?php echo $position; ?>">
-				<input type="checkbox" class="a-checkbox-always-show-comments" id="always-show-comments-<?php echo $position; ?>"<?php echo ( true === $always_load_comments ) ? ' value="0" checked' : ' value="1"'; ?>>
-				<span class="slider round"></span>
-			</label>
-		</div>
-		<?php
+		if ( comments_open() ) :
+			?>
+			<div class="m-user-always-show-comments">
+				<label class="always-show-comments" for="always-show-comments-<?php echo $position; ?>"><?php echo esc_html__( 'Always show comments when you are logged in', 'minnpost-largo' ); ?></label>
+				<label class="a-switch a-switch-always-show-comments a-switch-always-show-comments-<?php echo $position; ?>">
+					<input type="checkbox" class="a-checkbox-always-show-comments" id="always-show-comments-<?php echo $position; ?>"<?php echo ( true === $always_load_comments ) ? ' value="0" checked' : ' value="1"'; ?>>
+					<span class="slider round"></span>
+				</label>
+			</div>
+			<?php
+		endif;
 	}
 endif;
 

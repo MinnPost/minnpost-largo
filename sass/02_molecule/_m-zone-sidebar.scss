@@ -1,4 +1,5 @@
 .m-zone-sidebar {
+
 	h3.a-zone-title {
 		font-size: 123.1%;
 		text-transform: uppercase;
@@ -6,21 +7,26 @@
 		font-weight: normal;
 		padding: $standard-page-margin;
 		margin: 0;
+
 		a {
 			color: $color__minnpost-black;
 		}
 	}
+
 	.m-zone-contents {
 		padding: 0 $standard-page-margin $standard-page-margin / 2;
+
 		article {
 			padding-bottom: $standard-page-margin;
 			border-bottom: 1px solid $color__gray-lightest;
 			margin-bottom: $standard-page-margin;
+
 			&:last-child {
 				padding-bottom: 0;
 				border-bottom: none;
 				margin-bottom: 0;
 			}
+
 			.m-post-thumbnail {
 				float: right;
 				margin-left: 0.5em;
@@ -31,6 +37,7 @@
 
 // media queries for sidebar zones
 @media screen and (min-width: $max-width-page) {
+
 	.m-zone-contents {
 		font-size: 84.6153846153846%;
 		line-height: 1;

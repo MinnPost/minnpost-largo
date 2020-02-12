@@ -1,7 +1,7 @@
 function trackShare( text, position ) {
 
 	// if a not logged in user tries to email, don't count that as a share
-	if ( ! jQuery( 'body ').hasClass( 'logged-in') && 'Email' === text ) {
+	if ( ! jQuery( 'body' ).hasClass( 'logged-in' ) && 'Email' === text ) {
 		return;
 	}
 
@@ -9,7 +9,7 @@ function trackShare( text, position ) {
 	mp_analytics_tracking_event( 'event', 'Share - ' + position, text, location.pathname );
 	if ( 'undefined' !== typeof ga ) {
 		if ( 'Facebook' === text || 'Twitter' === text ) {
-			if ( text == 'Facebook' ) {
+			if ( 'Facebook' == text ) {
 				ga( 'send', 'social', text, 'Share', location.pathname );
 			} else {
 				ga( 'send', 'social', text, 'Tweet', location.pathname );

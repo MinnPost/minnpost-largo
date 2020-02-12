@@ -7,11 +7,14 @@
 }
 
 @media screen and (min-width: $more-than-logo-screen) {
+
 	.m-archive-has-sidebar {
 		flex-direction: row;
+
 		.m-archive-excerpt {
 			width: $size__main-smaller-screen;
 		}
+
 		.o-content-sidebar {
 			width: $size__main-smaller-screen;
 			padding-left: $archive-content-sidebar-padding;
@@ -20,10 +23,13 @@
 }
 
 @media screen and (min-width: $medium-screen) {
+
 	.m-archive-has-sidebar {
+
 		.m-archive-excerpt {
 			width: $size__main-small-screen;
 		}
+
 		.o-content-sidebar {
 			width: $size__content-sidebar-medium-screen;
 		}
@@ -31,24 +37,30 @@
 }
 
 @media screen and (min-width: $medium-margins-too-small) {
+
 	.o-archive-listing {
+
 		&.m-layout-primary {
 			display: block;
 			width: auto;
 			margin-right: $archive-content-sidebar-padding;
 		}
 	}
+
 	.archive .o-site-sidebar {
-	    width: $size__site-sidebar;
-	    min-width: $size__site-sidebar;
-	    margin-left: auto;
+		width: $size__site-sidebar;
+		min-width: $size__site-sidebar;
+		margin-left: auto;
 	}
+
 	.m-archive-has-sidebar {
 		display: flex;
 		flex-direction: column;
+
 		.m-archive-excerpt {
 			width: auto;
 		}
+
 		.o-content-sidebar {
 			width: auto;
 		}
@@ -56,11 +68,14 @@
 }
 
 @media screen and (min-width: $nav-breaks) {
+
 	.m-archive-has-sidebar {
 		flex-direction: row;
+
 		.m-archive-excerpt {
 			width: $size__main-small-screen;
 		}
+
 		.o-content-sidebar {
 			width: $size__content-sidebar-medium-screen;
 			padding-left: $archive-content-sidebar-padding;
@@ -69,7 +84,9 @@
 }
 
 @media screen and (min-width: $max-width-page) {
+
 	.o-archive-listing {
+
 		&.m-layout-primary {
 			max-width: $medium-screen;
 		}

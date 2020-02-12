@@ -1,42 +1,53 @@
 .m-main-navigation .search-form {
+
 	input[type="search"] {
 		-webkit-appearance: none;
 		border-radius: 0;
 		border: 0;
 		text-indent: $form-text-indent;
 	}
+
 	::-webkit-search-decoration {
-		display:none;
+		display: none;
 	}
 }
 
 .m-form-newsletter-shortcode {
+
 	fieldset {
 		margin: 0;
 		padding: 0;
 		border: 0;
 	}
+
 	h2.a-form-title {
 		color: $color__minnpost-black;
 		text-align: center;
 		margin-bottom: 0.75em;
 	}
+
 	&.m-form-newsletter-shortcode-default {
+
 		fieldset {
 			display: flex;
 			flex-flow: wrap;
 			max-width: 360px;
 			justify-content: space-between;
+
 			div.m-form-item {
+
 				label {
 					display: block;
 				}
+
 				&.m-form-item-email {
 					width: 100%;
+
 					input {
 						width: 100%;
 					}
 				}
+
 				&.m-form-item-interests {
 					width: 100%;
 					display: flex;
@@ -46,18 +57,21 @@
 			}
 		}
 	}
+
 	&.m-form-newsletter-shortcode-email {
 		padding: 0;
 		font-size: inherit;
 		margin: 0;
 		border: 0;
+
 		.m-form-message {
 			margin-bottom: 0;
 			border: 0;
 			padding: 0.5em;
 		}
+
 		button {
-			padding: 0.15em 0.5em 0.20em 0.5em;
+			padding: 0.15em 0.5em 0.2em 0.5em;
 			font-size: 1em;
 			line-height: normal;
 			margin-left: 0.5em;
@@ -69,14 +83,24 @@
 .o-content-sidebar .m-widget.m-form-minnpost-form-processor-mailchimp {
 	padding: 0;
 }
+
 .m-form-instory.m-form-minnpost-form-processor-mailchimp {
 	border: 1px solid $color__border-light;
+
 	&.legacy {
-	    margin-bottom: 1em;
-	    background: $color__background-pre;
-	    figure {
-	    	margin: 0;
-	    }
+		margin-bottom: 1em;
+		background: $color__background-pre;
+
+		figure {
+			margin: 0;
+		}
+	}
+}
+
+.m-form-widget.m-form-minnpost-form-processor-mailchimp {
+
+	.a-shortcode-image {
+		margin: 0;
 	}
 }
 
@@ -95,6 +119,7 @@
 }
 
 .m-form-standalone {
+
 	fieldset {
 		border: 0;
 		margin: 0;
@@ -110,11 +135,13 @@
 
 // for theme sizes
 @media screen and (min-width: $medium-screen ) {
+
 	.m-form-instory.m-form-minnpost-form-processor-mailchimp {
+
 		&.legacy {
-		    width: 50%;
-		    float: right;
-		    margin-left: 1em;
+			width: 50%;
+			float: right;
+			margin-left: 1em;
 		}
-	}	
+	}
 }

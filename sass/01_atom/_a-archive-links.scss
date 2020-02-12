@@ -10,23 +10,30 @@
 	padding: 4px;
 	margin-bottom: 10px;
 	margin-left: 1px;
+
 	li {
 		list-style: none;
+
 		&.a-rss-link a {
 			background: url(assets/img/icons/rss.png) no-repeat;
 		}
+
 		&.a-email-link a {
 			background: url(assets/img/icons/email.png) no-repeat;
 			background-size: 13px 13px;
 		}
+
 		&.a-twitter-link a {
 			background: url(assets/img/icons/twitter.png) no-repeat;
 			background-size: 13px 13px;
 		}
-		&.a-bio-link a, &.a-internal-link a {
+
+		&.a-bio-link a,
+		&.a-internal-link a {
 			background: url(assets/img/icons/internal.png) no-repeat;
 			background-size: 13px 13px;
 		}
+
 		a {
 			padding-left: 16px;
 			padding-top: 2px;
@@ -35,6 +42,7 @@
 			line-height: 16px;
 		}
 	}
+
 	&:first-child {
 		margin-top: 16px;
 		padding: 6px;

@@ -1,5 +1,6 @@
 .m-archive-header {
 	font-family: $font__sans;
+
 	.a-archive-title {
 		font-family: $font__headings;
 		font-size: 338.5%;
@@ -8,14 +9,17 @@
 		font-style: normal;
 		font-variant: normal;
 	}
+
 	.m-archive-meta {
 		font-size: 76.9%;
 		text-transform: uppercase;
 		font-weight: bold;
 		line-height: 1.3em;
-		margin: .25em 0;
+		margin: 0.25em 0;
 	}
-	&.m-archive-header-spill, &.m-archive-header-time {
+
+	&.m-archive-header-spill,
+	&.m-archive-header-time {
 		margin-bottom: $standard-page-margin;
 	}
 }
