@@ -41,6 +41,7 @@
 				font-weight: normal !important;
 				line-height: inherit !important;
 			}
+			.mcnPreviewText{display: none !important;}
 			</style>
 
 			<!--[if (gte mso 9)|(IE)]>
@@ -52,13 +53,6 @@
 		</head>
 		<body style="background: #ffffff; Margin: 0; min-width: 100%; padding: 0" bgcolor="#ffffff">
 
-		<?php
-		$preview_text = get_post_meta( get_the_ID(), '_mp_newsletter_preview_text', true );
-		if ( '' !== $preview_text ) {
-			?>
-		<!-- limit to 50 characters; only display if there is a value -->
-		<span style="display: none !important; font-size: 0; color: #fff;"> <!-- gmail only takes display none if it has !important; outlook still doesn't care -->
-			<?php echo $preview_text; ?>
-		</span>
-			<?php
-		}
+			<!--*|IF:MC_PREVIEW_TEXT|*--> 
+			<!--[if !gte mso 9]><!----><span class="mcnPreviewText" style="display:none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;">*|MC_PREVIEW_TEXT|*</span><!--<![endif]--> 
+			<!--*|END:IF|*-->
