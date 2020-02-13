@@ -76,8 +76,8 @@ if ( function_exists( 'create_newsletter' ) ) :
 			array(
 				'name' => __( 'Preview Text', 'minnpost-largo' ),
 				'id'   => $prefix . 'preview_text',
-				'type' => 'text',
-				'desc' => __( 'This is visible before users open the email in some email clients. If there\'s no value, we won\'t use it. Limited to 50 characters.', 'minnpost-largo' ),
+				'type' => 'textarea_small',
+				'desc' => __( 'This is visible before users open the email in some email clients. If there\'s no value, we won\'t use it. Email clients will limit how many characters they show.', 'minnpost-largo' ),
 			)
 		);
 		$newsletter_setup->add_field(
