@@ -1,5 +1,6 @@
 .o-site-message-container {
 
+	// site header and homepage middle
 	&.wp-message-inserter-message-region-homepage_middle,
 	&.wp-message-inserter-message-header {
 		header {
@@ -26,8 +27,14 @@
 		}
 	}
 
+	// homepage middle 
 	&.wp-message-inserter-message-region-homepage_middle {
 		width: 100%;
+		order: 1;
+		padding-top: $standard-page-margin;
+		border-top: 1px solid $color__gray-lightest;
+		margin-bottom: $standard-page-margin;
+		border-bottom: 1px solid $color__gray-lightest;
 
 		.m-wp-insert-message-item {
 			background: $_color-base-blue;
@@ -35,14 +42,6 @@
 			margin-bottom: $standard-page-margin;
 			padding: 2em 0;
 		}
-	}
-
-	&.wp-message-inserter-message-region-homepage_middle {
-		order: 1;
-		padding-top: $standard-page-margin;
-		border-top: 1px solid $color__gray-lightest;
-		margin-bottom: $standard-page-margin;
-		border-bottom: 1px solid $color__gray-lightest;
 
 		.m-form-frontpage.m-form-minnpost-form-processor-mailchimp {
 
