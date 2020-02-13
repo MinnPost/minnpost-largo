@@ -1,5 +1,6 @@
 .o-site-message-container {
 
+	// site header and homepage middle
 	&.wp-message-inserter-message-region-homepage_middle,
 	&.wp-message-inserter-message-header {
 		header {
@@ -26,8 +27,14 @@
 		}
 	}
 
+	// homepage middle 
 	&.wp-message-inserter-message-region-homepage_middle {
 		width: 100%;
+		order: 1;
+		padding-top: $standard-page-margin;
+		border-top: 1px solid $color__gray-lightest;
+		margin-bottom: $standard-page-margin;
+		border-bottom: 1px solid $color__gray-lightest;
 
 		.m-wp-insert-message-item {
 			background: $_color-base-blue;
@@ -35,72 +42,117 @@
 			margin-bottom: $standard-page-margin;
 			padding: 2em 0;
 		}
-	}
 
-	&.wp-message-inserter-message-region-homepage_middle {
-		order: 1;
-		padding-top: $standard-page-margin;
-		border-top: 1px solid $color__gray-lightest;
-		margin-bottom: $standard-page-margin;
-		border-bottom: 1px solid $color__gray-lightest;
-
+		// mailchimp form inside a homepage middle
 		.m-form-frontpage.m-form-minnpost-form-processor-mailchimp {
 
-				fieldset {
-					border: 0;
-					margin: 0;
-					padding: 2.5em 0 1em 0;
+			fieldset {
+				border: 0;
+				margin: 0;
+				padding: 2.5em 0 1em 0;
+				width: 100%;
+				max-width: 100%;
+
+				input {
+					color: $color__dark-gray;
 					width: 100%;
 					max-width: 100%;
-
-					input {
-						color: $color__dark-gray;
-						width: 100%;
-						max-width: 100%;
-					}
-
-					label {
-						color: $color__white;
-
-						a,
-						a:visited {
-							color: $color__border-light;
-						}
-					}
 				}
 
-				.m-form-container {
-					padding: 0 1.5em;
-				}
-			}
-
-			.m-form-frontpage.m-form-minnpost-form-processor-mailchimp-submitted {
-
-				.m-form-message {
-					margin: 0;
-					padding: 1em;
-					width: 100%;
-					max-width: 100%;
+				label {
 					color: $color__white;
-					font-size: $content-font-size;
-					line-height: $base-line-height;
-				}
 
-				fieldset {
-					display: none;
+					a,
+					a:visited {
+						color: $color__border-light;
+					}
 				}
 			}
+
+			.m-form-container {
+				padding: 0 1.5em;
+			}
+		}
+
+		// after the form has been submitted
+		.m-form-frontpage.m-form-minnpost-form-processor-mailchimp-submitted {
+
+			.m-form-message {
+				margin: 0;
+				padding: 1em;
+				width: 100%;
+				max-width: 100%;
+				color: $color__white;
+				font-size: $content-font-size;
+				line-height: $base-line-height;
+			}
+
+			fieldset {
+				display: none;
+			}
+		}
+	}
+
+	// article bottom
+	&.wp-message-inserter-message-region-article_bottom {
+		border: 1px solid $color__border-light;
+
+		.m-wp-insert-message-item {
+			padding: 1.25em; // this basically matches the sum of the legacy padding
+
+			// reset styles for legacy
+			.m-form-container,
+			.m-form-instory {
+				padding: 0;
+
+				h3,
+				p {
+					margin: 0;
+					padding: 0;
+				}
+			}
+
+			> h3,
+			> p {
+				margin: 0;
+				padding: 0;
+			}
+
+			> h3 {
+			    font-size: 138.5%;
+			    line-height: 1.15em;
+			    text-transform: uppercase;
+				font-family: $font__headings;
+				font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
+				font-weight: normal;
+				font-style: normal;
+				font-variant: normal;
+			}
+
+			fieldset {
+				margin: 0;
+				padding: 1em 0;
+			}
+		}
+
+		// mailchimp form inside article bottom
+		.m-form-instory.m-form-minnpost-form-processor-mailchimp {
+			border: 0;
+		}
 	}
 }
 
+// media queries for site message container
 @media screen and ( min-width: $more-than-logo-screen ) {
 
 	.o-site-message-container {
 
+		// homepage middle
 		&.wp-message-inserter-message-region-homepage_middle {
 
 			.m-wp-insert-message-item {
 
+				// mailchimp form inside homepage middle
 				.m-form-frontpage.m-form-minnpost-form-processor-mailchimp {
 
 					fieldset {
@@ -108,6 +160,7 @@
 					}
 				}
 
+				// after submitting
 				.m-form-frontpage.m-form-minnpost-form-processor-mailchimp-submitted {
 
 					.m-form-message {
@@ -119,15 +172,16 @@
 	}
 }
 
-// media queries for content message boxes
 @media screen and ( min-width: $max-width-medium ) {
 
 	.o-site-message-container {
 
+		// homepage middle
 		&.wp-message-inserter-message-region-homepage_middle {
 
 			.m-wp-insert-message-item {
 
+				// mailchimp form inside homepage middle
 				.m-form-frontpage.m-form-minnpost-form-processor-mailchimp {
 
 					.m-form-container {
@@ -141,6 +195,7 @@
 					}
 				}
 
+				// after submitting
 				.m-form-frontpage.m-form-minnpost-form-processor-mailchimp-submitted {
 
 					.m-form-message {
@@ -156,6 +211,7 @@
 
 	.o-site-message-container {
 
+		// homepage middle
 		&.wp-message-inserter-message-region-homepage_middle {
 			order: unset;
 		}
