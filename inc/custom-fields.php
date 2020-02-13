@@ -74,14 +74,6 @@ if ( function_exists( 'create_newsletter' ) ) :
 		);
 		$newsletter_setup->add_field(
 			array(
-				'name' => __( 'Preview Text', 'minnpost-largo' ),
-				'id'   => $prefix . 'preview_text',
-				'type' => 'textarea_small',
-				'desc' => __( 'This is visible before users open the email in some email clients. If there\'s no value, we won\'t use it. Email clients will limit how many characters they show.', 'minnpost-largo' ),
-			)
-		);
-		$newsletter_setup->add_field(
-			array(
 				'name' => __( 'Show Department for Top Stories?', 'minnpost-largo' ),
 				'id'   => $prefix . 'show_department_for_top_stories',
 				'type' => 'checkbox',
