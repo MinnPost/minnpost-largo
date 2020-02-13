@@ -1,25 +1,23 @@
-html {
-	box-sizing: border-box;
-	background: $color__background-body;
-	margin: 0;
-	padding: 0;
-}
-
 *,
 *::before,
 *::after { /* Inherit box-sizing to make it easier to change the property for components that leverage other behavior; see http://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
 	box-sizing: inherit;
 }
 
+html {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+	color: neutral-color(black);
+	background: neutral-color(white);
+}
+
 body {
-	//max-width: $max-width-page;
+	max-width: $max-width-page;
 	margin: 0 auto;
 	padding: 0;
-	color: $color__minnpost-black;
-	font-family: $font__serif;
-	font-size: $base-font-size;
-	line-height: $base-line-height;
-	background: $color__base-background-color;
+	color: neutral-color(black);
+	background: neutral-color(white);
 }
 
 blockquote,
@@ -60,4 +58,16 @@ textarea {
 	font-family: $font__sans;
 	font-size: 99%;
 	line-height: normal;
+}
+
+a {
+	color: utility-color(blue, dark);
+	text-decoration: underline;
+
+	&:active,
+	&:focus,
+	&:hover {
+		color: utility-color(blue, medium);
+		text-decoration: none;
+	}
 }

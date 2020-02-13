@@ -1,7 +1,51 @@
-.o-wrapper {
-	line-height: 1.3em;
+html {
+	font-size: $html-font-size; // 100%
 }
 
+// default
+body {
+
+	@include body-preset( $size: 0 );
+}
+
+// headings
+h1,
+.h1 {
+
+	@include heading-preset( $size: 4 );
+}
+
+h2,
+.h2 {
+
+	@include heading-preset( $size: 3 );
+}
+
+h3,
+.h3 {
+
+	@include heading-preset( $size: 2 );
+}
+
+h4,
+.h4 {
+
+	@include heading-preset( $size: 1 );
+}
+
+h5,
+.h5 {
+
+	@include heading-preset( $size: 0 );
+}
+
+h6,
+.h6 {
+
+	@include heading-preset( $size: 0, $bold: false );
+}
+
+// paragraphs
 p {
 	margin: 0 0 1em 0;
 	padding: 0;
@@ -11,11 +55,38 @@ p {
 	}
 }
 
+// blockquote
 blockquote {
+
+	@include body-preset( $size: 1 );
 	border-left: 5px solid $color__border-light;
 	margin-left: 0;
 	padding: 0 0 0.5em 1em;
 	margin-bottom: 1em;
+}
+
+// form elements
+label {
+
+	@include body-preset( $size: 0 );
+}
+
+input,
+textarea,
+select {
+
+	@include body-preset( $size: 0, $line-height: normal );
+}
+
+input[type="submit"],
+button[type="submit"],
+button[type="button"],
+a.a-button {
+	// put something here
+}
+
+body.single main h1 + * ~ * {
+	max-width: 85ch;
 }
 
 .screen-reader-text {
