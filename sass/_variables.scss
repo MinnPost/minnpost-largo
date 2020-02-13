@@ -48,23 +48,70 @@ $background-unpublished: neutral-color(white) url(/wp-content/themes/minnpost-la
 /*------------------------------------*\
 	#TYPOGRAPHY
 \*------------------------------------*/
-$font__main: sans-serif;
+
+// font families
 $font__code: monaco, consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
 $font__pre: "Courier 10 Pitch", courier, monospace;
-$font__line-height-body: 1.5;
-$font__line-height-pre: 1.6;
-
 $font__sans: helvetica, arial, sans-serif;
 $font__serif: georgia, cambria, "Times New Roman", times, serif;
-$font__headings: "NimbusSanNovConD-Bol", helvetica, arial, geneva, sans-serif;
+$webfont__serif: "ff-meta-serif-web-pro", georgia, cambria, "Times New Roman", times, serif;
+$webfont__sans: "ff-meta-web-pro", helvetica, arial, sans-serif;
 
-// Font sizes
-$base-font-size: 13px; // 13px
-$content-font-size: 1.23em; // 16px
-$meta-font-size: 92.3%; // 12px
+// type scale.
+// uses Rob Weychert's code at https://24ways.org/2019/a-modern-typographic-scale/
+$html-font-size: 100%;
+// starts with the <html> element's font size value, so we
+// should change that based on our media queries
+:root {
+	$interval: 1.2;    // Unitless for proportional, unit for fixed
+	$body-text: 1rem;  // Must have a unit
+	$scale-min: -2;    // Unitless negative integer
+	$scale-max: 4;     // Unitless positive integer
 
-// heading font sizes
-$large-title-font-size: 215.4%;
+	--int: #{$interval};
+	--scale0: #{$body-text};
+
+	@if $scale-min < 0 {
+		// Generate scale variables smaller than the base text size
+		@for $i from -1 through $scale-min {
+
+			@if type-of($interval) == number {
+
+				@if unitless($interval) {
+					--scale#{$i}: calc(var(--scale#{$i + 1}) / var(--int));
+				} @else {
+					--scale#{$i}: calc(var(--scale#{$i + 1}) - var(--int));
+				}
+			}
+		}
+	}
+
+	@if $scale-max > 0 {
+		// Generate scale variables larger than the base text size
+		@for $i from 1 through $scale-max {
+
+			@if type-of($interval) == number {
+
+				@if unitless($interval) {
+					--scale#{$i}: calc(var(--scale#{$i - 1}) * var(--int));
+				} @else {
+					--scale#{$i}: calc(var(--scale#{$i - 1}) + var(--int));
+				}
+			}
+		}
+	}
+}
+
+:root {
+	$interval: 1.2;
+	--int: #{$interval};
+	--lh0: var(--int);                       /* 1.5 */
+	--lh-1: calc(var(--lh0) / var(--int));   /* 1.0 */
+	--lh-2: calc(var(--lh-1) / var(--int));  /* 0.666666666666667 */
+	--lh1: calc(var(--lh0) * var(--int));    /* 2.25 */
+	--lh2: calc(var(--lh1) * var(--int));    /* 3.375 */
+}
+
 
 // Line height
 $base-line-height: 1.5;
