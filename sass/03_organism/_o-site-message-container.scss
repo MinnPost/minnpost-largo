@@ -43,52 +43,54 @@
 			padding: 2em 0;
 		}
 
+		// mailchimp form inside a homepage middle
 		.m-form-frontpage.m-form-minnpost-form-processor-mailchimp {
 
-				fieldset {
-					border: 0;
-					margin: 0;
-					padding: 2.5em 0 1em 0;
+			fieldset {
+				border: 0;
+				margin: 0;
+				padding: 2.5em 0 1em 0;
+				width: 100%;
+				max-width: 100%;
+
+				input {
+					color: $color__dark-gray;
 					width: 100%;
 					max-width: 100%;
-
-					input {
-						color: $color__dark-gray;
-						width: 100%;
-						max-width: 100%;
-					}
-
-					label {
-						color: $color__white;
-
-						a,
-						a:visited {
-							color: $color__border-light;
-						}
-					}
 				}
 
-				.m-form-container {
-					padding: 0 1.5em;
-				}
-			}
-
-			.m-form-frontpage.m-form-minnpost-form-processor-mailchimp-submitted {
-
-				.m-form-message {
-					margin: 0;
-					padding: 1em;
-					width: 100%;
-					max-width: 100%;
+				label {
 					color: $color__white;
-					font-size: $content-font-size;
-					line-height: $base-line-height;
-				}
 
-				fieldset {
-					display: none;
+					a,
+					a:visited {
+						color: $color__border-light;
+					}
 				}
 			}
+
+			.m-form-container {
+				padding: 0 1.5em;
+			}
+		}
+
+		// after the form has been submitted
+		.m-form-frontpage.m-form-minnpost-form-processor-mailchimp-submitted {
+
+			.m-form-message {
+				margin: 0;
+				padding: 1em;
+				width: 100%;
+				max-width: 100%;
+				color: $color__white;
+				font-size: $content-font-size;
+				line-height: $base-line-height;
+			}
+
+			fieldset {
+				display: none;
+			}
+		}
 	}
 }
 
