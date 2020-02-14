@@ -63,24 +63,24 @@ $html-font-size: 100%;
 // starts with the <html> element's font size value, so we
 // should change that based on our media queries
 :root {
-	$interval: 1.2;    // Unitless for proportional, unit for fixed
+	$font-size-interval: 1.3;    // Unitless for proportional, unit for fixed
 	$body-text: 1rem;  // Must have a unit
 	$scale-min: -2;    // Unitless negative integer
 	$scale-max: 4;     // Unitless positive integer
 
-	--int: #{$interval};
+	--font-size-int: #{$font-size-interval};
 	--scale0: #{$body-text};
 
 	@if $scale-min < 0 {
 		// Generate scale variables smaller than the base text size
 		@for $i from -1 through $scale-min {
 
-			@if type-of($interval) == number {
+			@if type-of($font-size-interval) == number {
 
-				@if unitless($interval) {
-					--scale#{$i}: calc(var(--scale#{$i + 1}) / var(--int));
+				@if unitless($font-size-interval) {
+					--scale#{$i}: calc(var(--scale#{$i + 1}) / var(--font-size-int));
 				} @else {
-					--scale#{$i}: calc(var(--scale#{$i + 1}) - var(--int));
+					--scale#{$i}: calc(var(--scale#{$i + 1}) - var(--font-size-int));
 				}
 			}
 		}
@@ -90,12 +90,12 @@ $html-font-size: 100%;
 		// Generate scale variables larger than the base text size
 		@for $i from 1 through $scale-max {
 
-			@if type-of($interval) == number {
+			@if type-of($font-size-interval) == number {
 
-				@if unitless($interval) {
-					--scale#{$i}: calc(var(--scale#{$i - 1}) * var(--int));
+				@if unitless($font-size-interval) {
+					--scale#{$i}: calc(var(--scale#{$i - 1}) * var(--font-size-int));
 				} @else {
-					--scale#{$i}: calc(var(--scale#{$i - 1}) + var(--int));
+					--scale#{$i}: calc(var(--scale#{$i - 1}) + var(--font-size-int));
 				}
 			}
 		}
@@ -103,19 +103,45 @@ $html-font-size: 100%;
 }
 
 :root {
-	$interval: 1.2;
-	--int: #{$interval};
-	--lh0: var(--int);                       /* 1.5 */
-	--lh-1: calc(var(--lh0) / var(--int));   /* 1.0 */
-	--lh-2: calc(var(--lh-1) / var(--int));  /* 0.666666666666667 */
-	--lh1: calc(var(--lh0) * var(--int));    /* 2.25 */
-	--lh2: calc(var(--lh1) * var(--int));    /* 3.375 */
+	$line-height-interval: 1.0;
+	$body-line-height: 1.2;
+	$line-height-scale-min: -2;    // Unitless negative integer
+	$line-height-scale-max: 4;     // Unitless positive integer
+
+	--line-height-int: #{$line-height-interval};
+	--lh0: #{$body-line-height};
+
+	@if $line-height-scale-min < 0 {
+		// Generate scale variables smaller than the base text size
+		@for $i from -1 through $line-height-scale-min {
+
+			@if type-of($line-height-interval) == number {
+
+				@if unitless($line-height-interval) {
+					--lh#{$i}: calc(var(--lh#{$i + 1}) / var(--line-height-int));
+				} @else {
+					--lh#{$i}: calc(var(--lh#{$i + 1}) - var(--line-height-int));
+				}
+			}
+		}
+	}
+
+	@if $line-height-scale-max > 0 {
+		// Generate scale variables larger than the base text size
+		@for $i from 1 through $line-height-scale-max {
+
+			@if type-of($line-height-interval) == number {
+
+				@if unitless($line-height-interval) {
+					--lh#{$i}: calc(var(--lh#{$i - 1}) * var(--line-height-int));
+				} @else {
+					--lh#{$i}: calc(var(--lh#{$i - 1}) + var(--line-height-int));
+				}
+			}
+		}
+	}
 }
 
-
-// Line height
-$base-line-height: 1.5;
-$base-line-height-em: 1.5em;
 
 // site structure
 $max-width-medium: 680px;

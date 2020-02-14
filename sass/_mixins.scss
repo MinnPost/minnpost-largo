@@ -125,7 +125,7 @@
 	//font-size: map-get( $text-sizes, $size )/10 + rem;
 	font-size: var(--scale#{ $size });
 	//line-height: map-get( $line-heights, $size );
-	line-height: var(--scale#{ $size });
+	line-height: var(--lh#{ $size });
 
 	/*@include breakpoint-min( xs ) {
         line-height: map-get( $line-heights, $size ) * 1.25;
