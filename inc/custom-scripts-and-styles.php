@@ -15,6 +15,7 @@ if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
 	add_action( 'wp_print_styles', 'minnpost_largo_add_remove_styles', 10 );
 	function minnpost_largo_add_remove_styles() {
 		// add
+		wp_enqueue_style( 'minnpost-fonts', 'https://use.typekit.net/cxj7fzg.css', array(), '1.0.0', 'all' );
 		wp_enqueue_style( 'minnpost-style', get_theme_file_uri() . '/style.css', array( 'dashicons' ), filemtime( get_theme_file_path() . '/style.css' ), 'all' );
 		wp_enqueue_style( 'minnpost-style-print', get_theme_file_uri() . '/print.css', array(), filemtime( get_theme_file_path() . '/print.css' ), 'print' );
 		// remove
@@ -36,6 +37,29 @@ if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
 endif;
 
 /**
+* Add typekit to link preconnect
+*
+*/
+if ( ! function_exists( 'minnpost_largo_typekit_head' ) ) :
+	add_filter( 'wp_head', 'minnpost_largo_typekit_head' );
+	function minnpost_largo_typekit_head() {
+		?>
+		<link rel="preconnect" href="https://use.typekit.net">
+		<?php
+	}
+endif;
+
+if ( ! function_exists( 'minnpost_largo_typekit_script' ) ) :
+	add_filter( 'script_loader_tag', 'minnpost_largo_typekit_script', 10, 2 );
+	function minnpost_largo_typekit_script( $tag, $handle ) {
+		if ( 'minnpost' === $handle ) {
+			$tag = '<link rel="stylesheet" href="https://use.typekit.net/cxj7fzg.css">' . $tag;
+		}
+		return $tag;
+	}
+endif;
+
+/**
 * Handle adding and removing of front end JavaScript in this theme
 * This also handles whether the JavaScript should be served as minified based on WP_DEBUG value
 * We can't use SCRIPT_DEBUG because our server fails to minify, so we have to keep that set to true, but these files are already minified.
@@ -45,8 +69,9 @@ if ( ! function_exists( 'minnpost_largo_add_remove_scripts' ) ) :
 	add_action( 'wp_enqueue_scripts', 'minnpost_largo_add_remove_scripts' );
 	function minnpost_largo_add_remove_scripts() {
 		// add
-		wp_enqueue_script( 'modernizr', get_theme_file_uri() . '/assets/js/modernizr-custom.min.js', array(), '1.0', false );
-		wp_enqueue_script( 'minnpost', get_theme_file_uri() . '/assets/js/minnpost.min.js', array( 'jquery', 'modernizr' ), filemtime( get_theme_file_path() . '/assets/js/minnpost.min.js' ), true );
+		//wp_enqueue_script( 'modernizr', get_theme_file_uri() . '/assets/js/modernizr-custom.min.js', array(), '1.0', false );
+		//wp_enqueue_script( 'minnpost', get_theme_file_uri() . '/assets/js/minnpost.min.js', array( 'jquery', 'modernizr' ), filemtime( get_theme_file_path() . '/assets/js/minnpost.min.js' ), true );
+		wp_enqueue_script( 'minnpost', get_theme_file_uri() . '/assets/js/minnpost.min.js', array( 'jquery' ), filemtime( get_theme_file_path() . '/assets/js/minnpost.min.js' ), true );
 		// localize
 		$params = array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
