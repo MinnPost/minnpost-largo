@@ -40,6 +40,7 @@
     "gulp-uglify": "^3.0.2",
     "gulp-wp-pot": "^2.3.6",
     "npm-check-updates": "^4.0.1",
+    "postcss-foft-classes": "^1.0.4",
     "stylelint": "^13.0.0",
     "stylelint-config-wordpress": "^16.0.0"
   },

@@ -24,7 +24,6 @@ Nicolas Gallagher and Jonathan Neal http://necolas.github.com/normalize.css/
 # we should fill this out
 --------------------------------------------------------------*/
 
-@import "bourbon";
 @import "functions"; // put functions first because they get used in color variable calculations
 @import "variables";
 @import "variables-legacy";

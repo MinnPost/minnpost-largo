@@ -26,6 +26,21 @@
 // used like this
 // @include gi-nums(1, 12);
 
+// clearfix
+@mixin clearfix {
+
+	&::after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+}
+// used like this
+.clearfix {
+
+	@include clearfix;
+}
+
 @mixin outer-container( $local-max-width: $max-width ) {
 
 	@include clearfix;
@@ -35,11 +50,6 @@
 		right: auto;
 	}
 	flex: 0 0 100%;
-}
-// used like this
-.clearfix {
-
-	@include clearfix;
 }
 
 // responsive iframes by ratio
