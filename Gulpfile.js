@@ -1,7 +1,6 @@
 // Require our dependencies
 const autoprefixer = require('autoprefixer');
 const babel = require('gulp-babel');
-const bourbon = require( 'bourbon' ).includePaths;
 const browserSync = require('browser-sync').create();
 const concat = require('gulp-concat');
 const cssnano = require('cssnano');
@@ -99,10 +98,7 @@ function frontendstyles() {
     .src(config.styles.front_end, { allowEmpty: true })
     .pipe(sourcemaps.init()) // Sourcemaps need to init before compilation
     .pipe(sassGlob()) // Allow for globbed @import statements in SCSS
-    .pipe(sass( {
-        'includePaths': bourbon
-      }
-    )) // Compile
+		.pipe(sass()) // Compile
     .on("error", sass.logError) // Error reporting
     .pipe(
       postcss([
@@ -133,10 +129,7 @@ function mainstyles() {
     .src(config.styles.main, { allowEmpty: true })
     .pipe(sourcemaps.init()) // Sourcemaps need to init before compilation
     .pipe(sassGlob()) // Allow for globbed @import statements in SCSS
-    .pipe(sass( {
-        'includePaths': bourbon
-      }
-    )) // Compile
+		.pipe(sass()) // Compile
     .on("error", sass.logError) // Error reporting
     .pipe(
       postcss([
