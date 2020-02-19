@@ -144,6 +144,7 @@
 	// article bottom
 	&.wp-message-inserter-message-region-article_bottom {
 		border: 1px solid $color__border-light;
+		margin-bottom: $standard-page-margin;
 
 		.m-wp-insert-message-item {
 			padding: 1.25em; // this basically matches the sum of the legacy padding
