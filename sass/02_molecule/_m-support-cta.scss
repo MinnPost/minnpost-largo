@@ -1,5 +1,16 @@
 .m-support-cta {
 
+	&.m-support-cta-top {
+
+		h2 {
+			@include meta-preset( $size: 0, $bold: false, $italic: false, $line-height: 1 );
+
+			@media screen and (min-width: $more-than-logo-screen) {
+				@include meta-preset( $size: 1, $bold: true, $italic: false, $line-height: 1 );
+			}
+		}
+	}
+
 	&.m-support-cta-bottom {
 
 		.m-membership-fast-select {
@@ -8,11 +19,11 @@
 			button,
 			input#amount,
 			input.a-button {
-				font-family: $font__headings;
+				/*font-family: $font__headings;
 				font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
 				font-weight: 400;
 				font-style: normal;
-				font-variant: normal;
+				font-variant: normal;*/
 			}
 
 			.m-form-radios {
@@ -27,7 +38,7 @@
 				label {
 					background: $_color-base-gray;
 					color: $color__white;
-					font-family: $font__serif;
+					//font-family: $font__serif;
 					border: 0;
 				}
 

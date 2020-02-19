@@ -43,11 +43,11 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 				<?php echo $image; ?>
 				<?php if ( '' !== $caption || '' !== $credit ) { ?>
 				<figcaption>
-					<?php if ( '' !== $credit ) { ?>
-						<div class="a-media-meta a-media-credit"><?php echo $credit; ?></div>
-					<?php } ?>
 					<?php if ( '' !== $caption ) { ?>
 						<div class="a-media-meta a-media-caption"><?php echo $caption; ?></div>
+					<?php } ?>
+					<?php if ( '' !== $credit ) { ?>
+						<div class="a-media-meta a-media-credit"><?php echo $credit; ?></div>
 					<?php } ?>
 				</figcaption>
 				<?php } ?>
@@ -140,7 +140,10 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 			} else {
 				$attributes['class'] = '';
 			}
-			$attributes['class'] .= 'no-lazy';
+			$attributes['class']  .= 'no-lazy';
+			$attributes['loading'] = 'eager';
+		} else {
+			$attributes['loading'] = 'lazy';
 		}
 
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
@@ -173,6 +176,9 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 				}
 				if ( isset( $attributes['height'] ) ) {
 					$image .= ' height="' . $attributes['height'] . '"';
+				}
+				if ( isset( $attributes['loading'] ) ) {
+					$image .= ' loading="' . $attributes['loading'] . '"';
 				}
 				$image .= '>';
 			}
@@ -671,14 +677,16 @@ endif;
 *
 * @param int $category_id
 * @param string $size
-* @param string $include_text
-* @param string $include_name
+* @param bool $include_text
+* @param bool $include_name
 * @param string $link_on
+* @param bool $lazy_load
+* @param array $attributes
 * @return string $output
 *
 */
 if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
-	function minnpost_get_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false, $link_on = 'title', $lazy_load = true ) {
+	function minnpost_get_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false, $link_on = 'title', $lazy_load = true, $attributes = array() ) {
 
 		$image_data = minnpost_get_term_image( $category_id, $size );
 		if ( '' !== $image_data ) {
@@ -734,11 +742,13 @@ endif;
 *
 * @param int $category_id
 * @param string $size
+* @param bool $lazy_load
+* @param array $attributes
 * @return array $image_data
 *
 */
 if ( ! function_exists( 'minnpost_get_term_image' ) ) :
-	function minnpost_get_term_image( $category_id = '', $size = 'feature', $lazy_load = true ) {
+	function minnpost_get_term_image( $category_id = '', $size = 'feature', $lazy_load = true, $attributes = array() ) {
 		$image_url = get_term_meta( $category_id, '_mp_category_main_image', true );
 		if ( 'feature' !== $size ) {
 			$image_url = get_term_meta( $category_id, '_mp_category_' . $size . '_image', true );

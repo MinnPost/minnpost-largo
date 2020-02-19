@@ -72,14 +72,15 @@ nav {
 }
 
 .m-main-navigation {
-	font-size: 123.1%;
+	/*font-size: 123.1%;
 	font-family: $font__headings;
 	font-weight: normal;
 	font-style: normal;
 	font-variant: normal;
 	-moz-font-feature-settings: "calt=0,dlig=0,ss01=0,liga=0";
 	-moz-font-feature-settings: "calt" 0, "dlig" 0, "ss01" 0, "liga" 0;
-	letter-spacing: 0.03em;
+	letter-spacing: 0.03em;*/
+	@include meta-preset( $size: 1, $bold: true, $italic: false, $line-height: 1 );
 	background: $color__minnpost-black;
 	position: relative;
 	z-index: 10;
@@ -94,7 +95,7 @@ nav {
 		font: inherit;
 		color: $color__white;
 		background: transparent;
-		text-transform: uppercase;
+		//text-transform: uppercase;
 		overflow: visible;
 		-moz-user-select: text;
 
@@ -143,7 +144,7 @@ nav {
 	}
 
 	li {
-		text-transform: uppercase;
+		//text-transform: uppercase;
 		flex-shrink: 0;
 
 		&:last-child,
@@ -244,7 +245,7 @@ nav {
 	background: $color__minnpost-white;
 
 	.a-nav-label {
-		text-transform: uppercase;
+		//text-transform: uppercase;
 		font-weight: normal;
 		font-size: 76.9%;
 		line-height: 1.3em;
@@ -305,13 +306,13 @@ nav {
 	}
 
 	li span.a-user-initial {
-		font-family: $font__headings;
+		/*font-family: $font__headings;
 		font-weight: normal;
 		font-style: normal;
 		font-variant: normal;
 		-moz-font-feature-settings: "calt=0,dlig=0,ss01=0,liga=0";
-		-moz-font-feature-settings: "calt" 0, "dlig" 0, "ss01" 0, "liga" 0;
-		text-transform: uppercase;
+		-moz-font-feature-settings: "calt" 0, "dlig" 0, "ss01" 0, "liga" 0;*
+		text-transform: uppercase;*/
 		text-decoration: none;
 		background: $color__minnpost-red;
 		border-radius: 50%;
@@ -384,10 +385,10 @@ nav {
 		background: transparent;
 		overflow: visible;
 		-moz-user-select: text;
-		text-transform: uppercase;
+		/*text-transform: uppercase;
 		font-weight: bold;
 		font-family: $font__sans;
-		font-size: 76.9%;
+		font-size: 76.9%;*/
 
 		&:hover,
 		&:focus {
@@ -461,9 +462,9 @@ nav {
 	ul {
 		justify-content: center;
 		text-align: center;
-		font-size: 76.9%;
+		/*font-size: 76.9%;
 		text-transform: uppercase;
-		font-family: $font__sans;
+		font-family: $font__sans;*/
 	}
 
 	li {
