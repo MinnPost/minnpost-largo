@@ -63,7 +63,7 @@ $html-font-size: 100%;
 // starts with the <html> element's font size value, so we
 // should change that based on our media queries
 :root {
-	$font-size-interval: 1.3;    // Unitless for proportional, unit for fixed
+	$font-size-interval: 1.1;    // Unitless for proportional, unit for fixed
 	$body-text: 1rem;  // Must have a unit
 	$scale-min: -2;    // Unitless negative integer
 	$scale-max: 4;     // Unitless positive integer
@@ -104,7 +104,7 @@ $html-font-size: 100%;
 
 :root {
 	$line-height-interval: 1.0;
-	$body-line-height: 1.2;
+	$body-line-height: 1.3;
 	$line-height-scale-min: -2;    // Unitless negative integer
 	$line-height-scale-max: 4;     // Unitless positive integer
 
@@ -147,8 +147,9 @@ $html-font-size: 100%;
 $max-width-medium: 680px;
 $medium-margins-too-small: 700px;
 $max-width-medium-plus-margins: 720px;
-$max-width-page: 975px;
+$max-width-page: 1200px; // added 225 for now
 $max-width-story-2012: 452px;
+$max-width-content: 640px;
 
 $header-height-smaller-screen: 50px;
 $header-height-small-screen: 76px;
@@ -160,7 +161,7 @@ $grid-gap: 10px;
 // Neat Breakpoints
 $small-screen: 480px;
 $more-than-logo-screen: 500px;
-$medium-screen: 640px;
+$medium-screen: 865px; // added 225 for now
 $nav-breaks: 768px;
 $nav-move-end: 810px;
 $large-screen: 860px;
@@ -181,6 +182,8 @@ $size__content-sidebar-large-screen: 205px;
 $size__footer-column: 270px;
 
 // spacing
+$standard-block-margin: 1.5em; // 36px at desktop
+
 $standard-page-margin: 1.538461538461538em; // 20px
 $home-content-sidebar-padding: 35px;
 $archive-content-sidebar-padding: 15px;

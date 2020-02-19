@@ -37,7 +37,7 @@ main .ad-x107,
 main .ad-x108,
 main .ad-x109,
 main .ad-x110 {
-	margin: $standard-page-margin 0;
+	margin: $standard-block-margin 0;
 	display: flex;
 	justify-content: center;
 	flex-direction: row;
@@ -52,7 +52,7 @@ main .ad-x110 {
 
 .ad-middle3,
 .ad-Middle3 {
-	margin-bottom: $standard-page-margin;
+	margin-bottom: $standard-block-margin;
 	border-bottom: 1px solid $color__gray-lightest;
 	padding: 0.5em;
 
@@ -72,7 +72,7 @@ main .ad-x110 {
 
 .acm-ad-wrapper.ad-middle3,
 .acm-ad-wrapper.ad-Middle3 {
-	margin-bottom: $standard-page-margin;
+	margin-bottom: $standard-block-margin;
 	border-bottom: 1px solid $color__gray-lightest;
 	background-color: $color__minnpost-white;
 	padding-bottom: 0.5em;
@@ -96,7 +96,7 @@ main .ad-x110 {
 .o-site-sidebar .acm-ad {
 
 	@include clearfix;
-	margin-bottom: $standard-page-margin;
+	margin-bottom: $standard-block-margin;
 
 	&.acm-ad-placeholder {
 		text-align: center;

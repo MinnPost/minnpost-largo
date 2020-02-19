@@ -3,7 +3,11 @@
 	&.m-support-cta-top {
 
 		h2 {
-			@include meta-preset( $size: 1, $bold: true, $italic: false, $line-height: 1 );
+			@include meta-preset( $size: 0, $bold: false, $italic: false, $line-height: 1 );
+
+			@media screen and (min-width: $more-than-logo-screen) {
+				@include meta-preset( $size: 1, $bold: true, $italic: false, $line-height: 1 );
+			}
 		}
 	}
 
