@@ -1,29 +1,77 @@
 .o-site-message-container {
+	@include meta-preset( $size: -1, $bold: false, $italic: false, $line-height: 1 );
+
+	h2,
+	.h2,
+	h3,
+	.h3 {
+		@include meta-preset( $size: inherit, $bold: true );
+	}
+
+	// add a default assumption of horizontally centering
+	// both the image and editor containers
+	.m-wp-insert-message-images,
+	.m-wp-insert-message-editor {
+		max-width: $max-width-page;
+	}
+
+	// banner wrapper
+	.m-wp-insert-message-item-banner {
+
+		&.banner-width-page {
+			max-width: $max-width-page;
+		}
+
+		.dual-wrap {
+
+			@media screen and (min-width: $max-width-medium) {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				align-content: center;
+				max-width: $max-width-page;
+				margin: 0 auto;
+			}
+		}
+	}
+
+	// Popup specifics
+	&.wp-message-inserter-message-region-popup {
+
+		// default styles for the editor type
+		&.wp-message-inserter-message-editor {
+
+			.m-wp-insert-message-item {
+				max-width: $max-width-page;
+			}
+		}
+	}
 
 	// site header and homepage middle
 	&.wp-message-inserter-message-region-homepage_middle,
 	&.wp-message-inserter-message-header {
+
 		header {
-			font-size: 1.2em;
+			//font-size: 1.2em;
 			margin-right: 1em;
 			line-height: 1.2;
 		}
 
 		h3,
 		h4 {
-			font-family: $font__headings;
+			/*font-family: $font__headings;
 			font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
 			font-weight: normal;
 			font-style: normal;
-			font-variant: normal;
+			font-variant: normal;*/
 		}
 
 		h3 {
-			font-size: 215.4%;
+			//font-size: 215.4%;
 		}
 
 		h4 {
-			font-size: 138.5%;
+			//font-size: 138.5%;
 		}
 	}
 
@@ -83,8 +131,8 @@
 				width: 100%;
 				max-width: 100%;
 				color: $color__white;
-				font-size: $content-font-size;
-				line-height: $base-line-height;
+				//font-size: $content-font-size;
+				//line-height: $base-line-height;
 			}
 
 			fieldset {
@@ -96,6 +144,7 @@
 	// article bottom
 	&.wp-message-inserter-message-region-article_bottom {
 		border: 1px solid $color__border-light;
+		margin-bottom: $standard-page-margin;
 
 		.m-wp-insert-message-item {
 			padding: 1.25em; // this basically matches the sum of the legacy padding
@@ -119,14 +168,14 @@
 			}
 
 			> h3 {
-			    font-size: 138.5%;
+			    /*font-size: 138.5%;
 			    line-height: 1.15em;
 			    text-transform: uppercase;
 				font-family: $font__headings;
 				font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
 				font-weight: normal;
 				font-style: normal;
-				font-variant: normal;
+				font-variant: normal;*/
 			}
 
 			fieldset {

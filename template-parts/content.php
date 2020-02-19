@@ -43,8 +43,6 @@
 		if ( 'post' === get_post_type() ) :
 			?>
 
-			<?php minnpost_share_buttons( 'top' ); ?>
-
 			<?php minnpost_deck(); ?>
 
 			<?php if ( '' !== minnpost_get_posted_by() && '' !== minnpost_get_posted_on() ) : ?>
@@ -71,7 +69,30 @@
 		<?php the_content(); ?>
 	</div><!-- .m-entry-content -->
 
-	<?php minnpost_share_buttons( 'bottom' ); ?>
+	<?php
+	$hide_author = get_post_meta( $id, '_mp_remove_author_from_display', true );
+	$coauthors   = get_coauthors( get_the_ID() );
+	$author_info = '';
+	if ( 'on' !== $hide_author && empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) ) ) {
+		foreach ( $coauthors as $coauthor ) {
+			$author_id    = $coauthor->ID;
+			$author_info .= minnpost_get_author_figure( $author_id, 'author-teaser', true, true );
+		}
+	}
+	if ( '' !== $author_info ) {
+		?>
+	<aside class="m-author-info m-author-info-excerpt<?php if ( is_singular() ) { ?> m-author-info-singular<?php } ?><?php if ( is_single() ) { ?> m-author-info-single<?php } ?>">
+		<h3 class="a-about-author">About the author:</h3>
+		<?php
+		foreach ( $coauthors as $coauthor ) :
+			$author_id = $coauthor->ID;
+			minnpost_author_figure( $author_id, 'author-teaser', true, true );
+		endforeach;
+		?>
+	</aside><!-- .m-author-info -->
+		<?php
+	}
+	?>
 
 	<?php if ( 'on' !== get_post_meta( get_the_ID(), '_mp_remove_newsletter_signup_from_display', true ) ) : ?>
 		<?php do_action( 'wp_message_inserter', 'article_bottom' ); ?>
@@ -99,31 +120,6 @@
 			?>
 		</aside>
 	<?php endif; ?>
-
-	<?php
-	$hide_author = get_post_meta( $id, '_mp_remove_author_from_display', true );
-	$coauthors   = get_coauthors( get_the_ID() );
-	$author_info = '';
-	if ( 'on' !== $hide_author && empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) ) ) {
-		foreach ( $coauthors as $coauthor ) {
-			$author_id    = $coauthor->ID;
-			$author_info .= minnpost_get_author_figure( $author_id, 'author-teaser', true, true );
-		}
-	}
-	if ( '' !== $author_info ) {
-		?>
-	<aside class="m-author-info m-author-info-excerpt<?php if ( is_singular() ) { ?> m-author-info-singular<?php } ?><?php if ( is_single() ) { ?> m-author-info-single<?php } ?>">
-		<h3 class="a-about-author">About the author:</h3>
-		<?php
-		foreach ( $coauthors as $coauthor ) :
-			$author_id = $coauthor->ID;
-			minnpost_author_figure( $author_id, 'author-teaser', true, true );
-		endforeach;
-		?>
-	</aside><!-- .m-author-info -->
-		<?php
-	}
-	?>
 
 	<?php
 	// If comments are open or we have at least one comment, load up the comment template.

@@ -6,10 +6,10 @@
 	background: $color__white;
 
 	.a-widget-title {
-		font-size: 123.1%;
+		/*font-size: 123.1%;
 		text-transform: none;
 		font-family: $font__sans;
-		font-weight: bold;
+		font-weight: bold;*/
 		padding: 20px;
 		padding-bottom: 0;
 		margin: 0;
@@ -33,9 +33,9 @@
 	&.m-minnpost-spills-widget .a-widget-title,
 	&.m-widget-most-commented .a-widget-title,
 	&.m-widget-recent-posts-extended .a-widget-title {
-		text-transform: uppercase;
+		/*text-transform: uppercase;
 		font-family: $font__headings;
-		font-weight: normal;
+		font-weight: normal;*/
 
 		a {
 			color: $color__minnpost-red;

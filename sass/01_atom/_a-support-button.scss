@@ -5,9 +5,7 @@
 		.a-support-button {
 			background: $color__minnpost-green;
 			color: $color__white;
-			font-size: 1.5em;
-			font-family: $font__headings;
-			letter-spacing: 0.02em;
+			@include meta-preset( $size: 1, $bold: true, $italic: false, $line-height: 1 );
 
 			&:hover,
 			&:focus,

@@ -26,6 +26,21 @@
 // used like this
 // @include gi-nums(1, 12);
 
+// clearfix
+@mixin clearfix {
+
+	&::after {
+		content: "";
+		display: table;
+		clear: both;
+	}
+}
+// used like this
+.clearfix {
+
+	@include clearfix;
+}
+
 @mixin outer-container( $local-max-width: $max-width ) {
 
 	@include clearfix;
@@ -35,11 +50,6 @@
 		right: auto;
 	}
 	flex: 0 0 100%;
-}
-// used like this
-.clearfix {
-
-	@include clearfix;
 }
 
 // responsive iframes by ratio
@@ -54,6 +64,89 @@
 // used like this
 //@include generateRatios(16,9); // 16x9
 //@include generateRatios(4,3);  // 4x3
+
+// font families
+
+// body text
+@mixin body-preset( $size: inherit, $bold: inherit, $italic: inherit, $line-height: inherit ) {
+
+	@include text-preset( $size, $line-height );
+	font-family: $webfont__serif;
+	font-size-adjust: 0.46;
+
+	@if $bold == true {
+		font-weight: 700;
+	} @else if $bold == false {
+		font-weight: 500;
+	}
+
+	@if $italic == true {
+		font-style: italic;
+	} @else if $italic == false {
+		font-style: normal;
+	}
+}
+// used like this: body-preset( $size: 3 );
+
+// heading text
+@mixin heading-preset( $size: inherit, $bold: inherit, $italic: inherit, $line-height: inherit ) {
+
+	@include text-preset( $size, $line-height );
+	font-family: $webfont__serif;
+	font-size-adjust: 0.46;
+
+	@if $bold == true {
+		font-weight: 900;
+	} @else if $bold == false {
+		font-weight: 500;
+	}
+
+	@if $italic == true {
+		font-style: italic;
+	} @else if $italic == false {
+		font-style: normal;
+	}
+}
+// used like this: @include heading-preset( $size: 3, $bold: false );
+
+// meta text
+@mixin meta-preset( $size: inherit, $bold: false, $italic: false, $line-height: inherit ) {
+
+	@include text-preset( $size, $line-height );
+	font-family: $webfont__sans;
+	font-size-adjust: 0.495;
+
+	@if $bold == true {
+		font-weight: 700;
+	} @else if $bold == false {
+		font-weight: 400;
+	}
+
+	@if $italic == true {
+		font-style: italic;
+	} @else if $italic == false {
+		font-style: normal;
+	}
+}
+
+// text sizes
+@mixin text-preset( $size: inherit, $line-height: inherit ) {
+	//font-size: map-get( $text-sizes, $size ) + px;
+	//font-size: map-get( $text-sizes, $size )/10 + rem;
+	@if $size != "inherit" {
+		font-size: var(--scale#{ $size });
+		line-height: var(--lh#{ $size });
+	}
+	
+	//line-height: map-get( $line-heights, $size );
+
+	/*@include breakpoint-min( xs ) {
+        line-height: map-get( $line-heights, $size ) * 1.25;
+    } // 125%
+    @include breakpoint-min( sm ) {
+        line-height: map-get( $line-heights, $size ) * 1.5;
+    } // 150%*/
+}
 
 // background colors
 @mixin rgba-background( $hexcolor, $opacity ) {

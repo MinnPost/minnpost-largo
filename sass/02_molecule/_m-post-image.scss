@@ -1,8 +1,18 @@
 .m-post-image {
-	display: block;
+	display: table;
+	align-self: flex-end;
+
+	img {
+		display: block;
+	}
 
 	&.m-post-image-large {
-		font-size: $content-font-size;
+		//font-size: $content-font-size;
+	}
+
+	figcaption {
+		display: table-caption;
+		caption-side: bottom;
 	}
 }
 

@@ -43,11 +43,11 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 				<?php echo $image; ?>
 				<?php if ( '' !== $caption || '' !== $credit ) { ?>
 				<figcaption>
-					<?php if ( '' !== $credit ) { ?>
-						<div class="a-media-meta a-media-credit"><?php echo $credit; ?></div>
-					<?php } ?>
 					<?php if ( '' !== $caption ) { ?>
 						<div class="a-media-meta a-media-caption"><?php echo $caption; ?></div>
+					<?php } ?>
+					<?php if ( '' !== $credit ) { ?>
+						<div class="a-media-meta a-media-credit"><?php echo $credit; ?></div>
 					<?php } ?>
 				</figcaption>
 				<?php } ?>
@@ -140,7 +140,10 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 			} else {
 				$attributes['class'] = '';
 			}
-			$attributes['class'] .= 'no-lazy';
+			$attributes['class']  .= 'no-lazy';
+			$attributes['loading'] = 'eager';
+		} else {
+			$attributes['loading'] = 'lazy';
 		}
 
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
@@ -173,6 +176,9 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 				}
 				if ( isset( $attributes['height'] ) ) {
 					$image .= ' height="' . $attributes['height'] . '"';
+				}
+				if ( isset( $attributes['loading'] ) ) {
+					$image .= ' loading="' . $attributes['loading'] . '"';
 				}
 				$image .= '>';
 			}
