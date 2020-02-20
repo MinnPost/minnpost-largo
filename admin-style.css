@@ -10,10 +10,10 @@
 }
 
 /* category checkbox fixes */
-.cmb2-category-multicheck .cmb-td p {
-	display: none;
+.cmb2-category-multicheck .cmb-td p.cmb2-metabox-description {
+	padding-top: 0;
 }
-.cmb2-category-multicheck .cmb-td {
+.cmb2-category-multicheck .cmb-td ul {
 	min-height: 42px;
 	max-height: 200px;
 	overflow: auto;

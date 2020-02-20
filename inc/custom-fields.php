@@ -798,12 +798,13 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 		// for news/opinion display
 		$category_setup->add_field(
 			array(
-				'name'    => __( 'Category Group', 'minnpost-largo' ),
-				'id'      => '_mp_category_group',
-				'type'    => 'radio_inline',
-				'desc'    => __( 'If a value is selected, this value will show before the category name. If Opinion is selected, this category will be excluded from automated story recommendations.', 'minnpost-largo' ),
-				'classes' => 'cmb2-match-admin-width',
-				'options' => minnpost_largo_category_groups(),
+				'name'             => __( 'Category Group', 'minnpost-largo' ),
+				'id'               => '_mp_category_group',
+				'type'             => 'radio_inline',
+				'desc'             => __( 'If a value is selected, this value will show before the category name, and this category will not be able to have grouped categories associated with it. If Opinion is selected, this category will be excluded from automated story recommendations.', 'minnpost-largo' ),
+				'classes'          => 'cmb2-match-admin-width',
+				'options'          => minnpost_largo_category_groups(),
+				'show_option_none' => true,
 			)
 		);
 		// for news/opinion display
@@ -813,7 +814,7 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 				'id'      => '_mp_grouped_categories',
 				'type'    => 'multicheck',
 				'desc'    => __( 'If this category is used to group other categories, they will be checked here, as well as indicated on that category\'s settings page.', 'minnpost-largo' ),
-				'classes' => 'cmb2-category-multicheck',
+				'classes' => 'cmb2-category-multicheck cmb2-match-admin-width',
 				'options' => minnpost_largo_grouped_categories(),
 			)
 		);
