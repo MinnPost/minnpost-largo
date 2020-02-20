@@ -146,11 +146,14 @@ $html-font-size: 100%;
 	#SITE STRUCTURE
 \*------------------------------------*/
 
+$size__site-sidebar: 300px; // this needs to be pixel based because of ad dimensions
+$max-width-main: calc(100% - #{$size__site-sidebar}); // got to interpolate the variable
+$max-width-page: 50em; // added 225px compared to current site. 1200px at desktop size.
+
 // site structure
 $max-width-medium: 680px;
 $medium-margins-too-small: 700px;
 $max-width-medium-plus-margins: 720px;
-$max-width-page: 1200px; // added 225 for now
 $max-width-story-2012: 452px;
 $max-width-content: 640px;
 
@@ -158,8 +161,6 @@ $header-height-smaller-screen: 50px;
 $header-height-small-screen: 76px;
 $header-height-before-nav-breaks: 66px;
 $header-height-after-nav-breaks: 71px;
-
-$grid-gap: 10px;
 
 // Neat Breakpoints
 $small-screen: 480px;
@@ -176,7 +177,6 @@ $size__main-small-screen: 65%;
 $size__main-large-screen: 400px;
 $size__archive-medium-screen: 600px;
 $size__ad-flexing: 660px;
-$size__site-sidebar: 300px;
 $size__content-sidebar-small-screen: 280px;
 $size__content-sidebar-medium-screen: 35%;
 $size__content-sidebar-large-screen: 205px;
