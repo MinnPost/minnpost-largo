@@ -6,5 +6,16 @@
 
 	&.a-category-group {
 		color: $color__white;
+		background-color: $color__black;
+		padding: 0 $standard-block-padding;
+		border-radius: $border-radius;
+	}
+
+	&.a-category-group-news {
+		background-color: brand-color(red, medium);
+	}
+
+	&.a-category-group-opinion {
+		background-color: utility-color(purple, dark);
 	}
 }

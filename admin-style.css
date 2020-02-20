@@ -23,6 +23,12 @@
 	margin: 20px 0;
 }
 
+/* parent categories are more trouble than they are worth! */
+.taxonomy-category .term-parent-wrap,
+.term-php .term-parent-wrap {
+	display: none;
+}
+
 /* excerpt fixes */
 #cmb2_excerpt .cmb2-context-wrap .cmb-row {
 	padding: 0;
