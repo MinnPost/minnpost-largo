@@ -4,6 +4,7 @@
 	margin-bottom: $standard-block-margin;
 	max-width: $max-width-content;
 	align-self: flex-end;
+	margin: 0 $content-gutter $standard-block-margin 0;
 }
 
 .m-entry-content-custom {

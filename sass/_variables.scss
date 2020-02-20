@@ -155,7 +155,8 @@ $max-width-medium: 680px;
 $medium-margins-too-small: 700px;
 $max-width-medium-plus-margins: 720px;
 $max-width-story-2012: 452px;
-$max-width-content: 640px;
+$max-width-content: 75%; // trying this percentage out for now
+$content-gutter: 5%;
 
 $header-height-smaller-screen: 50px;
 $header-height-small-screen: 76px;
