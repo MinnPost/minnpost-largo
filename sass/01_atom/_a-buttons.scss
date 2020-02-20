@@ -74,7 +74,7 @@ button.a-button,
 
 	.a-between-buttons {
 		display: inline-block;
-		margin: 0 0.5em;
+		margin: 0 $standard-block-padding;
 		color: $color__gray-meta;
 		text-transform: uppercase;
 		font-family: $font__sans;

@@ -67,14 +67,14 @@
 		.m-form-message {
 			margin-bottom: 0;
 			border: 0;
-			padding: 0.5em;
+			padding: $standard-block-padding;
 		}
 
 		button {
-			padding: 0.15em 0.5em 0.2em 0.5em;
+			padding: 0.15em $standard-block-padding 0.2em $standard-block-padding;
 			font-size: 1em;
 			line-height: normal;
-			margin-left: 0.5em;
+			margin-left: $standard-block-padding;
 		}
 	}
 }
@@ -85,7 +85,7 @@
 }
 
 .m-form-instory.m-form-minnpost-form-processor-mailchimp {
-	border: 1px solid $color__border-light;
+	border: $border-default-style;
 
 	&.legacy {
 		margin-bottom: 1em;
@@ -105,7 +105,7 @@
 }
 
 .m-form-container {
-	padding: 0 0.5em;
+	padding: 0 $standard-block-padding;
 }
 
 .m-form-in-body {
@@ -114,7 +114,7 @@
 	font-family: $font__sans;
 	font-size: 1.25em;
 	color: $color__form-text;
-	border: 1px solid $color__gray-lightest;
+	border: $border-default-style;
 	position: relative;
 }
 

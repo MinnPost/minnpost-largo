@@ -6,8 +6,8 @@
 	line-height: 1.3em;
 	font-family: $font__sans;
 	background: #fff;
-	border: 1px solid $color__gray-lightest;
-	padding: 4px;
+	border: $border-default-style;
+	padding: $standard-block-padding;
 	margin-bottom: 10px;
 	margin-left: 1px;
 

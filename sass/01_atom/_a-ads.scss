@@ -52,7 +52,7 @@ main .ad-x110 {
 
 .ad-middle3,
 .ad-Middle3 {
-	border-bottom: 1px solid $color__gray-lightest;
+	border-bottom: $border-default-style;
 	padding: $standard-block-margin / 2;
 
 	div {
@@ -72,7 +72,7 @@ main .ad-x110 {
 .acm-ad-wrapper.ad-middle3,
 .acm-ad-wrapper.ad-Middle3 {
 	margin-bottom: $standard-block-margin;
-	border-bottom: 1px solid $color__gray-lightest;
+	border-bottom: $border-default-style;
 	background-color: $color__minnpost-white;
 	padding-bottom: $standard-block-margin / 2;
 

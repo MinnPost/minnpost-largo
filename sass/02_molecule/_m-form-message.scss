@@ -1,7 +1,7 @@
 .m-form-message {
 	padding: 1em;
 	margin-bottom: 1.25em;
-	border: 1px solid $color__gray-lightest;
+	border: $border-default-style;
 
 	&.m-form-message-error {
 		background: rgba_color($_color-base-red, 0.2);
