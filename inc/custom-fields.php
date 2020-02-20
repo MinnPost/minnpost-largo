@@ -28,7 +28,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 		}
 	}
 	function newsletter_pre_get_posts( WP_Query $wp_query ) {
-		if ( in_array( $wp_query->get( 'post_type' ), array( 'post' ) ) ) {
+		if ( in_array( $wp_query->get( 'post_type' ), array( 'post' ), true ) ) {
 			$wp_query->set( 'update_post_meta_cache', false );
 		}
 	}
@@ -755,15 +755,24 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 		// for news/opinion display
 		$category_setup->add_field(
 			array(
-				'name'    => __( 'News or Opinion', 'minnpost-largo' ),
-				'id'      => '_mp_category_group',
-				'type'    => 'radio_inline',
-				'desc'    => __( 'If a value is selected, this value will show before the category name. If Opinion is selected, this category will be excluded from automated story recommendations.', 'minnpost-largo' ),
-				'classes' => 'cmb2-match-admin-width',
-				'options' => array(
-					'news'    => __( 'News', 'minnpost-largo' ),
-					'opinion' => __( 'Opinion', 'minnpost-largo' ),
-				),
+				'name'             => __( 'Category Group', 'minnpost-largo' ),
+				'id'               => '_mp_category_group',
+				'type'             => 'radio_inline',
+				'desc'             => __( 'If a value is selected, this value will show before the category name, and this category will not be able to have grouped categories associated with it. If Opinion is selected, this category will be excluded from automated story recommendations.', 'minnpost-largo' ),
+				'classes'          => 'cmb2-match-admin-width',
+				'options'          => minnpost_largo_category_groups(),
+				'show_option_none' => true,
+			)
+		);
+		// for news/opinion display
+		$category_setup->add_field(
+			array(
+				'name'    => __( 'Grouped Categories', 'minnpost-largo' ),
+				'id'      => '_mp_grouped_categories',
+				'type'    => 'multicheck',
+				'desc'    => __( 'If this category is used to group other categories, they will be checked here, as well as indicated on that category\'s settings page.', 'minnpost-largo' ),
+				'classes' => 'cmb2-category-multicheck cmb2-match-admin-width',
+				'options' => minnpost_largo_grouped_categories(),
 			)
 		);
 		// text fields
@@ -833,37 +842,15 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 				'desc' => __( 'If checked, the image for this category will not be lazy loaded.', 'minnpost-largo' ),
 			)
 		);
-
-		// featured columns that appear on categories
-		$options = array();
-		if ( is_admin() && ( isset( $_GET['taxonomy'] ) && 'category' === sanitize_key( $_GET['taxonomy'] ) && isset( $_GET['tag_ID'] ) ) || isset( $_POST['tag_ID'] ) && 'category' === sanitize_key( $_POST['taxonomy'] ) ) {
-
-			if ( isset( $_GET['tag_ID'] ) ) :
-				$category_id = absint( $_GET['tag_ID'] );
-			elseif ( isset( $_POST['tag_ID'] ) ) :
-				$category_id = absint( $_POST['tag_ID'] );
-			endif;
-			$categories = get_terms(
-				array(
-					'taxonomy'   => 'category',
-					'hide_empty' => false,
-				)
-			);
-			foreach ( $categories as $category ) {
-				if ( $category_id !== $category->term_id ) {
-					$options[ $category->term_id ] = $category->name;
-				}
-			}
-			$category_setup->add_field(
-				array(
-					'name'    => __( 'Featured Columns', 'minnpost-largo' ),
-					'id'      => '_mp_category_featured_columns',
-					'type'    => 'multicheck',
-					'options' => $options,
-				)
-			);
-
-		}
+		$category_setup->add_field(
+			array(
+				'name'    => __( 'Featured Columns', 'minnpost-largo' ),
+				'id'      => '_mp_category_featured_columns',
+				'type'    => 'multicheck',
+				'classes' => 'cmb2-category-multicheck',
+				'options' => minnpost_largo_featured_column_options(),
+			)
+		);
 	}
 
 endif;
@@ -888,6 +875,168 @@ if ( ! function_exists( 'remove_default_category_description' ) ) :
 	}
 endif;
 
+/**
+* Array of categories for grouped categories
+* @return $options
+*
+*/
+if ( ! function_exists( 'minnpost_largo_grouped_categories' ) ) :
+	function minnpost_largo_grouped_categories() {
+		// categories that can be grouped with this category
+		$options = array();
+		if ( is_admin() && ( isset( $_GET['taxonomy'] ) && 'category' === sanitize_key( $_GET['taxonomy'] ) && isset( $_GET['tag_ID'] ) ) || isset( $_POST['tag_ID'] ) && 'category' === sanitize_key( $_POST['taxonomy'] ) ) {
+
+			if ( isset( $_GET['tag_ID'] ) ) {
+				$category_id = absint( $_GET['tag_ID'] );
+			} elseif ( isset( $_POST['tag_ID'] ) ) {
+				$category_id = absint( $_POST['tag_ID'] );
+			}
+
+			$categories = get_terms(
+				array(
+					'taxonomy'   => 'category',
+					'hide_empty' => false,
+				)
+			);
+			foreach ( $categories as $category ) {
+				if ( isset( $category_id ) && $category_id !== $category->term_id ) {
+					$options[ $category->term_id ] = $category->name;
+				}
+			}
+		}
+		return $options;
+	}
+endif;
+
+/**
+* Get the grouped categories for the given category
+* @param array $data
+* @param string $object_id
+* @param array $args
+* @param object $field
+* @return $value
+*
+*/
+if ( ! function_exists( 'minnpost_largo_get_grouped_categories' ) ) :
+	add_filter( 'cmb2_override__mp_grouped_categories_meta_value', 'minnpost_largo_get_grouped_categories', 10, 4 );
+	function minnpost_largo_get_grouped_categories( $data, $object_id, $args, $field ) {
+		if ( is_admin() && ( isset( $_GET['taxonomy'] ) && 'category' === sanitize_key( $_GET['taxonomy'] ) && isset( $_GET['tag_ID'] ) ) || isset( $_POST['tag_ID'] ) && 'category' === sanitize_key( $_POST['taxonomy'] ) ) {
+			$value   = array();
+			$cat_ids = array_keys( $field->args['options'] );
+			if ( ! empty( $cat_ids ) ) {
+				foreach ( $cat_ids as $cat_id ) {
+					if ( isset( $args['id'] ) && $args['id'] !== $cat_id ) {
+						$category_group = get_term_meta( $cat_id, '_mp_category_group', true );
+						if ( '' !== $category_group ) {
+							if ( $category_group === $args['id'] ) {
+								$value[] = $cat_id;
+							}
+						}
+					}
+				}
+			}
+			return $value;
+		}
+	}
+endif;
+
+/**
+* Set the grouped categories for the given category
+* @param bool $override
+* @param array $args
+* @param array $field_args
+* @param object $field
+* @return int|WP_Error|bool $updated
+*
+*/
+if ( ! function_exists( 'minnpost_largo_set_grouped_categories' ) ) :
+	add_filter( 'cmb2_override__mp_grouped_categories_meta_save', 'minnpost_largo_set_grouped_categories', 10, 4 );
+	function minnpost_largo_set_grouped_categories( $override, $args, $field_args, $field ) {
+		if ( is_admin() && ( isset( $_GET['taxonomy'] ) && 'category' === sanitize_key( $_GET['taxonomy'] ) && isset( $_GET['tag_ID'] ) ) || isset( $_POST['tag_ID'] ) && 'category' === sanitize_key( $_POST['taxonomy'] ) ) {
+
+			if ( isset( $_GET['tag_ID'] ) ) {
+				$category_id = absint( $_GET['tag_ID'] );
+			} elseif ( isset( $_POST['tag_ID'] ) ) {
+				$category_id = absint( $_POST['tag_ID'] );
+			}
+
+			$cat_ids = $args['value']; // this should be an array of category ids
+			if ( ! empty( $cat_ids ) ) {
+				foreach ( $cat_ids as $cat_id ) {
+					$updated = update_term_meta( $cat_id, '_mp_category_group', $category_id );
+				}
+			}
+
+			return ! ! $updated;
+		}
+	}
+endif;
+
+/**
+* Array of categories for featured columns
+* This is deprecated
+* @return $options
+*
+*/
+if ( ! function_exists( 'minnpost_largo_featured_column_options' ) ) :
+	function minnpost_largo_featured_column_options() {
+		// featured columns that appear on categories
+		$options = array();
+		if ( is_admin() && ( isset( $_GET['taxonomy'] ) && 'category' === sanitize_key( $_GET['taxonomy'] ) && isset( $_GET['tag_ID'] ) ) || isset( $_POST['tag_ID'] ) && 'category' === sanitize_key( $_POST['taxonomy'] ) ) {
+
+			if ( isset( $_GET['tag_ID'] ) ) {
+				$category_id = absint( $_GET['tag_ID'] );
+			} elseif ( isset( $_POST['tag_ID'] ) ) {
+				$category_id = absint( $_POST['tag_ID'] );
+			}
+
+			$categories = get_terms(
+				array(
+					'taxonomy'   => 'category',
+					'hide_empty' => false,
+				)
+			);
+			foreach ( $categories as $category ) {
+				if ( isset( $category_id ) && $category_id !== $category->term_id ) {
+					$options[ $category->term_id ] = $category->name;
+				}
+			}
+		}
+		return $options;
+	}
+endif;
+
+/**
+* For the category group custom field, generate the options
+* @return $options
+*
+*/
+if ( ! function_exists( 'minnpost_largo_category_groups' ) ) :
+	function minnpost_largo_category_groups() {
+		$choices = array( 'news', 'opinion' );
+		$options = array();
+		foreach ( $choices as $choice ) {
+			$category = minnpost_largo_group_category( $choice );
+			if ( false !== $category ) {
+				$options[ $category->term_id ] = $category->name;
+			}
+		}
+		return $options;
+	}
+endif;
+
+/**
+* For a category group option, get the category data
+* @param $slug
+* @return $category
+*
+*/
+if ( ! function_exists( 'minnpost_largo_group_category' ) ) :
+	function minnpost_largo_group_category( $slug ) {
+		$category = get_category_by_slug( $slug );
+		return $category;
+	}
+endif;
 
 /**
 * Custom Author fields
@@ -1064,7 +1213,7 @@ if ( ! function_exists( 'cmb2_user_fields' ) ) :
 		);
 
 		// reading preferences
-		$user_preferences = new_cmb2_box(
+		$reading_preferences = new_cmb2_box(
 			array(
 				'id'           => $object_type . '_reading_preferences',
 				'title'        => __( 'Reading Preferences', 'minnpost-largo' ),
@@ -1073,7 +1222,7 @@ if ( ! function_exists( 'cmb2_user_fields' ) ) :
 				'priority'     => 'low',
 			)
 		);
-		$user_preferences->add_field(
+		$reading_preferences->add_field(
 			array(
 				'name'    => __( 'Reading preferences:', 'minnpost-largo' ),
 				'desc'    => '',
@@ -1094,6 +1243,7 @@ if ( ! function_exists( 'cmb2_user_fields' ) ) :
 			)
 		);
 
+		// donation fields
 		$user_donation_info = new_cmb2_box(
 			array(
 				'id'           => $object_type . '_donation_info',
