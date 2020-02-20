@@ -803,10 +803,7 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 				'type'    => 'radio_inline',
 				'desc'    => __( 'If a value is selected, this value will show before the category name. If Opinion is selected, this category will be excluded from automated story recommendations.', 'minnpost-largo' ),
 				'classes' => 'cmb2-match-admin-width',
-				'options' => array(
-					'News'    => __( 'News', 'minnpost-largo' ),
-					'Opinion' => __( 'Opinion', 'minnpost-largo' ),
-				),
+				'options' => minnpost_largo_category_groups(),
 			)
 		);
 		// text fields
@@ -876,37 +873,15 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 				'desc' => __( 'If checked, the image for this category will not be lazy loaded.', 'minnpost-largo' ),
 			)
 		);
-
-		// featured columns that appear on categories
-		$options = array();
-		if ( is_admin() && ( isset( $_GET['taxonomy'] ) && 'category' === sanitize_key( $_GET['taxonomy'] ) && isset( $_GET['tag_ID'] ) ) || isset( $_POST['tag_ID'] ) && 'category' === sanitize_key( $_POST['taxonomy'] ) ) {
-
-			if ( isset( $_GET['tag_ID'] ) ) :
-				$category_id = absint( $_GET['tag_ID'] );
-			elseif ( isset( $_POST['tag_ID'] ) ) :
-				$category_id = absint( $_POST['tag_ID'] );
-			endif;
-			$categories = get_terms(
-				array(
-					'taxonomy'   => 'category',
-					'hide_empty' => false,
-				)
-			);
-			foreach ( $categories as $category ) {
-				if ( $category_id !== $category->term_id ) {
-					$options[ $category->term_id ] = $category->name;
-				}
-			}
-			$category_setup->add_field(
-				array(
-					'name'    => __( 'Featured Columns', 'minnpost-largo' ),
-					'id'      => '_mp_category_featured_columns',
-					'type'    => 'multicheck',
-					'options' => $options,
-				)
-			);
-
-		}
+		$category_setup->add_field(
+			array(
+				'name'    => __( 'Featured Columns', 'minnpost-largo' ),
+				'id'      => '_mp_category_featured_columns',
+				'type'    => 'multicheck',
+				'classes' => 'cmb2-category-multicheck',
+				'options' => minnpost_largo_featured_column_options(),
+			)
+		);
 	}
 
 endif;
@@ -931,6 +906,71 @@ if ( ! function_exists( 'remove_default_category_description' ) ) :
 	}
 endif;
 
+/**
+* Array of categories for featured columns
+* This is deprecated
+* @return $options
+*
+*/
+if ( ! function_exists( 'minnpost_largo_featured_column_options' ) ) :
+	function minnpost_largo_featured_column_options() {
+		// featured columns that appear on categories
+		$options = array();
+		if ( is_admin() && ( isset( $_GET['taxonomy'] ) && 'category' === sanitize_key( $_GET['taxonomy'] ) && isset( $_GET['tag_ID'] ) ) || isset( $_POST['tag_ID'] ) && 'category' === sanitize_key( $_POST['taxonomy'] ) ) {
+
+			if ( isset( $_GET['tag_ID'] ) ) {
+				$category_id = absint( $_GET['tag_ID'] );
+			} elseif ( isset( $_POST['tag_ID'] ) ) {
+				$category_id = absint( $_POST['tag_ID'] );
+			}
+
+			$categories = get_terms(
+				array(
+					'taxonomy'   => 'category',
+					'hide_empty' => false,
+				)
+			);
+			foreach ( $categories as $category ) {
+				if ( isset( $category_id ) && $category_id !== $category->term_id ) {
+					$options[ $category->term_id ] = $category->name;
+				}
+			}
+		}
+		return $options;
+	}
+endif;
+
+/**
+* For the category group custom field, generate the options
+* @return $options
+*
+*/
+if ( ! function_exists( 'minnpost_largo_category_groups' ) ) :
+	function minnpost_largo_category_groups() {
+		$choices = array( 'news', 'opinion' );
+		$options = array();
+		foreach ( $choices as $choice ) {
+			$category = minnpost_largo_group_category( $choice );
+			if ( false !== $category ) {
+				$options[ $category->term_id ] = $category->name;
+			}
+		}
+		return $options;
+	}
+endif;
+
+/**
+* For a category group option, get the category data
+* @param $slug
+* @return $category
+*
+*/
+if ( ! function_exists( 'minnpost_largo_group_category' ) ) :
+	function minnpost_largo_group_category( $slug ) {
+		$category = get_category_by_slug( $slug );
+		return $category;
+	}
+endif;
 
 /**
 * Custom Author fields

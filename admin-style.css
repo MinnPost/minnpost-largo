@@ -9,11 +9,11 @@
 	display: none;
 }
 
-/* featured columns fixes */
-.cmb2-id--mp-category-featured-columns .cmb-td p {
+/* category checkbox fixes */
+.cmb2-category-multicheck .cmb-td p {
 	display: none;
 }
-.cmb2-id--mp-category-featured-columns .cmb-td {
+.cmb2-category-multicheck .cmb-td {
 	min-height: 42px;
 	max-height: 200px;
 	overflow: auto;

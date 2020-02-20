@@ -975,25 +975,33 @@ endif;
 * Outputs HTML for the category breadcrumb
 *
 * @param int $post_id
+* @param bool $show_group
 *
 */
 if ( ! function_exists( 'minnpost_category_breadcrumb' ) ) :
-	function minnpost_category_breadcrumb( $post_id = '' ) {
+	function minnpost_category_breadcrumb( $post_id = '', $show_group = true ) {
 
 		if ( '' === $post_id ) {
 			$post_id = get_the_ID();
 		}
-
-		$category_id = minnpost_get_permalink_category_id( $post_id );
+		$category_id       = minnpost_get_permalink_category_id( $post_id );
+		$category_group_id = '';
 		if ( '' !== $category_id ) {
-			$category       = get_category( $category_id );
-			$category_link  = get_category_link( $category );
-			$category_group = get_term_meta( $category_id, '_mp_category_group', true );
-			if ( '' !== $category_group ) {
-				echo '<div class="a-breadcrumb a-category-group a-category-group-' . sanitize_title( $category_group ) . '">' . $category_group . '</div>';
+			$category      = get_category( $category_id );
+			$category_link = get_category_link( $category );
+			if ( true === $show_group ) {
+				$category_group_id = get_term_meta( $category_id, '_mp_category_group', true );
+				if ( '' !== $category_group_id ) {
+					echo '<div class="a-breadcrumbs">';
+					$category_group = get_category( $category_group_id );
+					echo '<div class="a-breadcrumb a-category-group a-category-group-' . sanitize_title( $category_group->slug ) . '"><a href="' . esc_url( get_category_link( $category_group->term_id ) ) . '">' . $category_group->name . '</a></div>';
+				}
 			}
 			$category_name = $category->name;
 			echo '<div class="a-breadcrumb a-category-name"><a href="' . $category_link . '">' . $category_name . '</a></div>';
+		}
+		if ( '' !== $category_group_id ) {
+			echo '</div>';
 		}
 	}
 endif;

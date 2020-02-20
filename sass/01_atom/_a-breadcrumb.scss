@@ -1,14 +1,24 @@
+.a-breadcrumbs {
+	display: flex;
+}
 .a-breadcrumb {
 	font-weight: 700;
 	font-size: $content-font-size;
 	line-height: $base-line-height-em;
 	font-family: $font__sans;
+	margin-right: $standard-block-padding / 2;
 
 	&.a-category-group {
 		color: $color__white;
 		background-color: $color__black;
 		padding: 0 $standard-block-padding;
 		border-radius: $border-radius;
+
+		a,
+		a:link,
+		a:visited {
+			color: $color__white;
+		}
 	}
 
 	&.a-category-group-news {
