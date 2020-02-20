@@ -142,6 +142,9 @@ $html-font-size: 100%;
 	}
 }
 
+/*------------------------------------*\
+	#SITE STRUCTURE
+\*------------------------------------*/
 
 // site structure
 $max-width-medium: 680px;
@@ -181,14 +184,26 @@ $size__content-sidebar-large-screen: 205px;
 // footer
 $size__footer-column: 270px;
 
-// spacing
+/*------------------------------------*\
+	#SPACING
+\*------------------------------------*/
+
+// margin/padding
 $standard-block-margin: 1.5em; // 36px at desktop
+$standard-block-padding: 0.5em; // 12px at body
 
 $standard-page-margin: 1.538461538461538em; // 20px
 $home-content-sidebar-padding: 35px;
 $archive-content-sidebar-padding: 15px;
 $footer-box-spacing: 15px;
 $form-text-indent: 6px;
+
+/*------------------------------------*\
+	#BORDERS
+\*------------------------------------*/
+
+$border-radius: 4px;
+$border-default-style: 1px solid neutral-color(border);
 
 /*------------------------------------*\
 	#Fixed Sizes
