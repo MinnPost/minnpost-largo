@@ -96,4 +96,4 @@
 
 	<?php do_action( 'wp_message_inserter', 'header' ); ?>
 
-	<div id="content" class="o-wrapper o-wrapper-content<?php echo $full_class; ?>">
+	<div id="content" class="o-wrapper o-wrapper-content<?php echo $full_class; ?><?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">
