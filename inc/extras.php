@@ -173,20 +173,29 @@ endif;
 * @return array $headers
 *
 */
-add_filter('wp_headers', function( $headers, $wp_query ) {
-	if ( array_key_exists( 'X-Pingback', $headers ) ) {
-		unset( $headers['X-Pingback'] );
-	}
-	return $headers;
-}, 11, 2 );
+add_filter(
+	'wp_headers',
+	function( $headers, $wp_query ) {
+		if ( array_key_exists( 'X-Pingback', $headers ) ) {
+			unset( $headers['X-Pingback'] );
+		}
+		return $headers;
+	},
+	11,
+	2
+);
 
 /**
 * Remove the RSD link from <head>
 *
 */
-add_action( 'wp', function() {
-	remove_action( 'wp_head', 'rsd_link' );
-}, 11 );
+add_action(
+	'wp',
+	function() {
+		remove_action( 'wp_head', 'rsd_link' );
+	},
+	11
+);
 
 /**
 * Easy method to highlight the search string in the search result
@@ -294,12 +303,15 @@ endif;
  * @param array $hosts
  * @return array $hosts
  */
-add_filter( 'allowed_redirect_hosts', function( $hosts ) {
-	$hosts[] = 'members.minnpost.com';
-	$hosts[] = 'support.minnpost.com';
-	$hosts[] = 'givemn.org';
-	return $hosts;
-});
+add_filter(
+	'allowed_redirect_hosts',
+	function( $hosts ) {
+		$hosts[] = 'members.minnpost.com';
+		$hosts[] = 'support.minnpost.com';
+		$hosts[] = 'givemn.org';
+		return $hosts;
+	}
+);
 
 wpcom_vip_load_gutenberg( false );
 
@@ -333,4 +345,16 @@ endif;
 // use the WP Core send_frame_options_header method to apply x-frame-options: sameorigin
 if ( function_exists( 'send_frame_options_header' ) ) :
 	add_action( 'send_headers', 'send_frame_options_header', 10, 0 );
+endif;
+
+/**
+ * Allow the url to set if we should overlay the grid
+ * @return array $vars
+ */
+if ( ! function_exists( 'minnpost_largo_grid_overlay_var' ) ) :
+	add_filter( 'query_vars', 'minnpost_largo_grid_overlay_var' );
+	function minnpost_largo_grid_overlay_var( $vars ) {
+		$vars[] = 'grid';
+		return $vars;
+	}
 endif;

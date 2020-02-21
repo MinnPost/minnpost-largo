@@ -65,9 +65,15 @@
 	}
 	?>
 
-	<div class="m-entry-content">
-		<?php the_content(); ?>
-	</div><!-- .m-entry-content -->
+	<div class="o-entry">
+		<div class="m-entry-meta">
+			<?php minnpost_share_buttons(); ?>
+		</div><!-- .m-entry-meta -->
+
+		<div class="m-entry-content">
+			<?php the_content(); ?>
+		</div><!-- .m-entry-content -->
+	</div><!-- .o-entry -->
 
 	<?php
 	$hide_author = get_post_meta( $id, '_mp_remove_author_from_display', true );

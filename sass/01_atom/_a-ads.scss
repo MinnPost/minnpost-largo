@@ -1,10 +1,9 @@
 .acm-ad {
 	position: relative;
-	font-size: $base-font-size;
-	line-height: normal;
 	width: auto;
 	height: auto;
 	overflow: hidden;
+	@include meta-preset( $size: -1, $bold: false, $italic: false, $line-height: 1 );
 
 	&.acm-ad-placeholder {
 		text-align: center;
@@ -84,8 +83,7 @@ main .ad-x110 {
 
 	header {
 		text-transform: uppercase;
-		font-family: $font__sans;
-		font-size: $meta-font-size;
+		@include meta-preset( $size: -2, $bold: false, $italic: false, $line-height: 1 );
 		padding: $standard-block-margin / 2;
 		margin-bottom: $standard-block-margin / 2;
 		color: palette(grey, light);

@@ -328,17 +328,46 @@ endif;
 /**
 * Output the share buttons for top or bottom
 *
-* @param string $position
 * @param int $id
 *
 */
 if ( ! function_exists( 'minnpost_share_buttons' ) ) :
-	function minnpost_share_buttons( $position, $id = '' ) {
+	function minnpost_share_buttons( $id = '' ) {
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
-		$display_share  = true;
-		$share_location = get_post_meta( $id, '_mp_share_display_location', true );
+		$display_share = true;
+		?>
+		<ul class="m-share-list">
+			<li class="a-share a-share-facebook">
+				<a href="">
+					<i class="fab fa-facebook-f"></i>
+					Facebook
+				</a>
+			</li>
+			<li class="a-share a-share-twitter">
+				<a href="">
+				</a>
+			</li>
+			<li class="a-share a-share-email">
+				<a href="">
+				</a>
+			</li>
+			<li class="a-share a-share-print">
+				<a href="">
+				</a>
+			</li>
+			<li class="a-share a-share-copy-link">
+				<a href="">
+				</a>
+			</li>
+			<li class="a-share a-share-republish">
+				<a href="">
+				</a>
+			</li>
+		</ul>
+		<?php
+		/*$share_location = get_post_meta( $id, '_mp_share_display_location', true );
 		if ( '' !== $share_location ) {
 			switch ( $share_location ) {
 				case 'both':
@@ -351,14 +380,14 @@ if ( ! function_exists( 'minnpost_share_buttons' ) ) :
 					$display_share = false;
 					break;
 			}
-		}
-		if ( function_exists( 'sharing_display' ) && true === $display_share ) {
+		}*/
+		/*if ( function_exists( 'sharing_display' ) && true === $display_share ) {
 			?>
 			<div class="m-entry-share m-entry-share-<?php echo $position; ?>">
 				<?php sharing_display( '', true ); ?>
 			</div>
 			<?php
-		}
+		}*/
 	}
 endif;
 
