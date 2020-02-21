@@ -1,6 +1,9 @@
-.o-wrapper-content-full .m-layout-primary {
+.m-layout-primary {
+	max-width: colspan( 12, 16 );
+}
 
-	@include outer-container($max-width-page);
+.o-wrapper-content-full .m-layout-primary {
+	//@include outer-container($max-width-page);
 }
 
 body.single-post .m-layout-primary,
@@ -10,14 +13,14 @@ body.page .m-layout-primary {
 
 main {
 	position: relative;
-
 	@include clearfix;
 	max-width: 100%;
+	flex: 0 0 100%;
 }
 
 body.single-post main,
 body.page main {
-	flex: 0 0 100%;
+	//flex: 0 0 100%;
 }
 
 .m-layout-membership .m-membership-support-wrapper {
@@ -46,6 +49,6 @@ body.page main {
 @media screen and (min-width: $max-width-page) {
 
 	.m-layout-primary {
-		max-width: $max-width-main;
+		//max-width: $max-width-main;
 	}
 }

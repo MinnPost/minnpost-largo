@@ -143,6 +143,7 @@
 
 	// article bottom
 	&.wp-message-inserter-message-region-article_bottom {
+		width: colspan( 16, 12 );
 		border: 1px solid $color__border-light;
 		margin-bottom: $standard-page-margin;
 

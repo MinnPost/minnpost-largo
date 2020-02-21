@@ -16,7 +16,7 @@ if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
 	function minnpost_largo_add_remove_styles() {
 		// add
 		wp_enqueue_style( 'minnpost-fonts', 'https://use.typekit.net/cxj7fzg.css', array(), '1.0.0', 'all' );
-		wp_enqueue_style( 'minnpost-style', get_theme_file_uri() . '/style.css', array( 'dashicons' ), filemtime( get_theme_file_path() . '/style.css' ), 'all' );
+		wp_enqueue_style( 'minnpost-style', get_theme_file_uri() . '/style.css', array(), filemtime( get_theme_file_path() . '/style.css' ), 'all' );
 		wp_enqueue_style( 'minnpost-style-print', get_theme_file_uri() . '/print.css', array(), filemtime( get_theme_file_path() . '/print.css' ), 'print' );
 		// remove
 		wp_dequeue_style( 'largo-style' );

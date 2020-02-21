@@ -1,67 +1,83 @@
+// column-setter
+@include grid( o-wrapper );
+@include grid( o-wrapper-grid-overlay, overlay );
+
+// default, mobile-first styles for wrapper
 .o-wrapper {
-	max-width: 100%;
-	margin-left: $standard-page-margin / 2;
-	margin-right: $standard-page-margin / 2;
+	//max-width: $max-width-page;
+	//margin-left: $standard-page-margin / 2;
+	//margin-right: $standard-page-margin / 2;
 	position: relative;
-	&.o-wrapper-site-header {
-		display: flex;
-		flex-wrap: wrap;
-	}
+
+	&.o-wrapper-site-header,
 	&.o-wrapper-content {
 		display: flex;
-		flex-direction: column;
-		margin-bottom: 40px;
+		flex-wrap: wrap;
+		flex: 0 0 100%;
+		flex-direction: column; // on mobile, display as a column
 	}
-}
 
-.o-wrapper-support-navigation {
-	border-top: 1.230769230769231em solid #1a1818;
-}
+	&.o-wrapper-content {
+		//margin-bottom: 40px; // this should be a better value in ems or rems
+	}
 
-body.post .o-wrapper-content, body.page .o-wrapper-content {
-	flex: 0 0 100%;
+	&.o-wrapper-support-navigation {
+		border-top: 1.230769230769231em solid neutral-color(black);
+	}
 }
 
 // media queries for wrapper
 @media screen and (min-width: $more-than-logo-screen) {
 	.o-wrapper {
-		margin-left: $standard-page-margin;
-		margin-right: $standard-page-margin;
+		//margin-left: $standard-page-margin;
+		//margin-right: $standard-page-margin;
 	}
 }
 
 @media screen and (min-width: $medium-margins-too-small) {
-	.archive .o-wrapper.o-wrapper-content {
-		flex-direction: row;
+	// this is where we have a big enough screen to make some things horizontal
+	.o-wrapper {
+
+		&.o-wrapper-site-header {
+			flex-direction: row;
+		}
+	}
+
+	.archive .o-wrapper {
+		&.o-wrapper-content {
+			flex-direction: row;
+		}
 	}
 }
 
 @media screen and (min-width: $medium-screen) and (max-width: $nav-breaks) {
 	.o-wrapper {
-		max-width: $max-width-medium;
+		//max-width: $max-width-medium;
 	}
 }
 
 @media screen and (min-width: $max-width-medium-plus-margins) {
 	.o-wrapper {
-		margin-left: auto;
-		margin-right: auto;
+		//margin-left: auto;
+		//margin-right: auto;
 	}
 }
 
 @media screen and (min-width: $nav-breaks) {
 	.o-wrapper {
-		max-width: inherit;
-		margin-left: $standard-page-margin;
-		margin-right: $standard-page-margin;
+		//max-width: inherit;
+		//margin-left: $standard-page-margin;
+		//margin-right: $standard-page-margin;
 	}
 }
 
 @media screen and (min-width: $max-width-page) {
 	.o-wrapper {
-		@include outer-container($max-width-page);
-	}
-	.o-wrapper.o-wrapper-content {
-		flex-direction: row;
+		//@include outer-container($max-width-page);
+
+		// this is where we have a big enough screen to make it all horizontal
+		&.o-wrapper-content {
+			flex-direction: row;
+		}
 	}
 }
