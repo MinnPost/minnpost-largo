@@ -337,32 +337,39 @@ if ( ! function_exists( 'minnpost_share_buttons' ) ) :
 			$id = get_the_ID();
 		}
 		$display_share = true;
+		$share_url     = urlencode( get_current_url() );
+		$share_excerpt = minnpost_largo_get_description();
+		$share_title   = minnpost_largo_get_title();
 		?>
-		<ul class="m-share-list">
+		<ul class="m-entry-share m-entry-share-top">
 			<li class="a-share a-share-facebook">
-				<a href="">
-					<i class="fab fa-facebook-f"></i>
-					Facebook
+				<a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $share_url; ?>" aria-label="<?php echo __( 'Share this article on Facebook.', 'minnpost-largo' ); ?>" data-share-action="<?php echo __( 'Facebook', 'minnpost-largo' ); ?>">
+					<i class="fab fa-facebook-f" aria-hidden="true"></i>
 				</a>
 			</li>
 			<li class="a-share a-share-twitter">
-				<a href="">
+				<a href="https://twitter.com/intent/tweet?via=MinnPost&text=<?php echo $share_excerpt; ?>&url=<?php echo $share_url; ?>" aria-label="<?php echo __( 'Share this article on Twitter.', 'minnpost-largo' ); ?>" data-share-action="<?php echo __( 'Twitter', 'minnpost-largo' ); ?>">
+					<i class="fab fa-twitter" aria-hidden="true"></i>
 				</a>
 			</li>
 			<li class="a-share a-share-email">
-				<a href="">
+				<a href="mailto:?subject=<?php echo $share_title; ?>&body=<?php echo $share_url; ?>" aria-label="<?php echo __( 'Email this article.', 'minnpost-largo' ); ?>" data-share-action="<?php echo __( 'Email', 'minnpost-largo' ); ?>">
+					<i class="far fa-envelope" aria-hidden="true"></i>
 				</a>
 			</li>
 			<li class="a-share a-share-print">
-				<a href="">
+				<a href="#" aria-label="<?php echo __( 'Print this article.', 'minnpost-largo' ); ?>" data-share-action="<?php echo __( 'Print', 'minnpost-largo' ); ?>">
+					<i class="fas fa-print"></i>
 				</a>
 			</li>
-			<li class="a-share a-share-copy-link">
-				<a href="">
+			<li class="a-share a-share-copy-url">
+				<a href="#" aria-label="<?php echo __( 'Copy the article link to your clipboard.', 'minnpost-largo' ); ?>" data-share-action="<?php echo __( 'Copy', 'minnpost-largo' ); ?>" data-tlite="<?php echo __( 'Link copied', 'minnpost-largo' ); ?>">
+					<i class="fas fa-link"></i>
 				</a>
 			</li>
 			<li class="a-share a-share-republish">
-				<a href="">
+				<a href="" aria-label="<?php echo __( 'Republish this article.', 'minnpost-largo' ); ?>" data-share-action="<?php echo __( 'Republish', 'minnpost-largo' ); ?>">
+					<i class="fab fa-creative-commons"></i>
 				</a>
 			</li>
 		</ul>
