@@ -4,11 +4,11 @@
 	margin-top: 0;
 
 	@include breakpoint-range( sm, lg ) {
-		margin-left: colspan( 3, 12 );
+		//margin-left: colspan( 3, 12 );
 	}
 
 	@include breakpoint-min( xl ) {
-		margin-left: colspan( 3, 12 );
+		//margin-left: colspan( 3, 12 );
 	}
 
 	img {
