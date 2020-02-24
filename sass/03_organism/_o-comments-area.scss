@@ -1,7 +1,4 @@
 .o-comments-area {
-	@include breakpoint-min( lg ) {
-		width: colspan( 16, 12 );
-	}
 
 	ol {
 		list-style: none;
@@ -13,7 +10,7 @@
 		overflow-x: hidden;
 
 		li {
-			padding: $standard-page-margin;
+			padding: $standard-page-margin 0;
 			padding-bottom: $standard-page-margin / 2;
 			background: $color__white;
 			margin: 0 0 $standard-page-margin 0;
@@ -27,9 +24,14 @@
 			}
 		}
 
+		> li {
+			padding: $standard-page-margin;
+		}
+
 		ul.children {
 			list-style: none;
 			padding: 0;
+			margin-left: $standard-block-margin;
 		}
 
 		.comment-respond {
@@ -70,6 +72,16 @@
 					margin-bottom: 0.5em;
 				}
 			}
+		}
+	}
+}
+
+.single {
+
+	.o-comments-area {
+
+		@include breakpoint-min( lg ) {
+			width: colspan( 16, 12 );
 		}
 	}
 }

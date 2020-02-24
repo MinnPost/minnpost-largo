@@ -180,12 +180,12 @@ $grid-color: red; // Grid overlay color
 
 $breakpoints: (
 	xxs: (cols:  4, min-width:  0,  margin: $pad), // Includes optional custom margin
-	xs: (cols:  6, min-width: 30em, margin: $gut),
-	sm: (cols:  6, min-width: 40em, margin: $gut),
-	md: (cols:  8, min-width: 50em, margin: $gut),
-	lg: (cols: 12, min-width: 60em, margin: $mar),
-	xl: (cols: 16, min-width: 70em, margin: $mar),
-	xxl: (cols: 16, min-width: 80em, margin: $mar)
+	xs: (cols:  6, min-width: 30em, margin: $gut), // 480px
+	sm: (cols:  6, min-width: 40em, margin: $gut), // 640px
+	md: (cols:  8, min-width: 50em, margin: $gut), // 800px
+	lg: (cols: 12, min-width: 60em, margin: $mar), // 960px
+	xl: (cols: 16, min-width: 70em, margin: $mar), // 1120px
+	xxl: (cols: 16, min-width: 80em, margin: $mar) // 1280px
 );
 
 $max-width: null; // For no max-width, use $max-width: null;

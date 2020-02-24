@@ -2,6 +2,26 @@
 
 	&.m-support-cta-top {
 
+		@include breakpoint-min( md ) {
+			font-size: 80%;
+			max-width: colspan( 6, 8 );
+		}
+
+		@include breakpoint-min( lg ) {
+			font-size: 80%;
+			max-width: colspan( 8, 12 );
+		}
+
+		@include breakpoint-min( xl ) {
+			font-size: 85%;
+			max-width: colspan( 11, 16 );
+		}
+
+		@include breakpoint-min( xxl ) {
+			font-size: 100%;
+			max-width: none;
+		}
+
 		h2 {
 			@include meta-preset( $size: 0, $bold: false, $italic: false, $line-height: 1 );
 
@@ -50,42 +70,6 @@
 
 		.m-form-actions {
 			text-align: center;
-		}
-	}
-}
-
-@include breakpoint-min( md ) {
-	.m-support-cta {
-		&.m-support-cta-top {
-			font-size: 80%;
-			max-width: colspan( 6, 8 );
-		}
-	}
-}
-
-@include breakpoint-min( lg ) {
-	.m-support-cta {
-		&.m-support-cta-top {
-			font-size: 75%;
-			max-width: colspan( 8, 12 );
-		}
-	}
-}
-
-@include breakpoint-min( xl ) {
-	.m-support-cta {
-		&.m-support-cta-top {
-			font-size: 85%;
-			max-width: colspan( 11, 16 );
-		}
-	}
-}
-
-@include breakpoint-min( xxl ) {
-	.m-support-cta {
-		&.m-support-cta-top {
-			max-width: none;
-			font-size: 100%;
 		}
 	}
 }
