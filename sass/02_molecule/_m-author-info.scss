@@ -1,6 +1,9 @@
 .m-author-info {
-	width: colspan( 16, 12 );
 	padding-top: 2px;
+
+	@include breakpoint-min( lg ) {
+		width: colspan( 16, 12 );
+	}
 
 	.a-author-figure {
 

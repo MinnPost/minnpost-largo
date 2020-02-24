@@ -1,5 +1,7 @@
 .o-comments-area {
-	width: colspan( 16, 12 );
+	@include breakpoint-min( lg ) {
+		width: colspan( 16, 12 );
+	}
 
 	ol {
 		list-style: none;
