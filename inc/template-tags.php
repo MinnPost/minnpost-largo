@@ -368,6 +368,9 @@ if ( ! function_exists( 'minnpost_share_buttons' ) ) :
 				</a>
 			</li>
 			<?php if ( class_exists( 'Republication_Tracker_Tool' ) ) : ?>
+				<?php
+				// INN will have a template tag we can use to display the button in the next plugin release.
+				?>
 				<li class="a-share a-share-republish">
 					<a href="" aria-label="<?php echo __( 'Republish this article.', 'minnpost-largo' ); ?>" data-share-action="<?php echo __( 'Republish', 'minnpost-largo' ); ?>">
 						<i class="fab fa-creative-commons"></i>
