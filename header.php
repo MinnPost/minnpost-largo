@@ -27,7 +27,7 @@
 	</div>
 
 	<header id="masthead" class="o-header">
-		<div class="o-wrapper o-wrapper-site-header">
+		<div class="o-wrapper o-wrapper-site-header<?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">
 			<?php get_template_part( 'template-parts/logo', 'top' ); ?>
 			<?php do_action( 'minnpost_membership_site_header', true ); ?>
 		</div>

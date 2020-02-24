@@ -64,7 +64,7 @@ $html-font-size: 100%;
 // should change that based on our media queries
 :root {
 	$font-size-interval: 1.1;    // Unitless for proportional, unit for fixed
-	$body-text: 1rem;  // Must have a unit
+	$body-text: 1em;  // Must have a unit
 	$scale-min: -2;    // Unitless negative integer
 	$scale-max: 4;     // Unitless positive integer
 
@@ -182,8 +182,9 @@ $breakpoints: (
 	xs: (cols:  4, min-width:  0,   margin: $pad), // Includes optional custom margin
 	sm: (cols:  6, min-width: 30em, margin: $gut), // Includes optional custom margin
 	md: (cols:  8, min-width: 45em, margin: $gut),
-	lg: (cols: 16, min-width: 60em, margin: $mar),
-	xl: (cols: 16, min-width: 70em, margin: $mar)
+	lg: (cols: 12, min-width: 60em, margin: $mar),
+	xl: (cols: 16, min-width: 70em, margin: $mar),
+	xxl: (cols: 16, min-width: 80em, margin: $mar)
 );
 
 $max-width: null; // For no max-width, use $max-width: null;
