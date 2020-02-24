@@ -14,29 +14,32 @@
 		flex-direction: column;
 	}
 
-	li a {
-		display: inline-block;
-		overflow: none;
-		color: neutral-color(black);
-		border: 2px solid utility-color(blue, dark);
-		border-radius: 50%;
-		vertical-align: middle;
-		text-align: center;
-		width: $share-icon-size;
-		height: $share-icon-size;
-		line-height: $share-icon-size;
+	li {
 		margin-bottom: $standard-block-margin / 2;
 
 		&:last-of-type {
 			margin-bottom: 0;
 		}
 
-		&:hover, &:focus, &:active {
-			border: 2px solid utility-color(blue, medium);
-		}
+		a {
+			display: inline-block;
+			overflow: none;
+			color: neutral-color(black);
+			border: 2px solid utility-color(blue, dark);
+			border-radius: 50%;
+			vertical-align: middle;
+			text-align: center;
+			width: $share-icon-size;
+			height: $share-icon-size;
+			line-height: $share-icon-size;
 
-		svg {
-			pointer-events: none;
+			&:hover, &:focus, &:active {
+				border: 2px solid utility-color(blue, medium);
+			}
+
+			svg {
+				pointer-events: none;
+			}
 		}
 	}
 }
