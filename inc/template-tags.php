@@ -376,27 +376,6 @@ if ( ! function_exists( 'minnpost_share_buttons' ) ) :
 			<?php endif; ?>
 		</ul>
 		<?php
-		/*$share_location = get_post_meta( $id, '_mp_share_display_location', true );
-		if ( '' !== $share_location ) {
-			switch ( $share_location ) {
-				case 'both':
-					$display_share = true;
-					break;
-				case $position:
-					$display_share = true;
-					break;
-				default:
-					$display_share = false;
-					break;
-			}
-		}*/
-		/*if ( function_exists( 'sharing_display' ) && true === $display_share ) {
-			?>
-			<div class="m-entry-share m-entry-share-<?php echo $position; ?>">
-				<?php sharing_display( '', true ); ?>
-			</div>
-			<?php
-		}*/
 	}
 endif;
 
