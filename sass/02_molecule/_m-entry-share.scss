@@ -1,9 +1,18 @@
 .m-entry-share {
 	list-style: none;
-	margin: 0;
+	margin: $standard-block-margin 0;
 	padding: 0;
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
+	justify-content: space-between;
+
+	@include breakpoint-range( sm, lg ) {
+		flex-direction: column;
+	}
+
+	@include breakpoint-min( xl ) {
+		flex-direction: column;
+	}
 
 	li a {
 		display: inline-block;
@@ -17,6 +26,10 @@
 		height: $share-icon-size;
 		line-height: $share-icon-size;
 		margin-bottom: $standard-block-margin / 2;
+
+		&:last-of-type {
+			margin-bottom: 0;
+		}
 
 		&:hover, &:focus, &:active {
 			border: 2px solid utility-color(blue, medium);

@@ -1,7 +1,22 @@
 .o-entry {
 
 	.m-entry-meta {
-		width: colspan( 3, 12 );
+
+		@include breakpoint-range( sm, lg ) {
+			width: colspan( 4, 16 );
+		}
+
+		@include breakpoint-min( xl ) {
+			width: colspan( 4, 16 );
+		}
+
+		/*xxs: (cols:  4, min-width:  0,  margin: $pad), // Includes optional custom margin
+		xs: (cols:  6, min-width: 30em, margin: $gut),
+		sm: (cols:  6, min-width: 40em, margin: $gut),
+		lg: (cols: 12, min-width: 60em, margin: $mar),
+		xl: (cols: 16, min-width: 70em, margin: $mar),
+		xxl: (cols: 16, min-width: 80em, margin: $mar)*/
+
 	}
 }
 

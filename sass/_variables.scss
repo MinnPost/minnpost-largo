@@ -179,9 +179,10 @@ $grid-color: red; // Grid overlay color
 // customized for each breakpoint.
 
 $breakpoints: (
-	xs: (cols:  4, min-width:  0,   margin: $pad), // Includes optional custom margin
-	sm: (cols:  6, min-width: 30em, margin: $gut), // Includes optional custom margin
-	md: (cols:  8, min-width: 45em, margin: $gut),
+	xxs: (cols:  4, min-width:  0,  margin: $pad), // Includes optional custom margin
+	xs: (cols:  6, min-width: 30em, margin: $gut),
+	sm: (cols:  6, min-width: 40em, margin: $gut),
+	md: (cols:  8, min-width: 50em, margin: $gut),
 	lg: (cols: 12, min-width: 60em, margin: $mar),
 	xl: (cols: 16, min-width: 70em, margin: $mar),
 	xxl: (cols: 16, min-width: 80em, margin: $mar)
@@ -190,7 +191,6 @@ $breakpoints: (
 $max-width: null; // For no max-width, use $max-width: null;
 
 $size__site-sidebar: 300px; // this needs to be pixel based because of ad dimensions
-$max-width-main: calc(100% - #{$size__site-sidebar}); // got to interpolate the variable
 $max-width-page: 70em; // this is 1680px
 
 // site structure
