@@ -1,7 +1,7 @@
 html {
-	font-size: 125%;
-	
-	@media screen and (min-width: $nav-breaks) {
+	font-size: 125%; // 100% is 16px
+
+	@include breakpoint-min( xl ) {
 		font-size: 150%;
 	}
 }

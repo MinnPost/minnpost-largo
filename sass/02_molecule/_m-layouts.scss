@@ -1,5 +1,11 @@
 .m-layout-primary {
-	max-width: colspan( 12, 16 );
+	width: colspan( 12, 16 );
+	max-width: calc(100% - #{$size__site-sidebar});
+
+	@include breakpoint-min( sm ) {
+		display: flex;
+	}
+
 }
 
 .o-wrapper-content-full .m-layout-primary {
@@ -42,7 +48,7 @@ body.page main {
 @media screen and (min-width: $more-than-logo-screen) {
 
 	.m-layout-primary {
-		display: flex;
+		//display: flex;
 	}
 }
 

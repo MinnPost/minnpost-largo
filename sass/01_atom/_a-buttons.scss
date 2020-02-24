@@ -4,18 +4,20 @@ button[type="button"],
 a.a-button,
 button.a-button,
 .sce-comment-edit-buttons button {
+	text-decoration: none;
 	padding: 0.25em;
 	@include meta-preset( $size: 1, $bold: true, $italic: false, $line-height: 1 );
-	background: $color__minnpost-red;
+	background: palette(red, medium);
 	color: $color__white;
 	border: 0;
 	display: inline-block;
 	margin-right: 0.5em;
 	cursor: pointer;
+	transition: $hover-transition;
 
 	&:link,
 	&:visited {
-		background: $color__minnpost-red;
+		background: palette(red, medium);
 		color: $color__white;
 		text-decoration: none;
 	}
@@ -25,7 +27,6 @@ button.a-button,
 	&:active {
 		background: palette(red, dark);
 		color: $color__white;
-		text-decoration: none;
 	}
 
 	&:disabled,

@@ -181,9 +181,9 @@ $grid-color: red; // Grid overlay color
 $breakpoints: (
 	xs: (cols:  4, min-width:  0,   margin: $pad), // Includes optional custom margin
 	sm: (cols:  6, min-width: 30em, margin: $gut), // Includes optional custom margin
-	md: (cols:  8, min-width: 40em, margin: $gut),
-	lg: (cols: 16, min-width: 50em, margin: $mar),
-	//xl: (cols: 16, min-width: 60em)
+	md: (cols:  8, min-width: 45em, margin: $gut),
+	lg: (cols: 16, min-width: 60em, margin: $mar),
+	xl: (cols: 16, min-width: 70em, margin: $mar)
 );
 
 $max-width: null; // For no max-width, use $max-width: null;
@@ -206,13 +206,13 @@ $header-height-before-nav-breaks: 66px;
 $header-height-after-nav-breaks: 71px;
 
 // Neat Breakpoints
-$small-screen: 480px;
+$small-screen: 480px; // replace with "sm"
 $more-than-logo-screen: 500px;
 $medium-screen: 865px; // added 225 for now
-$nav-breaks: 768px;
+$nav-breaks: 768px; // maybe replace with md
 $nav-move-end: 810px;
 $large-screen: 860px;
-$nav-wrap-screen: 950px;
+$nav-wrap-screen: 950px; // replace with "lg" media query
 
 // site region sizes
 $size__main-smaller-screen: 50%;
@@ -252,6 +252,7 @@ $border-default-style: 1px solid neutral-color(border);
 	#Animation
 \*------------------------------------*/
 
+$hover-transition: .25s all;
 
 /*------------------------------------*\
 	#Fixed Sizes

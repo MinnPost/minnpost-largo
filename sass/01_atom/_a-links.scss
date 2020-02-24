@@ -1,42 +1,46 @@
 a {
-	color: $color__link;
-	text-decoration: none;
+	color: utility-color(blue, dark);
+	text-decoration: underline;
+	text-decoration-color: utility-color(blue, highlight);
+	text-underline-offset: 0.25em;
+	text-decoration-thickness: 0.08em;
+	transition: $hover-transition;
 
 	&:visited {
-		color: $color__link-visited;
+		color: utility-color(blue, dark);
 	}
 
 	&:active,
 	&:focus,
 	&:hover {
-		color: $color__link-hover;
-		text-decoration: underline;
+		color: utility-color(blue, medium);
+		text-decoration-color: utility-color(blue, background);
 	}
 
 	&:active,
 	&:focus {
-		outline: none;
+		//outline: none;
 	}
 
 	&.active {
-		color: $color__link-active;
+		color: utility-color(blue, medium);
 	}
 
-	&.a-more {
+	/*&.a-more {
 		font-family: $font__sans;
 
 		&::after {
 			content: " ▸";
 		}
-	}
+	}*/
 
 }
 
 // sometimes it can be the link container instead
-p.a-more {
+/*p.a-more {
 	font-family: $font__sans;
 
 	a::after {
 		content: " ▸";
 	}
-}
+}*/

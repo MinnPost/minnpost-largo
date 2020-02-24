@@ -42,8 +42,8 @@
 	}
 }
 
-@media screen and (min-width: $max-width-page) {
-
+//@media screen and (min-width: $nav-wrap-screen) {
+@include breakpoint-min( lg ) {
 	.o-site-sidebar {
 		width: $size__site-sidebar;
 		margin-left: auto;
@@ -61,4 +61,9 @@
 			}
 		}
 	}
+}
+
+@media screen and (min-width: $max-width-page) {
+
+	
 }
