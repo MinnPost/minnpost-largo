@@ -45,14 +45,16 @@
 
 			<?php minnpost_deck(); ?>
 
-			<?php if ( '' !== minnpost_get_posted_by() && '' !== minnpost_get_posted_on() ) : ?>
-				<div class="m-entry-meta">
-					<?php minnpost_posted_by(); ?> | <?php minnpost_posted_on(); ?>
+			<?php if ( '' !== get_the_excerpt() ) : ?>
+				<div class="m-entry-excerpt">
+					<?php the_excerpt(); ?>
+				</div><!-- .m-entry-excerpt -->
+			<?php endif; ?>
+
+			<?php if ( '' !== minnpost_get_posted_by() ) : ?>
+				<div class="m-entry-byline">
+					<?php minnpost_posted_by(); ?>
 				</div>
-			<?php elseif ( '' !== minnpost_get_posted_by() ) : ?>
-				<?php minnpost_posted_by(); ?>
-			<?php elseif ( '' !== minnpost_get_posted_on() ) : ?>
-				<?php minnpost_posted_on(); ?>
 			<?php endif; ?>
 
 		<?php endif; ?>
@@ -67,6 +69,9 @@
 
 	<div class="o-entry">
 		<div class="m-entry-meta">
+			<?php if ( '' !== minnpost_get_posted_on() ) : ?>
+				<?php minnpost_posted_on(); ?>
+			<?php endif; ?>
 			<?php minnpost_share_buttons(); ?>
 		</div><!-- .m-entry-meta -->
 
