@@ -38,7 +38,7 @@ const config = {
 	scripts: {
 		admin_src: './assets/js/src/admin/**/*.js',
 		admin_lint: "./assets/js/src/admin/",
-		main: './assets/js/src/front-end/**/*.js',
+		main: [ './assets/js/vendor/front-end/**/*.js', './assets/js/src/front-end/**/*.js' ],
 		main_lint: "./assets/js/src/front-end/",
 		uglify: [ 'assets/js/*.js', '!assets/js/*.min.js', '!assets/js/customizer.js' ],
 		dest: './assets/js'

@@ -1,8 +1,13 @@
-.m-entry-meta {
-	max-width: colspan( 2, 12 );
+.o-entry {
 
-	ul {
-		list-style: none;
-		margin: 0;
+	.m-entry-meta {
+		width: colspan( 3, 12 );
+	}
+}
+
+.m-entry-header {
+
+	.m-entry-meta {
+		width: colspan( 12, 12 );
 	}
 }
