@@ -221,7 +221,8 @@ if ( ! function_exists( 'minnpost_posted_on' ) ) :
 			$visible_date = esc_html( get_the_date( 'F j, Y', $id ) );
 		}
 
-		$time_string = sprintf( $time_string,
+		$time_string = sprintf(
+			$time_string,
 			esc_attr( get_the_date( 'c' ), $id ),
 			$visible_date,
 			esc_attr( get_the_modified_date( 'c', $id ) ),
@@ -260,7 +261,8 @@ if ( ! function_exists( 'minnpost_get_posted_on' ) ) :
 			return $posted_on;
 		}
 		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
-		$time_string = sprintf( $time_string,
+		$time_string = sprintf(
+			$time_string,
 			esc_attr( get_the_date( 'c' ), $id ),
 			esc_html( get_the_date( '', $id ) ),
 			esc_attr( get_the_modified_date( 'c', $id ) ),
@@ -908,10 +910,10 @@ if ( ! function_exists( 'minnpost_entry_footer' ) ) :
 
 		if ( ! is_single() && ! post_password_required() && ( comments_open() || get_comments_number() ) ) {
 			echo '<span class="comments-link">';
-			/* translators: %s: post title */
 			comments_popup_link(
 				sprintf(
 					wp_kses(
+						/* translators: %s: post title */
 						__( 'Leave a Comment<span class="screen-reader-text"> on %s</span>', 'minnpost-largo' ),
 						array(
 							'span' => array(
