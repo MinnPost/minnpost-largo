@@ -516,6 +516,8 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 
 		// admins only
 		if ( ! current_user_can( 'administrator' ) ) {
+			// vip host stuff
+			remove_menu_page( 'vip-dashboard' );
 			// tools
 			remove_submenu_page( 'tools.php', 'tools.php' );
 			remove_submenu_page( 'tools.php', 'widget-settings-import' );
