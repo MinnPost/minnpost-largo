@@ -285,14 +285,15 @@ endif;
 * This depends on the Co-Authors Plus plugin
 *
 * @param int $id
+* @param bool $include_title
 *
 */
 if ( ! function_exists( 'minnpost_posted_by' ) ) :
-	function minnpost_posted_by( $id = '' ) {
+	function minnpost_posted_by( $id = '', $include_title = true ) {
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
-		echo minnpost_get_posted_by( $id );
+		echo minnpost_get_posted_by( $id, $include_title );
 	}
 endif;
 
@@ -301,11 +302,12 @@ endif;
 * This depends on the Co-Authors Plus plugin
 *
 * @param int $id
+* @param bool $include_title
 * @return string
 *
 */
 if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
-	function minnpost_get_posted_by( $id = '' ) {
+	function minnpost_get_posted_by( $id = '', $include_title = false ) {
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
@@ -314,18 +316,61 @@ if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
 		if ( 'on' === $hide_author ) {
 			return $posted_by;
 		}
-		if ( ! empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) ) ) :
+		// is the basic byline field filled in?
+		if ( ! empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) ) ) {
 			return esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) );
-		else :
-			if ( function_exists( 'coauthors_posts_links' ) ) :
+		} else {
+			// we do not want to include the job title. does co-authors-plus exist?
+			if ( false === $include_title && function_exists( 'coauthors_posts_links' ) ) {
 				return 'By&nbsp;' . coauthors_posts_links( ', ', ' and ', null, null, false );
-			else :
+			} elseif ( true === $include_title && function_exists( 'get_coauthors' ) ) {
+				// we do want to include the job title. co-authors-plus exists.
+				$coauthors = get_coauthors( $id );
+				if ( ! empty( $coauthors ) ) {
+					$byline = esc_html__( 'By&nbsp;', 'minnpost-largo' );
+					foreach ( $coauthors as $key => $coauthor ) {
+						$name_display = '<a href="' . get_author_posts_url( $coauthor->ID, $coauthor->user_nicename ) . '" rel="author">' . apply_filters( 'the_author', $coauthor->display_name ) . '</a>';
+						if ( isset( get_the_coauthor_meta( 'job-title' )[ $coauthor->ID ] ) ) {
+							$title = get_the_coauthor_meta( 'job-title' )[ $coauthor->ID ];
+							if ( '' !== $title ) {
+								$name_display .= '&nbsp;|&nbsp;' . $title;
+							}
+						}
+						// there is more than one author
+						if ( 1 < sizeof( $coauthors ) ) {
+							if ( array_key_first( $coauthors ) === $key ) {
+								// we are at the beginning of the array
+								$byline .= $name_display;
+							} elseif ( array_key_last( $coauthors ) === $key ) {
+								// we are at the end of the array
+								$byline .= ' and ' . $name_display;
+							} else {
+								// we are in the middle of the array
+								$byline .= ', ' . $name_display;
+							}
+						} else {
+							// there is only one author
+							$byline .= $name_display;
+						}
+					}
+					return $byline;
+				}
+			} else {
+				// default byline from WordPress core
 				return 'By&nbsp;<a href="' . get_the_author_posts_url( get_the_author_meta( 'ID' ) ) . '">' . the_author( $id ) . '</a>';
-			endif;
-		endif;
+			}
+		}
 		return $posted_by;
 	}
 endif;
+
+/*add_filter( 'the_author', 'minnpost_largo_author_display_name' );
+function minnpost_largo_author_display_name( $name ) {
+	if ( '' !== get_the_author_meta( 'job-title' ) ) {
+		$name .= '&nbsp;|&nbsp;' . get_the_author_meta( 'job-title' );
+	}
+	return $name;
+}*/
 
 /**
 * Output the share buttons for top or bottom
