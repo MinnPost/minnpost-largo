@@ -22,7 +22,29 @@ function minnpost_largo_comment( $comment, $args, $depth ) {
 				$comment_name = comment_author( $comment->comment_ID );
 			}
 			?>
-			Submitted by <?php echo get_user_name_or_profile_link( $comment ); ?> on <a class="a-comment-permalink" href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_ID ) ); ?>"><?php printf( __( '%1$s - %2$s' ), get_comment_date(), get_comment_time() ); ?></a>. 
+			<?php if ( function_exists( 'get_ap_comment_date' ) && function_exists( 'get_ap_comment_time' ) ) : ?>
+				<?php
+				echo sprintf(
+					// translators: 1) user profile name/link, 2) comment link, 3) ap style comment date, 4) ap style comment time
+					esc_html__( 'Submitted by %1$s on ' ) . '<a class="a-comment-permalink" href="%2$s">%3$s - %4$s</a>',
+					get_user_name_or_profile_link( $comment ),
+					htmlspecialchars( get_comment_link( $comment->comment_ID ) ),
+					get_ap_comment_date(),
+					get_ap_comment_time()
+				);
+				?>
+			<?php else : ?>
+				<?php
+				echo sprintf(
+					// translators: 1) user profile name/link, 2) comment link, 3) comment date, 4) comment time
+					esc_html__( 'Submitted by %1$s on ' ) . '<a class="a-comment-permalink" href="%2$s">%3$s - %4$s</a>',
+					get_user_name_or_profile_link( $comment ),
+					htmlspecialchars( get_comment_link( $comment->comment_ID ) ),
+					get_comment_date(),
+					get_comment_time()
+				);
+				?>
+			<?php endif; ?>
 		</div>
 		<?php if ( 'approved' !== $status && intval( get_current_user_id() ) === intval( $comment->user_id ) ) : ?>
 			<p class="a-moderation-notice a-moderation-notice-pending"><?php echo __( 'Your comment is awaiting moderation.', 'minnpost-largo' ); ?></p>

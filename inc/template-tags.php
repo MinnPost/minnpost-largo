@@ -213,21 +213,42 @@ if ( ! function_exists( 'minnpost_posted_on' ) ) :
 			$id = get_the_ID();
 		}
 		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
-
-		$visible_date = esc_html( get_the_date( '', $id ) );
+		if ( function_exists( 'get_ap_date' ) ) {
+			$visible_date = esc_html( get_ap_date( '', $id ) );
+		} else {
+			$visible_date = esc_html( get_the_date( '', $id ) );
+		}
 		if ( ! is_singular( 'newsletter' ) && date( get_option( 'date_format' ), current_time( 'timestamp' ) ) === $visible_date ) {
-			$visible_date = esc_html( get_the_date( get_option( 'time_format' ), $id ) );
+			if ( function_exists( 'get_ap_date' ) ) {
+				$visible_date = esc_html( get_ap_date( get_option( 'time_format' ), $id ) );
+			} else {
+				$visible_date = esc_html( get_the_date( get_option( 'time_format' ), $id ) );
+			}
 		} elseif ( is_singular( 'newsletter' ) ) {
-			$visible_date = esc_html( get_the_date( 'F j, Y', $id ) );
+			if ( function_exists( 'get_ap_date' ) ) {
+				$visible_date = esc_html( get_ap_date( 'F j, Y', $id ) );
+			} else {
+				$visible_date = esc_html( get_the_date( 'F j, Y', $id ) );
+			}
 		}
 
-		$time_string = sprintf(
-			$time_string,
-			esc_attr( get_the_date( 'c' ), $id ),
-			$visible_date,
-			esc_attr( get_the_modified_date( 'c', $id ) ),
-			esc_html( get_the_modified_date( '', $id ) )
-		);
+		if ( function_exists( 'get_ap_date' ) ) {
+			$time_string = sprintf(
+				$time_string,
+				esc_attr( get_ap_date( 'c' ), $id ),
+				$visible_date,
+				esc_attr( get_the_modified_date( 'c', $id ) ),
+				esc_html( get_the_modified_date( '', $id ) )
+			);
+		} else {
+			$time_string = sprintf(
+				$time_string,
+				esc_attr( get_the_date( 'c' ), $id ),
+				$visible_date,
+				esc_attr( get_the_modified_date( 'c', $id ) ),
+				esc_html( get_the_modified_date( '', $id ) )
+			);
+		}
 
 		$posted_on = sprintf(
 			// translators: the placeholder is the time string, which can be translated
