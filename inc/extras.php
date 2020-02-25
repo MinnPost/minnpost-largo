@@ -329,3 +329,8 @@ if ( ! function_exists( 'is_membership' ) ) :
 		return ( isset( $wp_query->query['is_membership'] ) && true === $wp_query->query['is_membership'] );
 	}
 endif;
+
+// use the WP Core send_frame_options_header method to apply x-frame-options: sameorigin
+if ( function_exists( 'send_frame_options_header' ) ) :
+	add_action( 'send_headers', 'send_frame_options_header', 10, 0 );
+endif;

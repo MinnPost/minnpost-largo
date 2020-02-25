@@ -476,6 +476,7 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 		// users who cannot moderate comments
 		if ( ! current_user_can( 'moderate_comments' ) ) {
 			remove_menu_page( 'edit-comments.php' );
+			remove_submenu_page( 'options-general.php', 'sce' );
 		}
 
 		// advertising
@@ -516,6 +517,8 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 
 		// admins only
 		if ( ! current_user_can( 'administrator' ) ) {
+			// vip host stuff
+			remove_menu_page( 'vip-dashboard' );
 			// tools
 			remove_submenu_page( 'tools.php', 'tools.php' );
 			remove_submenu_page( 'tools.php', 'widget-settings-import' );
@@ -523,7 +526,9 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 			// settings
 			remove_submenu_page( 'options-general.php', 'options-writing.php' );
 			remove_submenu_page( 'options-general.php', 'options-permalink.php' );
+			remove_submenu_page( 'options-general.php', 'documentcloud' );
 			remove_submenu_page( 'options-general.php', 'duplicatepost' );
+			remove_submenu_page( 'options-general.php', 'font-awesome' );
 			remove_submenu_page( 'options-general.php', 'form-processor-mailchimp' );
 			remove_submenu_page( 'options-general.php', 'user-account-management' );
 			remove_submenu_page( 'options-general.php', 'widgetopts_plugin_settings' );

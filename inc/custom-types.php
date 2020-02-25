@@ -43,12 +43,14 @@ if ( ! function_exists( 'create_newsletter' ) ) :
 				),
 				'capabilities'        => array(
 					'edit_post'          => 'edit_newsletter',
+					'read_post'          => 'read_newsletter',
 					'delete_post'        => 'delete_newsletter',
 					'delete_posts'       => 'delete_newsletters',
 					'edit_posts'         => 'edit_newsletters',
 					'edit_others_posts'  => 'edit_others_newsletters',
 					'publish_posts'      => 'publish_newsletters',
 					'read_private_posts' => 'read_private_newsletters',
+					'create_posts'       => 'create_newsletters',
 				),
 				'menu_icon'           => 'dashicons-email-alt',
 			)
@@ -221,6 +223,7 @@ if ( ! function_exists( 'minnpost_message_regions' ) ) :
 			//'article_middle'  => __( 'Article Middle', 'minnpost-largo' ),
 			'archive_middle'  => __( 'Archive Middle', 'minnpost-largo' ),
 			'user_account'    => __( 'User Account', 'minnpost-largo' ),
+			'popup'           => __( 'Popup', 'minnpost-largo' ),
 			'email_header'    => __( 'Email Header', 'minnpost-largo' ),
 			'email_middle'    => __( 'Email Middle', 'minnpost-largo' ),
 			'email_footer'    => __( 'Email Footer', 'minnpost-largo' ),

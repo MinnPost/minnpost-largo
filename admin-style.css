@@ -9,11 +9,11 @@
 	display: none;
 }
 
-/* featured columns fixes */
-.cmb2-id--mp-category-featured-columns .cmb-td p {
-	display: none;
+/* category checkbox fixes */
+.cmb2-category-multicheck .cmb-td p.cmb2-metabox-description {
+	padding-top: 0;
 }
-.cmb2-id--mp-category-featured-columns .cmb-td {
+.cmb2-category-multicheck .cmb-td ul {
 	min-height: 42px;
 	max-height: 200px;
 	overflow: auto;
@@ -21,6 +21,12 @@
 	border: 1px solid #ddd;
 	background-color: #fdfdfd;
 	margin: 20px 0;
+}
+
+/* parent categories are more trouble than they are worth! */
+.taxonomy-category .term-parent-wrap,
+.term-php .term-parent-wrap {
+	display: none;
 }
 
 /* excerpt fixes */
@@ -45,4 +51,12 @@
 }
 .cmb-type-post-search-ajax input.cmb-post-search-ajax {
 	width: 50em;
+}
+
+/* cmb2 category fields */
+/* this media query pixel value comes from wp-admin/css/forms.css */
+@media screen and (min-width: 782px) {
+	.term-php .cmb2-match-admin-width .cmb-td {
+		width: calc(100% - 240px);
+	}
 }

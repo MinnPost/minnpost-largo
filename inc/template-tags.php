@@ -606,14 +606,16 @@ endif;
 *
 * @param int $category_id
 * @param string $size
-* @param string $include_text
-* @param string $include_name
+* @param bool $include_text
+* @param bool $include_name
 * @param string $link_on
+* @param bool $lazy_load
+* @param array $attributes
 * @return string $output
 *
 */
 if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
-	function minnpost_get_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false, $link_on = 'title', $lazy_load = true ) {
+	function minnpost_get_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false, $link_on = 'title', $lazy_load = true, $attributes = array() ) {
 
 		$image_data = minnpost_get_term_image( $category_id, $size );
 		if ( '' !== $image_data ) {
@@ -669,11 +671,13 @@ endif;
 *
 * @param int $category_id
 * @param string $size
+* @param bool $lazy_load
+* @param array $attributes
 * @return array $image_data
 *
 */
 if ( ! function_exists( 'minnpost_get_term_image' ) ) :
-	function minnpost_get_term_image( $category_id = '', $size = 'feature', $lazy_load = true ) {
+	function minnpost_get_term_image( $category_id = '', $size = 'feature', $lazy_load = true, $attributes = array() ) {
 		$image_url = get_term_meta( $category_id, '_mp_category_main_image', true );
 		if ( 'feature' !== $size ) {
 			$image_url = get_term_meta( $category_id, '_mp_category_' . $size . '_image', true );

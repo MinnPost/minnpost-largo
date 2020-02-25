@@ -11,6 +11,7 @@
 /**
 * Allows us to determine if a popup can be loaded, after the conditions have been processed.
 * We use this to prevent popups on /support, /user, /account urls
+* popups coming from the site messages plugin use the following method instead
 *
 * @param bool $loadable
 * @return int $id
@@ -32,6 +33,35 @@ if ( ! function_exists( 'minnpost_popup_is_loadable' ) ) :
 			}
 		}
 		return $loadable;
+	}
+endif;
+
+/**
+* Allows us to determine if a popup should be shown to the user, after the conditions have been processed.
+* We use this to prevent popups on /support, /user, /account urls
+*
+* @param bool $show_message
+* @return string $region
+*/
+if ( ! function_exists( 'minnpost_message_show' ) ) :
+	add_filter( 'wp_message_inserter_show_message', 'minnpost_message_show', 10, 2 );
+	function minnpost_message_show( $show_message, $region ) {
+		if ( 'popup' === $region ) {
+			$url = wp_parse_url( $_SERVER['REQUEST_URI'] );
+			if ( isset( $url['path'] ) ) {
+				$path = $url['path'];
+				if ( substr( $path, 0, strlen( '/support' ) ) === '/support' ) {
+					$show_message = false;
+				}
+				if ( substr( $path, 0, strlen( '/user' ) ) === '/user' ) {
+					$show_message = false;
+				}
+				if ( substr( $path, 0, strlen( '/account' ) ) === '/account' ) {
+					$show_message = false;
+				}
+			}
+		}
+		return $show_message;
 	}
 endif;
 
@@ -117,10 +147,10 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 					'multiple'    => true,
 					//'select2'     => true,
 					'as_array'    => true,
-					'options'     => minnpost_popup_roles(),
+					'options'     => minnpost_role_options(),
 				),
 			),
-			'callback' => 'minnpost_user_has_role',
+			'callback' => 'minnpost_popup_user_has_role',
 			'priority' => 5,
 		);
 		$conditions['benefit_eligible']     = array(
@@ -152,7 +182,7 @@ if ( ! function_exists( 'minnpost_popup_conditions' ) ) :
 					'options'     => minnpost_email_options(),
 				),
 			),
-			'callback' => 'minnpost_user_gets_emails',
+			'callback' => 'minnpost_popup_user_gets_emails',
 			'priority' => 7,
 		);
 		$conditions['url_is']               = array(
@@ -255,6 +285,38 @@ if ( ! function_exists( 'minnpost_site_message_conditionals' ) ) :
 				'list',
 			),
 		);
+		$conditionals['url'][]  = array(
+			'name'       => 'url_is',
+			'method'     => 'minnpost_url_matches',
+			'has_params' => true,
+			'params'     => array(
+				'target',
+			),
+		);
+		$conditionals['url'][]  = array(
+			'name'       => 'url_contains',
+			'method'     => 'minnpost_url_matches',
+			'has_params' => true,
+			'params'     => array(
+				'target',
+			),
+		);
+		$conditionals['url'][]  = array(
+			'name'       => 'url_begins_with',
+			'method'     => 'minnpost_url_matches',
+			'has_params' => true,
+			'params'     => array(
+				'target',
+			),
+		);
+		$conditionals['url'][]  = array(
+			'name'       => 'url_ends_with',
+			'method'     => 'minnpost_url_matches',
+			'has_params' => true,
+			'params'     => array(
+				'target',
+			),
+		);
 		/*$conditionals['benefit_eligible']     = array(
 			'group'    => __( 'User', 'minnpost-largo' ),
 			'name'     => __( 'User: Eligible For Benefit', 'minnpost-largo' ),
@@ -271,11 +333,24 @@ if ( ! function_exists( 'minnpost_site_message_conditionals' ) ) :
 			'callback' => 'minnpost_user_eligible_for_benefit',
 			'priority' => 6,
 		);*/
-		
-
-
 
 		return $conditionals;
+	}
+endif;
+
+/**
+* Modify the site message cache flag
+*
+* @param bool $cache
+* @return bool $cache
+*/
+if ( ! function_exists( 'minnpost_site_message_cache' ) ) :
+	add_filter( 'wp_message_inserter_cache', 'minnpost_site_message_cache', 10, 1 );
+	function minnpost_site_message_cache( $cache ) {
+		if ( current_user_can( 'edit_messages' ) ) {
+			$cache = false;
+		}
+		return $cache;
 	}
 endif;
 
@@ -287,7 +362,7 @@ endif;
 if ( ! function_exists( 'minnpost_user_is_member' ) ) :
 	function minnpost_user_is_member() {
 		$user = wp_get_current_user();
-		if ( 0 === $user ) {
+		if ( 0 === $user->ID ) {
 			return false;
 		}
 
@@ -297,7 +372,7 @@ if ( ! function_exists( 'minnpost_user_is_member' ) ) :
 		// Check each selected role against the user's roles
 		foreach ( $member_levels as $level ) {
 			// If the selected role matches, return true
-			if ( in_array( $level, (array) $user->roles ) ) {
+			if ( in_array( $level, (array) $user->roles, true ) ) {
 				return true;
 			}
 		}
@@ -345,11 +420,12 @@ if ( ! function_exists( 'minnpost_largo_message_conditional_fields' ) ) :
 	add_filter( 'wp_message_inserter_add_group_conditional_fields', 'minnpost_largo_message_conditional_fields', 10, 3 );
 	function minnpost_largo_message_conditional_fields( $conditional_fields, $group_id, $prefix ) {
 		$conditional_fields[] = array(
-			'name'       => __( 'Emails to match', 'minnpost-largo' ),
+			'name'       => __( 'Emails to Match', 'minnpost-largo' ),
 			'id'         => $prefix . 'emails_to_match',
 			'type'       => 'multicheck',
-			'desc'       => __( 'If you check values here, users who are subscribed to all of them will match. If you leave it unchecked, users who get ANY of the possible emails will match.', 'minnpost-largo' ),
+			'desc'       => __( 'This will match users who get ANY of the checked emails. If you want to require that the user gets multiple email addresses, use another conditional with an AND operator.', 'minnpost-largo' ),
 			'options'    => minnpost_email_options(),
+			'classes'    => 'cmb2-message-conditional-emails-value',
 			'default'    => 'none',
 			'attributes' => array(
 				'required'               => false,
@@ -357,7 +433,101 @@ if ( ! function_exists( 'minnpost_largo_message_conditional_fields' ) ) :
 				'data-conditional-value' => 'gets_emails',
 			),
 		);
+		$conditional_fields[] = array(
+			'name'       => __( 'Roles to Match', 'minnpost-largo' ),
+			'id'         => $prefix . 'roles_to_match',
+			'type'       => 'multicheck',
+			'desc'       => __( 'This will match users who have ANY of the checked roles. If you want to require that the user has multiple roles, use another conditional with an AND operator.', 'minnpost-largo' ),
+			'options'    => minnpost_role_options(),
+			'classes'    => 'cmb2-message-conditional-roles-value',
+			'default'    => 'none',
+			'attributes' => array(
+				'required'               => false,
+				'data-conditional-id'    => wp_json_encode( array( $group_id, $prefix . 'conditional' ) ),
+				'data-conditional-value' => 'has_role',
+			),
+		);
 		return $conditional_fields;
+	}
+endif;
+
+/**
+* Change the conditional value we expect when it is being replaced in the admin UI
+*
+* @param string $value
+* @param string $method
+* @return string $key
+*/
+if ( ! function_exists( 'minnpost_largo_message_conditional_value' ) ) :
+	add_filter( 'wp_message_inserter_add_conditional_value', 'minnpost_largo_message_conditional_value', 10, 2 );
+	function minnpost_largo_message_conditional_value( $value, $conditional ) {
+		$method = isset( $conditional['_wp_inserted_message_conditional'] ) ? $conditional['_wp_inserted_message_conditional'] : '';
+		if ( 'gets_emails' === $method ) {
+			// these are the emails we want to check and see if the user is getting
+			$value = $conditional['_wp_inserted_message_emails_to_match'];
+		}
+		if ( 'has_role' === $method ) {
+			// these are the roles we want to check and see if the user has
+			$value = $conditional['_wp_inserted_message_roles_to_match'];
+		}
+		return $value;
+	}
+endif;
+
+/**
+* Check to see if the user's newsletters match any of the one(s) we're checking against from the settings.
+*
+* @param array $lists_to_check
+* @return bool $user_is_match
+*/
+if ( ! function_exists( 'minnpost_user_gets_emails' ) ) :
+	function minnpost_user_gets_emails( $lists_to_check = array() ) {
+		$user_is_match = false;
+		$user          = wp_get_current_user();
+		if ( 0 === $user->ID ) {
+			return $user_is_match;
+		}
+		if ( ! is_array( $lists_to_check ) ) {
+			$emails_to_check   = array();
+			$emails_to_check[] = $lists_to_check;
+		} else {
+			$emails_to_check = $lists_to_check;
+		}
+
+		// populate values we need for the mc call
+		if ( function_exists( 'minnpost_form_processor_mailchimp' ) ) {
+			$minnpost_form_processor_mailchimp = minnpost_form_processor_mailchimp();
+			$shortcode                         = 'newsletter_form';
+			$resource_type                     = $minnpost_form_processor_mailchimp->get_data->get_resource_type( $shortcode );
+			$resource_id                       = $minnpost_form_processor_mailchimp->get_data->get_resource_id( $shortcode );
+
+			$user_email      = $user->user_email;
+			$reset_user_info = false;
+			$message_code    = get_query_var( 'newsletter_message_code' );
+			if ( '' !== $message_code ) {
+				$reset_user_info = true;
+			}
+
+			$user_mailchimp_groups = get_option( $minnpost_form_processor_mailchimp->option_prefix . $shortcode . '_mc_resource_item_type', '' );
+			$user_mailchimp_info   = $minnpost_form_processor_mailchimp->get_data->get_user_info( $shortcode, $resource_type, $resource_id, $user_email, $reset_user_info );
+
+			if ( ! is_wp_error( $user_mailchimp_info ) ) {
+				$mailchimp_user_id = $user_mailchimp_info['id'];
+				$groups            = $user_mailchimp_info[ $user_mailchimp_groups ];
+				$mailchimp_status  = $user_mailchimp_info['status'];
+				if ( 'subscribed' === $mailchimp_status ) {
+					$mc_resource_items = $minnpost_form_processor_mailchimp->get_data->get_mc_resource_items( $resource_type, $resource_id );
+					foreach ( $mc_resource_items as $item ) {
+						// check until there's a match for the list we're checking against on the user's groups. if there's at least one match, it's a true result.
+						if ( in_array( $item['value'], $emails_to_check, true ) ) {
+							$user_is_match = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+		return $user_is_match;
 	}
 endif;
 
@@ -367,9 +537,9 @@ endif;
 * @return bool
 */
 if ( ! function_exists( 'minnpost_user_gets_emails' ) ) :
-	function minnpost_user_gets_emails( $lists_to_check = array() ) {
+	function minnpost_popup_user_gets_emails( $lists_to_check = array() ) {
 		$user = wp_get_current_user();
-		if ( 0 === $user ) {
+		if ( 0 === $user->ID ) {
 			return false;
 		}
 
@@ -451,8 +621,8 @@ endif;
 *
 * @return array $roles
 */
-if ( ! function_exists( 'minnpost_popup_roles' ) ) :
-	function minnpost_popup_roles() {
+if ( ! function_exists( 'minnpost_role_options' ) ) :
+	function minnpost_role_options() {
 		static $roles = null;
 
 		if ( null === $roles ) {
@@ -473,13 +643,42 @@ endif;
 /**
 * Check to see if the user has any of the selected roles
 *
-* @param array $settings
+* @param array $roles
 * @return bool
 */
 if ( ! function_exists( 'minnpost_user_has_role' ) ) :
-	function minnpost_user_has_role( $settings = array() ) {
+	function minnpost_user_has_role( $roles = array() ) {
 		$user = wp_get_current_user();
-		if ( 0 === $user ) {
+		if ( 0 === $user->ID ) {
+			return false;
+		}
+
+		if ( ! is_array( $roles ) ) {
+			$roles_to_check   = array();
+			$roles_to_check[] = $roles;
+		} else {
+			$roles_to_check = $roles;
+		}
+
+		$user_has_role = array_intersect( $roles_to_check, (array) $user->roles );
+		if ( false !== $user_has_role ) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+endif;
+
+/**
+* Check to see if the user has any of the selected roles
+*
+* @param array $settings
+* @return bool
+*/
+if ( ! function_exists( 'minnpost_popup_user_has_role' ) ) :
+	function minnpost_popup_user_has_role( $settings = array() ) {
+		$user = wp_get_current_user();
+		if ( 0 === $user->ID ) {
 			return false;
 		}
 
@@ -623,6 +822,48 @@ endif;
 /**
 * Check to see if the URL matches
 *
+* @param string $name
+* @param string $value
+* @return bool
+*/
+if ( ! function_exists( 'minnpost_url_matches' ) ) :
+	function minnpost_url_matches( $name, $value = '' ) {
+		$is_match = false;
+		$target   = $value;
+		$url      = $_SERVER['REQUEST_URI'];
+
+		if ( '' !== $value ) {
+			switch ( $name ) {
+				case 'url_is':
+					if ( $url === $value || site_url( $url ) === site_url( $value ) ) {
+						$is_match = true;
+					}
+					break;
+				case 'url_contains':
+					if ( false !== strpos( $url, $value ) ) {
+						$is_match = true;
+					}
+					break;
+				case 'url_begins_with':
+					if ( substr( $url, 0, strlen( $value ) ) === $value ) {
+						$is_match = true;
+					}
+					break;
+				case 'url_ends_with':
+					if ( substr( $url, -strlen( $value ) ) === $value ) {
+						$is_match = true;
+					}
+					break;
+			}
+		}
+
+		return $is_match;
+	}
+endif;
+
+/**
+* Check to see if the URL matches
+*
 * @param array $settings
 * @return bool
 */
@@ -661,7 +902,6 @@ if ( ! function_exists( 'minnpost_popup_url_matches' ) ) :
 		return $is_match;
 	}
 endif;
-
 
 // Checks preloaded popups in the head for which assets to enqueue.
 if ( ! function_exists( 'minnpost_popup_assets' ) ) :

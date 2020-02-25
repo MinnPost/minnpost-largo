@@ -70,3 +70,4 @@
 
 </body>
 </html>
+<?php do_action( 'wp_message_inserter', 'popup' ); ?>
