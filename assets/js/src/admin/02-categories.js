@@ -1,5 +1,5 @@
 function showHideCategoryGroupChoices( radio_value, checkboxes_selector ) {
-	if ( '' === radio_value ) {
+	if ( 'undefined' === typeof radio_value || '' === radio_value ) {
 		$( checkboxes_selector ).show();
 	} else {
 		$( checkboxes_selector ).hide();
