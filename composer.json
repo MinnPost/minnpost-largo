@@ -1,11 +1,11 @@
 {
-    "name": "minnpost-largo",
+    "name": "minnpost/minnpost-largo",
     "description": "MinnPost Largo theme",
     "type": "wordpress-theme",
     "authors": [
         {
             "name": "MinnPost",
-            "email": "code@minnpost.com"
+            "email": "tech@minnpost.com"
         }
     ],
     "require": {

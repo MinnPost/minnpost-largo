@@ -749,7 +749,7 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 				'title'            => __( 'Category Settings', 'minnpost-largo' ),
 				'object_types'     => array( $object_type ),
 				'taxonomies'       => array( 'category' ),
-				'new_term_section' => true, // will display in add category section
+				'new_term_section' => false, // will display in add category sidebar
 			)
 		);
 		// for news/opinion display
@@ -782,7 +782,7 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 		$category_setup->add_field(
 			array(
 				'name'              => __( 'Grouped Categories', 'minnpost-largo' ),
-				'id'                => '_mp_grouped_categories',
+				'id'                => '_mp_category_grouped_categories',
 				'type'              => 'multicheck',
 				'desc'              => __( 'If this category is used to group other categories, they will be checked here, as well as indicated on that category\'s settings page.', 'minnpost-largo' ),
 				'classes'           => 'cmb2-category-multicheck cmb2-match-admin-width',
