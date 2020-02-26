@@ -25,14 +25,14 @@ if ( ' story-first' === $label ) {
 
 if ( $is_republishable_story ) : ?>
 <tr>
-	<td class="two-column content story" style="border-collapse: collapse; font-size: 0; Margin: 0; padding: 0; text-align: center" align="center">
+	<td class="one-column content story" style="border-collapse: collapse; font-size: 0; Margin: 0; padding: 0; text-align: center" align="center">
 		<!--[if (gte mso 9)|(IE)]>
 			<table cellpadding="0" cellspacing="0" width="100%">
 				<tr>
 					<td width="280" valign="middle">
 		<![endif]-->
 <?php endif; ?>
-		<div class="story story-<?php echo $current_post + 1; ?><?php echo $label; ?>" style="display: inline-block; Margin-right: 20px; max-width: 280px; vertical-align: middle; width: 100%;">
+		<div class="story story-<?php echo $current_post + 1; ?><?php echo $label; ?>" style="display: inline-block; vertical-align: middle; width: 100%;">
 			<div class="story-inner" style="border-bottom-color: #cccccf; border-bottom-style: solid; border-bottom-width: 2px; Margin-bottom: 18px; padding-bottom: 18px;<?php echo $end_styles; ?>">
 				<?php if ( 'on' === $show_republishable_departments ) : ?>
 					<h4 style="color: #555556; display: block; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 10px; font-weight: normal; line-height: 100%; Margin: 0 0 5px; text-align: left; text-transform: uppercase" align="left"><?php echo minnpost_get_category_name(); ?></h4>
