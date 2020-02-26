@@ -12,77 +12,77 @@ get_header(); ?>
 	<div id="primary" class="m-layout-primary o-archive-listing">
 		<main id="main" class="site-main">
 
-		<?php if ( have_posts() ) : ?>
-
-			<?php
-			if ( is_category() ) {
-				$category_id = $wp_query->get_queried_object_id();
-				$figure      = minnpost_get_term_figure( $category_id );
-				if ( '' === $figure ) {
-					$sponsorship = minnpost_get_category_sponsorship( '', $category_id );
-					if ( '' !== $sponsorship ) {
-						echo '<div class="m-category-info">';
-							echo $sponsorship;
-						echo '</div>';
-					}
+		<?php
+		if ( is_category() ) {
+			$category_id = $wp_query->get_queried_object_id();
+			$figure      = minnpost_get_term_figure( $category_id );
+			if ( '' === $figure ) {
+				$sponsorship = minnpost_get_category_sponsorship( '', $category_id );
+				if ( '' !== $sponsorship ) {
+					echo '<div class="m-category-info">';
+						echo $sponsorship;
+					echo '</div>';
 				}
 			}
+		}
+		?>
+
+		<header class="m-archive-header<?php if ( is_year() || is_month() || is_day() ) { echo ' m-archive-header-time'; } ?>">
+			<?php
+				the_archive_title( '<h1 class="a-archive-title">', '</h1>' );
+				the_archive_description( '<div class="archive-description">', '</div>' );
 			?>
+		</header><!-- .m-archive-header -->
 
-			<header class="m-archive-header<?php if ( is_year() || is_month() || is_day() ) { echo ' m-archive-header-time'; } ?>">
+		<?php if ( is_category() ) : ?>
+			<aside class="m-archive-info m-category-info m-category-full-info">
 				<?php
-					the_archive_title( '<h1 class="a-archive-title">', '</h1>' );
-					the_archive_description( '<div class="archive-description">', '</div>' );
-				?>
-			</header><!-- .m-archive-header -->
-
-			<?php if ( is_category() ) : ?>
-				<aside class="m-archive-info m-category-info m-category-full-info">
-					<?php
-					if ( '' !== $figure ) {
-						// category meta
-						$sponsorship = minnpost_get_category_sponsorship( '', $category_id );
-						if ( '' !== $sponsorship ) {
-							echo $sponsorship;
-						}
-						echo $figure;
-					} else {
-						$text = minnpost_get_term_text( $category_id );
-						if ( '' !== $text ) {
-							echo '<div class="a-description">' . $text . '</div>';
-						}
+				if ( '' !== $figure ) {
+					// category meta
+					$sponsorship = minnpost_get_category_sponsorship( '', $category_id );
+					if ( '' !== $sponsorship ) {
+						echo $sponsorship;
 					}
+					echo $figure;
+				} else {
+					$text = minnpost_get_term_text( $category_id );
+					if ( '' !== $text ) {
+						echo '<div class="a-description">' . $text . '</div>';
+					}
+				}
+				?>
+				<?php
+				$term_extra_links = minnpost_get_term_extra_links( $category_id );
+				if ( '' !== $term_extra_links ) :
 					?>
-					<?php
-					$term_extra_links = minnpost_get_term_extra_links( $category_id );
-					if ( '' !== $term_extra_links ) :
-						?>
-						<ul class="a-archive-links a-category-links">
-							<?php minnpost_term_extra_links( $category_id ); ?>
-						</ul>
-					<?php endif; ?>
-				</aside>
-			<?php elseif ( is_author() ) : ?>
-				<aside class="m-archive-info m-author-info m-author-full-info">
-					<?php
-					$author_id = get_the_author_meta( 'ID' );
-					minnpost_author_figure();
-					$author_email   = get_post_meta( $author_id, 'cap-user_email', true );
-					$author_twitter = get_post_meta( $author_id, 'cap-twitter', true );
-					if ( '' !== $author_email || '' !== $author_twitter ) :
-						?>
-						<ul class="a-archive-links a-author-links">
-							<?php if ( '' !== $author_email ) : ?>
-								<li class="a-email-link"><a href="mailto:<?php echo $author_email; ?>">Email</a></li>
-							<?php endif; ?>
-							<?php if ( '' !== $author_twitter ) : ?>
-								<li class="a-twitter-link"><a href="<?php echo $author_twitter; ?>">Twitter</a></li>
-							<?php endif; ?>
-						</ul>
-					<?php endif; ?>
-				</aside>
-				<h2 class="a-archive-subtitle">Articles by this author:</h2>
-			<?php endif; ?>
+					<ul class="a-archive-links a-category-links">
+						<?php minnpost_term_extra_links( $category_id ); ?>
+					</ul>
+				<?php endif; ?>
+			</aside>
+		<?php elseif ( is_author() ) : ?>
+			<aside class="m-archive-info m-author-info m-author-full-info">
+				<?php
+				$author_id = get_the_author_meta( 'ID' );
+				minnpost_author_figure();
+				$author_email   = get_post_meta( $author_id, 'cap-user_email', true );
+				$author_twitter = get_post_meta( $author_id, 'cap-twitter', true );
+				if ( '' !== $author_email || '' !== $author_twitter ) :
+					?>
+					<ul class="a-archive-links a-author-links">
+						<?php if ( '' !== $author_email ) : ?>
+							<li class="a-email-link"><a href="mailto:<?php echo $author_email; ?>">Email</a></li>
+						<?php endif; ?>
+						<?php if ( '' !== $author_twitter ) : ?>
+							<li class="a-twitter-link"><a href="<?php echo $author_twitter; ?>">Twitter</a></li>
+						<?php endif; ?>
+					</ul>
+				<?php endif; ?>
+			</aside>
+			<h2 class="a-archive-subtitle">Articles by this author:</h2>
+		<?php endif; ?>
+
+		<?php if ( have_posts() ) : ?>
 
 			<?php
 			$paged        = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;

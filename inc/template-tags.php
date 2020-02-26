@@ -730,7 +730,7 @@ if ( ! function_exists( 'minnpost_get_grouped_categories' ) ) :
 	function minnpost_get_grouped_categories( $category_id = '' ) {
 		$grouped_categories = get_term_meta( $category_id, '_mp_category_grouped_categories', false );
 		if ( array() !== $grouped_categories ) {
-			error_log( 'grouped is ' . print_r( $grouped_categories, true ) );
+			$grouped_categories = $grouped_categories[0];
 		}
 		return $grouped_categories;
 	}
