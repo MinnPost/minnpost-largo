@@ -720,6 +720,23 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 endif;
 
 /**
+* Returns array of grouped categories for the given category
+*
+* @param int $category_id
+* @return array $groupd_categories
+*
+*/
+if ( ! function_exists( 'minnpost_get_grouped_categories' ) ) :
+	function minnpost_get_grouped_categories( $category_id = '' ) {
+		$grouped_categories = get_term_meta( $category_id, '_mp_category_grouped_categories', false );
+		if ( array() !== $grouped_categories ) {
+			error_log( 'grouped is ' . print_r( $grouped_categories, true ) );
+		}
+		return $grouped_categories;
+	}
+endif;
+
+/**
 * Outputs term image, large or thumbnail, with/without the description or excerpt, all inside a <figure>
 *
 * @param int $category_id
