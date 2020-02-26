@@ -53,8 +53,8 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'id'           => $prefix . 'setup',
 				'title'        => __( 'Setup', 'minnpost-largo' ),
 				'object_types' => array( $object_type ),
-				//'context'    => 'after_title',
-				//'priority'   => 'high',
+				'context'      => 'after_title',
+				//'priority'     => 'high',
 			)
 		);
 		$newsletter_setup->add_field(
@@ -83,10 +83,14 @@ if ( function_exists( 'create_newsletter' ) ) :
 		);
 		$newsletter_setup->add_field(
 			array(
-				'name' => __( 'Show Department for Top Stories?', 'minnpost-largo' ),
-				'id'   => $prefix . 'show_department_for_top_stories',
-				'type' => 'checkbox',
-				'desc' => '',
+				'name'       => __( 'Show Main Category for Top Stories?', 'minnpost-largo' ),
+				'id'         => $prefix . 'show_department_for_top_stories',
+				'type'       => 'checkbox',
+				'desc'       => '',
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
 			)
 		);
 
@@ -123,17 +127,17 @@ if ( function_exists( 'create_newsletter' ) ) :
 		if ( 'production' === VIP_GO_ENV ) {
 			$newsletter_post_args['es'] = true; // elasticsearch on production only
 		}
-		$newsletter_top_posts = new_cmb2_box(
+		$newsletter_posts = new_cmb2_box(
 			array(
 				'id'           => $prefix . 'top_posts',
-				'title'        => __( 'Top Stories', 'minnpost-largo' ),
+				'title'        => __( 'Select Stories', 'minnpost-largo' ),
 				'object_types' => array( $object_type ), // Post type
 				'context'      => 'normal',
 				'priority'     => 'high',
 				'show_names'   => true, // Show field names on the left
 			)
 		);
-		$newsletter_top_posts->add_field(
+		$newsletter_posts->add_field(
 			minnpost_post_search_field(
 				array(
 					'name'       => __( 'Top Stories', 'minnpost-largo' ),
@@ -144,29 +148,27 @@ if ( function_exists( 'create_newsletter' ) ) :
 						'order'       => 'DESC',
 						'post_status' => 'any',
 					),
+					'attributes' => array(
+						'data-conditional-id'    => $prefix . 'type',
+						'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+					),
 				),
 				'post_search_ajax'
 			)
 		);
-		$newsletter_top_posts->add_field(
+		$newsletter_posts->add_field(
 			array(
-				'name' => __( 'Top Stories Manual Override', 'minnpost-largo' ),
-				'id'   => $prefix . 'top_posts_override',
-				'type' => 'text',
-				'desc' => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them in the order they are entered instead of the search field value.', 'minnpost-largo' ),
+				'name'       => __( 'Top Stories Manual Override', 'minnpost-largo' ),
+				'id'         => $prefix . 'top_posts_override',
+				'type'       => 'text',
+				'desc'       => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them in the order they are entered instead of the search field value.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
 			)
 		);
-		$newsletter_more_posts = new_cmb2_box(
-			array(
-				'id'           => $prefix . 'more_posts',
-				'title'        => __( 'More Stories', 'minnpost-largo' ),
-				'object_types' => array( $object_type ), // Post type
-				'context'      => 'normal',
-				'priority'     => 'high',
-				'show_names'   => true, // Show field names on the left
-			)
-		);
-		$newsletter_more_posts->add_field(
+		$newsletter_posts->add_field(
 			minnpost_post_search_field(
 				array(
 					'name'       => __( 'More Stories', 'minnpost-largo' ),
@@ -177,15 +179,23 @@ if ( function_exists( 'create_newsletter' ) ) :
 						'order'       => 'DESC',
 						'post_status' => 'any',
 					),
+					'attributes' => array(
+						'data-conditional-id'    => $prefix . 'type',
+						'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+					),
 				)
 			)
 		);
-		$newsletter_more_posts->add_field(
+		$newsletter_posts->add_field(
 			array(
-				'name' => __( 'More Stories Manual Override', 'minnpost-largo' ),
-				'id'   => $prefix . 'more_posts_override',
-				'type' => 'text',
-				'desc' => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them in the order they are entered instead of the search field value.', 'minnpost-largo' ),
+				'name'       => __( 'More Stories Manual Override', 'minnpost-largo' ),
+				'id'         => $prefix . 'more_posts_override',
+				'type'       => 'text',
+				'desc'       => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them in the order they are entered instead of the search field value.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
 			)
 		);
 	}
