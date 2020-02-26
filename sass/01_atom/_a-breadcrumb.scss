@@ -29,7 +29,8 @@
 		}
 	}
 
-	&.a-category-group-news {
+	&.a-category-group-news,
+	&.a-category-group-arts-culture {
 
 		a {
 			background-color: brand-color(red, medium);
