@@ -412,8 +412,8 @@ if ( ! function_exists( 'minnpost_largo_admin_special_character_url_redirect' ) 
 						if ( empty( $posts ) ) {
 							continue;
 						}
-						$post    = $posts[0];
-						$post_id = $post['ID'];
+						$post         = $posts[0];
+						$post_id      = $post['ID'];
 						$post_updated = wp_update_post(
 							array(
 								'ID'        => $post_id,
@@ -441,4 +441,9 @@ if ( ! function_exists( 'minnpost_largo_admin_special_character_url_redirect' ) 
 			}
 		}
 	}
+endif;
+
+// use the WP Core send_frame_options_header method to apply x-frame-options: sameorigin
+if ( function_exists( 'send_frame_options_header' ) ) :
+	add_action( 'send_headers', 'send_frame_options_header', 10, 0 );
 endif;
