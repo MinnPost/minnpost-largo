@@ -45,19 +45,21 @@ if ( $is_republishable_story ) : ?>
 						<tr>
 							<td style="border-collapse: collapse; Margin: 0; padding: 0" valign="top">
 								<?php
-								minnpost_post_image(
-									'newsletter-thumbnail',
-									array(
-										'title'  => get_the_title(),
-										'style'  => 'border: 0 none; display: block; Float: left; height: auto; line-height: 100%; Margin: 0 10px 5px 0; outline: none; text-decoration: none;',
-										'class'  => 'thumb',
-										'align'  => 'left',
-										'width'  => 80,
-										'height' => 60,
-									),
-									'',
-									false
-								);
+								if ( 'on' === $show_image ) {
+									minnpost_post_image(
+										'newsletter-thumbnail',
+										array(
+											'title'  => get_the_title(),
+											'style'  => 'border: 0 none; display: block; Float: left; height: auto; line-height: 100%; Margin: 0 10px 5px 0; outline: none; text-decoration: none;',
+											'class'  => 'thumb',
+											'align'  => 'left',
+											'width'  => 80,
+											'height' => 60,
+										),
+										'',
+										false
+									);
+								}
 								?>
 								<h5 style="color: #1A1818; display: block; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 10px; font-weight: bold; line-height: 100%; Margin: 0 0 5px; text-align: left; text-transform: uppercase" align="left"><?php echo preg_replace( '/(<a\b[^><]*)>/i', '$1 style="color: #1A1818; text-decoration: none;">', preg_replace( '/\s*title\s*=\s*(["\']).*?\1/', '', minnpost_get_posted_by() ) ); ?>
 								</h5>

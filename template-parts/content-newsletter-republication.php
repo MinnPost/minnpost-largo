@@ -171,6 +171,7 @@
 
 		if ( $republishable_query->have_posts() ) {
 			set_query_var( 'show_republishable_departments', get_post_meta( get_the_ID(), '_mp_newsletter_show_department_for_republish_stories', true ) );
+			set_query_var( 'show_image', get_post_meta( get_the_ID(), '_mp_newsletter_show_image_for_republish_stories', true ) );
 
 			while ( $republishable_query->have_posts() ) {
 				$republishable_query->the_post();
