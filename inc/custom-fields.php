@@ -231,19 +231,20 @@ if ( function_exists( 'create_newsletter' ) ) :
 		);
 		$newsletter_posts->add_field(
 			array(
-				'name'       => __( 'Preview of Upcoming Stories', 'minnpost-largo' ),
-				'id'         => $prefix . 'upcoming',
-				'type'       => 'wysiwyg',
-				'options'    => array(
+				'name'        => __( 'Preview of Upcoming Stories', 'minnpost-largo' ),
+				'id'          => $prefix . 'upcoming',
+				'type'        => 'wysiwyg',
+				'options'     => array(
 					'media_buttons' => false, // show insert/upload button(s)
 					'textarea_rows' => 5,
 					'teeny'         => true, // output the minimal editor config used in Press This
 				),
-				'desc'       => __( 'Use this to describe upcoming stories for this edition.', 'minnpost-largo' ),
-				'attributes' => array(
+				'desc'        => __( 'Use this to describe upcoming stories for this edition.', 'minnpost-largo' ),
+				'attributes'  => array(
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => 'republication',
 				),
+				'after_field' => '<input name="asdf" type="hidden" data-conditional-id="' . $prefix . 'type' . '" data-conditional-value="republication">', // hack to fix the condtional display
 			)
 		);
 	}
