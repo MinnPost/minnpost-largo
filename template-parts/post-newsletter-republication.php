@@ -67,23 +67,9 @@ if ( $is_republishable_story ) : ?>
 									<p style="font-family: Georgia, 'Times New Roman', Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 10px; padding: 0">
 									<?php echo strip_tags( get_the_excerpt() ); ?>
 									</p>
-									<table class="button read-story" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0" cellspacing="0" cellpadding="0">
-										<tbody>
-											<tr>
-												<td style="border-collapse: collapse; Margin: 0; padding: 0">
-													<table style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0" cellspacing="0" cellpadding="0">
-														<tbody>
-															<tr>
-																<td style="-moz-border-radius: 2px; -webkit-border-radius: 2px; background: #801019; border-collapse: collapse; border-radius: 2px; Margin: 0; padding: 0" bgcolor="#801019" align="center">
-																	<a href="<?php echo esc_url( get_permalink() ); ?>" style="-moz-border-radius: 2px; -webkit-border-radius: 2px; border: 1px solid #801019; border-radius: 2px; color: #ffffff; display: inline-block; font-family: Georgia, 'Times New Roman', Times, serif; font-size: 16px; padding: 8px 12px; text-decoration: none"><!--[if mso]>&nbsp;<![endif]-->Read story<!--[if mso]>&nbsp;<![endif]--></a>
-																</td>
-															</tr>
-														</tbody>
-													</table>
-												</td>
-											</tr>
-										</tbody>
-									</table>
+									<p style="font-family: Helvetica, Arial, sans-serif; font-size: 16px; line-height: 20.787px; Margin: 0; padding: 0">
+										<a href="<?php echo esc_url( get_permalink() ); ?>" style="color:#801018;text-decoration: none;font-weight: bold;">Read story</a><!--&nbsp;|&nbsp;<a href="<?php echo esc_url( get_permalink() ); ?>" style="color:#801018;text-decoration: none;font-weight: normal;">Read story</a>-->
+									</p>
 								</div>
 							</td>
 						</tr>

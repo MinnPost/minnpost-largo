@@ -1788,3 +1788,23 @@ if ( ! function_exists( 'limit_liveblog_box' ) ) :
 		}
 	}
 endif;
+
+/**
+* Format a field for newsletter HTML markup
+*
+*/
+if ( ! function_exists( 'minnpost_largo_email_html' ) ) :
+	function minnpost_largo_email_html( $field ) {
+		$field = str_replace( '<a href="', '<a style="color: #801019; text-decoration: none;" href="', $field );
+		$field = str_replace( ' dir="ltr"', '', $field );
+		$field = str_replace( '<p class="intro">', '<p>', $field );
+		$field = preg_replace( '/<p>/', '<p class="intro" style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 17.6px; line-height: 24.9444px; margin: 0 0 15px; padding: 15px 0 0;">', $field, 1 );
+		$field = str_replace( '<p>', '<p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', $field );
+		$field = str_replace( '<li>', '<li style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', $field );
+		$field = str_replace( '<ul>', '<ul style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0 0 0 40px;">', $field );
+		$field = str_replace( '<h2>', '<h2 style="color: #801019; margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $field );
+		$field = str_replace( '<h3>', '<h3 style="color: #801019; margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $field );
+		$field = str_replace( '<blockquote><p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', '<blockquote style="border-left-width: 2px; border-left-color: #cccccf; border-left-style: solid; margin: 10px 10px 15px; padding: 0 10px; color: #6a6161;"><p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', $field );
+		return $field;
+	}
+endif;
