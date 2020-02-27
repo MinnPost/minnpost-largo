@@ -105,6 +105,18 @@ if ( function_exists( 'create_newsletter' ) ) :
 				),
 			)
 		);
+		$newsletter_setup->add_field(
+			array(
+				'name'       => __( 'Show Thumbnail Image for Republishable Stories?', 'minnpost-largo' ),
+				'id'         => $prefix . 'show_image_for_republish_stories',
+				'type'       => 'checkbox',
+				'desc'       => '',
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => 'republication',
+				),
+			)
+		);
 
 		/**
 		 * For posts on newsletters
