@@ -462,11 +462,11 @@ if ( ! function_exists( 'minnpost_largo_message_conditional_value' ) ) :
 	add_filter( 'wp_message_inserter_add_conditional_value', 'minnpost_largo_message_conditional_value', 10, 2 );
 	function minnpost_largo_message_conditional_value( $value, $conditional ) {
 		$method = isset( $conditional['_wp_inserted_message_conditional'] ) ? $conditional['_wp_inserted_message_conditional'] : '';
-		if ( 'gets_emails' === $method ) {
+		if ( 'gets_emails' === $method && isset( $conditional['_wp_inserted_message_emails_to_match'] ) ) {
 			// these are the emails we want to check and see if the user is getting
 			$value = $conditional['_wp_inserted_message_emails_to_match'];
 		}
-		if ( 'has_role' === $method ) {
+		if ( 'has_role' === $method && isset( $conditional['_wp_inserted_message_roles_to_match'] ) ) {
 			// these are the roles we want to check and see if the user has
 			$value = $conditional['_wp_inserted_message_roles_to_match'];
 		}
