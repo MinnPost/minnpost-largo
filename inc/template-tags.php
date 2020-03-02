@@ -212,7 +212,7 @@ if ( ! function_exists( 'minnpost_posted_on' ) ) :
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
-		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
+		$time_string = '<time class="a-entry-date published updated" datetime="%1$s">%2$s</time>';
 		if ( function_exists( 'get_ap_date' ) ) {
 			$visible_date = esc_html( get_ap_date( '', $id ) );
 		} else {
@@ -249,14 +249,7 @@ if ( ! function_exists( 'minnpost_posted_on' ) ) :
 				esc_html( get_the_modified_date( '', $id ) )
 			);
 		}
-
-		$posted_on = sprintf(
-			// translators: the placeholder is the time string, which can be translated
-			esc_html_x( '%s', 'post date', 'minnpost-largo' ),
-			$time_string
-		);
-
-		echo '<span class="posted-on">' . $posted_on . '</span>'; // WPCS: XSS OK.
+		echo $time_string;
 
 	}
 endif;
@@ -289,15 +282,7 @@ if ( ! function_exists( 'minnpost_get_posted_on' ) ) :
 			esc_attr( get_the_modified_date( 'c', $id ) ),
 			esc_html( get_the_modified_date( '', $id ) )
 		);
-
-		$posted_on = sprintf(
-			// translators: the placeholder is the time string, which can be translated
-			esc_html_x( '%s', 'post date', 'minnpost-largo' ),
-			$time_string
-		);
-
-		$posted_on = '<span class="posted-on">' . $posted_on . '</span>'; // WPCS: XSS OK.
-		return $posted_on;
+		return $time_string;
 	}
 endif;
 
@@ -324,11 +309,12 @@ endif;
 *
 * @param int $id
 * @param bool $include_title
+* @param bool $link_name
 * @return string
 *
 */
 if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
-	function minnpost_get_posted_by( $id = '', $include_title = false ) {
+	function minnpost_get_posted_by( $id = '', $include_title = false, $link_name = false ) {
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
@@ -350,12 +336,10 @@ if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
 				if ( ! empty( $coauthors ) ) {
 					$byline = esc_html__( 'By&nbsp;', 'minnpost-largo' );
 					foreach ( $coauthors as $key => $coauthor ) {
-						$name_display = '<a href="' . get_author_posts_url( $coauthor->ID, $coauthor->user_nicename ) . '" rel="author">' . apply_filters( 'the_author', $coauthor->display_name ) . '</a>';
-						if ( isset( get_the_coauthor_meta( 'job-title' )[ $coauthor->ID ] ) ) {
-							$title = get_the_coauthor_meta( 'job-title' )[ $coauthor->ID ];
-							if ( '' !== $title ) {
-								$name_display .= '&nbsp;|&nbsp;' . $title;
-							}
+						if ( true === $link_name ) {
+							$name_display = '<a href="' . get_author_posts_url( $coauthor->ID, $coauthor->user_nicename ) . '" rel="author" class="a-entry-author">' . apply_filters( 'the_author', $coauthor->display_name ) . '</a>';
+						} else {
+							$name_display = '<span class="a-entry-author">' . apply_filters( 'the_author', $coauthor->display_name ) . '</span>';
 						}
 						// there is more than one author
 						if ( 1 < sizeof( $coauthors ) ) {
@@ -370,9 +354,19 @@ if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
 								$byline .= ', ' . $name_display;
 							}
 						} else {
-							// there is only one author
+							// there is only one author. showing the title works here.
+							if ( true === $include_title && isset( get_the_coauthor_meta( 'job-title' )[ $coauthor->ID ] ) ) {
+								$title = get_the_coauthor_meta( 'job-title' )[ $coauthor->ID ];
+								if ( '' !== $title ) {
+									$name_display .= '&nbsp;|&nbsp;<span class="a-entry-author-job-title">' . $title . '</span>';
+								}
+							}
 							$byline .= $name_display;
 						}
+					}
+					// display the post-author field if it has a value
+					if ( ! empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_after_authors', true ) ) ) ) {
+						$byline .= '&nbsp;|&nbsp;<span class="a-entry-author-finish-text">' . esc_html( get_post_meta( $id, '_mp_subtitle_settings_after_authors', true ) ) . '</span>';
 					}
 					return $byline;
 				}

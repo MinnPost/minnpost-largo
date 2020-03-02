@@ -277,6 +277,43 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		);
 
 		/**
+		 * Subtitle settings
+		 */
+		$subtitle_settings = new_cmb2_box(
+			array(
+				'id'           => 'subtitle_settings',
+				'title'        => __( 'Byline & Subtitle Settings', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'closed'       => true,
+			)
+		);
+		$subtitle_settings->add_field(
+			array(
+				'name' => __( 'After authors', 'minnpost-largo' ),
+				'id'   => '_mp_subtitle_settings_after_authors',
+				'type' => 'text',
+				'desc' => __( 'Proceeded by a |, this value will display right after the list of authors for this post. This is especially useful for stories with multiple authors. For example, to show "Tom Nehil and Greta Kaul | MinnPost Staff," put "MinnPost Staff" into this field.', 'minnpost-largo' ),
+			)
+		);
+		$subtitle_settings->add_field(
+			array(
+				'name' => __( 'Byline', 'minnpost-largo' ),
+				'id'   => '_mp_subtitle_settings_byline',
+				'type' => 'text',
+				'desc' => __( 'This value will override any authors associated with this post.', 'minnpost-largo' ),
+			)
+		);
+		$subtitle_settings->add_field(
+			array(
+				'name' => __( 'Deck', 'minnpost-largo' ),
+				'id'   => '_mp_subtitle_settings_deck',
+				'type' => 'text',
+			)
+		);
+
+		/**
 		 * SEO and social meta settings
 		 */
 		$seo_settings = new_cmb2_box(
@@ -313,34 +350,6 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 					'maxlength' => 300, // retrieved from https://moz.com/blog/how-long-should-your-meta-description-be-2018 on 9/27/2018
 				),
 				'desc'       => esc_html__( 'If you do not fill this out, the post excerpt will be used.' ),
-			)
-		);
-
-		/**
-		 * Subtitle settings
-		 */
-		$subtitle_settings = new_cmb2_box(
-			array(
-				'id'           => 'subtitle_settings',
-				'title'        => __( 'Subtitle Settings', 'minnpost-largo' ),
-				'object_types' => array( $object_type ),
-				'context'      => 'normal',
-				'priority'     => 'high',
-				'closed'       => true,
-			)
-		);
-		$subtitle_settings->add_field(
-			array(
-				'name' => __( 'Byline', 'minnpost-largo' ),
-				'id'   => '_mp_subtitle_settings_byline',
-				'type' => 'text',
-			)
-		);
-		$subtitle_settings->add_field(
-			array(
-				'name' => __( 'Deck', 'minnpost-largo' ),
-				'id'   => '_mp_subtitle_settings_deck',
-				'type' => 'text',
 			)
 		);
 
