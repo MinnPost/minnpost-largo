@@ -267,10 +267,21 @@ if ( ! function_exists( 'minnpost_get_posted_on' ) ) :
 			);
 		}
 
-		// override "today" on newsletters
+		// override "today"
 		if ( is_singular( 'newsletter' ) ) {
+			// if it's a newsletter, use the date
 			$date['published']['human'] = esc_html( get_the_date( 'F j, Y', $id ) );
 			$date['modified']['human']  = esc_html( get_the_modified_date( 'F j, Y', $id ) );
+		} elseif ( true && $time_ago && 'today' === $date['published']['human'] ) {
+			// if it's not a newsletter, use the human readable time difference
+			$date['published']['human'] = sprintf(
+				// translators: 1) is the human readable time difference
+				_x( '%1$s ago', '%2$s = human-readable time difference', 'minnpost-largo' ),
+				human_time_diff(
+					get_the_time( 'U' ),
+					strtotime( wp_date( 'Y-m-d H:i:s' ) )
+				)
+			);
 		}
 
 		return $date;
