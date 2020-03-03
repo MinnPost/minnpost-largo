@@ -208,47 +208,16 @@ if ( ! function_exists( 'minnpost_posted_on' ) ) :
 	/**
 	 * Prints HTML with meta information for the current post-date/time and author.
 	 */
-	function minnpost_posted_on( $id = '' ) {
+	function minnpost_posted_on( $id = '', $time_ago = true ) {
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
-		$time_string = '<time class="a-entry-date published updated" datetime="%1$s">%2$s</time>';
-		if ( function_exists( 'get_ap_date' ) ) {
-			$visible_date = esc_html( get_ap_date( '', $id ) );
-		} else {
-			$visible_date = esc_html( get_the_date( '', $id ) );
-		}
-		if ( ! is_singular( 'newsletter' ) && date( get_option( 'date_format' ), current_time( 'timestamp' ) ) === $visible_date ) {
-			if ( function_exists( 'get_ap_date' ) ) {
-				$visible_date = esc_html( get_ap_date( get_option( 'time_format' ), $id ) );
-			} else {
-				$visible_date = esc_html( get_the_date( get_option( 'time_format' ), $id ) );
-			}
-		} elseif ( is_singular( 'newsletter' ) ) {
-			if ( function_exists( 'get_ap_date' ) ) {
-				$visible_date = esc_html( get_ap_date( 'F j, Y', $id ) );
-			} else {
-				$visible_date = esc_html( get_the_date( 'F j, Y', $id ) );
-			}
-		}
-
-		if ( function_exists( 'get_ap_date' ) ) {
-			$time_string = sprintf(
-				$time_string,
-				esc_attr( get_ap_date( 'c' ), $id ),
-				$visible_date,
-				esc_attr( get_the_modified_date( 'c', $id ) ),
-				esc_html( get_the_modified_date( '', $id ) )
-			);
-		} else {
-			$time_string = sprintf(
-				$time_string,
-				esc_attr( get_the_date( 'c' ), $id ),
-				$visible_date,
-				esc_attr( get_the_modified_date( 'c', $id ) ),
-				esc_html( get_the_modified_date( '', $id ) )
-			);
-		}
+		$date        = minnpost_get_posted_on( $id, $time_ago );
+		$time_string = sprintf(
+			'<time class="a-entry-date published updated" datetime="%1$s">%2$s</time>',
+			$date['published']['machine'],
+			$date['published']['human'],
+		);
 		echo $time_string;
 
 	}
@@ -265,7 +234,7 @@ if ( ! function_exists( 'minnpost_get_posted_on' ) ) :
 	/**
 	 * Prints HTML with meta information for the current post-date/time and author.
 	 */
-	function minnpost_get_posted_on( $id = '' ) {
+	function minnpost_get_posted_on( $id = '', $time_ago = true ) {
 		$posted_on = '';
 		if ( '' === $id ) {
 			$id = get_the_ID();
@@ -274,15 +243,37 @@ if ( ! function_exists( 'minnpost_get_posted_on' ) ) :
 		if ( 'on' === $hide_date ) {
 			return $posted_on;
 		}
-		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
-		$time_string = sprintf(
-			$time_string,
-			esc_attr( get_the_date( 'c' ), $id ),
-			esc_html( get_the_date( '', $id ) ),
-			esc_attr( get_the_modified_date( 'c', $id ) ),
-			esc_html( get_the_modified_date( '', $id ) )
-		);
-		return $time_string;
+		if ( function_exists( 'get_ap_date' ) ) {
+			$date = array(
+				'published' => array(
+					'machine' => esc_attr( get_ap_date( 'c' ), $id ),
+					'human'   => esc_html( get_ap_date( '', $id ) ),
+				),
+				'modified'  => array(
+					'machine' => esc_attr( get_ap_modified_date( 'c' ), $id ),
+					'human'   => esc_html( get_ap_modified_date( '', $id ) ),
+				),
+			);
+		} else {
+			$date = array(
+				'published' => array(
+					'machine' => esc_attr( get_the_date( 'c' ), $id ),
+					'human'   => esc_html( get_the_date( '', $id ) ),
+				),
+				'modified'  => array(
+					'machine' => esc_attr( get_the_modified_date( 'c' ), $id ),
+					'human'   => esc_html( get_the_modified_date( '', $id ) ),
+				),
+			);
+		}
+
+		// override "today" on newsletters
+		if ( is_singular( 'newsletter' ) ) {
+			$date['published']['human'] = esc_html( get_the_date( 'F j, Y', $id ) );
+			$date['modified']['human']  = esc_html( get_the_modified_date( 'F j, Y', $id ) );
+		}
+
+		return $date;
 	}
 endif;
 
