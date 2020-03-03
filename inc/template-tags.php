@@ -366,8 +366,8 @@ if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
 							$byline .= $name_display;
 						}
 					}
-					// display the post-author field if it has a value
-					if ( ! empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_after_authors', true ) ) ) ) {
+					// display the post-author field if it has a value and if there were multiple authors
+					if ( 1 < sizeof( $coauthors ) && ! empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_after_authors', true ) ) ) ) {
 						$byline .= '&nbsp;|&nbsp;<span class="a-entry-author-finish-text">' . esc_html( get_post_meta( $id, '_mp_subtitle_settings_after_authors', true ) ) . '</span>';
 					}
 					return $byline;

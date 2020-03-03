@@ -291,10 +291,10 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		);
 		$subtitle_settings->add_field(
 			array(
-				'name' => __( 'After authors', 'minnpost-largo' ),
+				'name' => __( 'After Multiple Authors', 'minnpost-largo' ),
 				'id'   => '_mp_subtitle_settings_after_authors',
 				'type' => 'text',
-				'desc' => __( 'Proceeded by a |, this value will display right after the list of authors for this post. This is especially useful for stories with multiple authors. For example, to show "Tom Nehil and Greta Kaul | MinnPost Staff," put "MinnPost Staff" into this field.', 'minnpost-largo' ),
+				'desc' => __( 'Proceeded by a |, this value will display right after the authors if there are more than one. For example, to show "Tom Nehil and Greta Kaul | MinnPost Staff," put "MinnPost Staff" into this field.', 'minnpost-largo' ),
 			)
 		);
 		$subtitle_settings->add_field(
