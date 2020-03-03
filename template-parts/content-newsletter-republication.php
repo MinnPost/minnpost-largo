@@ -45,6 +45,15 @@
 	.content .button.read-story td td a:active {
 		color: #ffffff !important; text-decoration: none !important;
 	}
+	.content .read-or-republish a:hover {
+		color: #801018 !important; text-decoration: underline; !important;
+	}
+	.content .read-or-republish a:visited {
+		color: #801018 !important; text-decoration: none; !important;
+	}
+	.content .read-or-republish a:active {
+		color: #801018 !important; text-decoration: underline; !important;
+	}
 	.footer a:hover {
 		color: #801018 !important; text-decoration: underline; !important;
 	}
