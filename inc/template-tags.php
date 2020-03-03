@@ -208,34 +208,17 @@ if ( ! function_exists( 'minnpost_posted_on' ) ) :
 	/**
 	 * Prints HTML with meta information for the current post-date/time and author.
 	 */
-	function minnpost_posted_on( $id = '' ) {
+	function minnpost_posted_on( $id = '', $time_ago = true ) {
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
-		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
-
-		$visible_date = esc_html( get_the_date( '', $id ) );
-		if ( ! is_singular( 'newsletter' ) && date( get_option( 'date_format' ), current_time( 'timestamp' ) ) === $visible_date ) {
-			$visible_date = esc_html( get_the_date( get_option( 'time_format' ), $id ) );
-		} elseif ( is_singular( 'newsletter' ) ) {
-			$visible_date = esc_html( get_the_date( 'F j, Y', $id ) );
-		}
-
+		$date        = minnpost_get_posted_on( $id, $time_ago );
 		$time_string = sprintf(
-			$time_string,
-			esc_attr( get_the_date( 'c' ), $id ),
-			$visible_date,
-			esc_attr( get_the_modified_date( 'c', $id ) ),
-			esc_html( get_the_modified_date( '', $id ) )
+			'<time class="a-entry-date published updated" datetime="%1$s">%2$s</time>',
+			$date['published']['machine'],
+			$date['published']['human'],
 		);
-
-		$posted_on = sprintf(
-			// translators: the placeholder is the time string, which can be translated
-			esc_html_x( '%s', 'post date', 'minnpost-largo' ),
-			$time_string
-		);
-
-		echo '<span class="posted-on">' . $posted_on . '</span>'; // WPCS: XSS OK.
+		echo $time_string;
 
 	}
 endif;
@@ -251,7 +234,7 @@ if ( ! function_exists( 'minnpost_get_posted_on' ) ) :
 	/**
 	 * Prints HTML with meta information for the current post-date/time and author.
 	 */
-	function minnpost_get_posted_on( $id = '' ) {
+	function minnpost_get_posted_on( $id = '', $time_ago = true ) {
 		$posted_on = '';
 		if ( '' === $id ) {
 			$id = get_the_ID();
@@ -260,23 +243,48 @@ if ( ! function_exists( 'minnpost_get_posted_on' ) ) :
 		if ( 'on' === $hide_date ) {
 			return $posted_on;
 		}
-		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
-		$time_string = sprintf(
-			$time_string,
-			esc_attr( get_the_date( 'c' ), $id ),
-			esc_html( get_the_date( '', $id ) ),
-			esc_attr( get_the_modified_date( 'c', $id ) ),
-			esc_html( get_the_modified_date( '', $id ) )
-		);
+		if ( function_exists( 'get_ap_date' ) ) {
+			$date = array(
+				'published' => array(
+					'machine' => esc_attr( get_ap_date( 'c' ), $id ),
+					'human'   => esc_html( get_ap_date( '', $id ) ),
+				),
+				'modified'  => array(
+					'machine' => esc_attr( get_ap_modified_date( 'c' ), $id ),
+					'human'   => esc_html( get_ap_modified_date( '', $id ) ),
+				),
+			);
+		} else {
+			$date = array(
+				'published' => array(
+					'machine' => esc_attr( get_the_date( 'c' ), $id ),
+					'human'   => esc_html( get_the_date( '', $id ) ),
+				),
+				'modified'  => array(
+					'machine' => esc_attr( get_the_modified_date( 'c' ), $id ),
+					'human'   => esc_html( get_the_modified_date( '', $id ) ),
+				),
+			);
+		}
 
-		$posted_on = sprintf(
-			// translators: the placeholder is the time string, which can be translated
-			esc_html_x( '%s', 'post date', 'minnpost-largo' ),
-			$time_string
-		);
+		// override "today"
+		if ( is_singular( 'newsletter' ) ) {
+			// if it's a newsletter, use the date
+			$date['published']['human'] = esc_html( get_the_date( 'F j, Y', $id ) );
+			$date['modified']['human']  = esc_html( get_the_modified_date( 'F j, Y', $id ) );
+		} elseif ( true && $time_ago && 'today' === $date['published']['human'] ) {
+			// if it's not a newsletter, use the human readable time difference
+			$date['published']['human'] = sprintf(
+				// translators: 1) is the human readable time difference
+				_x( '%1$s ago', '%2$s = human-readable time difference', 'minnpost-largo' ),
+				human_time_diff(
+					get_the_time( 'U' ),
+					strtotime( wp_date( 'Y-m-d H:i:s' ) )
+				)
+			);
+		}
 
-		$posted_on = '<span class="posted-on">' . $posted_on . '</span>'; // WPCS: XSS OK.
-		return $posted_on;
+		return $date;
 	}
 endif;
 
@@ -303,11 +311,12 @@ endif;
 *
 * @param int $id
 * @param bool $include_title
+* @param bool $link_name
 * @return string
 *
 */
 if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
-	function minnpost_get_posted_by( $id = '', $include_title = false ) {
+	function minnpost_get_posted_by( $id = '', $include_title = false, $link_name = false ) {
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
@@ -329,12 +338,10 @@ if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
 				if ( ! empty( $coauthors ) ) {
 					$byline = esc_html__( 'By&nbsp;', 'minnpost-largo' );
 					foreach ( $coauthors as $key => $coauthor ) {
-						$name_display = '<a href="' . get_author_posts_url( $coauthor->ID, $coauthor->user_nicename ) . '" rel="author">' . apply_filters( 'the_author', $coauthor->display_name ) . '</a>';
-						if ( isset( get_the_coauthor_meta( 'job-title' )[ $coauthor->ID ] ) ) {
-							$title = get_the_coauthor_meta( 'job-title' )[ $coauthor->ID ];
-							if ( '' !== $title ) {
-								$name_display .= '&nbsp;|&nbsp;' . $title;
-							}
+						if ( true === $link_name ) {
+							$name_display = '<a href="' . get_author_posts_url( $coauthor->ID, $coauthor->user_nicename ) . '" rel="author" class="a-entry-author">' . apply_filters( 'the_author', $coauthor->display_name ) . '</a>';
+						} else {
+							$name_display = '<span class="a-entry-author">' . apply_filters( 'the_author', $coauthor->display_name ) . '</span>';
 						}
 						// there is more than one author
 						if ( 1 < sizeof( $coauthors ) ) {
@@ -349,9 +356,19 @@ if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
 								$byline .= ', ' . $name_display;
 							}
 						} else {
-							// there is only one author
+							// there is only one author. showing the title works here.
+							if ( true === $include_title && isset( get_the_coauthor_meta( 'job-title' )[ $coauthor->ID ] ) ) {
+								$title = get_the_coauthor_meta( 'job-title' )[ $coauthor->ID ];
+								if ( '' !== $title ) {
+									$name_display .= '&nbsp;|&nbsp;<span class="a-entry-author-job-title">' . $title . '</span>';
+								}
+							}
 							$byline .= $name_display;
 						}
+					}
+					// display the post-author field if it has a value and if there were multiple authors
+					if ( 1 < sizeof( $coauthors ) && ! empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_after_authors', true ) ) ) ) {
+						$byline .= '&nbsp;|&nbsp;<span class="a-entry-author-finish-text">' . esc_html( get_post_meta( $id, '_mp_subtitle_settings_after_authors', true ) ) . '</span>';
 					}
 					return $byline;
 				}
