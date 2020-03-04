@@ -451,9 +451,17 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_related' ) ) :
-	function minnpost_related( $type = 'content' ) {
-		$related_ids = minnpost_get_related( $type );
-		if ( ! empty( $related_ids ) ) :
+	function minnpost_related( $type = 'content', $only_show_images_if_not_missing = true ) {
+		if ( 'automated' === $type && function_exists( 'minnpost_largo_get_jetpack_results' ) ) {
+			$related_posts = minnpost_largo_get_jetpack_results();
+		} else {
+			$related_ids   = minnpost_get_related( $type );
+			$related_posts = array();
+			foreach ( $related_ids as $id ) {
+				$related_posts[] = get_post( $id );
+			}
+		}
+		if ( ! empty( $related_posts ) ) :
 			?>
 		<h3 class="a-related-title a-related-title-<?php echo $type; ?>">
 			<?php if ( '' !== get_post_meta( get_the_ID(), '_mp_related_content_label', true ) ) : ?>
@@ -465,10 +473,28 @@ if ( ! function_exists( 'minnpost_related' ) ) :
 		<ul class="a-related-list a-related-list-<?php echo $type; ?>">
 			<?php
 			global $post;
-			foreach ( $related_ids as $id ) :
-				$post = get_post( $id );
+			$image_size = 'thumbnail';
+			if ( true === $only_show_images_if_not_missing ) {
+				$show_image = true;
+				foreach ( $related_posts as $post ) {
+					setup_postdata( $post );
+					$image_data = get_minnpost_post_image( $image_size, array(), $post->id, true );
+					if ( empty( $image_data ) ) {
+						$show_image = false;
+						break;
+					}
+				}
+			}
+			foreach ( $related_posts as $post ) :
 				setup_postdata( $post );
-				get_template_part( 'template-parts/related-post', $type );
+				include(
+					locate_template(
+						array(
+							'template-parts/related-post-' . $type . '.php',
+							'template-parts/related-post.php',
+						)
+					)
+				);
 			endforeach;
 			wp_reset_postdata();
 			?>
@@ -551,13 +577,14 @@ if ( ! function_exists( 'minnpost_get_related_terms' ) ) :
 		$related_terms    = array();
 		$related_category = get_post_meta( get_the_ID(), '_mp_related_category', true );
 		$related_tag      = get_post_meta( get_the_ID(), '_mp_related_tag', true );
-		if ( '' !== $related_category || '' !== $related_tag ) {
-			if ( '' !== $related_category ) {
-				$related_terms['category'] = get_category( $related_category, ARRAY_A );
-			}
-			if ( '' !== $related_tag ) {
-				$related_terms['tag'] = get_tag( $related_tag, ARRAY_A );
-			}
+		if ( '' !== $related_category ) {
+			$related_terms['category'] = get_category( $related_category, ARRAY_A );
+		} else {
+			$permalink_category        = minnpost_get_permalink_category_id( get_the_ID() );
+			$related_terms['category'] = get_category( $permalink_category, ARRAY_A );
+		}
+		if ( '' !== $related_tag ) {
+			$related_terms['tag'] = get_tag( $related_tag, ARRAY_A );
 		}
 		return $related_terms;
 	}

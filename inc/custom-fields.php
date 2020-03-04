@@ -637,7 +637,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		$related_settings->add_field(
 			array(
 				'name'       => __( 'Link to a related category', 'minnpost-largo' ),
-				'desc'       => __( 'This post will contain a link to "More ___ articles" if there is a value.', 'minnpost-largo' ),
+				'desc'       => __( 'Search for a category here. If present, it will override the default category based on the permalink.', 'minnpost-largo' ),
 				'id'         => '_mp_related_category',
 				'type'       => 'term_ajax_search',
 				'query_args' => array(
@@ -649,7 +649,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		$related_settings->add_field(
 			array(
 				'name'       => __( 'Link to a related tag', 'minnpost-largo' ),
-				'desc'       => __( 'This post will contain a link to "More ___ articles" if there is a value.', 'minnpost-largo' ),
+				'desc'       => __( 'Search for a tag here.', 'minnpost-largo' ),
 				'id'         => '_mp_related_tag',
 				'type'       => 'term_ajax_search',
 				'query_args' => array(
