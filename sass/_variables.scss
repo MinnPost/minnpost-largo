@@ -63,9 +63,9 @@ $html-font-size: 100%;
 // starts with the <html> element's font size value, so we
 // should change that based on our media queries
 :root {
-	$font-size-interval: 1.1;    // Unitless for proportional, unit for fixed
+	$font-size-interval: 1.125;    // Unitless for proportional, unit for fixed
 	$body-text: 1em;  // Must have a unit
-	$scale-min: -2;    // Unitless negative integer
+	$scale-min: -3;    // Unitless negative integer
 	$scale-max: 4;     // Unitless positive integer
 
 	--font-size-int: #{$font-size-interval};
@@ -102,10 +102,11 @@ $html-font-size: 100%;
 	}
 }
 
+// line height scale
 :root {
-	$line-height-interval: 1.0;
+	$line-height-interval: 0.95;
 	$body-line-height: 1.3;
-	$line-height-scale-min: -2;    // Unitless negative integer
+	$line-height-scale-min: -3;    // Unitless negative integer
 	$line-height-scale-max: 4;     // Unitless positive integer
 
 	--line-height-int: #{$line-height-interval};
@@ -192,6 +193,7 @@ $max-width: null; // For no max-width, use $max-width: null;
 
 $size__site-sidebar: 300px; // this needs to be pixel based because of ad dimensions
 $max-width-page: 80em; // this is 1280px
+$max-width-popup: 92%;
 
 // site structure
 $max-width-medium: 680px;
