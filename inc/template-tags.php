@@ -451,7 +451,7 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_related' ) ) :
-	function minnpost_related( $type = 'content', $only_show_images_if_not_missing = true ) {
+	function minnpost_related( $type = 'content', $only_show_images_if_not_missing = false ) {
 		if ( 'automated' === $type && function_exists( 'minnpost_largo_get_jetpack_results' ) ) {
 			$related_posts = minnpost_largo_get_jetpack_results();
 		} else {
@@ -473,7 +473,7 @@ if ( ! function_exists( 'minnpost_related' ) ) :
 		<ul class="a-related-list a-related-list-<?php echo $type; ?>">
 			<?php
 			global $post;
-			$image_size = 'thumbnail';
+			$image_size = 'feature-medium';
 			if ( true === $only_show_images_if_not_missing ) {
 				$show_image = true;
 				foreach ( $related_posts as $post ) {
@@ -1117,9 +1117,9 @@ if ( ! function_exists( 'minnpost_category_breadcrumb' ) ) :
 			if ( true === $show_group ) {
 				$category_group_id = get_term_meta( $category_id, '_mp_category_group', true );
 				if ( '' !== $category_group_id ) {
-					echo '<div class="a-breadcrumbs">';
 					$category_group = get_category( $category_group_id );
-					echo '<div class="a-breadcrumb a-category-group a-category-group-' . sanitize_title( $category_group->slug ) . '"><a href="' . esc_url( get_category_link( $category_group->term_id ) ) . '">' . $category_group->name . '</a></div>';
+					echo '<div class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '">';
+					echo '<div class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category_group->term_id ) ) . '">' . $category_group->name . '</a></div>';
 				}
 			}
 			$category_name = $category->name;

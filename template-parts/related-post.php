@@ -11,7 +11,7 @@
 
 <li>
 	<?php
-	if ( isset( $show_image ) && false !== $show_image ) {
+	if ( ! isset( $show_image ) || true === $show_image ) {
 		minnpost_post_image(
 			$image_size,
 			array(
@@ -21,13 +21,24 @@
 		);
 	}
 	?>
-	<p class="a-post-category a-zone-item-category"><?php echo minnpost_get_category_name( $post->id ); ?></p>
+	<?php if ( '' === minnpost_get_replace_category_text() ) : ?>
+		<?php minnpost_category_breadcrumb(); ?>
+	<?php else : ?>
+		<?php minnpost_replace_category_text(); ?>
+	<?php endif; ?>
 	<header class="m-entry-header">
-		<h3 class="a-entry-title"><a href="<?php echo get_permalink( $post->id ); ?>"><?php echo get_the_title( $post->id ); ?></a></h3>
+		<h4 class="a-entry-title"><a href="<?php echo get_permalink( $post->id ); ?>"><?php echo get_the_title( $post->id ); ?></a></h4>
 		<?php if ( 'post' === get_post_type( $post->id ) ) : ?>
-			<div class="m-entry-meta">
-				<?php minnpost_posted_by( $post->id ); ?> | <?php minnpost_posted_on( $post->id ); ?> <?php minnpost_edit_link( $post->id ); ?>
-			</div>
+			<?php if ( '' !== minnpost_get_posted_by() ) : ?>
+				<div class="m-entry-byline">
+					<?php minnpost_posted_by( $post->id ); ?>
+				</div>
 			<?php endif; ?>
+			<div class="m-entry-meta">
+				<?php if ( '' !== minnpost_get_posted_on() ) : ?>
+					<?php minnpost_posted_on(); ?>
+				<?php endif; ?>
+			</div><!-- .m-entry-meta -->
+		<?php endif; ?>
 	</header>
 </li>
