@@ -1,12 +1,16 @@
 .a-comment-links {
-	display: inline-flex;
 	@include meta-preset( $size: -1 );
-	padding: $standard-block-padding / 20 0 $standard-block-margin;
-
+	padding-top: $standard-block-padding / 2;
 	div {
 
 		a {
-			margin-right: $standard-block-margin
+			display: block;
+			margin-right: $standard-block-margin;
+			margin-bottom: $standard-block-padding;
 		}
+	}
+
+	@include breakpoint-min( sm ) {
+		display: inline-flex;
 	}
 }
