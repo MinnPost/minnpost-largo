@@ -41,10 +41,9 @@
 				border-left: $border-default-style;
 			
 				$depths: 10; // from wordpress settings
-
-				@for $d from 1 through $depths {
-					$border-width: $d * 1;
-
+				$border-width: 1;
+				@for $d from 2 through $depths {
+					$border-width: $d * $d;
 					&.depth-#{$d} {
 						border-left-width: #{$border-width}px;
 					}
