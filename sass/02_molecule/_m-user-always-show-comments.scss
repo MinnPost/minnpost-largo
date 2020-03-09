@@ -6,11 +6,14 @@
 	border-left: 0;
 	border-right: 0;
 	padding: $standard-block-padding / 2 $standard-block-padding;
-	margin-bottom: $standard-block-margin;
 
 	label.always-show-comments {
 		cursor: pointer;
 		max-width: 60%;
 		@include meta-preset( $size: 0 );
+	}
+
+	&.m-user-always-show-comments-after {
+		margin-bottom: $standard-block-padding + $standard-block-margin;
 	}
 }

@@ -36,10 +36,6 @@
 			&:hover, &:focus, &:active {
 				border: 2px solid utility-color(blue, medium);
 			}
-
-			svg {
-				pointer-events: none;
-			}
 		}
 	}
 }
