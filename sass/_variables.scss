@@ -63,9 +63,9 @@ $html-font-size: 100%;
 // starts with the <html> element's font size value, so we
 // should change that based on our media queries
 :root {
-	$font-size-interval: 1.1;    // Unitless for proportional, unit for fixed
-	$body-text: 1rem;  // Must have a unit
-	$scale-min: -2;    // Unitless negative integer
+	$font-size-interval: 1.125;    // Unitless for proportional, unit for fixed
+	$body-text: 1em;  // Must have a unit
+	$scale-min: -3;    // Unitless negative integer
 	$scale-max: 4;     // Unitless positive integer
 
 	--font-size-int: #{$font-size-interval};
@@ -102,10 +102,11 @@ $html-font-size: 100%;
 	}
 }
 
+// line height scale
 :root {
-	$line-height-interval: 1.0;
+	$line-height-interval: 0.95;
 	$body-line-height: 1.3;
-	$line-height-scale-min: -2;    // Unitless negative integer
+	$line-height-scale-min: -3;    // Unitless negative integer
 	$line-height-scale-max: 4;     // Unitless positive integer
 
 	--line-height-int: #{$line-height-interval};
@@ -179,18 +180,20 @@ $grid-color: red; // Grid overlay color
 // customized for each breakpoint.
 
 $breakpoints: (
-	xs: (cols:  4, min-width:  0,   margin: $pad), // Includes optional custom margin
-	sm: (cols:  6, min-width: 30em, margin: $gut), // Includes optional custom margin
-	md: (cols:  8, min-width: 40em, margin: $gut),
-	lg: (cols: 16, min-width: 50em, margin: $mar),
-	//xl: (cols: 16, min-width: 60em)
+	xxs: (cols:  4, min-width:  0,  margin: $pad), // Includes optional custom margin
+	xs: (cols:  6, min-width: 30em, margin: $gut), // 480px
+	sm: (cols:  6, min-width: 40em, margin: $gut), // 640px
+	md: (cols:  8, min-width: 50em, margin: $gut), // 800px
+	lg: (cols: 12, min-width: 60em, margin: $mar), // 960px
+	xl: (cols: 16, min-width: 70em, margin: $mar), // 1120px
+	xxl: (cols: 16, min-width: 80em, margin: $mar) // 1280px
 );
 
 $max-width: null; // For no max-width, use $max-width: null;
 
 $size__site-sidebar: 300px; // this needs to be pixel based because of ad dimensions
-$max-width-main: calc(100% - #{$size__site-sidebar}); // got to interpolate the variable
-$max-width-page: 70em; // this is 1680px
+$max-width-page: 80em; // this is 1280px
+$max-width-popup: 92%;
 
 // site structure
 $max-width-medium: 680px;
@@ -206,13 +209,13 @@ $header-height-before-nav-breaks: 66px;
 $header-height-after-nav-breaks: 71px;
 
 // Neat Breakpoints
-$small-screen: 480px;
+$small-screen: 480px; // replace with "sm"
 $more-than-logo-screen: 500px;
 $medium-screen: 865px; // added 225 for now
-$nav-breaks: 768px;
+$nav-breaks: 768px; // maybe replace with md
 $nav-move-end: 810px;
 $large-screen: 860px;
-$nav-wrap-screen: 950px;
+$nav-wrap-screen: 950px; // replace with "lg" media query
 
 // site region sizes
 $size__main-smaller-screen: 50%;
@@ -252,13 +255,15 @@ $border-default-style: 1px solid neutral-color(border);
 	#Animation
 \*------------------------------------*/
 
+$hover-transition: .25s all;
 
 /*------------------------------------*\
 	#Fixed Sizes
 \*------------------------------------*/
 
 // icons
-$share-icon-size: 2.5em;
+$share-icon-size: 2em;
+$inline-icon-size: 1em;
 
 // ads
 $ad-top-width: 728px;

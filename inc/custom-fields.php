@@ -277,6 +277,43 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		);
 
 		/**
+		 * Subtitle settings
+		 */
+		$subtitle_settings = new_cmb2_box(
+			array(
+				'id'           => 'subtitle_settings',
+				'title'        => __( 'Byline & Subtitle Settings', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'closed'       => true,
+			)
+		);
+		$subtitle_settings->add_field(
+			array(
+				'name' => __( 'After Multiple Authors', 'minnpost-largo' ),
+				'id'   => '_mp_subtitle_settings_after_authors',
+				'type' => 'text',
+				'desc' => __( 'Proceeded by a |, this value will display right after the authors if there are more than one. For example, to show "Tom Nehil and Greta Kaul | MinnPost Staff," put "MinnPost Staff" into this field.', 'minnpost-largo' ),
+			)
+		);
+		$subtitle_settings->add_field(
+			array(
+				'name' => __( 'Byline', 'minnpost-largo' ),
+				'id'   => '_mp_subtitle_settings_byline',
+				'type' => 'text',
+				'desc' => __( 'This value will override any authors associated with this post.', 'minnpost-largo' ),
+			)
+		);
+		$subtitle_settings->add_field(
+			array(
+				'name' => __( 'Deck', 'minnpost-largo' ),
+				'id'   => '_mp_subtitle_settings_deck',
+				'type' => 'text',
+			)
+		);
+
+		/**
 		 * SEO and social meta settings
 		 */
 		$seo_settings = new_cmb2_box(
@@ -313,34 +350,6 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 					'maxlength' => 300, // retrieved from https://moz.com/blog/how-long-should-your-meta-description-be-2018 on 9/27/2018
 				),
 				'desc'       => esc_html__( 'If you do not fill this out, the post excerpt will be used.' ),
-			)
-		);
-
-		/**
-		 * Subtitle settings
-		 */
-		$subtitle_settings = new_cmb2_box(
-			array(
-				'id'           => 'subtitle_settings',
-				'title'        => __( 'Subtitle Settings', 'minnpost-largo' ),
-				'object_types' => array( $object_type ),
-				'context'      => 'normal',
-				'priority'     => 'high',
-				'closed'       => true,
-			)
-		);
-		$subtitle_settings->add_field(
-			array(
-				'name' => __( 'Byline', 'minnpost-largo' ),
-				'id'   => '_mp_subtitle_settings_byline',
-				'type' => 'text',
-			)
-		);
-		$subtitle_settings->add_field(
-			array(
-				'name' => __( 'Deck', 'minnpost-largo' ),
-				'id'   => '_mp_subtitle_settings_deck',
-				'type' => 'text',
 			)
 		);
 
@@ -628,7 +637,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		$related_settings->add_field(
 			array(
 				'name'       => __( 'Link to a related category', 'minnpost-largo' ),
-				'desc'       => __( 'This post will contain a link to "More ___ articles" if there is a value.', 'minnpost-largo' ),
+				'desc'       => __( 'Search for a category here. If present, it will override the default category based on the permalink.', 'minnpost-largo' ),
 				'id'         => '_mp_related_category',
 				'type'       => 'term_ajax_search',
 				'query_args' => array(
@@ -640,7 +649,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		$related_settings->add_field(
 			array(
 				'name'       => __( 'Link to a related tag', 'minnpost-largo' ),
-				'desc'       => __( 'This post will contain a link to "More ___ articles" if there is a value.', 'minnpost-largo' ),
+				'desc'       => __( 'Search for a tag here.', 'minnpost-largo' ),
 				'id'         => '_mp_related_tag',
 				'type'       => 'term_ajax_search',
 				'query_args' => array(
@@ -792,30 +801,45 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 				'title'            => __( 'Category Settings', 'minnpost-largo' ),
 				'object_types'     => array( $object_type ),
 				'taxonomies'       => array( 'category' ),
-				'new_term_section' => true, // will display in add category section
+				'new_term_section' => false, // will display in add category sidebar
 			)
 		);
 		// for news/opinion display
-		$category_setup->add_field(
-			array(
-				'name'             => __( 'Category Group', 'minnpost-largo' ),
-				'id'               => '_mp_category_group',
-				'type'             => 'radio_inline',
-				'desc'             => __( 'If a value is selected, this value will show before the category name, and this category will not be able to have grouped categories associated with it. If Opinion is selected, this category will be excluded from automated story recommendations.', 'minnpost-largo' ),
-				'classes'          => 'cmb2-match-admin-width',
-				'options'          => minnpost_largo_category_groups(),
-				'show_option_none' => true,
-			)
-		);
+		$group_categories = minnpost_largo_category_groups();
+		$category_id      = '';
+		if ( isset( $_GET['tag_ID'] ) ) {
+			$category_id = absint( $_GET['tag_ID'] );
+		} elseif ( isset( $_POST['tag_ID'] ) ) {
+			$category_id = absint( $_POST['tag_ID'] );
+		}
+		$category   = get_category( $category_id );
+		$is_current = false;
+		if ( isset( $category->slug ) ) {
+			$is_current = in_array( $category->slug, $group_categories );
+		}
+		if ( ! $is_current ) {
+			$category_setup->add_field(
+				array(
+					'name'             => __( 'Category Group', 'minnpost-largo' ),
+					'id'               => '_mp_category_group',
+					'type'             => 'radio_inline',
+					'desc'             => __( 'Puts this category into this group. If Opinion is the group, this category will be excluded from automated story recommendations.', 'minnpost-largo' ),
+					'classes'          => 'cmb2-match-admin-width',
+					'options'          => minnpost_largo_category_group_options(),
+					'show_option_none' => true,
+				)
+			);
+		}
 		// for news/opinion display
 		$category_setup->add_field(
 			array(
-				'name'    => __( 'Grouped Categories', 'minnpost-largo' ),
-				'id'      => '_mp_grouped_categories',
-				'type'    => 'multicheck',
-				'desc'    => __( 'If this category is used to group other categories, they will be checked here, as well as indicated on that category\'s settings page.', 'minnpost-largo' ),
-				'classes' => 'cmb2-category-multicheck cmb2-match-admin-width',
-				'options' => minnpost_largo_grouped_categories(),
+				'name'              => __( 'Grouped Categories', 'minnpost-largo' ),
+				'id'                => '_mp_category_grouped_categories',
+				'type'              => 'multicheck',
+				'desc'              => __( 'If this category is used to group other categories, they will be checked here, as well as indicated on that category\'s settings page.', 'minnpost-largo' ),
+				'classes'           => 'cmb2-category-multicheck cmb2-match-admin-width',
+				'options'           => minnpost_largo_grouped_categories(),
+				'select_all_button' => false,
 			)
 		);
 		// text fields
@@ -887,11 +911,12 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 		);
 		$category_setup->add_field(
 			array(
-				'name'    => __( 'Featured Columns', 'minnpost-largo' ),
-				'id'      => '_mp_category_featured_columns',
-				'type'    => 'multicheck',
-				'classes' => 'cmb2-category-multicheck',
-				'options' => minnpost_largo_featured_column_options(),
+				'name'              => __( 'Featured Columns', 'minnpost-largo' ),
+				'id'                => '_mp_category_featured_columns',
+				'type'              => 'multicheck',
+				'classes'           => 'cmb2-category-multicheck',
+				'options'           => minnpost_largo_featured_column_options(),
+				'select_all_button' => false,
 			)
 		);
 	}
@@ -1050,13 +1075,25 @@ if ( ! function_exists( 'minnpost_largo_featured_column_options' ) ) :
 endif;
 
 /**
-* For the category group custom field, generate the options
-* @return $options
+* Store the category slugs for the group categories
+* @return $choices
 *
 */
 if ( ! function_exists( 'minnpost_largo_category_groups' ) ) :
 	function minnpost_largo_category_groups() {
-		$choices = array( 'news', 'opinion' );
+		$choices = array( 'news', 'opinion', 'arts-culture' );
+		return $choices;
+	}
+endif;
+
+/**
+* For the category group custom field, generate the options
+* @return $options
+*
+*/
+if ( ! function_exists( 'minnpost_largo_category_group_options' ) ) :
+	function minnpost_largo_category_group_options() {
+		$choices = minnpost_largo_category_groups();
 		$options = array();
 		foreach ( $choices as $choice ) {
 			$category = minnpost_largo_group_category( $choice );

@@ -208,33 +208,17 @@ if ( ! function_exists( 'minnpost_posted_on' ) ) :
 	/**
 	 * Prints HTML with meta information for the current post-date/time and author.
 	 */
-	function minnpost_posted_on( $id = '' ) {
+	function minnpost_posted_on( $id = '', $time_ago = true ) {
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
-		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
-
-		$visible_date = esc_html( get_the_date( '', $id ) );
-		if ( ! is_singular( 'newsletter' ) && date( get_option( 'date_format' ), current_time( 'timestamp' ) ) === $visible_date ) {
-			$visible_date = esc_html( get_the_date( get_option( 'time_format' ), $id ) );
-		} elseif ( is_singular( 'newsletter' ) ) {
-			$visible_date = esc_html( get_the_date( 'F j, Y', $id ) );
-		}
-
-		$time_string = sprintf( $time_string,
-			esc_attr( get_the_date( 'c' ), $id ),
-			$visible_date,
-			esc_attr( get_the_modified_date( 'c', $id ) ),
-			esc_html( get_the_modified_date( '', $id ) )
+		$date        = minnpost_get_posted_on( $id, $time_ago );
+		$time_string = sprintf(
+			'<time class="a-entry-date published updated" datetime="%1$s">%2$s</time>',
+			$date['published']['machine'],
+			$date['published']['human'],
 		);
-
-		$posted_on = sprintf(
-			// translators: the placeholder is the time string, which can be translated
-			esc_html_x( '%s', 'post date', 'minnpost-largo' ),
-			$time_string
-		);
-
-		echo '<span class="posted-on">' . $posted_on . '</span>'; // WPCS: XSS OK.
+		echo $time_string;
 
 	}
 endif;
@@ -250,7 +234,7 @@ if ( ! function_exists( 'minnpost_get_posted_on' ) ) :
 	/**
 	 * Prints HTML with meta information for the current post-date/time and author.
 	 */
-	function minnpost_get_posted_on( $id = '' ) {
+	function minnpost_get_posted_on( $id = '', $time_ago = true ) {
 		$posted_on = '';
 		if ( '' === $id ) {
 			$id = get_the_ID();
@@ -259,22 +243,48 @@ if ( ! function_exists( 'minnpost_get_posted_on' ) ) :
 		if ( 'on' === $hide_date ) {
 			return $posted_on;
 		}
-		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
-		$time_string = sprintf( $time_string,
-			esc_attr( get_the_date( 'c' ), $id ),
-			esc_html( get_the_date( '', $id ) ),
-			esc_attr( get_the_modified_date( 'c', $id ) ),
-			esc_html( get_the_modified_date( '', $id ) )
-		);
+		if ( function_exists( 'get_ap_date' ) ) {
+			$date = array(
+				'published' => array(
+					'machine' => esc_attr( get_ap_date( 'c' ), $id ),
+					'human'   => esc_html( get_ap_date( '', $id ) ),
+				),
+				'modified'  => array(
+					'machine' => esc_attr( get_ap_modified_date( 'c' ), $id ),
+					'human'   => esc_html( get_ap_modified_date( '', $id ) ),
+				),
+			);
+		} else {
+			$date = array(
+				'published' => array(
+					'machine' => esc_attr( get_the_date( 'c' ), $id ),
+					'human'   => esc_html( get_the_date( '', $id ) ),
+				),
+				'modified'  => array(
+					'machine' => esc_attr( get_the_modified_date( 'c' ), $id ),
+					'human'   => esc_html( get_the_modified_date( '', $id ) ),
+				),
+			);
+		}
 
-		$posted_on = sprintf(
-			// translators: the placeholder is the time string, which can be translated
-			esc_html_x( '%s', 'post date', 'minnpost-largo' ),
-			$time_string
-		);
+		// override "today"
+		if ( is_singular( 'newsletter' ) ) {
+			// if it's a newsletter, use the date
+			$date['published']['human'] = esc_html( get_the_date( 'F j, Y', $id ) );
+			$date['modified']['human']  = esc_html( get_the_modified_date( 'F j, Y', $id ) );
+		} elseif ( true && $time_ago && 'today' === $date['published']['human'] ) {
+			// if it's not a newsletter, use the human readable time difference
+			$date['published']['human'] = sprintf(
+				// translators: 1) is the human readable time difference
+				_x( '%1$s ago', '%2$s = human-readable time difference', 'minnpost-largo' ),
+				human_time_diff(
+					get_the_time( 'U' ),
+					strtotime( wp_date( 'Y-m-d H:i:s' ) )
+				)
+			);
+		}
 
-		$posted_on = '<span class="posted-on">' . $posted_on . '</span>'; // WPCS: XSS OK.
-		return $posted_on;
+		return $date;
 	}
 endif;
 
@@ -283,14 +293,15 @@ endif;
 * This depends on the Co-Authors Plus plugin
 *
 * @param int $id
+* @param bool $include_title
 *
 */
 if ( ! function_exists( 'minnpost_posted_by' ) ) :
-	function minnpost_posted_by( $id = '' ) {
+	function minnpost_posted_by( $id = '', $include_title = true ) {
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
-		echo minnpost_get_posted_by( $id );
+		echo minnpost_get_posted_by( $id, $include_title );
 	}
 endif;
 
@@ -299,11 +310,13 @@ endif;
 * This depends on the Co-Authors Plus plugin
 *
 * @param int $id
+* @param bool $include_title
+* @param bool $link_name
 * @return string
 *
 */
 if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
-	function minnpost_get_posted_by( $id = '' ) {
+	function minnpost_get_posted_by( $id = '', $include_title = false, $link_name = false ) {
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
@@ -312,18 +325,69 @@ if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
 		if ( 'on' === $hide_author ) {
 			return $posted_by;
 		}
-		if ( ! empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) ) ) :
+		// is the basic byline field filled in?
+		if ( ! empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) ) ) {
 			return esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) );
-		else :
-			if ( function_exists( 'coauthors_posts_links' ) ) :
+		} else {
+			// we do not want to include the job title. does co-authors-plus exist?
+			if ( false === $include_title && function_exists( 'coauthors_posts_links' ) ) {
 				return 'By&nbsp;' . coauthors_posts_links( ', ', ' and ', null, null, false );
-			else :
+			} elseif ( true === $include_title && function_exists( 'get_coauthors' ) ) {
+				// we do want to include the job title. co-authors-plus exists.
+				$coauthors = get_coauthors( $id );
+				if ( ! empty( $coauthors ) ) {
+					$byline = esc_html__( 'By&nbsp;', 'minnpost-largo' );
+					foreach ( $coauthors as $key => $coauthor ) {
+						if ( true === $link_name ) {
+							$name_display = '<a href="' . get_author_posts_url( $coauthor->ID, $coauthor->user_nicename ) . '" rel="author" class="a-entry-author">' . apply_filters( 'the_author', $coauthor->display_name ) . '</a>';
+						} else {
+							$name_display = '<span class="a-entry-author">' . apply_filters( 'the_author', $coauthor->display_name ) . '</span>';
+						}
+						// there is more than one author
+						if ( 1 < sizeof( $coauthors ) ) {
+							if ( array_key_first( $coauthors ) === $key ) {
+								// we are at the beginning of the array
+								$byline .= $name_display;
+							} elseif ( array_key_last( $coauthors ) === $key ) {
+								// we are at the end of the array
+								$byline .= ' and ' . $name_display;
+							} else {
+								// we are in the middle of the array
+								$byline .= ', ' . $name_display;
+							}
+						} else {
+							// there is only one author. showing the title works here.
+							if ( true === $include_title && isset( get_the_coauthor_meta( 'job-title' )[ $coauthor->ID ] ) ) {
+								$title = get_the_coauthor_meta( 'job-title' )[ $coauthor->ID ];
+								if ( '' !== $title ) {
+									$name_display .= '&nbsp;|&nbsp;<span class="a-entry-author-job-title">' . $title . '</span>';
+								}
+							}
+							$byline .= $name_display;
+						}
+					}
+					// display the post-author field if it has a value and if there were multiple authors
+					if ( 1 < sizeof( $coauthors ) && ! empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_after_authors', true ) ) ) ) {
+						$byline .= '&nbsp;|&nbsp;<span class="a-entry-author-finish-text">' . esc_html( get_post_meta( $id, '_mp_subtitle_settings_after_authors', true ) ) . '</span>';
+					}
+					return $byline;
+				}
+			} else {
+				// default byline from WordPress core
 				return 'By&nbsp;<a href="' . get_the_author_posts_url( get_the_author_meta( 'ID' ) ) . '">' . the_author( $id ) . '</a>';
-			endif;
-		endif;
+			}
+		}
 		return $posted_by;
 	}
 endif;
+
+/*add_filter( 'the_author', 'minnpost_largo_author_display_name' );
+function minnpost_largo_author_display_name( $name ) {
+	if ( '' !== get_the_author_meta( 'job-title' ) ) {
+		$name .= '&nbsp;|&nbsp;' . get_the_author_meta( 'job-title' );
+	}
+	return $name;
+}*/
 
 /**
 * Output the share buttons for top or bottom
@@ -379,27 +443,6 @@ if ( ! function_exists( 'minnpost_share_buttons' ) ) :
 			<?php endif; ?>
 		</ul>
 		<?php
-		/*$share_location = get_post_meta( $id, '_mp_share_display_location', true );
-		if ( '' !== $share_location ) {
-			switch ( $share_location ) {
-				case 'both':
-					$display_share = true;
-					break;
-				case $position:
-					$display_share = true;
-					break;
-				default:
-					$display_share = false;
-					break;
-			}
-		}*/
-		/*if ( function_exists( 'sharing_display' ) && true === $display_share ) {
-			?>
-			<div class="m-entry-share m-entry-share-<?php echo $position; ?>">
-				<?php sharing_display( '', true ); ?>
-			</div>
-			<?php
-		}*/
 	}
 endif;
 
@@ -411,9 +454,17 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_related' ) ) :
-	function minnpost_related( $type = 'content' ) {
-		$related_ids = minnpost_get_related( $type );
-		if ( ! empty( $related_ids ) ) :
+	function minnpost_related( $type = 'content', $only_show_images_if_not_missing = false ) {
+		if ( 'automated' === $type && function_exists( 'minnpost_largo_get_jetpack_results' ) ) {
+			$related_posts = minnpost_largo_get_jetpack_results();
+		} else {
+			$related_ids   = minnpost_get_related( $type );
+			$related_posts = array();
+			foreach ( $related_ids as $id ) {
+				$related_posts[] = get_post( $id );
+			}
+		}
+		if ( ! empty( $related_posts ) ) :
 			?>
 		<h3 class="a-related-title a-related-title-<?php echo $type; ?>">
 			<?php if ( '' !== get_post_meta( get_the_ID(), '_mp_related_content_label', true ) ) : ?>
@@ -425,10 +476,28 @@ if ( ! function_exists( 'minnpost_related' ) ) :
 		<ul class="a-related-list a-related-list-<?php echo $type; ?>">
 			<?php
 			global $post;
-			foreach ( $related_ids as $id ) :
-				$post = get_post( $id );
+			$image_size = 'feature-medium';
+			if ( true === $only_show_images_if_not_missing ) {
+				$show_image = true;
+				foreach ( $related_posts as $post ) {
+					setup_postdata( $post );
+					$image_data = get_minnpost_post_image( $image_size, array(), $post->id, true );
+					if ( empty( $image_data ) ) {
+						$show_image = false;
+						break;
+					}
+				}
+			}
+			foreach ( $related_posts as $post ) :
 				setup_postdata( $post );
-				get_template_part( 'template-parts/related-post', $type );
+				include(
+					locate_template(
+						array(
+							'template-parts/related-post-' . $type . '.php',
+							'template-parts/related-post.php',
+						)
+					)
+				);
 			endforeach;
 			wp_reset_postdata();
 			?>
@@ -511,13 +580,14 @@ if ( ! function_exists( 'minnpost_get_related_terms' ) ) :
 		$related_terms    = array();
 		$related_category = get_post_meta( get_the_ID(), '_mp_related_category', true );
 		$related_tag      = get_post_meta( get_the_ID(), '_mp_related_tag', true );
-		if ( '' !== $related_category || '' !== $related_tag ) {
-			if ( '' !== $related_category ) {
-				$related_terms['category'] = get_category( $related_category, ARRAY_A );
-			}
-			if ( '' !== $related_tag ) {
-				$related_terms['tag'] = get_tag( $related_tag, ARRAY_A );
-			}
+		if ( '' !== $related_category ) {
+			$related_terms['category'] = get_category( $related_category, ARRAY_A );
+		} else {
+			$permalink_category        = minnpost_get_permalink_category_id( get_the_ID() );
+			$related_terms['category'] = get_category( $permalink_category, ARRAY_A );
+		}
+		if ( '' !== $related_tag ) {
+			$related_terms['tag'] = get_tag( $related_tag, ARRAY_A );
 		}
 		return $related_terms;
 	}
@@ -693,6 +763,23 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 		);
 		return $image_data;
 
+	}
+endif;
+
+/**
+* Returns array of grouped categories for the given category
+*
+* @param int $category_id
+* @return array $groupd_categories
+*
+*/
+if ( ! function_exists( 'minnpost_get_grouped_categories' ) ) :
+	function minnpost_get_grouped_categories( $category_id = '' ) {
+		$grouped_categories = get_term_meta( $category_id, '_mp_category_grouped_categories', false );
+		if ( array() !== $grouped_categories ) {
+			error_log( 'grouped is ' . print_r( $grouped_categories, true ) );
+		}
+		return $grouped_categories;
 	}
 endif;
 
@@ -932,10 +1019,10 @@ if ( ! function_exists( 'minnpost_entry_footer' ) ) :
 
 		if ( ! is_single() && ! post_password_required() && ( comments_open() || get_comments_number() ) ) {
 			echo '<span class="comments-link">';
-			/* translators: %s: post title */
 			comments_popup_link(
 				sprintf(
 					wp_kses(
+						/* translators: %s: post title */
 						__( 'Leave a Comment<span class="screen-reader-text"> on %s</span>', 'minnpost-largo' ),
 						array(
 							'span' => array(
@@ -1033,9 +1120,9 @@ if ( ! function_exists( 'minnpost_category_breadcrumb' ) ) :
 			if ( true === $show_group ) {
 				$category_group_id = get_term_meta( $category_id, '_mp_category_group', true );
 				if ( '' !== $category_group_id ) {
-					echo '<div class="a-breadcrumbs">';
 					$category_group = get_category( $category_group_id );
-					echo '<div class="a-breadcrumb a-category-group a-category-group-' . sanitize_title( $category_group->slug ) . '"><a href="' . esc_url( get_category_link( $category_group->term_id ) ) . '">' . $category_group->name . '</a></div>';
+					echo '<div class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '">';
+					echo '<div class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category_group->term_id ) ) . '">' . $category_group->name . '</a></div>';
 				}
 			}
 			$category_name = $category->name;

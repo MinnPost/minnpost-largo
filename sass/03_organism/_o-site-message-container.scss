@@ -143,9 +143,12 @@
 
 	// article bottom
 	&.wp-message-inserter-message-region-article_bottom {
-		width: colspan( 16, 12 );
 		border: 1px solid $color__border-light;
 		margin-bottom: $standard-page-margin;
+
+		@include breakpoint-min( lg ) {
+			width: colspan( 16, 12 );
+		}
 
 		.m-wp-insert-message-item {
 			padding: 1.25em; // this basically matches the sum of the legacy padding

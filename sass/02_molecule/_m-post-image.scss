@@ -1,7 +1,15 @@
 .m-post-image {
 	display: table;
-	align-self: center;
+	//align-self: center;
 	margin-top: 0;
+
+	@include breakpoint-range( sm, lg ) {
+		//margin-left: colspan( 3, 12 );
+	}
+
+	@include breakpoint-min( xl ) {
+		//margin-left: colspan( 3, 12 );
+	}
 
 	img {
 		display: block;

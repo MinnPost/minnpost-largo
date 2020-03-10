@@ -1,29 +1,41 @@
 .m-entry-share {
 	list-style: none;
-	margin: 0;
+	margin: $standard-block-margin 0;
 	padding: 0;
 	display: flex;
-	flex-direction: column;
+	flex-direction: row;
+	justify-content: space-between;
 
-	li a {
-		display: inline-block;
-		overflow: none;
-		color: neutral-color(black);
-		border: 2px solid utility-color(blue, dark);
-		border-radius: 50%;
-		vertical-align: middle;
-		text-align: center;
-		width: $share-icon-size;
-		height: $share-icon-size;
-		line-height: $share-icon-size;
+	@include breakpoint-range( sm, lg ) {
+		flex-direction: column;
+	}
+
+	@include breakpoint-min( xl ) {
+		flex-direction: column;
+	}
+
+	li {
 		margin-bottom: $standard-block-margin / 2;
 
-		&:hover, &:focus, &:active {
-			border: 2px solid utility-color(blue, medium);
+		&:last-of-type {
+			margin-bottom: 0;
 		}
 
-		svg {
-			pointer-events: none;
+		a {
+			display: inline-block;
+			overflow: none;
+			color: neutral-color(black);
+			border: 2px solid utility-color(blue, dark);
+			border-radius: 50%;
+			vertical-align: middle;
+			text-align: center;
+			width: $share-icon-size;
+			height: $share-icon-size;
+			line-height: $share-icon-size;
+
+			&:hover, &:focus, &:active {
+				border: 2px solid utility-color(blue, medium);
+			}
 		}
 	}
 }

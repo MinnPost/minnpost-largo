@@ -1,5 +1,13 @@
 .o-entry {
 	display: flex;
-	flex-direction: row;
+	flex-direction: column;
 	width: 100%;
+
+	@include breakpoint-range( sm, lg ) {
+		flex-direction: row;
+	}
+
+	@include breakpoint-min( xl ) {
+		flex-direction: row;
+	}
 }

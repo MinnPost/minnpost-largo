@@ -1,22 +1,16 @@
 .a-comment-links {
-	display: inline-flex;
-	margin: 0.75em 0;
-	font-size: 76.9%;
-	text-transform: uppercase;
-	line-height: 1.3em;
-	font-family: $font__sans;
-	border: $border-default-style;
-	padding: $standard-block-padding;
-	margin-bottom: 10px;
-	margin-left: 1px;
-
+	@include meta-preset( $size: -1 );
+	padding-top: $standard-block-padding / 2;
 	div {
 
 		a {
-			padding-left: 16px;
-			padding-top: 2px;
-			margin-right: 10px;
-			line-height: 16px;
+			display: block;
+			margin-right: $standard-block-margin;
+			margin-bottom: $standard-block-padding;
 		}
+	}
+
+	@include breakpoint-min( sm ) {
+		display: inline-flex;
 	}
 }

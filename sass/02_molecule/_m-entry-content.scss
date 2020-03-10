@@ -5,8 +5,14 @@
 	//align-self: flex-end;
 	//margin: 0 $content-gutter $standard-block-margin 0;
 	margin-bottom: $standard-block-margin;
-	max-width: colspan( 9, 12 );
-	margin-right: colspan( 1, 12 );
+
+	@include breakpoint-range( sm, lg ) {
+		max-width: colspan( 10, 12 );
+	}
+
+	@include breakpoint-min( xl ) {
+		max-width: colspan( 10, 12 );
+	}
 }
 
 .m-entry-content-custom {

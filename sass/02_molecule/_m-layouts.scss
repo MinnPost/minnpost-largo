@@ -1,5 +1,15 @@
 .m-layout-primary {
-	max-width: colspan( 12, 16 );
+	width: 100%;
+
+	@include breakpoint-min( sm ) {
+		display: flex;
+	}
+
+	@include breakpoint-min( lg ) {
+		width: colspan( 12, 16 );
+		max-width: calc((100% - #{colspan( 1, 16 )}) - #{$size__site-sidebar} );
+	}
+
 }
 
 .o-wrapper-content-full .m-layout-primary {
@@ -34,21 +44,5 @@ body.page main {
 
 	.a-finish-strong {
 		width: 100%;
-	}
-}
-
-// media queries for layouts
-
-@media screen and (min-width: $more-than-logo-screen) {
-
-	.m-layout-primary {
-		display: flex;
-	}
-}
-
-@media screen and (min-width: $max-width-page) {
-
-	.m-layout-primary {
-		//max-width: $max-width-main;
 	}
 }

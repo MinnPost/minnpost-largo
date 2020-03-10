@@ -4,29 +4,7 @@ button[type="button"],
 a.a-button,
 button.a-button,
 .sce-comment-edit-buttons button {
-	padding: 0.25em;
-	@include meta-preset( $size: 1, $bold: true, $italic: false, $line-height: 1 );
-	background: $color__minnpost-red;
-	color: $color__white;
-	border: 0;
-	display: inline-block;
-	margin-right: 0.5em;
-	cursor: pointer;
-
-	&:link,
-	&:visited {
-		background: $color__minnpost-red;
-		color: $color__white;
-		text-decoration: none;
-	}
-
-	&:hover,
-	&:focus,
-	&:active {
-		background: palette(red, dark);
-		color: $color__white;
-		text-decoration: none;
-	}
+	@include button();
 
 	&:disabled,
 	&.a-button-disabled {
@@ -35,12 +13,12 @@ button.a-button,
 	}
 
 	&.a-button-flip {
-		background: $color__minnpost-blue;
+		background-color: utility-color(blue, dark);
 
 		&:hover,
 		&:focus,
 		&:active {
-			background: palette(blue, dark);
+			background-color: utility-color(blue, medium);
 		}
 	}
 
@@ -107,4 +85,19 @@ button.a-button,
 .gform_wrapper .gform_page_footer input[type=submit] {
 	@include meta-preset( $size: 2, $bold: true, $italic: false, $line-height: 1 );
 	margin-bottom: 0;
+}
+
+// show comments button
+.a-button.a-button-show-comments {
+	@include link-underline();
+	background: none;
+	padding: 0;
+	margin: 0 0 $standard-block-padding 0;
+
+	&:active,
+	&:focus,
+	&:hover {
+		@include link-underline(utility-color(blue, medium), utility-color(blue, background));
+		background: none;
+	}
 }

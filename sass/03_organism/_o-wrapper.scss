@@ -19,11 +19,16 @@
 
 	&.o-wrapper-content {
 		//margin-bottom: 40px; // this should be a better value in ems or rems
+		@include breakpoint-min( lg ) {
+			// this is where we have a big enough screen to make it all horizontal
+			flex-direction: row;
+		}
 	}
 
 	&.o-wrapper-support-navigation {
 		border-top: 1.230769230769231em solid neutral-color(black);
 	}
+
 }
 
 // media queries for wrapper
@@ -71,7 +76,7 @@
 	}
 }
 
-@media screen and (min-width: $max-width-page) {
+/*@media screen and (min-width: $nav-wrap-screen) {
 	.o-wrapper {
 		//@include outer-container($max-width-page);
 
@@ -80,4 +85,4 @@
 			flex-direction: row;
 		}
 	}
-}
+}*/

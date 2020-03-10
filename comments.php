@@ -89,6 +89,7 @@ if ( post_password_required() ) {
 	if ( ! current_user_can( 'not_comment', get_the_ID() ) ) {
 		$comment_form_args = array(
 			'logged_in_as'       => $logged_in_as,
+			'title_reply'        => __( 'Leave a Comment', 'minnpost-largo' ),
 			'title_reply_before' => '<h3 id="reply-title" class="a-comment-reply-title">',
 			'class_form'         => 'm-form m-form-comment-form m-form-standalone',
 			'comment_field'      => '<div class="m-form-item m-form-item-comment"><label for="comment">' . _x( 'Comment', 'noun' ) . '</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" aria-required="true" required="required"></textarea></div>',

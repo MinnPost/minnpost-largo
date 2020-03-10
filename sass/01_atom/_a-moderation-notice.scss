@@ -1,15 +1,13 @@
 .a-moderation-notice {
-	padding: 1em;
-	margin-bottom: 1.25em;
-	border: 1px solid $color__gray-lightest;
+	padding: $standard-block-padding;
+	margin: $standard-block-padding 0;
+	border: $border-default-style;
 
 	&.a-moderation-notice-rejected {
-		background: rgba_color($_color-base-red, 0.2);
-		color: $color__gray-dark;
+		background: brand-color(red,background);
 	}
 
 	&.a-moderation-notice-pending {
-		background: rgba_color($_color-base-yellow, 0.4);
-		color: $color__gray-dark;
+		background: utility-color(purple, background);
 	}
 }
