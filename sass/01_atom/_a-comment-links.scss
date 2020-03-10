@@ -7,6 +7,10 @@
 			display: block;
 			margin-right: $standard-block-margin;
 			margin-bottom: $standard-block-padding;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
 		}
 	}
 

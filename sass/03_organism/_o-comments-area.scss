@@ -15,11 +15,12 @@
 		}
 
 		> li {
-			margin: 0 0 $standard-block-margin 0;
+			//margin: 0 0 $standard-block-margin 0;
+			margin: 0;
 		}
 
 		.o-comment {
-			padding: $standard-block-padding;
+			padding: $standard-block-margin $standard-block-padding;
 			border-bottom: $border-default-style;
 			margin: 0 0 0 $standard-block-padding;
 
@@ -29,6 +30,13 @@
 
 			&.o-comment-by-current-user {
 				background: neutral-color(white);
+			}
+		}
+
+		> li:first-child {
+			
+			> .o-comment {
+				padding-top: $standard-block-padding;
 			}
 		}
 
