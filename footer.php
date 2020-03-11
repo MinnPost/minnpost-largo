@@ -15,7 +15,7 @@
 
 	<footer id="site-footer" class="o-footer">
 
-		<div class="o-wrapper o-wrapper-site-footer">
+		<div class="o-wrapper o-wrapper-site-footer<?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">
 
 			<aside class="o-footer-hat">
 				<?php dynamic_sidebar( 'sidebar-3' ); ?>
