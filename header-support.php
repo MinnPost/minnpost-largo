@@ -21,7 +21,7 @@
 <body <?php body_class(); ?>>
 
 	<header id="masthead" class="o-header">
-		<div class="o-wrapper o-wrapper-site-header">
+		<div class="o-wrapper o-wrapper-site-header<?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">
 			<div class="a-site-branding">
 				<a class="a-logo a-logo-svg" rel="home" href="<?php echo esc_url( home_url( '/' ) ); ?>">
 					<picture>

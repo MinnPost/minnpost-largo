@@ -23,6 +23,11 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 	if ( false !== strpos( $widget_output, 'm-widget m-widget-text m-widget-custom-html' ) && 'custom_html' == $widget_type ) {
 
 		$widget_output = str_replace( '<div id="custom_html-', '<section id="custom_html-', $widget_output );
+		// site branding in sitewide footer
+		if ( false !== strpos( $widget_output, 'a-site-branding' ) ) {
+			$widget_output = str_replace( 'class="m-widget m-widget-text m-widget-custom-html"', 'class="m-widget m-widget-text m-widget-custom-html m-widget-site-branding"', $widget_output );
+		}
+		// mailchimp form
 		if ( false !== strpos( $widget_output, 'm-form-minnpost-form-processor-mailchimp' ) ) {
 			$widget_output = str_replace( 'class="m-widget m-widget-text m-widget-custom-html"', 'class="m-widget m-widget-text m-widget-custom-html m-form-minnpost-form-processor-mailchimp"', $widget_output );
 		}

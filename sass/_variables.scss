@@ -227,21 +227,18 @@ $size__content-sidebar-small-screen: 280px;
 $size__content-sidebar-medium-screen: 35%;
 $size__content-sidebar-large-screen: 205px;
 
-// footer
-$size__footer-column: 270px;
-
 /*------------------------------------*\
 	#SPACING
 \*------------------------------------*/
 
 // margin/padding
 $standard-block-margin: 1.5em; // 36px at desktop
+$standard-heading-margin: 0.75em; // 18px at desktop
 $standard-block-padding: 0.5em; // 12px at body
 
 $standard-page-margin: 1.538461538461538em; // 20px
 $home-content-sidebar-padding: 35px;
 $archive-content-sidebar-padding: 15px;
-$footer-box-spacing: 15px;
 $form-text-indent: 6px;
 
 /*------------------------------------*\

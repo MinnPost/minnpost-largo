@@ -6,6 +6,30 @@
 			background: $color__minnpost-green;
 			color: $color__white;
 			@include meta-preset( $size: 1, $bold: true, $italic: false, $line-height: 1 );
+			margin-bottom: $standard-block-padding;
+
+			@include breakpoint-min( xs ) {
+				margin-bottom: $standard-heading-margin;
+			}
+
+			@include breakpoint-min( sm ) {
+				width: colspan( 2, 6 );
+			}
+
+			// inside a 5 column space now
+			@include breakpoint-min( md ) {
+				width: colspan( 2, 5 );
+			}
+
+			// inside 8 column space
+			@include breakpoint-min( lg ) {
+				width: colspan( 2, 8 );
+			}
+
+			// inside 12 column space
+			@include breakpoint-min( xl ) {
+				width: colspan( 2, 12 );
+			}
 
 			&:hover,
 			&:focus,
