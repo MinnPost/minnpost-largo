@@ -436,7 +436,7 @@ if ( ! function_exists( 'minnpost_largo_load_comments_set_user_meta' ) ) :
 			die();
 		}
 
-		$always_show = isset( $_POST['value'] ) ? intval( $_POST['value'] ) : 0;
+		$always_show = isset( $_POST['value'] ) ? (int) $_POST['value'] : 0;
 		$update      = update_user_meta( $user_id, 'always_load_comments', $always_show );
 
 		if ( 1 === $always_show ) {

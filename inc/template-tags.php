@@ -1319,7 +1319,7 @@ if ( ! function_exists( 'numeric_pagination' ) ) :
 		}
 
 		$paged = get_query_var( 'paged' ) ? absint( get_query_var( 'paged' ) ) : 1;
-		$max   = intval( $wp_query->max_num_pages );
+		$max   = (int) $wp_query->max_num_pages;
 
 		// current page
 		if ( $paged >= 1 ) {

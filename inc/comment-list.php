@@ -8,7 +8,7 @@ function minnpost_largo_comment( $comment, $args, $depth ) {
 	if ( 'approved' !== $status ) {
 		$class[] = 'o-comment-unpublished';
 	}
-	if ( intval( get_current_user_id() ) === intval( $comment->user_id ) ) {
+	if ( (int) get_current_user_id() === (int) $comment->user_id ) {
 		$class[] = 'o-comment-by-current-user';
 	}
 
@@ -88,7 +88,7 @@ function minnpost_largo_comment( $comment, $args, $depth ) {
 				<?php endif; ?>
 			</div>
 			<div class="m-comment-entry">
-				<?php if ( 'approved' !== $status && intval( get_current_user_id() ) === intval( $comment->user_id ) ) : ?>
+				<?php if ( 'approved' !== $status && (int) get_current_user_id() === (int) $comment->user_id ) : ?>
 					<p class="a-moderation-notice a-moderation-notice-pending"><?php echo __( 'Your comment is awaiting moderation.', 'minnpost-largo' ); ?></p>
 				<?php endif; ?>
 				<?php comment_text(); ?>
