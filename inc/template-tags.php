@@ -129,58 +129,18 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 			$image_url = '';
 		}
 
-		// handle prevention of lazy loading
-		$prevent_lazy_load = get_post_meta( $id, '_mp_prevent_lazyload', true );
-		if ( 'on' === $prevent_lazy_load ) {
-			$lazy_load = false;
-		}
-		if ( false === $lazy_load ) {
-			if ( isset( $attributes['class'] ) ) {
-				$attributes['class'] .= ' ';
-			} else {
-				$attributes['class'] = '';
-			}
-			$attributes['class']  .= 'no-lazy';
-			$attributes['loading'] = 'eager';
-		} else {
-			$attributes['loading'] = 'lazy';
-		}
+		// set up lazy load attributes
+		$attributes = apply_filters( 'minnpost_largo_lazy_load_attributes', $attributes, $id, 'post', $lazy_load );
 
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
 			// this requires that the custom image sizes in custom-fields.php work correctly
 			$image     = wp_get_attachment_image( $image_id, $size, false, $attributes );
 			$image_url = wp_get_attachment_url( $image_id );
 		} else {
-			if ( '' !== $image_id ) {
-				$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
-			} else {
-				$alt = '';
-			}
-			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
 			if ( is_singular( 'newsletter' ) ) {
-				$image = '<img src="' . $image_url . '" alt="' . $alt . '"';
-				if ( isset( $attributes['title'] ) ) {
-					$image .= ' title="' . $attributes['title'] . '"';
-				}
-				if ( isset( $attributes['style'] ) ) {
-					$image .= ' style="' . $attributes['style'] . '"';
-				}
-				if ( isset( $attributes['class'] ) ) {
-					$image .= ' class="' . $attributes['class'] . '"';
-				}
-				if ( isset( $attributes['align'] ) ) {
-					$image .= ' align="' . $attributes['align'] . '"';
-				}
-				if ( isset( $attributes['width'] ) ) {
-					$image .= ' width="' . $attributes['width'] . '"';
-				}
-				if ( isset( $attributes['height'] ) ) {
-					$image .= ' height="' . $attributes['height'] . '"';
-				}
-				if ( isset( $attributes['loading'] ) ) {
-					$image .= ' loading="' . $attributes['loading'] . '"';
-				}
-				$image .= '>';
+				$image = minnpost_largo_manual_image_tag( $image_id, $image_url, $attributes, 'newsletter' );
+			} else {
+				$image = minnpost_largo_manual_image_tag( $image_id, $image_url, $attributes );
 			}
 		}
 
@@ -726,31 +686,17 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 			return '';
 		}
 
-		// handle prevention of lazy loading
-		$prevent_lazy_load = get_post_meta( $author_id, '_mp_prevent_lazyload', true );
-		if ( 'on' === $prevent_lazy_load ) {
-			$lazy_load = false;
-		}
 		$attributes = array();
-		if ( false === $lazy_load ) {
-			if ( isset( $attributes['class'] ) ) {
-				$attributes['class'] .= ' ';
-			}
-			$attributes['class'] .= 'no-lazy';
-		}
+
+		// set up lazy load attributes
+		$attributes = apply_filters( 'minnpost_largo_lazy_load_attributes', $attributes, $author_id, 'post', $lazy_load );
 
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
 			// this requires that the custom image sizes in custom-fields.php work correctly
 			$image     = wp_get_attachment_image( $image_id, $size, false, $attributes );
 			$image_url = wp_get_attachment_url( $image_id );
 		} else {
-			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
-			if ( isset( $attributes['class'] ) ) {
-				$class = ' class="' . $attributes['class'] . '"';
-			} else {
-				$class = '';
-			}
-			$image = '<img src="' . $image_url . '" alt="' . $alt . $class . '">';
+			$image = minnpost_largo_manual_image_tag( $image_id, $image_url, $attributes );
 		}
 
 		$image_data = array(
@@ -888,30 +834,15 @@ if ( ! function_exists( 'minnpost_get_term_image' ) ) :
 			return '';
 		}
 
-		// handle prevention of lazy loading
-		$prevent_lazy_load = get_term_meta( $category_id, '_mp_prevent_lazyload', true );
-		if ( 'on' === $prevent_lazy_load ) {
-			$lazy_load = false;
-		}
-		if ( false === $lazy_load ) {
-			if ( isset( $attributes['class'] ) ) {
-				$attributes['class'] .= ' ';
-			}
-			$attributes['class'] .= 'no-lazy';
-		}
+		// set up lazy load attributes
+		$attributes = apply_filters( 'minnpost_largo_lazy_load_attributes', $attributes, $category_id, 'term', $lazy_load );
 
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
 			// this requires that the custom image sizes in custom-fields.php work correctly
 			$image     = wp_get_attachment_image( $image_id, $size, false, $attributes );
 			$image_url = wp_get_attachment_url( $image_id );
 		} else {
-			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
-			if ( isset( $attributes['class'] ) ) {
-				$class = ' class="' . $attributes['class'] . '"';
-			} else {
-				$class = '';
-			}
-			$image = '<img src="' . $image_url . '" alt="' . $alt . $class . '">';
+			$image = minnpost_largo_manual_image_tag( $image_id, $image_url, $attributes );
 		}
 
 		$image_data = array(
@@ -1330,19 +1261,18 @@ if ( ! function_exists( 'minnpost_plus_icon' ) ) :
 				}
 			}
 
-			// handle prevention of lazy loading
-			$prevent_lazy_load = get_post_meta( $post_id, '_mp_prevent_lazyload', true );
-			if ( 'on' === $prevent_lazy_load ) {
-				$lazy_load = false;
+			$class = '';
+
+			// set up lazy load attributes
+			$attributes = apply_filters( 'minnpost_largo_lazy_load_attributes', $attributes, $post_id, 'post', $lazy_load );
+
+			if ( isset( $attributes['class'] ) ) {
+				$class = $attributes['class'];
 			}
 
-			if ( false === $lazy_load ) {
-				$class = 'no-lazy';
-			} else {
-				$class = '';
-			}
-
-			$image = '<img src="' . get_theme_file_uri() . '/assets/img/MinnPostPlusLogo.png' . '" alt="MinnPostPlus"' . $class . '>';
+			$attributes['alt'] = __( 'MinnPostPlus', 'minnpost-largo' );
+			$image_url         = get_theme_file_uri() . '/assets/img/MinnPostPlusLogo.png';
+			$image             = minnpost_largo_manual_image_tag( '', $image_url, $attributes );
 
 			echo '<div class="a-minnpost-plus">' . $image . '</div>';
 		}
@@ -1745,5 +1675,94 @@ if ( ! function_exists( 'get_user_name_or_profile_link' ) ) :
 		} else {
 			return $comment_name;
 		}
+	}
+endif;
+
+/**
+* Common filter for setting up lazy load attributes
+*
+* @param array $attributes
+* @param int $object_id
+* @param string $object_type
+* @param bool $lazy_load
+* @return array $attributes
+*
+*/
+if ( ! function_exists( 'minnpost_largo_add_lazy_load_attributes' ) ) :
+	add_filter( 'minnpost_largo_lazy_load_attributes', 'minnpost_largo_add_lazy_load_attributes', 10, 3 );
+	function minnpost_largo_add_lazy_load_attributes( $attributes, $object_id, $object_type = 'post', $lazy_load = true ) {
+		// handle prevention of lazy loading from the object loading the image
+		if ( 'post' === $object_type ) {
+			$prevent_lazy_load = get_post_meta( $object_id, '_mp_prevent_lazyload', true );
+		} elseif ( 'term' === $object_type ) {
+			$prevent_lazy_load = get_term_meta( $object_id, '_mp_prevent_lazyload', true );
+		}
+		if ( 'on' === $prevent_lazy_load ) {
+			$lazy_load = false;
+		}
+		if ( false === $lazy_load ) {
+			if ( isset( $attributes['class'] ) ) {
+				$attributes['class'] .= ' ';
+			} else {
+				$attributes['class'] = '';
+			}
+			// this is the class and attribute to disable lazy loading on an image
+			$attributes['class']  .= 'no-lazy';
+			$attributes['loading'] = 'eager';
+		} else {
+			$attributes['loading'] = 'lazy';
+			$attributes['class']   = 'jetpack-lazy-image';
+		}
+		return $attributes;
+	}
+endif;
+
+/**
+* Manually generate an image tag from its attributes
+* This is mostly used for images that are migrated pre-WordPress, but at least we can still add
+* attributes to them.
+*
+* @param int $image_id
+* @param string $image_url
+* @param array $attributes
+* @return string $image
+*
+*/
+if ( ! function_exists( 'minnpost_largo_manual_image_tag' ) ) :
+	function minnpost_largo_manual_image_tag( $image_id = '', $image_url = '', $attributes = array(), $object_type = 'post' ) {
+		$image = '';
+		if ( '' !== $image_id ) {
+			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+		} elseif ( isset( $attributes['alt'] ) ) {
+			$alt = $attributes['alt'];
+		} else {
+			$alt = '';
+		}
+		$image = '<img src="' . $image_url . '" alt="' . $alt . '"';
+		if ( 'newsletter' === $object_type ) {
+			if ( isset( $attributes['title'] ) ) {
+				$image .= ' title="' . $attributes['title'] . '"';
+			}
+		}
+		if ( isset( $attributes['style'] ) ) {
+			$image .= ' style="' . $attributes['style'] . '"';
+		}
+		if ( isset( $attributes['class'] ) ) {
+			$image .= ' class="' . $attributes['class'] . '"';
+		}
+		if ( isset( $attributes['align'] ) ) {
+			$image .= ' align="' . $attributes['align'] . '"';
+		}
+		if ( isset( $attributes['width'] ) ) {
+			$image .= ' width="' . $attributes['width'] . '"';
+		}
+		if ( isset( $attributes['height'] ) ) {
+			$image .= ' height="' . $attributes['height'] . '"';
+		}
+		if ( isset( $attributes['loading'] ) ) {
+			$image .= ' loading="' . $attributes['loading'] . '"';
+		}
+		$image .= '>';
+		return $image;
 	}
 endif;
