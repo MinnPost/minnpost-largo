@@ -257,11 +257,11 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_posted_by' ) ) :
-	function minnpost_posted_by( $id = '', $include_title = true ) {
+	function minnpost_posted_by( $id = '', $include_title = true, $link_name = false ) {
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
-		echo minnpost_get_posted_by( $id, $include_title );
+		echo minnpost_get_posted_by( $id, $include_title, $link_name );
 	}
 endif;
 
