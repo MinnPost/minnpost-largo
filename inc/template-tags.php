@@ -1292,6 +1292,9 @@ if ( ! function_exists( 'minnpost_newsletter_logo' ) ) :
 				case 'sunday_review':
 					$filename = 'newsletter-logo-sunday-review.png';
 					break;
+				case 'daily_coronavirus':
+					$filename = 'mp-dcu-600.png';
+					break;
 				case 'republication':
 					$filename = 'republication-header-260x50.png';
 					break;
