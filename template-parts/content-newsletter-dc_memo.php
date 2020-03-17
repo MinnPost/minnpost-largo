@@ -221,7 +221,7 @@ a[x-apple-data-detectors] {
 				$body = str_replace( '<li>', '<li style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', $body );
 				$body = str_replace( '<ul>', '<ul style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0 0 0 40px;">', $body );
 
-				// add the inline sponsor before the second <h4 in the body
+				// add the inline sponsor before the second h2-h6 in the body
 				$heading_counter = 1;
 				$ad_string       = '<h4 class="sponsored" style="color: #738bc0; Margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-color: #cccccf; border-top-style: solid; border-top-width: 2px; padding-top: 15px;" align="left">D.C. Memo Sponsored by Great River Energy</h4><p class="inline-sponsor" style="font-family: Georgia, &quot;Times New Roman&quot;, Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;" align="center"><a href="http://greatriverenergy.com/" style="color: #801019; text-decoration: none;"><img src="https://www.minnpost.com/wp-content/uploads/sites/default/files/imagecache/image_detail/images/image/great-river-energy-logo.png" alt="Great River Energy" align="center" style="height: 86px; line-height: 100%; outline: none; text-decoration: none; display: block; Margin: 0 10px 5px 0; border: 0 none;" /></a></p><h4';
 				$body            = preg_replace_callback(
