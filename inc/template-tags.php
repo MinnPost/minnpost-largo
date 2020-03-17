@@ -257,7 +257,7 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_posted_by' ) ) :
-	function minnpost_posted_by( $id = '', $include_title = true, $link_name = false ) {
+	function minnpost_posted_by( $id = '', $include_title = true, $link_name = true ) {
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
@@ -554,14 +554,15 @@ endif;
 * Outputs author image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
 *
 * @param int $author_id
-* @param string $size
+* @param string $photo_size
+* @param string $text_field
 * @param bool $include_text
 * @param bool $include_name
 *
 */
 if ( ! function_exists( 'minnpost_author_figure' ) ) :
-	function minnpost_author_figure( $author_id = '', $size = 'photo', $include_text = true, $include_name = false, $lazy_load = true ) {
-		$output = minnpost_get_author_figure( $author_id, $size, $include_text, $include_name, $lazy_load );
+	function minnpost_author_figure( $author_id = '', $photo_size = 'photo', $text_field = 'excerpt', $include_text = true, $include_name = false, $lazy_load = true ) {
+		$output = minnpost_get_author_figure( $author_id, $photo_size, $text_field, $include_text, $include_name, $lazy_load );
 		echo $output;
 	}
 endif;
@@ -570,7 +571,8 @@ endif;
 * Get author image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
 *
 * @param int $author_id
-* @param string $size
+* @param string $photo_size
+* @param string $text_field
 * @param bool $include_text
 * @param bool $include_name
 *
@@ -581,14 +583,14 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 	/**
 	 * Returns author image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
 	 */
-	function minnpost_get_author_figure( $author_id = '', $size = 'photo', $include_text = true, $include_name = false, $lazy_load = true ) {
+	function minnpost_get_author_figure( $author_id = '', $photo_size = 'photo', $text_field = 'excerpt', $include_text = true, $include_name = false, $lazy_load = true ) {
 
 		// in drupal there was only one author image size
 		if ( '' === $author_id ) {
 			$author_id = get_the_author_meta( 'ID' );
 		}
 
-		$image_data = minnpost_get_author_image( $author_id, $size );
+		$image_data = minnpost_get_author_image( $author_id, $photo_size );
 		if ( '' !== $image_data ) {
 			$image_id  = $image_data['image_id'];
 			$image_url = $image_data['image_url'];
@@ -596,10 +598,10 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 		}
 
 		$text = '';
-		if ( 'photo' === $size ) { // full text
-			$text = get_post_meta( $author_id, '_mp_author_bio', true );
-		} else { // excerpt
+		if ( 'excerpt' === $text_field ) { // excerpt
 			$text = wpautop( get_post_meta( $author_id, '_mp_author_excerpt', true ) );
+		} else { // full text
+			$text = get_post_meta( $author_id, '_mp_author_bio', true );
 		}
 
 		if ( post_password_required() || is_attachment() || ( ! isset( $image_id ) && ! isset( $image_url ) ) ) {
@@ -629,7 +631,7 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 
 		if ( is_singular() || is_archive() ) {
 			$output  = '';
-			$output .= '<figure class="a-archive-figure a-author-figure a-author-figure-' . $size . '">';
+			$output .= '<figure class="a-archive-figure a-author-figure a-author-figure-' . $photo_size . '">';
 			$output .= $image;
 			if ( true === $include_text && ( '' !== $text || '' !== $name ) ) {
 				$output .= '<figcaption>';
