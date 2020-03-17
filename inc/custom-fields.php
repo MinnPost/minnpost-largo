@@ -53,8 +53,8 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'id'           => $prefix . 'setup',
 				'title'        => __( 'Setup', 'minnpost-largo' ),
 				'object_types' => array( $object_type ),
-				//'context'    => 'after_title',
-				//'priority'   => 'high',
+				'context'      => 'after_title',
+				//'priority'     => 'high',
 			)
 		);
 		$newsletter_setup->add_field(
@@ -70,6 +70,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 					'sunday_review'     => __( 'Sunday Review', 'minnpost-largo' ),
 					'dc_memo'           => __( 'D.C. Memo', 'minnpost-largo' ),
 					'daily_coronavirus' => __( 'Daily Coronavirus Update', 'minnpost-largo' ),
+					'republication'     => __( 'Republication', 'minnpost-largo' ),
 				),
 			)
 		);
@@ -78,15 +79,43 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'name' => __( 'Preview Text', 'minnpost-largo' ),
 				'id'   => $prefix . 'preview_text',
 				'type' => 'textarea_small',
-				'desc' => __( 'This is visible before users open the email in some email clients. If there\'s no value, we won\'t use it. Email clients will limit how many characters they show.', 'minnpost-largo' ),
+				'desc' => __( 'In some email clients, this snippet will appear in the inbox after the subject line. If there\'s no value, we won\'t use it. Email clients will limit how many characters they show.', 'minnpost-largo' ),
 			)
 		);
 		$newsletter_setup->add_field(
 			array(
-				'name' => __( 'Show Department for Top Stories?', 'minnpost-largo' ),
-				'id'   => $prefix . 'show_department_for_top_stories',
-				'type' => 'checkbox',
-				'desc' => '',
+				'name'       => __( 'Show Main Category for Top Stories?', 'minnpost-largo' ),
+				'id'         => $prefix . 'show_department_for_top_stories',
+				'type'       => 'checkbox',
+				'desc'       => '',
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
+			)
+		);
+		$newsletter_setup->add_field(
+			array(
+				'name'       => __( 'Show Main Category for Republishable Stories?', 'minnpost-largo' ),
+				'id'         => $prefix . 'show_department_for_republish_stories',
+				'type'       => 'checkbox',
+				'desc'       => '',
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => 'republication',
+				),
+			)
+		);
+		$newsletter_setup->add_field(
+			array(
+				'name'       => __( 'Show Thumbnail Image for Republishable Stories?', 'minnpost-largo' ),
+				'id'         => $prefix . 'show_image_for_republish_stories',
+				'type'       => 'checkbox',
+				'desc'       => '',
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => 'republication',
+				),
 			)
 		);
 
@@ -123,69 +152,112 @@ if ( function_exists( 'create_newsletter' ) ) :
 		if ( 'production' === VIP_GO_ENV ) {
 			$newsletter_post_args['es'] = true; // elasticsearch on production only
 		}
-		$newsletter_top_posts = new_cmb2_box(
+		$newsletter_posts = new_cmb2_box(
 			array(
 				'id'           => $prefix . 'top_posts',
-				'title'        => __( 'Top Stories', 'minnpost-largo' ),
+				'title'        => __( 'Newsletter Content', 'minnpost-largo' ),
 				'object_types' => array( $object_type ), // Post type
 				'context'      => 'normal',
 				'priority'     => 'high',
 				'show_names'   => true, // Show field names on the left
 			)
 		);
-		$newsletter_top_posts->add_field(
+		$newsletter_posts->add_field(
 			minnpost_post_search_field(
 				array(
 					'name'       => __( 'Top Stories', 'minnpost-largo' ),
-					'desc'       => __( 'Search for a post here', 'minnpost-largo' ),
+					'desc'       => __( 'Search for a post here.', 'minnpost-largo' ),
 					'id'         => $prefix . 'top_posts',
 					'query_args' => array(
 						'orderby'     => 'modified',
 						'order'       => 'DESC',
 						'post_status' => 'any',
 					),
+					'attributes' => array(
+						'data-conditional-id'    => $prefix . 'type',
+						'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+					),
 				),
 				'post_search_ajax'
 			)
 		);
-		$newsletter_top_posts->add_field(
+		$newsletter_posts->add_field(
 			array(
-				'name' => __( 'Top Stories Manual Override', 'minnpost-largo' ),
-				'id'   => $prefix . 'top_posts_override',
-				'type' => 'text',
-				'desc' => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them in the order they are entered instead of the search field value.', 'minnpost-largo' ),
+				'name'       => __( 'Top Stories Manual Override', 'minnpost-largo' ),
+				'id'         => $prefix . 'top_posts_override',
+				'type'       => 'text',
+				'desc'       => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them in the order they are entered instead of the search field value.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
 			)
 		);
-		$newsletter_more_posts = new_cmb2_box(
-			array(
-				'id'           => $prefix . 'more_posts',
-				'title'        => __( 'More Stories', 'minnpost-largo' ),
-				'object_types' => array( $object_type ), // Post type
-				'context'      => 'normal',
-				'priority'     => 'high',
-				'show_names'   => true, // Show field names on the left
-			)
-		);
-		$newsletter_more_posts->add_field(
+		$newsletter_posts->add_field(
 			minnpost_post_search_field(
 				array(
 					'name'       => __( 'More Stories', 'minnpost-largo' ),
-					'desc'       => __( 'Search for a post here', 'minnpost-largo' ),
+					'desc'       => __( 'Search for a post here.', 'minnpost-largo' ),
 					'id'         => $prefix . 'more_posts',
 					'query_args' => array(
 						'orderby'     => 'modified',
 						'order'       => 'DESC',
 						'post_status' => 'any',
 					),
+					'attributes' => array(
+						'data-conditional-id'    => $prefix . 'type',
+						'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+					),
 				)
 			)
 		);
-		$newsletter_more_posts->add_field(
+		$newsletter_posts->add_field(
 			array(
-				'name' => __( 'More Stories Manual Override', 'minnpost-largo' ),
-				'id'   => $prefix . 'more_posts_override',
-				'type' => 'text',
-				'desc' => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them in the order they are entered instead of the search field value.', 'minnpost-largo' ),
+				'name'       => __( 'More Stories Manual Override', 'minnpost-largo' ),
+				'id'         => $prefix . 'more_posts_override',
+				'type'       => 'text',
+				'desc'       => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them in the order they are entered instead of the search field value.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
+			)
+		);
+		$newsletter_posts->add_field(
+			minnpost_post_search_field(
+				array(
+					'name'       => __( 'Republishable Stories', 'minnpost-largo' ),
+					'desc'       => __( 'Search for a post here.', 'minnpost-largo' ),
+					'id'         => $prefix . 'republishable_posts',
+					'query_args' => array(
+						'orderby'     => 'modified',
+						'order'       => 'DESC',
+						'post_status' => 'any',
+					),
+					'attributes' => array(
+						'data-conditional-id'    => $prefix . 'type',
+						'data-conditional-value' => 'republication',
+					),
+				),
+				'post_search_ajax'
+			)
+		);
+		$newsletter_posts->add_field(
+			array(
+				'name'        => __( 'Preview of Upcoming Stories', 'minnpost-largo' ),
+				'id'          => $prefix . 'upcoming',
+				'type'        => 'wysiwyg',
+				'options'     => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'textarea_rows' => 5,
+					'teeny'         => true, // output the minimal editor config used in Press This
+				),
+				'desc'        => __( 'Use this to describe upcoming stories for this edition.', 'minnpost-largo' ),
+				'attributes'  => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => 'republication',
+				),
+				'after_field' => '<input name="asdf" type="hidden" data-conditional-id="' . $prefix . 'type' . '" data-conditional-value="republication">', // hack to fix the condtional display
 			)
 		);
 	}
@@ -1715,5 +1787,25 @@ if ( ! function_exists( 'limit_liveblog_box' ) ) :
 		if ( ! current_user_can( 'enable_liveblog' ) ) {
 			remove_meta_box( 'liveblog', 'post', 'advanced' );
 		}
+	}
+endif;
+
+/**
+* Format a field for newsletter HTML markup
+*
+*/
+if ( ! function_exists( 'minnpost_largo_email_html' ) ) :
+	function minnpost_largo_email_html( $field ) {
+		$field = str_replace( '<a href="', '<a style="color: #801019; text-decoration: none;" href="', $field );
+		$field = str_replace( ' dir="ltr"', '', $field );
+		$field = str_replace( '<p class="intro">', '<p>', $field );
+		$field = preg_replace( '/<p>/', '<p class="intro" style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 17.6px; line-height: 24.9444px; margin: 0 0 15px; padding: 15px 0 0;">', $field, 1 );
+		$field = str_replace( '<p>', '<p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', $field );
+		$field = str_replace( '<li>', '<li style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', $field );
+		$field = str_replace( '<ul>', '<ul style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0 0 0 40px;">', $field );
+		$field = str_replace( '<h2>', '<h2 style="color: #801019; margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $field );
+		$field = str_replace( '<h3>', '<h3 style="color: #801019; margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $field );
+		$field = str_replace( '<blockquote><p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', '<blockquote style="border-left-width: 2px; border-left-color: #cccccf; border-left-style: solid; margin: 10px 10px 15px; padding: 0 10px; color: #6a6161;"><p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', $field );
+		return $field;
 	}
 endif;

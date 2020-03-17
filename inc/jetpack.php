@@ -105,3 +105,18 @@ if ( ! function_exists( 'minnpost_largo_es_query_args' ) ) :
 		return $args;
 	}
 endif;
+
+/**
+ * Remove the default Jetpack Related Posts output
+ * Because we're going to use WP Query instead
+ */
+if ( ! function_exists( 'minnpost_largo_jetpack_remove' ) ) :
+	add_action( 'wp', 'minnpost_largo_jetpack_remove', 20 );
+	function minnpost_largo_jetpack_remove() {
+		if ( class_exists( 'Jetpack_RelatedPosts' ) ) {
+			$jprp     = Jetpack_RelatedPosts::init();
+			$callback = array( $jprp, 'filter_add_target_to_dom' );
+			remove_filter( 'the_content', $callback, 40 );
+		}
+	}
+endif;
