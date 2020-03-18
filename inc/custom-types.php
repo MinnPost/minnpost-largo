@@ -217,16 +217,17 @@ if ( ! function_exists( 'minnpost_message_regions' ) ) :
 	add_filter( 'wp_message_inserter_regions', 'minnpost_message_regions' );
 	function minnpost_message_regions( $regions ) {
 		$regions = array(
-			'header'          => __( 'Site Header', 'minnpost-largo' ),
-			'article_bottom'  => __( 'Article Bottom', 'minnpost-largo' ),
-			'homepage_middle' => __( 'Homepage Middle', 'minnpost-largo' ),
-			//'article_middle'  => __( 'Article Middle', 'minnpost-largo' ),
-			'archive_middle'  => __( 'Archive Middle', 'minnpost-largo' ),
-			'user_account'    => __( 'User Account', 'minnpost-largo' ),
-			'popup'           => __( 'Popup', 'minnpost-largo' ),
-			'email_header'    => __( 'Email Header', 'minnpost-largo' ),
-			'email_middle'    => __( 'Email Middle', 'minnpost-largo' ),
-			'email_footer'    => __( 'Email Footer', 'minnpost-largo' ),
+			'header'             => __( 'Site Header', 'minnpost-largo' ),
+			'above_article_body' => __( 'Above Article Body', 'minnpost-largo' ),
+			//'article_middle'   => __( 'Article Middle', 'minnpost-largo' ),
+			'article_bottom'     => __( 'Article Bottom', 'minnpost-largo' ),
+			'homepage_middle'    => __( 'Homepage Middle', 'minnpost-largo' ),
+			'archive_middle'     => __( 'Archive Middle', 'minnpost-largo' ),
+			'user_account'       => __( 'User Account', 'minnpost-largo' ),
+			'popup'              => __( 'Popup', 'minnpost-largo' ),
+			'email_header'       => __( 'Email Header', 'minnpost-largo' ),
+			'email_middle'       => __( 'Email Middle', 'minnpost-largo' ),
+			'email_footer'       => __( 'Email Footer', 'minnpost-largo' ),
 		);
 		return $regions;
 	}
