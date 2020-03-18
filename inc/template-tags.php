@@ -558,11 +558,13 @@ endif;
 * @param string $text_field
 * @param bool $include_text
 * @param bool $include_name
+* @param bool $include_title
+* @param bool $lazy_load
 *
 */
 if ( ! function_exists( 'minnpost_author_figure' ) ) :
-	function minnpost_author_figure( $author_id = '', $photo_size = 'photo', $text_field = 'excerpt', $include_text = true, $include_name = false, $lazy_load = true ) {
-		$output = minnpost_get_author_figure( $author_id, $photo_size, $text_field, $include_text, $include_name, $lazy_load );
+	function minnpost_author_figure( $author_id = '', $photo_size = 'photo', $text_field = 'excerpt', $include_text = true, $include_name = false, $include_title = true, $lazy_load = true ) {
+		$output = minnpost_get_author_figure( $author_id, $photo_size, $text_field, $include_text, $include_name, $include_title, $lazy_load );
 		echo $output;
 	}
 endif;
@@ -575,6 +577,8 @@ endif;
 * @param string $text_field
 * @param bool $include_text
 * @param bool $include_name
+* @param bool $include_title
+* @param bool $lazy_load
 *
 * @return string $output
 *
@@ -583,7 +587,7 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 	/**
 	 * Returns author image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
 	 */
-	function minnpost_get_author_figure( $author_id = '', $photo_size = 'photo', $text_field = 'excerpt', $include_text = true, $include_name = false, $lazy_load = true ) {
+	function minnpost_get_author_figure( $author_id = '', $photo_size = 'photo', $text_field = 'excerpt', $include_text = true, $include_name = false, $include_title = true, $lazy_load = true ) {
 
 		// in drupal there was only one author image size
 		if ( '' === $author_id ) {
@@ -597,19 +601,20 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 			$image     = $image_data['markup'];
 		}
 
-		$text = '';
-		if ( 'excerpt' === $text_field ) { // excerpt
-			$text = wpautop( get_post_meta( $author_id, '_mp_author_excerpt', true ) );
-		} else { // full text
-			$text = get_post_meta( $author_id, '_mp_author_bio', true );
-		}
-
 		if ( post_password_required() || is_attachment() || ( ! isset( $image_id ) && ! isset( $image_url ) ) ) {
 			return;
 		}
 
 		$name = '';
 		$name = get_post_meta( $author_id, 'cap-display_name', true );
+		$text = '';
+
+		if ( 'excerpt' === $text_field ) { // excerpt
+			$text .= get_post_meta( $author_id, '_mp_author_excerpt', true );
+		} else { // full text
+			$text .= get_post_meta( $author_id, '_mp_author_bio', true );
+		}
+		$text = apply_filters( 'the_content', $text );
 
 		$caption = wp_get_attachment_caption( $image_id );
 		$credit  = get_media_credit_html( $image_id );
@@ -642,10 +647,32 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 						$output    .= '<a href="' . $author_url . '">';
 					}
 					$output .= $name;
+					if ( true === $include_title && isset( get_the_coauthor_meta( 'job-title' )[ $author_id ] ) ) {
+						$title = get_the_coauthor_meta( 'job-title' )[ $author_id ];
+						if ( '' !== $title ) {
+							$output .= '&nbsp;|&nbsp;<span class="a-entry-author-job-title">' . $title . '</span>';
+						}
+					}
 					if ( 0 < $count ) {
 						$output .= '</a>';
 					}
 					$output .= '</h3>';
+				} elseif ( '' !== $name ) {
+					if ( 0 < $count ) {
+						if ( true === $include_title && isset( get_the_coauthor_meta( 'job-title' )[ $author_id ] ) ) {
+							$title = get_the_coauthor_meta( 'job-title' )[ $author_id ];
+							if ( '' !== $title ) {
+								$output .= '<h3 class="a-author-figure-job-title">' . $title . '</h3>';
+							}
+						}
+						$author_url = get_author_posts_url( $author_id, sanitize_title( $name ) );
+						$text      .= sprintf(
+							// translators: 1) author archive url, 2) author name
+							'<p class="a-more-by-author"><a href="%1$s">' . esc_html__( 'More articles by %2$s', 'minnpost-largo' ) . '</a></p>',
+							esc_url( $author_url ),
+							$name
+						);
+					}
 				}
 				$output .= $text;
 				$output .= '</figcaption>';

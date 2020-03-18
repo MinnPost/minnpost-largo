@@ -1,5 +1,5 @@
 .m-author-info {
-	padding-top: 2px;
+//	padding-top: 2px;
 
 	@include breakpoint-min( lg ) {
 		width: colspan( 16, 12 );
@@ -8,29 +8,33 @@
 	.a-author-figure {
 
 		@include clearfix;
-		background: $color__minnpost-white;
+//		background: $color__minnpost-white;
 
 		img {
-			margin: 10px 20px 10px 10px;
+//			margin: 10px 20px 10px 10px;
 			float: left;
-			max-width: 190px;
+			max-width: $author-photo-size;
 		}
 
 		figcaption {
 
 			@include clearfix;
-			padding: 10px;
+
+			h3 {
+				padding-bottom: $standard-block-padding;
+			}
 
 			p {
+				margin-bottom: $standard-block-padding;
 
 				a {
-					color: $color__link;
+					//color: $color__link;
 
 					&:active,
 					&:focus,
 					&:hover {
-						color: $color__link;
-						text-decoration: underline;
+						//color: $color__link;
+						//text-decoration: underline;
 					}
 				}
 			}
@@ -38,36 +42,36 @@
 
 		a h3,
 		a img {
-			color: $color__link;
+			//color: $color__link;
 		}
 
 		a:visited h3 {
-			color: $color__link;
+			//color: $color__link;
 		}
 
 		a:active h3,
 		a:focus h3,
 		a:hover h3 {
-			color: $color__link;
-			text-decoration: underline;
+			//color: $color__link;
+			//text-decoration: underline;
 		}
 	}
 
 	&.m-author-info-single .a-author-figure {
-		border: 1px solid $color__gray-lightest;
-		margin-top: 10px;
+		//border: 1px solid $color__gray-lightest;
+		//margin-top: 10px;
 
 		img {
-			max-width: 75px; // in case the author has an image but not a teaser
+			max-width: $author-photo-size;
 		}
 
 		figcaption {
-			margin-bottom: 25px;
-			padding-bottom: 20px;
+			//margin-bottom: 25px;
+			//padding-bottom: 20px;
 
 			p {
-				font-size: $content-font-size;
-				line-height: 1.3em;
+				//font-size: $content-font-size;
+				//line-height: 1.3em;
 			}
 		}
 	}

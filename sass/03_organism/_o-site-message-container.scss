@@ -149,7 +149,7 @@
 
 	// article bottom
 	&.wp-message-inserter-message-region-article_bottom {
-		border: $border-default-style;
+		background: utility-color(blue, background);
 		margin-bottom: $standard-block-margin;
 
 		@include breakpoint-min( lg ) {
