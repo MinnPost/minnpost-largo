@@ -94,11 +94,10 @@
 	if ( '' !== $author_info ) {
 		?>
 	<aside class="m-author-info m-author-info-excerpt<?php if ( is_singular() ) { ?> m-author-info-singular<?php } ?><?php if ( is_single() ) { ?> m-author-info-single<?php } ?>">
-		<h3 class="a-about-author">About the author:</h3>
 		<?php
 		foreach ( $coauthors as $coauthor ) :
 			$author_id = $coauthor->ID;
-			minnpost_author_figure( $author_id, 'author-teaser', true, true );
+			minnpost_author_figure( $author_id, 'photo', true, true );
 		endforeach;
 		?>
 	</aside><!-- .m-author-info -->
