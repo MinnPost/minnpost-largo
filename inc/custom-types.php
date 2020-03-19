@@ -79,6 +79,21 @@ if ( ! function_exists( 'minnpost_newsletter_default_order' ) ) :
 endif;
 
 /**
+* Add Co-Authors-Plus support to Newsletters
+*
+* @param array $post_types
+* @return array $post_types
+*
+*/
+add_filter(
+	'coauthors_supported_post_types',
+	function( $post_types ) {
+		$post_types[] = 'newsletter';
+		return $post_types;
+	}
+);
+
+/**
 * Set which post types are indexable by Elasticpress
 *
 * @param array $post_types
