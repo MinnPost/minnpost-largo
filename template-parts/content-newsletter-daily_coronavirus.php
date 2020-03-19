@@ -222,9 +222,9 @@ a[x-apple-data-detectors] {
 				$body = str_replace( '<ul>', '<ul style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0 0 0 40px;">', $body );
 
 				// replace headings
-				$body = str_replace( '<h2>', '<h2 style="color: #801019; Margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $body );
-				$body = str_replace( '<h3>', '<h3 style="color: #801019; Margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $body );
-				$body = str_replace( '<h4>', '<h4 style="color: #801019; Margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $body );
+				$body = preg_replace( '/(<h[2-6]\b[^><]*)>/i', '$1 style="color: #801019; Margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $body );
+
+				// replace blockquotes
 				$body = str_replace( '<blockquote><p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', '<blockquote style="border-left-width: 2px; border-left-color: #cccccf; border-left-style: solid; Margin: 10px 10px 15px; padding: 0 10px; color: #6a6161;"><p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', $body );
 				?>
 				<tr>
