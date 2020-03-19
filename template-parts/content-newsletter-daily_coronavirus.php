@@ -174,22 +174,58 @@ a[x-apple-data-detectors] {
 				</td> <!-- end .one-column.header -->
 			</tr> <!-- end row -->
 
+			<?php if ( '' !== minnpost_get_posted_by() ) : ?>
+				<tr>
+					<td class="one-column header" style="border-collapse: collapse; border-bottom-width: 2px; border-bottom-color: #cccccf; border-bottom-style: solid; Margin: 0; padding: 0;">
+				<!--[if (gte mso 9)|(IE)]>
+				<table cellpadding="0" cellspacing="0" width="100%">
+					<tr>
+						<td width="100%" valign="bottom">
+				<![endif]-->
+						<div class="column tagline byline" style="width: 100%;">
+							<table cellpadding="0" cellspacing="0" width="100%" style="border-spacing: 0; Margin: 0; padding: 0; font-family: Helvetica, Arial, Geneva, sans-serif; color: #1A1818; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse;">
+								<tr>
+									<td class="inner" style="border-collapse: collapse; Margin: 0; padding: 2px 0; max-height: 50px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, &quot;Times New Roman&quot;, Times, serif; font-style: italic; font-size: 16px;">
+										<table cellpadding="0" cellspacing="0" class="contents" style="border-spacing: 0; Margin: 0; padding: 0; font-family: Helvetica, Arial, Geneva, sans-serif; color: #1A1818; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; width: 100%;">
+											<tr>
+												<td align="left" style="border-collapse: collapse; Margin: 0; padding: 2px 0; max-height: 50px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, &quot;Times New Roman&quot;, Times, serif; font-style: normal; font-size: 16px;">
+													<?php
+													$byline = minnpost_get_posted_by();
+													$byline = str_replace( '<a href="', '<a style="color: #801019; text-decoration: none;" href="', $byline );
+													?>
+													<p style="vertical-align: middle; Margin: 0; padding: 0;"><?php echo $byline; ?></p>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</div>
+				<!--[if (gte mso 9)|(IE)]>
+						</td>
+					</tr>
+				</table>
+				<![endif]-->
+					</td> <!-- end .one-column.header -->
+				</tr> <!-- end row -->
+			<?php endif; ?>
+
 			<?php
 			$body = apply_filters( 'the_content', get_the_content() );
 			if ( '' !== $body ) :
 				$body = str_replace( '<a href="', '<a style="color: #801019; text-decoration: none;" href="', $body );
 				$body = str_replace( ' dir="ltr"', '', $body );
 				$body = str_replace( '<p class="intro">', '<p>', $body );
-				$body = preg_replace( '/<p>/', '<p class="intro" style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 17.6px; line-height: 24.9444px; margin: 0 0 15px; padding: 15px 0 0;">', $body, 1 );
-				$body = str_replace( '<p>', '<p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', $body );
-				$body = str_replace( '<li>', '<li style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', $body );
-				$body = str_replace( '<ul>', '<ul style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0 0 0 40px;">', $body );
+				$body = preg_replace( '/<p>/', '<p class="intro" style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 17.6px; line-height: 24.9444px; Margin: 0 0 15px; padding: 15px 0 0;">', $body, 1 );
+				$body = str_replace( '<p>', '<p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', $body );
+				$body = str_replace( '<li>', '<li style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', $body );
+				$body = str_replace( '<ul>', '<ul style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0 0 0 40px;">', $body );
 
 				// replace headings
-				$body = str_replace( '<h2>', '<h2 style="color: #801019; margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $body );
-				$body = str_replace( '<h3>', '<h3 style="color: #801019; margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $body );
-				$body = str_replace( '<h4>', '<h4 style="color: #801019; margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $body );
-				$body = str_replace( '<blockquote><p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', '<blockquote style="border-left-width: 2px; border-left-color: #cccccf; border-left-style: solid; margin: 10px 10px 15px; padding: 0 10px; color: #6a6161;"><p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', $body );
+				$body = str_replace( '<h2>', '<h2 style="color: #801019; Margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $body );
+				$body = str_replace( '<h3>', '<h3 style="color: #801019; Margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $body );
+				$body = str_replace( '<h4>', '<h4 style="color: #801019; Margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $body );
+				$body = str_replace( '<blockquote><p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', '<blockquote style="border-left-width: 2px; border-left-color: #cccccf; border-left-style: solid; Margin: 10px 10px 15px; padding: 0 10px; color: #6a6161;"><p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', $body );
 				?>
 				<tr>
 					<td class="one-column content story" style="border-collapse: collapse; Margin: 0; padding: 0;">
@@ -199,7 +235,7 @@ a[x-apple-data-detectors] {
 								<td width="100%" valign="bottom">
 					<![endif]-->
 						<div class="column story story-first">
-							<div class="story-inner" style="Margin: 0;">
+							<div class="story-inner" style="border-bottom-width: 2px; border-bottom-color: #cccccf; border-bottom-style: solid; Margin-bottom: 18px;">
 								<table cellpadding="0" cellspacing="0" class="bodyTable forwardTable" style="border-spacing: 0; Margin: 0; padding: 0; font-family: Helvetica, Arial, Geneva, sans-serif; color: #1A1818; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; text-align: left;">
 									<tr>
 										<td valign="top" style="border-collapse: collapse; Margin: 0; padding: 0;">
@@ -219,6 +255,42 @@ a[x-apple-data-detectors] {
 					</td> <!-- end .one-column.story -->
 				</tr> <!-- end row -->
 			<?php endif; ?>
+
+			<?php
+			$hide_author = get_post_meta( $id, '_mp_remove_author_from_display', true );
+			$coauthors   = get_coauthors( get_the_ID() );
+			$author_info = '';
+			if ( 'on' !== $hide_author && empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) ) ) {
+				foreach ( $coauthors as $coauthor ) {
+					$author_id    = $coauthor->ID;
+					$author_info .= minnpost_get_author_figure( $author_id, 'author-teaser', true, true );
+				}
+			}
+			if ( '' !== $author_info ) {
+				?>
+				<tr>
+					<td class="twp-column content author" style="border-collapse: collapse; Margin: 0; padding: 0;">
+					<!--[if (gte mso 9)|(IE)]>
+						<table cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+								<td width="100%" valign="bottom">
+					<![endif]-->
+						<?php
+						foreach ( $coauthors as $coauthor ) :
+							$author_id = $coauthor->ID;
+							minnpost_author_figure( $author_id, 'author-teaser', true, true );
+						endforeach;
+						?>
+						<!--[if (gte mso 9)|(IE)]>
+								</td>
+							</tr>
+						</table>
+						<![endif]-->
+					</td> <!-- end .two-column.author -->
+				</tr> <!-- end row -->
+				<?php
+			}
+			?>
 
 			<tr>
 				<td class="one-column footer" style="border-collapse: collapse; Margin: 0; padding: 0">
