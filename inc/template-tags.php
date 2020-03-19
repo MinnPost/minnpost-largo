@@ -634,7 +634,7 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 			$count = 0;
 		}
 
-		if ( is_singular() || is_archive() ) {
+		if ( ( is_singular() || is_archive() ) && ! is_singular( 'newsletter' ) ) {
 			$output  = '';
 			$output .= '<figure class="a-archive-figure a-author-figure a-author-figure-' . $photo_size . '">';
 			$output .= $image;
@@ -679,7 +679,60 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 			}
 			$output .= '</figure><!-- .author-figure -->';
 			return $output;
-		}; // End is_singular() || is_archive
+		} elseif ( is_singular( 'newsletter' ) ) {
+			$output    = '';
+			$lazy_load = false;
+			$output   .= '<!--[if (gte mso 9)|(IE)]>
+						<table cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+								<td width="25%" valign="top">
+					<![endif]-->';
+			$output   .= '<div class="column photo" style="display: inline-block; Margin-right: 0; max-width: 95px; vertical-align: top; width: 100%">
+					<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0;">
+							<tr>
+								<td class="inner" style="border-collapse: collapse; font-size: 0; line-height: 0px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; vertical-align: top" valign="top">
+									<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
+									<tr>
+										<td style="border-collapse: collapse; font-size: 0; line-height: 0px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; vertical-align: top" valign="top">' . $image . '</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</div>';
+			$output   .= '<!--[if (gte mso 9)|(IE)]>
+				</td><td width="75%" valign="bottom">
+			<![endif]-->';
+			$output   .= '<div class="column bio" style="display: inline-block; Margin-right: 0; max-width: 75%; vertical-align: bottom; width: 100%">
+					<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
+						<tr>
+							<td class="inner" style="border-collapse: collapse; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; font-weight: normal; line-height: 100%; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: right; vertical-align: bottom; width: 100%" align="right" valign="bottom">
+								<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
+									<tr>
+										<td class="text" style="border-collapse: collapse; font-family: Georgia, &quot;Times New Roman&quot;, Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; vertical-align: top; width: 100%" align="right" valign="top">';
+			if ( true === $include_name && '' !== $name ) {
+				$output .= '<h3 style="Margin: 0 0 5px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold;">';
+				if ( 0 < $count ) {
+					$author_url = get_author_posts_url( $author_id, sanitize_title( $name ) );
+					$output    .= '<a style="color: #801019; text-decoration: none;" href="' . $author_url . '">';
+				}
+				$output .= $name;
+				if ( 0 < $count ) {
+					$output .= '</a>';
+				}
+				$output .= '</h3>';
+			}
+			$text    = str_replace( '<p>', '<p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', $text );
+			$output .= $text;
+			$output .= '</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</div>';
+			return $output;
+		}
 	}
 endif;
 

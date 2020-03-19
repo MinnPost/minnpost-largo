@@ -118,6 +118,18 @@ if ( function_exists( 'create_newsletter' ) ) :
 				),
 			)
 		);
+		$newsletter_setup->add_field(
+			array(
+				'name'       => __( 'Remove author(s) from display?', 'minnpost-largo' ),
+				'id'         => '_mp_remove_author_from_display',
+				'type'       => 'checkbox',
+				'desc'       => __( 'If checked, the newsletter author(s) will not display.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => 'daily_coronavirus',
+				),
+			)
+		);
 
 		/**
 		 * For posts on newsletters
