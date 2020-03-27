@@ -554,7 +554,8 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 				}
 				$output .= '</h3>';
 			}
-			$text    = str_replace( '<p>', '<p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', $text );
+			// email content filter
+			$text    = apply_filters( 'format_email_content', $text, false );
 			$output .= $text;
 			$output .= '</td>
 								</tr>
@@ -1613,5 +1614,48 @@ if ( ! function_exists( 'get_user_name_or_profile_link' ) ) :
 		} else {
 			return $comment_name;
 		}
+	}
+endif;
+
+/**
+* Display a string for email-friendly formatting
+*
+* @param string $content
+*
+*/
+if ( ! function_exists( 'email_formatted_content' ) ) :
+	function email_formatted_content( $content ) {
+		$content = apply_filters( 'format_email_content', $content );
+		echo $content;
+	}
+endif;
+
+/**
+* Format a string for email-friendly display
+*
+* @param string $content
+* @return string $content
+*
+*/
+if ( ! function_exists( 'format_email_content' ) ) :
+	add_filter( 'format_email_content', 'format_email_content', 10, 2 );
+	function format_email_content( $content, $body = true ) {
+		// links
+		$content = str_replace( '<a href="', '<a style="color: #801019; text-decoration: none;" href="', $content );
+		$content = str_replace( ' dir="ltr"', '', $content );
+		// paragraphs
+		if ( true === $body ) {
+			$content = str_replace( '<p class="intro">', '<p>', $content );
+			$content = preg_replace( '/<p>/', '<p class="intro" style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 17.6px; line-height: 24.9444px; Margin: 0 0 15px; padding: 15px 0 0;">', $content, 1 );
+		}
+		$content = str_replace( '<p>', '<p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', $content );
+		// lists
+		$content = str_replace( '<li>', '<li style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', $content );
+		$content = str_replace( '<ul>', '<ul style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0 0 0 40px;">', $content );
+		// headings
+		$content = preg_replace( '/(<h[2-6]\b[^><]*)>/i', '$1 style="color: #801019; Margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $content );
+		// blockquotes
+		$content = str_replace( '<blockquote><p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', '<blockquote style="border-left-width: 2px; border-left-color: #cccccf; border-left-style: solid; Margin: 10px 10px 15px; padding: 0 10px; color: #6a6161;"><p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', $content );
+		return $content;
 	}
 endif;
