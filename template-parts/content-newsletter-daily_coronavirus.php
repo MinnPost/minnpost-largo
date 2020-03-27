@@ -210,6 +210,8 @@ a[x-apple-data-detectors] {
 				</tr> <!-- end row -->
 			<?php endif; ?>
 
+			<?php do_action( 'wp_message_inserter', 'email_header' ); ?>
+
 			<?php
 			$body = apply_filters( 'the_content', get_the_content() );
 			if ( '' !== $body ) :
@@ -244,6 +246,8 @@ a[x-apple-data-detectors] {
 					</td> <!-- end .one-column.story -->
 				</tr> <!-- end row -->
 			<?php endif; ?>
+
+			<?php do_action( 'wp_message_inserter', 'email_before_bios' ); ?>
 
 			<?php
 			$hide_author = get_post_meta( $id, '_mp_remove_author_from_display', true );
@@ -280,6 +284,8 @@ a[x-apple-data-detectors] {
 				<?php
 			}
 			?>
+
+			<?php do_action( 'wp_message_inserter', 'email_bottom' ); ?>
 
 			<tr>
 				<td class="one-column footer" style="border-collapse: collapse; Margin: 0; padding: 0">

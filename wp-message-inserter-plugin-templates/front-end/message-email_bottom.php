@@ -1,7 +1,7 @@
 <?php
 /**
- * Template and variables for email footer site message
- * This template controls editor and image messages, as well as loading the banner message template, specifically for the email footer region.
+ * Template and variables for email bottom site message
+ * This template controls editor and image messages, as well as loading the banner message template, specifically for the email bottom region.
  *
  * @package MinnPost Largo
  */
@@ -106,5 +106,5 @@ usort(
 		</td> <!-- end .one-column.message -->
 	</tr> <!-- end row -->
 <?php elseif ( 'banner' === $type ) : ?>
-	<?php require( 'includes/email_footer-banner.php' ); ?>
+	<?php require( 'includes/email_bottom-banner.php' ); ?>
 <?php endif; ?>
