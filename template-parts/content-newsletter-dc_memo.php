@@ -213,14 +213,6 @@ a[x-apple-data-detectors] {
 			<?php
 			$body = apply_filters( 'the_content', get_the_content() );
 			if ( '' !== $body ) :
-				$body = str_replace( '<a href="', '<a style="color: #801019; text-decoration: none;" href="', $body );
-				$body = str_replace( ' dir="ltr"', '', $body );
-				$body = str_replace( '<p class="intro">', '<p>', $body );
-				$body = preg_replace( '/<p>/', '<p class="intro" style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 17.6px; line-height: 24.9444px; margin: 0 0 15px; padding: 15px 0 0;">', $body, 1 );
-				$body = str_replace( '<p>', '<p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', $body );
-				$body = str_replace( '<li>', '<li style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', $body );
-				$body = str_replace( '<ul>', '<ul style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0 0 0 40px;">', $body );
-
 				// add the inline sponsor before the second h2-h6 in the body
 				$heading_counter = 1;
 				$ad_string       = '<h4 class="sponsored" style="color: #738bc0; Margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-color: #cccccf; border-top-style: solid; border-top-width: 2px; padding-top: 15px;" align="left">D.C. Memo Sponsored by Great River Energy</h4><p class="inline-sponsor" style="font-family: Georgia, &quot;Times New Roman&quot;, Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;" align="center"><a href="http://greatriverenergy.com/" style="color: #801019; text-decoration: none;"><img src="https://www.minnpost.com/wp-content/uploads/sites/default/files/imagecache/image_detail/images/image/great-river-energy-logo.png" alt="Great River Energy" align="center" style="height: 86px; line-height: 100%; outline: none; text-decoration: none; display: block; Margin: 0 10px 5px 0; border: 0 none;" /></a></p><h4';
@@ -235,12 +227,8 @@ a[x-apple-data-detectors] {
 					},
 					$body
 				);
-
-				// replace headings
-				$body = preg_replace( '/(<h[2-6]\b[^><]*)>/i', '$1 style="color: #801019; Margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $body );
-
-				// replace blockquotes
-				$body = str_replace( '<blockquote><p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', '<blockquote style="border-left-width: 2px; border-left-color: #cccccf; border-left-style: solid; margin: 10px 10px 15px; padding: 0 10px; color: #6a6161;"><p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', $body );
+				// email content filter
+				$body = apply_filters( 'format_email_content', $body );
 				?>
 				<tr>
 					<td class="one-column content story" style="border-collapse: collapse; Margin: 0; padding: 0;">

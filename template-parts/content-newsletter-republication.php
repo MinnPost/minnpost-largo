@@ -154,9 +154,8 @@
 		$body = apply_filters( 'the_content', $content );
 
 		if ( '' !== $body ) {
-			if ( function_exists( 'minnpost_largo_email_html' ) ) {
-				$body = minnpost_largo_email_html( $body );
-			}
+			// email content filter
+			$body = apply_filters( 'format_email_content', $body );
 			?>
 		<tr>
 			<td class="one-column content promo" style="border-collapse: collapse; border-bottom-width: 2px; border-bottom-color: #cccccf; border-bottom-style: solid; Margin: 0; padding: 0;">
@@ -207,9 +206,8 @@
 		$upcoming = apply_filters( 'the_content', $upcoming );
 
 		if ( '' !== $upcoming ) {
-			if ( function_exists( 'minnpost_largo_email_html' ) ) {
-				$upcoming = minnpost_largo_email_html( $upcoming );
-			}
+			// email content filter
+			$upcoming = apply_filters( 'format_email_content', $upcoming );
 			?>
 		<tr>
 			<td class="one-column content promo" style="border-collapse: collapse; /*border-bottom-width: 2px; border-bottom-color: #cccccf; border-bottom-style: solid;*/ Margin: 0; padding: 0;">

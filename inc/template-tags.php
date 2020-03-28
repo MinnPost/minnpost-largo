@@ -560,11 +560,12 @@ endif;
 * @param bool $include_name
 * @param bool $include_title
 * @param bool $lazy_load
+* @param bool $end
 *
 */
 if ( ! function_exists( 'minnpost_author_figure' ) ) :
-	function minnpost_author_figure( $author_id = '', $photo_size = 'photo', $text_field = 'excerpt', $include_text = true, $include_name = false, $include_title = true, $lazy_load = true ) {
-		$output = minnpost_get_author_figure( $author_id, $photo_size, $text_field, $include_text, $include_name, $include_title, $lazy_load );
+	function minnpost_author_figure( $author_id = '', $photo_size = 'photo', $text_field = 'excerpt', $include_text = true, $include_name = false, $include_title = true, $lazy_load = true, $end = false ) {
+		$output = minnpost_get_author_figure( $author_id, $photo_size, $text_field, $include_text, $include_name, $include_title, $lazy_load, $end );
 		echo $output;
 	}
 endif;
@@ -579,6 +580,7 @@ endif;
 * @param bool $include_name
 * @param bool $include_title
 * @param bool $lazy_load
+* @param bool $end
 *
 * @return string $output
 *
@@ -587,7 +589,7 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 	/**
 	 * Returns author image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
 	 */
-	function minnpost_get_author_figure( $author_id = '', $photo_size = 'photo', $text_field = 'excerpt', $include_text = true, $include_name = false, $include_title = true, $lazy_load = true ) {
+	function minnpost_get_author_figure( $author_id = '', $photo_size = 'photo', $text_field = 'excerpt', $include_text = true, $include_name = false, $include_title = true, $lazy_load = true, $end = false ) {
 
 		// in drupal there was only one author image size
 		if ( '' === $author_id ) {
@@ -682,12 +684,18 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 		} elseif ( is_singular( 'newsletter' ) ) {
 			$output    = '';
 			$lazy_load = false;
-			$output   .= '<!--[if (gte mso 9)|(IE)]>
+			$margin    = '';
+			if ( false === $end ) {
+				$margin = 'border-bottom: 2px solid #cccccf; padding-bottom: 15px; Margin-bottom: 20px; ';
+			}
+			$output .= '
+			<div class="author" style="display: block; ' . $margin . 'width: 100%;">
+					<!--[if (gte mso 9)|(IE)]>
 						<table cellpadding="0" cellspacing="0" width="100%">
 							<tr>
 								<td width="25%" valign="top">
-					<![endif]-->';
-			$output   .= '<div class="column photo" style="display: inline-block; Margin-right: 0; max-width: 95px; vertical-align: top; width: 100%">
+					<![endif]-->
+				<div class="column photo" style="display: inline-block; Margin-right: 0; max-width: 95px; vertical-align: top; width: 100%">
 					<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0;">
 							<tr>
 								<td class="inner" style="border-collapse: collapse; font-size: 0; line-height: 0px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; vertical-align: top" valign="top">
@@ -700,13 +708,13 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 						</tr>
 					</table>
 				</div>';
-			$output   .= '<!--[if (gte mso 9)|(IE)]>
-				</td><td width="75%" valign="bottom">
+			$output .= '<!--[if (gte mso 9)|(IE)]>
+				</td><td width="75%" valign="top">
 			<![endif]-->';
-			$output   .= '<div class="column bio" style="display: inline-block; Margin-right: 0; max-width: 75%; vertical-align: bottom; width: 100%">
+			$output .= '<div class="column bio" style="display: inline-block; Margin-right: 0; max-width: 75%; vertical-align: top; width: 100%">
 					<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
 						<tr>
-							<td class="inner" style="border-collapse: collapse; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; font-weight: normal; line-height: 100%; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: right; vertical-align: bottom; width: 100%" align="right" valign="bottom">
+							<td class="inner" style="border-collapse: collapse; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; font-weight: normal; line-height: 100%; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: right; vertical-align: top; width: 100%" align="right" valign="top">
 								<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
 									<tr>
 										<td class="text" style="border-collapse: collapse; font-family: Georgia, &quot;Times New Roman&quot;, Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; vertical-align: top; width: 100%" align="right" valign="top">';
@@ -722,15 +730,17 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 				}
 				$output .= '</h3>';
 			}
-			$text    = str_replace( '<p>', '<p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', $text );
+			// email content filter
+			$text    = apply_filters( 'format_email_content', $text, false );
 			$output .= $text;
 			$output .= '</td>
-								</tr>
-							</table>
-						</td>
-					</tr>
-				</table>
-			</div>';
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>';
 			return $output;
 		}
 	}
@@ -1852,5 +1862,137 @@ if ( ! function_exists( 'minnpost_largo_manual_image_tag' ) ) :
 		}
 		$image .= '>';
 		return $image;
+	}
+endif;
+
+/**
+* Common filter for setting up lazy load attributes
+*
+* @param array $attributes
+* @param int $object_id
+* @param string $object_type
+* @param bool $lazy_load
+* @return array $attributes
+*
+*/
+if ( ! function_exists( 'minnpost_largo_add_lazy_load_attributes' ) ) :
+	add_filter( 'minnpost_largo_lazy_load_attributes', 'minnpost_largo_add_lazy_load_attributes', 10, 3 );
+	function minnpost_largo_add_lazy_load_attributes( $attributes, $object_id, $object_type = 'post', $lazy_load = true ) {
+		// handle prevention of lazy loading from the object loading the image
+		if ( 'post' === $object_type ) {
+			$prevent_lazy_load = get_post_meta( $object_id, '_mp_prevent_lazyload', true );
+		} elseif ( 'term' === $object_type ) {
+			$prevent_lazy_load = get_term_meta( $object_id, '_mp_prevent_lazyload', true );
+		}
+		if ( 'on' === $prevent_lazy_load ) {
+			$lazy_load = false;
+		}
+		if ( false === $lazy_load ) {
+			if ( isset( $attributes['class'] ) ) {
+				$attributes['class'] .= ' ';
+			} else {
+				$attributes['class'] = '';
+			}
+			// this is the class and attribute to disable lazy loading on an image
+			$attributes['class']  .= 'no-lazy';
+			$attributes['loading'] = 'eager';
+		} else {
+			$attributes['loading'] = 'lazy';
+			$attributes['class']   = 'jetpack-lazy-image';
+		}
+		return $attributes;
+	}
+endif;
+
+/**
+* Manually generate an image tag from its attributes
+* This is mostly used for images that are migrated pre-WordPress, but at least we can still add
+* attributes to them.
+*
+* @param int $image_id
+* @param string $image_url
+* @param array $attributes
+* @return string $image
+*
+*/
+if ( ! function_exists( 'minnpost_largo_manual_image_tag' ) ) :
+	function minnpost_largo_manual_image_tag( $image_id = '', $image_url = '', $attributes = array(), $object_type = 'post' ) {
+		$image = '';
+		if ( '' !== $image_id ) {
+			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+		} elseif ( isset( $attributes['alt'] ) ) {
+			$alt = $attributes['alt'];
+		} else {
+			$alt = '';
+		}
+		$image = '<img src="' . $image_url . '" alt="' . $alt . '"';
+		if ( 'newsletter' === $object_type ) {
+			if ( isset( $attributes['title'] ) ) {
+				$image .= ' title="' . $attributes['title'] . '"';
+			}
+		}
+		if ( isset( $attributes['style'] ) ) {
+			$image .= ' style="' . $attributes['style'] . '"';
+		}
+		if ( isset( $attributes['class'] ) ) {
+			$image .= ' class="' . $attributes['class'] . '"';
+		}
+		if ( isset( $attributes['align'] ) ) {
+			$image .= ' align="' . $attributes['align'] . '"';
+		}
+		if ( isset( $attributes['width'] ) ) {
+			$image .= ' width="' . $attributes['width'] . '"';
+		}
+		if ( isset( $attributes['height'] ) ) {
+			$image .= ' height="' . $attributes['height'] . '"';
+		}
+		if ( isset( $attributes['loading'] ) ) {
+			$image .= ' loading="' . $attributes['loading'] . '"';
+		}
+		$image .= '>';
+		return $image;
+	}
+endif;
+
+/**
+* Display a string for email-friendly formatting
+*
+* @param string $content
+*
+*/
+if ( ! function_exists( 'email_formatted_content' ) ) :
+	function email_formatted_content( $content ) {
+		$content = apply_filters( 'format_email_content', $content );
+		echo $content;
+	}
+endif;
+
+/**
+* Format a string for email-friendly display
+*
+* @param string $content
+* @return string $content
+*
+*/
+if ( ! function_exists( 'format_email_content' ) ) :
+	add_filter( 'format_email_content', 'format_email_content', 10, 2 );
+	function format_email_content( $content, $body = true ) {
+		// links
+		$content = str_replace( '<a href="', '<a style="color: #801019; text-decoration: none;" href="', $content );
+		$content = str_replace( ' dir="ltr"', '', $content );
+		// paragraphs
+		if ( true === $body ) {
+			$content = str_replace( '<p class="intro">', '<p>', $content );
+			$content = preg_replace( '/<p>/', '<p class="intro" style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 17.6px; line-height: 24.9444px; Margin: 0 0 15px; padding: 15px 0 0;">', $content, 1 );
+		}
+		$content = str_replace( '<p>', '<p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', $content );
+		// lists
+		$content = str_replace( '<li>', '<li style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', $content );
+		$content = str_replace( '<ul>', '<ul style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0 0 0 40px;">', $content );
+		// headings
+		$content = preg_replace( '/(<h[2-6]\b[^><]*)>/i', '$1 style="color: #801019; Margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $content );
+		// blockquotes
+		$content = str_replace( '<blockquote><p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', '<blockquote style="border-left-width: 2px; border-left-color: #cccccf; border-left-style: solid; Margin: 10px 10px 15px; padding: 0 10px; color: #6a6161;"><p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', $content );
+		return $content;
 	}
 endif;
