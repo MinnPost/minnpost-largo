@@ -1,7 +1,7 @@
 <?php
 /**
- * Template and variables for email header site message
- * This template controls editor and image messages, as well as loading the banner message template, specifically for the email header region.
+ * Template and variables for email site message
+ * This template controls editor and image messages, as well as loading the banner message template, specifically for emails.
  *
  * @package MinnPost Largo
  */
@@ -41,7 +41,7 @@ usort(
 <?php if ( 'image' === $type || 'editor' === $type ) : ?>
 
 	<tr>
-		<td class="one-column message" style="border-collapse: collapse; border-bottom-width: 2px; border-bottom-color: #cccccf; border-bottom-style: solid; Margin: 0; padding: 0;">
+		<td class="one-column message" style="Margin: 0; padding: 0;">
 		<!--[if (gte mso 9)|(IE)]>
 			<table cellpadding="0" cellspacing="0" width="100%">
 				<tr>
@@ -86,7 +86,7 @@ usort(
 				<?php if ( 'editor' === $type ) : ?>
 					<?php if ( 0 < count( $screen_sizes ) ) : ?>
 						<?php foreach ( $screen_sizes as $key => $screen_size ) : ?>
-							<div class="m-wp-insert-message-item m-wp-insert-message-editor m-wp-insert-message-item-<?php echo $key; ?>">
+							<div class="m-wp-insert-message-item m-wp-insert-message-editor m-wp-insert-message-item-<?php echo $key; ?>" style="padding: 15px 10px 5px 10px; margin: 15px 0;">
 								<?php
 								$content = apply_filters( 'the_content', $screen_size[ $prefix . 'message_editor' ], 20 );
 								// email content filter
@@ -105,16 +105,6 @@ usort(
 		<![endif]-->
 		</td> <!-- end .one-column.message -->
 	</tr> <!-- end row -->
+<?php elseif ( 'banner' === $type ) : ?>
+	<?php require( 'includes/banner.php' ); ?>
 <?php endif; ?>
-
-<?php
-// For Banners we Loop over them because with session checking we might need to load more than one
-foreach ( $attributes as $message ) {
-	if ( isset( $message['meta'] ) && is_array( $message['meta'] ) ) {
-		$type = $message['meta'][ $prefix . 'message_type' ][0];
-		if ( 'banner' === $type ) {
-			require( 'includes/email_header-banner.php' );
-		}
-	}
-}
-?>
