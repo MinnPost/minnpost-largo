@@ -52,20 +52,16 @@ $session_count_operator = isset( $message['meta'][ $prefix . 'operator_session' 
 
 			?>
 
-			<div class="m-wp-insert-message-item m-wp-insert-message-item-<?php echo $key; ?> m-wp-insert-message-item-<?php echo $type; ?><?php echo ( 'page' === $banner_max_width ) ? ' banner-width-page' : ''; ?>" style="<?php echo $banner_style; ?>">
+			<div class="m-wp-insert-message-item m-wp-insert-message-item-<?php echo $key; ?> m-wp-insert-message-item-<?php echo $type; ?><?php echo ( 'page' === $banner_max_width ) ? ' banner-width-page' : ''; ?>" style="padding: 15px 10px 5px 10px; margin: 15px 0; border: 1px solid #cccccf; <?php echo $banner_style; ?>">
 
 				<?php if ( 'dualcol' === $screen_size[ $prefix . 'banner_layout' ] ) : ?>
 					<!-- Dual Col -->
 					<div class="dual-wrap <?php echo ( isset( $screen_size[ $prefix . 'banner_flip_columns' ] ) && 'on' === $screen_size[ $prefix . 'banner_flip_columns' ] ) ? 'flip' : ''; ?>">
-						<?php require( 'banner/icon.php' ); ?>
 						<div class="col">
 							<?php require( 'banner/text.php' ); ?>
-							<?php if ( 'form' === $screen_size[ $prefix . 'cta_type' ] ) : ?>
-								<?php require( 'banner/cta-form.php' ); ?>
-							<?php endif; ?>
 						</div>
 						<div class="col">
-							<?php if ( 'button' === $screen_size[ $prefix . 'cta_type' ] ) : ?>
+							<?php if ( 'button' === $screen_size[ $prefix . 'cta_type_email' ] ) : ?>
 								<?php require( 'banner/cta-button.php' ); ?>
 							<?php endif; ?>
 							<?php require( 'banner/disclaimer.php' ); ?>
@@ -77,13 +73,10 @@ $session_count_operator = isset( $message['meta'][ $prefix . 'operator_session' 
 					<!-- Stacked Banner -->
 					<div class="stack-wrap">
 						<?php require( 'banner/text.php' ); ?>
-						<?php if ( 'button' === $screen_size[ $prefix . 'cta_type' ] ) : ?>
+						<?php if ( 'button' === $screen_size[ $prefix . 'cta_type_email' ] ) : ?>
 							<?php require( 'banner/cta-button.php' ); ?>
 						<?php endif; ?>
 						<?php require( 'banner/disclaimer.php' ); ?>
-						<?php if ( 'form' === $screen_size[ $prefix . 'cta_type' ] ) : ?>
-							<?php require( 'banner/cta-form.php' ); ?>
-						<?php endif; ?>
 					</div>
 				<?php endif; ?>
 			</div>

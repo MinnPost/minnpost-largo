@@ -41,7 +41,7 @@ usort(
 <?php if ( 'image' === $type || 'editor' === $type ) : ?>
 
 	<tr>
-		<td class="one-column message" style="border-collapse: collapse; border-bottom-width: 2px; border-bottom-color: #cccccf; border-bottom-style: solid; Margin: 0; padding: 0;">
+		<td class="one-column message" style="Margin: 0; padding: 0;">
 		<!--[if (gte mso 9)|(IE)]>
 			<table cellpadding="0" cellspacing="0" width="100%">
 				<tr>
@@ -86,11 +86,11 @@ usort(
 				<?php if ( 'editor' === $type ) : ?>
 					<?php if ( 0 < count( $screen_sizes ) ) : ?>
 						<?php foreach ( $screen_sizes as $key => $screen_size ) : ?>
-							<div class="m-wp-insert-message-item m-wp-insert-message-editor m-wp-insert-message-item-<?php echo $key; ?>">
+							<div class="m-wp-insert-message-item m-wp-insert-message-editor m-wp-insert-message-item-<?php echo $key; ?>" style="padding: 15px 10px 5px 10px; margin: 15px 0;">
 								<?php
 								$content = apply_filters( 'the_content', $screen_size[ $prefix . 'message_editor' ], 20 );
 								// email content filter
-								$content = apply_filters( 'format_email_content', $content, false );
+								$content = apply_filters( 'format_email_content', $content, false, true );
 								echo $content;
 								?>
 							</div>
