@@ -14,7 +14,7 @@ $session_count_operator = isset( $message['meta'][ $prefix . 'operator_session' 
 
 <?php if ( 0 < count( $screen_sizes ) ) : ?>
 	<tr>
-		<td class="one-column message" style="border-collapse: collapse; border-bottom-width: 2px; border-bottom-color: #cccccf; border-bottom-style: solid; Margin: 0; padding: 0;">
+		<td class="one-column message" style="padding: 0 0 15px 0; Margin: 0;">
 		<!--[if (gte mso 9)|(IE)]>
 			<table cellpadding="0" cellspacing="0" width="100%">
 				<tr>
