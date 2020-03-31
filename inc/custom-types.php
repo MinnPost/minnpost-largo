@@ -242,7 +242,8 @@ if ( ! function_exists( 'minnpost_message_regions' ) ) :
 			'popup'              => __( 'Popup', 'minnpost-largo' ),
 			'email_header'       => __( 'Email Header', 'minnpost-largo' ),
 			'email_middle'       => __( 'Email Middle', 'minnpost-largo' ),
-			'email_footer'       => __( 'Email Footer', 'minnpost-largo' ),
+			'email_before_bios'  => __( 'Email Before Bios', 'minnpost-largo' ),
+			'email_bottom'       => __( 'Email Bottom', 'minnpost-largo' ),
 		);
 		return $regions;
 	}

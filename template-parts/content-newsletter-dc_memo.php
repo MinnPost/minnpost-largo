@@ -210,6 +210,8 @@ a[x-apple-data-detectors] {
 				</td> <!-- end .one-column.header -->
 			</tr> <!-- end row -->
 
+			<?php do_action( 'wp_message_inserter', 'email_header', 'email' ); ?>
+
 			<?php
 			$body = apply_filters( 'the_content', get_the_content() );
 			if ( '' !== $body ) :
@@ -269,6 +271,10 @@ a[x-apple-data-detectors] {
 					</td> <!-- end .one-column.story -->
 				</tr> <!-- end row -->
 			<?php endif; ?>
+
+			<?php do_action( 'wp_message_inserter', 'email_before_bios', 'email' ); ?>
+
+			<?php do_action( 'wp_message_inserter', 'email_bottom', 'email' ); ?>
 
 			<tr>
 				<td class="one-column footer" style="border-collapse: collapse; Margin: 0; padding: 0">
