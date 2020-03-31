@@ -27,17 +27,22 @@
 	if ( '' !== $button_url ) {
 		$button_href = ' href="' . $button_url . '"';
 	}
-	$button_text = isset( $screen_size[ $prefix . 'banner_buttondetails' ]['text'] ) ? $screen_size[ $prefix . 'banner_buttondetails' ]['text'] : '';
+	$button_emoji = isset( $screen_size[ $prefix . 'banner_buttonemoji' ] ) ? $screen_size[ $prefix . 'banner_buttonemoji' ] : '';
+	$button_text  = isset( $screen_size[ $prefix . 'banner_buttondetails' ]['text'] ) ? $screen_size[ $prefix . 'banner_buttondetails' ]['text'] : '';
 	?>
 	<?php if ( '' !== $button_text ) : ?>
 		<?php
 		$value  = '';
 		$value .= '<a class="a-button"' . $button_style . $button_href . ( 'true' === $screen_size[ $prefix . 'banner_buttondetails' ]['blank'] ? 'target="_blank"' : '' ) . '>';
+		$text   = '';
+		if ( '' !== $button_emoji ) {
+			$text .= $button_emoji;
+		}
 		if ( '' !== $button_text ) {
-			$value .= '<!--[if mso]>&nbsp;<![endif]-->' . $button_text . '<!--[if mso]>&nbsp;<![endif]-->';
+			$text  .= $button_text;
+			$value .= '<!--[if mso]>&nbsp;<![endif]-->' . $text . '<!--[if mso]>&nbsp;<![endif]-->';
 		}
 		$value .= '</a>';
-		//$value  = apply_filters( 'the_content', $value, 20 );
 		// email content filter
 		$value = apply_filters( 'format_email_content', $value, false, true );
 		?>
