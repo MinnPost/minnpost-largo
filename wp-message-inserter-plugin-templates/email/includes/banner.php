@@ -14,7 +14,7 @@ $session_count_operator = isset( $message['meta'][ $prefix . 'operator_session' 
 
 <?php if ( 0 < count( $screen_sizes ) ) : ?>
 	<tr>
-		<td class="one-column message" style="padding: 0 0 15px 0; Margin: 0;">
+		<td class="one-column message" style="Margin: 0 0 15px 0; padding: 0;">
 		<!--[if (gte mso 9)|(IE)]>
 			<table cellpadding="0" cellspacing="0" width="100%">
 				<tr>
@@ -52,7 +52,7 @@ $session_count_operator = isset( $message['meta'][ $prefix . 'operator_session' 
 
 			?>
 
-			<div class="m-wp-insert-message-item m-wp-insert-message-item-<?php echo $key; ?> m-wp-insert-message-item-<?php echo $type; ?><?php echo ( 'page' === $banner_max_width ) ? ' banner-width-page' : ''; ?>" style="padding: 15px 10px 5px 10px; margin: 15px 0; border: 1px solid #cccccf; <?php echo $banner_style; ?>">
+			<div class="m-wp-insert-message-item m-wp-insert-message-item-<?php echo $key; ?> m-wp-insert-message-item-<?php echo $type; ?><?php echo ( 'page' === $banner_max_width ) ? ' banner-width-page' : ''; ?>" style="padding: 15px 10px 5px 10px; Margin: 15px 0; border: 1px solid #cccccf; <?php echo $banner_style; ?>">
 
 				<?php if ( 'dualcol' === $screen_size[ $prefix . 'banner_layout' ] ) : ?>
 					<!-- Dual Col -->

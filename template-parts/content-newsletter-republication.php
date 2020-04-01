@@ -144,6 +144,8 @@
 			</tr> <!-- end row -->
 		</tr> <!-- end row -->
 
+		<?php do_action( 'wp_message_inserter', 'email_header', 'email' ); ?>
+
 		<?php
 		// default value for the republication newsletter summary
 		$content = 'Here\'s a look at MinnPost\'s plans for Monday. Check www.minnpost.com for changes. All MinnPost content is available for you to republish at no charge.';
@@ -229,6 +231,11 @@
 			<?php
 		}
 		?>
+
+		<?php do_action( 'wp_message_inserter', 'email_before_bios', 'email' ); ?>
+
+		<?php do_action( 'wp_message_inserter', 'email_bottom', 'email' ); ?>
+
 		<tr>
 			<td class="one-column footer" style="border-collapse: collapse; Margin: 0; padding: 0">
 				<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
