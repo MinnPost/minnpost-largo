@@ -45,6 +45,15 @@
 	.content .button.read-story td td a:active {
 		color: #ffffff !important; text-decoration: none !important;
 	}
+	.footer a:hover {
+		color: #801018 !important; text-decoration: underline; !important;
+	}
+	.footer a:visited {
+		color: #801018 !important; text-decoration: none; !important;
+	}
+	.footer a:active {
+		color: #801018 !important; text-decoration: underline; !important;
+	}
 	@media only screen and (max-width: 600px) {
 		.two-column.header .logo td {
 			border-bottom: 10px solid #000 !important; Margin-bottom: 5px !important;
@@ -124,6 +133,8 @@
 				<![endif]-->
 			</td> <!-- end .two-column.header -->
 		</tr> <!-- end row -->
+
+		<?php do_action( 'wp_message_inserter', 'email_header', 'email' ); ?>
 
 		<?php
 		$body = apply_filters( 'the_content', get_the_content() );
@@ -311,6 +322,10 @@
 				<![endif]-->
 			</td> <!-- end .two-column.content.supp -->
 		</tr> <!-- end row -->
+
+		<?php do_action( 'wp_message_inserter', 'email_before_bios', 'email' ); ?>
+
+		<?php do_action( 'wp_message_inserter', 'email_bottom', 'email' ); ?>
 
 		<tr>
 			<td class="one-column footer" style="border-collapse: collapse; Margin: 0; padding: 0">

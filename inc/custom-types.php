@@ -79,6 +79,21 @@ if ( ! function_exists( 'minnpost_newsletter_default_order' ) ) :
 endif;
 
 /**
+* Add Co-Authors-Plus support to Newsletters
+*
+* @param array $post_types
+* @return array $post_types
+*
+*/
+add_filter(
+	'coauthors_supported_post_types',
+	function( $post_types ) {
+		$post_types[] = 'newsletter';
+		return $post_types;
+	}
+);
+
+/**
 * Set which post types are indexable by Elasticpress
 *
 * @param array $post_types
@@ -217,16 +232,18 @@ if ( ! function_exists( 'minnpost_message_regions' ) ) :
 	add_filter( 'wp_message_inserter_regions', 'minnpost_message_regions' );
 	function minnpost_message_regions( $regions ) {
 		$regions = array(
-			'header'          => __( 'Site Header', 'minnpost-largo' ),
-			'article_bottom'  => __( 'Article Bottom', 'minnpost-largo' ),
-			'homepage_middle' => __( 'Homepage Middle', 'minnpost-largo' ),
-			//'article_middle'  => __( 'Article Middle', 'minnpost-largo' ),
-			'archive_middle'  => __( 'Archive Middle', 'minnpost-largo' ),
-			'user_account'    => __( 'User Account', 'minnpost-largo' ),
-			'popup'           => __( 'Popup', 'minnpost-largo' ),
-			'email_header'    => __( 'Email Header', 'minnpost-largo' ),
-			'email_middle'    => __( 'Email Middle', 'minnpost-largo' ),
-			'email_footer'    => __( 'Email Footer', 'minnpost-largo' ),
+			'header'             => __( 'Site Header', 'minnpost-largo' ),
+			'above_article_body' => __( 'Above Article Body', 'minnpost-largo' ),
+			//'article_middle'   => __( 'Article Middle', 'minnpost-largo' ),
+			'article_bottom'     => __( 'Article Bottom', 'minnpost-largo' ),
+			'homepage_middle'    => __( 'Homepage Middle', 'minnpost-largo' ),
+			'archive_middle'     => __( 'Archive Middle', 'minnpost-largo' ),
+			'user_account'       => __( 'User Account', 'minnpost-largo' ),
+			'popup'              => __( 'Popup', 'minnpost-largo' ),
+			'email_header'       => __( 'Email Header', 'minnpost-largo' ),
+			'email_middle'       => __( 'Email Middle', 'minnpost-largo' ),
+			'email_before_bios'  => __( 'Email Before Bios', 'minnpost-largo' ),
+			'email_bottom'       => __( 'Email Bottom', 'minnpost-largo' ),
 		);
 		return $regions;
 	}

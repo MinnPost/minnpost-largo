@@ -418,11 +418,13 @@ endif;
 * @param string $size
 * @param bool $include_text
 * @param bool $include_name
+* @param bool $lazy_load
+* @param bool $end
 *
 */
 if ( ! function_exists( 'minnpost_author_figure' ) ) :
-	function minnpost_author_figure( $author_id = '', $size = 'photo', $include_text = true, $include_name = false, $lazy_load = true ) {
-		$output = minnpost_get_author_figure( $author_id, $size, $include_text, $include_name, $lazy_load );
+	function minnpost_author_figure( $author_id = '', $size = 'photo', $include_text = true, $include_name = false, $lazy_load = true, $end = false ) {
+		$output = minnpost_get_author_figure( $author_id, $size, $include_text, $include_name, $lazy_load, $end );
 		echo $output;
 	}
 endif;
@@ -434,6 +436,8 @@ endif;
 * @param string $size
 * @param bool $include_text
 * @param bool $include_name
+* @param bool $lazy_load
+* @param bool $end
 *
 * @return string $output
 *
@@ -442,7 +446,7 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 	/**
 	 * Returns author image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
 	 */
-	function minnpost_get_author_figure( $author_id = '', $size = 'photo', $include_text = true, $include_name = false, $lazy_load = true ) {
+	function minnpost_get_author_figure( $author_id = '', $size = 'photo', $include_text = true, $include_name = false, $lazy_load = true, $end = false ) {
 
 		// in drupal there was only one author image size
 		if ( '' === $author_id ) {
@@ -488,7 +492,7 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 			$count = 0;
 		}
 
-		if ( is_singular() || is_archive() ) {
+		if ( ( is_singular() || is_archive() ) && ! is_singular( 'newsletter' ) ) {
 			$output  = '';
 			$output .= '<figure class="a-archive-figure a-author-figure a-author-figure-' . $size . '">';
 			$output .= $image;
@@ -511,7 +515,68 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 			}
 			$output .= '</figure><!-- .author-figure -->';
 			return $output;
-		}; // End is_singular() || is_archive
+		} elseif ( is_singular( 'newsletter' ) ) {
+			$output    = '';
+			$lazy_load = false;
+			$margin    = '';
+			if ( false === $end ) {
+				$margin = 'border-bottom: 2px solid #cccccf; padding-bottom: 15px; Margin-bottom: 20px; ';
+			}
+			$output .= '
+			<div class="author" style="display: block; ' . $margin . 'width: 100%;">
+					<!--[if (gte mso 9)|(IE)]>
+						<table cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+								<td width="25%" valign="top">
+					<![endif]-->
+				<div class="column photo" style="display: inline-block; Margin-right: 0; max-width: 95px; vertical-align: top; width: 100%">
+					<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0;">
+							<tr>
+								<td class="inner" style="border-collapse: collapse; font-size: 0; line-height: 0px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; vertical-align: top" valign="top">
+									<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
+									<tr>
+										<td style="border-collapse: collapse; font-size: 0; line-height: 0px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; vertical-align: top" valign="top">' . $image . '</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</div>';
+			$output .= '<!--[if (gte mso 9)|(IE)]>
+				</td><td width="75%" valign="top">
+			<![endif]-->';
+			$output .= '<div class="column bio" style="display: inline-block; Margin-right: 0; max-width: 75%; vertical-align: top; width: 100%">
+					<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
+						<tr>
+							<td class="inner" style="border-collapse: collapse; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; font-weight: normal; line-height: 100%; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: right; vertical-align: top; width: 100%" align="right" valign="top">
+								<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
+									<tr>
+										<td class="text" style="border-collapse: collapse; font-family: Georgia, &quot;Times New Roman&quot;, Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; vertical-align: top; width: 100%" align="right" valign="top">';
+			if ( true === $include_name && '' !== $name ) {
+				$output .= '<h3 style="Margin: 0 0 5px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold;">';
+				if ( 0 < $count ) {
+					$author_url = get_author_posts_url( $author_id, sanitize_title( $name ) );
+					$output    .= '<a style="color: #801019; text-decoration: none;" href="' . $author_url . '">';
+				}
+				$output .= $name;
+				if ( 0 < $count ) {
+					$output .= '</a>';
+				}
+				$output .= '</h3>';
+			}
+			// email content filter
+			$text    = apply_filters( 'format_email_content', $text, false );
+			$output .= $text;
+			$output .= '</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>';
+			return $output;
+		}
 	}
 endif;
 
@@ -1292,6 +1357,12 @@ if ( ! function_exists( 'minnpost_newsletter_logo' ) ) :
 				case 'sunday_review':
 					$filename = 'newsletter-logo-sunday-review.png';
 					break;
+				case 'daily_coronavirus':
+					$filename = 'mp-dcu-600.png';
+					break;
+				case 'republication':
+					$filename = 'republication-header-260x50.png';
+					break;
 				default:
 					$filename = 'newsletter-logo-daily.png';
 					break;
@@ -1554,5 +1625,61 @@ if ( ! function_exists( 'get_user_name_or_profile_link' ) ) :
 		} else {
 			return $comment_name;
 		}
+	}
+endif;
+
+/**
+* Display a string for email-friendly formatting
+*
+* @param string $content
+* @param bool $message
+*
+*/
+if ( ! function_exists( 'email_formatted_content' ) ) :
+	function email_formatted_content( $content, $message = false ) {
+		$content = apply_filters( 'format_email_content', $content );
+		echo $content;
+	}
+endif;
+
+/**
+* Format a string for email-friendly display
+*
+* @param string $content
+* @param bool $message
+* @return string $content
+*
+*/
+if ( ! function_exists( 'format_email_content' ) ) :
+	add_filter( 'format_email_content', 'format_email_content', 10, 3 );
+	function format_email_content( $content, $body = true, $message = false ) {
+		$serif_stack = 'font-family: Georgia, \'Times New Roman\', Times, serif; ';
+		$sans_stack  = 'font-family: Helvetica, Arial, Geneva, sans-serif; ';
+		$font_stack  = $serif_stack;
+		if ( true === $message ) {
+			$font_stack = $sans_stack;
+		}
+		$content = str_replace( ' dir="ltr"', '', $content );
+
+		// links
+		$content = str_replace( '<a href="', '<a style="' . $font_stack . 'color: #801019; text-decoration: none;" href="', $content );
+		// paragraphs
+		if ( true === $body ) {
+			$content = str_replace( '<p class="intro">', '<p>', $content );
+			$content = preg_replace( '/<p>/', '<p class="intro" style="' . $font_stack . 'font-size: 17.6px; line-height: 24.9444px; Margin: 0 0 15px; padding: 15px 0 0;">', $content, 1 );
+		}
+		$content = str_replace( '<p>', '<p style="' . $font_stack . 'font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', $content );
+		// lists
+		$content = str_replace( '<li>', '<li style="' . $font_stack . 'font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', $content );
+		$content = str_replace( '<ul>', '<ul style="' . $font_stack . 'font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0 0 0 40px;">', $content );
+		// headings
+		if ( false === $message ) {
+			$content = preg_replace( '/(<h[2-6]\b[^><]*)>/i', '$1 style="color: #801019; Margin: 15px 0; display: block; font-size: 14px; line-height: 1; ' . $sans_stack . 'font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $content );
+		} else {
+			$content = preg_replace( '/(<h[2-6]\b[^><]*)>/i', '$1 style="Margin: 0 0 15px 0; display: block; font-size: 16px; line-height: 1; ' . $sans_stack . 'font-weight: bold;">', $content );
+		}
+		// blockquotes
+		$content = str_replace( '<blockquote><p style="' . $font_stack . 'font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', '<blockquote style="border-left-width: 2px; border-left-color: #cccccf; border-left-style: solid; Margin: 10px 10px 15px; padding: 0 10px; color: #6a6161;"><p style="' . $font_stack . 'font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', $content );
+		return $content;
 	}
 endif;
