@@ -36,7 +36,7 @@
 		$value .= '<a class="a-button"' . $button_style . $button_href . ( 'true' === $screen_size[ $prefix . 'banner_buttondetails' ]['blank'] ? 'target="_blank"' : '' ) . '>';
 		$text   = '';
 		if ( '' !== $button_emoji ) {
-			$text .= $button_emoji;
+			$text .= $button_emoji . '&nbsp;';
 		}
 		if ( '' !== $button_text ) {
 			$text  .= $button_text;
