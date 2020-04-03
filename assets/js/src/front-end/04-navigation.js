@@ -5,9 +5,34 @@
  * navigation support for dropdown menus.
  */
 
-setupMenu( 'navigation-primary' );
-setupMenu( 'navigation-user-account-management' );
-setupNavSearch( 'navigation-primary' );
+//setupMenu( 'navigation-primary' );
+//setupMenu( 'navigation-user-account-management' );
+//setupNavSearch( 'navigation-primary' );
+
+var navButton = document.querySelector( 'nav button' );
+let menu = navButton.nextElementSibling;
+navButton.addEventListener( 'click', function() {
+    let expanded = this.getAttribute( 'aria-expanded' ) === 'true' || false;
+    this.setAttribute( 'aria-expanded', ! expanded );
+    let menu = this.nextElementSibling;
+    menu.hidden = ! menu.hidden;
+});
+// escape key press
+$(document).keyup(function(e) {
+	if (27 === e.keyCode) {
+		navButton.setAttribute( 'aria-expanded', false );
+		//let menu = navButton.nextElementSibling;
+		menu.hidden = true;
+	}
+});
+
+document.addEventListener(
+	"click", function( event ) {
+		navButton.setAttribute( 'aria-expanded', false );
+		//let menu = navButton.nextElementSibling;
+		menu.hidden = true;
+	}, true
+);
 
 function setupNavSearch( container ) {
 
