@@ -35,7 +35,26 @@
 	}
 
 	&.o-wrapper-support-navigation {
-		border-top: 1.230769230769231em solid neutral-color(black);
+		//border-top: 1.230769230769231em solid neutral-color(black);
+	}
+
+	&.o-wrapper-site-navigation {
+		font-size: 75%;
+		@include breakpoint-min( md ) {
+			font-size: 80%;
+		}
+
+		@include breakpoint-min( lg ) {
+			font-size: 80%;
+		}
+
+		@include breakpoint-min( xl ) {
+			font-size: 85%;
+		}
+
+		@include breakpoint-min( xxl ) {
+			font-size: 100%;
+		}
 	}
 
 }

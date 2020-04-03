@@ -40,7 +40,7 @@ if ( ! function_exists( 'minnpost_wp_nav_menu_objects_sub_menu' ) ) :
 	// get submenu functionality from https://christianvarga.com/how-to-get-submenu-items-from-a-wordpress-menu-based-on-parent-or-sibling/
 
 	// filter_hook function to react on sub_menu flag
-	add_filter( 'wp_nav_menu_objects', 'minnpost_wp_nav_menu_objects_sub_menu', 10, 2 );
+	//add_filter( 'wp_nav_menu_objects', 'minnpost_wp_nav_menu_objects_sub_menu', 10, 2 );
 	function minnpost_wp_nav_menu_objects_sub_menu( $sorted_menu_items, $args ) {
 
 		global $wp_query;
