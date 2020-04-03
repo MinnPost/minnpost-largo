@@ -26,14 +26,6 @@ $(document).keyup(function(e) {
 	}
 });
 
-document.addEventListener(
-	"click", function( event ) {
-		navButton.setAttribute( 'aria-expanded', false );
-		//let menu = navButton.nextElementSibling;
-		menu.hidden = true;
-	}, true
-);
-
 function setupNavSearch( container ) {
 
 	var navsearchcontainer, navsearchtoggle, navsearchform;
