@@ -7,18 +7,6 @@ nav {
 	svg {
 		pointer-events: none;
 	}
-
-	/*li span.a-arrow-down {
-		width: 0;
-		height: 0;
-		border-left: 4px solid transparent;
-		border-right: 4px solid transparent;
-		border-top: 4px solid $color__minnpost-black;
-		position: absolute;
-		display: block;
-		//top: $nav-common-spacing;
-		right: 0;
-	}*/
 }
 
 .m-secondary-navigation,
@@ -48,11 +36,17 @@ nav {
 	z-index: 10;
 	display: flex;
 	align-items: center;
+
+	@include breakpoint-min( md ) {
+		border-top: 2px solid neutral-color(dark);
+	}
 	
 	button {
 		-webkit-appearance: none;
 		user-select: text;
 		cursor: pointer;
+		margin: 0;
+		margin-left: -$standard-block-padding / 2;
 		border: 0;
 		padding: $standard-block-padding / 2;
 		font: inherit;
@@ -71,6 +65,12 @@ nav {
 		&[aria-expanded="true"] {
 			background: neutral-color(dark);
 			color: neutral-color(white);
+			margin-bottom: -2px;
+			border-bottom: 2px solid neutral-color(dark);
+		}
+
+		@include breakpoint-min( md ) {
+			display: none;
 		}
 	}
 
@@ -82,10 +82,14 @@ nav {
 
 		&[hidden] {
 			display: none;
+			@include breakpoint-min( md ) {
+				display: flex;
+			}
 		}
 
 		li {
 			position: relative;
+			flex-shrink: 0;
 
 			a {
 				display: inline-flex;
@@ -98,6 +102,13 @@ nav {
   					width: 1em;
   					margin: $standard-block-padding / 2 0;
 				}
+
+				@include breakpoint-min( md ) {
+					  margin-bottom: -2px;
+					  border-bottom: 2px solid transparent;
+					  margin-top: -2px;
+					  border-top: 2px solid transparent;
+				}
 			}
 		}
 	}
@@ -106,20 +117,36 @@ nav {
 	> ul ul {
 		position: absolute;
 		z-index: -1;
-		background: neutral-color(dark);
-		color: neutral-color(white);
-		position: absolute;
 		top: -$standard-block-padding;
 		left: -$standard-block-padding;
 		padding: 0 0 $standard-block-padding / 2 0;
 		margin: 0;
 		flex-direction: column;
+		background: neutral-color(dark);
+		color: neutral-color(white);
+
+		&.m-menu-primary-links {
+
+			@include breakpoint-min( md ) {
+				position: relative;
+				top: 0;
+				left: 0;
+				padding: 0;
+				flex-direction: row;
+				background: transparent;
+				color: neutral-color(dark);
+			}
+		}
 
 		li {
 			z-index: 10000;
 
 			&:first-child {
 				margin-top: 2.5em;
+
+				@include breakpoint-min( md ) {
+					margin-top: 0;
+				}
 			}
 
 			a {
@@ -135,6 +162,21 @@ nav {
 					color: neutral-color(white);
 				}
 			}
+
+			@include breakpoint-min( md ) {
+				a {
+					font-weight: 700;
+					color: neutral-color(dark);
+					background: transparent;
+
+					&:hover,
+					&:focus,
+					&:active {
+						background: neutral-color(dark);
+						color: neutral-color(white);
+					}
+				}
+			}
 		}
 	}
 
@@ -144,27 +186,38 @@ nav {
 		flex-grow: 0;
 		flex-wrap: nowrap;
 		align-items: center;
+		margin: 0;
+		margin-right: -$standard-block-padding / 2;
+
+		@include breakpoint-min( md ) {
+			margin-right: 0;
+			flex-grow: 1;
+			max-width: 100%;
+			width: auto;
+		}
 
 		li {
-			flex-shrink: 0;
-			display: none;
+			display: block;
 
-			&[data-menu-item-priority="10"] {
-				display: block;
+			&[data-menu-item-priority="20"] {
+				display: none;
+				@include breakpoint-min( md ) { // this one can probably be a smaller media query
+					display: block;
+				}
 			}
 
 			a {
 				display: inline-flex;
 				color: neutral-color(dark);
 				background: transparent;
-				//margin: 0 $standard-block-padding / 2;
-				margin: 0;
 
 				&:hover,
 				&:focus,
 				&:active {
 					background: neutral-color(dark);
 					color: neutral-color(white);
+					//margin-bottom: -2px;
+					//border-bottom: 2px solid neutral-color(dark);
 				}
 			}
 
@@ -513,7 +566,7 @@ nav {
 
 // media queries for menus
 
-@media screen and (min-width: $medium-screen) {
+/*@media screen and (min-width: $medium-screen) {
 
 	.m-featured-navigation {
 		display: flex;
@@ -529,9 +582,9 @@ nav {
 			}
 		}
 	}
-}
+}*/
 
-@media screen and (min-width: $medium-screen) and (max-width: $nav-move-end) {
+/*@media screen and (min-width: $medium-screen) and (max-width: $nav-move-end) {
 
 	#navigation-user-account-access {
 
@@ -543,16 +596,16 @@ nav {
 			display: none;
 		}
 	}
-}
+}*/
 
-@media screen and (min-width: $medium-margins-too-small) {
+/*@media screen and (min-width: $medium-margins-too-small) {
 
 	.m-pagination {
 		margin-bottom: 0.75em;
 	}
-}
+}*/
 
-@media screen and (min-width: $nav-breaks) {
+/*@media screen and (min-width: $nav-breaks) {
 
 	.m-main-navigation {
 		display: flex;
@@ -594,9 +647,9 @@ nav {
 			}
 		}
 	}
-}
+}*/
 
-@media screen and (min-width: $nav-breaks) and (max-width: $nav-wrap-screen) {
+/*@media screen and (min-width: $nav-breaks) and (max-width: $nav-wrap-screen) {
 
 	.m-main-navigation {
 
@@ -606,9 +659,9 @@ nav {
 			flex-wrap: wrap;
 		}
 	}
-}
+}*/
 
-@media screen and (min-width: $nav-move-end) and (max-width: $nav-wrap-screen) {
+/*@media screen and (min-width: $nav-move-end) and (max-width: $nav-wrap-screen) {
 
 	.m-main-navigation {
 
@@ -617,4 +670,4 @@ nav {
 			justify-content: flex-end;
 		}
 	}
-}
+}*/
