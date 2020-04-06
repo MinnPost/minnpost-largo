@@ -334,3 +334,23 @@ endif;
 if ( function_exists( 'send_frame_options_header' ) ) :
 	add_action( 'send_headers', 'send_frame_options_header', 10, 0 );
 endif;
+
+/**
+* Hide the Republication sharing widget on posts that are
+* included in the category with the ID of 14 or 15.
+*
+* @return bool Whether or not the sharing widget should be hidden
+*/
+if ( ! function_exists( 'minnpost_largo_remove_republish_button_from_category' ) ) :
+	add_filter( 'hide_republication_widget', 'minnpost_largo_remove_republish_button_from_category', 10, 2 );
+	function minnpost_largo_remove_republish_button_from_category( $hide_republication_widget, $post ) {
+		if ( true !== $hide_republication_widget ) {
+			// if the current post is in either of these categories, return true
+			if ( in_category( array( 55628, 55630, 55622, 55619 ), $post->ID ) ) {
+				// returning true will cause the filter to hide the button
+				$hide_republication_widget = true;
+			}
+		}
+		return $hide_republication_widget;
+	}
+endif;
