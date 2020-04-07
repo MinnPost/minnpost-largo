@@ -21,9 +21,7 @@
 	}
 
 	h2.a-form-title {
-		color: $color__minnpost-black;
 		text-align: center;
-		margin-bottom: 0.75em;
 	}
 
 	&.m-form-newsletter-shortcode-default {
@@ -89,7 +87,7 @@
 
 	&.legacy {
 		margin-bottom: 1em;
-		background: $color__background-pre;
+		background: neutral-color(border);
 
 		figure {
 			margin: 0;
@@ -111,9 +109,9 @@
 .m-form-in-body {
 	margin-bottom: 1em;
 	padding: 1em 3em;
-	font-family: $font__sans;
-	font-size: 1.25em;
-	color: $color__form-text;
+	//font-family: $font__sans;
+	font-size: var(--scale1);
+	//color: $color__form-text;
 	border: $border-default-style;
 	position: relative;
 }
@@ -141,7 +139,7 @@
 		&.legacy {
 			width: 50%;
 			float: right;
-			margin-left: 1em;
+			margin-left: $standard-block-padding * 2;
 		}
 	}
 }
