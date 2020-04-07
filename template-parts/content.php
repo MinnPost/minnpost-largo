@@ -78,6 +78,7 @@
 		<div class="m-entry-content">
 			<?php do_action( 'wp_message_inserter', 'above_article_body' ); ?>
 			<?php the_content(); ?>
+			<?php do_action( 'wp_message_inserter', 'below_article_body' ); ?>
 		</div><!-- .m-entry-content -->
 	</div><!-- .o-entry -->
 

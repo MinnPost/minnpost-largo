@@ -235,6 +235,7 @@ if ( ! function_exists( 'minnpost_message_regions' ) ) :
 			'header'             => __( 'Site Header', 'minnpost-largo' ),
 			'above_article_body' => __( 'Above Article Body', 'minnpost-largo' ),
 			//'article_middle'   => __( 'Article Middle', 'minnpost-largo' ),
+			'below_article_body' => __( 'Below Article Body', 'minnpost-largo' ),
 			'article_bottom'     => __( 'Article Bottom', 'minnpost-largo' ),
 			'homepage_middle'    => __( 'Homepage Middle', 'minnpost-largo' ),
 			'archive_middle'     => __( 'Archive Middle', 'minnpost-largo' ),
