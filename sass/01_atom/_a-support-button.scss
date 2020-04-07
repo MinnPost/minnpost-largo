@@ -19,6 +19,7 @@
 			// inside a 5 column space now
 			@include breakpoint-min( md ) {
 				width: colspan( 2, 5 );
+				margin-bottom: 0;
 			}
 
 			// inside 8 column space

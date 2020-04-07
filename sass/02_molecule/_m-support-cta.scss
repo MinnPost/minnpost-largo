@@ -30,6 +30,10 @@
 			@include breakpoint-min( xs ) {
 				@include meta-preset( $size: 1, $bold: true, $italic: false, $line-height: 1 );
 			}
+
+			@include breakpoint-min( md ) {
+				padding-bottom: 0;
+			}
 		}
 	}
 

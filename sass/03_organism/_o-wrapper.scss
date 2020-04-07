@@ -20,8 +20,10 @@
 	&.o-wrapper-site-header {
 
 		@include breakpoint-min( md ) {
+			align-items: center;
 			justify-content: space-between;
 			flex-direction: row;
+			margin-bottom: $standard-block-padding;
 		}
 	}
 
