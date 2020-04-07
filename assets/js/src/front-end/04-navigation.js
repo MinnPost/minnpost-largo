@@ -10,6 +10,7 @@
 //setupNavSearch( 'navigation-primary' );
 
 var navButton = document.querySelector( 'nav button' );
+var searchToggle = document.querySelector( 'li.search a' );
 let menu = navButton.nextElementSibling;
 navButton.addEventListener( 'click', function() {
     let expanded = this.getAttribute( 'aria-expanded' ) === 'true' || false;
@@ -17,12 +18,28 @@ navButton.addEventListener( 'click', function() {
     let menu = this.nextElementSibling;
     menu.hidden = ! menu.hidden;
 });
+searchToggle.addEventListener( 'click', function(event) {
+	event.preventDefault();
+	let searchVisible = this.getAttribute( 'aria-expanded' ) === 'true' || false;
+	this.setAttribute( 'aria-expanded', ! searchVisible );
+	let searchForm = this.nextElementSibling;
+	searchForm.hidden = ! searchForm.hidden;
+});
 // escape key press
 $(document).keyup(function(e) {
-	if (27 === e.keyCode) {
-		navButton.setAttribute( 'aria-expanded', false );
-		//let menu = navButton.nextElementSibling;
-		menu.hidden = true;
+	if (27 === e.keyCode ) {
+		let expanded = navButton.getAttribute( 'aria-expanded' ) === 'true' || false;
+		let searchVisible = searchToggle.getAttribute( 'aria-expanded' ) === 'true' || false;
+		if ( undefined !== typeof expanded && true === expanded ) {
+			let menu = navButton.nextElementSibling;
+			navButton.setAttribute( 'aria-expanded', false );
+			menu.hidden = ! menu.hidden;
+		}
+		if ( undefined !== typeof searchVisible && true === searchVisible ) {
+			let searchForm = searchToggle.nextElementSibling;
+			searchToggle.setAttribute( 'aria-expanded', false );
+			searchForm.hidden = ! searchForm.hidden;
+		}
 	}
 });
 
