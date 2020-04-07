@@ -220,17 +220,6 @@ if ( ! function_exists( 'highlight_search_results' ) ) :
 		return $text;
 	}
 endif;
-
-/**
- * Redirection Plugin Editor access
- */
-if ( ! function_exists( 'redirection_to_editor' ) ) :
-	add_filter( 'redirection_role', 'redirection_to_editor' );
-	function redirection_to_editor() {
-		return 'edit_pages';
-	}
-endif;
-
 /**
  * default editor for certain posts
  */
@@ -283,18 +272,6 @@ if ( ! function_exists( 'minnpost_message_args' ) ) :
 			$args['es'] = true; // elasticsearch on production only
 		}
 		return $args;
-	}
-endif;
-
-/**
- * Turn off the view count because we don't use it anyway
- * @param bool $status
- * @return bool false
- */
-if ( ! function_exists( 'minnpost_turn_off_popular_views' ) ) :
-	add_filter( 'pop_set_post_view', 'minnpost_turn_off_popular_views' );
-	function minnpost_turn_off_popular_views( $status ) {
-		return false;
 	}
 endif;
 
