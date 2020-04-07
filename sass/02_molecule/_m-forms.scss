@@ -1,10 +1,9 @@
-.m-main-navigation .search-form {
+.m-main-navigation .m-form-search {
 
 	input[type="search"] {
 		-webkit-appearance: none;
-		border-radius: 0;
 		border: 0;
-		text-indent: $form-text-indent;
+		text-indent: $standard-block-padding;
 	}
 
 	::-webkit-search-decoration {
