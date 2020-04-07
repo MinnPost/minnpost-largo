@@ -43,11 +43,19 @@ button.a-button,
 
 .a-button-sentence {
 
+	input {
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+
 	a.a-button:link,
 	a.a-button:visited,
 	button[type="submit"],
-	button[type="button"] {
+	button[type="button"],
+	input[type="submit"] {
 		margin-right: 0;
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
 	}
 
 	.a-between-buttons {
