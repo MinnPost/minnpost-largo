@@ -257,13 +257,13 @@ if ( ! function_exists( 'minnpost_set_default_editor' ) ) :
 endif;
 
 /**
- * Use ElasticPress for Zoninator zone queries
+ * Use Elasticsearch for Zoninator zone queries
  * @param array $args
  * @return array $args
  */
-if ( ! function_exists( 'minnpost_zoninator_elasticpress' ) ) :
-	add_filter( 'zoninator_recent_posts_args', 'minnpost_zoninator_elasticpress' );
-	function minnpost_zoninator_elasticpress( $args ) {
+if ( ! function_exists( 'minnpost_zoninator_elasticsearch' ) ) :
+	add_filter( 'zoninator_recent_posts_args', 'minnpost_zoninator_elasticsearch' );
+	function minnpost_zoninator_elasticsearch( $args ) {
 		if ( 'production' === VIP_GO_ENV ) {
 			$args['es'] = true; // elasticsearch on production only
 		}
@@ -272,7 +272,7 @@ if ( ! function_exists( 'minnpost_zoninator_elasticpress' ) ) :
 endif;
 
 /**
- * Use ElasticPress for message queries
+ * Use Elasticsearch for message queries
  * @param array $args
  * @return array $args
  */

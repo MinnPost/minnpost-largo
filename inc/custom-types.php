@@ -94,15 +94,16 @@ add_filter(
 );
 
 /**
-* Set which post types are indexable by Elasticpress
-*
-* @param array $post_types
-* @return array $post_types
-*
-*/
-if ( ! function_exists( 'minnpost_indexable_post_types' ) ) :
-	add_filter( 'ep_indexable_post_types', 'minnpost_indexable_post_types', 11 );
-	function minnpost_indexable_post_types( $post_types ) {
+ * Change which post types are publicly searchable, even if they are indexed by ElasticSearch
+ * In https://github.com/Automattic/vip-go-mu-plugins/blob/master/shared-plugins/vip-go-elasticsearch/vip-go-elasticsearch.php, VIP indicates that they default to post types that don't have exclude_from_search in the args.
+ *
+ * @param string $post_type the name of the post type
+ * @param object $args the post type args
+ */
+if ( ! function_exists( 'minnpost_exclude_from_search' ) ) :
+	add_action( 'registered_post_type', 'minnpost_exclude_from_search', 10, 2 );
+	function minnpost_exclude_from_search( $post_type, $args ) {
+
 		/* default value with non-public types enabled is:
 		$post_types = array(
 			'post'                => 'post',
@@ -134,27 +135,6 @@ if ( ! function_exists( 'minnpost_indexable_post_types' ) ) :
 			'newsletter'          => 'newsletter',
 		);
 		*/
-		$non_indexable_types = array(
-			'partner_offer'    => 'partner_offer',
-			'message'          => 'message',
-			'scheduled-action' => 'message',
-			'wp_log'           => 'wp_log',
-			'deleted_event'    => 'wp_log',
-		);
-		$post_types          = array_diff_assoc( $post_types, $non_indexable_types );
-		return $post_types;
-	}
-endif;
-
-/**
- * Change which post types are publicly searchable, even if they are indexed by ElasticSearch
- *
- * @param string $post_type the name of the post type
- * @param object $args the post type args
- */
-if ( ! function_exists( 'minnpost_exclude_from_search' ) ) :
-	add_action( 'registered_post_type', 'minnpost_exclude_from_search', 10, 2 );
-	function minnpost_exclude_from_search( $post_type, $args ) {
 
 		$types_to_exclude = array(
 			'attachment',
@@ -164,6 +144,7 @@ if ( ! function_exists( 'minnpost_exclude_from_search' ) ) :
 			'guest-author',
 			'cr3ativsponsor',
 			'message',
+			'nav_menu_item',
 		);
 
 		if ( ! in_array( $post_type, $types_to_exclude ) ) {
