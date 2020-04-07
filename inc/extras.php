@@ -198,29 +198,6 @@ add_action(
 );
 
 /**
-* Easy method to highlight the search string in the search result
-*
-* @param string $text
-*
-* @return string $text
-*/
-if ( ! function_exists( 'highlight_search_results' ) ) :
-	// this filter runs on the_excerpt and the_title
-	// to highlight inside both locations for search result pages
-	add_filter( 'the_excerpt', 'highlight_search_results' );
-	add_filter( 'the_title', 'highlight_search_results' );
-	function highlight_search_results( $text ) {
-		if ( is_search() && ! is_admin() ) {
-			$sr          = get_query_var( 's' );
-			$highlighted = preg_filter( '/' . preg_quote( $sr, '/' ) . '/i', '<span class="a-search-highlight">$0</span>', $text );
-			if ( ! empty( $highlighted ) ) {
-				$text = $highlighted;
-			}
-		}
-		return $text;
-	}
-endif;
-/**
  * default editor for certain posts
  */
 if ( ! function_exists( 'minnpost_set_default_editor' ) ) :
