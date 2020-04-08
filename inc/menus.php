@@ -19,97 +19,10 @@ if ( ! function_exists( 'minnpost_menus' ) ) :
 				'minnpost_network'        => __( 'Network Menu', 'minnpost-largo' ), // social networks
 				'primary_links'           => __( 'Primary Categories', 'minnpost-largo' ), // main nav below logo
 				'primary_actions'         => __( 'Primary Actions', 'minnpost-largo' ), // main nav below logo
-				'user_account_access'     => __( 'User Account Access Menu', 'minnpost-largo' ), // menu where users log in/register/log out
 				'user_account_management' => __( 'User Account Management Menu', 'minnpost-largo' ), // menu where users manage their account info/preferences
 			)
 		);
 		unregister_nav_menu( 'menu-1' ); // we don't need whatever this is
-	}
-endif;
-
-/**
-* Deal with sub menus. This is the featured items we display.
-*
-* @param array $sorted_menu_items
-* @param array $args
-*
-* @return array $sorted_menu_items
-*
-*/
-if ( ! function_exists( 'minnpost_wp_nav_menu_objects_sub_menu' ) ) :
-	// get submenu functionality from https://christianvarga.com/how-to-get-submenu-items-from-a-wordpress-menu-based-on-parent-or-sibling/
-
-	// filter_hook function to react on sub_menu flag
-	//add_filter( 'wp_nav_menu_objects', 'minnpost_wp_nav_menu_objects_sub_menu', 10, 2 );
-	function minnpost_wp_nav_menu_objects_sub_menu( $sorted_menu_items, $args ) {
-
-		global $wp_query;
-
-		if ( isset( $args->sub_menu ) ) {
-
-			// we only bother with submenus on:
-			// - home
-			// - category archives
-			if ( is_singular() || ( isset( $wp_query->query['is_membership'] ) && true === $wp_query->query['is_membership'] ) ) {
-				return;
-			}
-
-			// find the current menu item
-			foreach ( $sorted_menu_items as $menu_item ) {
-
-				$found_top_parent_id = false;
-				if ( ( 0 === $menu_item->menu_item_parent && 1 === $menu_item->current_item_ancestor ) || ( 0 === $menu_item->menu_item_parent && 1 === $menu_item->current ) ) {
-					$root_id = $menu_item->ID;
-				}
-
-				if ( $menu_item->current ) {
-					// set the root id based on whether the current menu item has a parent or not
-					$root_id = ( $menu_item->menu_item_parent ) ? $menu_item->menu_item_parent : $menu_item->ID;
-					continue;
-				}
-			}
-
-			if ( is_home() ) {
-				$root_id = 0;
-				$menu    = wp_get_nav_menu_items(
-					$args->menu->name,
-					array(
-						'posts_per_page' => -1,
-						'meta_key'       => '_menu_item_menu_item_parent',
-						'meta_value'     => $root_id,
-					)
-				);
-				$root_id = $menu[0]->ID;
-			}
-
-			// fix places that are not part of any category
-			if ( ! isset( $root_id ) ) {
-				return;
-			}
-
-			$menu_item_parents = array();
-			foreach ( $sorted_menu_items as $key => $item ) {
-				// init menu_item_parents
-				if ( (int) $root_id === (int) $item->ID ) {
-					$menu_item_parents[] = $item->ID;
-				} elseif ( (int) $root_id === (int) $item->menu_item_parent ) {
-					$menu_item_parents[] = $item->menu_item_parent;
-					continue;
-				}
-				if ( in_array( $item->menu_item_parent, $menu_item_parents ) ) {
-					// part of sub-tree: keep!
-					$menu_item_parents[] = $item->ID;
-				} elseif ( ! ( isset( $args->show_parent ) && in_array( $item->ID, $menu_item_parents ) ) ) {
-					// not part of sub-tree: away with it!
-					unset( $sorted_menu_items[ $key ] );
-					continue;
-				}
-			}
-
-			return $sorted_menu_items;
-		} else {
-			return $sorted_menu_items;
-		} // End if().
 	}
 endif;
 
