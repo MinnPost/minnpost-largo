@@ -5,21 +5,39 @@
  */
 
 function setupPrimaryNav() {
-	const navTransitioner = transitionHiddenElement({
+	const primaryNavTransitioner = transitionHiddenElement({
 	  element: document.querySelector( '.m-menu-primary-links' ),
 	  visibleClass: 'is-open',
 	  displayValue: 'flex'
 	});
 
-	var navToggle = document.querySelector( 'nav button' );
-	navToggle.addEventListener( 'click', function(e) {
+	var primaryNavToggle = document.querySelector( 'nav button' );
+	primaryNavToggle.addEventListener( 'click', function(e) {
 		e.preventDefault();
 		let expanded = this.getAttribute( 'aria-expanded' ) === 'true' || false;
 		this.setAttribute( 'aria-expanded', ! expanded );
 		if ( true === expanded ) {
-			navTransitioner.transitionHide();	
+			primaryNavTransitioner.transitionHide();	
 		} else {
-			navTransitioner.transitionShow();
+			primaryNavTransitioner.transitionShow();
+		}
+	});
+
+	const userNavTransitioner = transitionHiddenElement({
+	  element: document.querySelector( '.your-minnpost-account ul' ),
+	  visibleClass: 'is-open',
+	  displayValue: 'flex'
+	});
+
+	var userNavToggle = document.querySelector( '.your-minnpost-account > a' );
+	userNavToggle.addEventListener( 'click', function(e) {
+		e.preventDefault();
+		let expanded = this.getAttribute( 'aria-expanded' ) === 'true' || false;
+		this.setAttribute( 'aria-expanded', ! expanded );
+		if ( true === expanded ) {
+			userNavTransitioner.transitionHide();	
+		} else {
+			userNavTransitioner.transitionShow();
 		}
 	});
 
@@ -68,11 +86,16 @@ function setupPrimaryNav() {
 	// escape key press
 	$(document).keyup(function(e) {
 		if (27 === e.keyCode ) {
-			let expanded = navToggle.getAttribute( 'aria-expanded' ) === 'true' || false;
+			let primaryNavExpanded = primaryNavToggle.getAttribute( 'aria-expanded' ) === 'true' || false;
+			let userNavExpanded = userNavToggle.getAttribute( 'aria-expanded' ) === 'true' || false;
 			let searchIsVisible = searchVisible.getAttribute( 'aria-expanded' ) === 'true' || false;
-			if ( undefined !== typeof expanded && true === expanded ) {
-				navToggle.setAttribute( 'aria-expanded', ! expanded );
-				navTransitioner.transitionHide();	
+			if ( undefined !== typeof primaryNavExpanded && true === primaryNavExpanded ) {
+				primaryNavToggle.setAttribute( 'aria-expanded', ! primaryNavExpanded );
+				primaryNavTransitioner.transitionHide();	
+			}
+			if ( undefined !== typeof userNavExpanded && true === userNavExpanded ) {
+				userNavToggle.setAttribute( 'aria-expanded', ! userNavExpanded );
+				userNavTransitioner.transitionHide();	
 			}
 			if ( undefined !== typeof searchIsVisible && true === searchIsVisible ) {
 				searchVisible.setAttribute( 'aria-expanded', ! searchIsVisible );
