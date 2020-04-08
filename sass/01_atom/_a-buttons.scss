@@ -43,7 +43,8 @@ button.a-button,
 
 .a-button-sentence {
 
-	input {
+	input[type="text"],
+	input[type="search"] {
 		border-top-right-radius: 0;
 		border-bottom-right-radius: 0;
 	}
