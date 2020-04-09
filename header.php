@@ -64,7 +64,7 @@
 			</nav><!-- #navigation-primary -->
 		</div>
 		<div class="o-wrapper o-wrapper-topics-navigation">
-			<span class="a-topics-label"><?php echo __( 'Topics', 'minnpost-largo' ); ?></span>
+			<a class="a-topics-label" href="/topics/"><?php echo __( 'Topics', 'minnpost-largo' ); ?></a>
 			<div class="m-topics">
 				<nav id="navigation-topics" class="m-topics-navigation">
 					<?php
@@ -82,10 +82,9 @@
 					?>
 				</nav><!-- #navigation-topics -->
 				<button class="nav-scroller-btn nav-scroller-btn--left" aria-label="Scroll left">
-					<svg class="nav-scroller-icon" width="21" height="32" viewBox="0 0 21 32"><path d="M0 16l4.736-4.768L16 0l4.736 4.736L9.504 16l11.232 11.264L16 32 4.736 20.736z"></path></svg>
+					<i class="fas fa-chevron-left"></i></svg>
 				</button>
-				<button class="nav-scroller-btn nav-scroller-btn--right" aria-label="Scroll right">
-					<svg class="nav-scroller-icon" width="21" height="32" viewBox="0 0 21 32"><path d="M0 27.264L11.264 16 0 4.736 4.736 0 16 11.232 20.736 16l-16 16z"></path></svg>
+				<button class="nav-scroller-btn nav-scroller-btn--right" aria-label="Scroll right"><i class="fas fa-chevron-right"></i></svg>
 				</button>
 			</div>
 		</div>
