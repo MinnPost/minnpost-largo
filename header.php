@@ -61,7 +61,33 @@
 					)
 				);
 				?>
-			</nav><!-- #site-navigation -->
+			</nav><!-- #navigation-primary -->
+		</div>
+		<div class="o-wrapper o-wrapper-topics-navigation">
+			<span class="a-topics-label"><?php echo __( 'Topics', 'minnpost-largo' ); ?></span>
+			<div class="m-topics">
+				<nav id="navigation-topics" class="m-topics-navigation">
+					<?php
+					wp_nav_menu(
+						array(
+							'theme_location' => 'topics',
+							'menu_id'        => 'topics',
+							'depth'          => 1,
+							'container'      => false,
+							'walker'         => new Minnpost_Walker_Nav_Menu,
+							'items_wrap'     => '<ul id="%1$s" class="m-menu m-menu-%1$s">%3$s</ul>',
+							//'item_classes'   => 'values',
+						)
+					);
+					?>
+				</nav><!-- #navigation-topics -->
+				<button class="nav-scroller-btn nav-scroller-btn--left" aria-label="Scroll left">
+					<svg class="nav-scroller-icon" width="21" height="32" viewBox="0 0 21 32"><path d="M0 16l4.736-4.768L16 0l4.736 4.736L9.504 16l11.232 11.264L16 32 4.736 20.736z"></path></svg>
+				</button>
+				<button class="nav-scroller-btn nav-scroller-btn--right" aria-label="Scroll right">
+					<svg class="nav-scroller-icon" width="21" height="32" viewBox="0 0 21 32"><path d="M0 27.264L11.264 16 0 4.736 4.736 0 16 11.232 20.736 16l-16 16z"></path></svg>
+				</button>
+			</div>
 		</div>
 	</header><!-- #masthead -->
 

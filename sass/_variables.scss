@@ -218,6 +218,20 @@ $nav-move-end: 810px;
 $large-screen: 860px;
 $nav-wrap-screen: 950px; // replace with "lg" media query
 
+// ------------------------------------------------------------
+// Z-INDEXES
+// ------------------------------------------------------------
+
+$z-index__xxxl: 1000000000;
+$z-index__xxl: 100000000;
+$z-index__xl: 10000000;
+$z-index__lg: 1000000;
+$z-index__md: 100000;
+$z-index__sm: 10000;
+$z-index__xs: 1000;
+$z-index__xxs: 100;
+$z-index__xxxs: 10;
+
 // site region sizes
 $size__main-smaller-screen: 50%;
 $size__main-small-screen: 65%;

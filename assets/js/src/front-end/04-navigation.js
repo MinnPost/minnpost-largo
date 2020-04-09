@@ -105,7 +105,31 @@ function setupPrimaryNav() {
 	});
 }
 
+function setupTopicsNav() {
+
+	// Init with all options at default setting
+	const priorityNavScrollerDefault = PriorityNavScroller({
+	  selector: '.m-topics',
+	  navSelector: '.m-topics-navigation',
+	  contentSelector: '.m-menu-topics',
+	  itemSelector: 'li, a',
+	  buttonLeftSelector: '.nav-scroller-btn--left',
+	  buttonRightSelector: '.nav-scroller-btn--right',
+	  //scrollStep: 'average'
+	});
+
+	// Init multiple nav scrollers with the same options
+	/*let navScrollers = document.querySelectorAll('.nav-scroller');
+
+	navScrollers.forEach((currentValue, currentIndex) => {
+	  PriorityNavScroller({
+	    selector: currentValue
+	  });
+	});*/
+}
+
 setupPrimaryNav();
+setupTopicsNav();
 
 $( '#navigation-featured a' ).click( function( e ) {
 	mp_analytics_tracking_event( 'event', 'Featured Bar Link', 'Click', this.href );

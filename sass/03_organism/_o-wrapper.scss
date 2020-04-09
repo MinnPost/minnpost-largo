@@ -40,7 +40,8 @@
 		//border-top: 1.230769230769231em solid neutral-color(black);
 	}
 
-	&.o-wrapper-site-navigation {
+	&.o-wrapper-site-navigation,
+	&.o-wrapper-topics-navigation {
 		font-size: 75%;
 		@include breakpoint-min( md ) {
 			font-size: 80%;
@@ -57,6 +58,11 @@
 		@include breakpoint-min( xxl ) {
 			font-size: 100%;
 		}
+	}
+
+	&.o-wrapper-topics-navigation {
+		display: flex;
+		border-bottom: 2px solid neutral-color(border);
 	}
 
 }

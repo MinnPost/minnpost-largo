@@ -14,11 +14,11 @@ if ( ! function_exists( 'minnpost_menus' ) ) :
 	function minnpost_menus() {
 		register_nav_menus(
 			array(
-				'footer_primary'          => __( 'Footer Primary', 'minnpost-largo' ), // main footer. about, advertise, member benefits, etc
-				'featured_columns'        => __( 'Featured Columns', 'minnpost-largo' ), // featured columns on homepage, category pages
-				'minnpost_network'        => __( 'Network Menu', 'minnpost-largo' ), // social networks
 				'primary_links'           => __( 'Primary Categories', 'minnpost-largo' ), // main nav below logo
 				'primary_actions'         => __( 'Primary Actions', 'minnpost-largo' ), // main nav below logo
+				'topics'                  => __( 'Topics', 'minnpost-largo' ), // scrolling topics nav
+				'footer_primary'          => __( 'Footer Primary', 'minnpost-largo' ), // main footer. about, advertise, member benefits, etc
+				'minnpost_network'        => __( 'Network Menu', 'minnpost-largo' ), // social networks
 				'user_account_management' => __( 'User Account Management Menu', 'minnpost-largo' ), // menu where users manage their account info/preferences
 			)
 		);
@@ -115,7 +115,7 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 
 	// start and end submenu output with an unordered list
 	public function start_lvl( &$output, $depth = 0, $args = array() ) {
-		$output .= '<ul>';
+		$output .= '<ul hidden>';
 	}
 	public function end_lvl( &$output, $depth = 0, $args = array() ) {
 		$output .= '</ul>';
