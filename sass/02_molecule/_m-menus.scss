@@ -31,7 +31,7 @@ nav {
 	position: relative;
 	width: 100%;
 	overflow: hidden;
-	@include meta-preset( $size: -1, $bold: false, $italic: false );
+	@include meta-preset( $size: -2, $bold: false, $italic: false );
 
 	.nav-scroller-btn {
 		-webkit-appearance: none;
@@ -52,10 +52,10 @@ nav {
 		}
 
 		&:not(.active) {
-			//opacity: 0;
-			//pointer-events: none;
-			background: neutral-color(white);
-			color: neutral-color(highlight);
+			opacity: 0;
+			pointer-events: none;
+			//background: neutral-color(white);
+			//color: neutral-color(highlight);
 		}
 
 		&.nav-scroller-btn--left {
@@ -109,7 +109,7 @@ nav {
 	}
 
 	&.m-main-navigation {
-		@include meta-preset( $size: 1, $bold: true, $italic: false );
+		@include meta-preset( $size: 0, $bold: true, $italic: false );
 		border-bottom: 2px solid neutral-color(dark);
 		@include breakpoint-min( md ) {
 			border-top: 2px solid neutral-color(dark);
@@ -120,7 +120,7 @@ nav {
 			user-select: text;
 			cursor: pointer;
 			margin: 0;
-			margin-left: -$standard-block-padding / 2;
+			//margin-left: -$standard-block-padding / 2;
 			border: 0;
 			padding: $standard-block-padding / 2;
 			font: inherit;

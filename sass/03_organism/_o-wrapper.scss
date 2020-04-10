@@ -42,6 +42,18 @@
 
 	&.o-wrapper-site-navigation,
 	&.o-wrapper-topics-navigation {
+
+		a,
+		button {
+			min-height: $touch-target-minimum-size;
+			align-items: center;
+		}
+
+		button {
+			min-width: $touch-target-minimum-size;
+			justify-content: center;
+		}
+
 		font-size: 75%;
 		@include breakpoint-min( md ) {
 			font-size: 80%;
@@ -49,6 +61,12 @@
 
 		@include breakpoint-min( lg ) {
 			font-size: 80%;
+
+			a,
+			button {
+				min-height: 0;
+				min-width: 0;
+			}
 		}
 
 		@include breakpoint-min( xl ) {

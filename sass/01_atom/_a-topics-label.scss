@@ -6,7 +6,7 @@ span.a-topics-label {
 	display: inline-flex;
 	padding: $standard-block-padding;
 	margin-right: $standard-block-padding / 2;
-	@include meta-preset( $size: -1, $bold: false, $italic: false );
+	@include meta-preset( $size: -2, $bold: false, $italic: false );
 	line-height: normal;
 
 	@include breakpoint-min( md ) {
