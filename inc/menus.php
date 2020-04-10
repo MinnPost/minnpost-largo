@@ -164,6 +164,10 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 			if ( $cat_id !== $item->object_id ) {
 				$active_class = '';
 			}
+			$category_group_id = minnpost_get_category_group_id( get_the_id(), $cat_id );
+			if ( '' !== $category_group_id && $category_group_id === $item->object_id ) {
+				$active_class = 'active-parent';
+			}
 		}
 
 		$url = '';

@@ -1138,7 +1138,7 @@ if ( ! function_exists( 'minnpost_category_breadcrumb' ) ) :
 			$category      = get_category( $category_id );
 			$category_link = get_category_link( $category );
 			if ( true === $show_group ) {
-				$category_group_id = get_term_meta( $category_id, '_mp_category_group', true );
+				$category_group_id = minnpost_get_category_group_id( $post_id, $category_id );
 				if ( '' !== $category_group_id ) {
 					$category_group = get_category( $category_group_id );
 					echo '<div class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '">';
@@ -1214,6 +1214,31 @@ if ( ! function_exists( 'minnpost_get_permalink_category_id' ) ) :
 			}
 		}
 		return $category_id;
+	}
+endif;
+
+/**
+* Returns the grouping category ID for a post's main category
+*
+* @param int $post_id
+* @param int $category_id
+* @return int $category_group_id
+*
+*/
+if ( ! function_exists( 'minnpost_get_category_group_id' ) ) :
+	function minnpost_get_category_group_id( $post_id = '', $category_id = '' ) {
+		$category_group_id = '';
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
+
+		if ( '' === $category_id ) {
+			$category_id = minnpost_get_permalink_category_id( $post_id );
+		}
+
+		$category_group_id = get_term_meta( $category_id, '_mp_category_group', true );
+
+		return $category_group_id;
 	}
 endif;
 
