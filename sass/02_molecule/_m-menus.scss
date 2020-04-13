@@ -157,6 +157,7 @@ nav {
 			&.active a,
 			&.active-parent a {
 				background: neutral-color(medium);
+				color: neutral-color(black);
 			}
 		}
 	}
@@ -330,7 +331,7 @@ nav {
 			&.active a,
 			&.active-parent a {
 				background: utility-color(blue, highlight);
-				color: neutral-color(white);
+				color: neutral-color(black);
 			}
 		}
 	}
@@ -399,7 +400,7 @@ nav {
 				&.active a,
 				&.active-parent a {
 					background: neutral-color(medium);
-					color: neutral-color(white);
+					color: neutral-color(black);
 				}
 			}
 		}
