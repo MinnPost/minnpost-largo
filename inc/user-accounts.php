@@ -103,6 +103,28 @@ if ( ! function_exists( 'lost_password_form_action' ) ) :
 endif;
 
 /**
+* Customize error messages
+*
+* @param string $lost_password_form_action
+* @return string
+*
+*/
+if ( ! function_exists( 'user_account_error_messages' ) ) :
+	add_filter( 'user_account_management_custom_error_message', 'user_account_error_messages', 10, 3 );
+	function user_account_error_messages( $message, $error_code, $data ) {
+		if ( 'spam' === $error_code ) {
+			// translators: parameter is the email address
+			$error   = __(
+				'Our system flagged your account information as spam. You can try again, or email us at <a href="%1$s">%2$s</a>',
+				'user-account-management'
+			);
+			$message = sprintf( $error, 'feedback@minnpost.com', 'feedback@minnpost.com' );
+		}
+		return $message;
+	}
+endif;
+
+/**
 * Return theme template for user pages
 *
 * @param string $template
