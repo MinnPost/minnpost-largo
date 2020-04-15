@@ -114,8 +114,8 @@ if ( ! function_exists( 'user_account_error_messages' ) ) :
 	function user_account_error_messages( $message, $error_code, $data ) {
 		if ( 'spam' === $error_code ) {
 			// translators: parameter is the email address
-			$error = __(
-				'Our system flagged your account information as spam. You can try again, or email us at <a href="%s">%s</a>',
+			$error   = __(
+				'Our system flagged your account information as spam. You can try again, or email us at <a href="%1$s">%2$s</a>',
 				'user-account-management'
 			);
 			$message = sprintf( $error, 'feedback@minnpost.com', 'feedback@minnpost.com' );
