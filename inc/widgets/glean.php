@@ -6,7 +6,7 @@
  */
 
 if ( ! function_exists( 'minnpost_largo_glean' ) ) :
-	function minnpost_largo_glean( $before_title, $title, $after_title, $content, $categories, $terms ) {
+	function minnpost_largo_glean( $before_title, $title, $after_title, $content, $categories, $terms, $use_elasticsearch = true ) {
 		if ( ! isset( $categories[0] ) ) {
 			$category = get_category_by_slug( 'glean' );
 			$category = $category->cat_ID;
@@ -36,7 +36,7 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 			'cat'            => $category,
 			'orderby'        => 'date',
 		);
-		if ( 'production' === VIP_GO_ENV ) {
+		if ( 'production' === VIP_GO_ENV && true === $use_elasticsearch ) {
 			$glean_query_args['es'] = true; // elasticsearch on production only
 		}
 		$glean_query = new WP_Query( $glean_query_args );
