@@ -37,7 +37,7 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 			'orderby'        => 'date',
 		);
 		if ( 'production' === VIP_GO_ENV ) {
-			$glean_query_args['es'] = true; // elasticsearch on production only
+			//$glean_query_args['es'] = true; // elasticsearch on production only
 		}
 		$glean_query = new WP_Query( $glean_query_args );
 
