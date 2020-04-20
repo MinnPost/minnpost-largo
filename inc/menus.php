@@ -407,11 +407,6 @@ if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
 			$wp_admin_bar->remove_menu( 'edit' );
 		}
 
-		// business users
-		if ( ! in_array( 'business', (array) $user->roles ) ) {
-			$wp_admin_bar->remove_menu( 'popup-maker' );
-		}
-
 		// users who cannot create sponsors
 		if ( ! current_user_can( 'create_sponsors' ) ) {
 			$wp_admin_bar->remove_node( 'new-cr3ativsponsor' );
@@ -441,11 +436,6 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 		if ( class_exists( 'Jetpack' ) && ! current_user_can( 'manage_jetpack' ) ) {
 			remove_menu_page( 'jetpack' );
 			remove_submenu_page( 'options-general.php', 'sharing' );
-		}
-
-		// users who cannot edit popup themes
-		if ( ! current_user_can( 'edit_popup_themes' ) ) {
-			remove_submenu_page( 'themes.php', 'edit.php?post_type=popup_theme' );
 		}
 
 		// users who cannot edit themes
@@ -485,7 +475,7 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 			// tools
 			remove_submenu_page( 'tools.php', 'ad-code-manager' );
 			// settings
-			remove_submenu_page( 'options-general.php', 'appnexus-acm-provider' );
+			remove_submenu_page( 'options-general.php', 'arcads-dfp-acm-provider' );
 		}
 
 		// thumbnails
@@ -522,8 +512,6 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 			remove_menu_page( 'vip-dashboard' );
 			// tools
 			remove_submenu_page( 'tools.php', 'tools.php' );
-			remove_submenu_page( 'tools.php', 'widget-settings-import' );
-			remove_submenu_page( 'tools.php', 'widget-settings-export' );
 			// settings
 			remove_submenu_page( 'options-general.php', 'options-writing.php' );
 			remove_submenu_page( 'options-general.php', 'options-permalink.php' );
@@ -531,19 +519,17 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 			remove_submenu_page( 'options-general.php', 'duplicatepost' );
 			remove_submenu_page( 'options-general.php', 'font-awesome' );
 			remove_submenu_page( 'options-general.php', 'form-processor-mailchimp' );
+			remove_submenu_page( 'options-general.php', 'jquery-updater' );
 			remove_submenu_page( 'options-general.php', 'user-account-management' );
 			remove_submenu_page( 'options-general.php', 'widgetopts_plugin_settings' );
 			remove_submenu_page( 'options-general.php', 'wp-analytics-tracking-generator-admin' );
 			remove_submenu_page( 'options-general.php', 'image-credits' ); // these settings are ignored anyway because of how the theme works
 			// chartbeat
 			remove_menu_page( 'chartbeat_console' );
-			// remove those weird popup menus
-			remove_submenu_page( 'edit.php?post_type=popup', 'pum-extensions' );
-			remove_submenu_page( 'edit.php?post_type=popup', 'pum-support' );
-			remove_submenu_page( 'edit.php?post_type=popup', 'pum-settings' );
-			remove_submenu_page( 'edit.php?post_type=popup', 'pum-tools' );
 			// stop spammers
 			remove_menu_page( 'stop_spammers' );
+			// font awesome
+			remove_menu_page( 'font-awesome' );
 		}
 
 	}
