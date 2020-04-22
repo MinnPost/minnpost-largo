@@ -152,6 +152,27 @@ if ( ! function_exists( 'minnpost_largo_get_og_image_thumbnail' ) ) :
 	}
 endif;
 
+// Schema filters. these currently depend on the https://wordpress.org/plugins/schema-and-structured-data-for-wp/ plugin.
+/**
+* Change the input array for the news article schema to theme methods when they're available
+*
+* @param array $input
+* @return array $input
+*/
+if ( ! function_exists( 'minnpost_largo_news_article_schema' ) ) :
+	add_filter( 'saswp_modify_news_article_schema_output', 'minnpost_largo_news_article_schema', 10, 1 );
+	function minnpost_largo_news_article_schema( $input ) {
+		if ( isset( $input['headline'] ) && function_exists( 'minnpost_largo_get_title' ) ) {
+			$input['headline'] = minnpost_largo_get_title();
+		}
+		if ( isset( $input['description'] ) && function_exists( 'minnpost_largo_get_description' ) ) {
+			$input['description'] = minnpost_largo_get_description();
+		}
+		// the tags are already present as the keywords
+		return $input;
+	}
+endif;
+
 /**
 * Set meta tags in <head>
 *
