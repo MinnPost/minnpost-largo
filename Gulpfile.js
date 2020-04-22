@@ -23,6 +23,7 @@ const sourcemaps = require('gulp-sourcemaps');
 const svgmin = require( 'gulp-svgmin' );
 const uglify = require('gulp-uglify');
 const wpPot = require('gulp-wp-pot');
+const realFavicon = require ('gulp-real-favicon');
 
 // Some config data for our tasks
 const config = {
@@ -46,6 +47,13 @@ const config = {
   images: {
   	main: './assets/img/**/*',
   	dest: './assets/img/'
+  },
+  favicon: {
+    json_file: './assets/img/app-icons/faviconData.json',
+    html_file: './assets/img/app-icons/icons.html',
+    src_file: './assets/img/minnpost-app-icon.png',
+    dest: './assets/img/app-icons/',
+    icons_uri_path: '/wp-content/themes/minnpost-largo/assets/img/app-icons/'
   },
   languages: {
     src: [ './**/*.php', '!vendor/*' ],
@@ -262,6 +270,97 @@ function images() {
     .pipe(gulp.dest(config.images.dest));
 }
 
+// Generate the icons. This task takes a few seconds to complete.
+// You should run it at least once to create the icons. Then,
+// you should run it whenever RealFaviconGenerator updates its
+// package (see the check-for-favicon-update task below).
+function generate_favicons(done) {
+  realFavicon.generateFavicon({
+    masterPicture: config.favicon.src_file,
+    dest: config.favicon.dest,
+    iconsPath: config.favicon.icons_uri_path,
+    design: {
+      ios: {
+        pictureAspect: 'noChange',
+        assets: {
+          ios6AndPriorIcons: false,
+          ios7AndLaterIcons: false,
+          precomposedIcons: false,
+          declareOnlyDefaultIcon: true
+      }
+    },
+    desktopBrowser: {
+      design: 'raw'
+    },
+    windows: {
+      pictureAspect: 'noChange',
+      backgroundColor: '#801018',
+      onConflict: 'override',
+      assets: {
+        windows80Ie10Tile: false,
+        windows10Ie11EdgeTiles: {
+          small: true,
+          medium: true,
+          big: true,
+          rectangle: true
+        }
+      }
+    },
+    androidChrome: {
+      pictureAspect: 'noChange',
+      themeColor: '#ffffff',
+      manifest: {
+        display: 'standalone',
+        orientation: 'notSet',
+        onConflict: 'override',
+        declared: true
+      },
+      assets: {
+        legacyIcon: false,
+        lowResolutionIcons: false
+      }
+    },
+    safariPinnedTab: {
+      pictureAspect: 'blackAndWhite',
+      threshold: 50,
+      themeColor: '#801018'
+    }
+  },
+  settings: {
+    scalingAlgorithm: 'Mitchell',
+    errorOnImageTooSmall: false,
+    readmeFile: false,
+    htmlCodeFile: false,
+    usePathAsIs: false
+  },
+  markupFile: config.favicon.json_file
+  }, function() {
+  done();
+  });
+}
+
+// Inject the favicon markups in your HTML pages. You should run
+// this task whenever you modify a page. You can keep this task
+// as is or refactor your existing HTML pipeline.
+function inject_favicon_markups() {
+  return gulp.src([ config.favicon.html_file ])
+    .pipe(realFavicon.injectFaviconMarkups(JSON.parse(fs.readFileSync(config.favicon.json_file)).favicon.html_code))
+    .pipe(gulp.dest(config.favicon.dest));
+}
+
+// Check for updates on RealFaviconGenerator (think: Apple has just
+// released a new Touch icon along with the latest version of iOS).
+// Run this task from time to time. Ideally, make it part of your
+// continuous integration system.
+function check_for_favicon_update(done) {
+  var currentVersion = JSON.parse(fs.readFileSync(config.favicon.json_file)).version;
+  realFavicon.checkForUpdates(currentVersion, function(err) {
+    if (err) {
+      throw err;
+    }
+  });
+}
+
 function svgminify() {
 	return gulp.src( config.images.main + '.svg' )
         .pipe(svgmin())
@@ -308,17 +407,19 @@ function watch() {
 }
 
 // define complex gulp tasks
-const lint = gulp.series(gulp.parallel(frontendsasslint, mainsasslint, adminscriptlint, mainscriptlint));
+const lint    = gulp.series(gulp.parallel(frontendsasslint, mainsasslint, adminscriptlint, mainscriptlint));
 const styles  = gulp.series(gulp.parallel(frontendstyles, mainstyles));
 const scripts = gulp.series(gulp.parallel(mainscripts, adminscripts), uglifyscripts);
 const build   = gulp.series(gulp.parallel(styles, scripts, images, svgminify, translate));
 
 // export tasks
-exports.lint      = lint;
-exports.styles    = styles;
-exports.scripts   = scripts;
-exports.images    = images;
-exports.svgminify = svgminify;
-exports.translate = translate;
-exports.watch     = watch;
-exports.default   = build;
+exports.lint              = lint;
+exports.styles            = styles;
+exports.scripts           = scripts;
+exports.images            = images;
+exports.generate_favicons = generate_favicons;
+exports.inject_favicon_markups = inject_favicon_markups;
+exports.svgminify         = svgminify;
+exports.translate         = translate;
+exports.watch             = watch;
+exports.default           = build;
