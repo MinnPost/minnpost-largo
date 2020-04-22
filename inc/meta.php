@@ -162,17 +162,29 @@ endif;
 if ( ! function_exists( 'minnpost_largo_news_article_schema' ) ) :
 	add_filter( 'saswp_modify_news_article_schema_output', 'minnpost_largo_news_article_schema', 10, 1 );
 	function minnpost_largo_news_article_schema( $input ) {
+		// title/desc can be set as seo values, or they get the standard ones
 		if ( isset( $input['headline'] ) && function_exists( 'minnpost_largo_get_title' ) ) {
 			$input['headline'] = minnpost_largo_get_title();
 		}
 		if ( isset( $input['description'] ) && function_exists( 'minnpost_largo_get_description' ) ) {
 			$input['description'] = minnpost_largo_get_description();
 		}
+		// author
 		if ( isset( $input['author'] ) && function_exists( 'minnpost_largo_get_author_schema' ) ) {
 			$input['author'] = minnpost_largo_get_author_schema();
 			//error_log( 'author is ' . print_r( $input['author'], true ) );
 		}
 		// the tags are already present as the keywords
+		// images
+
+		// thumbnail
+		if ( isset( $input['thumbnailUrl'] ) && function_exists( 'minnpost_largo_get_og_image' ) ) {
+			if ( '' !== minnpost_largo_get_og_image() ) {
+				$input['thumbnailUrl'] = minnpost_largo_get_og_image();
+			} else {
+				$input['thumbnailUrl'] = get_option( 'default_image_url', '' );
+			}
+		}
 		return $input;
 	}
 endif;
