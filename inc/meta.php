@@ -181,8 +181,6 @@ if ( ! function_exists( 'minnpost_largo_news_article_schema' ) ) :
 		if ( isset( $input['thumbnailUrl'] ) && function_exists( 'minnpost_largo_get_og_image' ) ) {
 			if ( '' !== minnpost_largo_get_og_image() ) {
 				$input['thumbnailUrl'] = minnpost_largo_get_og_image();
-			} else {
-				$input['thumbnailUrl'] = get_option( 'default_image_url', '' );
 			}
 		}
 		return $input;
