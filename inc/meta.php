@@ -182,14 +182,14 @@ if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 	function minnpost_largo_add_meta_tags() {
 		?>
 		<meta property="og:site_name" content="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
-		<link rel="shortcut icon" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/favicon.ico' ) ); ?>" type="image/x-icon">
-		<link rel="icon" type="image/png" sizes="16x16" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/favicon-16x16.png' ) ); ?>">
-		<link rel="icon" type="image/png" sizes="32x32" href="<?php echo esc_url( get_theme_file_uri( 'assets/img/app-icons/favicon-32x32.png' ) ); ?>">
-		<link rel="apple-touch-icon" sizes="180x180" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/apple-touch-icon.png' ) ); ?>">
-		<link rel="mask-icon" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/safari-pinned-tab.svg' ) ); ?>" color="#801018">
+		<link rel="shortcut icon" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/favicon.ico?v=' . filemtime( get_theme_file_path() . '/assets/img/app-icons/favicon.ico' ) ) ); ?>" type="image/x-icon">
+		<link rel="icon" type="image/png" sizes="16x16" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/favicon-16x16.png?v=' . filemtime( get_theme_file_path() . '/assets/img/app-icons/favicon-16x16.png' ) ) ); ?>">
+		<link rel="icon" type="image/png" sizes="32x32" href="<?php echo esc_url( get_theme_file_uri( 'assets/img/app-icons/favicon-32x32.png?v=' . filemtime( get_theme_file_path() . '/assets/img/app-icons/favicon-32x32.png' ) ) ); ?>">
+		<link rel="apple-touch-icon" sizes="180x180" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/apple-touch-icon.png?v=' . filemtime( get_theme_file_path() . '/assets/img/app-icons/apple-touch-icon.png' ) ) ); ?>">
+		<link rel="mask-icon" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/safari-pinned-tab.svg?v=' . filemtime( get_theme_file_path() . '/assets/img/app-icons/safari-pinned-tab.svg' ) ) ); ?>" color="#801018">
 		<meta name="msapplication-TileColor" content="#801018">
-		<meta name="msapplication-TileImage" content="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/mstile-144x144.png' ) ); ?>">
-		<meta name="msapplication-config" content="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/browserconfig.xml' ) ); ?>">
+		<meta name="msapplication-TileImage" content="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/mstile-144x144.png?v=' . filemtime( get_theme_file_path() . '/assets/img/app-icons/mstile-144x144.png' ) ) ); ?>">
+		<meta name="msapplication-config" content="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/browserconfig.xml?v=' . filemtime( get_theme_file_path() . '/assets/img/app-icons/browserconfig.xml' ) ) ); ?>">
 		<meta name="theme-color" content="#ffffff">
 		<?php
 		echo sprintf(
