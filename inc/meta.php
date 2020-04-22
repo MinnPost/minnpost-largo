@@ -179,7 +179,11 @@ if ( ! function_exists( 'minnpost_largo_news_article_schema' ) ) :
 
 		// thumbnail
 		if ( isset( $input['thumbnailUrl'] ) && function_exists( 'minnpost_largo_get_og_image' ) ) {
-			if ( '' !== minnpost_largo_get_og_image() ) {
+			if ( '' !== minnpost_largo_get_og_image() && minnpost_largo_get_og_default() !== minnpost_largo_get_og_image() ) {
+				$input['thumbnailUrl'] = minnpost_largo_get_og_image();
+			} elseif ( '' !== minnpost_largo_get_og_image_thumbnail() ) {
+				$input['thumbnailUrl'] = minnpost_largo_get_og_image_thumbnail();
+			} else {
 				$input['thumbnailUrl'] = minnpost_largo_get_og_image();
 			}
 		}
