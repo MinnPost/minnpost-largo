@@ -168,8 +168,57 @@ if ( ! function_exists( 'minnpost_largo_news_article_schema' ) ) :
 		if ( isset( $input['description'] ) && function_exists( 'minnpost_largo_get_description' ) ) {
 			$input['description'] = minnpost_largo_get_description();
 		}
+		if ( isset( $input['author'] ) && function_exists( 'minnpost_largo_get_author_schema' ) ) {
+			$input['author'] = minnpost_largo_get_author_schema();
+			//error_log( 'author is ' . print_r( $input['author'], true ) );
+		}
 		// the tags are already present as the keywords
 		return $input;
+	}
+endif;
+
+/**
+* Generate the author schema for co-authors-plus data.
+*
+* @return array $pieces
+*/
+if ( ! function_exists( 'minnpost_largo_author_schema' ) ) :
+	function minnpost_largo_get_author_schema() {
+
+		$coauthors = get_coauthors( get_the_ID() );
+		$pieces    = [];
+		foreach ( $coauthors as $coauthor ) {
+			$data = array(
+				//'@id' => $id,
+				'@type' => 'Person',
+				'name'  => $coauthor->display_name,
+			);
+			// meta fields
+			$bio       = get_post_meta( $coauthor->ID, '_mp_author_excerpt', true );
+			$job_title = get_post_meta( $coauthor->ID, 'cap-job-title', true );
+			$email     = get_post_meta( $coauthor->ID, 'cap-user_email', true );
+			if ( '' !== $bio ) {
+				$data['description'] = strip_tags( $bio );
+			}
+			if ( '' !== $job_title ) {
+				$data['JobTitle'] = $job_title;
+			}
+			if ( '' !== $email ) {
+				$data['email'] = $email;
+			}
+			if ( ! empty( $coauthor->website ) ) {
+				$data['sameAs'] = $coauthor->website;
+			}
+			// image
+			if ( function_exists( 'minnpost_get_author_image' ) ) {
+				$image_data = minnpost_get_author_image( $coauthor->ID );
+				if ( ! empty( $image_data ) ) {
+					$data['image'] = $image_data['image_url'];
+				}
+			}
+			$pieces[] = $data;
+		}
+		return $pieces;
 	}
 endif;
 
