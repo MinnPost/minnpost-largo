@@ -493,7 +493,7 @@ endif;
 if ( ! function_exists( 'minnpost_related_terms' ) ) :
 	function minnpost_related_terms() {
 		$related_terms = minnpost_get_related_terms();
-		if ( ! is_wp_error( $related_terms['category'] ) && ! is_wp_error( $related_terms['tag'] ) && ( isset( $related_terms['category'] ) || isset( $related_terms['tag'] ) ) ) :
+		if ( ( isset( $related_terms['category'] ) && ! is_wp_error( $related_terms['category'] ) ) || ( ! is_wp_error( $related_terms['tag'] ) && isset( $related_terms['tag'] ) ) ) :
 			?>
 			<?php if ( isset( $related_terms['category'] ) ) : ?>
 				<h3 class="a-related-title a-related-title-category">
