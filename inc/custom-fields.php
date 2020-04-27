@@ -1067,6 +1067,40 @@ if ( ! function_exists( 'minnpost_largo_set_grouped_categories' ) ) :
 endif;
 
 /**
+* Manage admin columns for categories
+* @param array $category_columns
+* @return array $category_columns
+*
+*/
+if ( ! function_exists( 'minnpost_largo_manage_category_columns' ) ) :
+	add_filter( 'manage_edit-category_columns', 'minnpost_largo_manage_category_columns', 10, 2 );
+	function minnpost_largo_manage_category_columns( $category_columns ) {
+		$category_columns['_mp_category_group'] = __( 'Category Group', 'minnpost-largo' );
+		return $category_columns;
+	}
+endif;
+
+/**
+* Add data to admin columns for categories
+* @param string $string is blank
+* @param string $column_name
+* @param int $term_id
+*
+*/
+if ( ! function_exists( 'minnpost_largo_manage_category_custom_fields' ) ) :
+	add_filter( 'manage_category_custom_column', 'minnpost_largo_manage_category_custom_fields', 10, 3 );
+	function minnpost_largo_manage_category_custom_fields( $string, $column_name, $term_id ) {
+		if ( '_mp_category_group' === $column_name ) {
+			$category_group_id = get_term_meta( $term_id, $column_name, true );
+			if ( '' !== $category_group_id ) {
+				$category = get_the_category_by_ID( $category_group_id );
+				echo $category;
+			}
+		}
+	}
+endif;
+
+/**
 * Array of categories for featured columns
 * This is deprecated
 * @return $options
