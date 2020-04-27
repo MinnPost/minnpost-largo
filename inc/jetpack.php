@@ -224,3 +224,24 @@ if ( ! function_exists( 'minnpost_largo_jetpack_exclude_category' ) ) :
 		return $filters;
 	}
 endif;
+
+use Automattic\Jetpack\Sync\Settings;
+
+/**
+ * Filter all blacklisted post types.
+ *
+ * @param array $args Hook arguments.
+ * @return array|false Hook arguments, or false if the post type is a blacklisted one.
+ */
+if ( ! function_exists( 'wpvip_filter_blacklisted_post_types_deleted' ) ) :
+	add_filter( 'jetpack_sync_before_enqueue_deleted_post', 'wpvip_filter_blacklisted_post_types_deleted' );
+	function wpvip_filter_blacklisted_post_types_deleted( $args ) {
+		$post = get_post( $args[0] );
+		if ( ! is_wp_error( $post ) && ! empty( $post ) ) {
+			if ( in_array( $post->post_type, Settings::get_setting( 'post_types_blacklist' ), true ) ) {
+				return false;
+			}
+		}
+		return $args;
+	}
+endif;
