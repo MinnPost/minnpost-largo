@@ -214,6 +214,17 @@ if ( ! function_exists( 'minnpost_largo_jetpack_exclude_category' ) ) :
 			$exclude_ids[] = $term->term_id;
 		}
 
+		$exclusions = do_shortcode( '[return_excluded_terms]' );
+		if ( '' !== $exclusions ) {
+			$exclusions = str_getcsv( $exclusions, ',', "'" );
+			foreach ( $exclusions as $exclusion ) {
+				$category = get_term_by( 'name', $exclusion, 'category' );
+				if ( isset( $category->term_id ) ) {
+					$exclude_ids[] = $category->term_id;
+				}
+			}
+		}
+
 		$filters[] = array(
 			'not' => array(
 				'terms' => array(
