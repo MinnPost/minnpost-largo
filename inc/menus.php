@@ -560,39 +560,6 @@ if ( ! function_exists( 'minnpost_largo_manage_zones' ) ) :
 endif;
 
 /**
-* Flush Redis cache button in the admin menu
-*
-*/
-if ( function_exists( 'wp_cache_flush' ) ) :
-	add_action( 'admin_bar_menu', 'minnpost_flush_cache_button', 100 );
-	function minnpost_flush_cache_button( $wp_admin_bar ) {
-
-		if ( ! current_user_can( 'administrator' ) ) {
-			return;
-		}
-
-		if ( isset( $_GET['flush-cache-button'] ) && 'flush' === $_GET['flush-cache-button'] && wp_verify_nonce( $_GET['_wpnonce'], 'flush-cache-button' ) ) {
-			wp_cache_flush();
-			add_action(
-				'admin_notices',
-				function () {
-					echo '<div class="notice notice-success is-dismissible"><p>Object Cache flushed.</p></div>';
-				}
-			);
-		}
-
-		$dashboard_url = admin_url( add_query_arg( 'flush-cache-button', 'flush', 'index.php' ) );
-		$args          = array(
-			'id'    => 'flush_cache_button',
-			'title' => __( '&#x1F6BD; Flush Object Cache', 'minnpost-largo' ),
-			'href'  => wp_nonce_url( $dashboard_url, 'flush-cache-button' ),
-			'meta'  => array( 'class' => 'flush-cache-button' ),
-		);
-		$wp_admin_bar->add_node( $args );
-	}
-endif;
-
-/**
 * Add unpublished indicator to admin bar menu
 *
 */
@@ -625,7 +592,6 @@ if ( ! function_exists( 'minnpost_largo_unpublished_indicator' ) ) :
 		$args = array(
 			'id'    => 'item_unpublishd',
 			'title' => __( 'Unpublished', 'minnpost-largo' ),
-			//'href'  => wp_nonce_url( $dashboard_url, 'flush-cache-button' ),
 			'meta'  => array(
 				'class' => 'unpublished-indicator',
 			),
