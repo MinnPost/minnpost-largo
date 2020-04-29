@@ -131,8 +131,8 @@ nav {
 			&[aria-expanded="true"] {
 				background: neutral-color(dark);
 				color: neutral-color(white);
-				margin-bottom: -2px;
-				border-bottom: 2px solid neutral-color(dark);
+				//margin-bottom: -2px;
+				//border-bottom: 2px solid neutral-color(dark);
 			}
 
 			@include breakpoint-min( md ) {
@@ -203,16 +203,20 @@ nav {
 					position: absolute;
 					top: 0;
 					left: 0;
-					font-size: var(--scale-3);
+					font-size: var(--scale-1);
 					align-items: center;
 					width: 100%;
-					z-index: $z-index__xl;
+					z-index: $z-index__xxxl;
 					background: neutral-color(medium);
 					display: flex;
 					//transform: translateY(100%);
 					opacity: 0;
 					height: 0;
 					transition: $hover-transition;
+
+					@include breakpoint-min( lg ) {
+						font-size: var(--scale-2);
+					}
 
 					&.is-open {
 						opacity: 1;
@@ -255,8 +259,24 @@ nav {
 
 						.a-close-search {
 							margin: 0 0 0 $standard-block-padding / 2;
-							border-radius: $border-radius;
+							border-radius: 50%;
 							color: neutral-color(white);
+							background: neutral-color(dark);
+							height: 2em;
+							width: 2em;
+							font-size: 1em;
+							text-align: center;
+							vertical-align: middle;
+							display: inline-block;
+							min-height: 0;
+							align-self: center;
+
+							&:hover,
+							&:focus,
+							&:active {
+								background: neutral-color(border);
+								color: neutral-color(black);
+							}
 						}
 					}
 				}
@@ -264,9 +284,8 @@ nav {
 		}
 
 		ul {
-			//margin-top: 2px;
 			right: 0;
-			top: 2em;
+			top: 100%;
 			transform: translateX(150%);
 			z-index: $z-index__xl;
 			transition: $hover-transition;
@@ -346,7 +365,8 @@ nav {
 		list-style: none;
 
 		&.m-menu-primary-links {
-			top: -$standard-block-padding;
+			//top: -$standard-block-padding;
+			top: 0;
 			left: -$standard-block-padding;
 			transform: translateX(-150%);
 

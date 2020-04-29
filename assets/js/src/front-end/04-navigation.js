@@ -41,16 +41,12 @@ function setupPrimaryNav() {
 		}
 	});
 
-	var target = document.querySelector( 'nav .m-form-search fieldset' );
-	var span = document.createElement( 'span');
-	span.innerHTML = '<a href="#" class="a-close-search"><i class="fas fa-times"></i></a>';
-
-	var div = document.createElement('div');
-	div.appendChild(span);
-
-	var fragment = document.createDocumentFragment();
+	var target    = document.querySelector( 'nav .m-form-search fieldset' );
+	var div       = document.createElement('div');
+	div.innerHTML = '<a href="#" class="a-close-search"><i class="fas fa-times"></i></a>';
+	var fragment  = document.createDocumentFragment();
+	div.setAttribute( 'class', 'a-close-holder' );
 	fragment.appendChild(div);
-
 	target.appendChild(fragment);
 
 	const searchTransitioner = transitionHiddenElement({
