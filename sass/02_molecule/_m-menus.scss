@@ -147,8 +147,9 @@ nav {
 		li {
 			&.active a,
 			&.active-parent a {
-				background: neutral-color(border);
+				//background: neutral-color(border);
 				color: neutral-color(black);
+				font-weight: 700;
 			}
 		}
 	}
@@ -345,10 +346,19 @@ nav {
 		}
 
 		li {
-			&.active a,
-			&.active-parent a {
-				background: utility-color(blue, highlight);
-				color: neutral-color(black);
+
+			&.active,
+			&.active-parent {
+				a {
+					font-weight: bold;
+					color: utility-color(blue, dark);
+
+					&:hover,
+					&:focus,
+					&:active {
+						color: neutral-color(white);
+					}
+				}
 			}
 		}
 	}
@@ -417,7 +427,9 @@ nav {
 
 				&.active a,
 				&.active-parent a {
-					background: neutral-color(border);
+					//background: neutral-color(border);
+					//color: neutral-color(black);
+					font-weight: 700;
 					color: neutral-color(black);
 				}
 			}

@@ -1,11 +1,13 @@
 a.a-topics-label,
 span.a-topics-label {
 	text-decoration: none;
-	color: neutral-color(white);
-	background-color: brand-color(red, medium);
+	color: neutral-color(black);
+	background-color: neutral-color(highlight);
+	font-weight: 700;
 	display: inline-flex;
 	padding: $standard-block-padding;
 	margin-right: $standard-block-padding / 2;
+	border-right: 2px solid neutral-color(border);
 	@include meta-preset( $size: -2, $bold: false, $italic: false );
 	line-height: normal;
 
@@ -16,6 +18,6 @@ span.a-topics-label {
 	&:hover,
 	&:focus,
 	&:active {
-		background-color: brand-color(red, dark);
+		//background-color: brand-color(red, dark);
 	}
 }
