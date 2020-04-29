@@ -95,14 +95,6 @@ nav {
 				svg {
 					height: 1em;
   					width: 1em;
-  					margin: $standard-block-padding / 2 0;
-				}
-
-				@include breakpoint-min( md ) {
-					  margin-bottom: -2px;
-					  border-bottom: 2px solid transparent;
-					  margin-top: -2px;
-					  border-top: 2px solid transparent;
 				}
 			}
 		}
@@ -120,7 +112,6 @@ nav {
 			user-select: text;
 			cursor: pointer;
 			margin: 0;
-			//margin-left: -$standard-block-padding / 2;
 			border: 0;
 			padding: $standard-block-padding / 2;
 			font: inherit;
@@ -156,7 +147,7 @@ nav {
 		li {
 			&.active a,
 			&.active-parent a {
-				background: neutral-color(medium);
+				background: neutral-color(border);
 				color: neutral-color(black);
 			}
 		}
@@ -177,12 +168,15 @@ nav {
 		}
 
 		> li {
-			display: block;
+			//display: block;
+			display: flex;
+    		align-self: stretch;
 
 			&[data-menu-item-priority="20"] {
 				display: none;
 				@include breakpoint-min( xs ) {
-					display: block;
+					//display: block;
+					display: flex;
 				}
 			}
 
@@ -193,7 +187,10 @@ nav {
 
 				&:hover,
 				&:focus,
-				&:active,
+				&:active {
+					background: neutral-color(border);
+					color: neutral-color(black);
+				}
 				&[aria-expanded="true"] {
 					background: neutral-color(dark);
 					color: neutral-color(white);
@@ -267,8 +264,9 @@ nav {
 		}
 
 		ul {
-			margin-top: 2px;
+			//margin-top: 2px;
 			right: 0;
+			top: 2em;
 			transform: translateX(150%);
 			z-index: $z-index__xl;
 			transition: $hover-transition;
@@ -391,15 +389,15 @@ nav {
 						&:hover,
 						&:focus,
 						&:active {
-							background: neutral-color(dark);
-							color: neutral-color(white);
+							background: neutral-color(border);
+							color: neutral-color(black);
 						}
 					}
 				}
 
 				&.active a,
 				&.active-parent a {
-					background: neutral-color(medium);
+					background: neutral-color(border);
 					color: neutral-color(black);
 				}
 			}
