@@ -231,9 +231,9 @@ if ( ! function_exists( 'minnpost_account_info' ) ) :
 		}
 
 		$can_access = false;
-		if ( class_exists( 'User_Account_Management' ) ) {
-			$account_management = User_Account_Management::get_instance();
-			$can_access         = $account_management->check_user_permissions( $user_id );
+		if ( function_exists( 'user_account_management' ) ) {
+			$account_management = user_account_management();
+			$can_access         = $account_management->user_data->check_user_permissions( $user_id );
 		} else {
 			return;
 		}
@@ -307,9 +307,9 @@ if ( ! function_exists( 'minnpost_account_preferences' ) ) :
 		}
 
 		$can_access = false;
-		if ( class_exists( 'User_Account_Management' ) ) {
-			$account_management = User_Account_Management::get_instance();
-			$can_access         = $account_management->check_user_permissions( $user_id );
+		if ( function_exists( 'user_account_management' ) ) {
+			$account_management = user_account_management();
+			$can_access         = $account_management->user_data->check_user_permissions( $user_id );
 		} else {
 			return;
 		}

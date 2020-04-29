@@ -53,8 +53,8 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'id'           => $prefix . 'setup',
 				'title'        => __( 'Setup', 'minnpost-largo' ),
 				'object_types' => array( $object_type ),
-				//'context'    => 'after_title',
-				//'priority'   => 'high',
+				'context'      => 'after_title',
+				//'priority'     => 'high',
 			)
 		);
 		$newsletter_setup->add_field(
@@ -64,12 +64,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'type'    => 'select',
 				'desc'    => __( 'Select an option', 'minnpost-largo' ),
 				'default' => 'daily',
-				'options' => array(
-					'daily'         => __( 'Daily', 'minnpost-largo' ),
-					'greater_mn'    => __( 'Greater MN', 'minnpost-largo' ),
-					'sunday_review' => __( 'Sunday Review', 'minnpost-largo' ),
-					'dc_memo'       => __( 'D.C. Memo', 'minnpost-largo' ),
-				),
+				'options' => minnpost_largo_email_types(),
 			)
 		);
 		$newsletter_setup->add_field(
@@ -77,15 +72,55 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'name' => __( 'Preview Text', 'minnpost-largo' ),
 				'id'   => $prefix . 'preview_text',
 				'type' => 'textarea_small',
-				'desc' => __( 'This is visible before users open the email in some email clients. If there\'s no value, we won\'t use it. Email clients will limit how many characters they show.', 'minnpost-largo' ),
+				'desc' => __( 'In some email clients, this snippet will appear in the inbox after the subject line. If there\'s no value, we won\'t use it. Email clients will limit how many characters they show.', 'minnpost-largo' ),
 			)
 		);
 		$newsletter_setup->add_field(
 			array(
-				'name' => __( 'Show Department for Top Stories?', 'minnpost-largo' ),
-				'id'   => $prefix . 'show_department_for_top_stories',
-				'type' => 'checkbox',
-				'desc' => '',
+				'name'       => __( 'Show Main Category for Top Stories?', 'minnpost-largo' ),
+				'id'         => $prefix . 'show_department_for_top_stories',
+				'type'       => 'checkbox',
+				'desc'       => '',
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
+			)
+		);
+		$newsletter_setup->add_field(
+			array(
+				'name'       => __( 'Show Main Category for Republishable Stories?', 'minnpost-largo' ),
+				'id'         => $prefix . 'show_department_for_republish_stories',
+				'type'       => 'checkbox',
+				'desc'       => '',
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => 'republication',
+				),
+			)
+		);
+		$newsletter_setup->add_field(
+			array(
+				'name'       => __( 'Show Thumbnail Image for Republishable Stories?', 'minnpost-largo' ),
+				'id'         => $prefix . 'show_image_for_republish_stories',
+				'type'       => 'checkbox',
+				'desc'       => '',
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => 'republication',
+				),
+			)
+		);
+		$newsletter_setup->add_field(
+			array(
+				'name'       => __( 'Remove author(s) from display?', 'minnpost-largo' ),
+				'id'         => '_mp_remove_author_from_display',
+				'type'       => 'checkbox',
+				'desc'       => __( 'If checked, the newsletter author(s) will not display.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => 'daily_coronavirus',
+				),
 			)
 		);
 
@@ -122,69 +157,112 @@ if ( function_exists( 'create_newsletter' ) ) :
 		if ( 'production' === VIP_GO_ENV ) {
 			$newsletter_post_args['es'] = true; // elasticsearch on production only
 		}
-		$newsletter_top_posts = new_cmb2_box(
+		$newsletter_posts = new_cmb2_box(
 			array(
 				'id'           => $prefix . 'top_posts',
-				'title'        => __( 'Top Stories', 'minnpost-largo' ),
+				'title'        => __( 'Newsletter Content', 'minnpost-largo' ),
 				'object_types' => array( $object_type ), // Post type
 				'context'      => 'normal',
 				'priority'     => 'high',
 				'show_names'   => true, // Show field names on the left
 			)
 		);
-		$newsletter_top_posts->add_field(
+		$newsletter_posts->add_field(
 			minnpost_post_search_field(
 				array(
 					'name'       => __( 'Top Stories', 'minnpost-largo' ),
-					'desc'       => __( 'Search for a post here', 'minnpost-largo' ),
+					'desc'       => __( 'Search for a post here.', 'minnpost-largo' ),
 					'id'         => $prefix . 'top_posts',
 					'query_args' => array(
 						'orderby'     => 'modified',
 						'order'       => 'DESC',
 						'post_status' => 'any',
 					),
+					'attributes' => array(
+						'data-conditional-id'    => $prefix . 'type',
+						'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+					),
 				),
 				'post_search_ajax'
 			)
 		);
-		$newsletter_top_posts->add_field(
+		$newsletter_posts->add_field(
 			array(
-				'name' => __( 'Top Stories Manual Override', 'minnpost-largo' ),
-				'id'   => $prefix . 'top_posts_override',
-				'type' => 'text',
-				'desc' => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them in the order they are entered instead of the search field value.', 'minnpost-largo' ),
+				'name'       => __( 'Top Stories Manual Override', 'minnpost-largo' ),
+				'id'         => $prefix . 'top_posts_override',
+				'type'       => 'text',
+				'desc'       => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them in the order they are entered instead of the search field value.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
 			)
 		);
-		$newsletter_more_posts = new_cmb2_box(
-			array(
-				'id'           => $prefix . 'more_posts',
-				'title'        => __( 'More Stories', 'minnpost-largo' ),
-				'object_types' => array( $object_type ), // Post type
-				'context'      => 'normal',
-				'priority'     => 'high',
-				'show_names'   => true, // Show field names on the left
-			)
-		);
-		$newsletter_more_posts->add_field(
+		$newsletter_posts->add_field(
 			minnpost_post_search_field(
 				array(
 					'name'       => __( 'More Stories', 'minnpost-largo' ),
-					'desc'       => __( 'Search for a post here', 'minnpost-largo' ),
+					'desc'       => __( 'Search for a post here.', 'minnpost-largo' ),
 					'id'         => $prefix . 'more_posts',
 					'query_args' => array(
 						'orderby'     => 'modified',
 						'order'       => 'DESC',
 						'post_status' => 'any',
 					),
+					'attributes' => array(
+						'data-conditional-id'    => $prefix . 'type',
+						'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+					),
 				)
 			)
 		);
-		$newsletter_more_posts->add_field(
+		$newsletter_posts->add_field(
 			array(
-				'name' => __( 'More Stories Manual Override', 'minnpost-largo' ),
-				'id'   => $prefix . 'more_posts_override',
-				'type' => 'text',
-				'desc' => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them in the order they are entered instead of the search field value.', 'minnpost-largo' ),
+				'name'       => __( 'More Stories Manual Override', 'minnpost-largo' ),
+				'id'         => $prefix . 'more_posts_override',
+				'type'       => 'text',
+				'desc'       => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them in the order they are entered instead of the search field value.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
+			)
+		);
+		$newsletter_posts->add_field(
+			minnpost_post_search_field(
+				array(
+					'name'       => __( 'Republishable Stories', 'minnpost-largo' ),
+					'desc'       => __( 'Search for a post here.', 'minnpost-largo' ),
+					'id'         => $prefix . 'republishable_posts',
+					'query_args' => array(
+						'orderby'     => 'modified',
+						'order'       => 'DESC',
+						'post_status' => 'any',
+					),
+					'attributes' => array(
+						'data-conditional-id'    => $prefix . 'type',
+						'data-conditional-value' => 'republication',
+					),
+				),
+				'post_search_ajax'
+			)
+		);
+		$newsletter_posts->add_field(
+			array(
+				'name'        => __( 'Preview of Upcoming Stories', 'minnpost-largo' ),
+				'id'          => $prefix . 'upcoming',
+				'type'        => 'wysiwyg',
+				'options'     => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'textarea_rows' => 5,
+					'teeny'         => true, // output the minimal editor config used in Press This
+				),
+				'desc'        => __( 'Use this to describe upcoming stories for this edition.', 'minnpost-largo' ),
+				'attributes'  => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => 'republication',
+				),
+				'after_field' => '<input name="asdf" type="hidden" data-conditional-id="' . $prefix . 'type' . '" data-conditional-value="republication">', // hack to fix the condtional display
 			)
 		);
 	}
@@ -1041,6 +1119,40 @@ if ( ! function_exists( 'minnpost_largo_set_grouped_categories' ) ) :
 endif;
 
 /**
+* Manage admin columns for categories
+* @param array $category_columns
+* @return array $category_columns
+*
+*/
+if ( ! function_exists( 'minnpost_largo_manage_category_columns' ) ) :
+	add_filter( 'manage_edit-category_columns', 'minnpost_largo_manage_category_columns', 10, 2 );
+	function minnpost_largo_manage_category_columns( $category_columns ) {
+		$category_columns['_mp_category_group'] = __( 'Category Group', 'minnpost-largo' );
+		return $category_columns;
+	}
+endif;
+
+/**
+* Add data to admin columns for categories
+* @param string $string is blank
+* @param string $column_name
+* @param int $term_id
+*
+*/
+if ( ! function_exists( 'minnpost_largo_manage_category_custom_fields' ) ) :
+	add_filter( 'manage_category_custom_column', 'minnpost_largo_manage_category_custom_fields', 10, 3 );
+	function minnpost_largo_manage_category_custom_fields( $string, $column_name, $term_id ) {
+		if ( '_mp_category_group' === $column_name ) {
+			$category_group_id = get_term_meta( $term_id, $column_name, true );
+			if ( '' !== $category_group_id ) {
+				$category = get_the_category_by_ID( $category_group_id );
+				echo $category;
+			}
+		}
+	}
+endif;
+
+/**
 * Array of categories for featured columns
 * This is deprecated
 * @return $options
@@ -1785,5 +1897,23 @@ if ( ! function_exists( 'limit_liveblog_box' ) ) :
 		if ( ! current_user_can( 'enable_liveblog' ) ) {
 			remove_meta_box( 'liveblog', 'post', 'advanced' );
 		}
+	}
+endif;
+
+/**
+* Array of supported newsletter types
+*
+*/
+if ( ! function_exists( 'minnpost_largo_email_types' ) ) :
+	function minnpost_largo_email_types() {
+		$types = array(
+			'daily'             => __( 'Daily', 'minnpost-largo' ),
+			'greater_mn'        => __( 'Greater MN', 'minnpost-largo' ),
+			'sunday_review'     => __( 'Sunday Review', 'minnpost-largo' ),
+			'dc_memo'           => __( 'D.C. Memo', 'minnpost-largo' ),
+			'daily_coronavirus' => __( 'Daily Coronavirus Update', 'minnpost-largo' ),
+			'republication'     => __( 'Republication', 'minnpost-largo' ),
+		);
+		return $types;
 	}
 endif;

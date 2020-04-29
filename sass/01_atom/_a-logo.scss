@@ -1,23 +1,39 @@
 .a-site-branding {
-	max-width: 330px;
 	width: 100%;
 	height: auto;
 	position: relative;
-	margin: 10px auto 5px auto;
+	margin: 0 auto $standard-block-padding auto;
 
 	.a-logo-svg {
-		width: 102%;
 		display: block;
 	}
 }
 
-@media screen and (min-width: 330px) {
+header .a-site-branding {
 
-	.a-site-branding {
-		width: 330px;
+	@include breakpoint-min( xs ) {
+		max-width: colspan( 4, 6 );
+	}
+
+	@include breakpoint-min( md ) {
+		max-width: colspan( 3, 8 );
+		margin-bottom: 0;
+	}
+
+	@include breakpoint-min( lg ) {
+		max-width: colspan( 4, 12 );
+	}
+
+	@include breakpoint-min( xl ) {
+		max-width: colspan( 5, 16 );
 	}
 }
 
+footer .a-logo-svg picture {
+	filter: brightness(0) invert(1);
+}
+
+// this depends on modernizr
 .no-srcset {
 
 	.a-site-branding {
@@ -35,10 +51,16 @@
 
 // media queries for logo
 
+@media screen and (min-width: 330px) {
+
+	.a-site-branding {
+		//width: 330px;
+	}
+}
+
 @media screen and (min-width: $more-than-logo-screen) {
 
 	.a-site-branding {
-		width: 330px;
 		margin-left: 0;
 		margin-right: 0;
 	}

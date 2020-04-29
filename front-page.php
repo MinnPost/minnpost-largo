@@ -16,7 +16,7 @@ get_header(); ?>
 				<?php $top_query = z_get_zone_query( 'homepage-top' ); ?>
 				<?php if ( $top_query->have_posts() ) : ?>
 					<?php $post_count = $top_query->post_count; ?>
-					<section class="m-zone m-zone-homepage-top m-archive m-archive-top m-archive-has-<?php echo intval( $post_count ); ?>-post">
+					<section class="m-zone m-zone-homepage-top m-archive m-archive-top m-archive-has-<?php echo (int) $post_count; ?>-post">
 						<?php
 						while ( $top_query->have_posts() ) :
 							$top_query->the_post();

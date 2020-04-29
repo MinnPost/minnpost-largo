@@ -4,21 +4,32 @@
 
 // default, mobile-first styles for wrapper
 .o-wrapper {
-	//max-width: $max-width-page;
-	//margin-left: $standard-page-margin / 2;
-	//margin-right: $standard-page-margin / 2;
 	position: relative;
 
+	// header and main content and footer
 	&.o-wrapper-site-header,
-	&.o-wrapper-content {
+	&.o-wrapper-content,
+	&.o-wrapper-site-footer {
 		display: flex;
 		flex-wrap: wrap;
 		flex: 0 0 100%;
 		flex-direction: column; // on mobile, display as a column
 	}
 
+	// site header wrapper
+	&.o-wrapper-site-header {
+
+		@include breakpoint-min( md ) {
+			align-items: center;
+			justify-content: space-between;
+			flex-direction: row;
+			margin-bottom: $standard-block-padding;
+		}
+	}
+
 	&.o-wrapper-content {
-		//margin-bottom: 40px; // this should be a better value in ems or rems
+		margin-bottom: $standard-block-margin;
+
 		@include breakpoint-min( lg ) {
 			// this is where we have a big enough screen to make it all horizontal
 			flex-direction: row;
@@ -26,63 +37,60 @@
 	}
 
 	&.o-wrapper-support-navigation {
-		border-top: 1.230769230769231em solid neutral-color(black);
+		//border-top: 1.230769230769231em solid neutral-color(black);
 	}
 
-}
+	&.o-wrapper-site-navigation,
+	&.o-wrapper-topics-navigation {
 
-// media queries for wrapper
-@media screen and (min-width: $more-than-logo-screen) {
-	.o-wrapper {
-		//margin-left: $standard-page-margin;
-		//margin-right: $standard-page-margin;
-	}
-}
+		a,
+		button {
+			min-height: $touch-target-minimum-size;
+			align-items: center;
+		}
 
-@media screen and (min-width: $medium-margins-too-small) {
-	// this is where we have a big enough screen to make some things horizontal
-	.o-wrapper {
+		button {
+			min-width: $touch-target-minimum-size;
+			justify-content: center;
+		}
 
-		&.o-wrapper-site-header {
-			flex-direction: row;
+		font-size: 75%;
+		@include breakpoint-min( md ) {
+			font-size: 80%;
+		}
+
+		@include breakpoint-min( lg ) {
+			font-size: 80%;
+
+			a,
+			button {
+				min-height: 0;
+				min-width: 0;
+			}
+		}
+
+		@include breakpoint-min( xl ) {
+			font-size: 85%;
+		}
+
+		@include breakpoint-min( xxl ) {
+			font-size: 100%;
 		}
 	}
 
+	&.o-wrapper-topics-navigation {
+		display: flex;
+		align-items: center;
+		border-bottom: 2px solid neutral-color(border);
+	}
+
+}
+
+@media screen and (min-width: $medium-margins-too-small) {
+	// legacy variable: this is where we have a big enough screen to make some things horizontal
 	.archive .o-wrapper {
 		&.o-wrapper-content {
 			flex-direction: row;
 		}
 	}
 }
-
-@media screen and (min-width: $medium-screen) and (max-width: $nav-breaks) {
-	.o-wrapper {
-		//max-width: $max-width-medium;
-	}
-}
-
-@media screen and (min-width: $max-width-medium-plus-margins) {
-	.o-wrapper {
-		//margin-left: auto;
-		//margin-right: auto;
-	}
-}
-
-@media screen and (min-width: $nav-breaks) {
-	.o-wrapper {
-		//max-width: inherit;
-		//margin-left: $standard-page-margin;
-		//margin-right: $standard-page-margin;
-	}
-}
-
-/*@media screen and (min-width: $nav-wrap-screen) {
-	.o-wrapper {
-		//@include outer-container($max-width-page);
-
-		// this is where we have a big enough screen to make it all horizontal
-		&.o-wrapper-content {
-			flex-direction: row;
-		}
-	}
-}*/

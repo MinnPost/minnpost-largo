@@ -79,16 +79,17 @@
 	&.wp-message-inserter-message-region-homepage_middle {
 		width: 100%;
 		order: 1;
-		padding-top: $standard-page-margin;
-		border-top: 1px solid $color__gray-lightest;
-		margin-bottom: $standard-page-margin;
-		border-bottom: 1px solid $color__gray-lightest;
+		border-radius: $border-radius;
+		padding-top: $standard-block-padding;
+		border-top: $border-default-style;
+		margin-bottom: $standard-block-margin;
+		border-bottom: $border-default-style;
 
 		.m-wp-insert-message-item {
-			background: $_color-base-blue;
-			color: $color__white;
-			margin-bottom: $standard-page-margin;
-			padding: 2em 0;
+			background: utility-color(blue, medium);
+			color: neutral-color(white);
+			margin-bottom: $standard-block-margin;
+			padding: $standard-block-margin 0;
 		}
 
 		// mailchimp form inside a homepage middle
@@ -102,23 +103,28 @@
 				max-width: 100%;
 
 				input {
-					color: $color__dark-gray;
 					width: 100%;
 					max-width: 100%;
 				}
 
 				label {
-					color: $color__white;
+					color: neutral-color(white);
 
-					a,
+					a:link,
 					a:visited {
-						color: $color__border-light;
+						@include link-underline(neutral-color(white), neutral-color(white));
+					}
+
+					a:hover,
+					a:focus,
+					a:active {
+						@include link-underline(neutral-color(highlight), neutral-color(highlight));
 					}
 				}
 			}
 
 			.m-form-container {
-				padding: 0 1.5em;
+				padding: 0 $standard-block-margin;
 			}
 		}
 
@@ -130,7 +136,7 @@
 				padding: 1em;
 				width: 100%;
 				max-width: 100%;
-				color: $color__white;
+				color: neutral-color(white);
 				//font-size: $content-font-size;
 				//line-height: $base-line-height;
 			}
@@ -143,8 +149,8 @@
 
 	// article bottom
 	&.wp-message-inserter-message-region-article_bottom {
-		border: 1px solid $color__border-light;
-		margin-bottom: $standard-page-margin;
+		background: utility-color(blue, background);
+		margin-bottom: $standard-block-margin;
 
 		@include breakpoint-min( lg ) {
 			width: colspan( 16, 12 );

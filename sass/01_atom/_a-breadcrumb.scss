@@ -3,10 +3,7 @@
 	align-items: center;
 }
 .a-breadcrumb {
-	font-weight: 700;
-	font-size: $content-font-size;
-	line-height: $base-line-height-em;
-	font-family: $font__sans;
+	@include meta-preset( $size: 0, $bold: true, $italic: false, $line-height: 1 );
 	margin-right: $standard-block-padding / 2;
 
 	a {
