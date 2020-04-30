@@ -268,6 +268,7 @@ $border-default-style: 1px solid neutral-color(border);
 \*------------------------------------*/
 
 $hover-transition: .25s all;
+$double-transition: .5s all;
 
 /*------------------------------------*\
 	#Fixed Sizes
@@ -292,3 +293,4 @@ $ad-halfpage-height: 600px;
 
 // touch targets
 $touch-target-minimum-size: 44px;
+$touch-target-minimum-size-desktop: 32px;

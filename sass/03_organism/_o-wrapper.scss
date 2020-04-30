@@ -64,8 +64,8 @@
 
 			a,
 			button {
-				min-height: 0;
-				min-width: 0;
+				min-height: $touch-target-minimum-size-desktop;
+				min-width: $touch-target-minimum-size-desktop;
 			}
 		}
 
