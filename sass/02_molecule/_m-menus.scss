@@ -206,7 +206,8 @@ nav {
 					align-items: center;
 					width: 100%;
 					z-index: $z-index__xxxl;
-					background: neutral-color(medium);
+					background: neutral-color(dark);
+					color: neutral-color(white);
 					display: flex;
 					//transform: translateY(100%);
 					opacity: 0;
@@ -260,7 +261,7 @@ nav {
 							margin: 0 0 0 $standard-block-padding / 2;
 							border-radius: 50%;
 							color: neutral-color(white);
-							background: neutral-color(dark);
+							background: neutral-color(black);
 							height: 2em;
 							width: 2em;
 							font-size: 1em;
@@ -273,7 +274,7 @@ nav {
 							&:hover,
 							&:focus,
 							&:active {
-								background: neutral-color(border);
+								background: neutral-color(medium);
 								color: neutral-color(black);
 							}
 						}
