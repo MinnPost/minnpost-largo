@@ -406,28 +406,32 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		);
 		$seo_settings->add_field(
 			array(
-				'name'       => 'Title',
-				'id'         => '_mp_seo_title',
-				'type'       => 'text',
-				'desc'       => sprintf(
+				'name'         => 'Title',
+				'id'           => '_mp_seo_title',
+				'type'         => 'text',
+				'char_counter' => true,
+				'char_max'     => 78,
+				'desc'         => sprintf(
 					// translators: 1) the sitename
 					esc_html__( 'If you do not fill this out, the post title will be used. If you do fill it out and do not include %1$s in the value, it will be placed at the end in this way: Your Title | %1$s' ),
 					get_bloginfo( 'name' )
 				),
-				'attributes' => array(
+				'attributes'   => array(
 					'maxlength' => 78, // retrieved from https://seopressor.com/blog/google-title-meta-descriptions-length/ on 9/27/2018
 				),
 			)
 		);
 		$seo_settings->add_field(
 			array(
-				'name'       => 'Description',
-				'id'         => '_mp_seo_description',
-				'type'       => 'textarea_small',
-				'attributes' => array(
+				'name'         => 'Description',
+				'id'           => '_mp_seo_description',
+				'type'         => 'textarea_small',
+				'char_counter' => true,
+				'char_max'     => 300,
+				'attributes'   => array(
 					'maxlength' => 300, // retrieved from https://moz.com/blog/how-long-should-your-meta-description-be-2018 on 9/27/2018
 				),
-				'desc'       => esc_html__( 'If you do not fill this out, the post excerpt will be used.' ),
+				'desc'         => esc_html__( 'If you do not fill this out, the post excerpt will be used.' ),
 			)
 		);
 
