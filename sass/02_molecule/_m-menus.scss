@@ -595,8 +595,18 @@ nav {
 		li {
 			font-weight: bold;
 
+			a {
+				color: utility-color(blue, highlight);
+
+				&:hover,
+				&:focus,
+				&:active {
+					color: utility-color(blue, background);
+				}
+			}
+
 			&.active > a {
-			//	color: $color__minnpost-black;
+				color: utility-color(blue, background);
 			}
 
 			&:not(:last-child) {
