@@ -205,11 +205,11 @@ nav {
 					font-size: var(--scale-1);
 					align-items: center;
 					width: 100%;
-					z-index: $z-index__xxxl;
 					background: neutral-color(dark);
 					color: neutral-color(white);
 					display: flex;
 					//transform: translateY(100%);
+					z-index: 0;
 					opacity: 0;
 					height: 0;
 					transition: $hover-transition;
@@ -219,6 +219,7 @@ nav {
 					}
 
 					&.is-open {
+						z-index: $z-index__xxxl;
 						opacity: 1;
 						height: 100%;
 					}
