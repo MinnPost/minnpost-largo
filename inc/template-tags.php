@@ -172,7 +172,10 @@ if ( ! function_exists( 'minnpost_posted_on' ) ) :
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
-		$date        = minnpost_get_posted_on( $id, $time_ago );
+		$date = minnpost_get_posted_on( $id, $time_ago );
+		if ( '' === $date ) {
+			return;
+		}
 		$time_string = sprintf(
 			'<time class="a-entry-date published updated" datetime="%1$s">%2$s</time>',
 			$date['published']['machine'],
