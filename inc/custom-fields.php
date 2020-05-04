@@ -509,30 +509,6 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		);
 		$display_settings->add_field(
 			array(
-				'name' => __( 'Prevent automatic embed ads?', 'minnpost-largo' ),
-				'id'   => '_mp_prevent_automatic_ads',
-				'type' => 'checkbox',
-				'desc' => __( 'If checked, this post will not contain automatic embed ads.', 'minnpost-largo' ),
-			)
-		);
-		$display_settings->add_field(
-			array(
-				'name' => __( 'Prevent all embed ads?', 'minnpost-largo' ),
-				'id'   => '_mp_prevent_ads',
-				'type' => 'checkbox',
-				'desc' => __( 'If checked, this post will not contain any embed ads.', 'minnpost-largo' ),
-			)
-		);
-		$display_settings->add_field(
-			array(
-				'name' => __( 'Prevent lazy loading of embed ads?', 'minnpost-largo' ),
-				'id'   => 'arcads_dfp_acm_provider_post_prevent_lazyload',
-				'type' => 'checkbox',
-				'desc' => __( 'If checked, this post will not attempt to lazy load embed ads.', 'minnpost-largo' ),
-			)
-		);
-		$display_settings->add_field(
-			array(
 				'name' => __( 'Prevent lazy loading of images?', 'minnpost-largo' ),
 				'id'   => '_mp_prevent_lazyload',
 				'type' => 'checkbox',
@@ -617,6 +593,65 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 					'top'     => __( 'Top', 'minnpost-largo' ),
 					'bottom'  => __( 'Bottom', 'minnpost-largo' ),
 				),
+			)
+		);
+
+		/**
+		 * Ad & Sponsorship settings
+		 */
+		$ad_settings = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_ad_settings',
+				'title'        => __( 'Ad & Sponsorship Settings', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'closed'       => true,
+			)
+		);
+		$ad_settings->add_field(
+			array(
+				'name' => __( 'Prevent automatic embed ads?', 'minnpost-largo' ),
+				'id'   => '_mp_prevent_automatic_ads',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not contain automatic embed ads.', 'minnpost-largo' ),
+			)
+		);
+		$ad_settings->add_field(
+			array(
+				'name' => __( 'Prevent all embed ads?', 'minnpost-largo' ),
+				'id'   => '_mp_prevent_ads',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not contain any embed ads.', 'minnpost-largo' ),
+			)
+		);
+		$ad_settings->add_field(
+			array(
+				'name' => __( 'Prevent lazy loading of embed ads?', 'minnpost-largo' ),
+				'id'   => 'arcads_dfp_acm_provider_post_prevent_lazyload',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not attempt to lazy load embed ads.', 'minnpost-largo' ),
+			)
+		);
+		$ad_settings->add_field(
+			array(
+				'name'    => __( 'Sponsorship', 'minnpost-largo' ),
+				'id'      => '_mp_post_sponsorship',
+				'type'    => 'wysiwyg',
+				'desc'    => __( 'This field overrides a sponsorship message from the category that contains a post.', 'minnpost-largo' ),
+				'options' => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'textarea_rows' => 5,
+					'teeny'         => true, // output the minimal editor config used in Press This
+				),
+			)
+		);
+		$ad_settings->add_field(
+			array(
+				'name' => __( 'Prevent sponsorship display', 'minnpost-largo' ),
+				'id'   => '_mp_prevent_post_sponsorship',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not display any sponsorship message.', 'minnpost-largo' ),
 			)
 		);
 
@@ -954,15 +989,108 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 endif;
 
 /**
-* Remove the default description from categories
-* We do this because we have a whole body field for categories; it is a wysiwyg field
+* Add custom fields to tags
 *
 */
-if ( ! function_exists( 'remove_default_category_description' ) ) :
-	add_action( 'admin_head', 'remove_default_category_description' );
-	function remove_default_category_description() {
+if ( ! function_exists( 'cmb2_tag_fields' ) ) :
+	add_action( 'cmb2_init', 'cmb2_tag_fields' );
+	function cmb2_tag_fields() {
+
+		$object_type = 'term';
+
+		/**
+		 * Tag settings
+		 */
+		$tag_setup = new_cmb2_box(
+			array(
+				'id'               => 'tag_properties',
+				'title'            => __( 'Tag Settings', 'minnpost-largo' ),
+				'object_types'     => array( $object_type ),
+				'taxonomies'       => array( 'post_tag' ),
+				'new_term_section' => false, // will display in add category sidebar
+			)
+		);
+		// text fields
+		$tag_setup->add_field(
+			array(
+				'name'    => __( 'Excerpt', 'minnpost-largo' ),
+				'id'      => '_mp_tag_excerpt',
+				'type'    => 'wysiwyg',
+				'options' => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'textarea_rows' => 5,
+					'teeny'         => true, // output the minimal editor config used in Press This
+				),
+			)
+		);
+		$tag_setup->add_field(
+			array(
+				'name'    => __( 'Sponsorship', 'minnpost-largo' ),
+				'id'      => '_mp_tag_sponsorship',
+				'type'    => 'wysiwyg',
+				'options' => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'textarea_rows' => 5,
+					'teeny'         => true, // output the minimal editor config used in Press This
+				),
+			)
+		);
+		// image fields
+		$tag_setup->add_field(
+			array(
+				'name'       => __( 'Tag Thumbnail', 'minnpost-largo' ),
+				'id'         => '_mp_tag_thumbnail_image',
+				'type'       => 'file',
+				'query_args' => array(
+					'type' => 'image',
+				),
+			)
+		);
+		$tag_setup->add_field(
+			array(
+				'name'       => __( 'Tag Main Image', 'minnpost-largo' ),
+				'id'         => '_mp_tag_main_image',
+				'type'       => 'file',
+				// query_args are passed to wp.media's library query.
+				'query_args' => array(
+					'type' => 'image',
+				),
+			)
+		);
+		// main body field
+		$tag_setup->add_field(
+			array(
+				'name'    => __( 'Body', 'minnpost-largo' ),
+				'id'      => '_mp_tag_body',
+				'type'    => 'wysiwyg',
+				'options' => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'teeny'         => false, // output the minimal editor config used in Press This
+				),
+			)
+		);
+		$tag_setup->add_field(
+			array(
+				'name' => __( 'Prevent lazy loading of image?', 'minnpost-largo' ),
+				'id'   => '_mp_prevent_lazyload',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, the image for this tag will not be lazy loaded.', 'minnpost-largo' ),
+			)
+		);
+	}
+
+endif;
+
+/**
+* Remove the default description from categories and tags
+* We do this because we have a whole body field for them; it is a wysiwyg field
+*
+*/
+if ( ! function_exists( 'remove_default_category_tag_description' ) ) :
+	add_action( 'admin_head', 'remove_default_category_tag_description' );
+	function remove_default_category_tag_description() {
 		global $current_screen;
-		if ( 'edit-category' === $current_screen->id ) { ?>
+		if ( 'edit-category' === $current_screen->id || 'edit-post_tag' === $current_screen->id ) { ?>
 			<script>
 			jQuery(function($) {
 				$('textarea#description, textarea#tag-description').closest('tr.form-field, div.form-field').remove();
