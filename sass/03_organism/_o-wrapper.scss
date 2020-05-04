@@ -41,7 +41,7 @@
 	}
 
 	&.o-wrapper-site-navigation,
-	&.o-wrapper-topics-navigation {
+	&.o-wrapper-sub-navigation {
 
 		a,
 		button {
@@ -65,6 +65,8 @@
 			a,
 			button {
 				min-height: $touch-target-minimum-size-desktop;
+			}
+			button {
 				min-width: $touch-target-minimum-size-desktop;
 			}
 		}
@@ -78,7 +80,7 @@
 		}
 	}
 
-	&.o-wrapper-topics-navigation {
+	&.o-wrapper-sub-navigation {
 		display: flex;
 		align-items: center;
 		border-bottom: 2px solid neutral-color(border);
