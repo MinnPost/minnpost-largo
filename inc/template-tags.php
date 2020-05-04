@@ -1104,44 +1104,60 @@ if ( ! function_exists( 'minnpost_replace_category_text' ) ) :
 endif;
 
 /**
-* Outputs HTML for category sponsorship
+* Outputs HTML for sponsorship on a category or post
 *
 * @param int $post_id
 * @param int $category_id
 *
 */
-if ( ! function_exists( 'minnpost_category_sponsorship' ) ) :
-	function minnpost_category_sponsorship( $post_id = '', $category_id = '' ) {
-		$sponsorship = minnpost_get_category_sponsorship( $post_id, $category_id );
-		echo $sponsorship;
+if ( ! function_exists( 'minnpost_post_category_sponsorship' ) ) :
+	function minnpost_post_category_sponsorship( $post_id = '', $category_id = '' ) {
+		$sponsorship = minnpost_get_post_category_sponsorship( $post_id, $category_id );
+		if ( '' !== $sponsorship ) {
+			echo '<div class="a-sponsorship">' . $sponsorship . '</div>';
+		}
 	}
 endif;
 
 /**
-* Returns the category sponsorship for a post's primary category, if it exists
+* Returns the sponsorship for a post's primary category, or for a post
 *
 * @param int $post_id
 * @param int $category_id
 * @return string
 *
 */
-if ( ! function_exists( 'minnpost_get_category_sponsorship' ) ) :
-	function minnpost_get_category_sponsorship( $post_id = '', $category_id = '' ) {
+if ( ! function_exists( 'minnpost_get_post_category_sponsorship' ) ) :
+	function minnpost_get_post_category_sponsorship( $post_id = '', $category_id = '' ) {
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
 		if ( '' === $category_id ) {
-			if ( '' === $post_id ) {
-				$post_id = get_the_ID();
-			}
 			$category_id = minnpost_get_permalink_category_id( $post_id );
 			if ( '' === $category_id ) {
 				return '';
 			}
 		}
-		$sponsorship = get_term_meta( $category_id, '_mp_category_sponsorship', true );
-		if ( ! empty( $sponsorship ) ) {
-			return '<div class="a-sponsorship">' . $sponsorship . '</div>';
-		} else {
+
+		// allow a post to prevent sponsorship display
+		$prevent_sponsorship = get_post_meta( $post_id, '_mp_prevent_post_sponsorship', true );
+		if ( 'on' === $prevent_sponsorship ) {
 			return '';
 		}
+
+		// post sponsorship has higher priority than category
+		$sponsorship = get_post_meta( $post_id, '_mp_post_sponsorship', true );
+		if ( ! empty( $sponsorship ) ) {
+			return $sponsorship;
+		}
+
+		// followed by category sponsorship
+		$sponsorship = get_term_meta( $category_id, '_mp_category_sponsorship', true );
+		if ( ! empty( $sponsorship ) ) {
+			return $sponsorship;
+		}
+
+		return '';
 	}
 endif;
 

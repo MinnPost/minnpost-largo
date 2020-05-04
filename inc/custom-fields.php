@@ -509,30 +509,6 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		);
 		$display_settings->add_field(
 			array(
-				'name' => __( 'Prevent automatic embed ads?', 'minnpost-largo' ),
-				'id'   => '_mp_prevent_automatic_ads',
-				'type' => 'checkbox',
-				'desc' => __( 'If checked, this post will not contain automatic embed ads.', 'minnpost-largo' ),
-			)
-		);
-		$display_settings->add_field(
-			array(
-				'name' => __( 'Prevent all embed ads?', 'minnpost-largo' ),
-				'id'   => '_mp_prevent_ads',
-				'type' => 'checkbox',
-				'desc' => __( 'If checked, this post will not contain any embed ads.', 'minnpost-largo' ),
-			)
-		);
-		$display_settings->add_field(
-			array(
-				'name' => __( 'Prevent lazy loading of embed ads?', 'minnpost-largo' ),
-				'id'   => 'arcads_dfp_acm_provider_post_prevent_lazyload',
-				'type' => 'checkbox',
-				'desc' => __( 'If checked, this post will not attempt to lazy load embed ads.', 'minnpost-largo' ),
-			)
-		);
-		$display_settings->add_field(
-			array(
 				'name' => __( 'Prevent lazy loading of images?', 'minnpost-largo' ),
 				'id'   => '_mp_prevent_lazyload',
 				'type' => 'checkbox',
@@ -617,6 +593,65 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 					'top'     => __( 'Top', 'minnpost-largo' ),
 					'bottom'  => __( 'Bottom', 'minnpost-largo' ),
 				),
+			)
+		);
+
+		/**
+		 * Ad & Sponsorship settings
+		 */
+		$ad_settings = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_ad_settings',
+				'title'        => __( 'Ad & Sponsorship Settings', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'closed'       => true,
+			)
+		);
+		$ad_settings->add_field(
+			array(
+				'name' => __( 'Prevent automatic embed ads?', 'minnpost-largo' ),
+				'id'   => '_mp_prevent_automatic_ads',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not contain automatic embed ads.', 'minnpost-largo' ),
+			)
+		);
+		$ad_settings->add_field(
+			array(
+				'name' => __( 'Prevent all embed ads?', 'minnpost-largo' ),
+				'id'   => '_mp_prevent_ads',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not contain any embed ads.', 'minnpost-largo' ),
+			)
+		);
+		$ad_settings->add_field(
+			array(
+				'name' => __( 'Prevent lazy loading of embed ads?', 'minnpost-largo' ),
+				'id'   => 'arcads_dfp_acm_provider_post_prevent_lazyload',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not attempt to lazy load embed ads.', 'minnpost-largo' ),
+			)
+		);
+		$ad_settings->add_field(
+			array(
+				'name'    => __( 'Sponsorship', 'minnpost-largo' ),
+				'id'      => '_mp_post_sponsorship',
+				'type'    => 'wysiwyg',
+				'desc'    => __( 'This field overrides a sponsorship message from the category that contains a post.', 'minnpost-largo' ),
+				'options' => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'textarea_rows' => 5,
+					'teeny'         => true, // output the minimal editor config used in Press This
+				),
+			)
+		);
+		$ad_settings->add_field(
+			array(
+				'name' => __( 'Prevent sponsorship display', 'minnpost-largo' ),
+				'id'   => '_mp_prevent_post_sponsorship',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not display any sponsorship message.', 'minnpost-largo' ),
 			)
 		);
 
