@@ -41,7 +41,7 @@ function setupPrimaryNav() {
 		}
 	});
 
-	var target    = document.querySelector( 'nav .m-form-search fieldset' );
+	var target    = document.querySelector( 'nav .m-form-search fieldset .a-button-sentence' );
 	var div       = document.createElement('div');
 	div.innerHTML = '<a href="#" class="a-close-search"><i class="fas fa-times"></i></a>';
 	var fragment  = document.createDocumentFragment();
@@ -101,13 +101,13 @@ function setupPrimaryNav() {
 	});
 }
 
-function setupTopicsNav() {
+function setupSubNav() {
 
 	// Init with all options at default setting
 	const priorityNavScrollerDefault = PriorityNavScroller({
-	  selector: '.m-topics',
-	  navSelector: '.m-topics-navigation',
-	  contentSelector: '.m-menu-topics',
+	  selector: '.m-sub-navigation',
+	  navSelector: '.m-subnav-navigation',
+	  contentSelector: '.m-menu-sub-navigation',
 	  itemSelector: 'li, a',
 	  buttonLeftSelector: '.nav-scroller-btn--left',
 	  buttonRightSelector: '.nav-scroller-btn--right',
@@ -125,7 +125,7 @@ function setupTopicsNav() {
 }
 
 setupPrimaryNav();
-setupTopicsNav();
+setupSubNav();
 
 $( '#navigation-featured a' ).click( function( e ) {
 	mp_analytics_tracking_event( 'event', 'Featured Bar Link', 'Click', this.href );
