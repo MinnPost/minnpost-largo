@@ -12,7 +12,77 @@ body {
 	@include body-preset( $size: 0 );
 }
 
+// links
+a {
+	@include link-underline();
+	transition: $hover-transition;
+
+	&:visited {
+		@include link-underline();
+	}
+
+	&:active,
+	&:focus,
+	&:hover {
+		@include link-underline(utility-color(blue, medium), utility-color(blue, background));
+	}
+
+	&:active,
+	&:focus {
+		//outline: none;
+	}
+
+	&.active {
+		@include link-underline(utility-color(blue, medium), utility-color(blue, background));
+	}
+}
+
 // headings
+h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+	margin: 0;
+	padding: 0;
+}
+
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+	padding-bottom: $standard-heading-margin;
+	// if we want a top margin, we need to use padding too
+}
+
+/*h1,
+.h1,
+h2,
+.h2,
+h3,
+.h3,
+h4,
+.h4,
+h5,
+.h5,
+h6,
+.h6 {
+	margin-top: 0;
+}*/
+
 h1,
 .h1 {
 
@@ -49,6 +119,10 @@ h6,
 	@include heading-preset( $size: 0, $bold: false );
 }
 
+body.single main h1 + * ~ * {
+	max-width: 85ch;
+}
+
 // paragraphs
 p {
 	margin: 0 0 $standard-block-margin 0;
@@ -59,7 +133,17 @@ p {
 	}
 }
 
-// blockquote
+// quotes
+blockquote,
+q {
+	quotes: "" "";
+
+	&::before,
+	&::after {
+		content: "";
+	}
+}
+
 blockquote {
 
 	@include body-preset( $size: 1 );
@@ -87,10 +171,6 @@ button[type="submit"],
 button[type="button"],
 a.a-button {
 	// put something here
-}
-
-body.single main h1 + * ~ * {
-	max-width: 85ch;
 }
 
 .screen-reader-text {

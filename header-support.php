@@ -21,7 +21,7 @@
 <body <?php body_class(); ?>>
 
 	<header id="masthead" class="o-header">
-		<div class="o-wrapper o-wrapper-site-header">
+		<div class="o-wrapper o-wrapper-site-header<?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">
 			<div class="a-site-branding">
 				<a class="a-logo a-logo-svg" rel="home" href="<?php echo esc_url( home_url( '/' ) ); ?>">
 					<picture>
@@ -31,21 +31,6 @@
 				</a>
 			</div><!-- .a-site-branding -->
 			<?php do_action( 'minnpost_membership_site_header', false ); ?>
-		</div>
-		<div class="o-wrapper o-wrapper-site-navigation o-wrapper-support-navigation">
-			<?php
-				$user_account_access_menu = get_minnpost_account_access_menu();
-			?>
-			<?php if ( ! empty( $user_account_access_menu ) ) : ?>
-				<div id="navigation-featured-account-access">
-					<?php if ( ! empty( $user_account_access_menu ) ) : ?>
-					<nav id="navigation-user-account-access" class="m-secondary-navigation">
-						<?php echo $user_account_access_menu; ?>
-					</nav><!-- #navigation-user-account-access -->
-					<?php endif; ?>
-				</div>
-			<?php endif; ?>
-
 		</div>
 	</header><!-- #masthead -->
 

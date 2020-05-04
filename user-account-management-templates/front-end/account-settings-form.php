@@ -1,8 +1,8 @@
 <form id="account-settings-form" action="<?php echo esc_url( $attributes['current_url'] ); ?>" method="post" class="m-form m-form-standalone m-form-user m-form-account-settings">
 	<?php if ( isset( $_GET['user_id'] ) ) : ?>
-		<input type="hidden" name="user_id" value="<?php echo intval( wp_unslash( $_GET['user_id'] ) ); ?>">
-	<?php else: ?>
-		<input type="hidden" name="user_id" value="<?php echo intval( wp_unslash( get_current_user_id() ) ); ?>">
+		<input type="hidden" name="user_id" value="<?php echo (int) wp_unslash( $_GET['user_id'] ); ?>">
+	<?php else : ?>
+		<input type="hidden" name="user_id" value="<?php echo (int) wp_unslash( get_current_user_id() ); ?>">
 	<?php endif; ?>
 	<input type="hidden" name="user_account_management_action" value="account-settings-update">
 	<input type="hidden" name="user_account_management_redirect" value="<?php echo esc_url( $attributes['redirect'] ); ?>"/>
@@ -52,7 +52,7 @@
 		<div class="m-form-item m-form-email m-form-change-email">
 			<?php
 			$user_other_emails = minnpost_largo_check_consolidated_emails( $attributes['user_meta'], isset( $_POST['email'] ) && wp_verify_nonce( sanitize_key( $_POST['wp_create_nonce'] ), 'uam-account-settings-nonce' ) ? sanitize_email( $_POST['email'] ) : isset( $attributes['user']->user_email ) ? esc_html( $attributes['user']->user_email ) : '' );
-			$email_count = count( $user_other_emails );
+			$email_count       = count( $user_other_emails );
 			if ( 0 === $email_count ) {
 				$label = sprintf( esc_html__( 'Email address:', 'minnpost-largo' ), $email_count );
 			} else {
@@ -128,7 +128,7 @@
 				<select name="country" id="country">
 					<option value="">Choose country</option>
 					<?php foreach ( $attributes['countries'] as $country ) : ?>
-						<?php if ( isset( $attributes['user_meta']['_country'][0] ) && ( $country['alpha2Code'] === $attributes['user_meta']['_country'][0] || $country['name'] === $attributes['user_meta']['_country'][0]) ) : ?>
+						<?php if ( isset( $attributes['user_meta']['_country'][0] ) && ( $country['alpha2Code'] === $attributes['user_meta']['_country'][0] || $country['name'] === $attributes['user_meta']['_country'][0] ) ) : ?>
 							<option value="<?php echo $country['alpha2Code']; ?>" selected><?php echo $country['name']; ?></option>
 						<?php else : ?>
 							<option value="<?php echo $country['alpha2Code']; ?>"><?php echo $country['name']; ?></option>

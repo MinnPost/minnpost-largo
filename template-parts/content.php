@@ -20,7 +20,7 @@
 			<?php endif; ?>
 			<?php minnpost_plus_icon(); ?>
 		</div>
-		<?php minnpost_category_sponsorship(); ?>
+		<?php minnpost_post_category_sponsorship(); ?>
 	<?php endif; ?>
 
 	<?php
@@ -76,7 +76,9 @@
 		</div><!-- .m-entry-meta -->
 
 		<div class="m-entry-content">
+			<?php do_action( 'wp_message_inserter', 'above_article_body' ); ?>
 			<?php the_content(); ?>
+			<?php do_action( 'wp_message_inserter', 'below_article_body' ); ?>
 		</div><!-- .m-entry-content -->
 	</div><!-- .o-entry -->
 
@@ -93,11 +95,10 @@
 	if ( '' !== $author_info ) {
 		?>
 	<aside class="m-author-info m-author-info-excerpt<?php if ( is_singular() ) { ?> m-author-info-singular<?php } ?><?php if ( is_single() ) { ?> m-author-info-single<?php } ?>">
-		<h3 class="a-about-author">About the author:</h3>
 		<?php
 		foreach ( $coauthors as $coauthor ) :
 			$author_id = $coauthor->ID;
-			minnpost_author_figure( $author_id, 'author-teaser', true, true );
+			minnpost_author_figure( $author_id, 'photo', true, true );
 		endforeach;
 		?>
 	</aside><!-- .m-author-info -->
@@ -116,7 +117,7 @@
 			$related_content_ids    = minnpost_get_related( 'content' );
 			if ( empty( $related_multimedia_ids ) && empty( $related_content_ids ) ) {
 				if ( ! empty( minnpost_largo_get_jetpack_results() ) ) {
-					minnpost_largo_jetpack_results();
+					minnpost_related( 'automated' );
 				} else {
 					echo do_shortcode( '[jetpack-related-posts]' );
 				}

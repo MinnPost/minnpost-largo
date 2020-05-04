@@ -15,7 +15,7 @@
 
 	<footer id="site-footer" class="o-footer">
 
-		<div class="o-wrapper o-wrapper-site-footer">
+		<div class="o-wrapper o-wrapper-site-footer<?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">
 
 			<aside class="o-footer-hat">
 				<?php dynamic_sidebar( 'sidebar-3' ); ?>
@@ -44,7 +44,6 @@
 							'menu_id'        => 'minnpost-network',
 							'depth'          => 1,
 							'container'      => false,
-							'item_classes'   => 'values',
 							'walker'         => new Minnpost_Walker_Nav_Menu,
 						)
 					);
@@ -60,7 +59,7 @@
 
 			</aside>
 
-			<?php echo vip_powered_wpcom( 4 ); ?>
+			<?php echo vip_powered_wpcom( 1 ); ?>
 
 		</div>
 	</footer>

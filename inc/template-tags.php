@@ -129,58 +129,18 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 			$image_url = '';
 		}
 
-		// handle prevention of lazy loading
-		$prevent_lazy_load = get_post_meta( $id, '_mp_prevent_lazyload', true );
-		if ( 'on' === $prevent_lazy_load ) {
-			$lazy_load = false;
-		}
-		if ( false === $lazy_load ) {
-			if ( isset( $attributes['class'] ) ) {
-				$attributes['class'] .= ' ';
-			} else {
-				$attributes['class'] = '';
-			}
-			$attributes['class']  .= 'no-lazy';
-			$attributes['loading'] = 'eager';
-		} else {
-			$attributes['loading'] = 'lazy';
-		}
+		// set up lazy load attributes
+		$attributes = apply_filters( 'minnpost_largo_lazy_load_attributes', $attributes, $id, 'post', $lazy_load );
 
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
 			// this requires that the custom image sizes in custom-fields.php work correctly
 			$image     = wp_get_attachment_image( $image_id, $size, false, $attributes );
 			$image_url = wp_get_attachment_url( $image_id );
 		} else {
-			if ( '' !== $image_id ) {
-				$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
-			} else {
-				$alt = '';
-			}
-			$image = '<img src="' . $image_url . '" alt="' . $alt . '">';
 			if ( is_singular( 'newsletter' ) ) {
-				$image = '<img src="' . $image_url . '" alt="' . $alt . '"';
-				if ( isset( $attributes['title'] ) ) {
-					$image .= ' title="' . $attributes['title'] . '"';
-				}
-				if ( isset( $attributes['style'] ) ) {
-					$image .= ' style="' . $attributes['style'] . '"';
-				}
-				if ( isset( $attributes['class'] ) ) {
-					$image .= ' class="' . $attributes['class'] . '"';
-				}
-				if ( isset( $attributes['align'] ) ) {
-					$image .= ' align="' . $attributes['align'] . '"';
-				}
-				if ( isset( $attributes['width'] ) ) {
-					$image .= ' width="' . $attributes['width'] . '"';
-				}
-				if ( isset( $attributes['height'] ) ) {
-					$image .= ' height="' . $attributes['height'] . '"';
-				}
-				if ( isset( $attributes['loading'] ) ) {
-					$image .= ' loading="' . $attributes['loading'] . '"';
-				}
-				$image .= '>';
+				$image = minnpost_largo_manual_image_tag( $image_id, $image_url, $attributes, 'newsletter' );
+			} else {
+				$image = minnpost_largo_manual_image_tag( $image_id, $image_url, $attributes );
 			}
 		}
 
@@ -208,34 +168,20 @@ if ( ! function_exists( 'minnpost_posted_on' ) ) :
 	/**
 	 * Prints HTML with meta information for the current post-date/time and author.
 	 */
-	function minnpost_posted_on( $id = '' ) {
+	function minnpost_posted_on( $id = '', $time_ago = true ) {
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
-		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
-
-		$visible_date = esc_html( get_the_date( '', $id ) );
-		if ( ! is_singular( 'newsletter' ) && date( get_option( 'date_format' ), current_time( 'timestamp' ) ) === $visible_date ) {
-			$visible_date = esc_html( get_the_date( get_option( 'time_format' ), $id ) );
-		} elseif ( is_singular( 'newsletter' ) ) {
-			$visible_date = esc_html( get_the_date( 'F j, Y', $id ) );
+		$date = minnpost_get_posted_on( $id, $time_ago );
+		if ( '' === $date ) {
+			return;
 		}
-
 		$time_string = sprintf(
-			$time_string,
-			esc_attr( get_the_date( 'c' ), $id ),
-			$visible_date,
-			esc_attr( get_the_modified_date( 'c', $id ) ),
-			esc_html( get_the_modified_date( '', $id ) )
+			'<time class="a-entry-date published updated" datetime="%1$s">%2$s</time>',
+			$date['published']['machine'],
+			$date['published']['human'],
 		);
-
-		$posted_on = sprintf(
-			// translators: the placeholder is the time string, which can be translated
-			esc_html_x( '%s', 'post date', 'minnpost-largo' ),
-			$time_string
-		);
-
-		echo '<span class="posted-on">' . $posted_on . '</span>'; // WPCS: XSS OK.
+		echo $time_string;
 
 	}
 endif;
@@ -251,7 +197,7 @@ if ( ! function_exists( 'minnpost_get_posted_on' ) ) :
 	/**
 	 * Prints HTML with meta information for the current post-date/time and author.
 	 */
-	function minnpost_get_posted_on( $id = '' ) {
+	function minnpost_get_posted_on( $id = '', $time_ago = true ) {
 		$posted_on = '';
 		if ( '' === $id ) {
 			$id = get_the_ID();
@@ -260,23 +206,48 @@ if ( ! function_exists( 'minnpost_get_posted_on' ) ) :
 		if ( 'on' === $hide_date ) {
 			return $posted_on;
 		}
-		$time_string = '<time class="entry-date published updated" datetime="%1$s">%2$s</time>';
-		$time_string = sprintf(
-			$time_string,
-			esc_attr( get_the_date( 'c' ), $id ),
-			esc_html( get_the_date( '', $id ) ),
-			esc_attr( get_the_modified_date( 'c', $id ) ),
-			esc_html( get_the_modified_date( '', $id ) )
-		);
+		if ( function_exists( 'get_ap_date' ) ) {
+			$date = array(
+				'published' => array(
+					'machine' => esc_attr( get_ap_date( 'c' ), $id ),
+					'human'   => esc_html( get_ap_date( '', $id ) ),
+				),
+				'modified'  => array(
+					'machine' => esc_attr( get_ap_modified_date( 'c' ), $id ),
+					'human'   => esc_html( get_ap_modified_date( '', $id ) ),
+				),
+			);
+		} else {
+			$date = array(
+				'published' => array(
+					'machine' => esc_attr( get_the_date( 'c' ), $id ),
+					'human'   => esc_html( get_the_date( '', $id ) ),
+				),
+				'modified'  => array(
+					'machine' => esc_attr( get_the_modified_date( 'c' ), $id ),
+					'human'   => esc_html( get_the_modified_date( '', $id ) ),
+				),
+			);
+		}
 
-		$posted_on = sprintf(
-			// translators: the placeholder is the time string, which can be translated
-			esc_html_x( '%s', 'post date', 'minnpost-largo' ),
-			$time_string
-		);
+		// override "today"
+		if ( is_singular( 'newsletter' ) ) {
+			// if it's a newsletter, use the date
+			$date['published']['human'] = esc_html( get_the_date( 'F j, Y', $id ) );
+			$date['modified']['human']  = esc_html( get_the_modified_date( 'F j, Y', $id ) );
+		} elseif ( true && $time_ago && 'today' === $date['published']['human'] ) {
+			// if it's not a newsletter, use the human readable time difference
+			$date['published']['human'] = sprintf(
+				// translators: 1) is the human readable time difference
+				_x( '%1$s ago', '%2$s = human-readable time difference', 'minnpost-largo' ),
+				human_time_diff(
+					get_the_time( 'U' ),
+					strtotime( wp_date( 'Y-m-d H:i:s' ) )
+				)
+			);
+		}
 
-		$posted_on = '<span class="posted-on">' . $posted_on . '</span>'; // WPCS: XSS OK.
-		return $posted_on;
+		return $date;
 	}
 endif;
 
@@ -289,11 +260,11 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_posted_by' ) ) :
-	function minnpost_posted_by( $id = '', $include_title = true ) {
+	function minnpost_posted_by( $id = '', $include_title = true, $link_name = true ) {
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
-		echo minnpost_get_posted_by( $id, $include_title );
+		echo minnpost_get_posted_by( $id, $include_title, $link_name );
 	}
 endif;
 
@@ -303,11 +274,12 @@ endif;
 *
 * @param int $id
 * @param bool $include_title
+* @param bool $link_name
 * @return string
 *
 */
 if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
-	function minnpost_get_posted_by( $id = '', $include_title = false ) {
+	function minnpost_get_posted_by( $id = '', $include_title = false, $link_name = false ) {
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
@@ -329,12 +301,10 @@ if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
 				if ( ! empty( $coauthors ) ) {
 					$byline = esc_html__( 'By&nbsp;', 'minnpost-largo' );
 					foreach ( $coauthors as $key => $coauthor ) {
-						$name_display = '<a href="' . get_author_posts_url( $coauthor->ID, $coauthor->user_nicename ) . '" rel="author">' . apply_filters( 'the_author', $coauthor->display_name ) . '</a>';
-						if ( isset( get_the_coauthor_meta( 'job-title' )[ $coauthor->ID ] ) ) {
-							$title = get_the_coauthor_meta( 'job-title' )[ $coauthor->ID ];
-							if ( '' !== $title ) {
-								$name_display .= '&nbsp;|&nbsp;' . $title;
-							}
+						if ( true === $link_name ) {
+							$name_display = '<a href="' . get_author_posts_url( $coauthor->ID, $coauthor->user_nicename ) . '" rel="author" class="a-entry-author">' . apply_filters( 'the_author', $coauthor->display_name ) . '</a>';
+						} else {
+							$name_display = '<span class="a-entry-author">' . apply_filters( 'the_author', $coauthor->display_name ) . '</span>';
 						}
 						// there is more than one author
 						if ( 1 < sizeof( $coauthors ) ) {
@@ -349,9 +319,19 @@ if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
 								$byline .= ', ' . $name_display;
 							}
 						} else {
-							// there is only one author
+							// there is only one author. showing the title works here.
+							if ( true === $include_title && isset( get_the_coauthor_meta( 'job-title' )[ $coauthor->ID ] ) ) {
+								$title = get_the_coauthor_meta( 'job-title' )[ $coauthor->ID ];
+								if ( '' !== $title ) {
+									$name_display .= '&nbsp;|&nbsp;<span class="a-entry-author-job-title">' . $title . '</span>';
+								}
+							}
 							$byline .= $name_display;
 						}
+					}
+					// display the post-author field if it has a value and if there were multiple authors
+					if ( 1 < sizeof( $coauthors ) && ! empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_after_authors', true ) ) ) ) {
+						$byline .= '&nbsp;|&nbsp;<span class="a-entry-author-finish-text">' . esc_html( get_post_meta( $id, '_mp_subtitle_settings_after_authors', true ) ) . '</span>';
 					}
 					return $byline;
 				}
@@ -434,9 +414,17 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_related' ) ) :
-	function minnpost_related( $type = 'content' ) {
-		$related_ids = minnpost_get_related( $type );
-		if ( ! empty( $related_ids ) ) :
+	function minnpost_related( $type = 'content', $only_show_images_if_not_missing = false ) {
+		if ( 'automated' === $type && function_exists( 'minnpost_largo_get_jetpack_results' ) ) {
+			$related_posts = minnpost_largo_get_jetpack_results();
+		} else {
+			$related_ids   = minnpost_get_related( $type );
+			$related_posts = array();
+			foreach ( $related_ids as $id ) {
+				$related_posts[] = get_post( $id );
+			}
+		}
+		if ( ! empty( $related_posts ) ) :
 			?>
 		<h3 class="a-related-title a-related-title-<?php echo $type; ?>">
 			<?php if ( '' !== get_post_meta( get_the_ID(), '_mp_related_content_label', true ) ) : ?>
@@ -448,10 +436,28 @@ if ( ! function_exists( 'minnpost_related' ) ) :
 		<ul class="a-related-list a-related-list-<?php echo $type; ?>">
 			<?php
 			global $post;
-			foreach ( $related_ids as $id ) :
-				$post = get_post( $id );
+			$image_size = 'feature-medium';
+			if ( true === $only_show_images_if_not_missing ) {
+				$show_image = true;
+				foreach ( $related_posts as $post ) {
+					setup_postdata( $post );
+					$image_data = get_minnpost_post_image( $image_size, array(), $post->id, true );
+					if ( empty( $image_data ) ) {
+						$show_image = false;
+						break;
+					}
+				}
+			}
+			foreach ( $related_posts as $post ) :
 				setup_postdata( $post );
-				get_template_part( 'template-parts/related-post', $type );
+				include(
+					locate_template(
+						array(
+							'template-parts/related-post-' . $type . '.php',
+							'template-parts/related-post.php',
+						)
+					)
+				);
 			endforeach;
 			wp_reset_postdata();
 			?>
@@ -490,7 +496,7 @@ endif;
 if ( ! function_exists( 'minnpost_related_terms' ) ) :
 	function minnpost_related_terms() {
 		$related_terms = minnpost_get_related_terms();
-		if ( isset( $related_terms['category'] ) || isset( $related_terms['tag'] ) ) :
+		if ( ( isset( $related_terms['category'] ) && ! is_wp_error( $related_terms['category'] ) ) || ( ! is_wp_error( $related_terms['tag'] ) && isset( $related_terms['tag'] ) ) ) :
 			?>
 			<?php if ( isset( $related_terms['category'] ) ) : ?>
 				<h3 class="a-related-title a-related-title-category">
@@ -534,13 +540,14 @@ if ( ! function_exists( 'minnpost_get_related_terms' ) ) :
 		$related_terms    = array();
 		$related_category = get_post_meta( get_the_ID(), '_mp_related_category', true );
 		$related_tag      = get_post_meta( get_the_ID(), '_mp_related_tag', true );
-		if ( '' !== $related_category || '' !== $related_tag ) {
-			if ( '' !== $related_category ) {
-				$related_terms['category'] = get_category( $related_category, ARRAY_A );
-			}
-			if ( '' !== $related_tag ) {
-				$related_terms['tag'] = get_tag( $related_tag, ARRAY_A );
-			}
+		if ( '' !== $related_category ) {
+			$related_terms['category'] = get_category( $related_category, ARRAY_A );
+		} else {
+			$permalink_category        = minnpost_get_permalink_category_id( get_the_ID() );
+			$related_terms['category'] = get_category( $permalink_category, ARRAY_A );
+		}
+		if ( '' !== $related_tag ) {
+			$related_terms['tag'] = get_tag( $related_tag, ARRAY_A );
 		}
 		return $related_terms;
 	}
@@ -550,14 +557,18 @@ endif;
 * Outputs author image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
 *
 * @param int $author_id
-* @param string $size
+* @param string $photo_size
+* @param string $text_field
 * @param bool $include_text
 * @param bool $include_name
+* @param bool $include_title
+* @param bool $lazy_load
+* @param bool $end
 *
 */
 if ( ! function_exists( 'minnpost_author_figure' ) ) :
-	function minnpost_author_figure( $author_id = '', $size = 'photo', $include_text = true, $include_name = false, $lazy_load = true ) {
-		$output = minnpost_get_author_figure( $author_id, $size, $include_text, $include_name, $lazy_load );
+	function minnpost_author_figure( $author_id = '', $photo_size = 'photo', $text_field = 'excerpt', $include_text = true, $include_name = false, $include_title = true, $lazy_load = true, $end = false ) {
+		$output = minnpost_get_author_figure( $author_id, $photo_size, $text_field, $include_text, $include_name, $include_title, $lazy_load, $end );
 		echo $output;
 	}
 endif;
@@ -566,9 +577,13 @@ endif;
 * Get author image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
 *
 * @param int $author_id
-* @param string $size
+* @param string $photo_size
+* @param string $text_field
 * @param bool $include_text
 * @param bool $include_name
+* @param bool $include_title
+* @param bool $lazy_load
+* @param bool $end
 *
 * @return string $output
 *
@@ -577,25 +592,18 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 	/**
 	 * Returns author image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
 	 */
-	function minnpost_get_author_figure( $author_id = '', $size = 'photo', $include_text = true, $include_name = false, $lazy_load = true ) {
+	function minnpost_get_author_figure( $author_id = '', $photo_size = 'photo', $text_field = 'excerpt', $include_text = true, $include_name = false, $include_title = true, $lazy_load = true, $end = false ) {
 
 		// in drupal there was only one author image size
 		if ( '' === $author_id ) {
 			$author_id = get_the_author_meta( 'ID' );
 		}
 
-		$image_data = minnpost_get_author_image( $author_id, $size );
+		$image_data = minnpost_get_author_image( $author_id, $photo_size );
 		if ( '' !== $image_data ) {
 			$image_id  = $image_data['image_id'];
 			$image_url = $image_data['image_url'];
 			$image     = $image_data['markup'];
-		}
-
-		$text = '';
-		if ( 'photo' === $size ) { // full text
-			$text = get_post_meta( $author_id, '_mp_author_bio', true );
-		} else { // excerpt
-			$text = wpautop( get_post_meta( $author_id, '_mp_author_excerpt', true ) );
 		}
 
 		if ( post_password_required() || is_attachment() || ( ! isset( $image_id ) && ! isset( $image_url ) ) ) {
@@ -604,6 +612,14 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 
 		$name = '';
 		$name = get_post_meta( $author_id, 'cap-display_name', true );
+		$text = '';
+
+		if ( 'excerpt' === $text_field ) { // excerpt
+			$text .= get_post_meta( $author_id, '_mp_author_excerpt', true );
+		} else { // full text
+			$text .= get_post_meta( $author_id, '_mp_author_bio', true );
+		}
+		$text = apply_filters( 'the_content', $text );
 
 		$caption = wp_get_attachment_caption( $image_id );
 		$credit  = get_media_credit_html( $image_id );
@@ -623,9 +639,9 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 			$count = 0;
 		}
 
-		if ( is_singular() || is_archive() ) {
+		if ( ( is_singular() || is_archive() ) && ! is_singular( 'newsletter' ) ) {
 			$output  = '';
-			$output .= '<figure class="a-archive-figure a-author-figure a-author-figure-' . $size . '">';
+			$output .= '<figure class="a-archive-figure a-author-figure a-author-figure-' . $photo_size . '">';
 			$output .= $image;
 			if ( true === $include_text && ( '' !== $text || '' !== $name ) ) {
 				$output .= '<figcaption>';
@@ -636,17 +652,100 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 						$output    .= '<a href="' . $author_url . '">';
 					}
 					$output .= $name;
+					if ( true === $include_title && isset( get_the_coauthor_meta( 'job-title' )[ $author_id ] ) ) {
+						$title = get_the_coauthor_meta( 'job-title' )[ $author_id ];
+						if ( '' !== $title ) {
+							$output .= '&nbsp;|&nbsp;<span class="a-entry-author-job-title">' . $title . '</span>';
+						}
+					}
 					if ( 0 < $count ) {
 						$output .= '</a>';
 					}
 					$output .= '</h3>';
+				} elseif ( '' !== $name ) {
+					if ( 0 < $count ) {
+						if ( true === $include_title && isset( get_the_coauthor_meta( 'job-title' )[ $author_id ] ) ) {
+							$title = get_the_coauthor_meta( 'job-title' )[ $author_id ];
+							if ( '' !== $title ) {
+								$output .= '<h3 class="a-author-figure-job-title">' . $title . '</h3>';
+							}
+						}
+						$author_url = get_author_posts_url( $author_id, sanitize_title( $name ) );
+						$text      .= sprintf(
+							// translators: 1) author archive url, 2) author name
+							'<p class="a-more-by-author"><a href="%1$s">' . esc_html__( 'More articles by %2$s', 'minnpost-largo' ) . '</a></p>',
+							esc_url( $author_url ),
+							$name
+						);
+					}
 				}
 				$output .= $text;
 				$output .= '</figcaption>';
 			}
 			$output .= '</figure><!-- .author-figure -->';
 			return $output;
-		}; // End is_singular() || is_archive
+		} elseif ( is_singular( 'newsletter' ) ) {
+			$output    = '';
+			$lazy_load = false;
+			$margin    = '';
+			if ( false === $end ) {
+				$margin = 'border-bottom: 2px solid #cccccf; padding-bottom: 15px; Margin-bottom: 20px; ';
+			}
+			$output .= '
+			<div class="author" style="display: block; ' . $margin . 'width: 100%;">
+					<!--[if (gte mso 9)|(IE)]>
+						<table cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+								<td width="25%" valign="top">
+					<![endif]-->
+				<div class="column photo" style="display: inline-block; Margin-right: 0; max-width: 95px; vertical-align: top; width: 100%">
+					<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0;">
+							<tr>
+								<td class="inner" style="border-collapse: collapse; font-size: 0; line-height: 0px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; vertical-align: top" valign="top">
+									<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
+									<tr>
+										<td style="border-collapse: collapse; font-size: 0; line-height: 0px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; vertical-align: top" valign="top">' . $image . '</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+				</div>';
+			$output .= '<!--[if (gte mso 9)|(IE)]>
+				</td><td width="75%" valign="top">
+			<![endif]-->';
+			$output .= '<div class="column bio" style="display: inline-block; Margin-right: 0; max-width: 75%; vertical-align: top; width: 100%">
+					<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
+						<tr>
+							<td class="inner" style="border-collapse: collapse; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; font-weight: normal; line-height: 100%; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: right; vertical-align: top; width: 100%" align="right" valign="top">
+								<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
+									<tr>
+										<td class="text" style="border-collapse: collapse; font-family: Georgia, &quot;Times New Roman&quot;, Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; vertical-align: top; width: 100%" align="right" valign="top">';
+			if ( true === $include_name && '' !== $name ) {
+				$output .= '<h3 style="Margin: 0 0 5px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold;">';
+				if ( 0 < $count ) {
+					$author_url = get_author_posts_url( $author_id, sanitize_title( $name ) );
+					$output    .= '<a style="color: #801019; text-decoration: none;" href="' . $author_url . '">';
+				}
+				$output .= $name;
+				if ( 0 < $count ) {
+					$output .= '</a>';
+				}
+				$output .= '</h3>';
+			}
+			// email content filter
+			$text    = apply_filters( 'format_email_content', $text, false );
+			$output .= $text;
+			$output .= '</td>
+						</tr>
+					</table>
+				</td>
+			</tr>
+		</table>
+	</div>
+</div>';
+			return $output;
+		}
 	}
 endif;
 
@@ -682,31 +781,17 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 			return '';
 		}
 
-		// handle prevention of lazy loading
-		$prevent_lazy_load = get_post_meta( $author_id, '_mp_prevent_lazyload', true );
-		if ( 'on' === $prevent_lazy_load ) {
-			$lazy_load = false;
-		}
 		$attributes = array();
-		if ( false === $lazy_load ) {
-			if ( isset( $attributes['class'] ) ) {
-				$attributes['class'] .= ' ';
-			}
-			$attributes['class'] .= 'no-lazy';
-		}
+
+		// set up lazy load attributes
+		$attributes = apply_filters( 'minnpost_largo_lazy_load_attributes', $attributes, $author_id, 'post', $lazy_load );
 
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
 			// this requires that the custom image sizes in custom-fields.php work correctly
 			$image     = wp_get_attachment_image( $image_id, $size, false, $attributes );
 			$image_url = wp_get_attachment_url( $image_id );
 		} else {
-			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
-			if ( isset( $attributes['class'] ) ) {
-				$class = ' class="' . $attributes['class'] . '"';
-			} else {
-				$class = '';
-			}
-			$image = '<img src="' . $image_url . '" alt="' . $alt . $class . '">';
+			$image = minnpost_largo_manual_image_tag( $image_id, $image_url, $attributes );
 		}
 
 		$image_data = array(
@@ -844,30 +929,15 @@ if ( ! function_exists( 'minnpost_get_term_image' ) ) :
 			return '';
 		}
 
-		// handle prevention of lazy loading
-		$prevent_lazy_load = get_term_meta( $category_id, '_mp_prevent_lazyload', true );
-		if ( 'on' === $prevent_lazy_load ) {
-			$lazy_load = false;
-		}
-		if ( false === $lazy_load ) {
-			if ( isset( $attributes['class'] ) ) {
-				$attributes['class'] .= ' ';
-			}
-			$attributes['class'] .= 'no-lazy';
-		}
+		// set up lazy load attributes
+		$attributes = apply_filters( 'minnpost_largo_lazy_load_attributes', $attributes, $category_id, 'term', $lazy_load );
 
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
 			// this requires that the custom image sizes in custom-fields.php work correctly
 			$image     = wp_get_attachment_image( $image_id, $size, false, $attributes );
 			$image_url = wp_get_attachment_url( $image_id );
 		} else {
-			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
-			if ( isset( $attributes['class'] ) ) {
-				$class = ' class="' . $attributes['class'] . '"';
-			} else {
-				$class = '';
-			}
-			$image = '<img src="' . $image_url . '" alt="' . $alt . $class . '">';
+			$image = minnpost_largo_manual_image_tag( $image_id, $image_url, $attributes );
 		}
 
 		$image_data = array(
@@ -1071,11 +1141,11 @@ if ( ! function_exists( 'minnpost_category_breadcrumb' ) ) :
 			$category      = get_category( $category_id );
 			$category_link = get_category_link( $category );
 			if ( true === $show_group ) {
-				$category_group_id = get_term_meta( $category_id, '_mp_category_group', true );
+				$category_group_id = minnpost_get_category_group_id( $post_id, $category_id );
 				if ( '' !== $category_group_id ) {
-					echo '<div class="a-breadcrumbs">';
 					$category_group = get_category( $category_group_id );
-					echo '<div class="a-breadcrumb a-category-group a-category-group-' . sanitize_title( $category_group->slug ) . '"><a href="' . esc_url( get_category_link( $category_group->term_id ) ) . '">' . $category_group->name . '</a></div>';
+					echo '<div class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '">';
+					echo '<div class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category_group->term_id ) ) . '">' . $category_group->name . '</a></div>';
 				}
 			}
 			$category_name = $category->name;
@@ -1151,6 +1221,31 @@ if ( ! function_exists( 'minnpost_get_permalink_category_id' ) ) :
 endif;
 
 /**
+* Returns the grouping category ID for a post's main category
+*
+* @param int $post_id
+* @param int $category_id
+* @return int $category_group_id
+*
+*/
+if ( ! function_exists( 'minnpost_get_category_group_id' ) ) :
+	function minnpost_get_category_group_id( $post_id = '', $category_id = '' ) {
+		$category_group_id = '';
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
+
+		if ( '' === $category_id ) {
+			$category_id = minnpost_get_permalink_category_id( $post_id );
+		}
+
+		$category_group_id = get_term_meta( $category_id, '_mp_category_group', true );
+
+		return $category_group_id;
+	}
+endif;
+
+/**
 * Replace category text at the top of a post
 *
 * @param int $post_id
@@ -1186,44 +1281,60 @@ if ( ! function_exists( 'minnpost_replace_category_text' ) ) :
 endif;
 
 /**
-* Outputs HTML for category sponsorship
+* Outputs HTML for sponsorship on a category or post
 *
 * @param int $post_id
 * @param int $category_id
 *
 */
-if ( ! function_exists( 'minnpost_category_sponsorship' ) ) :
-	function minnpost_category_sponsorship( $post_id = '', $category_id = '' ) {
-		$sponsorship = minnpost_get_category_sponsorship( $post_id, $category_id );
-		echo $sponsorship;
+if ( ! function_exists( 'minnpost_post_category_sponsorship' ) ) :
+	function minnpost_post_category_sponsorship( $post_id = '', $category_id = '' ) {
+		$sponsorship = minnpost_get_post_category_sponsorship( $post_id, $category_id );
+		if ( '' !== $sponsorship ) {
+			echo '<div class="a-sponsorship">' . $sponsorship . '</div>';
+		}
 	}
 endif;
 
 /**
-* Returns the category sponsorship for a post's primary category, if it exists
+* Returns the sponsorship for a post's primary category, or for a post
 *
 * @param int $post_id
 * @param int $category_id
 * @return string
 *
 */
-if ( ! function_exists( 'minnpost_get_category_sponsorship' ) ) :
-	function minnpost_get_category_sponsorship( $post_id = '', $category_id = '' ) {
+if ( ! function_exists( 'minnpost_get_post_category_sponsorship' ) ) :
+	function minnpost_get_post_category_sponsorship( $post_id = '', $category_id = '' ) {
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
 		if ( '' === $category_id ) {
-			if ( '' === $post_id ) {
-				$post_id = get_the_ID();
-			}
 			$category_id = minnpost_get_permalink_category_id( $post_id );
 			if ( '' === $category_id ) {
 				return '';
 			}
 		}
-		$sponsorship = get_term_meta( $category_id, '_mp_category_sponsorship', true );
-		if ( ! empty( $sponsorship ) ) {
-			return '<div class="a-sponsorship">' . $sponsorship . '</div>';
-		} else {
+
+		// allow a post to prevent sponsorship display
+		$prevent_sponsorship = get_post_meta( $post_id, '_mp_prevent_post_sponsorship', true );
+		if ( 'on' === $prevent_sponsorship ) {
 			return '';
 		}
+
+		// post sponsorship has higher priority than category
+		$sponsorship = get_post_meta( $post_id, '_mp_post_sponsorship', true );
+		if ( ! empty( $sponsorship ) ) {
+			return $sponsorship;
+		}
+
+		// followed by category sponsorship
+		$sponsorship = get_term_meta( $category_id, '_mp_category_sponsorship', true );
+		if ( ! empty( $sponsorship ) ) {
+			return $sponsorship;
+		}
+
+		return '';
 	}
 endif;
 
@@ -1286,19 +1397,18 @@ if ( ! function_exists( 'minnpost_plus_icon' ) ) :
 				}
 			}
 
-			// handle prevention of lazy loading
-			$prevent_lazy_load = get_post_meta( $post_id, '_mp_prevent_lazyload', true );
-			if ( 'on' === $prevent_lazy_load ) {
-				$lazy_load = false;
+			$class = '';
+
+			// set up lazy load attributes
+			$attributes = apply_filters( 'minnpost_largo_lazy_load_attributes', $attributes, $post_id, 'post', $lazy_load );
+
+			if ( isset( $attributes['class'] ) ) {
+				$class = $attributes['class'];
 			}
 
-			if ( false === $lazy_load ) {
-				$class = 'no-lazy';
-			} else {
-				$class = '';
-			}
-
-			$image = '<img src="' . get_theme_file_uri() . '/assets/img/MinnPostPlusLogo.png' . '" alt="MinnPostPlus"' . $class . '>';
+			$attributes['alt'] = __( 'MinnPostPlus', 'minnpost-largo' );
+			$image_url         = get_theme_file_uri() . '/assets/img/MinnPostPlusLogo.png';
+			$image             = minnpost_largo_manual_image_tag( '', $image_url, $attributes );
 
 			echo '<div class="a-minnpost-plus">' . $image . '</div>';
 		}
@@ -1345,7 +1455,7 @@ if ( ! function_exists( 'numeric_pagination' ) ) :
 		}
 
 		$paged = get_query_var( 'paged' ) ? absint( get_query_var( 'paged' ) ) : 1;
-		$max   = intval( $wp_query->max_num_pages );
+		$max   = (int) $wp_query->max_num_pages;
 
 		// current page
 		if ( $paged >= 1 ) {
@@ -1438,6 +1548,12 @@ if ( ! function_exists( 'minnpost_newsletter_logo' ) ) :
 					break;
 				case 'sunday_review':
 					$filename = 'newsletter-logo-sunday-review.png';
+					break;
+				case 'daily_coronavirus':
+					$filename = 'mp-dcu-600.png';
+					break;
+				case 'republication':
+					$filename = 'republication-header-260x50.png';
 					break;
 				default:
 					$filename = 'newsletter-logo-daily.png';
@@ -1587,9 +1703,10 @@ if ( ! function_exists( 'get_minnpost_account_management_menu' ) ) :
 	function get_minnpost_account_management_menu( $user_id = '' ) {
 		$menu       = '';
 		$can_access = false;
-		if ( class_exists( 'User_Account_Management' ) ) {
-			$account_management = User_Account_Management::get_instance();
-			$can_access         = $account_management->check_user_permissions( $user_id );
+
+		if ( function_exists( 'user_account_management' ) ) {
+			$account_management = user_account_management();
+			$can_access         = $account_management->user_data->check_user_permissions( $user_id );
 		} else {
 			if ( get_current_user_id() === $user_id || current_user_can( 'edit_user', $user_id ) ) {
 				$can_access = true;
@@ -1648,9 +1765,9 @@ if ( ! function_exists( 'get_minnpost_account_access_menu' ) ) :
 
 		$menu       = '';
 		$can_access = false;
-		if ( class_exists( 'User_Account_Management' ) ) {
-			$account_management = User_Account_Management::get_instance();
-			$can_access         = $account_management->check_user_permissions( $user_id );
+		if ( function_exists( 'user_account_management' ) ) {
+			$account_management = user_account_management();
+			$can_access         = $account_management->user_data->check_user_permissions( $user_id );
 		} else {
 			if ( get_current_user_id() === $user_id || current_user_can( 'edit_user', $user_id ) ) {
 				$can_access = true;
@@ -1701,5 +1818,239 @@ if ( ! function_exists( 'get_user_name_or_profile_link' ) ) :
 		} else {
 			return $comment_name;
 		}
+	}
+endif;
+
+/**
+* Common filter for setting up lazy load attributes
+*
+* @param array $attributes
+* @param int $object_id
+* @param string $object_type
+* @param bool $lazy_load
+* @return array $attributes
+*
+*/
+if ( ! function_exists( 'minnpost_largo_add_lazy_load_attributes' ) ) :
+	add_filter( 'minnpost_largo_lazy_load_attributes', 'minnpost_largo_add_lazy_load_attributes', 10, 3 );
+	function minnpost_largo_add_lazy_load_attributes( $attributes, $object_id, $object_type = 'post', $lazy_load = true ) {
+		// handle prevention of lazy loading from the object loading the image
+		if ( 'post' === $object_type ) {
+			$prevent_lazy_load = get_post_meta( $object_id, '_mp_prevent_lazyload', true );
+		} elseif ( 'term' === $object_type ) {
+			$prevent_lazy_load = get_term_meta( $object_id, '_mp_prevent_lazyload', true );
+		}
+		if ( 'on' === $prevent_lazy_load ) {
+			$lazy_load = false;
+		}
+		if ( false === $lazy_load ) {
+			if ( isset( $attributes['class'] ) ) {
+				$attributes['class'] .= ' ';
+			} else {
+				$attributes['class'] = '';
+			}
+			// this is the class and attribute to disable lazy loading on an image
+			$attributes['class']  .= 'no-lazy';
+			$attributes['loading'] = 'eager';
+		} else {
+			$attributes['loading'] = 'lazy';
+			$attributes['class']   = 'jetpack-lazy-image';
+		}
+		return $attributes;
+	}
+endif;
+
+/**
+* Manually generate an image tag from its attributes
+* This is mostly used for images that are migrated pre-WordPress, but at least we can still add
+* attributes to them.
+*
+* @param int $image_id
+* @param string $image_url
+* @param array $attributes
+* @return string $image
+*
+*/
+if ( ! function_exists( 'minnpost_largo_manual_image_tag' ) ) :
+	function minnpost_largo_manual_image_tag( $image_id = '', $image_url = '', $attributes = array(), $object_type = 'post' ) {
+		$image = '';
+		if ( '' !== $image_id ) {
+			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+		} elseif ( isset( $attributes['alt'] ) ) {
+			$alt = $attributes['alt'];
+		} else {
+			$alt = '';
+		}
+		$image = '<img src="' . $image_url . '" alt="' . $alt . '"';
+		if ( 'newsletter' === $object_type ) {
+			if ( isset( $attributes['title'] ) ) {
+				$image .= ' title="' . $attributes['title'] . '"';
+			}
+		}
+		if ( isset( $attributes['style'] ) ) {
+			$image .= ' style="' . $attributes['style'] . '"';
+		}
+		if ( isset( $attributes['class'] ) ) {
+			$image .= ' class="' . $attributes['class'] . '"';
+		}
+		if ( isset( $attributes['align'] ) ) {
+			$image .= ' align="' . $attributes['align'] . '"';
+		}
+		if ( isset( $attributes['width'] ) ) {
+			$image .= ' width="' . $attributes['width'] . '"';
+		}
+		if ( isset( $attributes['height'] ) ) {
+			$image .= ' height="' . $attributes['height'] . '"';
+		}
+		if ( isset( $attributes['loading'] ) ) {
+			$image .= ' loading="' . $attributes['loading'] . '"';
+		}
+		$image .= '>';
+		return $image;
+	}
+endif;
+
+/**
+* Common filter for setting up lazy load attributes
+*
+* @param array $attributes
+* @param int $object_id
+* @param string $object_type
+* @param bool $lazy_load
+* @return array $attributes
+*
+*/
+if ( ! function_exists( 'minnpost_largo_add_lazy_load_attributes' ) ) :
+	add_filter( 'minnpost_largo_lazy_load_attributes', 'minnpost_largo_add_lazy_load_attributes', 10, 3 );
+	function minnpost_largo_add_lazy_load_attributes( $attributes, $object_id, $object_type = 'post', $lazy_load = true ) {
+		// handle prevention of lazy loading from the object loading the image
+		if ( 'post' === $object_type ) {
+			$prevent_lazy_load = get_post_meta( $object_id, '_mp_prevent_lazyload', true );
+		} elseif ( 'term' === $object_type ) {
+			$prevent_lazy_load = get_term_meta( $object_id, '_mp_prevent_lazyload', true );
+		}
+		if ( 'on' === $prevent_lazy_load ) {
+			$lazy_load = false;
+		}
+		if ( false === $lazy_load ) {
+			if ( isset( $attributes['class'] ) ) {
+				$attributes['class'] .= ' ';
+			} else {
+				$attributes['class'] = '';
+			}
+			// this is the class and attribute to disable lazy loading on an image
+			$attributes['class']  .= 'no-lazy';
+			$attributes['loading'] = 'eager';
+		} else {
+			$attributes['loading'] = 'lazy';
+			$attributes['class']   = 'jetpack-lazy-image';
+		}
+		return $attributes;
+	}
+endif;
+
+/**
+* Manually generate an image tag from its attributes
+* This is mostly used for images that are migrated pre-WordPress, but at least we can still add
+* attributes to them.
+*
+* @param int $image_id
+* @param string $image_url
+* @param array $attributes
+* @return string $image
+*
+*/
+if ( ! function_exists( 'minnpost_largo_manual_image_tag' ) ) :
+	function minnpost_largo_manual_image_tag( $image_id = '', $image_url = '', $attributes = array(), $object_type = 'post' ) {
+		$image = '';
+		if ( '' !== $image_id ) {
+			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+		} elseif ( isset( $attributes['alt'] ) ) {
+			$alt = $attributes['alt'];
+		} else {
+			$alt = '';
+		}
+		$image = '<img src="' . $image_url . '" alt="' . $alt . '"';
+		if ( 'newsletter' === $object_type ) {
+			if ( isset( $attributes['title'] ) ) {
+				$image .= ' title="' . $attributes['title'] . '"';
+			}
+		}
+		if ( isset( $attributes['style'] ) ) {
+			$image .= ' style="' . $attributes['style'] . '"';
+		}
+		if ( isset( $attributes['class'] ) ) {
+			$image .= ' class="' . $attributes['class'] . '"';
+		}
+		if ( isset( $attributes['align'] ) ) {
+			$image .= ' align="' . $attributes['align'] . '"';
+		}
+		if ( isset( $attributes['width'] ) ) {
+			$image .= ' width="' . $attributes['width'] . '"';
+		}
+		if ( isset( $attributes['height'] ) ) {
+			$image .= ' height="' . $attributes['height'] . '"';
+		}
+		if ( isset( $attributes['loading'] ) ) {
+			$image .= ' loading="' . $attributes['loading'] . '"';
+		}
+		$image .= '>';
+		return $image;
+	}
+endif;
+
+/**
+* Display a string for email-friendly formatting
+*
+* @param string $content
+* @param bool $message
+*
+*/
+if ( ! function_exists( 'email_formatted_content' ) ) :
+	function email_formatted_content( $content, $message = false ) {
+		$content = apply_filters( 'format_email_content', $content );
+		echo $content;
+	}
+endif;
+
+/**
+* Format a string for email-friendly display
+*
+* @param string $content
+* @param bool $message
+* @return string $content
+*
+*/
+if ( ! function_exists( 'format_email_content' ) ) :
+	add_filter( 'format_email_content', 'format_email_content', 10, 3 );
+	function format_email_content( $content, $body = true, $message = false ) {
+		$serif_stack = 'font-family: Georgia, \'Times New Roman\', Times, serif; ';
+		$sans_stack  = 'font-family: Helvetica, Arial, Geneva, sans-serif; ';
+		$font_stack  = $serif_stack;
+		if ( true === $message ) {
+			$font_stack = $sans_stack;
+		}
+		$content = str_replace( ' dir="ltr"', '', $content );
+
+		// links
+		$content = str_replace( '<a href="', '<a style="' . $font_stack . 'color: #801019; text-decoration: none;" href="', $content );
+		// paragraphs
+		if ( true === $body ) {
+			$content = str_replace( '<p class="intro">', '<p>', $content );
+			$content = preg_replace( '/<p>/', '<p class="intro" style="' . $font_stack . 'font-size: 17.6px; line-height: 24.9444px; Margin: 0 0 15px; padding: 15px 0 0;">', $content, 1 );
+		}
+		$content = str_replace( '<p>', '<p style="' . $font_stack . 'font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', $content );
+		// lists
+		$content = str_replace( '<li>', '<li style="' . $font_stack . 'font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', $content );
+		$content = str_replace( '<ul>', '<ul style="' . $font_stack . 'font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0 0 0 40px;">', $content );
+		// headings
+		if ( false === $message ) {
+			$content = preg_replace( '/(<h[2-6]\b[^><]*)>/i', '$1 style="color: #801019; Margin: 15px 0; display: block; font-size: 14px; line-height: 1; ' . $sans_stack . 'font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $content );
+		} else {
+			$content = preg_replace( '/(<h[2-6]\b[^><]*)>/i', '$1 style="Margin: 0 0 15px 0; display: block; font-size: 16px; line-height: 1; ' . $sans_stack . 'font-weight: bold;">', $content );
+		}
+		// blockquotes
+		$content = str_replace( '<blockquote><p style="' . $font_stack . 'font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', '<blockquote style="border-left-width: 2px; border-left-color: #cccccf; border-left-style: solid; Margin: 10px 10px 15px; padding: 0 10px; color: #6a6161;"><p style="' . $font_stack . 'font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', $content );
+		return $content;
 	}
 endif;

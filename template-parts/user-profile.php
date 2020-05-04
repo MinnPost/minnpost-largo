@@ -14,7 +14,7 @@
 
 	<?php
 	# The comment functions use the query var 'cpage', so we'll ensure that's set
-	$page = intval( get_query_var( 'page' ) );
+	$page = (int) get_query_var( 'page' );
 	if ( 0 === $page ) {
 		$page = 1;
 	}

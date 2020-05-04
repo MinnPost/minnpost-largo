@@ -143,36 +143,8 @@ if ( ! function_exists( 'minnpost_largo_jetpack_remove' ) ) :
 endif;
 
 /**
- * Display automated related posts based on the Jetpack query
- *
- */
-if ( ! function_exists( 'minnpost_largo_jetpack_results' ) ) :
-	function minnpost_largo_jetpack_results() {
-		$related_query = minnpost_largo_get_jetpack_results();
-		if ( ! empty( $related_query ) ) : ?>
-			<h3 class="a-related-title a-related-title-automated">
-				<?php if ( '' !== get_post_meta( get_the_ID(), '_mp_related_content_label', true ) ) : ?>
-					<?php echo get_post_meta( get_the_ID(), '_mp_related_content_label', true ); ?>
-				<?php else : ?>
-					<?php echo esc_html__( 'Read these stories next', 'minnpost-largo' ); ?>
-				<?php endif; ?>
-			</h3>
-			<ul class="a-related-list a-related-list-automated">
-				<?php
-				while ( $related_query->have_posts() ) :
-					$related_query->the_post();
-					get_template_part( 'template-parts/related-post', 'automated' );
-				endwhile;
-				wp_reset_query();
-				?>
-			</ul>
-			<?php
-	endif;
-	}
-endif;
-
-/**
- * Generate a WP query object for jetpack related posts
+ * Generate a WP query object for jetpack related posts.
+ * These results are displayed by the minnpost_related function in inc/template-tags.php
  *
  * @return object $related_query
  */
@@ -205,7 +177,8 @@ if ( ! function_exists( 'minnpost_largo_get_jetpack_results' ) ) :
 			$query['orderby']  = 'post__in';
 			$title             = __( 'Related Posts', 'minnpost-largo' );
 			$related_query     = new WP_Query( $query );
-			return $related_query;
+			$related_posts     = $related_query->get_posts();
+			return $related_posts;
 		} else {
 			return;
 		}
@@ -241,6 +214,17 @@ if ( ! function_exists( 'minnpost_largo_jetpack_exclude_category' ) ) :
 			$exclude_ids[] = $term->term_id;
 		}
 
+		$exclusions = do_shortcode( '[return_excluded_terms]' );
+		if ( '' !== $exclusions ) {
+			$exclusions = str_getcsv( $exclusions, ',', "'" );
+			foreach ( $exclusions as $exclusion ) {
+				$category = get_term_by( 'name', $exclusion, 'category' );
+				if ( isset( $category->term_id ) ) {
+					$exclude_ids[] = $category->term_id;
+				}
+			}
+		}
+
 		$filters[] = array(
 			'not' => array(
 				'terms' => array(
@@ -249,5 +233,26 @@ if ( ! function_exists( 'minnpost_largo_jetpack_exclude_category' ) ) :
 			),
 		);
 		return $filters;
+	}
+endif;
+
+use Automattic\Jetpack\Sync\Settings;
+
+/**
+ * Filter all blacklisted post types.
+ *
+ * @param array $args Hook arguments.
+ * @return array|false Hook arguments, or false if the post type is a blacklisted one.
+ */
+if ( ! function_exists( 'wpvip_filter_blacklisted_post_types_deleted' ) ) :
+	add_filter( 'jetpack_sync_before_enqueue_deleted_post', 'wpvip_filter_blacklisted_post_types_deleted' );
+	function wpvip_filter_blacklisted_post_types_deleted( $args ) {
+		$post = get_post( $args[0] );
+		if ( ! is_wp_error( $post ) && ! empty( $post ) ) {
+			if ( in_array( $post->post_type, Settings::get_setting( 'post_types_blacklist' ), true ) ) {
+				return false;
+			}
+		}
+		return $args;
 	}
 endif;

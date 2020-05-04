@@ -34,7 +34,7 @@
 		<div class="o-wrapper o-wrapper-site-navigation">
 			<nav id="navigation-primary" class="m-main-navigation">
 				<button class="menu-toggle" aria-controls="primary-links" aria-expanded="false">
-					<span><?php esc_html_e( 'Menu', 'minnpost-largo' ); ?></span>
+					<i class="fas fa-bars"></i><span><?php esc_html_e( 'Menu', 'minnpost-largo' ); ?></span>
 				</button>
 				<?php
 				wp_nav_menu(
@@ -44,43 +44,49 @@
 						'depth'          => 1,
 						'container'      => false,
 						'walker'         => new Minnpost_Walker_Nav_Menu,
+						'priority'       => '20',
+						'items_wrap'     => '<ul hidden id="%1$s" class="m-menu m-menu-%1$s">%3$s</ul>',
+						//'item_classes'   => 'values',
 					)
 				);
-				?>
-			</nav><!-- #site-navigation -->
-			<?php
-				$featured_menu = wp_nav_menu(
+				wp_nav_menu(
 					array(
-						'theme_location' => 'primary_links',
-						'menu_id'        => 'featured-links',
-						'depth'          => 2,
+						'theme_location' => 'primary_actions',
+						'menu_id'        => 'primary-actions',
+						//'depth'          => 1,
 						'container'      => false,
 						'walker'         => new Minnpost_Walker_Nav_Menu,
 						'item_classes'   => 'values',
-						'sub_menu'       => true,
-						'echo'           => false,
-						'fallback_cb'    => '__return_false',
+						'items_wrap'     => '<ul id="%1$s" class="m-menu m-menu-%1$s">%3$s</ul>',
 					)
 				);
-
-				$user_account_access_menu = get_minnpost_account_access_menu();
 				?>
-			<?php if ( ! empty( $featured_menu ) || ! empty( $user_account_access_menu ) ) : ?>
-				<div id="navigation-featured-account-access">
-					<?php if ( ! empty( $featured_menu ) ) : ?>
-					<nav id="navigation-featured" class="m-featured-navigation">
-						<span class="a-nav-label">Featured:</span>
-						<?php echo $featured_menu; ?>
-					</nav><!-- #navigation-featured -->
-					<?php endif; ?>
-					<?php if ( ! empty( $user_account_access_menu ) ) : ?>
-					<nav id="navigation-user-account-access" class="m-secondary-navigation">
-						<?php echo $user_account_access_menu; ?>
-					</nav><!-- #navigation-user-account-access -->
-					<?php endif; ?>
-				</div>
-			<?php endif; ?>
-
+			</nav><!-- #navigation-primary -->
+		</div>
+		<div class="o-wrapper o-wrapper-topics-navigation">
+			<a class="a-topics-label" href="/topics/"><?php echo __( 'Topics', 'minnpost-largo' ); ?></a>
+			<div class="m-topics">
+				<nav id="navigation-topics" class="m-topics-navigation">
+					<?php
+					wp_nav_menu(
+						array(
+							'theme_location' => 'topics',
+							'menu_id'        => 'topics',
+							'depth'          => 1,
+							'container'      => false,
+							'walker'         => new Minnpost_Walker_Nav_Menu,
+							'items_wrap'     => '<ul id="%1$s" class="m-menu m-menu-%1$s">%3$s</ul>',
+							//'item_classes'   => 'values',
+						)
+					);
+					?>
+				</nav><!-- #navigation-topics -->
+				<button class="nav-scroller-btn nav-scroller-btn--left" aria-label="Scroll left">
+					<i class="fas fa-chevron-left"></i></svg>
+				</button>
+				<button class="nav-scroller-btn nav-scroller-btn--right" aria-label="Scroll right"><i class="fas fa-chevron-right"></i></svg>
+				</button>
+			</div>
 		</div>
 	</header><!-- #masthead -->
 

@@ -21,13 +21,13 @@ body.page .m-layout-primary {
 	flex: 0 0 100%;
 }
 
+// todo: if this does not cause conflicts, we should move it into the _root.scss
 main {
 	position: relative;
 	@include clearfix;
 	max-width: 100%;
 	flex: 0 0 100%;
 }
-
 body.single-post main,
 body.page main {
 	//flex: 0 0 100%;

@@ -1,5 +1,5 @@
 article .m-entry-excerpt {
-	margin: $standard-block-padding 0;
+	margin: $standard-block-padding 0 $standard-block-padding * 2 0;
 	@include meta-preset( $size: 0 );
 	max-width: 70ch;
 }

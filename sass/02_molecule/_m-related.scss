@@ -7,6 +7,7 @@ $minimum-width: 130px;
 	}
 
 	.a-related-list {
+		@include body-preset( $size: -2 );
 		list-style: none;
 		padding: 0;
 		margin: 0 0 $standard-page-margin 0;
@@ -22,20 +23,20 @@ $minimum-width: 130px;
 			.m-post-image {
 				margin: 0;
 
-				a,
+				/*a,
 				a:hover,
 				a:focus,
 				a:active {
 					text-decoration: none;
 					color: $color__base-font-color;
-				}
+				}*/
 
 				img {
-					margin: 0 $standard-page-margin 0 0;
-					max-width: $minimum-width; // for older items without proper thumbnails
+					margin: 0;
+					max-width: 100%; // for older items without proper thumbnails
 
 					&:last-child {
-						margin-bottom: $standard-page-margin;
+						margin-bottom: $standard-block-padding;
 					}
 				}
 			}
@@ -72,6 +73,14 @@ $minimum-width: 130px;
 
 		.a-related-list {
 			order: 3;
+		}
+
+		.a-entry-title {
+			padding: $standard-block-padding / 2 0;
+		}
+
+		.m-entry-byline {
+			margin-bottom: $standard-block-padding / 2;
 		}
 	}
 }

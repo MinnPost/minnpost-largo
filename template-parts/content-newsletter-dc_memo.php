@@ -210,31 +210,27 @@ a[x-apple-data-detectors] {
 				</td> <!-- end .one-column.header -->
 			</tr> <!-- end row -->
 
+			<?php do_action( 'wp_message_inserter', 'email_header', 'email' ); ?>
+
 			<?php
 			$body = apply_filters( 'the_content', get_the_content() );
 			if ( '' !== $body ) :
-				$body = str_replace( '<a href="', '<a style="color: #801019; text-decoration: none;" href="', $body );
-				$body = str_replace( ' dir="ltr"', '', $body );
-				$body = str_replace( '<p class="intro">', '<p>', $body );
-				$body = preg_replace( '/<p>/', '<p class="intro" style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 17.6px; line-height: 24.9444px; margin: 0 0 15px; padding: 15px 0 0;">', $body, 1 );
-				$body = str_replace( '<p>', '<p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', $body );
-				$body = str_replace( '<li>', '<li style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', $body );
-				$body = str_replace( '<ul>', '<ul style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0 0 0 40px;">', $body );
-
-				// add the inline sponsor before the second <h2 in the body
-				$h2_counter   = 1;
-				$ad_string = '<h2 class="sponsored" style="color: #738bc0; Margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-color: #cccccf; border-top-style: solid; border-top-width: 2px; padding-top: 15px;" align="left">D.C. Memo Sponsored by Great River Energy</h2><p class="inline-sponsor" style="font-family: Georgia, &quot;Times New Roman&quot;, Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;" align="center"><a href="http://greatriverenergy.com/" style="color: #801019; text-decoration: none;"><img src="https://www.minnpost.com/wp-content/uploads/sites/default/files/imagecache/image_detail/images/image/great-river-energy-logo.png" alt="Great River Energy" align="center" style="height: 86px; line-height: 100%; outline: none; text-decoration: none; display: block; Margin: 0 10px 5px 0; border: 0 none;" /></a></p><h2';
-				$body         = preg_replace_callback( '/<h2/', function ( $match ) use ( &$h2_counter, $ad_string ) {
-					# prefix second h2 with ad content
-					if ( 2 === $h2_counter++ ) {
-						return $ad_string;
-					}
-					return $match[0];
-				}, $body );
-
-				$body = str_replace( '<h2>', '<h2 style="color: #801019; margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $body );
-				$body = str_replace( '<h3>', '<h3 style="color: #801019; margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $body );
-				$body = str_replace( '<blockquote><p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', '<blockquote style="border-left-width: 2px; border-left-color: #cccccf; border-left-style: solid; margin: 10px 10px 15px; padding: 0 10px; color: #6a6161;"><p style="font-family: Georgia, \'Times New Roman\', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 15px; padding: 0;">', $body );
+				// add the inline sponsor before the second h2-h6 in the body
+				$heading_counter = 1;
+				$ad_string       = '<h4 class="sponsored" style="color: #738bc0; Margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-color: #cccccf; border-top-style: solid; border-top-width: 2px; padding-top: 15px;" align="left">D.C. Memo Sponsored by Great River Energy</h4><p class="inline-sponsor" style="font-family: Georgia, &quot;Times New Roman&quot;, Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;" align="center"><a href="http://greatriverenergy.com/" style="color: #801019; text-decoration: none;"><img src="https://www.minnpost.com/wp-content/uploads/sites/default/files/imagecache/image_detail/images/image/great-river-energy-logo.png" alt="Great River Energy" align="center" style="height: 86px; line-height: 100%; outline: none; text-decoration: none; display: block; Margin: 0 10px 5px 0; border: 0 none;" /></a></p><h4';
+				$body            = preg_replace_callback(
+					'/<h[2-6](.*?)/',
+					function ( $match ) use ( &$heading_counter, $ad_string ) {
+						# prefix second heading that is not an h1 with ad content
+						if ( 2 === $heading_counter++ ) {
+							return $ad_string;
+						}
+						return $match[0];
+					},
+					$body
+				);
+				// email content filter
+				$body = apply_filters( 'format_email_content', $body );
 				?>
 				<tr>
 					<td class="one-column content story" style="border-collapse: collapse; Margin: 0; padding: 0;">
@@ -258,7 +254,7 @@ a[x-apple-data-detectors] {
 								<table cellpadding="0" cellspacing="0" width="100%" class="sponsors" style="border-spacing: 0; Margin: 0 0 18px; padding: 0 0 18px; font-family: Helvetica, Arial, Geneva, sans-serif; color: #1A1818; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse;">
 									<tr>
 										<td class="inner contents" style="border-collapse: collapse; width: 100%; Margin: 0; padding: 0;">
-											<h2 class="sponsored" style="color: #738bc0; Margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-color: #cccccf; border-top-style: solid; border-top-width: 2px; padding-top: 15px;" align="left">D.C. Memo Sponsor</h2>
+											<h4 class="sponsored" style="color: #738bc0; Margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-color: #cccccf; border-top-style: solid; border-top-width: 2px; padding-top: 15px;" align="left">D.C. Memo Sponsor</h4>
 											<p style="color: #7a7a7a; font-size: 9px; text-transform: uppercase; Margin: 0 0 5px; padding: 0;" align="center">Presenting sponsor</p>
 											<p class="presenting-sponsor" style="color: #7a7a7a; font-size: 9px; text-transform: uppercase; Margin: 0 0 30px; padding: 0;" align="center"><a href="http://greatriverenergy.com/" style="color: #801019; text-decoration: none;"><img src="https://www.minnpost.com/wp-content/uploads/sites/default/files/imagecache/image_detail/images/image/great-river-energy-logo.png" alt="Great River Energy" align="middle" style="height: auto; line-height: 100%; outline: none; text-decoration: none; display: block; Margin: 0 10px 5px 0; border: 0 none;" /></a></p>
 										</td>
@@ -276,6 +272,10 @@ a[x-apple-data-detectors] {
 				</tr> <!-- end row -->
 			<?php endif; ?>
 
+			<?php do_action( 'wp_message_inserter', 'email_before_bios', 'email' ); ?>
+
+			<?php do_action( 'wp_message_inserter', 'email_bottom', 'email' ); ?>
+
 			<tr>
 				<td class="one-column footer" style="border-collapse: collapse; Margin: 0; padding: 0">
 					<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
@@ -285,7 +285,7 @@ a[x-apple-data-detectors] {
 								<?php
 								$footer_message = get_option( 'site_footer_message', '' );
 								if ( '' !== $footer_message ) :
-								?>
+									?>
 									<p class="address" style="font-size: 12px; Margin: 10px 0 15px; padding: 0; text-align: center;" align="center"><?php echo $footer_message; ?></p>
 								<?php endif; ?>
 							</td>

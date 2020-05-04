@@ -53,8 +53,8 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'id'           => $prefix . 'setup',
 				'title'        => __( 'Setup', 'minnpost-largo' ),
 				'object_types' => array( $object_type ),
-				//'context'    => 'after_title',
-				//'priority'   => 'high',
+				'context'      => 'after_title',
+				//'priority'     => 'high',
 			)
 		);
 		$newsletter_setup->add_field(
@@ -64,12 +64,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'type'    => 'select',
 				'desc'    => __( 'Select an option', 'minnpost-largo' ),
 				'default' => 'daily',
-				'options' => array(
-					'daily'         => __( 'Daily', 'minnpost-largo' ),
-					'greater_mn'    => __( 'Greater MN', 'minnpost-largo' ),
-					'sunday_review' => __( 'Sunday Review', 'minnpost-largo' ),
-					'dc_memo'       => __( 'D.C. Memo', 'minnpost-largo' ),
-				),
+				'options' => minnpost_largo_email_types(),
 			)
 		);
 		$newsletter_setup->add_field(
@@ -77,15 +72,55 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'name' => __( 'Preview Text', 'minnpost-largo' ),
 				'id'   => $prefix . 'preview_text',
 				'type' => 'textarea_small',
-				'desc' => __( 'This is visible before users open the email in some email clients. If there\'s no value, we won\'t use it. Email clients will limit how many characters they show.', 'minnpost-largo' ),
+				'desc' => __( 'In some email clients, this snippet will appear in the inbox after the subject line. If there\'s no value, we won\'t use it. Email clients will limit how many characters they show.', 'minnpost-largo' ),
 			)
 		);
 		$newsletter_setup->add_field(
 			array(
-				'name' => __( 'Show Department for Top Stories?', 'minnpost-largo' ),
-				'id'   => $prefix . 'show_department_for_top_stories',
-				'type' => 'checkbox',
-				'desc' => '',
+				'name'       => __( 'Show Main Category for Top Stories?', 'minnpost-largo' ),
+				'id'         => $prefix . 'show_department_for_top_stories',
+				'type'       => 'checkbox',
+				'desc'       => '',
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
+			)
+		);
+		$newsletter_setup->add_field(
+			array(
+				'name'       => __( 'Show Main Category for Republishable Stories?', 'minnpost-largo' ),
+				'id'         => $prefix . 'show_department_for_republish_stories',
+				'type'       => 'checkbox',
+				'desc'       => '',
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => 'republication',
+				),
+			)
+		);
+		$newsletter_setup->add_field(
+			array(
+				'name'       => __( 'Show Thumbnail Image for Republishable Stories?', 'minnpost-largo' ),
+				'id'         => $prefix . 'show_image_for_republish_stories',
+				'type'       => 'checkbox',
+				'desc'       => '',
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => 'republication',
+				),
+			)
+		);
+		$newsletter_setup->add_field(
+			array(
+				'name'       => __( 'Remove author(s) from display?', 'minnpost-largo' ),
+				'id'         => '_mp_remove_author_from_display',
+				'type'       => 'checkbox',
+				'desc'       => __( 'If checked, the newsletter author(s) will not display.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => 'daily_coronavirus',
+				),
 			)
 		);
 
@@ -122,69 +157,112 @@ if ( function_exists( 'create_newsletter' ) ) :
 		if ( 'production' === VIP_GO_ENV ) {
 			$newsletter_post_args['es'] = true; // elasticsearch on production only
 		}
-		$newsletter_top_posts = new_cmb2_box(
+		$newsletter_posts = new_cmb2_box(
 			array(
 				'id'           => $prefix . 'top_posts',
-				'title'        => __( 'Top Stories', 'minnpost-largo' ),
+				'title'        => __( 'Newsletter Content', 'minnpost-largo' ),
 				'object_types' => array( $object_type ), // Post type
 				'context'      => 'normal',
 				'priority'     => 'high',
 				'show_names'   => true, // Show field names on the left
 			)
 		);
-		$newsletter_top_posts->add_field(
+		$newsletter_posts->add_field(
 			minnpost_post_search_field(
 				array(
 					'name'       => __( 'Top Stories', 'minnpost-largo' ),
-					'desc'       => __( 'Search for a post here', 'minnpost-largo' ),
+					'desc'       => __( 'Search for a post here.', 'minnpost-largo' ),
 					'id'         => $prefix . 'top_posts',
 					'query_args' => array(
 						'orderby'     => 'modified',
 						'order'       => 'DESC',
 						'post_status' => 'any',
 					),
+					'attributes' => array(
+						'data-conditional-id'    => $prefix . 'type',
+						'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+					),
 				),
 				'post_search_ajax'
 			)
 		);
-		$newsletter_top_posts->add_field(
+		$newsletter_posts->add_field(
 			array(
-				'name' => __( 'Top Stories Manual Override', 'minnpost-largo' ),
-				'id'   => $prefix . 'top_posts_override',
-				'type' => 'text',
-				'desc' => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them in the order they are entered instead of the search field value.', 'minnpost-largo' ),
+				'name'       => __( 'Top Stories Manual Override', 'minnpost-largo' ),
+				'id'         => $prefix . 'top_posts_override',
+				'type'       => 'text',
+				'desc'       => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them in the order they are entered instead of the search field value.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
 			)
 		);
-		$newsletter_more_posts = new_cmb2_box(
-			array(
-				'id'           => $prefix . 'more_posts',
-				'title'        => __( 'More Stories', 'minnpost-largo' ),
-				'object_types' => array( $object_type ), // Post type
-				'context'      => 'normal',
-				'priority'     => 'high',
-				'show_names'   => true, // Show field names on the left
-			)
-		);
-		$newsletter_more_posts->add_field(
+		$newsletter_posts->add_field(
 			minnpost_post_search_field(
 				array(
 					'name'       => __( 'More Stories', 'minnpost-largo' ),
-					'desc'       => __( 'Search for a post here', 'minnpost-largo' ),
+					'desc'       => __( 'Search for a post here.', 'minnpost-largo' ),
 					'id'         => $prefix . 'more_posts',
 					'query_args' => array(
 						'orderby'     => 'modified',
 						'order'       => 'DESC',
 						'post_status' => 'any',
 					),
+					'attributes' => array(
+						'data-conditional-id'    => $prefix . 'type',
+						'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+					),
 				)
 			)
 		);
-		$newsletter_more_posts->add_field(
+		$newsletter_posts->add_field(
 			array(
-				'name' => __( 'More Stories Manual Override', 'minnpost-largo' ),
-				'id'   => $prefix . 'more_posts_override',
-				'type' => 'text',
-				'desc' => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them in the order they are entered instead of the search field value.', 'minnpost-largo' ),
+				'name'       => __( 'More Stories Manual Override', 'minnpost-largo' ),
+				'id'         => $prefix . 'more_posts_override',
+				'type'       => 'text',
+				'desc'       => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them in the order they are entered instead of the search field value.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
+			)
+		);
+		$newsletter_posts->add_field(
+			minnpost_post_search_field(
+				array(
+					'name'       => __( 'Republishable Stories', 'minnpost-largo' ),
+					'desc'       => __( 'Search for a post here.', 'minnpost-largo' ),
+					'id'         => $prefix . 'republishable_posts',
+					'query_args' => array(
+						'orderby'     => 'modified',
+						'order'       => 'DESC',
+						'post_status' => 'any',
+					),
+					'attributes' => array(
+						'data-conditional-id'    => $prefix . 'type',
+						'data-conditional-value' => 'republication',
+					),
+				),
+				'post_search_ajax'
+			)
+		);
+		$newsletter_posts->add_field(
+			array(
+				'name'        => __( 'Preview of Upcoming Stories', 'minnpost-largo' ),
+				'id'          => $prefix . 'upcoming',
+				'type'        => 'wysiwyg',
+				'options'     => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'textarea_rows' => 5,
+					'teeny'         => true, // output the minimal editor config used in Press This
+				),
+				'desc'        => __( 'Use this to describe upcoming stories for this edition.', 'minnpost-largo' ),
+				'attributes'  => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => 'republication',
+				),
+				'after_field' => '<input name="asdf" type="hidden" data-conditional-id="' . $prefix . 'type' . '" data-conditional-value="republication">', // hack to fix the condtional display
 			)
 		);
 	}
@@ -277,6 +355,43 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		);
 
 		/**
+		 * Subtitle settings
+		 */
+		$subtitle_settings = new_cmb2_box(
+			array(
+				'id'           => 'subtitle_settings',
+				'title'        => __( 'Byline & Subtitle Settings', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'closed'       => true,
+			)
+		);
+		$subtitle_settings->add_field(
+			array(
+				'name' => __( 'After Multiple Authors', 'minnpost-largo' ),
+				'id'   => '_mp_subtitle_settings_after_authors',
+				'type' => 'text',
+				'desc' => __( 'Proceeded by a |, this value will display right after the authors if there are more than one. For example, to show "Tom Nehil and Greta Kaul | MinnPost Staff," put "MinnPost Staff" into this field.', 'minnpost-largo' ),
+			)
+		);
+		$subtitle_settings->add_field(
+			array(
+				'name' => __( 'Byline', 'minnpost-largo' ),
+				'id'   => '_mp_subtitle_settings_byline',
+				'type' => 'text',
+				'desc' => __( 'This value will override any authors associated with this post.', 'minnpost-largo' ),
+			)
+		);
+		$subtitle_settings->add_field(
+			array(
+				'name' => __( 'Deck', 'minnpost-largo' ),
+				'id'   => '_mp_subtitle_settings_deck',
+				'type' => 'text',
+			)
+		);
+
+		/**
 		 * SEO and social meta settings
 		 */
 		$seo_settings = new_cmb2_box(
@@ -291,56 +406,32 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		);
 		$seo_settings->add_field(
 			array(
-				'name'       => 'Title',
-				'id'         => '_mp_seo_title',
-				'type'       => 'text',
-				'desc'       => sprintf(
+				'name'         => 'Title',
+				'id'           => '_mp_seo_title',
+				'type'         => 'text',
+				'char_counter' => true,
+				'char_max'     => 78,
+				'desc'         => sprintf(
 					// translators: 1) the sitename
 					esc_html__( 'If you do not fill this out, the post title will be used. If you do fill it out and do not include %1$s in the value, it will be placed at the end in this way: Your Title | %1$s' ),
 					get_bloginfo( 'name' )
 				),
-				'attributes' => array(
+				'attributes'   => array(
 					'maxlength' => 78, // retrieved from https://seopressor.com/blog/google-title-meta-descriptions-length/ on 9/27/2018
 				),
 			)
 		);
 		$seo_settings->add_field(
 			array(
-				'name'       => 'Description',
-				'id'         => '_mp_seo_description',
-				'type'       => 'textarea_small',
-				'attributes' => array(
+				'name'         => 'Description',
+				'id'           => '_mp_seo_description',
+				'type'         => 'textarea_small',
+				'char_counter' => true,
+				'char_max'     => 300,
+				'attributes'   => array(
 					'maxlength' => 300, // retrieved from https://moz.com/blog/how-long-should-your-meta-description-be-2018 on 9/27/2018
 				),
-				'desc'       => esc_html__( 'If you do not fill this out, the post excerpt will be used.' ),
-			)
-		);
-
-		/**
-		 * Subtitle settings
-		 */
-		$subtitle_settings = new_cmb2_box(
-			array(
-				'id'           => 'subtitle_settings',
-				'title'        => __( 'Subtitle Settings', 'minnpost-largo' ),
-				'object_types' => array( $object_type ),
-				'context'      => 'normal',
-				'priority'     => 'high',
-				'closed'       => true,
-			)
-		);
-		$subtitle_settings->add_field(
-			array(
-				'name' => __( 'Byline', 'minnpost-largo' ),
-				'id'   => '_mp_subtitle_settings_byline',
-				'type' => 'text',
-			)
-		);
-		$subtitle_settings->add_field(
-			array(
-				'name' => __( 'Deck', 'minnpost-largo' ),
-				'id'   => '_mp_subtitle_settings_deck',
-				'type' => 'text',
+				'desc'         => esc_html__( 'If you do not fill this out, the post excerpt will be used.' ),
 			)
 		);
 
@@ -423,30 +514,6 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'context'      => 'normal',
 				'priority'     => 'high',
 				'closed'       => true,
-			)
-		);
-		$display_settings->add_field(
-			array(
-				'name' => __( 'Prevent automatic embed ads?', 'minnpost-largo' ),
-				'id'   => '_mp_prevent_automatic_ads',
-				'type' => 'checkbox',
-				'desc' => __( 'If checked, this post will not contain automatic embed ads.', 'minnpost-largo' ),
-			)
-		);
-		$display_settings->add_field(
-			array(
-				'name' => __( 'Prevent all embed ads?', 'minnpost-largo' ),
-				'id'   => '_mp_prevent_ads',
-				'type' => 'checkbox',
-				'desc' => __( 'If checked, this post will not contain any embed ads.', 'minnpost-largo' ),
-			)
-		);
-		$display_settings->add_field(
-			array(
-				'name' => __( 'Prevent lazy loading of embed ads?', 'minnpost-largo' ),
-				'id'   => 'arcads_dfp_acm_provider_post_prevent_lazyload',
-				'type' => 'checkbox',
-				'desc' => __( 'If checked, this post will not attempt to lazy load embed ads.', 'minnpost-largo' ),
 			)
 		);
 		$display_settings->add_field(
@@ -535,6 +602,65 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 					'top'     => __( 'Top', 'minnpost-largo' ),
 					'bottom'  => __( 'Bottom', 'minnpost-largo' ),
 				),
+			)
+		);
+
+		/**
+		 * Ad & Sponsorship settings
+		 */
+		$ad_settings = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_ad_settings',
+				'title'        => __( 'Ad & Sponsorship Settings', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'closed'       => true,
+			)
+		);
+		$ad_settings->add_field(
+			array(
+				'name' => __( 'Prevent automatic embed ads?', 'minnpost-largo' ),
+				'id'   => '_mp_prevent_automatic_ads',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not contain automatic embed ads.', 'minnpost-largo' ),
+			)
+		);
+		$ad_settings->add_field(
+			array(
+				'name' => __( 'Prevent all embed ads?', 'minnpost-largo' ),
+				'id'   => '_mp_prevent_ads',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not contain any embed ads.', 'minnpost-largo' ),
+			)
+		);
+		$ad_settings->add_field(
+			array(
+				'name' => __( 'Prevent lazy loading of embed ads?', 'minnpost-largo' ),
+				'id'   => 'arcads_dfp_acm_provider_post_prevent_lazyload',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not attempt to lazy load embed ads.', 'minnpost-largo' ),
+			)
+		);
+		$ad_settings->add_field(
+			array(
+				'name'    => __( 'Sponsorship', 'minnpost-largo' ),
+				'id'      => '_mp_post_sponsorship',
+				'type'    => 'wysiwyg',
+				'desc'    => __( 'This field overrides a sponsorship message from the category that contains a post.', 'minnpost-largo' ),
+				'options' => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'textarea_rows' => 5,
+					'teeny'         => true, // output the minimal editor config used in Press This
+				),
+			)
+		);
+		$ad_settings->add_field(
+			array(
+				'name' => __( 'Prevent sponsorship display', 'minnpost-largo' ),
+				'id'   => '_mp_prevent_post_sponsorship',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not display any sponsorship message.', 'minnpost-largo' ),
 			)
 		);
 
@@ -628,7 +754,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		$related_settings->add_field(
 			array(
 				'name'       => __( 'Link to a related category', 'minnpost-largo' ),
-				'desc'       => __( 'This post will contain a link to "More ___ articles" if there is a value.', 'minnpost-largo' ),
+				'desc'       => __( 'Search for a category here. If present, it will override the default category based on the permalink.', 'minnpost-largo' ),
 				'id'         => '_mp_related_category',
 				'type'       => 'term_ajax_search',
 				'query_args' => array(
@@ -640,7 +766,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		$related_settings->add_field(
 			array(
 				'name'       => __( 'Link to a related tag', 'minnpost-largo' ),
-				'desc'       => __( 'This post will contain a link to "More ___ articles" if there is a value.', 'minnpost-largo' ),
+				'desc'       => __( 'Search for a tag here.', 'minnpost-largo' ),
 				'id'         => '_mp_related_tag',
 				'type'       => 'term_ajax_search',
 				'query_args' => array(
@@ -915,15 +1041,108 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 endif;
 
 /**
-* Remove the default description from categories
-* We do this because we have a whole body field for categories; it is a wysiwyg field
+* Add custom fields to tags
 *
 */
-if ( ! function_exists( 'remove_default_category_description' ) ) :
-	add_action( 'admin_head', 'remove_default_category_description' );
-	function remove_default_category_description() {
+if ( ! function_exists( 'cmb2_tag_fields' ) ) :
+	add_action( 'cmb2_init', 'cmb2_tag_fields' );
+	function cmb2_tag_fields() {
+
+		$object_type = 'term';
+
+		/**
+		 * Tag settings
+		 */
+		$tag_setup = new_cmb2_box(
+			array(
+				'id'               => 'tag_properties',
+				'title'            => __( 'Tag Settings', 'minnpost-largo' ),
+				'object_types'     => array( $object_type ),
+				'taxonomies'       => array( 'post_tag' ),
+				'new_term_section' => false, // will display in add category sidebar
+			)
+		);
+		// text fields
+		$tag_setup->add_field(
+			array(
+				'name'    => __( 'Excerpt', 'minnpost-largo' ),
+				'id'      => '_mp_tag_excerpt',
+				'type'    => 'wysiwyg',
+				'options' => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'textarea_rows' => 5,
+					'teeny'         => true, // output the minimal editor config used in Press This
+				),
+			)
+		);
+		$tag_setup->add_field(
+			array(
+				'name'    => __( 'Sponsorship', 'minnpost-largo' ),
+				'id'      => '_mp_tag_sponsorship',
+				'type'    => 'wysiwyg',
+				'options' => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'textarea_rows' => 5,
+					'teeny'         => true, // output the minimal editor config used in Press This
+				),
+			)
+		);
+		// image fields
+		$tag_setup->add_field(
+			array(
+				'name'       => __( 'Tag Thumbnail', 'minnpost-largo' ),
+				'id'         => '_mp_tag_thumbnail_image',
+				'type'       => 'file',
+				'query_args' => array(
+					'type' => 'image',
+				),
+			)
+		);
+		$tag_setup->add_field(
+			array(
+				'name'       => __( 'Tag Main Image', 'minnpost-largo' ),
+				'id'         => '_mp_tag_main_image',
+				'type'       => 'file',
+				// query_args are passed to wp.media's library query.
+				'query_args' => array(
+					'type' => 'image',
+				),
+			)
+		);
+		// main body field
+		$tag_setup->add_field(
+			array(
+				'name'    => __( 'Body', 'minnpost-largo' ),
+				'id'      => '_mp_tag_body',
+				'type'    => 'wysiwyg',
+				'options' => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'teeny'         => false, // output the minimal editor config used in Press This
+				),
+			)
+		);
+		$tag_setup->add_field(
+			array(
+				'name' => __( 'Prevent lazy loading of image?', 'minnpost-largo' ),
+				'id'   => '_mp_prevent_lazyload',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, the image for this tag will not be lazy loaded.', 'minnpost-largo' ),
+			)
+		);
+	}
+
+endif;
+
+/**
+* Remove the default description from categories and tags
+* We do this because we have a whole body field for them; it is a wysiwyg field
+*
+*/
+if ( ! function_exists( 'remove_default_category_tag_description' ) ) :
+	add_action( 'admin_head', 'remove_default_category_tag_description' );
+	function remove_default_category_tag_description() {
 		global $current_screen;
-		if ( 'edit-category' === $current_screen->id ) { ?>
+		if ( 'edit-category' === $current_screen->id || 'edit-post_tag' === $current_screen->id ) { ?>
 			<script>
 			jQuery(function($) {
 				$('textarea#description, textarea#tag-description').closest('tr.form-field, div.form-field').remove();
@@ -1027,6 +1246,40 @@ if ( ! function_exists( 'minnpost_largo_set_grouped_categories' ) ) :
 			}
 
 			return ! ! $updated;
+		}
+	}
+endif;
+
+/**
+* Manage admin columns for categories
+* @param array $category_columns
+* @return array $category_columns
+*
+*/
+if ( ! function_exists( 'minnpost_largo_manage_category_columns' ) ) :
+	add_filter( 'manage_edit-category_columns', 'minnpost_largo_manage_category_columns', 10, 2 );
+	function minnpost_largo_manage_category_columns( $category_columns ) {
+		$category_columns['_mp_category_group'] = __( 'Category Group', 'minnpost-largo' );
+		return $category_columns;
+	}
+endif;
+
+/**
+* Add data to admin columns for categories
+* @param string $string is blank
+* @param string $column_name
+* @param int $term_id
+*
+*/
+if ( ! function_exists( 'minnpost_largo_manage_category_custom_fields' ) ) :
+	add_filter( 'manage_category_custom_column', 'minnpost_largo_manage_category_custom_fields', 10, 3 );
+	function minnpost_largo_manage_category_custom_fields( $string, $column_name, $term_id ) {
+		if ( '_mp_category_group' === $column_name ) {
+			$category_group_id = get_term_meta( $term_id, $column_name, true );
+			if ( '' !== $category_group_id ) {
+				$category = get_the_category_by_ID( $category_group_id );
+				echo $category;
+			}
 		}
 	}
 endif;
@@ -1776,5 +2029,23 @@ if ( ! function_exists( 'limit_liveblog_box' ) ) :
 		if ( ! current_user_can( 'enable_liveblog' ) ) {
 			remove_meta_box( 'liveblog', 'post', 'advanced' );
 		}
+	}
+endif;
+
+/**
+* Array of supported newsletter types
+*
+*/
+if ( ! function_exists( 'minnpost_largo_email_types' ) ) :
+	function minnpost_largo_email_types() {
+		$types = array(
+			'daily'             => __( 'Daily', 'minnpost-largo' ),
+			'greater_mn'        => __( 'Greater MN', 'minnpost-largo' ),
+			'sunday_review'     => __( 'Sunday Review', 'minnpost-largo' ),
+			'dc_memo'           => __( 'D.C. Memo', 'minnpost-largo' ),
+			'daily_coronavirus' => __( 'Daily Coronavirus Update', 'minnpost-largo' ),
+			'republication'     => __( 'Republication', 'minnpost-largo' ),
+		);
+		return $types;
 	}
 endif;

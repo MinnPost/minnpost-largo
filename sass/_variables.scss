@@ -63,9 +63,9 @@ $html-font-size: 100%;
 // starts with the <html> element's font size value, so we
 // should change that based on our media queries
 :root {
-	$font-size-interval: 1.1;    // Unitless for proportional, unit for fixed
+	$font-size-interval: 1.125;    // Unitless for proportional, unit for fixed
 	$body-text: 1em;  // Must have a unit
-	$scale-min: -2;    // Unitless negative integer
+	$scale-min: -3;    // Unitless negative integer
 	$scale-max: 4;     // Unitless positive integer
 
 	--font-size-int: #{$font-size-interval};
@@ -102,10 +102,11 @@ $html-font-size: 100%;
 	}
 }
 
+// line height scale
 :root {
-	$line-height-interval: 1.0;
+	$line-height-interval: 0.95;
 	$body-line-height: 1.3;
-	$line-height-scale-min: -2;    // Unitless negative integer
+	$line-height-scale-min: -3;    // Unitless negative integer
 	$line-height-scale-max: 4;     // Unitless positive integer
 
 	--line-height-int: #{$line-height-interval};
@@ -185,13 +186,15 @@ $breakpoints: (
 	md: (cols:  8, min-width: 50em, margin: $gut), // 800px
 	lg: (cols: 12, min-width: 60em, margin: $mar), // 960px
 	xl: (cols: 16, min-width: 70em, margin: $mar), // 1120px
-	xxl: (cols: 16, min-width: 80em, margin: $mar) // 1280px
+	xxl: (cols: 16, min-width: 80em, margin: $mar), // 1280px
+    xxxl: (cols: 16, min-width: 90em, margin: $mar) // 1440px
 );
 
 $max-width: null; // For no max-width, use $max-width: null;
 
 $size__site-sidebar: 300px; // this needs to be pixel based because of ad dimensions
 $max-width-page: 80em; // this is 1280px
+$max-width-popup: 92%;
 
 // site structure
 $max-width-medium: 680px;
@@ -215,6 +218,20 @@ $nav-move-end: 810px;
 $large-screen: 860px;
 $nav-wrap-screen: 950px; // replace with "lg" media query
 
+// ------------------------------------------------------------
+// Z-INDEXES
+// ------------------------------------------------------------
+
+$z-index__xxxl: 1000000000;
+$z-index__xxl: 100000000;
+$z-index__xl: 10000000;
+$z-index__lg: 1000000;
+$z-index__md: 100000;
+$z-index__sm: 10000;
+$z-index__xs: 1000;
+$z-index__xxs: 100;
+$z-index__xxxs: 10;
+
 // site region sizes
 $size__main-smaller-screen: 50%;
 $size__main-small-screen: 65%;
@@ -225,21 +242,18 @@ $size__content-sidebar-small-screen: 280px;
 $size__content-sidebar-medium-screen: 35%;
 $size__content-sidebar-large-screen: 205px;
 
-// footer
-$size__footer-column: 270px;
-
 /*------------------------------------*\
 	#SPACING
 \*------------------------------------*/
 
 // margin/padding
 $standard-block-margin: 1.5em; // 36px at desktop
+$standard-heading-margin: 0.75em; // 18px at desktop
 $standard-block-padding: 0.5em; // 12px at body
 
 $standard-page-margin: 1.538461538461538em; // 20px
 $home-content-sidebar-padding: 35px;
 $archive-content-sidebar-padding: 15px;
-$footer-box-spacing: 15px;
 $form-text-indent: 6px;
 
 /*------------------------------------*\
@@ -254,13 +268,18 @@ $border-default-style: 1px solid neutral-color(border);
 \*------------------------------------*/
 
 $hover-transition: .25s all;
+$double-transition: .5s all;
 
 /*------------------------------------*\
 	#Fixed Sizes
 \*------------------------------------*/
 
+// images
+$author-photo-size: 190px;
+
 // icons
 $share-icon-size: 2em;
+$inline-icon-size: 1em;
 
 // ads
 $ad-top-width: 728px;
@@ -271,3 +290,7 @@ $ad-embed-width: 300px;
 $ad-embed-height: 250px;
 $ad-halfpage-width: 300px;
 $ad-halfpage-height: 600px;
+
+// touch targets
+$touch-target-minimum-size: 44px;
+$touch-target-minimum-size-desktop: 32px;

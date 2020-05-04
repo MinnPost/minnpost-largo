@@ -152,6 +152,90 @@ if ( ! function_exists( 'minnpost_largo_get_og_image_thumbnail' ) ) :
 	}
 endif;
 
+// Schema filters. these currently depend on the https://wordpress.org/plugins/schema-and-structured-data-for-wp/ plugin.
+/**
+* Change the input array for the news article schema to theme methods when they're available
+*
+* @param array $input
+* @return array $input
+*/
+if ( ! function_exists( 'minnpost_largo_news_article_schema' ) ) :
+	add_filter( 'saswp_modify_news_article_schema_output', 'minnpost_largo_news_article_schema', 10, 1 );
+	function minnpost_largo_news_article_schema( $input ) {
+		// title/desc can be set as seo values, or they get the standard ones
+		if ( isset( $input['headline'] ) && function_exists( 'minnpost_largo_get_title' ) ) {
+			$input['headline'] = minnpost_largo_get_title();
+		}
+		if ( isset( $input['description'] ) && function_exists( 'minnpost_largo_get_description' ) ) {
+			$input['description'] = minnpost_largo_get_description();
+		}
+		// author
+		if ( isset( $input['author'] ) && function_exists( 'minnpost_largo_get_author_schema' ) ) {
+			$input['author'] = minnpost_largo_get_author_schema();
+			//error_log( 'author is ' . print_r( $input['author'], true ) );
+		}
+		// the tags are already present as the keywords
+		// images
+
+		// thumbnail
+		if ( isset( $input['thumbnailUrl'] ) && function_exists( 'minnpost_largo_get_og_image' ) ) {
+			if ( '' !== minnpost_largo_get_og_image() && minnpost_largo_get_og_default() !== minnpost_largo_get_og_image() ) {
+				$input['thumbnailUrl'] = minnpost_largo_get_og_image();
+			} elseif ( '' !== minnpost_largo_get_og_image_thumbnail() ) {
+				$input['thumbnailUrl'] = minnpost_largo_get_og_image_thumbnail();
+			} else {
+				$input['thumbnailUrl'] = minnpost_largo_get_og_image();
+			}
+		}
+		return $input;
+	}
+endif;
+
+/**
+* Generate the author schema for co-authors-plus data.
+*
+* @return array $pieces
+*/
+if ( ! function_exists( 'minnpost_largo_author_schema' ) ) :
+	function minnpost_largo_get_author_schema() {
+
+		$coauthors = get_coauthors( get_the_ID() );
+		$pieces    = [];
+		foreach ( $coauthors as $coauthor ) {
+			$data = array(
+				//'@id' => $id,
+				'@type' => 'Person',
+				'name'  => $coauthor->display_name,
+			);
+			// meta fields
+			$bio       = get_post_meta( $coauthor->ID, '_mp_author_excerpt', true );
+			$job_title = get_post_meta( $coauthor->ID, 'cap-job-title', true );
+			$email     = get_post_meta( $coauthor->ID, 'cap-user_email', true );
+			if ( '' !== $bio ) {
+				$data['description'] = strip_tags( $bio );
+			}
+			if ( '' !== $job_title ) {
+				$data['JobTitle'] = $job_title;
+			}
+			if ( '' !== $email ) {
+				$data['email'] = $email;
+			}
+			if ( ! empty( $coauthor->website ) ) {
+				$data['sameAs'] = $coauthor->website;
+			}
+			// image
+			if ( function_exists( 'minnpost_get_author_image' ) ) {
+				$image_data = minnpost_get_author_image( $coauthor->ID );
+				if ( ! empty( $image_data ) ) {
+					$data['image'] = $image_data['image_url'];
+				}
+			}
+			$pieces[] = $data;
+		}
+		return $pieces;
+	}
+endif;
+
 /**
 * Set meta tags in <head>
 *
@@ -161,23 +245,15 @@ if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 	function minnpost_largo_add_meta_tags() {
 		?>
 		<meta property="og:site_name" content="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
-		<link rel="shortcut icon" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/favicon.ico' ) ); ?>" type="image/x-icon">
-
-		<link rel="icon" type="image/png" sizes="16x16" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/favicon-16x16.png' ) ); ?>">
-		<link rel="icon" type="image/png" sizes="32x32" href="<?php echo esc_url( get_theme_file_uri( 'assets/img/app-icons/favicon-32x32.png' ) ); ?>">
-		<link rel="apple-touch-icon" sizes="76x76" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/icon-76x76.png' ) ); ?>">
-		<link rel="apple-touch-icon" sizes="120x120" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/icon-120x120.png' ) ); ?>">
-		<link rel="icon" sizes="128x128" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/icon-128x128.png' ) ); ?>">
-		<link rel="apple-touch-icon" sizes="152x152" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/icon-152x152.png' ) ); ?>">
-		<link rel="apple-touch-icon" sizes="180x180" href="<?php echo esc_url( get_theme_file_uri( 'assets/img/app-icons/apple-touch-icon.png' ) ); ?>">
-		<link rel="icon" sizes="192x192" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/icon-192x192.png' ) ); ?>">
-
-		<link rel="mask-icon" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/mp.svg' ) ); ?>" color="#5bbad5">
-		<meta name="msapplication-TileColor" content="#da532c">
-		<meta name="msapplication-TileImage" content="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/mstile-144x144.png' ) ); ?>">
-		<meta name="msapplication-config" content="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/browserconfig.xml' ) ); ?>">
+		<link rel="shortcut icon" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/favicon.ico?v=' . filemtime( get_theme_file_path() . '/assets/img/app-icons/favicon.ico' ) ) ); ?>" type="image/x-icon">
+		<link rel="icon" type="image/png" sizes="16x16" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/favicon-16x16.png?v=' . filemtime( get_theme_file_path() . '/assets/img/app-icons/favicon-16x16.png' ) ) ); ?>">
+		<link rel="icon" type="image/png" sizes="32x32" href="<?php echo esc_url( get_theme_file_uri( 'assets/img/app-icons/favicon-32x32.png?v=' . filemtime( get_theme_file_path() . '/assets/img/app-icons/favicon-32x32.png' ) ) ); ?>">
+		<link rel="apple-touch-icon" sizes="180x180" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/apple-touch-icon.png?v=' . filemtime( get_theme_file_path() . '/assets/img/app-icons/apple-touch-icon.png' ) ) ); ?>">
+		<link rel="mask-icon" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/safari-pinned-tab.svg?v=' . filemtime( get_theme_file_path() . '/assets/img/app-icons/safari-pinned-tab.svg' ) ) ); ?>" color="#801018">
+		<meta name="msapplication-TileColor" content="#801018">
+		<meta name="msapplication-TileImage" content="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/mstile-144x144.png?v=' . filemtime( get_theme_file_path() . '/assets/img/app-icons/mstile-144x144.png' ) ) ); ?>">
+		<meta name="msapplication-config" content="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/browserconfig.xml?v=' . filemtime( get_theme_file_path() . '/assets/img/app-icons/browserconfig.xml' ) ) ); ?>">
 		<meta name="theme-color" content="#ffffff">
-
 		<?php
 		echo sprintf(
 			'<link rel="alternate" type="application/rss+xml" title="%1$s articles | RSS Feed" href="%2$s">',

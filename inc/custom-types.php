@@ -79,15 +79,31 @@ if ( ! function_exists( 'minnpost_newsletter_default_order' ) ) :
 endif;
 
 /**
-* Set which post types are indexable by Elasticpress
+* Add Co-Authors-Plus support to Newsletters
 *
 * @param array $post_types
 * @return array $post_types
 *
 */
-if ( ! function_exists( 'minnpost_indexable_post_types' ) ) :
-	add_filter( 'ep_indexable_post_types', 'minnpost_indexable_post_types', 11 );
-	function minnpost_indexable_post_types( $post_types ) {
+add_filter(
+	'coauthors_supported_post_types',
+	function( $post_types ) {
+		$post_types[] = 'newsletter';
+		return $post_types;
+	}
+);
+
+/**
+ * Change which post types are publicly searchable, even if they are indexed by ElasticSearch
+ * In https://github.com/Automattic/vip-go-mu-plugins/blob/master/shared-plugins/vip-go-elasticsearch/vip-go-elasticsearch.php, VIP indicates that they default to post types that don't have exclude_from_search in the args.
+ *
+ * @param string $post_type the name of the post type
+ * @param object $args the post type args
+ */
+if ( ! function_exists( 'minnpost_exclude_from_search' ) ) :
+	add_action( 'registered_post_type', 'minnpost_exclude_from_search', 10, 2 );
+	function minnpost_exclude_from_search( $post_type, $args ) {
+
 		/* default value with non-public types enabled is:
 		$post_types = array(
 			'post'                => 'post',
@@ -119,27 +135,6 @@ if ( ! function_exists( 'minnpost_indexable_post_types' ) ) :
 			'newsletter'          => 'newsletter',
 		);
 		*/
-		$non_indexable_types = array(
-			'partner_offer'    => 'partner_offer',
-			'message'          => 'message',
-			'scheduled-action' => 'message',
-			'wp_log'           => 'wp_log',
-			'deleted_event'    => 'wp_log',
-		);
-		$post_types          = array_diff_assoc( $post_types, $non_indexable_types );
-		return $post_types;
-	}
-endif;
-
-/**
- * Change which post types are publicly searchable, even if they are indexed by ElasticSearch
- *
- * @param string $post_type the name of the post type
- * @param object $args the post type args
- */
-if ( ! function_exists( 'minnpost_exclude_from_search' ) ) :
-	add_action( 'registered_post_type', 'minnpost_exclude_from_search', 10, 2 );
-	function minnpost_exclude_from_search( $post_type, $args ) {
 
 		$types_to_exclude = array(
 			'attachment',
@@ -149,6 +144,7 @@ if ( ! function_exists( 'minnpost_exclude_from_search' ) ) :
 			'guest-author',
 			'cr3ativsponsor',
 			'message',
+			'nav_menu_item',
 		);
 
 		if ( ! in_array( $post_type, $types_to_exclude ) ) {
@@ -217,16 +213,19 @@ if ( ! function_exists( 'minnpost_message_regions' ) ) :
 	add_filter( 'wp_message_inserter_regions', 'minnpost_message_regions' );
 	function minnpost_message_regions( $regions ) {
 		$regions = array(
-			'header'          => __( 'Site Header', 'minnpost-largo' ),
-			'article_bottom'  => __( 'Article Bottom', 'minnpost-largo' ),
-			'homepage_middle' => __( 'Homepage Middle', 'minnpost-largo' ),
-			//'article_middle'  => __( 'Article Middle', 'minnpost-largo' ),
-			'archive_middle'  => __( 'Archive Middle', 'minnpost-largo' ),
-			'user_account'    => __( 'User Account', 'minnpost-largo' ),
-			'popup'           => __( 'Popup', 'minnpost-largo' ),
-			'email_header'    => __( 'Email Header', 'minnpost-largo' ),
-			'email_middle'    => __( 'Email Middle', 'minnpost-largo' ),
-			'email_footer'    => __( 'Email Footer', 'minnpost-largo' ),
+			'header'             => __( 'Site Header', 'minnpost-largo' ),
+			'above_article_body' => __( 'Above Article Body', 'minnpost-largo' ),
+			//'article_middle'   => __( 'Article Middle', 'minnpost-largo' ),
+			'below_article_body' => __( 'Below Article Body', 'minnpost-largo' ),
+			'article_bottom'     => __( 'Article Bottom', 'minnpost-largo' ),
+			'homepage_middle'    => __( 'Homepage Middle', 'minnpost-largo' ),
+			'archive_middle'     => __( 'Archive Middle', 'minnpost-largo' ),
+			'user_account'       => __( 'User Account', 'minnpost-largo' ),
+			'popup'              => __( 'Popup', 'minnpost-largo' ),
+			'email_header'       => __( 'Email Header', 'minnpost-largo' ),
+			'email_middle'       => __( 'Email Middle', 'minnpost-largo' ),
+			'email_before_bios'  => __( 'Email Before Bios', 'minnpost-largo' ),
+			'email_bottom'       => __( 'Email Bottom', 'minnpost-largo' ),
 		);
 		return $regions;
 	}

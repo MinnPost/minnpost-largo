@@ -198,40 +198,6 @@ add_action(
 );
 
 /**
-* Easy method to highlight the search string in the search result
-*
-* @param string $text
-*
-* @return string $text
-*/
-if ( ! function_exists( 'highlight_search_results' ) ) :
-	// this filter runs on the_excerpt and the_title
-	// to highlight inside both locations for search result pages
-	add_filter( 'the_excerpt', 'highlight_search_results' );
-	add_filter( 'the_title', 'highlight_search_results' );
-	function highlight_search_results( $text ) {
-		if ( is_search() && ! is_admin() ) {
-			$sr          = get_query_var( 's' );
-			$highlighted = preg_filter( '/' . preg_quote( $sr, '/' ) . '/i', '<span class="a-search-highlight">$0</span>', $text );
-			if ( ! empty( $highlighted ) ) {
-				$text = $highlighted;
-			}
-		}
-		return $text;
-	}
-endif;
-
-/**
- * Redirection Plugin Editor access
- */
-if ( ! function_exists( 'redirection_to_editor' ) ) :
-	add_filter( 'redirection_role', 'redirection_to_editor' );
-	function redirection_to_editor() {
-		return 'edit_pages';
-	}
-endif;
-
-/**
  * default editor for certain posts
  */
 if ( ! function_exists( 'minnpost_set_default_editor' ) ) :
@@ -257,13 +223,13 @@ if ( ! function_exists( 'minnpost_set_default_editor' ) ) :
 endif;
 
 /**
- * Use ElasticPress for Zoninator zone queries
+ * Use Elasticsearch for Zoninator zone queries
  * @param array $args
  * @return array $args
  */
-if ( ! function_exists( 'minnpost_zoninator_elasticpress' ) ) :
-	add_filter( 'zoninator_recent_posts_args', 'minnpost_zoninator_elasticpress' );
-	function minnpost_zoninator_elasticpress( $args ) {
+if ( ! function_exists( 'minnpost_zoninator_elasticsearch' ) ) :
+	add_filter( 'zoninator_recent_posts_args', 'minnpost_zoninator_elasticsearch' );
+	function minnpost_zoninator_elasticsearch( $args ) {
 		if ( 'production' === VIP_GO_ENV ) {
 			$args['es'] = true; // elasticsearch on production only
 		}
@@ -272,7 +238,7 @@ if ( ! function_exists( 'minnpost_zoninator_elasticpress' ) ) :
 endif;
 
 /**
- * Use ElasticPress for message queries
+ * Use Elasticsearch for message queries
  * @param array $args
  * @return array $args
  */
@@ -283,18 +249,6 @@ if ( ! function_exists( 'minnpost_message_args' ) ) :
 			$args['es'] = true; // elasticsearch on production only
 		}
 		return $args;
-	}
-endif;
-
-/**
- * Turn off the view count because we don't use it anyway
- * @param bool $status
- * @return bool false
- */
-if ( ! function_exists( 'minnpost_turn_off_popular_views' ) ) :
-	add_filter( 'pop_set_post_view', 'minnpost_turn_off_popular_views' );
-	function minnpost_turn_off_popular_views( $status ) {
-		return false;
 	}
 endif;
 
@@ -356,5 +310,25 @@ if ( ! function_exists( 'minnpost_largo_grid_overlay_var' ) ) :
 	function minnpost_largo_grid_overlay_var( $vars ) {
 		$vars[] = 'grid';
 		return $vars;
+	}
+endif;
+
+/**
+* Hide the Republication sharing widget on posts that are
+* included in the category with the ID of 14 or 15.
+*
+* @return bool Whether or not the sharing widget should be hidden
+*/
+if ( ! function_exists( 'minnpost_largo_remove_republish_button_from_category' ) ) :
+	add_filter( 'hide_republication_widget', 'minnpost_largo_remove_republish_button_from_category', 10, 2 );
+	function minnpost_largo_remove_republish_button_from_category( $hide_republication_widget, $post ) {
+		if ( true !== $hide_republication_widget ) {
+			// if the current post is in either of these categories, return true
+			if ( in_category( array( 55628, 55630, 55622, 55619 ), $post->ID ) ) {
+				// returning true will cause the filter to hide the button
+				$hide_republication_widget = true;
+			}
+		}
+		return $hide_republication_widget;
 	}
 endif;
