@@ -63,31 +63,7 @@
 				?>
 			</nav><!-- #navigation-primary -->
 		</div>
-		<div class="o-wrapper o-wrapper-sub-navigation o-wrapper-topics-navigation">
-			<a class="a-subnav-label a-topics-label" href="/topics/"><?php echo __( 'Topics', 'minnpost-largo' ); ?></a>
-			<div class="m-sub-navigation m-topics">
-				<nav id="navigation-topics" class="m-subnav-navigation m-topics-navigation">
-					<?php
-					wp_nav_menu(
-						array(
-							'theme_location' => 'topics',
-							'menu_id'        => 'topics',
-							'depth'          => 1,
-							'container'      => false,
-							'walker'         => new Minnpost_Walker_Nav_Menu,
-							'items_wrap'     => '<ul id="%1$s" class="m-menu m-menu-sub-navigation m-menu-%1$s">%3$s</ul>',
-							//'item_classes'   => 'values',
-						)
-					);
-					?>
-				</nav><!-- #navigation-topics -->
-				<button class="nav-scroller-btn nav-scroller-btn--left" aria-label="Scroll left">
-					<i class="fas fa-chevron-left"></i></svg>
-				</button>
-				<button class="nav-scroller-btn nav-scroller-btn--right" aria-label="Scroll right"><i class="fas fa-chevron-right"></i></svg>
-				</button>
-			</div>
-		</div>
+		<?php minnpost_account_management_menu(); ?>
 	</header><!-- #masthead -->
 
 	<?php
