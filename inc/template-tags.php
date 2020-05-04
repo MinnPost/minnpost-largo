@@ -499,7 +499,7 @@ endif;
 if ( ! function_exists( 'minnpost_related_terms' ) ) :
 	function minnpost_related_terms() {
 		$related_terms = minnpost_get_related_terms();
-		if ( ( isset( $related_terms['category'] ) && ! is_wp_error( $related_terms['category'] ) ) || ( ! is_wp_error( $related_terms['tag'] ) && isset( $related_terms['tag'] ) ) ) :
+		if ( ( isset( $related_terms['category'] ) && ! is_wp_error( $related_terms['category'] ) ) || ( isset( $related_terms['tag'] ) && ! is_wp_error( $related_terms['tag'] ) ) ) :
 			?>
 			<?php if ( isset( $related_terms['category'] ) ) : ?>
 				<h3 class="a-related-title a-related-title-category">
@@ -1684,10 +1684,18 @@ if ( ! function_exists( 'minnpost_account_management_menu' ) ) :
 		$menu = get_minnpost_account_management_menu( $user_id );
 		?>
 		<?php if ( ! empty( $menu ) ) : ?>
-			<div id="navigation-account-management">
-				<nav id="navigation-user-account-management" class="m-secondary-navigation" role="navigation">
-					<?php echo $menu; ?>
-				</nav><!-- #navigation-user-account-management -->
+			<div class="o-wrapper o-wrapper-sub-navigation o-wrapper-user-account-management-navigation">
+				<a class="a-subnav-label a-user-account-management-label" href="/user/"><?php echo __( 'Your&nbsp;MinnPost&nbsp;Account', 'minnpost-largo' ); ?></a>
+				<div class="m-sub-navigation m-user-account-management">
+					<nav id="navigation-user-account-management" class="m-subnav-navigation m-user-account-management-navigation">
+						<?php echo $menu; ?>
+					</nav><!-- #navigation-user-account-management -->
+					<button class="nav-scroller-btn nav-scroller-btn--left" aria-label="Scroll left">
+						<i class="fas fa-chevron-left"></i></svg>
+					</button>
+					<button class="nav-scroller-btn nav-scroller-btn--right" aria-label="Scroll right"><i class="fas fa-chevron-right"></i></svg>
+					</button>
+				</div>
 			</div>
 		<?php endif; ?>
 		<?php
@@ -1723,7 +1731,8 @@ if ( ! function_exists( 'get_minnpost_account_management_menu' ) ) :
 					'menu_id'        => 'user-account-management',
 					'depth'          => 1,
 					'container'      => false,
-					'walker'         => new Minnpost_Walker_Nav_Menu( $user_id ),
+					'walker'         => new Minnpost_Walker_Nav_Menu ( $user_id ),
+					'items_wrap'     => '<ul id="%1$s" class="m-menu m-menu-sub-navigation m-menu-%1$s">%3$s</ul>',
 					'echo'           => false,
 				)
 			);
