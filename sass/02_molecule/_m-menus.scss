@@ -42,9 +42,10 @@ nav {
 		color: neutral-color(dark);
 		background: neutral-color(white);
 		padding: $standard-block-padding / 2;
+		font-size: var(--scale1);
 		border: $border-default-style;
 		border-radius: $border-radius;
-		transition: $hover-transition;
+		transition: $double-transition;
 
 		&:hover,
 		&:focus {
@@ -131,8 +132,6 @@ nav {
 			&[aria-expanded="true"] {
 				background: neutral-color(dark);
 				color: neutral-color(white);
-				//margin-bottom: -2px;
-				//border-bottom: 2px solid neutral-color(dark);
 			}
 
 			@include breakpoint-min( md ) {
@@ -169,14 +168,12 @@ nav {
 		}
 
 		> li {
-			//display: block;
 			display: flex;
     		align-self: stretch;
 
 			&[data-menu-item-priority="20"] {
 				display: none;
 				@include breakpoint-min( xs ) {
-					//display: block;
 					display: flex;
 				}
 			}
@@ -192,6 +189,7 @@ nav {
 					background: neutral-color(border);
 					color: neutral-color(black);
 				}
+
 				&[aria-expanded="true"] {
 					background: neutral-color(dark);
 					color: neutral-color(white);
@@ -207,10 +205,11 @@ nav {
 					font-size: var(--scale-1);
 					align-items: center;
 					width: 100%;
-					z-index: $z-index__xxxl;
-					background: neutral-color(medium);
+					background: neutral-color(dark);
+					color: neutral-color(white);
 					display: flex;
 					//transform: translateY(100%);
+					z-index: 0;
 					opacity: 0;
 					height: 0;
 					transition: $hover-transition;
@@ -220,6 +219,7 @@ nav {
 					}
 
 					&.is-open {
+						z-index: $z-index__xxxl;
 						opacity: 1;
 						height: 100%;
 					}
@@ -262,7 +262,7 @@ nav {
 							margin: 0 0 0 $standard-block-padding / 2;
 							border-radius: 50%;
 							color: neutral-color(white);
-							background: neutral-color(dark);
+							background: neutral-color(black);
 							height: 2em;
 							width: 2em;
 							font-size: 1em;
@@ -275,7 +275,7 @@ nav {
 							&:hover,
 							&:focus,
 							&:active {
-								background: neutral-color(border);
+								background: neutral-color(medium);
 								color: neutral-color(black);
 							}
 						}
@@ -311,7 +311,6 @@ nav {
 		//scroll-padding: 0 44px;
 
 		ul {
-			//min-height: 44px;
 			will-change: transform;
 			display: inline-flex;
 			align-items: center;
@@ -375,7 +374,6 @@ nav {
 		list-style: none;
 
 		&.m-menu-primary-links {
-			//top: -$standard-block-padding;
 			top: 0;
 			left: -$standard-block-padding;
 			transform: translateX(-150%);
@@ -396,6 +394,7 @@ nav {
 			}
 
 			li {
+
 				&:first-child {
 					margin-top: 3em;
 
@@ -597,8 +596,18 @@ nav {
 		li {
 			font-weight: bold;
 
+			a {
+				color: utility-color(blue, highlight);
+
+				&:hover,
+				&:focus,
+				&:active {
+					color: utility-color(blue, background);
+				}
+			}
+
 			&.active > a {
-			//	color: $color__minnpost-black;
+				color: utility-color(blue, background);
 			}
 
 			&:not(:last-child) {

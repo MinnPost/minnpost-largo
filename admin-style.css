@@ -29,6 +29,12 @@
 	display: none;
 }
 
+/* for now, custom field length counter needs an override */
+/* see: https://github.com/CMB2/CMB2/issues/1306 */
+.cmb2-char-counter {
+	width: 5em !important;
+}
+
 /* excerpt fixes */
 #cmb2_excerpt .cmb2-context-wrap .cmb-row {
 	padding: 0;

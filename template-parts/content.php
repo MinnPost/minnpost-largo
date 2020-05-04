@@ -20,7 +20,7 @@
 			<?php endif; ?>
 			<?php minnpost_plus_icon(); ?>
 		</div>
-		<?php minnpost_category_sponsorship(); ?>
+		<?php minnpost_post_category_sponsorship(); ?>
 	<?php endif; ?>
 
 	<?php
