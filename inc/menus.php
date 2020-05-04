@@ -14,15 +14,88 @@ if ( ! function_exists( 'minnpost_menus' ) ) :
 	function minnpost_menus() {
 		register_nav_menus(
 			array(
-				'footer_primary'          => __( 'Footer Primary', 'minnpost-largo' ), // main footer. about, advertise, member benefits, etc
+				'primary_links'           => __( 'Primary Categories', 'minnpost-largo' ), // main nav below logo
+				'primary_actions'         => __( 'Primary Actions', 'minnpost-largo' ), // main nav below logo
+				'topics'                  => __( 'Topics', 'minnpost-largo' ), // scrolling topics nav
 				'featured_columns'        => __( 'Featured Columns', 'minnpost-largo' ), // featured columns on homepage, category pages
-				'minnpost_network'        => __( 'Network Menu', 'minnpost-largo' ), // social networks
-				'primary_links'           => __( 'Primary', 'minnpost-largo' ), // main nav below logo
 				'user_account_access'     => __( 'User Account Access Menu', 'minnpost-largo' ), // menu where users log in/register/log out
 				'user_account_management' => __( 'User Account Management Menu', 'minnpost-largo' ), // menu where users manage their account info/preferences
+				'minnpost_network'        => __( 'Network Menu', 'minnpost-largo' ), // social networks
+				'footer_primary'          => __( 'Footer Primary', 'minnpost-largo' ), // main footer. about, advertise, member benefits, etc
 			)
 		);
 		unregister_nav_menu( 'menu-1' ); // we don't need whatever this is
+	}
+endif;
+
+/**
+* Add custom fields to menu
+*
+* @param int $item_id
+* @param object $item
+* @param int $depth
+* @param array $args
+*
+*/
+if ( ! function_exists( 'minnpost_largo_menu_custom_fields' ) ) :
+	add_action( 'wp_nav_menu_item_custom_fields', 'minnpost_largo_menu_custom_fields', 10, 4 );
+	function minnpost_largo_menu_custom_fields( $item_id, $item, $depth, $args ) {
+		wp_nonce_field( 'minnpost_largo_menu_meta_nonce', '_minnpost_largo_menu_meta_nonce_name' );
+		$minnpost_largo_menu_item_priority = get_post_meta( $item_id, '_minnpost_largo_menu_item_priority', true );
+		$minnpost_largo_menu_item_icon     = get_post_meta( $item_id, '_minnpost_largo_menu_item_icon', true );
+		?>
+		<input type="hidden" name="minnpost-largo-menu-meta-nonce" value="<?php echo wp_create_nonce( 'minnpost-largo-menu-meta-name' ); ?>">
+		<input type="hidden" class="nav-menu-id" value="<?php echo $item_id; ?>">
+		<p class="field-minnpost_largo_menu_item_priority description description-wide">
+			<label for="minnpost-largo-menu-meta-item-priority-for-<?php echo $item_id; ?>">
+				<?php echo esc_html__( 'Priority', 'minnpost-largo' ); ?>
+				<br>
+				<input type="number" name="minnpost_largo_menu_item_priority[<?php echo $item_id; ?>]" id="minnpost-largo-menu-meta-item-priority-for-<?php echo $item_id; ?>" value="<?php echo esc_attr( $minnpost_largo_menu_item_priority ); ?>">
+			</label>
+			<small class="description" style="display: inline-block;"><?php echo esc_html__( 'A low priority (ex 1) will cause the site to try to show this menu item at the smallest screen sizes. A higher priority will potentially hide this item on smaller screens, and show it as the screen gets bigger.', 'minnpost-largo' ); ?></small>
+		</p>
+		<p class="field-minnpost_largo_menu_item_icon description description-wide">
+			<label for="minnpost-largo-menu-meta-item-icon-for-<?php echo $item_id; ?>">
+				<?php echo esc_html__( 'Font Awesome Icon Name', 'minnpost-largo' ); ?>
+				<br>
+				<input type="text" name="minnpost_largo_menu_item_icon[<?php echo $item_id; ?>]" id="minnpost-largo-menu-meta-item-icon-for-<?php echo $item_id; ?>" value="<?php echo esc_attr( $minnpost_largo_menu_item_icon ); ?>">
+			</label>
+			<small class="description" style="display: inline-block;"><?php echo esc_html__( 'A value here will cause the menu item to display as an icon.', 'minnpost-largo' ); ?></small>
+		</p>
+		<?php
+	}
+endif;
+
+/**
+* Save the menu item meta fields
+*
+* @param int $menu_id
+* @param int $menu_item_db_id
+*/
+if ( ! function_exists( 'minnpost_largo_nav_update' ) ) :
+	add_action( 'wp_update_nav_menu_item', 'minnpost_largo_nav_update', 10, 2 );
+	function minnpost_largo_nav_update( $menu_id, $menu_item_db_id ) {
+
+		// Verify this came from our screen and with proper authorization.
+		if ( ! isset( $_POST['_minnpost_largo_menu_meta_nonce_name'] ) || ! wp_verify_nonce( $_POST['_minnpost_largo_menu_meta_nonce_name'], 'minnpost_largo_menu_meta_nonce' ) ) {
+			return $menu_id;
+		}
+
+		// menu item priority
+		if ( isset( $_POST['minnpost_largo_menu_item_priority'][ $menu_item_db_id ] ) ) {
+			$sanitized_data = sanitize_text_field( $_POST['minnpost_largo_menu_item_priority'][ $menu_item_db_id ] );
+			update_post_meta( $menu_item_db_id, '_minnpost_largo_menu_item_priority', $sanitized_data );
+		} else {
+			delete_post_meta( $menu_item_db_id, '_minnpost_largo_menu_item_priority' );
+		}
+
+		// menu item icon
+		if ( isset( $_POST['minnpost_largo_menu_item_icon'][ $menu_item_db_id ] ) ) {
+			$sanitized_data = sanitize_text_field( $_POST['minnpost_largo_menu_item_icon'][ $menu_item_db_id ] );
+			update_post_meta( $menu_item_db_id, '_minnpost_largo_menu_item_icon', $sanitized_data );
+		} else {
+			delete_post_meta( $menu_item_db_id, '_minnpost_largo_menu_item_icon' );
+		}
 	}
 endif;
 
