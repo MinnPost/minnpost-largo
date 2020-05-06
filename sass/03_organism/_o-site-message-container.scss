@@ -153,6 +153,10 @@
 		margin-bottom: $standard-block-margin;
 
 		@include breakpoint-min( lg ) {
+			width: colspan( 12, 8 );
+		}
+
+		@include breakpoint-min( xl ) {
 			width: colspan( 16, 12 );
 		}
 
