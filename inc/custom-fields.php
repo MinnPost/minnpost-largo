@@ -427,9 +427,9 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'id'           => '_mp_seo_description',
 				'type'         => 'textarea_small',
 				'char_counter' => true,
-				'char_max'     => 300,
+				'char_max'     => 155,
 				'attributes'   => array(
-					'maxlength' => 300, // retrieved from https://moz.com/blog/how-long-should-your-meta-description-be-2018 on 9/27/2018
+					'maxlength' => 155, // retrieved from https://moz.com/blog/how-long-should-your-meta-description-be-2018 on 9/27/2018
 				),
 				'desc'         => esc_html__( 'If you do not fill this out, the post excerpt will be used.' ),
 			)
