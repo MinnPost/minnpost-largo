@@ -1176,7 +1176,7 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_largo_set_grouped_categories' ) ) :
-	add_filter( 'cmb2_override__mp_grouped_categories_meta_save', 'minnpost_largo_set_grouped_categories', 10, 4 );
+	add_filter( 'cmb2_override__mp_category_grouped_categories_meta_save', 'minnpost_largo_set_grouped_categories', 10, 4 );
 	function minnpost_largo_set_grouped_categories( $override, $args, $field_args, $field ) {
 		if ( is_admin() && ( isset( $_GET['taxonomy'] ) && 'category' === sanitize_key( $_GET['taxonomy'] ) && isset( $_GET['tag_ID'] ) ) || isset( $_POST['tag_ID'] ) && 'category' === sanitize_key( $_POST['taxonomy'] ) ) {
 
