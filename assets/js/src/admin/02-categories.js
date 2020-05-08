@@ -7,7 +7,7 @@ function showHideCategoryGroupChoices( radio_value, checkboxes_selector ) {
 }
 
 function setupCategoryGroupChoices() {
-	var category_group_selector     = '.cmb2-id--mp-category-group input';
+	var category_group_selector     = '.cmb2-id--mp-category-group input:checked';
 	var grouped_categories_selector = '.cmb2-id--mp-category-grouped-categories';
 	if ( $( category_group_selector ).length > 0 || $( grouped_categories_selector ).length > 0 ) {
 		showHideCategoryGroupChoices( $( category_group_selector ).val(), grouped_categories_selector );
