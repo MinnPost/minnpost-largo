@@ -390,11 +390,11 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'id'           => '_mp_seo_description',
 				'type'         => 'textarea_small',
 				'char_counter' => true,
-				'char_max'     => 155,
+				'char_max'     => 200,
 				'attributes'   => array(
-					'maxlength' => 155, // retrieved from https://moz.com/blog/how-long-should-your-meta-description-be-2018 on 9/27/2018
+					'maxlength' => 200, // 155 is the number, but it's ok to go higher as long as the spider sees the most important stuff at the beginning. retrieved from https://moz.com/blog/how-to-write-meta-descriptions-in-a-changing-world on 5/8/2020
 				),
-				'desc'         => esc_html__( 'If you do not fill this out, the post excerpt will be used.' ),
+				'desc'         => esc_html__( 'When using this field, make sure the most important text is in the first 155 characters to ensure that Google can see it. If you do not fill it out, the post excerpt will be used.' ),
 			)
 		);
 
