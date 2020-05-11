@@ -153,11 +153,11 @@
 		margin-bottom: $standard-block-margin;
 
 		@include breakpoint-min( lg ) {
-			width: colspan( 12, 8 );
+			width: 100%;
 		}
 
 		@include breakpoint-min( xl ) {
-			width: colspan( 16, 12 );
+			width: 100%;
 		}
 
 		.m-wp-insert-message-item {

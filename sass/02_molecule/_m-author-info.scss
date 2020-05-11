@@ -2,7 +2,7 @@
 	margin-bottom: $standard-heading-margin;
 
 	@include breakpoint-min( lg ) {
-		width: colspan( 16, 12 );
+		width: 100%;
 	}
 
 	.a-author-figure {
