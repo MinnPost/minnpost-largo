@@ -54,6 +54,32 @@ if ( ! function_exists( 'minnpost_grouped_category_query' ) ) :
 endif;
 
 /**
+* Returns array of grouped categories for the given category
+*
+* @param int $category_id
+* @return array $grouped_categories
+*
+*/
+if ( ! function_exists( 'minnpost_get_grouped_categories' ) ) :
+	function minnpost_get_grouped_categories( $category_id = '' ) {
+		$grouped_categories_args = array(
+			'hide_empty' => true, // also retrieve terms which are not used yet
+			'fields'     => 'ids',
+			'meta_query' => array(
+				array(
+					'key'     => '_mp_category_group',
+					'value'   => $category_id,
+					'compare' => '=',
+				),
+			),
+			'taxonomy'   => 'category',
+		);
+		$grouped_categories      = get_terms( $grouped_categories_args );
+		return $grouped_categories;
+	}
+endif;
+
+/**
 * Change the post query used on category archive pages based on whether or not they have featured columns.
 * This arranges featured posts and not featured posts on those archives.
 *
