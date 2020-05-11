@@ -117,7 +117,7 @@
 			z-index: 10;
 
 			@include breakpoint-min( lg ) {
-				width: colspan( 16, 12 );
+				width: 100%;
 			}
 		}
 	}
