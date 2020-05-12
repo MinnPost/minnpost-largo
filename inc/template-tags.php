@@ -410,7 +410,6 @@ if ( ! function_exists( 'minnpost_related' ) ) :
 	function minnpost_related( $type = 'content', $only_show_images_if_not_missing = false ) {
 		if ( 'automated' === $type && function_exists( 'minnpost_largo_get_jetpack_results' ) ) {
 			$related_posts = minnpost_largo_get_jetpack_results();
-			error_log( 'related posts is ' . print_r( $related_posts, true ) );
 		} else {
 			$related_ids   = minnpost_get_related( $type );
 			$related_posts = array();
