@@ -1,50 +1,38 @@
 .m-author-info {
-	margin-bottom: $standard-heading-margin;
 
 	@include breakpoint-min( lg ) {
 		width: 100%;
 	}
 
-	.a-author-figure {
-		margin: 0;
+	.a-author-figure,
+	> .a-author-bio {
+		margin: 0 0 $standard-block-margin 0;
+	}
 
-		@include clearfix;
+	.a-author-figure {
 
 		img {
-			float: left;
 			max-width: $author-photo-size;
 		}
+	}
 
-		figcaption {
+	.a-author-bio {
 
-			@include clearfix;
+		h3,
+		p {
+			//padding-bottom: $standard-block-padding;
+			margin-bottom: $standard-heading-margin;
 
-			h3 {
-				padding-bottom: $standard-block-padding;
-			}
-
-			p {
-				margin-bottom: $standard-block-padding;
+			&:last-child {
+				margin-bottom: 0;
 			}
 		}
 	}
 
 	&.m-author-info-single .a-author-figure {
-		//border: 1px solid $color__gray-lightest;
-		//margin-top: 10px;
 
 		img {
 			max-width: $author-photo-size;
-		}
-
-		figcaption {
-			//margin-bottom: 25px;
-			//padding-bottom: 20px;
-
-			p {
-				//font-size: $content-font-size;
-				//line-height: 1.3em;
-			}
 		}
 	}
 }

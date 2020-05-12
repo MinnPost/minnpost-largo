@@ -64,8 +64,9 @@ h5,
 .h5,
 h6,
 .h6 {
-	padding-bottom: $standard-heading-margin;
-	// if we want a top margin, we need to use padding too
+	// if we want a top margin, we need to use padding
+	margin: 0 0 $standard-heading-margin 0;
+	padding: 0;
 }
 
 /*h1,
