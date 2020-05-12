@@ -433,7 +433,7 @@ endif;
 * Get author image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
 *
 * @param int $author_id
-* @param string $size
+* @param string $photo_size
 * @param bool $include_text
 * @param bool $include_name
 * @param bool $lazy_load
@@ -446,36 +446,43 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 	/**
 	 * Returns author image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
 	 */
-	function minnpost_get_author_figure( $author_id = '', $size = 'photo', $include_text = true, $include_name = false, $lazy_load = true, $end = false ) {
+	function minnpost_get_author_figure( $author_id = '', $photo_size = 'photo', $include_text = true, $include_name = false, $lazy_load = true, $end = false ) {
+
+		// some empty defaults
+		$image_id  = '';
+		$image_url = '';
+		$image     = '';
+		$text      = '';
+		$name      = '';
 
 		// in drupal there was only one author image size
 		if ( '' === $author_id ) {
 			$author_id = get_the_author_meta( 'ID' );
 		}
 
-		$image_data = minnpost_get_author_image( $author_id, $size );
+		$image_data = minnpost_get_author_image( $author_id, $photo_size );
 		if ( '' !== $image_data ) {
 			$image_id  = $image_data['image_id'];
 			$image_url = $image_data['image_url'];
 			$image     = $image_data['markup'];
 		}
 
-		$text = '';
-		if ( 'photo' === $size ) { // full text
+		if ( 'photo' === $photo_size ) { // full text
 			$text = get_post_meta( $author_id, '_mp_author_bio', true );
 		} else { // excerpt
 			$text = wpautop( get_post_meta( $author_id, '_mp_author_excerpt', true ) );
 		}
 
-		if ( post_password_required() || is_attachment() || ( ! isset( $image_id ) && ! isset( $image_url ) ) ) {
+		if ( post_password_required() || is_attachment() || ( '' === $image_id && '' === $image_url && '' === $text ) ) {
 			return;
 		}
 
-		$name = '';
 		$name = get_post_meta( $author_id, 'cap-display_name', true );
 
-		$caption = wp_get_attachment_caption( $image_id );
-		$credit  = get_media_credit_html( $image_id );
+		if ( '' !== $image_id ) {
+			$caption = wp_get_attachment_caption( $image_id );
+			$credit  = get_media_credit_html( $image_id );
+		}
 
 		// Make sure the guest author actually exists
 		if ( class_exists( 'CoAuthors_Guest_Authors' ) ) {
@@ -493,11 +500,17 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 		}
 
 		if ( ( is_singular() || is_archive() ) && ! is_singular( 'newsletter' ) ) {
-			$output  = '';
-			$output .= '<figure class="a-archive-figure a-author-figure a-author-figure-' . $size . '">';
-			$output .= $image;
+			$output = '';
+			if ( '' !== $image ) {
+				$output .= '<figure class="a-archive-figure a-author-figure a-author-figure-' . $photo_size . '">';
+				$output .= $image;
+			}
 			if ( true === $include_text && ( '' !== $text || '' !== $name ) ) {
-				$output .= '<figcaption>';
+				if ( '' !== $image ) {
+					$output .= '<figcaption class="a-author-bio">';
+				} else {
+					$output .= '<div class="a-author-bio">';
+				}
 				if ( true === $include_name && '' !== $name ) {
 					$output .= '<h3 class="a-author-title">';
 					if ( 0 < $count ) {
@@ -511,9 +524,15 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 					$output .= '</h3>';
 				}
 				$output .= $text;
-				$output .= '</figcaption>';
+				if ( '' !== $image ) {
+					$output .= '</figcaption>';
+				} else {
+					$output .= '</div>';
+				}
 			}
-			$output .= '</figure><!-- .author-figure -->';
+			if ( '' !== $image ) {
+				$output .= '</figure><!-- .author-figure -->';
+			}
 			return $output;
 		} elseif ( is_singular( 'newsletter' ) ) {
 			$output    = '';

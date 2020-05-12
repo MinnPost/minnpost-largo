@@ -1,53 +1,64 @@
 .m-author-info {
 	padding-top: 2px;
-	.a-author-figure {
+	.a-author-figure,
+	> .a-author-bio {
 		@include clearfix;
 		background: $color__minnpost-white;
+	}
+	.a-author-figure {
 		img {
 			margin: 10px 20px 10px 10px;
 			float: left;
 			max-width: 190px;
 		}
-		figcaption {
-			@include clearfix;
-			padding: 10px;
-			p {
-				a {
+	}
+	.a-author-bio {
+		padding: 10px;
+		p {
+			a {
+				color: $color__link;
+				&:active,
+				&:focus,
+				&:hover {
 					color: $color__link;
-					&:active,
-					&:focus,
-					&:hover {
-						color: $color__link;
-						text-decoration: underline;
-					}
+					text-decoration: underline;
 				}
 			}
 		}
-		a h3, a img {
-			color: $color__link;
-		}
-		a:visited h3 {
-			color: $color__link;
-		}
-		a:active h3,
-		a:focus h3,
-		a:hover h3 {
-			color: $color__link;
-			text-decoration: underline;
-		}
 	}
-	&.m-author-info-single .a-author-figure {
-		border: 1px solid $color__gray-lightest;
-		margin-top: 10px;
-		img {
-			max-width: 75px; // in case the author has an image but not a teaser
+	a h3, a img {
+		color: $color__link;
+	}
+	a:visited h3 {
+		color: $color__link;
+	}
+	a:active h3,
+	a:focus h3,
+	a:hover h3 {
+		color: $color__link;
+		text-decoration: underline;
+	}
+	&.m-author-info-single {
+
+		.a-author-figure,
+		> .a-author-bio {
+			border: 1px solid $color__gray-lightest;
+			margin-top: 10px;
 		}
-		figcaption {
+
+		.a-author-bio {
 			margin-bottom: 25px;
 			padding-bottom: 20px;
 			p {
 				font-size: $content-font-size;
 				line-height: 1.3em;
+			}
+		}
+
+		.a-author-figure {
+			
+			img {
+				max-width: 75px; // in case the author has an image but not a teaser
 			}
 		}
 	}
