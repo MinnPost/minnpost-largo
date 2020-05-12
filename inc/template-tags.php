@@ -420,6 +420,7 @@ if ( ! function_exists( 'minnpost_related' ) ) :
 	function minnpost_related( $type = 'content', $only_show_images_if_not_missing = false ) {
 		if ( 'automated' === $type && function_exists( 'minnpost_largo_get_jetpack_results' ) ) {
 			$related_posts = minnpost_largo_get_jetpack_results();
+			error_log( 'related posts is ' . print_r( $related_posts, true ) );
 		} else {
 			$related_ids   = minnpost_get_related( $type );
 			$related_posts = array();
@@ -804,23 +805,6 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 		);
 		return $image_data;
 
-	}
-endif;
-
-/**
-* Returns array of grouped categories for the given category
-*
-* @param int $category_id
-* @return array $groupd_categories
-*
-*/
-if ( ! function_exists( 'minnpost_get_grouped_categories' ) ) :
-	function minnpost_get_grouped_categories( $category_id = '' ) {
-		$grouped_categories = get_term_meta( $category_id, '_mp_category_grouped_categories', false );
-		if ( array() !== $grouped_categories ) {
-			error_log( 'grouped is ' . print_r( $grouped_categories, true ) );
-		}
-		return $grouped_categories;
 	}
 endif;
 

@@ -3,7 +3,7 @@ $minimum-width: 130px;
 .m-related {
 
 	@include breakpoint-min( lg ) {
-		width: colspan( 16, 12 );
+		width: 100%;
 	}
 
 	.a-related-list {

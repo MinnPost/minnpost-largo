@@ -1,17 +1,16 @@
 .m-author-info {
-//	padding-top: 2px;
+	margin-bottom: $standard-heading-margin;
 
 	@include breakpoint-min( lg ) {
-		width: colspan( 16, 12 );
+		width: 100%;
 	}
 
 	.a-author-figure {
+		margin: 0;
 
 		@include clearfix;
-//		background: $color__minnpost-white;
 
 		img {
-//			margin: 10px 20px 10px 10px;
 			float: left;
 			max-width: $author-photo-size;
 		}
@@ -26,34 +25,7 @@
 
 			p {
 				margin-bottom: $standard-block-padding;
-
-				a {
-					//color: $color__link;
-
-					&:active,
-					&:focus,
-					&:hover {
-						//color: $color__link;
-						//text-decoration: underline;
-					}
-				}
 			}
-		}
-
-		a h3,
-		a img {
-			//color: $color__link;
-		}
-
-		a:visited h3 {
-			//color: $color__link;
-		}
-
-		a:active h3,
-		a:focus h3,
-		a:hover h3 {
-			//color: $color__link;
-			//text-decoration: underline;
 		}
 	}
 
