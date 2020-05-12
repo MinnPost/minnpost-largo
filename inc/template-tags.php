@@ -394,13 +394,6 @@ if ( ! function_exists( 'minnpost_share_buttons' ) ) :
 					<i class="fas fa-link"></i>
 				</a>
 			</li>
-			<?php if ( class_exists( 'Republication_Tracker_Tool' ) ) : ?>
-				<li class="a-share a-share-republish">
-					<a href="" aria-label="<?php echo __( 'Republish this article.', 'minnpost-largo' ); ?>" data-share-action="<?php echo __( 'Republish', 'minnpost-largo' ); ?>">
-						<i class="fab fa-creative-commons"></i>
-					</a>
-				</li>
-			<?php endif; ?>
 		</ul>
 		<?php
 	}
