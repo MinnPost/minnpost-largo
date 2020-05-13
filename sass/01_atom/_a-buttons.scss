@@ -44,7 +44,12 @@ button.a-button,
 .a-button-sentence {
 
 	input[type="text"],
-	input[type="search"] {
+	input[type="search"],
+	input[type="email"],
+	input[type="tel"],
+	input[type="url"],
+	input[type="number"] {
+		margin-right: 0;
 		border-top-right-radius: 0;
 		border-bottom-right-radius: 0;
 	}
