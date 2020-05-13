@@ -6,12 +6,8 @@
 	font-size: 75%;
 
 	.a-widget-title {
-		padding: $standard-block-padding;
+		padding: $standard-block-padding $standard-block-padding 0 $standard-block-padding;
 		margin: 0;
-
-		a {
-			color: $color__minnpost-black;
-		}
 	}
 
 	&.m-widget-custom-html {
@@ -24,22 +20,6 @@
 			padding: 0 $standard-block-padding $standard-block-padding / 2 $standard-block-padding;
 		}
 	}
-
-	&.m-minnpost-spills-widget .a-widget-title,
-	&.m-widget-most-commented .a-widget-title,
-	&.m-widget-recent-posts-extended .a-widget-title {
-		/*text-transform: uppercase;
-		font-family: $font__headings;
-		font-weight: normal;*/
-
-		a {
-		//	color: $color__minnpost-red;
-		}
-	}
-
-	/*&.m-widget-recent-posts-extended .a-widget-title {
-		color: $color__minnpost-red;
-	}*/
 
 	.m-widget-contents {
 		padding: 0 $standard-block-padding;
@@ -64,10 +44,6 @@
 
 		li {
 			margin: 0 0 $standard-block-margin 0;
-
-			a {
-				//color: $color__minnpost-black;
-			}
 		}
 	}
 
@@ -81,10 +57,6 @@
 
 	.a-spill-item-title {
 		margin: 0;
-
-		a {
-			//color: $color__minnpost-black;
-		}
 	}
 
 	.a-spill-item-thumbnail {
