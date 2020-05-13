@@ -27,8 +27,8 @@
 
 .m-archive-top .m-post-image,
 .m-archive-excerpt .m-post-image {
-	margin-bottom: $standard-page-margin;
-	margin-right: $standard-page-margin;
+	margin-bottom: $standard-block-margin;
+	margin-right: $standard-block-margin;
 }
 
 .m-archive-top.m-archive-has-1-post .m-post-image {
@@ -51,6 +51,6 @@
 	.m-zone-homepage-top.m-archive-top.m-archive-has-1-post .m-post-thumbnail-feature-large,
 	.m-zone-homepage-top.m-archive-top.m-archive-has-1-post .m-post-thumbnail-feature-medium {
 		float: left;
-		margin-right: $standard-page-margin;
+		margin-right: $standard-block-margin;
 	}
 }

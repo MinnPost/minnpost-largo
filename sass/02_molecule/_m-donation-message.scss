@@ -3,7 +3,7 @@
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: wrap;
-	margin-bottom: $standard-page-margin;
+	margin-bottom: $standard-block-margin;
 	border-bottom: 1px solid $color__gray-lightest;
 
 	&:last-of-type {
