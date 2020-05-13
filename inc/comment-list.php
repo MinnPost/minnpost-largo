@@ -5,6 +5,18 @@ function minnpost_largo_comment( $comment, $args, $depth ) {
 	$class              = array( 'o-comment' );
 	$status             = wp_get_comment_status( $comment->comment_ID );
 	$class[]            = 'o-comment-' . $status;
+
+	$child_status = function_exists( 'get_comment_status_by_access' ) ? get_comment_status_by_access() : 'approve';
+	$children     = $comment->get_children(
+		array(
+			'status' => $child_status,
+		)
+	);
+
+	if ( ! empty( $children ) ) {
+		$class[] = 'o-comment-has-children';
+	}
+
 	if ( 'approved' !== $status ) {
 		$class[] = 'o-comment-unpublished';
 	}
