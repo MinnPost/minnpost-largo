@@ -60,42 +60,42 @@ msgid "Search"
 msgstr ""
 
 #. translators: 1) is the human readable time difference
-#: inc/comment-list.php:57
+#: inc/comment-list.php:69
 msgctxt "%2$s = comment date/time"
 msgid "on %1$s"
 msgstr ""
 
 #. translators: 1) is the human readable time difference
-#: inc/comment-list.php:48, inc/template-tags.php:242
+#: inc/comment-list.php:60, inc/template-tags.php:242
 msgctxt "%2$s = human-readable time difference"
 msgid "%1$s ago"
 msgstr ""
 
-#: inc/comment-list.php:85
+#: inc/comment-list.php:97
 msgid "Go to the previous comment"
 msgstr ""
 
-#: inc/comment-list.php:92
+#: inc/comment-list.php:104
 msgid "Your comment is awaiting moderation."
 msgstr ""
 
-#: inc/comment-list.php:114
+#: inc/comment-list.php:126
 msgid "Unapprove"
 msgstr ""
 
-#: inc/comment-list.php:112
+#: inc/comment-list.php:124
 msgid "Approve"
 msgstr ""
 
-#: inc/comment-list.php:118
+#: inc/comment-list.php:130
 msgid "Spam"
 msgstr ""
 
-#: inc/comment-list.php:119, inc/comments.php:495
+#: inc/comment-list.php:131, inc/comments.php:495
 msgid "Edit"
 msgstr ""
 
-#: inc/comment-list.php:120
+#: inc/comment-list.php:132
 msgid "Trash"
 msgstr ""
 

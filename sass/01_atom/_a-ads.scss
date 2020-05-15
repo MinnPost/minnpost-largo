@@ -1,3 +1,16 @@
+.acm-ad-container {
+
+	&.acm-ad-container-bordered {
+		border-bottom: $border-default-style;
+    	border-left: 0;
+    	border-right: 0;
+	}
+
+	.a-text-around-ad {
+		color: neutral-color(medium);
+	}
+}
+
 .acm-ad {
 	position: relative;
 	width: auto;
@@ -7,16 +20,16 @@
 
 	&.acm-ad-placeholder {
 		text-align: center;
-		background-color: $color__black;
-		color: $color__white;
+		background-color: neutral-color(black);
+		color: neutral-color(white);
 		padding: 29px 0;
 		line-height: 1.3em;
 	}
 
 	.ad-overlay {
 		position: absolute;
-		background-color: $color__black;
-		color: $color__white;
+		background-color: neutral-color(black);
+		color: neutral-color(white);
 		padding: 2px;
 		font-size: 0.5em;
 		text-align: center;
@@ -36,7 +49,7 @@ main .ad-x107,
 main .ad-x108,
 main .ad-x109,
 main .ad-x110 {
-	margin: 0 0 $standard-block-margin 0;
+	margin: $standard-block-padding / 2 0 $standard-block-margin 0;
 	display: flex;
 	justify-content: center;
 	flex-direction: row;
@@ -68,11 +81,12 @@ main .ad-x110 {
 	}
 }
 
+// sponsored ad on homepage
 .acm-ad-wrapper.ad-middle3,
 .acm-ad-wrapper.ad-Middle3 {
 	margin-bottom: $standard-block-margin;
 	border-bottom: $border-default-style;
-	background-color: $color__minnpost-white;
+	background-color: $color__minnpost-white; // todo: fix this color
 	padding-bottom: $standard-block-margin / 2;
 
 	.ad-middle3,
@@ -86,7 +100,7 @@ main .ad-x110 {
 		@include meta-preset( $size: -2, $bold: false, $italic: false, $line-height: 1 );
 		padding: $standard-block-margin / 2;
 		margin-bottom: $standard-block-margin / 2;
-		color: palette(grey, light);
+		color: palette(grey, light); // todo: fix this color
 	}
 }
 
