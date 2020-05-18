@@ -459,10 +459,13 @@ nav {
 				}
 			}
 
+			&.active,
 			&.active-parent {
 				> a {
 					@include breakpoint-min( md ) {
 						background: transparent;
+						color: neutral-color(black);
+						font-weight: 700;
 					}
 				}
 			}
