@@ -2,27 +2,12 @@
 .o-site-sidebar section.m-zone-sidebar {
 	margin-bottom: $standard-block-margin;
 	border: $border-default-style;
-	padding: $standard-block-padding;
+	border-radius: $border-radius;
+	padding: $standard-heading-margin;
 	font-size: 75%;
 
-	.a-widget-title {
-		padding: $standard-block-padding $standard-block-padding 0 $standard-block-padding;
-		margin: 0;
-	}
-
-	&.m-widget-custom-html {
-
-		.m-widget-contents {
-			padding-bottom: 0;
-		}
-
-		> p:last-child {
-			padding: 0 $standard-block-padding $standard-block-padding / 2 $standard-block-padding;
-		}
-	}
-
 	.m-widget-contents {
-		padding: 0 $standard-block-padding;
+		//padding: 0 $standard-block-padding;
 		padding-bottom: $standard-block-padding / 2;
 
 		&.m-custom-html-widget {
@@ -44,6 +29,7 @@
 
 		li {
 			margin: 0 0 $standard-block-margin 0;
+			padding: 0;
 		}
 	}
 

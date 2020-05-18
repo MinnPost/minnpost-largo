@@ -6,12 +6,12 @@
 .m-form-widget .m-form-item {
 
 	label input {
-		margin-top: 0.375em;
+		margin-top: $standard-block-padding;
 	}
 }
 
 .m-form-standalone .m-form-item {
-	margin-bottom: 1.25em;
+	margin-bottom: $standard-block-padding;
 	width: 100%;
 	max-width: 100%;
 
@@ -28,8 +28,8 @@
 	}
 
 	label {
-		margin-bottom: 0.375em;
-		line-height: 1.5em;
+		margin-bottom: $standard-block-padding;
+		//line-height: 1.5em;
 	}
 
 	input:not([type=checkbox]):not([type=radio]),
@@ -37,14 +37,8 @@
 	textarea {
 		padding: $standard-block-padding;
 		border: $border-default-style;
-		margin-bottom: 0.375em;
+		margin-bottom: $standard-block-padding;
 		width: 100%;
-	}
-
-	input:not([type=checkbox]):not([type=radio]),
-	textarea {
-		-webkit-appearance: none;
-		-webkit-border-radius: 0;
 	}
 
 	input[type="checkbox"],
@@ -54,7 +48,7 @@
 
 	p,
 	span {
-		margin-bottom: 0.375em;
+		margin-bottom: $standard-block-padding;
 	}
 
 	input:last-child,

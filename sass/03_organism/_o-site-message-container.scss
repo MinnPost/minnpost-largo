@@ -87,6 +87,7 @@
 
 		.m-wp-insert-message-item {
 			background: utility-color(blue, medium);
+			border-radius: $border-radius;
 			color: neutral-color(white);
 			margin-bottom: $standard-block-margin;
 			padding: $standard-block-margin 0;
