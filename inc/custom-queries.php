@@ -37,7 +37,10 @@ if ( ! function_exists( 'minnpost_grouped_category_query' ) ) :
 			$category_id = $query->get_queried_object_id();
 			if ( function_exists( 'minnpost_get_grouped_categories' ) ) {
 				$grouped_categories = minnpost_get_grouped_categories( $category_id );
-				$tax_query          = $query->get( 'tax_query' );
+				if ( empty( $grouped_categories ) ) {
+					return;
+				}
+				$tax_query = $query->get( 'tax_query' );
 				if ( ! is_array( $tax_query ) ) {
 					$tax_query = array();
 				}
