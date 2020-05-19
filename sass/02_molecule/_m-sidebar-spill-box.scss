@@ -6,6 +6,10 @@
 	padding: $standard-heading-margin;
 	font-size: 75%;
 
+	@include breakpoint-min( lg ) {
+		margin-bottom: auto;
+	}
+
 	.m-widget-contents {
 		//padding: 0 $standard-block-padding;
 		padding-bottom: $standard-block-padding / 2;
