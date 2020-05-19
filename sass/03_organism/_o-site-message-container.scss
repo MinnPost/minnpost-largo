@@ -151,6 +151,7 @@
 	// article bottom
 	&.wp-message-inserter-message-region-article_bottom {
 		background: utility-color(blue, background);
+		border-radius: $border-radius;
 		margin-bottom: $standard-block-margin;
 
 		@include breakpoint-min( lg ) {
