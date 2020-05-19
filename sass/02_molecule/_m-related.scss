@@ -5,6 +5,10 @@
 	flex-wrap: wrap;
 	margin: 0 0 $standard-block-margin 0;
 
+	h3 {
+		font-size: var(--scale0);
+	}
+
 	.a-related-list {
 		@include body-preset( $size: -2 );
 		list-style: none;
