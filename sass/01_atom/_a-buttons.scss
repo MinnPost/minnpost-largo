@@ -106,7 +106,9 @@ button.a-button,
 	@include link-underline();
 	background: none;
 	padding: 0;
-	margin: 0 0 $standard-block-padding 0;
+	margin: 0 0 $standard-block-margin 0;
+	font-size: var(--scale0);
+	text-align: left;
 
 	&:active,
 	&:focus,
