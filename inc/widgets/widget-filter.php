@@ -17,6 +17,7 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 	$widget_output = str_replace( '<div class="textwidget custom-html-widget">', '<div class="m-widget-contents m-textwidget m-custom-html-widget">', $widget_output );
 	$widget_output = str_replace( ' class="widget_text widget widget_custom_html">', ' class="m-widget m-widget-text m-widget-custom-html">', $widget_output );
 	$widget_output = str_replace( ' class="widget widget_most-commented">', ' class="m-widget m-widget-most-commented">', $widget_output );
+	$widget_output = str_replace( ' class="widget widget-zone-posts">', ' class="m-widget m-widget-zone-posts">', $widget_output );
 
 	// target custom html widget
 	if ( false !== strpos( $widget_output, 'm-widget m-widget-text m-widget-custom-html' ) && 'custom_html' == $widget_type ) {
@@ -33,10 +34,6 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 		// sponsor list
 		if ( false !== strpos( $widget_output, 'a-sponsor-list' ) ) {
 			$widget_output = str_replace( 'class="m-widget m-widget-text m-widget-custom-html"', 'class="m-widget m-widget-text m-widget-custom-html m-widget-sponsor-list"', $widget_output );
-		}
-		// picked for you
-		if ( false !== strpos( $widget_output, '<h3 class="a-widget-title">Picked for you</h3>' ) ) {
-			$widget_output = str_replace( 'class="m-widget m-widget-text m-widget-custom-html"', 'class="m-widget m-widget-text m-widget-custom-html m-widget-picked-for-you"', $widget_output );
 		}
 		$widget_output = str_replace( '</div></div>', '</div></section>', $widget_output );
 
@@ -78,6 +75,19 @@ function minnpost_widget_output_filter( $widget_output, $widget_type, $widget_id
 		);
 		$widget_output = str_replace( '</div></div>', '</div></section>', $widget_output );
 		$widget_output = str_replace( '<div class="m-widget m-minnpost-spills-widget ', '<section class="m-widget m-minnpost-spills-widget ', $widget_output );
+	}
+
+	// target the recommended widget
+	if ( false !== strpos( $widget_output, 'class="m-widget m-widget-zone-posts"' ) && 'zoninator_zoneposts_widget' == $widget_type ) {
+		$widget_output = str_replace( '<div id="zoninator_zoneposts_widget-', '<section id="zoninator-zoneposts-widget-', $widget_output );
+		$widget_output = str_replace(
+			'</ul>
+
+		</div>',
+			'</ul></div></section>',
+			$widget_output
+		);
+		$widget_output = str_replace( '<ul', '<div class="m-widget-contents"><ul', $widget_output );
 	}
 
 	// target most commented widget
