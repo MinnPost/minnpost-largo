@@ -141,3 +141,16 @@ if ( ! function_exists( 'minnpost_largo_extend_widget_options' ) ) :
 		return $display_logic;
 	}
 endif;
+
+if ( 'production' !== VIP_GO_ENV ) {
+	if ( ! function_exists( 'minnpost_largo_most_commented_args' ) ) :
+		add_filter( 'most_commented_widget_args_pre_cache', 'minnpost_largo_most_commented_args', 10, 4 );
+		add_filter( 'most_commented_widget_args_ids', 'minnpost_largo_most_commented_args', 10, 4 );
+		function minnpost_largo_most_commented_args( $args, $post_type, $show_pass_post, $duration ) {
+			$args['date_query'] = array(
+				'after' => '90 days ago',
+			);
+			return $args;
+		}
+	endif;
+}
