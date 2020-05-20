@@ -11,7 +11,6 @@
 	}
 
 	.m-widget-contents {
-		//padding: 0 $standard-block-padding;
 		padding-bottom: $standard-block-padding / 2;
 
 		&.m-custom-html-widget {
@@ -19,20 +18,6 @@
 			.image {
 				margin-bottom: $standard-block-margin;
 			}
-		}
-	}
-
-	&.m-widget-most-commented {
-
-		ul {
-			margin: 0;
-			padding: 0;
-			list-style: none;
-		}
-
-		li {
-			margin: 0 0 $standard-block-margin 0;
-			padding: 0;
 		}
 	}
 
