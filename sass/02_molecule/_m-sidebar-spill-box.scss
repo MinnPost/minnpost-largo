@@ -10,6 +10,10 @@
 		margin-bottom: auto;
 	}
 
+	> p {
+		margin-bottom: $standard-heading-margin;
+	}
+
 	.m-widget-contents {
 		padding-bottom: $standard-block-padding / 2;
 
