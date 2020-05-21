@@ -434,6 +434,19 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'desc'         => esc_html__( 'When using this field, make sure the most important text is in the first 155 characters to ensure that Google can see it. If you do not fill it out, the post excerpt will be used.' ),
 			)
 		);
+		$seo_settings->add_field(
+			array(
+				'name'         => esc_html__( 'Meta images', 'minnpost-largo' ),
+				'desc'         => esc_html__( 'Using this field will remove images that are uploaded to this story from the story\'s metadata, and replace them with the images in this field.', 'minnpost-largo' ),
+				'id'           => '_mp_social_images',
+				'type'         => 'file_list',
+				'preview_size' => array( 130, 85 ),
+				// query_args are passed to wp.media's library query.
+				'query_args'   => array(
+					'type' => 'image',
+				),
+			)
+		);
 
 		/**
 		 * Image settings
