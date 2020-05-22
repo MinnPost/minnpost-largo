@@ -1276,60 +1276,112 @@ if ( ! function_exists( 'minnpost_replace_category_text' ) ) :
 endif;
 
 /**
-* Outputs HTML for sponsorship on a category or post
+* Outputs HTML for sponsorship on an object
 *
-* @param int $post_id
-* @param int $category_id
+* @param string $object_type
+* @param int $object_id
 *
 */
-if ( ! function_exists( 'minnpost_post_category_sponsorship' ) ) :
-	function minnpost_post_category_sponsorship( $post_id = '', $category_id = '' ) {
-		$sponsorship = minnpost_get_post_category_sponsorship( $post_id, $category_id );
+if ( ! function_exists( 'minnpost_content_sponsorship' ) ) :
+	function minnpost_content_sponsorship( $object_type = 'post', $object_id = '' ) {
+		$sponsorship = minnpost_get_content_sponsorship( $object_type, $object_id );
 		if ( '' !== $sponsorship ) {
+			$sponsorship = apply_filters( 'the_content', $sponsorship );
 			echo '<div class="a-sponsorship">' . $sponsorship . '</div>';
 		}
 	}
 endif;
 
 /**
-* Returns the sponsorship for a post's primary category, or for a post
+* Returns the sponsorship for an object
 *
-* @param int $post_id
-* @param int $category_id
+* @param string $object_type
+* @param int $object_id
 * @return string
 *
 */
-if ( ! function_exists( 'minnpost_get_post_category_sponsorship' ) ) :
-	function minnpost_get_post_category_sponsorship( $post_id = '', $category_id = '' ) {
-		if ( '' === $post_id ) {
-			$post_id = get_the_ID();
+if ( ! function_exists( 'minnpost_get_content_sponsorship' ) ) :
+	function minnpost_get_content_sponsorship( $object_type = 'post', $object_id = '' ) {
+		$sponsorship = '';
+		$post_id     = '';
+		$tag_id      = '';
+		$category_id = '';
+
+		$post_sponsorship_field     = '_mp_post_sponsorship';
+		$tag_sponsorship_field      = '_mp_tag_sponsorship';
+		$category_sponsorship_field = '_mp_category_sponsorship';
+
+		if ( 'post' === $object_type ) {
+			$post_id = $object_id;
 		}
-		if ( '' === $category_id ) {
+
+		if ( 'category' === $object_type ) {
+			$category_id = $object_id;
+		}
+
+		if ( 'post_tag' === $object_type ) {
+			$tag_id = $object_id;
+		}
+
+		if ( '' === $object_id && 'post' === $object_type ) {
+			$post_id     = get_the_ID();
 			$category_id = minnpost_get_permalink_category_id( $post_id );
-			if ( '' === $category_id ) {
-				return '';
+			// look for a tag on this post that has a non-empty sponsorship value
+			$tag_args  = array(
+				'hide_empty' => true, // also retrieve terms which are not used yet
+				'meta_query' => array(
+					array(
+						'key'     => $tag_sponsorship_field,
+						'value'   => '',
+						'compare' => '!=',
+					),
+				),
+				'fields'     => 'ids',
+			);
+			$post_tags = wp_get_post_terms( $post_id, 'post_tag', $tag_args );
+			if ( ! empty( $post_tags ) && ! is_wp_error( $post_tags ) ) {
+				$tag_id = $post_tags[0];
 			}
 		}
 
-		// allow a post to prevent sponsorship display
-		$prevent_sponsorship = get_post_meta( $post_id, '_mp_prevent_post_sponsorship', true );
-		if ( 'on' === $prevent_sponsorship ) {
-			return '';
+		// we have to supply a tag id if we want to use the tag for a sponsor
+
+		if ( '' === $post_id && '' === $category_id && '' === $tag_id ) {
+			return $sponsorship; // empty
 		}
 
-		// post sponsorship has higher priority than category
-		$sponsorship = get_post_meta( $post_id, '_mp_post_sponsorship', true );
-		if ( ! empty( $sponsorship ) ) {
-			return $sponsorship;
+		if ( 'post' === $object_type ) {
+			// allow a post to prevent sponsorship display
+			$prevent_sponsorship = get_post_meta( $post_id, '_mp_prevent_post_sponsorship', true );
+			if ( 'on' === $prevent_sponsorship ) {
+				return $sponsorship; // empty
+			}
+			// post sponsorship has the highest priority on a post
+			$sponsorship = get_post_meta( $post_id, $post_sponsorship_field, true );
+			if ( ! empty( $sponsorship ) ) {
+				return $sponsorship;
+			}
 		}
 
-		// followed by category sponsorship
-		$sponsorship = get_term_meta( $category_id, '_mp_category_sponsorship', true );
-		if ( ! empty( $sponsorship ) ) {
-			return $sponsorship;
+		if ( 'post' === $object_type || 'post_tag' === $object_type ) {
+			// followed by tag sponsorship of the post's tag
+			$sponsorship = get_term_meta( $tag_id, $tag_sponsorship_field, true );
+			if ( ! empty( $sponsorship ) ) {
+				return $sponsorship;
+			}
 		}
 
-		return '';
+		if ( 'post' === $object_type || 'category' === $object_type ) {
+			// followed by category sponsorship of the post's category
+			$sponsorship = get_term_meta( $category_id, $category_sponsorship_field, true );
+			if ( ! empty( $sponsorship ) ) {
+				return $sponsorship;
+			}
+		}
+
+		// we could also have sponsored authors later
+
+		return $sponsorship; // empty
 	}
 endif;
 

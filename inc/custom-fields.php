@@ -660,7 +660,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'name'    => __( 'Sponsorship', 'minnpost-largo' ),
 				'id'      => '_mp_post_sponsorship',
 				'type'    => 'wysiwyg',
-				'desc'    => __( 'This field overrides a sponsorship message from the category that contains a post.', 'minnpost-largo' ),
+				'desc'    => __( 'This field overrides a sponsorship message from the category or tag that contains a post.', 'minnpost-largo' ),
 				'options' => array(
 					'media_buttons' => false, // show insert/upload button(s)
 					'textarea_rows' => 5,
@@ -673,7 +673,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'name' => __( 'Prevent sponsorship display', 'minnpost-largo' ),
 				'id'   => '_mp_prevent_post_sponsorship',
 				'type' => 'checkbox',
-				'desc' => __( 'If checked, this post will not display any sponsorship message.', 'minnpost-largo' ),
+				'desc' => __( 'If checked, this post will not display any sponsorship message, regardless of its tags or categories.', 'minnpost-largo' ),
 			)
 		);
 

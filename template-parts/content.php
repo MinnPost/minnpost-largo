@@ -20,7 +20,6 @@
 			<?php endif; ?>
 			<?php minnpost_plus_icon(); ?>
 		</div>
-		<?php minnpost_post_category_sponsorship(); ?>
 	<?php endif; ?>
 
 	<?php
@@ -66,6 +65,8 @@
 		minnpost_post_image( 'large' );
 	}
 	?>
+
+	<?php minnpost_content_sponsorship( 'post' ); ?>
 
 	<div class="o-entry">
 		<div class="m-entry-meta">
