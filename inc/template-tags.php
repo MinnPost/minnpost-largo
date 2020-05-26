@@ -594,6 +594,9 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 		$text      = '';
 		$name      = '';
 
+		// default job title
+		$default_title = esc_html__( 'About the author', 'minnpost-largo' );
+
 		// in drupal there was only one author image size
 		if ( '' === $author_id ) {
 			$author_id = get_the_author_meta( 'ID' );
@@ -658,11 +661,14 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 						$output    .= '<a href="' . $author_url . '">';
 					}
 					$output .= $name;
-					if ( true === $include_title && isset( get_the_coauthor_meta( 'job-title' )[ $author_id ] ) ) {
+					$title   = '';
+					if ( true === $include_title && isset( get_the_coauthor_meta( 'job-title' )[ $author_id ] ) && '' !== get_the_coauthor_meta( 'job-title' )[ $author_id ] ) {
 						$title = get_the_coauthor_meta( 'job-title' )[ $author_id ];
-						if ( '' !== $title ) {
-							$output .= '&nbsp;|&nbsp;<span class="a-entry-author-job-title">' . $title . '</span>';
-						}
+					} elseif ( true === $include_title ) {
+						$title = $default_title;
+					}
+					if ( '' !== $title ) {
+						$output .= '&nbsp;|&nbsp;<span class="a-entry-author-job-title">' . $title . '</span>';
 					}
 					if ( 0 < $count ) {
 						$output .= '</a>';
@@ -670,11 +676,14 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 					$output .= '</h3>';
 				} elseif ( '' !== $name ) {
 					if ( 0 < $count ) {
-						if ( true === $include_title && isset( get_the_coauthor_meta( 'job-title' )[ $author_id ] ) ) {
+						$title = '';
+						if ( true === $include_title && isset( get_the_coauthor_meta( 'job-title' )[ $author_id ] ) && '' !== get_the_coauthor_meta( 'job-title' )[ $author_id ] ) {
 							$title = get_the_coauthor_meta( 'job-title' )[ $author_id ];
-							if ( '' !== $title ) {
-								$output .= '<h3 class="a-author-figure-job-title">' . $title . '</h3>';
-							}
+						} elseif ( true === $include_title ) {
+							$title = $default_title;
+						}
+						if ( '' !== $title ) {
+							$output .= '<h3 class="a-author-figure-job-title">' . $title . '</h3>';
 						}
 						$author_url = get_author_posts_url( $author_id, sanitize_title( $name ) );
 						$text      .= sprintf(
