@@ -10,4 +10,15 @@
 	@include breakpoint-min( xl ) {
 		flex-direction: row;
 	}
+
+	.m-entry-content {
+
+		@include breakpoint-range( sm, lg ) {
+			max-width: colspan( 10, 12 );
+		}
+
+		@include breakpoint-min( xl ) {
+			max-width: colspan( 10, 12 );
+		}
+	}
 }
