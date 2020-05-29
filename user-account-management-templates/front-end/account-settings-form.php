@@ -87,7 +87,7 @@
 					<input type="email" name="email" id="email" value="<?php echo isset( $_POST['email'] ) && wp_verify_nonce( sanitize_key( $_POST['wp_create_nonce'] ), 'uam-account-settings-nonce' ) ? sanitize_email( $_POST['email'] ) : isset( $attributes['user']->user_email ) ? esc_html( $attributes['user']->user_email ) : ''; ?>" required>
 			<?php endif; ?>
 			<div class="a-form-caption a-add-email">
-				<small><a href="#">Add another email address</a></small>
+				<a href="#">Add another email address</a>
 			</div>
 		</div>
 

@@ -11,7 +11,7 @@
 }
 
 .m-form-standalone .m-form-item {
-	margin-bottom: $standard-block-padding;
+	margin-bottom: $standard-block-padding * 2;
 	width: 100%;
 	max-width: 100%;
 
@@ -35,7 +35,7 @@
 	input:not([type=checkbox]):not([type=radio]),
 	select,
 	textarea {
-		padding: $standard-block-padding;
+		padding: $standard-block-padding / 2;
 		border: $border-default-style;
 		margin-bottom: $standard-block-padding;
 		width: 100%;
@@ -75,6 +75,8 @@
 
 		&.m-form-change-email {
 			max-width: 80%;
+			margin-bottom: $standard-block-margin;
+			@include meta-preset( $size: -2 );
 		}
 	}
 }

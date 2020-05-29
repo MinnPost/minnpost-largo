@@ -75,7 +75,7 @@ button.a-button,
 
 .a-input-with-button {
 	width: 100%;
-	margin-bottom: 0.375em;
+	margin-bottom: $standard-block-padding;
 	display: flex;
 
 	input[type="submit"],

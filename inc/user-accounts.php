@@ -422,3 +422,45 @@ if ( ! function_exists( 'minnpost_largo_check_consolidated_emails' ) ) :
 		return $emails;
 	}
 endif;
+
+if ( ! function_exists( 'minnpost_largo_get_user_registered_date' ) ) :
+	function minnpost_largo_get_user_registered_date( $date_string ) {
+		$date_time = new DateTime( $date_string );
+		if ( function_exists( 'get_ap_date' ) ) {
+			$month   = $date_time->format( 'm' );
+			$ap_year = $date_time->format( 'Y' );
+			$ap_day  = $date_time->format( 'j' );
+			switch ( $month ) {
+				case '01':
+					$ap_month = 'Jan.';
+					break;
+				case '02':
+					$ap_month = 'Feb.';
+					break;
+				case '08':
+					$ap_month = 'Aug.';
+					break;
+				case '09':
+					$ap_month = 'Sept.';
+					break;
+				case '10':
+					$ap_month = 'Oct.';
+					break;
+				case '11':
+					$ap_month = 'Nov.';
+					break;
+				case '12':
+					$ap_month = 'Dec.';
+					break;
+				default:
+					$ap_month = $datetime->format( 'F' );
+					break;
+			}
+			$date = $ap_month . ' ' . $ap_day . ', ' . $ap_year;
+		} else {
+			$date_format = get_option( 'date_format', 'c' );
+			$date        = $datetime->format( $date_format );
+		}
+		return $date;
+	}
+endif;

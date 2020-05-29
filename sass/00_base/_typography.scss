@@ -158,14 +158,14 @@ blockquote {
 // form elements
 label {
 
-	@include body-preset( $size: 0 );
+	//@include body-preset( $size: 0 );
 }
 
 input,
 textarea,
 select {
 
-	@include body-preset( $size: 0, $line-height: normal );
+	@include meta-preset( $line-height: normal );
 }
 
 input[type="submit"],
