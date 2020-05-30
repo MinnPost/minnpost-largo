@@ -216,7 +216,7 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 			if ( site_url( '/users/userid' ) === $url || '/users/userid' === $url ) {
 				$url = site_url( '/users/' . $user_id . '/' );
 				if ( rtrim( get_current_url(), '/' ) . '/' === $url ) {
-					$active_class = ' class="active"';
+					$active_class = 'active';
 				}
 			}
 			if ( ( $account_parent_id !== (int) $item->menu_item_parent && $account_parent_id !== (int) $item->ID ) && strpos( $url, '/user/' ) && '' !== $user_id && get_current_user_id() !== $user_id ) {
