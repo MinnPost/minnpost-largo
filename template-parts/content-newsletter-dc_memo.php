@@ -274,6 +274,48 @@ a[x-apple-data-detectors] {
 
 			<?php do_action( 'wp_message_inserter', 'email_before_bios', 'email' ); ?>
 
+			<?php
+			$hide_author = get_post_meta( $id, '_mp_remove_author_from_display', true );
+			$coauthors   = get_coauthors( get_the_ID() );
+			$author_info = '';
+			if ( 'on' !== $hide_author && empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) ) ) {
+				foreach ( $coauthors as $key => $coauthor ) {
+					$author_id    = $coauthor->ID;
+					$author_info .= minnpost_get_author_figure( $author_id, 'author-teaser', true, true );
+				}
+			}
+			if ( '' !== $author_info ) {
+				?>
+				<tr>
+					<td class="twp-column content author" style="border-collapse: collapse; Margin: 0; padding: 0;">
+					<!--[if (gte mso 9)|(IE)]>
+						<table cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+								<td width="100%" valign="bottom">
+					<![endif]-->
+						<?php
+						$author_keys = array_keys( $coauthors );
+						$last_key    = end( $author_keys );
+						$end         = false;
+						foreach ( $coauthors as $key => $coauthor ) :
+							$author_id = $coauthor->ID;
+							if ( $key === $last_key ) {
+								$end = true;
+							}
+							minnpost_author_figure( $author_id, 'author-teaser', true, true, false, $end );
+						endforeach;
+						?>
+						<!--[if (gte mso 9)|(IE)]>
+								</td>
+							</tr>
+						</table>
+						<![endif]-->
+					</td> <!-- end .two-column.author -->
+				</tr> <!-- end row -->
+				<?php
+			}
+			?>
+
 			<?php do_action( 'wp_message_inserter', 'email_bottom', 'email' ); ?>
 
 			<tr>
