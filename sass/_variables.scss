@@ -58,6 +58,13 @@ $font__serif: georgia, cambria, "Times New Roman", times, serif;
 $webfont__serif: "ff-meta-serif-web-pro", georgia, cambria, "Times New Roman", times, serif;
 $webfont__sans: "ff-meta-web-pro", helvetica, arial, sans-serif;
 
+$html-root-size: 125%; // 100% is 16px
+$html-root-size-large-screen: 150%;
+
+$interface-copy-size: 80%;
+$interface-copy-size-larger: 85%;
+$interface-copy-size-smaller: 75%;
+
 // type scale.
 // uses Rob Weychert's code at https://24ways.org/2019/a-modern-typographic-scale/
 $html-font-size: 100%;

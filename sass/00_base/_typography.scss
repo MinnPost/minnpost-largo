@@ -1,8 +1,8 @@
 html {
-	font-size: 125%; // 100% is 16px
+	font-size: $html-root-size;
 
 	@include breakpoint-min( xl ) {
-		font-size: 150%;
+		font-size: $html-root-size-large-screen;
 	}
 }
 
