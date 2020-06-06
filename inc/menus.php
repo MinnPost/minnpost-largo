@@ -263,7 +263,7 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 			}
 			$user_id             = (int) $user_id;
 			$account_parent_item = get_page_by_title( 'Welcome', 'OBJECT', 'nav_menu_item' );
-			$account_parent_id   = $account_parent_item->ID;
+			$account_parent_id   = isset( $account_parent_item->ID ) ? $account_parent_item->ID : 0;
 
 			$url    = rtrim( $item->url, '/' );
 			$length = strlen( $url );
