@@ -1,54 +1,24 @@
-/*.m-entry-header {
-	width: 100%;
-	@include clearfix;
-
-	.m-entry-meta {
-		font-size: 92.3%;
-		text-transform: uppercase;
-		font-weight: bold;
-		line-height: 1.3em;
-		margin: 0.5em 0;
-	}
-
-	.a-intro {
-		margin: 1em 0;
-		line-height: $base-line-height-em;
-		font-family: $font__serif;
-		font-size: $content-font-size;
-	}
-}*/
-
 .m-archive article .m-entry-header {
 	display: flex;
 	flex-wrap: wrap;
-	margin-bottom: 0.25em;
+	margin-bottom: $standard-block-padding / 2;
 
 	.m-entry-meta {
 		flex-basis: 100%;
 	}
 }
 
-.m-entry-header-single {
-
-	.m-entry-meta {
-		margin-bottom: 1em;
-	}
-}
-
 .m-entry-header-singular {
 
 	.m-entry-meta {
-		font-size: 124%;
-		text-transform: none;
-		font-weight: normal;
 
 		&.m-entry-meta-deck {
-			margin-bottom: 0.25em;
+			margin-bottom: $standard-block-padding / 2;
 			font-weight: bold;
 		}
 	}
 }
 
 .m-page .m-entry-header {
-	margin-bottom: 15px;
+	margin-bottom: $standard-block-padding;
 }
