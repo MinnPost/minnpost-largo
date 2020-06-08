@@ -13,7 +13,7 @@ function getConfirmChangeMarkup( action ) {
 function manageEmails() {
 	var form               = $( '#account-settings-form' );
 	var rest_root          = user_account_management_rest.site_url + user_account_management_rest.rest_namespace;
-	var full_url           = rest_root + '/' + 'update-user/';
+	var fullUrl           = rest_root + '/' + 'update-user/';
 	var confirmChange      = '';
 	var nextEmailCount     = 1;
 	var newPrimaryEmail    = '';
@@ -143,7 +143,7 @@ function manageEmails() {
 			ajax_form_data = form.serialize(); //add our own ajax check as X-Requested-With is not always reliable
 			ajax_form_data = ajax_form_data + '&rest=true';
 			$.ajax( {
-				url: full_url,
+				url: fullUrl,
 				type: 'post',
 				beforeSend: function( xhr ) {
 			        xhr.setRequestHeader( 'X-WP-Nonce', user_account_management_rest.nonce );
