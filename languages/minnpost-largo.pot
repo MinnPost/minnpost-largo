@@ -60,13 +60,14 @@ msgid "Search"
 msgstr ""
 
 #. translators: 1) is the human readable time difference
-#: inc/comment-list.php:69
+#. translators: 1) is the human readable time difference
+#: inc/comment-list.php:69, template-parts/comments-user.php:36
 msgctxt "%2$s = comment date/time"
 msgid "on %1$s"
 msgstr ""
 
 #. translators: 1) is the human readable time difference
-#: inc/comment-list.php:60, inc/template-tags.php:242
+#: inc/comment-list.php:60, inc/template-tags.php:242, template-parts/comments-user.php:27
 msgctxt "%2$s = human-readable time difference"
 msgid "%1$s ago"
 msgstr ""
