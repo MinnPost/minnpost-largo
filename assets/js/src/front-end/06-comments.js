@@ -19,7 +19,7 @@ function trackShowComments( always, id, clickValue ) {
 		position = position.charAt( 0 ).toUpperCase() + position.slice( 1 );
 		categorySuffix = ' - ' + position;
 	}
-	mp_analytics_tracking_event( 'event', categoryPrefix + 'Show Comments' + categorySuffix, action, location.pathname );
+	mpAnalyticsTrackingEvent( 'event', categoryPrefix + 'Show Comments' + categorySuffix, action, location.pathname );
 }
 
 // when showing comments once, track it as an analytics event

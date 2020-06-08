@@ -22,7 +22,15 @@ module.exports = {
     'Backbone': false,
     'jQuery': false,
     'JSON': false,
-    'wp': false
+    'wp': false,
+    'PriorityNavScroller': false,
+    'transitionHiddenElement': false,
+    'mpAnalyticsTrackingEvent': false,
+    'user_account_management_rest': false,
+    'tlite': false,
+    'ga': false,
+    'minnpost_membership_data': false,
+    'FontFaceObserver': false
   },
 
   /**

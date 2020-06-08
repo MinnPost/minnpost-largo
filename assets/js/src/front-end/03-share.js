@@ -11,10 +11,10 @@ function trackShare( text, position = '' ) {
 	}
 
 	// track as an event, and as social if it is twitter or fb
-	mp_analytics_tracking_event( 'event', category, text, location.pathname );
+	mpAnalyticsTrackingEvent( 'event', category, text, location.pathname );
 	if ( 'undefined' !== typeof ga ) {
 		if ( 'Facebook' === text || 'Twitter' === text ) {
-			if ( 'Facebook' == text ) {
+			if ( 'Facebook' === text ) {
 				ga( 'send', 'social', text, 'Share', location.pathname );
 			} else {
 				ga( 'send', 'social', text, 'Tweet', location.pathname );
@@ -35,7 +35,7 @@ function copyCurrentURL() {
 	document.body.removeChild( dummy );
 }
 
-$( '.m-entry-share-top a' ).click( function( e ) {
+$( '.m-entry-share-top a' ).click( function() {
 	var text = $( this ).data( 'share-action' );
 	var position = 'top';
 	trackShare( text, position );
