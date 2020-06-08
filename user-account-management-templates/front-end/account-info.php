@@ -11,7 +11,7 @@
 	<?php if ( ! empty( $attributes['reading_topics'] ) ) : ?>
 		<p class="a-has-interests"><strong>Based on Your Interests:</strong> <span class="interests"><?php echo implode( ', ', array_values( $attributes['reading_topics'] ) ); ?></span> | <a href="<?php echo site_url( '/user/preferences/' ); ?>">Edit interests</a></p>
 		<div class="m-interest-posts">
-			<ul>
+			<ul class="a-interest-list a-interest-list-content">
 			<?php
 			if ( $attributes['topics_query']->have_posts() ) {
 				while ( $attributes['topics_query']->have_posts() ) {

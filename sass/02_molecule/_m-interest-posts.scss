@@ -1,53 +1,48 @@
 .m-interest-posts {
+	display: flex;
+	flex-wrap: wrap;
+	margin: 0 0 $standard-block-margin 0;
 
-	ul {
-		display: flex;
-		width: 100%;
-		padding: 0;
+	h3 {
+		font-size: var(--scale0);
+	}
+
+	.a-interest-list {
+		@include body-preset( $size: -2 );
 		list-style: none;
-		justify-content: space-between;
+		padding: $standard-block-padding 0 0 0;
+		margin: 0 0 $standard-block-margin 0;
+		display: flex;
 		flex-wrap: wrap;
+		justify-content: space-between;
 
 		li {
-			border-top: 1px solid $color__border-light;
-			font-size: 81%;
-			list-style: none;
-			padding: 0.5em 0;
-			margin: 0;
+			margin: 0 0 $standard-block-margin 0;
+			padding: 0 $standard-block-padding;
+			flex-basis: 25%;
+			flex-grow: 1;
 
-			a {
-				color: $color__minnpost-black;
-				text-decoration: none;
+			&:last-of-type {
+				margin-bottom: 0;
+			}
 
-				&:hover,
-				&:focus,
-				&:active {
+			.a-entry-title {
+				margin: $standard-block-padding / 2 0;
+			}
 
-					.a-entry-title {
-						text-decoration: underline;
-					}
-				}
+			.m-entry-byline {
+				margin-bottom: $standard-block-padding / 2;
+			}
 
-				.a-interest-image {
-					float: left;
-					margin-right: 2%;
-					position: relative;
+			.m-post-image {
+				margin: 0;
 
-					.a-new {
-						position: absolute;
-						left: 0;
-						bottom: 8px;
-						display: block;
-						line-height: normal;
-						width: 100%;
-						/*font-family: $font__headings;
-						font-weight: normal;
-						font-style: normal;
-						font-variant: normal;*/
-						color: $color__white;
-						background: rgba(130, 13, 21, 0.65);
-						text-align: center;
-						font-size: 81%;
+				img {
+					margin: 0;
+					max-width: 100%; // for older items without proper thumbnails
+
+					&:last-child {
+						margin-bottom: $standard-block-padding;
 					}
 				}
 			}
@@ -55,17 +50,35 @@
 	}
 }
 
-// media queries
-@media screen and (min-width: $nav-breaks) {
+
+// media queries for interest post content
+@media screen and (min-width: $size__ad-flexing) {
 
 	.m-interest-posts {
 
-		ul {
+		> h3 {
+			padding: $standard-block-padding;
+			flex-grow: 1;
+			border-bottom: $border-default-style;
+			order: 2;
 
-			li {
-				width: 48%;
-				margin: 0 1% 0 0;
+			&:first-of-type {
+				flex-grow: initial;
+				order: 1;
+				border-top: $border-default-style;
+				border-right: $border-default-style;
+				border-bottom: 0;
+				border-radius: $border-radius;
 			}
+
+			&:nth-of-type(2) {
+				padding-left: $standard-block-padding * 2;
+			}
+		}
+
+		.a-interest-list {
+			order: 3;
+			margin-bottom: 0;
 		}
 	}
 }
