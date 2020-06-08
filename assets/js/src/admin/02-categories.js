@@ -1,22 +1,22 @@
-function showHideCategoryGroupChoices( radio_value, checkboxes_selector ) {
-	if ( 'undefined' === typeof radio_value || '' === radio_value ) {
-		$( checkboxes_selector ).show();
+function showHideCategoryGroupChoices( radioValue, checkboxesSelector ) {
+	if ( 'undefined' === typeof radioValue || '' === radioValue ) {
+		$( checkboxesSelector ).show();
 	} else {
-		$( checkboxes_selector ).hide();
+		$( checkboxesSelector ).hide();
 	}
 }
 
 function setupCategoryGroupChoices() {
-	var category_group_selector     = '.cmb2-id--mp-category-group input:checked';
-	var grouped_categories_selector = '.cmb2-id--mp-category-grouped-categories';
-	if ( 0 < $( category_group_selector ).length || 0 < $( grouped_categories_selector ).length ) {
-		showHideCategoryGroupChoices( $( category_group_selector ).val(), grouped_categories_selector );
-		$( document ).on( 'change', category_group_selector, function( event ) {
-			showHideCategoryGroupChoices( $( this ).val(), grouped_categories_selector );
+	var categoryGroupSelector     = '.cmb2-id--mp-category-group input:checked';
+	var groupedCategoriesSelector = '.cmb2-id--mp-category-grouped-categories';
+	if ( 0 < $( categoryGroupSelector ).length || 0 < $( groupedCategoriesSelector ).length ) {
+		showHideCategoryGroupChoices( $( categoryGroupSelector ).val(), groupedCategoriesSelector );
+		$( document ).on( 'change', categoryGroupSelector, function() {
+			showHideCategoryGroupChoices( $( this ).val(), groupedCategoriesSelector );
 		} );
 	}
 }
 
-$( document ).ready( function( e ) {
+$( document ).ready( function() {
 	setupCategoryGroupChoices();
 } );
