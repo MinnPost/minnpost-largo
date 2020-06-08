@@ -611,6 +611,8 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 
 		if ( 'excerpt' === $text_field ) { // excerpt
 			$text .= get_post_meta( $author_id, '_mp_author_excerpt', true );
+		} elseif ( '' !== get_post_meta( $author_id, $text_field, true ) ) { // the field exists
+			$text .= get_post_meta( $author_id, $text_field, true );
 		} else { // full text
 			$text .= get_post_meta( $author_id, '_mp_author_bio', true );
 		}
@@ -620,6 +622,7 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 		}
 
 		$name = get_post_meta( $author_id, 'cap-display_name', true );
+		$text = wpautop( $text );
 		$text = apply_filters( 'the_content', $text );
 
 		if ( '' !== $image_id ) {
@@ -662,8 +665,8 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 					}
 					$output .= $name;
 					$title   = '';
-					if ( true === $include_title && isset( get_the_coauthor_meta( 'job-title' )[ $author_id ] ) && '' !== get_the_coauthor_meta( 'job-title' )[ $author_id ] ) {
-						$title = get_the_coauthor_meta( 'job-title' )[ $author_id ];
+					if ( true === $include_title && isset( get_the_coauthor_meta( 'job-title', $author_id )[ $author_id ] ) && '' !== get_the_coauthor_meta( 'job-title', $author_id )[ $author_id ] ) {
+						$title = get_the_coauthor_meta( 'job-title', $author_id )[ $author_id ];
 					} elseif ( true === $include_title ) {
 						$title = $default_title;
 					}
@@ -677,8 +680,8 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 				} elseif ( '' !== $name ) {
 					if ( 0 < $count ) {
 						$title = '';
-						if ( true === $include_title && isset( get_the_coauthor_meta( 'job-title' )[ $author_id ] ) && '' !== get_the_coauthor_meta( 'job-title' )[ $author_id ] ) {
-							$title = get_the_coauthor_meta( 'job-title' )[ $author_id ];
+						if ( true === $include_title && isset( get_the_coauthor_meta( 'job-title', $author_id )[ $author_id ] ) && '' !== get_the_coauthor_meta( 'job-title', $author_id )[ $author_id ] ) {
+							$title = get_the_coauthor_meta( 'job-title', $author_id )[ $author_id ];
 						} elseif ( true === $include_title ) {
 							$title = $default_title;
 						}
