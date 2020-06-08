@@ -25,7 +25,7 @@ function trackShowComments( always, id, click_value ) {
 // when showing comments once, track it as an analytics event
 $( document ).on( 'click', '.a-button-show-comments', function() {
 	trackShowComments( false, '', '' );
-});
+} );
 
 // Set user meta value for always showing comments if that button is clicked
 $( document ).on( 'click', '.a-checkbox-always-show-comments', function() {
@@ -40,7 +40,7 @@ $( document ).on( 'click', '.a-checkbox-always-show-comments', function() {
 	trackShowComments( true, that.attr( 'id' ), that.val() );
 
 	// we already have ajaxurl from the theme
-	$.ajax({
+	$.ajax( {
 		type: 'POST',
 		url: ajaxurl,
 		data: {
@@ -55,5 +55,5 @@ $( document ).on( 'click', '.a-checkbox-always-show-comments', function() {
 				$( '.a-checkbox-always-show-comments' ).val( 1 );
 			}
 		}
-	});
-});
+	} );
+} );

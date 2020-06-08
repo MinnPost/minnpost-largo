@@ -22,10 +22,10 @@ function setupMessageConditional() {
 		showHideConditionalValue( $( conditional_selector ).val() );
 		$( document ).on( 'change', conditional_selector, function( event ) {
 			showHideConditionalValue( $( this ).val(), $( event.target ).closest( '.cmb-field-list' ) );
-		});
+		} );
 	}
 }
 
 $( document ).ready( function( e ) {
 	setupMessageConditional();
-});
+} );

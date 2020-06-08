@@ -43,7 +43,8 @@ const config = {
 		admin_src: './assets/js/src/admin/**/*.js',
 		admin_lint: "./assets/js/src/admin/",
 		main: [ './assets/js/vendor/front-end/**/*.js', './assets/js/src/front-end/**/*.js' ],
-		main_lint: "./assets/js/src/front-end/",
+		main_lint_src: [ './assets/js/src/front-end/**/*.js' ],
+		main_lint_dest: "./assets/js/src/front-end/",
 		uglify: [ 'assets/js/*.js', '!assets/js/*.min.js', '!assets/js/customizer.js' ],
 		dest: './assets/js'
 	},
@@ -231,10 +232,10 @@ function adminscriptlint() {
 
 function mainscriptlint() {
 	return gulp
-		.src(config.scripts.main)
+		.src(config.scripts.main_lint_src)
 		.pipe(eslint({fix:true}))
 		.pipe(eslint.format())
-		.pipe(gulp.dest(config.scripts.main_lint))
+		.pipe(gulp.dest(config.scripts.main_lint_dest))
 		// Brick on failure to be super strict
 		//.pipe(eslint.failOnError());
 };
