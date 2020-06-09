@@ -1155,8 +1155,10 @@ if ( ! function_exists( 'minnpost_category_breadcrumb' ) ) :
 					echo '<div class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category_group->term_id ) ) . '">' . $category_group->name . '</a></div>';
 				}
 			}
-			$category_name = $category->name;
-			echo '<div class="a-breadcrumb a-category-name"><a href="' . $category_link . '">' . $category_name . '</a></div>';
+			$category_name = isset( $category->name ) ? $category->name : '';
+			if ( '' !== $category_name ) {
+				echo '<div class="a-breadcrumb a-category-name"><a href="' . $category_link . '">' . $category_name . '</a></div>';
+			}
 		}
 		if ( '' !== $category_group_id ) {
 			echo '</div>';
@@ -1534,7 +1536,7 @@ if ( ! function_exists( 'numeric_pagination' ) ) :
 		echo '<div class="m-pagination"><ul>' . "\n";
 
 		// link to page 1
-		if ( ! in_array( 1, $links ) ) {
+		if ( ! in_array( 1, $links, true ) ) {
 			printf( '<li><a href="%s">%s</a></li>' . "\n", esc_url( get_pagenum_link( 1 ) ), '&Lt; First' );
 		}
 
@@ -1542,7 +1544,7 @@ if ( ! function_exists( 'numeric_pagination' ) ) :
 		if ( get_previous_posts_link() ) {
 			printf( '<li>%s</li>' . "\n", get_previous_posts_link( '&lt; Previous' ) );
 			// elipses
-			if ( ! in_array( 2, $links ) ) {
+			if ( ! in_array( 2, $links, true ) ) {
 				echo '<li>&hellip;</li>';
 			}
 		}
@@ -1551,14 +1553,14 @@ if ( ! function_exists( 'numeric_pagination' ) ) :
 		sort( $links );
 		foreach ( (array) $links as $link ) {
 			if ( $paged === $link ) {
-				printf( '<li class="current">%s</li>' . "\n", $link );
+				printf( '<li class="current"><span>%s</span></li>' . "\n", $link );
 			} else {
 				printf( '<li><a href="%s">%s</a></li>' . "\n", esc_url( get_pagenum_link( $link ) ), $link );
 			}
 		}
 
 		// elipses
-		if ( ! in_array( $max - 1, $links ) ) {
+		if ( ! in_array( $max - 1, $links, true ) ) {
 			echo '<li>&hellip;</li>' . "\n";
 		}
 
@@ -1568,7 +1570,7 @@ if ( ! function_exists( 'numeric_pagination' ) ) :
 		}
 
 		// "last" link
-		if ( ! in_array( $max, $links ) ) {
+		if ( ! in_array( $max, $links, true ) ) {
 			printf( '<li><a href="%s">%s</a></li>' . "\n", esc_url( get_pagenum_link( $max ) ), 'Last &Gt;' );
 		}
 
