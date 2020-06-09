@@ -7,9 +7,9 @@ nav {
 	}
 }
 
+.m-secondary-navigation,
 .m-pagination {
 	position: relative;
-	@include meta-preset( $size: 0, $bold: false, $italic: false, $line-height: 1 );
 
 	ul {
 		list-style: none;
@@ -473,17 +473,14 @@ nav {
 }
 
 .m-pagination {
+	@include meta-preset( $size: 0, $bold: false, $italic: false, $line-height: 1 );
 	max-width: 100%;
 	width: 100%;
-	//background: $color__minnpost-white;
-	padding: 5px;
-	margin-bottom: 1.5em;
+	margin-bottom: $standard-block-margin;
 
 	ul {
 		justify-content: center;
 		text-align: center;
-		/*text-transform: uppercase;
-		font-family: $font__sans;*/
 	}
 
 	li {
