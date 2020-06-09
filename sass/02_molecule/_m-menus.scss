@@ -7,10 +7,9 @@ nav {
 	}
 }
 
-.m-secondary-navigation,
-.m-featured-navigation,
 .m-pagination {
 	position: relative;
+	@include meta-preset( $size: 0, $bold: false, $italic: false, $line-height: 1 );
 
 	ul {
 		list-style: none;
@@ -470,38 +469,6 @@ nav {
 				}
 			}
 		}
-	}
-}
-
-.m-featured-navigation {
-	display: none;
-	justify-content: flex-start;
-	line-height: normal;
-	//background: $color__minnpost-white;
-
-	.a-nav-label {
-		//text-transform: uppercase;
-		font-weight: normal;
-		//line-height: 1.3em;
-		//padding: 2px 10px 0 0;
-	}
-
-	li {
-		//line-height: 1.4em;
-		//font-weight: bold;
-
-		&.support-minnpost a {
-			color: $color__minnpost-red;
-		}
-	}
-
-	a {
-		color: $color__minnpost-black;
-		padding-right: 15px;
-	}
-
-	li.active > a {
-		color: $color__minnpost-red;
 	}
 }
 
