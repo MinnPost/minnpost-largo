@@ -1537,15 +1537,15 @@ if ( ! function_exists( 'numeric_pagination' ) ) :
 
 		// link to page 1
 		if ( ! in_array( 1, $links, true ) ) {
-			printf( '<li><a href="%s">%s</a></li>' . "\n", esc_url( get_pagenum_link( 1 ) ), '&Lt; First' );
+			printf( '<li class="a-pagination-first"><a href="%s">%s</a></li>' . "\n", esc_url( get_pagenum_link( 1 ) ), '&Lt; First' );
 		}
 
 		// "previous" link
 		if ( get_previous_posts_link() ) {
-			printf( '<li>%s</li>' . "\n", get_previous_posts_link( '&lt; Previous' ) );
+			printf( '<li class="a-pagination-previous">%s</li>' . "\n", get_previous_posts_link( '&lt; Previous' ) );
 			// elipses
 			if ( ! in_array( 2, $links, true ) ) {
-				echo '<li>&hellip;</li>';
+				echo '<li class="a-pagination-ellipsis"><span>&hellip;</span></li>';
 			}
 		}
 
@@ -1561,17 +1561,17 @@ if ( ! function_exists( 'numeric_pagination' ) ) :
 
 		// elipses
 		if ( ! in_array( $max - 1, $links, true ) ) {
-			echo '<li>&hellip;</li>' . "\n";
+			echo '<li class="a-pagination-ellipsis"><span>&hellip;</span></li>' . "\n";
 		}
 
 		// "next" link
 		if ( get_next_posts_link() ) {
-			printf( '<li>%s</li>' . "\n", get_next_posts_link( 'Next &gt;' ) );
+			printf( '<li class="a-pagination-next">%s</li>' . "\n", get_next_posts_link( 'Next &gt;' ) );
 		}
 
 		// "last" link
 		if ( ! in_array( $max, $links, true ) ) {
-			printf( '<li><a href="%s">%s</a></li>' . "\n", esc_url( get_pagenum_link( $max ) ), 'Last &Gt;' );
+			printf( '<li class="a-pagination-last"><a href="%s">%s</a></li>' . "\n", esc_url( get_pagenum_link( $max ) ), 'Last &Gt;' );
 		}
 
 		echo '</ul></div>' . "\n";
