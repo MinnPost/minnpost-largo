@@ -501,6 +501,12 @@ nav {
 			border-radius: $border-radius;
 			text-decoration: none;
 			margin-right: $standard-block-padding;
+
+			svg {
+				height: 1em;
+				width: 1em;
+			}
+
 		}
 
 		a:hover,
