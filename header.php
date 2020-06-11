@@ -82,9 +82,10 @@
 					?>
 				</nav><!-- #navigation-topics -->
 				<button class="nav-scroller-btn nav-scroller-btn--left" aria-label="Scroll left">
-					<i class="fas fa-chevron-left"></i></svg>
+					<i class="fas fa-chevron-left"></i>
 				</button>
-				<button class="nav-scroller-btn nav-scroller-btn--right" aria-label="Scroll right"><i class="fas fa-chevron-right"></i></svg>
+				<button class="nav-scroller-btn nav-scroller-btn--right" aria-label="Scroll right">
+					<i class="fas fa-chevron-right"></i>
 				</button>
 			</div>
 		</div>
