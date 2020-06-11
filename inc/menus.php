@@ -144,12 +144,12 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 		}
 
 		$active_class = '';
-		if ( in_array( 'current-menu-item', $classes ) ) {
+		if ( in_array( 'current-menu-item', $classes, true ) ) {
 			$active_class = 'active';
-		} elseif ( in_array( 'current-menu-parent', $classes ) && '/' !== $item->url ) {
+		} elseif ( in_array( 'current-menu-parent', $classes, true ) && '/' !== $item->url ) {
 			// checking '/' because home menu should never be a parent menu
 			$active_class = 'active-parent';
-		} elseif ( in_array( 'current-menu-ancestor', $classes ) ) {
+		} elseif ( in_array( 'current-menu-ancestor', $classes, true ) ) {
 			$active_class = 'active-ancestor';
 		}
 
@@ -292,7 +292,7 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 			$custom_classes = array_filter(
 				$all_classes,
 				function( $value ) {
-					return ( str_replace( [ 'menu-', 'page_', 'page-' ], '', $value ) != $value ) ? false : true;
+					return ( str_replace( array( 'menu-', 'page_', 'page-' ), '', $value ) !== $value ) ? false : true;
 				}
 			);
 			return implode( ' ', $custom_classes );
