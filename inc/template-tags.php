@@ -1155,8 +1155,10 @@ if ( ! function_exists( 'minnpost_category_breadcrumb' ) ) :
 					echo '<div class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category_group->term_id ) ) . '">' . $category_group->name . '</a></div>';
 				}
 			}
-			$category_name = $category->name;
-			echo '<div class="a-breadcrumb a-category-name"><a href="' . $category_link . '">' . $category_name . '</a></div>';
+			$category_name = isset( $category->name ) ? $category->name : '';
+			if ( '' !== $category_name ) {
+				echo '<div class="a-breadcrumb a-category-name"><a href="' . $category_link . '">' . $category_name . '</a></div>';
+			}
 		}
 		if ( '' !== $category_group_id ) {
 			echo '</div>';
@@ -1534,16 +1536,16 @@ if ( ! function_exists( 'numeric_pagination' ) ) :
 		echo '<div class="m-pagination"><ul>' . "\n";
 
 		// link to page 1
-		if ( ! in_array( 1, $links ) ) {
-			printf( '<li><a href="%s">%s</a></li>' . "\n", esc_url( get_pagenum_link( 1 ) ), '&Lt; First' );
+		if ( ! in_array( 1, $links, true ) ) {
+			printf( '<li class="a-pagination-first"><a href="%s">%s</a></li>' . "\n", esc_url( get_pagenum_link( 1 ) ), '&Lt; First' );
 		}
 
 		// "previous" link
 		if ( get_previous_posts_link() ) {
-			printf( '<li>%s</li>' . "\n", get_previous_posts_link( '&lt; Previous' ) );
+			printf( '<li class="a-pagination-previous">%s</li>' . "\n", get_previous_posts_link( '&lt; Previous' ) );
 			// elipses
-			if ( ! in_array( 2, $links ) ) {
-				echo '<li>&hellip;</li>';
+			if ( ! in_array( 2, $links, true ) ) {
+				echo '<li class="a-pagination-ellipsis"><span>&hellip;</span></li>';
 			}
 		}
 
@@ -1551,25 +1553,25 @@ if ( ! function_exists( 'numeric_pagination' ) ) :
 		sort( $links );
 		foreach ( (array) $links as $link ) {
 			if ( $paged === $link ) {
-				printf( '<li class="current">%s</li>' . "\n", $link );
+				printf( '<li class="current"><span>%s</span></li>' . "\n", $link );
 			} else {
 				printf( '<li><a href="%s">%s</a></li>' . "\n", esc_url( get_pagenum_link( $link ) ), $link );
 			}
 		}
 
 		// elipses
-		if ( ! in_array( $max - 1, $links ) ) {
-			echo '<li>&hellip;</li>' . "\n";
+		if ( ! in_array( $max - 1, $links, true ) ) {
+			echo '<li class="a-pagination-ellipsis"><span>&hellip;</span></li>' . "\n";
 		}
 
 		// "next" link
 		if ( get_next_posts_link() ) {
-			printf( '<li>%s</li>' . "\n", get_next_posts_link( 'Next &gt;' ) );
+			printf( '<li class="a-pagination-next">%s</li>' . "\n", get_next_posts_link( 'Next &gt;' ) );
 		}
 
 		// "last" link
-		if ( ! in_array( $max, $links ) ) {
-			printf( '<li><a href="%s">%s</a></li>' . "\n", esc_url( get_pagenum_link( $max ) ), 'Last &Gt;' );
+		if ( ! in_array( $max, $links, true ) ) {
+			printf( '<li class="a-pagination-last"><a href="%s">%s</a></li>' . "\n", esc_url( get_pagenum_link( $max ) ), 'Last &Gt;' );
 		}
 
 		echo '</ul></div>' . "\n";
