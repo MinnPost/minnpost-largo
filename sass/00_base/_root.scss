@@ -59,4 +59,5 @@ input, select, textarea {
 	line-height: normal;
 	color: $color__minnpost-black; // set a default text color and background color for input fields
 	background: $color__base-background-color;
+	border: 0; // by default, they shouldn't need a border
 }
