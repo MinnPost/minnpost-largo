@@ -8,13 +8,6 @@
 	}
 }
 
-.m-form-fullpage {
-	
-	input:not([type=checkbox]):not([type=radio]), select, textarea {
-		border: 1px solid $color__border-input;
-	}
-}
-
 .m-form-standalone .m-form-item {
 	margin-bottom: 1.25em;
 	width: 100%;

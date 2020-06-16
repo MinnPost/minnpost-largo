@@ -1,5 +1,11 @@
 .o-site-message-container {
 
+	input {
+		color: $color__minnpost-black; // set a default text color and background color for input fields
+		background: $color__base-background-color;
+		border: 0; // by default, they shouldn't need a border
+	}
+
 	// site header and homepage middle
 	&.wp-message-inserter-message-region-homepage_middle,
 	&.wp-message-inserter-message-header {
@@ -132,6 +138,10 @@
 			fieldset {
 				margin: 0;
 				padding: 1em 0;
+
+				input {
+					border: 1px solid $color__gray-lightest;
+				}
 			}
 		}
 
