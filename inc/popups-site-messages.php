@@ -904,7 +904,7 @@ if ( ! function_exists( 'minnpost_popup_url_matches' ) ) :
 endif;
 
 // Checks preloaded popups in the head for which assets to enqueue.
-if ( ! function_exists( 'minnpost_popup_assets' ) ) :
+if ( ! function_exists( 'minnpost_popup_assets' ) && 'preprod' === VIP_GO_ENV ) :
 	add_action( 'pum_preload_popup', 'minnpost_popup_assets' );
 	add_filter( 'wp_enqueue_scripts', 'minnpost_popup_assets' );
 	function minnpost_popup_assets( $popup_id = 0 ) {
