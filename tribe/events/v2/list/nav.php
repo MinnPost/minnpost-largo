@@ -10,7 +10,7 @@ $years = minnpost_event_addon_event_years( 'tribe-bar-year', 'DESC', false, true
 ?>
 <?php if ( '' !== $years ) : ?>
 <div class="m-pagination-all m-pagination-events">
-	<span class="a-subnav-label"><?php echo __( 'Past Events By Year', 'minnpost-largo' ); ?></span>
+	<a class="a-subnav-label" href="<?php echo site_url( '/events/list/?eventDisplay=past' ); ?>"><?php echo __( 'Past Events By Year', 'minnpost-largo' ); ?></a>
 	<div class="m-pagination-navigation m-events">
 		<div class="m-pagination-container m-pagination-container-events">
 			<?php minnpost_event_addon_event_years( 'tribe-bar-year', 'DESC', true, true ); ?>
