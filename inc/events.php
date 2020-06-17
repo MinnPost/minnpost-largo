@@ -35,3 +35,63 @@ if ( ! function_exists( 'minnpost_largo_event_columns' ) ) :
 		return $columns;
 	}
 endif;
+
+/**
+* Get a full date string
+*
+* @param string $start_date
+* @param string $end_date
+* @return string $time
+*
+*/
+if ( ! function_exists( 'minnpost_largo_full_event_date' ) ) :
+	function minnpost_largo_full_event_date( $start_date, $end_date ) {
+		if ( ! function_exists( 'minnpost_largo_get_ap_date' ) ) {
+			return $html;
+		}
+		if ( $end_date !== $start_date ) {
+			$time = sprintf(
+				// translators: 1) start date, 2) end date
+				__( '%1$s to %2$s', 'minnpost-largo' ),
+				$start_date,
+				$end_date
+			);
+		} else {
+			$time = sprintf(
+				'%1$s',
+				$start_date
+			);
+		}
+		return $time;
+	}
+endif;
+
+/**
+* Get a full time string
+*
+* @param string $start_date
+* @param string $end_date
+* @return string $time
+*
+*/
+if ( ! function_exists( 'minnpost_largo_full_event_time' ) ) :
+	function minnpost_largo_full_event_time( $start_time, $end_time ) {
+		if ( ! function_exists( 'minnpost_largo_get_ap_time' ) ) {
+			return $html;
+		}
+		if ( $end_time !== $start_time ) {
+			$time = sprintf(
+				// translators: 1) start time, 2) end time
+				__( '%1$s to %2$s', 'minnpost-largo' ),
+				$start_time,
+				$end_time
+			);
+		} else {
+			$time = sprintf(
+				'%1$s',
+				$start_time
+			);
+		}
+		return $time;
+	}
+endif;
