@@ -300,6 +300,56 @@ if ( ! function_exists( 'minnpost_largo_get_ap_date' ) ) :
 	}
 endif;
 
+/**
+* Get the AP time from a time string
+*
+* @return string $time_string
+* @return string $time
+*
+*/
+if ( ! function_exists( 'minnpost_largo_get_ap_time' ) ) :
+	function minnpost_largo_get_ap_time( $time_string ) {
+		$date_time = new DateTime( $time_string );
+		if ( function_exists( 'get_ap_time' ) ) {
+			$capnoon    = get_option( 'ap_capnoon' );
+			$meridian   = $date_time->format( 'a' );
+			$ap_hour_12 = $date_time->format( 'g' );
+			$ap_minute  = $date_time->format( 'i' );
+			$ap_time_24 = $date_time->format( 'H:i' );
+			$ap_time_12 = $date_time->format( 'g:i' );
+
+			// Format am and pm to AP Style abbreviations
+			if ( 'am' === $meridian ) {
+				$meridian = 'a.m.';
+			} elseif ( 'pm' === $meridian ) {
+				$meridian = 'p.m.';
+			}
+
+			// Reformat 12:00 and 00:00 to noon and midnight
+			if ( '00:00' === $ap_time_24 ) {
+				if ( 'true' === $capnoon ) {
+					$time = 'Midnight';
+				} else {
+					$time = 'midnight';
+				}
+			} elseif ( '12:00' === $ap_time_24 ) {
+				if ( 'true' === $capnoon ) {
+					$time = 'Noon';
+				} else {
+					$time = 'noon';
+				}
+			} elseif ( '00' === $ap_minute ) {
+				$time = $ap_hour_12 . ' ' . $meridian;
+			} else {
+				$time = $ap_time_12 . ' ' . $meridian;
+			}
+		} else {
+			$date_format = get_option( 'date_format', 'c' );
+			$time        = $date_time->format( $date_format );
+		}
+		return $time;
+	}
+endif;
 
 /**
 * Output the author/authors who posted the article
