@@ -252,6 +252,56 @@ if ( ! function_exists( 'minnpost_get_posted_on' ) ) :
 endif;
 
 /**
+* Get the AP date from a date string
+*
+* @return string $date_string
+* @return string $date
+*
+*/
+if ( ! function_exists( 'minnpost_largo_get_ap_date' ) ) :
+	function minnpost_largo_get_ap_date( $date_string ) {
+		$date_time = new DateTime( $date_string );
+		if ( function_exists( 'get_ap_date' ) ) {
+			$month   = $date_time->format( 'm' );
+			$ap_year = $date_time->format( 'Y' );
+			$ap_day  = $date_time->format( 'j' );
+			switch ( $month ) {
+				case '01':
+					$ap_month = 'Jan.';
+					break;
+				case '02':
+					$ap_month = 'Feb.';
+					break;
+				case '08':
+					$ap_month = 'Aug.';
+					break;
+				case '09':
+					$ap_month = 'Sept.';
+					break;
+				case '10':
+					$ap_month = 'Oct.';
+					break;
+				case '11':
+					$ap_month = 'Nov.';
+					break;
+				case '12':
+					$ap_month = 'Dec.';
+					break;
+				default:
+					$ap_month = $date_time->format( 'F' );
+					break;
+			}
+			$date = $ap_month . ' ' . $ap_day . ', ' . $ap_year;
+		} else {
+			$date_format = get_option( 'date_format', 'c' );
+			$date        = $date_time->format( $date_format );
+		}
+		return $date;
+	}
+endif;
+
+
+/**
 * Output the author/authors who posted the article
 * This depends on the Co-Authors Plus plugin
 *
