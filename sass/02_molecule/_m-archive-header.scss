@@ -22,4 +22,9 @@
 	&.m-archive-header-time {
 		margin-bottom: $standard-block-margin;
 	}
+
+	&.tribe-events-header {
+		display: flex;
+		justify-content: space-between;
+	}
 }
