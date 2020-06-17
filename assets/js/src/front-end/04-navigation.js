@@ -101,13 +101,13 @@ function setupPrimaryNav() {
 	} );
 }
 
-function setupSubNav() {
+function setupScrollNav( selector, navSelector, contentSelector ) {
 
 	// Init with all options at default setting
 	const priorityNavScrollerDefault = PriorityNavScroller( {
-		selector: '.m-sub-navigation',
-		navSelector: '.m-subnav-navigation',
-		contentSelector: '.m-menu-sub-navigation',
+		selector: selector,
+		navSelector: navSelector,
+		contentSelector: contentSelector,
 		itemSelector: 'li, a',
 		buttonLeftSelector: '.nav-scroller-btn--left',
 		buttonRightSelector: '.nav-scroller-btn--right'
@@ -126,7 +126,8 @@ function setupSubNav() {
 }
 
 setupPrimaryNav();
-setupSubNav();
+setupScrollNav( '.m-sub-navigation', '.m-subnav-navigation', '.m-menu-sub-navigation' );
+setupScrollNav( '.m-pagination-navigation', '.m-pagination-container', '.m-pagination-list' );
 
 $( '#navigation-featured a' ).click( function() {
 	mpAnalyticsTrackingEvent( 'event', 'Featured Bar Link', 'Click', this.href );

@@ -5,25 +5,22 @@
  * This overrides the default the-events-calendar/views/v2/list/nav.php
  *
  */
+
+$years = minnpost_event_addon_event_years( 'tribe-bar-year', 'DESC', false, true );
 ?>
-<nav class="tribe-events-calendar-list-nav tribe-events-c-nav">
-	<ul class="tribe-events-c-nav__list">
-		<?php
-		if ( ! empty( $prev_url ) ) {
-			$this->template( 'list/nav/prev', [ 'link' => $prev_url ] );
-		} else {
-			$this->template( 'list/nav/prev-disabled' );
-		}
-		?>
-
-		<?php $this->template( 'list/nav/today' ); ?>
-
-		<?php
-		if ( ! empty( $next_url ) ) {
-			$this->template( 'list/nav/next', [ 'link' => $next_url ] );
-		} else {
-			$this->template( 'list/nav/next-disabled' );
-		}
-		?>
-	</ul>
-</nav>
+<?php if ( '' !== $years ) : ?>
+<div class="m-pagination-all m-pagination-events">
+	<span class="a-subnav-label"><?php echo __( 'Past Events By Year', 'minnpost-largo' ); ?></span>
+	<div class="m-pagination-navigation m-events">
+		<div class="m-pagination-container m-pagination-container-events">
+			<?php minnpost_event_addon_event_years( 'tribe-bar-year', 'DESC', true, true ); ?>
+		</div>
+		<button class="nav-scroller-btn nav-scroller-btn--left" aria-label="Scroll left">
+			<i class="fas fa-chevron-left"></i>
+		</button>
+		<button class="nav-scroller-btn nav-scroller-btn--right" aria-label="Scroll right">
+			<i class="fas fa-chevron-right"></i>
+		</button>
+	</div>
+</div>
+<?php endif; ?>

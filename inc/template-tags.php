@@ -1533,7 +1533,7 @@ if ( ! function_exists( 'numeric_pagination' ) ) :
 			$links[] = $paged + 1;
 		}
 
-		echo '<div class="m-pagination"><ul>' . "\n";
+		echo '<div class="m-pagination"><ol>' . "\n";
 
 		// "previous" link
 		if ( get_previous_posts_link() ) {
@@ -1564,7 +1564,7 @@ if ( ! function_exists( 'numeric_pagination' ) ) :
 			printf( '<li class="a-pagination-next">%s</li>' . "\n", get_next_posts_link( 'Next <i class="fas fa-chevron-right"></i>' ) );
 		}
 
-		echo '</ul></div>' . "\n";
+		echo '</ol></div>' . "\n";
 
 	}
 endif;
