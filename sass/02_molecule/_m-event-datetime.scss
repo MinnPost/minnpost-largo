@@ -1,0 +1,15 @@
+.m-event-datetime {
+	display: flex;
+	justify-content: space-between;
+	@include body-preset( $size: -1 );
+	margin-bottom: $standard-block-padding;
+
+	> span {
+		display: block;
+
+		svg {
+			display: inline-flex;
+			margin-right: $standard-block-padding;
+		}
+	}
+}

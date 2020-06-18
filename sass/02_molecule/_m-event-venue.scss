@@ -1,0 +1,4 @@
+article .m-event-venue {
+	margin: 0 0 $standard-block-padding 0;
+	@include meta-preset( $size: -1 );
+}

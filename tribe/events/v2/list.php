@@ -15,14 +15,13 @@ $container_classes[] = 'm-layout-primary';
 			<?php $this->template( 'list/header-link' ); ?>
 		</header>
 		<?php $this->template( 'components/before' ); ?>
-		<section class="m-archive tribe-events-calendar-list">
+		<section class="m-archive m-archive-events tribe-events-calendar-list">
 			<?php foreach ( $events as $event ) : ?>
 				<?php $this->setup_postdata( $event ); ?>
 				<?php $this->template( 'list/event', array( 'event' => $event ) ); ?>
 			<?php endforeach; ?>
 		</section>
 		<?php $this->template( 'components/after' ); ?>
-		
 		<?php $this->template( 'list/nav' ); ?>
 
 		<?php numeric_pagination(); ?>
