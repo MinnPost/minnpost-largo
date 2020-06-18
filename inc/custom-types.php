@@ -94,6 +94,24 @@ add_filter(
 );
 
 /**
+* Co-authors in RSS and other feeds
+* /wp-includes/feed-rss2.php uses the_author(), so we selectively filter the_author value
+*/
+if ( ! function_exists( 'minnpost_coauthors_in_rss' ) ) :
+	add_filter( 'the_author', 'minnpost_coauthors_in_rss' );
+	function minnpost_coauthors_in_rss( $the_author ) {
+		if ( ! is_feed() || ! function_exists( 'coauthors' ) ) {
+			return $the_author;
+		} else {
+			if ( ! empty( esc_html( get_post_meta( get_the_ID(), '_mp_subtitle_settings_byline', true ) ) ) ) {
+				return esc_html( get_post_meta( get_the_ID(), '_mp_subtitle_settings_byline', true ) );
+			}
+			return coauthors( null, null, null, null, false );
+		}
+	}
+endif;
+
+/**
 * Set which post types are indexable by Elasticpress
 *
 * @param array $post_types
