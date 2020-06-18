@@ -2,8 +2,11 @@ article .m-entry-excerpt {
 	margin: $standard-block-padding 0 $standard-block-padding * 2 0;
 	@include meta-preset( $size: -1 );
 	max-width: 70ch;
+	width: 100%;
 
-	&.m-entry-excerpt-event {
-		width: colspan( 7, 16 );
+	@include breakpoint-min( md ) {
+		&.m-entry-excerpt-event {
+			width: colspan( 7, 16 );
+		}
 	}
 }

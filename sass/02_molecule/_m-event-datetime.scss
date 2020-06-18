@@ -4,8 +4,21 @@
 	@include body-preset( $size: -1 );
 	margin-bottom: $standard-block-padding;
 
+	@include breakpoint-min( xs ) {
+		flex-direction: column;
+	}
+
+	@include breakpoint-min( xl ) {
+		flex-direction: row;
+	}
+
 	> span {
 		display: block;
+		margin: 0 $standard-block-padding $standard-block-padding 0;
+
+		&:last-child {
+			margin-right: 0;
+		}
 
 		svg {
 			display: inline-flex;

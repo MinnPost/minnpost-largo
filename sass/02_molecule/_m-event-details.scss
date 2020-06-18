@@ -1,5 +1,9 @@
 .m-event-details {
-	width: colspan( 7, 16 );
+	width: 100%;
+
+	@include breakpoint-min( md ) {
+		width: colspan( 7, 16 );
+	}
 
 	.a-event-title {
 		margin: 0 0 $standard-block-padding 0;
