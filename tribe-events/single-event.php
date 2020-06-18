@@ -10,7 +10,7 @@
 ?>
 
 <div id="primary" class="m-layout-primary">
-	<main id="main" class="site-main">
+	<main id="main" class="site-main tribe-events-pg-template">
 		<?php
 		while ( have_posts() ) :
 			the_post();
