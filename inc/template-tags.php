@@ -1193,7 +1193,7 @@ if ( ! function_exists( 'minnpost_edit_link' ) ) :
 			}
 		}
 		$user = wp_get_current_user();
-		if ( 0 === $user->ID || in_array( 'comment_moderator', (array) $user->roles ) ) {
+		if ( 0 === $user->ID || in_array( 'comment_moderator', (array) $user->roles, true ) ) {
 			return;
 		}
 		edit_post_link(
@@ -1879,7 +1879,7 @@ if ( ! function_exists( 'get_minnpost_account_management_menu' ) ) :
 					'menu_id'        => 'user-account-management',
 					'depth'          => 1,
 					'container'      => false,
-					'walker'         => new Minnpost_Walker_Nav_Menu ( $user_id ),
+					'walker'         => new Minnpost_Walker_Nav_Menu( $user_id ),
 					'items_wrap'     => '<ul id="%1$s" class="m-menu m-menu-sub-navigation m-menu-%1$s">%3$s</ul>',
 					'echo'           => false,
 				)
