@@ -1,30 +1,23 @@
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post m-event' ); ?>>
+		<header class="m-event-header m-entry-header tribe-events-calendar-list__event-header">
+			<h1 class="a-entry-title a-event-title tribe-events-single-event-title"><?php echo get_the_title(); ?></h1>
+			<div class="m-event-notices">
+				<?php tribe_the_notices(); ?>
+			</div>
+			<!-- Event meta -->
+			<?php do_action( 'tribe_events_single_event_before_the_meta' ); ?>
+			<?php get_template_part( 'tribe/events/modules/meta/date' ); ?>
+			<?php get_template_part( 'tribe/events/modules/meta/venue' ); ?>
+			<?php do_action( 'tribe_events_single_event_after_the_meta' ); ?>
+		</header>	
+		<?php get_template_part( 'tribe/events/modules/meta/cost' ); ?>
+		<?php minnpost_post_image( 'large' ); ?>
 
-	<!-- Notices -->
-	<?php tribe_the_notices() ?>
-
-	<?php the_title( '<h1 class="tribe-events-single-event-title">', '</h1>' ); ?>
-
-	<div class="tribe-events-schedule tribe-clearfix">
-		<?php echo tribe_events_event_schedule_details( get_the_ID(), '<h2>', '</h2>' ); ?>
-		<?php if ( tribe_get_cost() ) : ?>
-			<span class="tribe-events-cost"><?php echo tribe_get_cost( null, true ) ?></span>
-		<?php endif; ?>
-	</div>
-
-	<!-- Event featured image, but exclude link -->
-	<?php echo tribe_event_featured_image( get_the_ID(), 'full', false ); ?>
-
-	<!-- Event content -->
-	<?php do_action( 'tribe_events_single_event_before_the_content' ) ?>
-	<div class="tribe-events-single-event-description tribe-events-content">
-		<?php the_content(); ?>
-	</div>
-	<!-- .tribe-events-single-event-description -->
-	<?php do_action( 'tribe_events_single_event_after_the_content' ) ?>
-
-	<!-- Event meta -->
-	<?php do_action( 'tribe_events_single_event_before_the_meta' ) ?>
-	<?php tribe_get_template_part( 'modules/meta' ); ?>
-	<?php do_action( 'tribe_events_single_event_after_the_meta' ) ?>
+		<!-- Event content -->
+		<?php do_action( 'tribe_events_single_event_before_the_content' ); ?>
+		<div class="tribe-events-single-event-description tribe-events-content">
+			<?php the_content(); ?>
+		</div>
+		<!-- .tribe-events-single-event-description -->
+		<?php do_action( 'tribe_events_single_event_after_the_content' ); ?>
 </article> <!-- #post-x -->
