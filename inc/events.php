@@ -39,15 +39,14 @@ endif;
 /**
 * Get a full date string
 *
-* @param string $start_date
-* @param string $end_date
+* @param int $event_id
 * @return string $time
 *
 */
 if ( ! function_exists( 'minnpost_largo_full_event_date' ) ) :
-	function minnpost_largo_full_event_date( $event_id ) {
-		if ( ! function_exists( 'minnpost_largo_get_ap_date' ) ) {
-			return $html;
+	function minnpost_largo_full_event_date( $event_id = '' ) {
+		if ( '' === $event_id ) {
+			$event_id = get_the_ID();
 		}
 		$start_date = minnpost_largo_get_ap_date( tribe_get_start_date( $event_id, false, 'j-F' ) );
 		$end_date   = minnpost_largo_get_ap_date( tribe_get_end_date( $event_id, false, 'j-F' ) );
@@ -71,15 +70,14 @@ endif;
 /**
 * Get a full time string
 *
-* @param string $start_date
-* @param string $end_date
+* @param int $event_id
 * @return string $time
 *
 */
 if ( ! function_exists( 'minnpost_largo_full_event_time' ) ) :
-	function minnpost_largo_full_event_time( $event_id ) {
-		if ( ! function_exists( 'minnpost_largo_get_ap_time' ) ) {
-			return $html;
+	function minnpost_largo_full_event_time( $event_id = '' ) {
+		if ( '' === $event_id ) {
+			$event_id = get_the_ID();
 		}
 		$start_time = minnpost_largo_get_ap_time( tribe_get_start_date( $event_id, false, 'H:i' ) );
 		$end_time   = minnpost_largo_get_ap_time( tribe_get_end_date( $event_id, false, 'H:i' ) );
