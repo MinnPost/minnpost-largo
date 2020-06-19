@@ -453,7 +453,7 @@ function minnpost_largo_author_display_name( $name ) {
 }*/
 
 /**
-* Output the share buttons for top or bottom
+* Output the share buttons
 *
 * @param int $id
 *
@@ -463,7 +463,10 @@ if ( ! function_exists( 'minnpost_share_buttons' ) ) :
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
-		$display_share = true;
+		$hide_share_buttons = get_post_meta( $post_id, '_mp_remove_share_buttons_from_display', true );
+		if ( 'on' === $hide_share_buttons ) {
+			return;
+		}
 		$share_url     = urlencode( get_current_url() );
 		$share_excerpt = minnpost_largo_get_description();
 		$share_title   = minnpost_largo_get_title();

@@ -603,18 +603,10 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		);
 		$display_settings->add_field(
 			array(
-				'name'             => __( 'Share button location', 'minnpost-largo' ),
-				'id'               => '_mp_share_display_location',
-				'type'             => 'select',
-				'show_option_none' => false,
-				'desc'             => __( 'Select a location for the share buttons to display', 'minnpost-largo' ),
-				'default'          => 'both',
-				'options'          => array(
-					'neither' => __( 'Neither', 'minnpost-largo' ),
-					'both'    => __( 'Both', 'minnpost-largo' ),
-					'top'     => __( 'Top', 'minnpost-largo' ),
-					'bottom'  => __( 'Bottom', 'minnpost-largo' ),
-				),
+				'name' => __( 'Remove share buttons from display?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_share_buttons_from_display',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, share buttons will not display on this post.', 'minnpost-largo' ),
 			)
 		);
 
