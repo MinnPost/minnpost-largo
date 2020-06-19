@@ -41,6 +41,6 @@ if ( ! tribe_get_venue_id() ) {
 		<p class="tel"><?php echo tribe_get_phone(); ?></p>
 	<?php endif; ?>
 	<?php if ( tribe_show_google_map_link() && ! empty( tribe_get_map_link() ) ) : ?>
-		<p class="a-google-map-link"><a href="<?php echo tribe_get_map_link(); ?>"><?php echo __( 'See it on Google Maps', 'minnpost-largo' ); ?></a></p>
+		<p class="a-google-map-link"><a href="<?php echo tribe_get_map_link(); ?>"><i class="fas fa-map-marker-alt"></i> <?php echo __( 'On Google Maps', 'minnpost-largo' ); ?></a></p>
 	<?php endif; ?>
 </div>

@@ -1995,7 +1995,7 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 				'desc' => __( 'If checked, this post will open with the HTML editor visible.', 'minnpost-largo' ),
 			)
 		);
-		$display_settings->add_field(
+		/*$display_settings->add_field(
 			array(
 				'name' => __( 'Remove category from display?', 'minnpost-largo' ),
 				'id'   => '_mp_remove_category_from_display',
@@ -2010,16 +2010,32 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 				'type' => 'text',
 				'desc' => __( 'This text will show in place of the category name(s).', 'minnpost-largo' ),
 			)
-		);
+		);*/
 		$display_settings->add_field(
 			array(
 				'name' => __( 'Remove title from display?', 'minnpost-largo' ),
 				'id'   => '_mp_remove_title_from_display',
 				'type' => 'checkbox',
-				'desc' => __( 'If checked, the post title will not display.', 'minnpost-largo' ),
+				'desc' => __( 'If checked, the event title will not display.', 'minnpost-largo' ),
 			)
 		);
 		$display_settings->add_field(
+			array(
+				'name' => __( 'Remove notice(s) from display?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_notice_from_display',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this event will not display any notices it would otherwise contain from the events plugin.', 'minnpost-largo' ),
+			)
+		);
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Remove all event details from display?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_event_details_from_display',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this event will not display any of its details in their normal locations, including date, venue, and cost information.', 'minnpost-largo' ),
+			)
+		);
+		/*$display_settings->add_field(
 			array(
 				'name' => __( 'Remove author(s) from display?', 'minnpost-largo' ),
 				'id'   => '_mp_remove_author_from_display',
@@ -2050,21 +2066,13 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 				'type' => 'checkbox',
 				'desc' => __( 'If checked, this post will not have a newsletter signup box.', 'minnpost-largo' ),
 			)
-		);
+		);*/
 		$display_settings->add_field(
 			array(
-				'name'             => __( 'Share button location', 'minnpost-largo' ),
-				'id'               => '_mp_share_display_location',
-				'type'             => 'select',
-				'show_option_none' => false,
-				'desc'             => __( 'Select a location for the share buttons to display', 'minnpost-largo' ),
-				'default'          => 'both',
-				'options'          => array(
-					'neither' => __( 'Neither', 'minnpost-largo' ),
-					'both'    => __( 'Both', 'minnpost-largo' ),
-					'top'     => __( 'Top', 'minnpost-largo' ),
-					'bottom'  => __( 'Bottom', 'minnpost-largo' ),
-				),
+				'name' => __( 'Remove share buttons from display?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_share_buttons_from_display',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, share buttons will not display on this event.', 'minnpost-largo' ),
 			)
 		);
 
@@ -2110,7 +2118,7 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 				'name'    => __( 'Sponsorship', 'minnpost-largo' ),
 				'id'      => '_mp_post_sponsorship',
 				'type'    => 'wysiwyg',
-				'desc'    => __( 'This field overrides a sponsorship message from the category or tag that contains a post.', 'minnpost-largo' ),
+				'desc'    => __( 'This field overrides a sponsorship message from the category or tag that contains an event.', 'minnpost-largo' ),
 				'options' => array(
 					'media_buttons' => false, // show insert/upload button(s)
 					'textarea_rows' => 5,
@@ -2123,7 +2131,7 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 				'name' => __( 'Prevent sponsorship display', 'minnpost-largo' ),
 				'id'   => '_mp_prevent_post_sponsorship',
 				'type' => 'checkbox',
-				'desc' => __( 'If checked, this post will not display any sponsorship message, regardless of its tags or categories.', 'minnpost-largo' ),
+				'desc' => __( 'If checked, this event will not display any sponsorship message, regardless of its tags or categories.', 'minnpost-largo' ),
 			)
 		);
 
