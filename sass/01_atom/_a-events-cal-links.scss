@@ -1,0 +1,25 @@
+.a-events-cal-links {
+    display: none;
+    position: absolute;
+    left: 0;
+    top: 2.5em;
+    margin: 0;
+    list-style: none;
+    background: neutral-color(white);
+    border: $border-default-style;
+    border-radius: $border-radius;
+    padding: $standard-block-padding $standard-block-margin * 2 $standard-block-padding * 2 $standard-block-padding $standard-block-padding;
+    width: 100%;
+    @include meta-preset( $size: -2 );
+    margin: -$standard-block-padding 0 0 0;
+
+    &.a-events-cal-link-visible {
+        display: block;
+    }
+
+    .a-close-holder {
+        position: absolute;
+        top: $standard-block-padding;
+        right: $standard-block-padding;
+    }
+}

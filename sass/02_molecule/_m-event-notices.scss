@@ -4,7 +4,7 @@
     .tribe-events-notices {
         background: utility-color(blue, background);
         border: $border-default-style;
-        margin: $standard-block-padding 0 $standard-block-padding * 2 0;
+        margin: -$standard-heading-margin 0 $standard-block-margin 0;
 	    @include meta-preset( $size: -1 );
         padding: $standard-block-padding;
         border-radius: $border-radius;

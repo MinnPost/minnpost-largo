@@ -43,7 +43,7 @@ function setupPrimaryNav() {
 
 	var target    = document.querySelector( 'nav .m-form-search fieldset .a-button-sentence' );
 	var div       = document.createElement( 'div' );
-	div.innerHTML = '<a href="#" class="a-close-search"><i class="fas fa-times"></i></a>';
+	div.innerHTML = '<a href="#" class="a-close-button a-close-search"><i class="fas fa-times"></i></a>';
 	var fragment  = document.createDocumentFragment();
 	div.setAttribute( 'class', 'a-close-holder' );
 	fragment.appendChild( div );
@@ -126,8 +126,13 @@ function setupScrollNav( selector, navSelector, contentSelector ) {
 }
 
 setupPrimaryNav();
-setupScrollNav( '.m-sub-navigation', '.m-subnav-navigation', '.m-menu-sub-navigation' );
-setupScrollNav( '.m-pagination-navigation', '.m-pagination-container', '.m-pagination-list' );
+
+if ( 0 < $( '.m-sub-navigation' ).length ) {
+	setupScrollNav( '.m-sub-navigation', '.m-subnav-navigation', '.m-menu-sub-navigation' );
+}
+if ( 0 < $( '.m-pagination-navigation' ).length ) {
+	setupScrollNav( '.m-pagination-navigation', '.m-pagination-container', '.m-pagination-list' );
+}
 
 $( '#navigation-featured a' ).click( function() {
 	mpAnalyticsTrackingEvent( 'event', 'Featured Bar Link', 'Click', this.href );

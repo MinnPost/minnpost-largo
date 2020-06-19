@@ -1,4 +1,12 @@
 article .m-event-venue {
 	margin: 0 0 $standard-block-padding 0;
-	@include meta-preset( $size: -1 );
+
+	p {
+		margin: 0;
+
+		.street-address {
+			display: block;
+			margin: 0;
+		}
+	}
 }

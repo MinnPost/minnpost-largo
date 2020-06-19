@@ -25,7 +25,7 @@ if ( ! tribe_get_venue_id() ) {
 			<span class="street-address"><?php echo tribe_get_address(); ?></span>
 		<?php endif; ?>
 		<?php if ( ! empty( tribe_get_city() ) ) : ?>
-			<span class="locality"><?php echo tribe_get_city(); ?></span>
+		<span class="locality"><?php echo tribe_get_city(); ?></span>
 		<?php endif; ?>
 		<?php if ( ! empty( tribe_get_region() ) ) : ?>
 			<span class="region"><?php echo tribe_get_region(); ?></span>
@@ -40,8 +40,7 @@ if ( ! tribe_get_venue_id() ) {
 	<?php if ( ! empty( tribe_get_phone() ) ) : ?>
 		<p class="tel"><?php echo tribe_get_phone(); ?></p>
 	<?php endif; ?>
+	<?php if ( tribe_show_google_map_link() && ! empty( tribe_get_map_link() ) ) : ?>
+		<p class="a-google-map-link"><a href="<?php echo tribe_get_map_link(); ?>"><?php echo __( 'See it on Google Maps', 'minnpost-largo' ); ?></a></p>
+	<?php endif; ?>
 </div>
-
-<?php if ( tribe_show_google_map_link() && ! empty( tribe_get_map_link() ) ) : ?>
-	<p class="a-google-map-link"><a href="<?php echo tribe_get_map_link(); ?>"><?php echo __( 'See it on Google Maps', 'minnpost-largo' ); ?></a></p>
-<?php endif; ?>

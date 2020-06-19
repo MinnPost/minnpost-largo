@@ -1,6 +1,7 @@
 .m-archive article .m-entry-header {
 	display: flex;
 	flex-wrap: wrap;
+	align-content: flex-start;
 	margin-bottom: $standard-block-padding / 2;
 
 	.m-entry-meta {

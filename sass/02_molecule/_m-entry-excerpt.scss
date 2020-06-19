@@ -4,9 +4,18 @@ article .m-entry-excerpt {
 	max-width: 70ch;
 	width: 100%;
 
-	@include breakpoint-min( md ) {
-		&.m-entry-excerpt-event {
-			width: colspan( 7, 16 );
+	
+}
+
+.m-archive-events {
+
+	article .m-entry-excerpt {
+
+		@include breakpoint-min( md ) {
+			&.m-entry-excerpt-event {
+				width: colspan( 7, 16 );
+			}
 		}
+
 	}
 }

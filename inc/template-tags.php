@@ -83,6 +83,11 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
+
+		// defaults
+		$image_id  = '';
+		$image_url = '';
+
 		// large is the story detail image. this is a built in size in WP
 		// home has its own size field
 		if ( is_home() && 'feature' === $size ) {
@@ -124,15 +129,10 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 			}
 		}
 
-		if ( ! isset( $image_id ) ) {
-			$image_id  = '';
-			$image_url = '';
-		}
-
 		// set up lazy load attributes
 		$attributes = apply_filters( 'minnpost_largo_lazy_load_attributes', $attributes, $id, 'post', $lazy_load );
 
-		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
+		if ( '' !== $image_id && '' !== wp_get_attachment_image( $image_id, $size ) ) {
 			// this requires that the custom image sizes in custom-fields.php work correctly
 			$image     = wp_get_attachment_image( $image_id, $size, false, $attributes );
 			$image_url = wp_get_attachment_url( $image_id );

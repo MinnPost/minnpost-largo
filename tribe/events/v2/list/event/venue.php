@@ -11,20 +11,21 @@
 if ( ! $event->venues->count() ) {
 	return;
 }
-
-$separator            = esc_html_x( ', ', 'Address separator', 'the-events-calendar' );
-$venue                = $event->venues[0];
-$append_after_address = array_filter( array_map( 'trim', array( $venue->city, $venue->state_province, $venue->state, $venue->province ) ) );
-$address              = $venue->address . ( $venue->address && $append_after_address ? $separator : '' );
+$venue = $event->venues[0];
 ?>
-<address class="m-event-venue tribe-events-calendar-list__event-venue tribe-common-b2">
-	<span class="a-event-venue-title tribe-events-calendar-list__event-venue-title">
-		<?php echo wp_kses_post( $venue->post_title ); ?>
+<div class="m-event-venue vcard tribe-events-calendar-list__event-venue tribe-common-b2">
+	<span class="fn a-event-venue-title a-event-venue-title tribe-events-calendar-list__event-venue-title">
+		<?php echo wp_kses_post( $venue->post_title ); ?><?php echo esc_html( ',', 'minnpost-largo' ); ?>
 	</span>
-	<span class="a-event-venue-address tribe-events-calendar-list__event-venue-address">
-		<?php echo esc_html( $address ); ?>
-		<?php if ( $append_after_address ) : ?>
-			<?php echo esc_html( reset( $append_after_address ) ); ?>
+	<span class="adr a-event-venue-address">
+		<?php if ( ! empty( $venue->address ) ) : ?>
+		<span class="street-address"><?php echo esc_html( $venue->address ); ?><?php if ( ! empty( $venue->address ) && ! empty( $venue->city ) ) : ?><?php echo esc_html( ',', 'minnpost-largo' ); ?><?php endif; ?></span>
+		<?php endif; ?>
+		<?php if ( ! empty( $venue->city ) ) : ?>
+			<span class="locality"><?php echo esc_html( $venue->city ); ?></span>
+		<?php endif; ?>
+		<?php if ( ! empty( $venue->state ) ) : ?>
+			<span class="region"><?php echo esc_html( $venue->state ); ?></span>
 		<?php endif; ?>
 	</span>
-</address>
+</div>

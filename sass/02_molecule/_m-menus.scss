@@ -264,25 +264,11 @@ nav {
 						}
 
 						.a-close-search {
-							margin: 0 0 0 $standard-block-padding / 2;
-							border-radius: 50%;
-							color: neutral-color(white);
-							background: neutral-color(black);
-							height: 2em;
-							width: 2em;
-							font-size: 1em;
-							text-align: center;
-							vertical-align: middle;
 							display: inline-block;
+							line-height: 2em;
 							min-height: 0;
 							align-self: center;
-
-							&:hover,
-							&:focus,
-							&:active {
-								background: neutral-color(medium);
-								color: neutral-color(black);
-							}
+							padding: 0;
 						}
 					}
 				}

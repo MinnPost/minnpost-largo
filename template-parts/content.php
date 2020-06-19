@@ -9,7 +9,7 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post' ); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post m-post-single' ); ?>>
 
 	<?php if ( '' !== minnpost_get_category_name() || '' !== minnpost_get_replace_category_text() ) : ?>
 		<div class="m-post-classification">
