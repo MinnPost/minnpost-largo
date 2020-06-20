@@ -38,6 +38,10 @@
 			}
 		}
 	}
+
+	&:first-child {
+		margin-top: 0;
+	}
 }
 
 .no-js {

@@ -8,6 +8,7 @@ span.a-subnav-label {
 	padding: $standard-block-padding;
 	margin-right: $standard-block-padding / 2;
 	border-right: 2px solid neutral-color(border);
+	white-space: nowrap;
 	@include meta-preset( $size: -2, $bold: false, $italic: false );
 	line-height: normal;
 
@@ -20,4 +21,8 @@ span.a-subnav-label {
 	&:active {
 		//background-color: brand-color(red, dark);
 	}
+}
+
+.m-pagination-all .a-subnav-label {
+//	@include meta-preset( $size: 0, $bold: false, $italic: false );
 }

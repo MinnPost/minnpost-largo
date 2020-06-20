@@ -83,6 +83,11 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
+
+		// defaults
+		$image_id  = '';
+		$image_url = '';
+
 		// large is the story detail image. this is a built in size in WP
 		// home has its own size field
 		if ( is_home() && 'feature' === $size ) {
@@ -124,15 +129,10 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 			}
 		}
 
-		if ( ! isset( $image_id ) ) {
-			$image_id  = '';
-			$image_url = '';
-		}
-
 		// set up lazy load attributes
 		$attributes = apply_filters( 'minnpost_largo_lazy_load_attributes', $attributes, $id, 'post', $lazy_load );
 
-		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
+		if ( '' !== $image_id && '' !== wp_get_attachment_image( $image_id, $size ) ) {
 			// this requires that the custom image sizes in custom-fields.php work correctly
 			$image     = wp_get_attachment_image( $image_id, $size, false, $attributes );
 			$image_url = wp_get_attachment_url( $image_id );
@@ -252,6 +252,106 @@ if ( ! function_exists( 'minnpost_get_posted_on' ) ) :
 endif;
 
 /**
+* Get the AP date from a date string
+*
+* @return string $date_string
+* @return string $date
+*
+*/
+if ( ! function_exists( 'minnpost_largo_get_ap_date' ) ) :
+	function minnpost_largo_get_ap_date( $date_string ) {
+		$date_time = new DateTime( $date_string );
+		if ( function_exists( 'get_ap_date' ) ) {
+			$month   = $date_time->format( 'm' );
+			$ap_year = $date_time->format( 'Y' );
+			$ap_day  = $date_time->format( 'j' );
+			switch ( $month ) {
+				case '01':
+					$ap_month = 'Jan.';
+					break;
+				case '02':
+					$ap_month = 'Feb.';
+					break;
+				case '08':
+					$ap_month = 'Aug.';
+					break;
+				case '09':
+					$ap_month = 'Sept.';
+					break;
+				case '10':
+					$ap_month = 'Oct.';
+					break;
+				case '11':
+					$ap_month = 'Nov.';
+					break;
+				case '12':
+					$ap_month = 'Dec.';
+					break;
+				default:
+					$ap_month = $date_time->format( 'F' );
+					break;
+			}
+			$date = $ap_month . ' ' . $ap_day . ', ' . $ap_year;
+		} else {
+			$date_format = get_option( 'date_format', 'c' );
+			$date        = $date_time->format( $date_format );
+		}
+		return $date;
+	}
+endif;
+
+/**
+* Get the AP time from a time string
+*
+* @return string $time_string
+* @return string $time
+*
+*/
+if ( ! function_exists( 'minnpost_largo_get_ap_time' ) ) :
+	function minnpost_largo_get_ap_time( $time_string ) {
+		$date_time = new DateTime( $time_string );
+		if ( function_exists( 'get_ap_time' ) ) {
+			$capnoon    = get_option( 'ap_capnoon' );
+			$meridian   = $date_time->format( 'a' );
+			$ap_hour_12 = $date_time->format( 'g' );
+			$ap_minute  = $date_time->format( 'i' );
+			$ap_time_24 = $date_time->format( 'H:i' );
+			$ap_time_12 = $date_time->format( 'g:i' );
+
+			// Format am and pm to AP Style abbreviations
+			if ( 'am' === $meridian ) {
+				$meridian = 'a.m.';
+			} elseif ( 'pm' === $meridian ) {
+				$meridian = 'p.m.';
+			}
+
+			// Reformat 12:00 and 00:00 to noon and midnight
+			if ( '00:00' === $ap_time_24 ) {
+				if ( 'true' === $capnoon ) {
+					$time = 'Midnight';
+				} else {
+					$time = 'midnight';
+				}
+			} elseif ( '12:00' === $ap_time_24 ) {
+				if ( 'true' === $capnoon ) {
+					$time = 'Noon';
+				} else {
+					$time = 'noon';
+				}
+			} elseif ( '00' === $ap_minute ) {
+				$time = $ap_hour_12 . ' ' . $meridian;
+			} else {
+				$time = $ap_time_12 . ' ' . $meridian;
+			}
+		} else {
+			$date_format = get_option( 'date_format', 'c' );
+			$time        = $date_time->format( $date_format );
+		}
+		return $time;
+	}
+endif;
+
+/**
 * Output the author/authors who posted the article
 * This depends on the Co-Authors Plus plugin
 *
@@ -353,7 +453,7 @@ function minnpost_largo_author_display_name( $name ) {
 }*/
 
 /**
-* Output the share buttons for top or bottom
+* Output the share buttons
 *
 * @param int $id
 *
@@ -363,7 +463,10 @@ if ( ! function_exists( 'minnpost_share_buttons' ) ) :
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
-		$display_share = true;
+		$hide_share_buttons = get_post_meta( $post_id, '_mp_remove_share_buttons_from_display', true );
+		if ( 'on' === $hide_share_buttons ) {
+			return;
+		}
 		$share_url     = urlencode( get_current_url() );
 		$share_excerpt = minnpost_largo_get_description();
 		$share_title   = minnpost_largo_get_title();
@@ -1093,7 +1196,7 @@ if ( ! function_exists( 'minnpost_edit_link' ) ) :
 			}
 		}
 		$user = wp_get_current_user();
-		if ( 0 === $user->ID || in_array( 'comment_moderator', (array) $user->roles ) ) {
+		if ( 0 === $user->ID || in_array( 'comment_moderator', (array) $user->roles, true ) ) {
 			return;
 		}
 		edit_post_link(
@@ -1533,7 +1636,7 @@ if ( ! function_exists( 'numeric_pagination' ) ) :
 			$links[] = $paged + 1;
 		}
 
-		echo '<div class="m-pagination"><ul>' . "\n";
+		echo '<div class="m-pagination"><ol>' . "\n";
 
 		// "previous" link
 		if ( get_previous_posts_link() ) {
@@ -1564,7 +1667,7 @@ if ( ! function_exists( 'numeric_pagination' ) ) :
 			printf( '<li class="a-pagination-next">%s</li>' . "\n", get_next_posts_link( 'Next <i class="fas fa-chevron-right"></i>' ) );
 		}
 
-		echo '</ul></div>' . "\n";
+		echo '</ol></div>' . "\n";
 
 	}
 endif;
@@ -1779,7 +1882,7 @@ if ( ! function_exists( 'get_minnpost_account_management_menu' ) ) :
 					'menu_id'        => 'user-account-management',
 					'depth'          => 1,
 					'container'      => false,
-					'walker'         => new Minnpost_Walker_Nav_Menu ( $user_id ),
+					'walker'         => new Minnpost_Walker_Nav_Menu( $user_id ),
 					'items_wrap'     => '<ul id="%1$s" class="m-menu m-menu-sub-navigation m-menu-%1$s">%3$s</ul>',
 					'echo'           => false,
 				)

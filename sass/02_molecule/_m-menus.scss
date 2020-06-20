@@ -8,10 +8,11 @@ nav {
 }
 
 .m-secondary-navigation,
-.m-pagination {
+.m-pagination,
+.m-pagination-all {
 	position: relative;
 
-	ul {
+	ul, ol {
 		list-style: none;
 		display: flex;
 		justify-content: flex-start;
@@ -33,38 +34,38 @@ nav {
 	width: 100%;
 	overflow: hidden;
 	@include meta-preset( $size: -2, $bold: false, $italic: false );
+}
 
-	.nav-scroller-btn {
-		-webkit-appearance: none;
-		display: inline-flex;
-		position: absolute;
-		z-index: $z-index__md;
-		cursor: pointer;
-		color: neutral-color(dark);
-		background: neutral-color(white);
-		padding: $standard-block-padding / 2;
-		font-size: var(--scale1);
-		border: $border-default-style;
-		border-radius: $border-radius;
-		transition: $double-transition;
+.nav-scroller-btn {
+	-webkit-appearance: none;
+	display: inline-flex;
+	position: absolute;
+	z-index: $z-index__md;
+	cursor: pointer;
+	color: neutral-color(dark);
+	background: neutral-color(white);
+	padding: $standard-block-padding / 2;
+	font-size: var(--scale1);
+	border: $border-default-style;
+	border-radius: $border-radius;
+	transition: $double-transition;
 
-		&:hover,
-		&:focus {
-			background: neutral-color(highlight);
-		}
+	&:hover,
+	&:focus {
+		background: neutral-color(highlight);
+	}
 
-		&:not(.active) {
-			opacity: 0;
-			pointer-events: none;
-		}
+	&:not(.active) {
+		opacity: 0;
+		pointer-events: none;
+	}
 
-		&.nav-scroller-btn--left {
-			left: 0;
-		}
+	&.nav-scroller-btn--left {
+		left: 0;
+	}
 
-		&.nav-scroller-btn--right {
-			right: 0;
-		}
+	&.nav-scroller-btn--right {
+		right: 0;
 	}
 }
 
@@ -263,25 +264,11 @@ nav {
 						}
 
 						.a-close-search {
-							margin: 0 0 0 $standard-block-padding / 2;
-							border-radius: 50%;
-							color: neutral-color(white);
-							background: neutral-color(black);
-							height: 2em;
-							width: 2em;
-							font-size: 1em;
-							text-align: center;
-							vertical-align: middle;
 							display: inline-block;
+							line-height: 2em;
 							min-height: 0;
 							align-self: center;
-
-							&:hover,
-							&:focus,
-							&:active {
-								background: neutral-color(medium);
-								color: neutral-color(black);
-							}
+							padding: 0;
 						}
 					}
 				}
@@ -483,7 +470,7 @@ nav {
 	width: 100%;
 	margin-bottom: $standard-block-margin;
 
-	ul {
+	ol {
 		justify-content: space-evenly;
 		align-content: center;
 		text-align: center;
@@ -525,6 +512,109 @@ nav {
 		&.current span {
 			font-weight: bold;
 		}
+	}
+}
+
+.m-pagination-all {
+	display: flex;
+	align-items: center;
+	border-top: 2px solid neutral-color(border);
+	border-bottom: 2px solid neutral-color(border);
+	max-width: 100%;
+	width: 100%;
+	margin-bottom: $standard-block-margin;
+
+	a,
+	button {
+		min-height: $touch-target-minimum-size;
+		align-items: center;
+		cursor: pointer;
+	}
+
+	button {
+		min-width: $touch-target-minimum-size;
+		justify-content: center;
+	}
+
+	@include breakpoint-min( lg ) {
+		a,
+		button {
+			min-height: $touch-target-minimum-size-desktop;
+		}
+		button {
+			min-width: $touch-target-minimum-size-desktop;
+		}
+	}
+
+	.m-pagination-navigation {
+		display: flex;
+		align-items: center;
+		position: relative;
+		width: 100%;
+		overflow: hidden;
+	}
+
+	.m-pagination-container {
+		display: flex;
+		width: 100%;
+		max-width: 100%;
+		position: relative;
+		overflow-x: auto;
+		overflow-y: hidden;
+		-webkit-overflow-scrolling: touch;
+		align-self: center;
+		align-items: center;
+		padding-bottom: $standard-block-padding * 2; // fixes the visible scrollbar
+		margin-bottom: -$standard-block-padding * 2;
+	}
+
+	ol {
+		@include meta-preset( $size: -2, $bold: false, $italic: false );
+		will-change: transform;
+		display: inline-flex;
+		align-items: center;
+		white-space: nowrap;
+
+		&:not(.no-transition) {
+		    transition: transform 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+		}
+
+		a {
+			display: inline-flex;
+			text-decoration: none;
+			line-height: normal;
+			padding: $standard-block-padding;
+
+			@include breakpoint-min( md ) {
+				padding: $standard-block-padding / 2 $standard-block-padding;
+			}
+
+			&:hover,
+			&:focus,
+			&:active {
+				background: utility-color(blue, dark);
+				color: neutral-color(white);
+			}
+		}
+
+		li {
+			flex-shrink: 0;
+
+			&.active,
+			&.active-parent {
+				> a {
+					font-weight: bold;
+					color: utility-color(blue, dark);
+
+					&:hover,
+					&:focus,
+					&:active {
+						color: neutral-color(white);
+					}
+				}
+			}
+		}
+
 	}
 }
 

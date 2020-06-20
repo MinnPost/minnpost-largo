@@ -43,7 +43,7 @@ function setupPrimaryNav() {
 
 	var target    = document.querySelector( 'nav .m-form-search fieldset .a-button-sentence' );
 	var div       = document.createElement( 'div' );
-	div.innerHTML = '<a href="#" class="a-close-search"><i class="fas fa-times"></i></a>';
+	div.innerHTML = '<a href="#" class="a-close-button a-close-search"><i class="fas fa-times"></i></a>';
 	var fragment  = document.createDocumentFragment();
 	div.setAttribute( 'class', 'a-close-holder' );
 	fragment.appendChild( div );
@@ -101,13 +101,13 @@ function setupPrimaryNav() {
 	} );
 }
 
-function setupSubNav() {
+function setupScrollNav( selector, navSelector, contentSelector ) {
 
 	// Init with all options at default setting
 	const priorityNavScrollerDefault = PriorityNavScroller( {
-		selector: '.m-sub-navigation',
-		navSelector: '.m-subnav-navigation',
-		contentSelector: '.m-menu-sub-navigation',
+		selector: selector,
+		navSelector: navSelector,
+		contentSelector: contentSelector,
 		itemSelector: 'li, a',
 		buttonLeftSelector: '.nav-scroller-btn--left',
 		buttonRightSelector: '.nav-scroller-btn--right'
@@ -126,7 +126,13 @@ function setupSubNav() {
 }
 
 setupPrimaryNav();
-setupSubNav();
+
+if ( 0 < $( '.m-sub-navigation' ).length ) {
+	setupScrollNav( '.m-sub-navigation', '.m-subnav-navigation', '.m-menu-sub-navigation' );
+}
+if ( 0 < $( '.m-pagination-navigation' ).length ) {
+	setupScrollNav( '.m-pagination-navigation', '.m-pagination-container', '.m-pagination-list' );
+}
 
 $( '#navigation-featured a' ).click( function() {
 	mpAnalyticsTrackingEvent( 'event', 'Featured Bar Link', 'Click', this.href );
