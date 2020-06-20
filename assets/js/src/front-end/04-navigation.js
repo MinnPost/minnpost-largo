@@ -140,14 +140,6 @@ if ( 0 < $( '.m-pagination-navigation' ).length ) {
 	setupScrollNav( '.m-pagination-navigation', '.m-pagination-container', '.m-pagination-list' );
 }
 
-$( '#navigation-featured a' ).click( function() {
-	mpAnalyticsTrackingEvent( 'event', 'Featured Bar Link', 'Click', this.href );
-} );
-
-$( 'a.glean-sidebar' ).click( function() {
-	mpAnalyticsTrackingEvent( 'event', 'Sidebar Support Link', 'Click', this.href );
-} );
-
 $( 'a', $( '.o-site-sidebar' ) ).click( function() {
 	var widgetTitle         = $( this ).closest( '.m-widget' ).find( 'h3' ).text();
 	var zoneTitle           = $( this ).closest( '.m-zone' ).find( '.a-zone-title' ).text();
