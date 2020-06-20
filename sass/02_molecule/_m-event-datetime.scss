@@ -12,7 +12,15 @@
 		flex-direction: row;
 	}
 
-	> span {
+	> a {
+		display: inline-flex;
+		width: auto;
+		justify-content: space-between;
+		text-decoration: none;
+	}
+
+	> span,
+	> a > span {
 		display: block;
 		margin: 0 $standard-block-margin $standard-block-padding 0;
 
@@ -23,6 +31,10 @@
 		svg {
 			display: inline-flex;
 			margin-right: $standard-block-padding;
+		}
+
+		span {
+			color: neutral-color(black);
 		}
 	}
 }

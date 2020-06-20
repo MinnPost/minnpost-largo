@@ -12,7 +12,7 @@ const calendarTransitioner = transitionHiddenElement( {
     displayValue: 'block'
 } );
 
-var calendarVisible = document.querySelector( '.a-close-calendar' );
+var calendarVisible = document.querySelector( '.m-event-datetime a' );
 calendarVisible.addEventListener( 'click', function( e ) {
     e.preventDefault();
     let expanded = 'true' === calendarVisible.getAttribute( 'aria-expanded' ) || false;
@@ -39,6 +39,6 @@ calendarClose.addEventListener( 'click', function( e ) {
 // when a datetime is clicked, if the calendar link is present, show it
 $( document ).on( 'click', '.m-event-datetime', function() {
     if ( 0 < $( '.a-events-cal-links' ).length ) {
-        $( '.a-events-cal-links' ).toggleClass( 'a-events-cal-link-visible' );
+        //$( '.a-events-cal-links' ).toggleClass( 'a-events-cal-link-visible' );
     }
 } );
