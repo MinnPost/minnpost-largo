@@ -33,11 +33,11 @@ msgstr ""
 msgid "Topics"
 msgstr ""
 
-#: search.php:71
+#: search.php:72
 msgid "Search on MinnPost"
 msgstr ""
 
-#: search.php:74
+#: search.php:75
 msgid "Enter your search terms. You can start by searching for a title, author, or topic."
 msgstr ""
 
@@ -222,7 +222,7 @@ msgstr ""
 msgid "Use this to describe upcoming stories for this edition."
 msgstr ""
 
-#: inc/custom-fields.php:335, inc/custom-fields.php:345, inc/custom-fields.php:978, inc/custom-fields.php:1081, inc/custom-fields.php:1440
+#: inc/custom-fields.php:335, inc/custom-fields.php:345, inc/custom-fields.php:970, inc/custom-fields.php:1073, inc/custom-fields.php:1432, inc/custom-fields.php:1825, inc/custom-fields.php:1835
 msgid "Excerpt"
 msgstr ""
 
@@ -250,39 +250,39 @@ msgstr ""
 msgid "Deck"
 msgstr ""
 
-#: inc/custom-fields.php:439
+#: inc/custom-fields.php:439, inc/custom-fields.php:1892
 msgid "Meta images"
 msgstr ""
 
-#: inc/custom-fields.php:440
+#: inc/custom-fields.php:440, inc/custom-fields.php:1893
 msgid "Using this field will remove images that are uploaded to this story from the story's metadata, and replace them with the images in this field."
 msgstr ""
 
-#: inc/custom-fields.php:457, inc/custom-fields.php:1761, inc/custom-fields.php:1833
+#: inc/custom-fields.php:457, inc/custom-fields.php:1753, inc/custom-fields.php:1910
 msgid "Image Settings"
 msgstr ""
 
-#: inc/custom-fields.php:466, inc/custom-fields.php:1770, inc/custom-fields.php:1841
+#: inc/custom-fields.php:466, inc/custom-fields.php:1762, inc/custom-fields.php:1918
 msgid "Thumbnail Image"
 msgstr ""
 
-#: inc/custom-fields.php:467, inc/custom-fields.php:502, inc/custom-fields.php:1771, inc/custom-fields.php:1842, inc/custom-fields.php:1875
+#: inc/custom-fields.php:467, inc/custom-fields.php:502, inc/custom-fields.php:1763, inc/custom-fields.php:1919, inc/custom-fields.php:1952
 msgid "Upload an image or enter an URL."
 msgstr ""
 
-#: inc/custom-fields.php:485, inc/custom-fields.php:1859
+#: inc/custom-fields.php:485, inc/custom-fields.php:1936
 msgid "Homepage Image Size"
 msgstr ""
 
-#: inc/custom-fields.php:492, inc/custom-fields.php:1866
+#: inc/custom-fields.php:492, inc/custom-fields.php:1943
 msgid "Medium"
 msgstr ""
 
-#: inc/custom-fields.php:493, inc/custom-fields.php:1867
+#: inc/custom-fields.php:493, inc/custom-fields.php:1944
 msgid "Do not display image"
 msgstr ""
 
-#: inc/custom-fields.php:494, inc/custom-fields.php:1868
+#: inc/custom-fields.php:494, inc/custom-fields.php:1945
 msgid "Large"
 msgstr ""
 
@@ -290,27 +290,27 @@ msgstr ""
 msgid "Full size"
 msgstr ""
 
-#: inc/custom-fields.php:501, inc/custom-fields.php:1874
+#: inc/custom-fields.php:501, inc/custom-fields.php:1951
 msgid "Main Image"
 msgstr ""
 
-#: inc/custom-fields.php:525
+#: inc/custom-fields.php:525, inc/custom-fields.php:1975
 msgid "Display Settings"
 msgstr ""
 
-#: inc/custom-fields.php:534, inc/custom-fields.php:905
+#: inc/custom-fields.php:534, inc/custom-fields.php:897, inc/custom-fields.php:1984
 msgid "Prevent lazy loading of images?"
 msgstr ""
 
-#: inc/custom-fields.php:537
+#: inc/custom-fields.php:537, inc/custom-fields.php:1987
 msgid "If checked, this post will not attempt to lazy load images."
 msgstr ""
 
-#: inc/custom-fields.php:542
+#: inc/custom-fields.php:542, inc/custom-fields.php:1992
 msgid "Load HTML editor by default?"
 msgstr ""
 
-#: inc/custom-fields.php:545
+#: inc/custom-fields.php:545, inc/custom-fields.php:1995
 msgid "If checked, this post will open with the HTML editor visible."
 msgstr ""
 
@@ -330,7 +330,7 @@ msgstr ""
 msgid "This text will show in place of the category name(s)."
 msgstr ""
 
-#: inc/custom-fields.php:566, inc/custom-fields.php:870
+#: inc/custom-fields.php:566, inc/custom-fields.php:862, inc/custom-fields.php:2016
 msgid "Remove title from display?"
 msgstr ""
 
@@ -366,444 +366,460 @@ msgstr ""
 msgid "If checked, this post will not have a newsletter signup box."
 msgstr ""
 
-#: inc/custom-fields.php:606
-msgid "Share button location"
+#: inc/custom-fields.php:606, inc/custom-fields.php:2072
+msgid "Remove share buttons from display?"
 msgstr ""
 
-#: inc/custom-fields.php:610
-msgid "Select a location for the share buttons to display"
+#: inc/custom-fields.php:609
+msgid "If checked, share buttons will not display on this post."
 msgstr ""
 
-#: inc/custom-fields.php:613
-msgid "Neither"
-msgstr ""
-
-#: inc/custom-fields.php:614
-msgid "Both"
-msgstr ""
-
-#: inc/custom-fields.php:615
-msgid "Top"
-msgstr ""
-
-#: inc/custom-fields.php:616
-msgid "Bottom"
-msgstr ""
-
-#: inc/custom-fields.php:627
+#: inc/custom-fields.php:619, inc/custom-fields.php:2085
 msgid "Ad & Sponsorship Settings"
 msgstr ""
 
-#: inc/custom-fields.php:636
+#: inc/custom-fields.php:628, inc/custom-fields.php:2094
 msgid "Prevent automatic embed ads?"
 msgstr ""
 
-#: inc/custom-fields.php:639
+#: inc/custom-fields.php:631, inc/custom-fields.php:2097
 msgid "If checked, this post will not contain automatic embed ads."
 msgstr ""
 
-#: inc/custom-fields.php:644
+#: inc/custom-fields.php:636, inc/custom-fields.php:2102
 msgid "Prevent all embed ads?"
 msgstr ""
 
-#: inc/custom-fields.php:647
+#: inc/custom-fields.php:639, inc/custom-fields.php:2105
 msgid "If checked, this post will not contain any embed ads."
 msgstr ""
 
-#: inc/custom-fields.php:652, inc/custom-fields.php:1473
+#: inc/custom-fields.php:644, inc/custom-fields.php:1465, inc/custom-fields.php:2110
 msgid "Prevent lazy loading of embed ads?"
 msgstr ""
 
-#: inc/custom-fields.php:655
+#: inc/custom-fields.php:647, inc/custom-fields.php:2113
 msgid "If checked, this post will not attempt to lazy load embed ads."
 msgstr ""
 
-#: inc/custom-fields.php:660, inc/custom-fields.php:990, inc/custom-fields.php:1093
+#: inc/custom-fields.php:652, inc/custom-fields.php:982, inc/custom-fields.php:1085, inc/custom-fields.php:2118
 msgid "Sponsorship"
 msgstr ""
 
-#: inc/custom-fields.php:663
+#: inc/custom-fields.php:655
 msgid "This field overrides a sponsorship message from the category or tag that contains a post."
 msgstr ""
 
-#: inc/custom-fields.php:673
+#: inc/custom-fields.php:665, inc/custom-fields.php:2131
 msgid "Prevent sponsorship display"
 msgstr ""
 
-#: inc/custom-fields.php:676
+#: inc/custom-fields.php:668
 msgid "If checked, this post will not display any sponsorship message, regardless of its tags or categories."
 msgstr ""
 
-#: inc/custom-fields.php:686, inc/custom-fields.php:880, inc/custom-fields.php:1898
+#: inc/custom-fields.php:678, inc/custom-fields.php:872, inc/custom-fields.php:2144
 msgid "Sidebar Settings"
 msgstr ""
 
-#: inc/custom-fields.php:695
+#: inc/custom-fields.php:687
 msgid "Remove whole right sidebar from this post?"
 msgstr ""
 
-#: inc/custom-fields.php:703, inc/custom-fields.php:897, inc/custom-fields.php:1915
+#: inc/custom-fields.php:695, inc/custom-fields.php:889, inc/custom-fields.php:2161
 msgid "Sidebar Content Box"
 msgstr ""
 
-#: inc/custom-fields.php:704, inc/custom-fields.php:898, inc/custom-fields.php:1916
+#: inc/custom-fields.php:696, inc/custom-fields.php:890, inc/custom-fields.php:2162
 msgid "Content for a single right sidebar box"
 msgstr ""
 
-#: inc/custom-fields.php:716
+#: inc/custom-fields.php:708
 msgid "Related Content Settings"
 msgstr ""
 
-#: inc/custom-fields.php:725
+#: inc/custom-fields.php:717
 msgid "Prevent related content?"
 msgstr ""
 
-#: inc/custom-fields.php:728
+#: inc/custom-fields.php:720
 msgid "If checked, this post will not contain any related content. This prevents manual and automated recommendations, as well as \"more ___ articles\" links."
 msgstr ""
 
-#: inc/custom-fields.php:733
+#: inc/custom-fields.php:725
 msgid "Related Content Label"
 msgstr ""
 
 #. translators: 1) the default label for related items
-#: inc/custom-fields.php:738
+#: inc/custom-fields.php:730
 msgid "This text will show as a heading above the Related Content items. If you leave it blank, it will say %1$s."
 msgstr ""
 
-#: inc/custom-fields.php:739, inc/template-tags.php:426
+#: inc/custom-fields.php:731, inc/template-tags.php:529
 msgid "Read these stories next"
 msgstr ""
 
-#: inc/custom-fields.php:746
+#: inc/custom-fields.php:738
 msgid "Related Content"
 msgstr ""
 
-#: inc/custom-fields.php:747, inc/custom-fields.php:759
+#: inc/custom-fields.php:739, inc/custom-fields.php:751
 msgid "Search for a post here. If any posts are selected, they will override automated recommendations."
 msgstr ""
 
-#: inc/custom-fields.php:758
+#: inc/custom-fields.php:750
 msgid "Related Multimedia"
 msgstr ""
 
-#: inc/custom-fields.php:769
+#: inc/custom-fields.php:761
 msgid "Link to a related category"
 msgstr ""
 
-#: inc/custom-fields.php:770
+#: inc/custom-fields.php:762
 msgid "Search for a category here. If present, it will override the default category based on the permalink."
 msgstr ""
 
-#: inc/custom-fields.php:781
+#: inc/custom-fields.php:773
 msgid "Link to a related tag"
 msgstr ""
 
-#: inc/custom-fields.php:782
+#: inc/custom-fields.php:774
 msgid "Search for a tag here."
 msgstr ""
 
-#: inc/custom-fields.php:799
+#: inc/custom-fields.php:791
 msgid "Member Content Settings"
 msgstr ""
 
-#: inc/custom-fields.php:808
+#: inc/custom-fields.php:800
 msgid "Lowest access level"
 msgstr ""
 
-#: inc/custom-fields.php:811
+#: inc/custom-fields.php:803
 msgid "If this content is restricted, select the lowest level that can access it."
 msgstr ""
 
-#: inc/custom-fields.php:819
+#: inc/custom-fields.php:811
 msgid "MinnPost+ icon style"
 msgstr ""
 
-#: inc/custom-fields.php:822
+#: inc/custom-fields.php:814
 msgid "Which MP+ icon to overlay on the thumbnails"
 msgstr ""
 
-#: inc/custom-fields.php:826
+#: inc/custom-fields.php:818
 msgid "Black on White"
 msgstr ""
 
-#: inc/custom-fields.php:827
+#: inc/custom-fields.php:819
 msgid "White on Black"
 msgstr ""
 
-#: inc/custom-fields.php:828
+#: inc/custom-fields.php:820
 msgid "White on Red"
 msgstr ""
 
-#: inc/custom-fields.php:829
+#: inc/custom-fields.php:821
 msgid "White on Transparent"
 msgstr ""
 
-#: inc/custom-fields.php:853
+#: inc/custom-fields.php:845
 msgid "Page Settings"
 msgstr ""
 
-#: inc/custom-fields.php:862
+#: inc/custom-fields.php:854
 msgid "Pre-title text"
 msgstr ""
 
-#: inc/custom-fields.php:865
+#: inc/custom-fields.php:857
 msgid "This text will show above the title"
 msgstr ""
 
-#: inc/custom-fields.php:889
+#: inc/custom-fields.php:881
 msgid "Remove whole right sidebar from this page?"
 msgstr ""
 
-#: inc/custom-fields.php:908
+#: inc/custom-fields.php:900
 msgid "If checked, this page will not attempt to lazy load images."
 msgstr ""
 
-#: inc/custom-fields.php:931
+#: inc/custom-fields.php:923
 msgid "Category Settings"
 msgstr ""
 
-#: inc/custom-fields.php:953, inc/custom-fields.php:1275
+#: inc/custom-fields.php:945, inc/custom-fields.php:1267
 msgid "Category Group"
 msgstr ""
 
-#: inc/custom-fields.php:956
+#: inc/custom-fields.php:948
 msgid "Puts this category into this group. If Opinion is the group, this category will be excluded from automated story recommendations."
 msgstr ""
 
-#: inc/custom-fields.php:966
+#: inc/custom-fields.php:958
 msgid "Grouped Categories"
 msgstr ""
 
-#: inc/custom-fields.php:969
+#: inc/custom-fields.php:961
 msgid "If this category is used to group other categories, they will be checked here, as well as indicated on that category's settings page."
 msgstr ""
 
-#: inc/custom-fields.php:1003
+#: inc/custom-fields.php:995
 msgid "Category Thumbnail"
 msgstr ""
 
-#: inc/custom-fields.php:1013
+#: inc/custom-fields.php:1005
 msgid "Category Main Image"
 msgstr ""
 
-#: inc/custom-fields.php:1025, inc/custom-fields.php:1128
+#: inc/custom-fields.php:1017, inc/custom-fields.php:1120
 msgid "Body"
 msgstr ""
 
-#: inc/custom-fields.php:1036, inc/custom-fields.php:1139
+#: inc/custom-fields.php:1028, inc/custom-fields.php:1131
 msgid "Prevent lazy loading of image?"
 msgstr ""
 
-#: inc/custom-fields.php:1039
+#: inc/custom-fields.php:1031
 msgid "If checked, the image for this category will not be lazy loaded."
 msgstr ""
 
-#: inc/custom-fields.php:1044
+#: inc/custom-fields.php:1036
 msgid "Featured Columns"
 msgstr ""
 
-#: inc/custom-fields.php:1072
+#: inc/custom-fields.php:1064
 msgid "Tag Settings"
 msgstr ""
 
-#: inc/custom-fields.php:1106
+#: inc/custom-fields.php:1098
 msgid "Tag Thumbnail"
 msgstr ""
 
-#: inc/custom-fields.php:1116
+#: inc/custom-fields.php:1108
 msgid "Tag Main Image"
 msgstr ""
 
-#: inc/custom-fields.php:1142
+#: inc/custom-fields.php:1134
 msgid "If checked, the image for this tag will not be lazy loaded."
 msgstr ""
 
-#: inc/custom-fields.php:1423
+#: inc/custom-fields.php:1415
 msgid "Page Info"
 msgstr ""
 
-#: inc/custom-fields.php:1432
+#: inc/custom-fields.php:1424
 msgid "Photo"
 msgstr ""
 
-#: inc/custom-fields.php:1453
+#: inc/custom-fields.php:1445
 msgid "Bio"
 msgstr ""
 
-#: inc/custom-fields.php:1465
+#: inc/custom-fields.php:1457
 msgid "Staff Member?"
 msgstr ""
 
-#: inc/custom-fields.php:1476
+#: inc/custom-fields.php:1468
 msgid "If checked, the image for this author will not be lazy loaded."
 msgstr ""
 
-#: inc/custom-fields.php:1497
+#: inc/custom-fields.php:1489
 msgid "Address Info"
 msgstr ""
 
-#: inc/custom-fields.php:1505
+#: inc/custom-fields.php:1497
 msgid "All Email Addresses"
 msgstr ""
 
-#: inc/custom-fields.php:1508
+#: inc/custom-fields.php:1500
 msgid "Separate each email address with a comma."
 msgstr ""
 
-#: inc/custom-fields.php:1513
+#: inc/custom-fields.php:1505
 msgid "Street Address"
 msgstr ""
 
-#: inc/custom-fields.php:1521
+#: inc/custom-fields.php:1513
 msgid "City"
 msgstr ""
 
-#: inc/custom-fields.php:1529
+#: inc/custom-fields.php:1521
 msgid "State"
 msgstr ""
 
-#: inc/custom-fields.php:1537
+#: inc/custom-fields.php:1529
 msgid "Zip Code"
 msgstr ""
 
-#: inc/custom-fields.php:1545
+#: inc/custom-fields.php:1537
 msgid "Country"
 msgstr ""
 
-#: inc/custom-fields.php:1556
+#: inc/custom-fields.php:1548
 msgid "Reading Preferences"
 msgstr ""
 
-#: inc/custom-fields.php:1564
+#: inc/custom-fields.php:1556
 msgid "Reading preferences:"
 msgstr ""
 
-#: inc/custom-fields.php:1569, inc/custom-shortcodes.php:349
+#: inc/custom-fields.php:1561, inc/custom-shortcodes.php:349
 msgid "Arts & Culture"
 msgstr ""
 
-#: inc/custom-fields.php:1570, inc/custom-shortcodes.php:350
+#: inc/custom-fields.php:1562, inc/custom-shortcodes.php:350
 msgid "Economy"
 msgstr ""
 
-#: inc/custom-fields.php:1571, inc/custom-shortcodes.php:351
+#: inc/custom-fields.php:1563, inc/custom-shortcodes.php:351
 msgid "Education"
 msgstr ""
 
-#: inc/custom-fields.php:1572, inc/custom-shortcodes.php:352
+#: inc/custom-fields.php:1564, inc/custom-shortcodes.php:352
 msgid "Environment"
 msgstr ""
 
-#: inc/custom-fields.php:1573, inc/custom-shortcodes.php:353
+#: inc/custom-fields.php:1565, inc/custom-shortcodes.php:353
 msgid "Greater Minnesota news"
 msgstr ""
 
-#: inc/custom-fields.php:1574, inc/custom-shortcodes.php:354
+#: inc/custom-fields.php:1566, inc/custom-shortcodes.php:354
 msgid "Health"
 msgstr ""
 
-#: inc/custom-fields.php:1575, inc/custom-shortcodes.php:355
+#: inc/custom-fields.php:1567, inc/custom-shortcodes.php:355
 msgid "MinnPost announcements"
 msgstr ""
 
-#: inc/custom-fields.php:1576, inc/custom-shortcodes.php:356
+#: inc/custom-fields.php:1568, inc/custom-shortcodes.php:356
 msgid "Opinion/Commentary"
 msgstr ""
 
-#: inc/custom-fields.php:1577, inc/custom-shortcodes.php:357
+#: inc/custom-fields.php:1569, inc/custom-shortcodes.php:357
 msgid "Politics & Policy"
 msgstr ""
 
-#: inc/custom-fields.php:1578, inc/custom-shortcodes.php:358
+#: inc/custom-fields.php:1570, inc/custom-shortcodes.php:358
 msgid "Sports"
 msgstr ""
 
-#: inc/custom-fields.php:1587
+#: inc/custom-fields.php:1579
 msgid "Site Preferences"
 msgstr ""
 
-#: inc/custom-fields.php:1595
+#: inc/custom-fields.php:1587
 msgid "Always load comments"
 msgstr ""
 
-#: inc/custom-fields.php:1606
+#: inc/custom-fields.php:1598
 msgid "Donation Info"
 msgstr ""
 
-#: inc/custom-fields.php:1614
+#: inc/custom-fields.php:1606
 msgid "Stripe Customer ID"
 msgstr ""
 
-#: inc/custom-fields.php:1622
+#: inc/custom-fields.php:1614
 msgid "Membership Qualification Amount"
 msgstr ""
 
-#: inc/custom-fields.php:1630
+#: inc/custom-fields.php:1622
 msgid "Annual Recurring Amount"
 msgstr ""
 
-#: inc/custom-fields.php:1638
+#: inc/custom-fields.php:1630
 msgid "Coming Year Contributions"
 msgstr ""
 
-#: inc/custom-fields.php:1646
+#: inc/custom-fields.php:1638
 msgid "Prior Year Contributions"
 msgstr ""
 
-#: inc/custom-fields.php:1654
+#: inc/custom-fields.php:1646
 msgid "Sustaining Member"
 msgstr ""
 
-#: inc/custom-fields.php:1662
+#: inc/custom-fields.php:1654
 msgid "Next Partner Claim Date"
 msgstr ""
 
-#: inc/custom-fields.php:1670
+#: inc/custom-fields.php:1662
 msgid "Last Partner Claim Date"
 msgstr ""
 
-#: inc/custom-fields.php:1678
+#: inc/custom-fields.php:1670
 msgid "Exclude from current campaign"
 msgstr ""
 
-#: inc/custom-fields.php:1732
+#: inc/custom-fields.php:1724
 msgid "Sponsor Information"
 msgstr ""
 
-#: inc/custom-fields.php:1741
+#: inc/custom-fields.php:1733
 msgid "Company URL"
 msgstr ""
 
-#: inc/custom-fields.php:1749
+#: inc/custom-fields.php:1741
 msgid "Display Text"
 msgstr ""
 
-#: inc/custom-fields.php:1907
+#: inc/custom-fields.php:2019
+msgid "If checked, the event title will not display."
+msgstr ""
+
+#: inc/custom-fields.php:2024
+msgid "Remove notice(s) from display?"
+msgstr ""
+
+#: inc/custom-fields.php:2027
+msgid "If checked, this event will not display any notices it would otherwise contain from the events plugin."
+msgstr ""
+
+#: inc/custom-fields.php:2032
+msgid "Remove all event details from display?"
+msgstr ""
+
+#: inc/custom-fields.php:2035
+msgid "If checked, this event will not display any of its details in their normal locations, including date, venue, and cost information."
+msgstr ""
+
+#: inc/custom-fields.php:2075
+msgid "If checked, share buttons will not display on this event."
+msgstr ""
+
+#: inc/custom-fields.php:2121
+msgid "This field overrides a sponsorship message from the category or tag that contains an event."
+msgstr ""
+
+#: inc/custom-fields.php:2134
+msgid "If checked, this event will not display any sponsorship message, regardless of its tags or categories."
+msgstr ""
+
+#: inc/custom-fields.php:2153
 msgid "Remove whole right sidebar from this event?"
 msgstr ""
 
-#: inc/custom-fields.php:2055
+#: inc/custom-fields.php:2301
 msgid "Daily"
 msgstr ""
 
-#: inc/custom-fields.php:2056
+#: inc/custom-fields.php:2302
 msgid "Greater MN"
 msgstr ""
 
-#: inc/custom-fields.php:2057
+#: inc/custom-fields.php:2303
 msgid "Sunday Review"
 msgstr ""
 
-#: inc/custom-fields.php:2058
+#: inc/custom-fields.php:2304
 msgid "D.C. Memo"
 msgstr ""
 
-#: inc/custom-fields.php:2059
+#: inc/custom-fields.php:2305
 msgid "Daily Coronavirus Update"
 msgstr ""
 
-#: inc/custom-fields.php:2060
+#: inc/custom-fields.php:2306
 msgid "Republication"
 msgstr ""
 
@@ -883,56 +899,70 @@ msgstr ""
 msgid "No newsletters found in Trash."
 msgstr ""
 
-#: inc/custom-types.php:200
+#: inc/custom-types.php:218
 msgid "Deleted Events"
 msgstr ""
 
-#: inc/custom-types.php:216
+#: inc/custom-types.php:234
 msgid "Site Header"
 msgstr ""
 
-#: inc/custom-types.php:217
+#: inc/custom-types.php:235
 msgid "Above Article Body"
 msgstr ""
 
-#: inc/custom-types.php:219
+#: inc/custom-types.php:237
 msgid "Below Article Body"
 msgstr ""
 
-#: inc/custom-types.php:220
+#: inc/custom-types.php:238
 msgid "Article Bottom"
 msgstr ""
 
-#: inc/custom-types.php:221
+#: inc/custom-types.php:239
 msgid "Homepage Middle"
 msgstr ""
 
-#: inc/custom-types.php:222
+#: inc/custom-types.php:240
 msgid "Archive Middle"
 msgstr ""
 
-#: inc/custom-types.php:223
+#: inc/custom-types.php:241
 msgid "User Account"
 msgstr ""
 
-#: inc/custom-types.php:224
+#: inc/custom-types.php:242
 msgid "Popup"
 msgstr ""
 
-#: inc/custom-types.php:225
+#: inc/custom-types.php:243
 msgid "Email Header"
 msgstr ""
 
-#: inc/custom-types.php:226
+#: inc/custom-types.php:244
 msgid "Email Middle"
 msgstr ""
 
-#: inc/custom-types.php:227
+#: inc/custom-types.php:245
 msgid "Email Before Bios"
 msgstr ""
 
-#: inc/custom-types.php:228
+#: inc/custom-types.php:246
 msgid "Email Bottom"
+msgstr ""
+
+#. translators: 1) start date, 2) end date
+#. translators: 1) start time, 2) end time
+#: inc/events.php:116, inc/events.php:147
+msgid "%1$s to %2$s"
+msgstr ""
+
+#: inc/events.php:173
+msgid "Add to Google Calendar"
+msgstr ""
+
+#: inc/events.php:174
+msgid "Export to Calendar"
 msgstr ""
 
 #: inc/jetpack.php:178
@@ -1075,95 +1105,95 @@ msgstr ""
 msgid "This will match users who have ANY of the checked roles. If you want to require that the user has multiple roles, use another conditional with an AND operator."
 msgstr ""
 
-#: inc/template-tags.php:302
+#: inc/template-tags.php:402
 msgid "By&nbsp;"
 msgstr ""
 
-#: inc/template-tags.php:373
+#: inc/template-tags.php:476
 msgid "Share this article on Facebook."
 msgstr ""
 
-#: inc/template-tags.php:373
+#: inc/template-tags.php:476
 msgid "Facebook"
 msgstr ""
 
-#: inc/template-tags.php:378
+#: inc/template-tags.php:481
 msgid "Share this article on Twitter."
 msgstr ""
 
-#: inc/template-tags.php:378
+#: inc/template-tags.php:481
 msgid "Twitter"
 msgstr ""
 
-#: inc/template-tags.php:383
+#: inc/template-tags.php:486
 msgid "Email this article."
 msgstr ""
 
-#: inc/template-tags.php:383
+#: inc/template-tags.php:486
 msgid "Email"
 msgstr ""
 
-#: inc/template-tags.php:388
+#: inc/template-tags.php:491
 msgid "Print this article."
 msgstr ""
 
-#: inc/template-tags.php:388
+#: inc/template-tags.php:491
 msgid "Print"
 msgstr ""
 
-#: inc/template-tags.php:393
+#: inc/template-tags.php:496
 msgid "Copy the article link to your clipboard."
 msgstr ""
 
-#: inc/template-tags.php:393
+#: inc/template-tags.php:496
 msgid "Copy"
 msgstr ""
 
-#: inc/template-tags.php:393
+#: inc/template-tags.php:496
 msgid "Link copied"
 msgstr ""
 
-#: inc/template-tags.php:598
+#: inc/template-tags.php:701
 msgid "About the author"
 msgstr ""
 
 #. translators: 1) author archive url, 2) author name
-#: inc/template-tags.php:691
+#: inc/template-tags.php:797
 msgid "More articles by %2$s"
 msgstr ""
 
 #. translators: used between list items, there is a space after the comma
 #. translators: used between list items, there is a space after the comma
-#: inc/template-tags.php:1033, inc/template-tags.php:1040
+#: inc/template-tags.php:1139, inc/template-tags.php:1146
 msgid ", "
 msgstr ""
 
 #. translators: placeholder is the list of categories
-#: inc/template-tags.php:1036
+#: inc/template-tags.php:1142
 msgid "Posted in %1$s"
 msgstr ""
 
 #. translators: placeholder is the list of tags
-#: inc/template-tags.php:1043
+#: inc/template-tags.php:1149
 msgid "Tagged %1$s"
 msgstr ""
 
 #. translators: %s: post title
-#: inc/template-tags.php:1053
+#: inc/template-tags.php:1159
 msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
 #. translators: %s: Name of current post
 #. translators: %s: Name of current post
-#: inc/template-tags.php:1069, inc/template-tags.php:1099
+#: inc/template-tags.php:1175, inc/template-tags.php:1205
 msgid "Edit %s"
 msgstr ""
 
-#: inc/template-tags.php:1465
+#: inc/template-tags.php:1573
 msgid "MinnPostPlus"
 msgstr ""
 
-#: inc/template-tags.php:1741
+#: inc/template-tags.php:1839
 msgid "Your&nbsp;MinnPost&nbsp;Account"
 msgstr ""
 
@@ -1203,7 +1233,7 @@ msgstr ""
 msgid "Partner logo"
 msgstr ""
 
-#: inc/user-accounts.php:237
+#: inc/user-accounts.php:238
 msgid "You are not allowed to access this part of the site"
 msgstr ""
 
@@ -1270,4 +1300,34 @@ msgstr ""
 
 #: user-account-management-templates/front-end/account-settings-form.php:127
 msgid "Country:"
+msgstr ""
+
+#. translators: 1) cost
+#. translators: 1) cost
+#: tribe/events/modules/meta/cost.php:13, tribe/events/v2/list/event/cost.php:21
+msgid "Cost: %1$s"
+msgstr ""
+
+#: tribe/events/modules/meta/date.php:12, tribe/events/modules/meta/date.php:16
+msgid "Add to your calendar"
+msgstr ""
+
+#: tribe/events/modules/meta/venue.php:44
+msgid "On Google Maps"
+msgstr ""
+
+#: tribe/events/modules/meta/website.php:9
+msgid "Event website:"
+msgstr ""
+
+#: tribe/events/v2/list/header-link.php:13
+msgid "Past Events"
+msgstr ""
+
+#: tribe/events/v2/list/header-link.php:11
+msgid "Upcoming Events"
+msgstr ""
+
+#: tribe/events/v2/list/nav.php:13
+msgid "Past Events By Year"
 msgstr ""
