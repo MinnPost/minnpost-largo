@@ -12,16 +12,18 @@ function setupPrimaryNav() {
 	} );
 
 	var primaryNavToggle = document.querySelector( 'nav button' );
-	primaryNavToggle.addEventListener( 'click', function( e ) {
-		e.preventDefault();
-		let expanded = 'true' === this.getAttribute( 'aria-expanded' ) || false;
-		this.setAttribute( 'aria-expanded', ! expanded );
-		if ( true === expanded ) {
-			primaryNavTransitioner.transitionHide();
-		} else {
-			primaryNavTransitioner.transitionShow();
-		}
-	} );
+	if ( null !== primaryNavToggle ) {
+		primaryNavToggle.addEventListener( 'click', function( e ) {
+			e.preventDefault();
+			let expanded = 'true' === this.getAttribute( 'aria-expanded' ) || false;
+			this.setAttribute( 'aria-expanded', ! expanded );
+			if ( true === expanded ) {
+				primaryNavTransitioner.transitionHide();
+			} else {
+				primaryNavTransitioner.transitionShow();
+			}
+		} );
+	}
 
 	const userNavTransitioner = transitionHiddenElement( {
 		element: document.querySelector( '.your-minnpost-account ul' ),
@@ -30,54 +32,58 @@ function setupPrimaryNav() {
 	} );
 
 	var userNavToggle = document.querySelector( '.your-minnpost-account > a' );
-	userNavToggle.addEventListener( 'click', function( e ) {
-		e.preventDefault();
-		let expanded = 'true' === this.getAttribute( 'aria-expanded' ) || false;
-		this.setAttribute( 'aria-expanded', ! expanded );
-		if ( true === expanded ) {
-			userNavTransitioner.transitionHide();
-		} else {
-			userNavTransitioner.transitionShow();
-		}
-	} );
+	if ( null !== userNavToggle ) {
+		userNavToggle.addEventListener( 'click', function( e ) {
+			e.preventDefault();
+			let expanded = 'true' === this.getAttribute( 'aria-expanded' ) || false;
+			this.setAttribute( 'aria-expanded', ! expanded );
+			if ( true === expanded ) {
+				userNavTransitioner.transitionHide();
+			} else {
+				userNavTransitioner.transitionShow();
+			}
+		} );
+	}
 
 	var target    = document.querySelector( 'nav .m-form-search fieldset .a-button-sentence' );
-	var div       = document.createElement( 'div' );
-	div.innerHTML = '<a href="#" class="a-close-button a-close-search"><i class="fas fa-times"></i></a>';
-	var fragment  = document.createDocumentFragment();
-	div.setAttribute( 'class', 'a-close-holder' );
-	fragment.appendChild( div );
-	target.appendChild( fragment );
+	if ( null !== target ) {
+		var div       = document.createElement( 'div' );
+		div.innerHTML = '<a href="#" class="a-close-button a-close-search"><i class="fas fa-times"></i></a>';
+		var fragment  = document.createDocumentFragment();
+		div.setAttribute( 'class', 'a-close-holder' );
+		fragment.appendChild( div );
+		target.appendChild( fragment );
 
-	const searchTransitioner = transitionHiddenElement( {
-		element: document.querySelector( '.m-menu-primary-actions .m-form-search' ),
-		visibleClass: 'is-open',
-		displayValue: 'flex'
-	} );
+		const searchTransitioner = transitionHiddenElement( {
+			element: document.querySelector( '.m-menu-primary-actions .m-form-search' ),
+			visibleClass: 'is-open',
+			displayValue: 'flex'
+		} );
 
-	var searchVisible = document.querySelector( 'li.search > a' );
-	searchVisible.addEventListener( 'click', function( e ) {
-		e.preventDefault();
-		let expanded = 'true' === searchVisible.getAttribute( 'aria-expanded' ) || false;
-		searchVisible.setAttribute( 'aria-expanded', ! expanded );
-		if ( true === expanded ) {
-			searchTransitioner.transitionHide();
-		} else {
-			searchTransitioner.transitionShow();
-		}
-	} );
+		var searchVisible = document.querySelector( 'li.search > a' );
+		searchVisible.addEventListener( 'click', function( e ) {
+			e.preventDefault();
+			let expanded = 'true' === searchVisible.getAttribute( 'aria-expanded' ) || false;
+			searchVisible.setAttribute( 'aria-expanded', ! expanded );
+			if ( true === expanded ) {
+				searchTransitioner.transitionHide();
+			} else {
+				searchTransitioner.transitionShow();
+			}
+		} );
 
-	var searchClose  = document.querySelector( '.a-close-search' );
-	searchClose.addEventListener( 'click', function( e ) {
-		e.preventDefault();
-		let expanded = 'true' === searchVisible.getAttribute( 'aria-expanded' ) || false;
-		searchVisible.setAttribute( 'aria-expanded', ! expanded );
-		if ( true === expanded ) {
-			searchTransitioner.transitionHide();
-		} else {
-			searchTransitioner.transitionShow();
-		}
-	} );
+		var searchClose  = document.querySelector( '.a-close-search' );
+		searchClose.addEventListener( 'click', function( e ) {
+			e.preventDefault();
+			let expanded = 'true' === searchVisible.getAttribute( 'aria-expanded' ) || false;
+			searchVisible.setAttribute( 'aria-expanded', ! expanded );
+			if ( true === expanded ) {
+				searchTransitioner.transitionHide();
+			} else {
+				searchTransitioner.transitionShow();
+			}
+		} );
+	}
 
 	// escape key press
 	$( document ).keyup( function( e ) {
