@@ -3,26 +3,19 @@
 	margin-bottom: $standard-block-margin;
 
 	#amount-item #amount {
-		/*font-family: $font__sans;
-		font-weight: normal;*/
+		font-family: $webfont__sans;
 	}
 
 	select,
 	button,
 	input.a-button {
-		/*font-family: $font__headings;
-		font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
-		font-weight: normal;
-		font-style: normal;
-		font-variant: normal;*/
+		font-family: $webfont__sans;
 	}
 
 	.m-form-radios,
 	.m-form-checkboxes {
 
 		label {
-			/*font-family: $font__sans;
-			font-weight: normal;*/
 			border: 0;
 			background: $color__gray-membership;
 			color: $color__black;
@@ -37,7 +30,7 @@
 	&.m-membership-choose-amount {
 
 		.a-fast-select-intro {
-			//font-family: $font__sans;
+			font-family: $webfont__sans;
 		}
 
 		#amount-item {

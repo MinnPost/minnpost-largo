@@ -6,11 +6,7 @@
 		h3,
 		select {
 			color: $color__minnpost-black;
-			/*font-family: $font__headings;
-			font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
-			font-style: normal;
-			font-variant: normal;
-			font-weight: normal;*/
+			font-family: $webfont__sans;
 		}
 
 		h2 {
@@ -25,7 +21,7 @@
 		}
 
 		.enter .m-form-item input {
-			//font-family: $font__headings;
+			font-family: $webfont__sans;
 		}
 	}
 

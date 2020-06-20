@@ -25,6 +25,8 @@
 
 		// tagline
 		h2 {
+			margin: 0;
+
 			@include meta-preset( $size: 0, $bold: false, $italic: false, $line-height: 1 );
 
 			@include breakpoint-min( xs ) {
