@@ -38,7 +38,10 @@
 				</div>
 				<?php get_template_part( 'tribe/events/modules/meta/venue' ); ?>
 				<?php do_action( 'tribe_events_single_event_after_the_meta' ); ?>
-				<?php get_template_part( 'tribe/events/modules/meta/cost' ); ?>
+				<div class="m-event-cta">
+					<?php get_template_part( 'tribe/events/modules/meta/cost' ); ?>
+					<?php get_template_part( 'tribe/events/modules/meta/website' ); ?>
+				</div>
 			</div>
 			<?php endif; ?>
 			<?php minnpost_post_image( 'large' ); ?>
