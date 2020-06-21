@@ -117,3 +117,15 @@
 		}
 	}
 }
+
+.o-header-support .m-support-cta.m-support-cta-top {
+	text-align: left;
+	flex-direction: row;
+	width: auto;
+
+	// tagline
+	h2 {
+		margin: 0;
+		@include meta-preset( $size: 0, $bold: true, $italic: false, $line-height: 1 );
+	}
+}
