@@ -16,6 +16,7 @@ if ( ! function_exists( 'minnpost_menus' ) ) :
 			array(
 				'primary_links'           => __( 'Primary Categories', 'minnpost-largo' ), // main nav below logo
 				'primary_actions'         => __( 'Primary Actions', 'minnpost-largo' ), // main nav below logo
+				'support_actions'         => __( 'Support Actions', 'minnpost-largo' ), // nav below logo on support pages
 				'topics'                  => __( 'Topics', 'minnpost-largo' ), // scrolling topics nav
 				'featured_columns'        => __( 'Featured Columns', 'minnpost-largo' ), // featured columns on homepage, category pages
 				'user_account_access'     => __( 'User Account Access Menu', 'minnpost-largo' ), // menu where users log in/register/log out
@@ -474,7 +475,7 @@ if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
 		$user = wp_get_current_user();
 
 		// comment moderators
-		if ( in_array( 'comment_moderator', (array) $user->roles ) ) {
+		if ( in_array( 'comment_moderator', (array) $user->roles, true ) ) {
 			$wp_admin_bar->remove_menu( 'new-content' );
 			$wp_admin_bar->remove_menu( 'edit' );
 		}
@@ -493,6 +494,30 @@ if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
 		{
 		}*/
 
+	}
+endif;
+
+if ( ! function_exists( 'minnpost_largo_menu_support' ) ) :
+	add_action( 'minnpost_membership_site_header_support', 'minnpost_largo_menu_support' );
+	function minnpost_largo_menu_support() {
+		?>
+		<div class="o-wrapper o-wrapper-site-navigation o-wrapper-site-navigation-support">
+			<nav id="navigation-support" class="m-main-navigation m-main-navigation-support">
+				<?php
+				wp_nav_menu(
+					array(
+						'theme_location' => 'support_actions',
+						'menu_id'        => 'primary-actions',
+						'container'      => false,
+						'walker'         => new Minnpost_Walker_Nav_Menu,
+						'item_classes'   => 'values',
+						'items_wrap'     => '<ul id="%1$s" class="m-menu m-menu-%1$s">%3$s</ul>',
+					)
+				);
+				?>
+			</nav><!-- #navigation-support -->
+		</div>
+		<?php
 	}
 endif;
 
@@ -646,7 +671,7 @@ if ( ! function_exists( 'minnpost_largo_unpublished_indicator' ) ) :
 
 		$user = wp_get_current_user();
 		// not for comment moderators
-		if ( in_array( 'comment_moderator', (array) $user->roles ) ) {
+		if ( in_array( 'comment_moderator', (array) $user->roles, true ) ) {
 			return;
 		}
 
