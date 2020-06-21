@@ -17,13 +17,13 @@
 
 		label {
 			border: 0;
-			background: $color__gray-membership;
-			color: $color__black;
+			background: neutral-color(border);
+			color: neutral-color(black);
 		}
 
 		input:checked + label {
-			background: $_color-base-blue;
-			color: $color__white;
+			background: utility-color(blue, medium);
+			color: neutral-color(white);
 		}
 	}
 	// specific to choosing amount
@@ -36,19 +36,18 @@
 		#amount-item {
 
 			#amount {
-				border: 2px solid $_color-base-gray;
+				border: 2px solid neutral-color(border);
 				border-radius: 0;
 			}
 
 			.a-frequency-text-label {
 				margin: 0.9em 0;
-				//font-family: $font__sans;
 			}
 		}
 	}
 	// specific to choosing thank you gift
 	&.m-membership-gift-selector {
-		border: 1px solid $color__border-light;
+		border: $border-default-style;
 
 		.m-form-radios .m-form-item,
 		.m-form-checkboxes .m-form-item {
@@ -58,21 +57,21 @@
 				.support-tooltip {
 
 					.tooltip-text {
-						border: 1px solid $color__border-abbr;
+						border: $border-default-style;
 					}
 
 					.tooltip-text::after {
-						border-color: transparent transparent $color__border-abbr transparent;
+						border-color: transparent transparent neutral-color(border) transparent;
 					}
 				}
 			}
 
 			input:checked + label {
-				border: 3px solid $color__border-button-focus;
+				border: 3px solid neutral-color(highlight);
 			}
 
 			input:disabled + label::after {
-				background-color: $color__gray-lightest;
+				background-color: neutral-color(light);
 			}
 		}
 	}
