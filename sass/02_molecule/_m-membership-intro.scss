@@ -1,0 +1,17 @@
+.m-membership-intro {
+    width: 100%;
+
+	@include breakpoint-min( sm ) {
+		display: flex;
+	}
+
+	@include breakpoint-min( lg ) {
+		width: colspan( 8, 12 );
+		max-width: calc((100% - #{colspan( 1, 12 )}) - #{$size__site-sidebar} );
+	}
+
+	@include breakpoint-min( xl ) {
+		width: colspan( 12, 16 );
+		max-width: calc((100% - #{colspan( 1, 16 )}) - #{$size__site-sidebar} );
+	}
+}
