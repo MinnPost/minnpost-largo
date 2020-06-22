@@ -4,9 +4,12 @@
 	margin-bottom: $standard-block-margin;
 	border-bottom: $border-default-style;
 	border-top: $border-default-style;
-	padding: 0;
+	padding: $standard-heading-margin 0;
 
 	p {
-		margin-bottom: $standard-block-margin;
+
+		br {
+			display: none;
+		}
 	}
 }
