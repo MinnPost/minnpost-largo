@@ -1567,6 +1567,9 @@ if ( ! function_exists( 'minnpost_plus_icon' ) ) :
 			$class = '';
 
 			// set up lazy load attributes
+			if ( ! isset( $attributes ) ) {
+				$attributes = array();
+			}
 			$attributes = apply_filters( 'minnpost_largo_lazy_load_attributes', $attributes, $post_id, 'post', $lazy_load );
 
 			if ( isset( $attributes['class'] ) ) {
