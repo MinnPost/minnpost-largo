@@ -2308,3 +2308,31 @@ if ( ! function_exists( 'minnpost_largo_email_types' ) ) :
 		return $types;
 	}
 endif;
+
+/**
+* Whether to remove the site sidebar
+*
+* @param bool $remove_sidebar
+* @param int $post_id
+* @return bool $remove_sidebar
+*
+*/
+if ( ! function_exists( 'minnpost_largo_check_remove_sidebar' ) ) :
+	add_filter( 'minnpost_largo_remove_sidebar', 'minnpost_largo_check_remove_sidebar' );
+	function minnpost_largo_check_remove_sidebar( $remove_sidebar = false, $post_id = '' ) {
+		if ( ! is_singular() ) {
+			return $remove_sidebar;
+		}
+
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
+
+		$remove_sidebar_meta = get_post_meta( $post_id, '_mp_remove_right_sidebar', true );
+		if ( isset( $remove_sidebar_meta ) && 'on' === $remove_sidebar_meta ) {
+			$remove_sidebar = true;
+		}
+
+		return $remove_sidebar;
+	}
+endif;

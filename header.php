@@ -92,12 +92,10 @@
 	</header><!-- #masthead -->
 
 	<?php
-	$full_class = '';
-	if ( is_singular() ) {
-		$remove_sidebar = get_post_meta( get_the_ID(), '_mp_remove_right_sidebar', true );
-		if ( isset( $remove_sidebar ) && 'on' === $remove_sidebar ) {
-			$full_class = ' o-wrapper-content-full';
-		}
+	$full_class     = '';
+	$remove_sidebar = apply_filters( 'minnpost_largo_remove_sidebar', false );
+	if ( true === $remove_sidebar ) {
+		$full_class = ' o-wrapper-content-full';
 	}
 	?>
 
