@@ -2328,10 +2328,10 @@ if ( ! function_exists( 'minnpost_largo_check_remove_sidebar' ) ) :
 			$post_id = get_the_ID();
 		}
 
-		$remove_sidebar_meta = get_post_meta( $post_id, '_mp_remove_right_sidebar', true );
+		/*$remove_sidebar_meta = get_post_meta( $post_id, '_mp_remove_right_sidebar', true );
 		if ( isset( $remove_sidebar_meta ) && 'on' === $remove_sidebar_meta ) {
 			$remove_sidebar = true;
-		}
+		}*/
 
 		return $remove_sidebar;
 	}
