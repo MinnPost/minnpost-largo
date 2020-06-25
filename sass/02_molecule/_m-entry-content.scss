@@ -1,5 +1,9 @@
 .m-entry-content {
 	margin-bottom: $standard-block-margin;
+
+	&.m-membership-support-wrapper {
+		font-family: $webfont__sans;
+	}
 }
 
 .m-entry-content-custom {

@@ -1,88 +1,30 @@
 .m-post-paywalled {
 
 	.m-entry-content-paywalled {
-		padding: 1em;
-		margin-bottom: 1em;
-		border: 1px solid $color__gray-light;
+		padding: $standard-block-padding;
+		margin: $standard-block-margin 0;
+		border: $border-default-style;
 		width: auto;
-		background: $color__white;
+		background: neutral-color(white);
 		display: flex;
 		flex-wrap: wrap;
 		justify-content: space-between;
 
 		section {
-			margin-bottom: 1em;
+			margin-bottom: $standard-block-margin;
+
+			@include breakpoint-min( md ) {
+				width: 48%;
+				margin-bottom: 0;
+			}
+
+			fieldset {
+				margin-bottom: $standard-block-margin;
+			}
 		}
 
 		h2 {
 			width: 100%;
-		}
-
-		h2,
-		h3 {
-			line-height: 1.15em;
-			/*font-family: $font__headings;
-			font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
-			font-weight: normal;
-			font-style: normal;
-			font-variant: normal;*/
-			margin-bottom: 0.5em;
-		}
-
-		h2 {
-			font-size: 300%;
-		}
-
-		h3 {
-			font-size: 154%;
-		}
-
-		p {
-			font-size: $content-font-size;
-			line-height: 1.5em;
-		}
-
-		fieldset {
-			font-size: $content-font-size;
-			line-height: 1.5em;
-		}
-
-		small {
-			font-size: 74%;
-		}
-		// hide honeypots
-		.m-form-user .m-user-field-shift {
-			left: -9999px;
-			position: absolute;
-		}
-		// if html is rtl, switch the honeypots
-		html[dir="rtl"] .m-form-user .m-user-field-shift {
-			right: -9999px;
-			left: auto;
-		}
-	}
-}
-
-@media screen and (min-width: $nav-breaks) {
-
-	.m-post-paywalled {
-
-		.m-entry-content-paywalled {
-
-			section {
-				width: 48%;
-				margin-bottom: 0;
-			}
-		}
-	}
-}
-
-@media screen and (min-width: $max-width-page ) {
-
-	.m-post-paywalled {
-
-		.m-entry-content-paywalled {
-			margin-bottom: 0;
 		}
 	}
 }

@@ -18,7 +18,10 @@
 }
 
 .o-wrapper-content-full .m-layout-primary {
-	//@include outer-container($max-width-page);
+	@include breakpoint-min( lg ) {
+		width: colspan( 16, 16 );
+		max-width: (100%);
+	}
 }
 
 body.single-post .m-layout-primary,

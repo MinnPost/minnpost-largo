@@ -455,13 +455,13 @@ function minnpost_largo_author_display_name( $name ) {
 /**
 * Output the share buttons
 *
-* @param int $id
+* @param int $post_id
 *
 */
 if ( ! function_exists( 'minnpost_share_buttons' ) ) :
-	function minnpost_share_buttons( $id = '' ) {
-		if ( '' === $id ) {
-			$id = get_the_ID();
+	function minnpost_share_buttons( $post_id = '' ) {
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
 		}
 		$hide_share_buttons = get_post_meta( $post_id, '_mp_remove_share_buttons_from_display', true );
 		if ( 'on' === $hide_share_buttons ) {
@@ -1510,6 +1510,9 @@ endif;
 */
 if ( ! function_exists( 'minnpost_deck' ) ) :
 	function minnpost_deck( $post_id = '' ) {
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
 		$deck = minnpost_get_deck( $post_id );
 		echo $deck;
 	}
@@ -1564,6 +1567,9 @@ if ( ! function_exists( 'minnpost_plus_icon' ) ) :
 			$class = '';
 
 			// set up lazy load attributes
+			if ( ! isset( $attributes ) ) {
+				$attributes = array();
+			}
 			$attributes = apply_filters( 'minnpost_largo_lazy_load_attributes', $attributes, $post_id, 'post', $lazy_load );
 
 			if ( isset( $attributes['class'] ) ) {

@@ -29,6 +29,10 @@ header .a-site-branding {
 	}
 }
 
+header.o-header-support .a-site-branding {
+	margin-right: auto;
+}
+
 footer .a-logo-svg picture {
 	filter: brightness(0) invert(1);
 }

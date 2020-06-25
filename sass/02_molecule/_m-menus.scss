@@ -90,6 +90,7 @@ nav {
 			padding: 0;
 
 			a {
+				white-space: nowrap;
 				display: inline-flex;
 				text-decoration: none;
 				line-height: normal;
@@ -155,6 +156,10 @@ nav {
 					font-weight: 700;
 				}
 			}
+		}
+
+		&.m-main-navigation-support {
+			border: 0;
 		}
 	}
 

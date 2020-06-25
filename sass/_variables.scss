@@ -43,6 +43,13 @@ $neutral-colors: (
 	light: #efeff0,
 	white: #fff
 );
+
+// Membership levels
+$color__minnpost-bronze: #cd7f32;
+$color__minnpost-silver: #c0c0c0;
+$color__minnpost-gold: #ffd700;
+$color__minnpost-platinum: #e5e4e2;
+
 $background-unpublished: neutral-color(white) url(/wp-content/themes/minnpost-largo/assets/img/unpublished.png);
 
 

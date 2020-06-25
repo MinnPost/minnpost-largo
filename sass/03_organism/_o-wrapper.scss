@@ -36,10 +36,6 @@
 		}
 	}
 
-	&.o-wrapper-support-navigation {
-		//border-top: 1.230769230769231em solid neutral-color(black);
-	}
-
 	&.o-wrapper-site-navigation,
 	&.o-wrapper-sub-navigation {
 
@@ -84,6 +80,21 @@
 		display: flex;
 		align-items: center;
 		border-bottom: 2px solid neutral-color(border);
+	}
+
+	&.o-wrapper-site-navigation.o-wrapper-site-navigation-support {
+		margin-right: 0;
+		margin-left: auto;
+		width: auto;
+		font-size: var(--scale2);
+
+		width: colspan( 2, 6 );
+
+		// inside a 5 column space now
+		@include breakpoint-min( md ) {
+			width: auto;
+		}
+
 	}
 
 }
