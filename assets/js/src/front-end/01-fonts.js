@@ -1,3 +1,11 @@
+/**
+ * This loads our fonts and adds classes to the HTML element
+ *
+ * This file does not require jQuery.
+ * This file does require Font Face Observer v2.1.0
+ *
+ */
+
 // Optimization for Repeat Views
 if ( sessionStorage.serifFontsLoadedFoutWithClassPolyfill && sessionStorage.sansFontsLoadedFoutWithClassPolyfill ) {
 	document.documentElement.className += ' serif-fonts-loaded sans-fonts-loaded';
