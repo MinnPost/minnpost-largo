@@ -21,4 +21,13 @@
 			max-width: colspan( 10, 12 );
 		}
 	}
+
+	&.o-entry-horizontal {
+		flex-direction: column;	
+
+		.m-entry-content {
+			max-width: 100%;
+		}
+	}
+	
 }

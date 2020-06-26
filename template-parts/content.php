@@ -68,8 +68,24 @@
 
 	<?php minnpost_content_sponsorship( 'post' ); ?>
 
-	<div class="o-entry">
-		<div class="m-entry-meta">
+	<?php
+	// keep share buttons horizontal if instructed
+	$layout_class = '';
+	$share_buttons_always_horizontal = get_post_meta( $id, '_mp_share_buttons_always_horizontal', true );
+	if ( 'on' === $share_buttons_always_horizontal ) {
+		$layout_class .= ' o-entry-horizontal';
+	}
+	?>
+	<div class="o-entry<?php echo $layout_class; ?>">
+		<?php
+		// keep share buttons horizontal if instructed
+		$layout_class_meta = '';
+		$share_buttons_always_horizontal = get_post_meta( $id, '_mp_share_buttons_always_horizontal', true );
+		if ( 'on' === $share_buttons_always_horizontal ) {
+			$layout_class_meta .= ' m-entry-meta-horizontal';
+		}
+		?>
+		<div class="m-entry-meta<?php echo $layout_class_meta; ?>">
 			<?php if ( '' !== minnpost_get_posted_on() ) : ?>
 				<?php minnpost_posted_on(); ?>
 			<?php endif; ?>

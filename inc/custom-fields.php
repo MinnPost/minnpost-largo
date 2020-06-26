@@ -609,6 +609,14 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'desc' => __( 'If checked, share buttons will not display on this post.', 'minnpost-largo' ),
 			)
 		);
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Keep share buttons horizontal on large screens', 'minnpost-largo' ),
+				'id'   => '_mp_share_buttons_always_horizontal',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will have horizontal share buttons above the post content, rather than vertical ones next to it, on large screens. This is similar to its mobile behavior.', 'minnpost-largo' ),
+			)
+		);
 
 		/**
 		 * Ad & Sponsorship settings
@@ -2081,6 +2089,14 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 				'id'   => '_mp_remove_share_buttons_from_display',
 				'type' => 'checkbox',
 				'desc' => __( 'If checked, share buttons will not display on this event.', 'minnpost-largo' ),
+			)
+		);
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Keep share buttons horizontal on large screens', 'minnpost-largo' ),
+				'id'   => '_mp_share_buttons_always_horizontal',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this event will have horizontal share buttons above the event content, rather than vertical ones next to it, on large screens. This is similar to its mobile behavior.', 'minnpost-largo' ),
 			)
 		);
 

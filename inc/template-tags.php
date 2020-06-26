@@ -463,15 +463,26 @@ if ( ! function_exists( 'minnpost_share_buttons' ) ) :
 		if ( '' === $post_id ) {
 			$post_id = get_the_ID();
 		}
+
+		// don't show share buttons if instructed
 		$hide_share_buttons = get_post_meta( $post_id, '_mp_remove_share_buttons_from_display', true );
 		if ( 'on' === $hide_share_buttons ) {
 			return;
 		}
+
+		$layout_class = '';
+
+		// keep share buttons horizontal if instructed
+		$share_buttons_always_horizontal = get_post_meta( $post_id, '_mp_share_buttons_always_horizontal', true );
+		if ( 'on' === $share_buttons_always_horizontal ) {
+			$layout_class .= ' m-entry-share-horizontal';
+		}
+
 		$share_url     = urlencode( get_current_url() );
 		$share_excerpt = minnpost_largo_get_description();
 		$share_title   = minnpost_largo_get_title();
 		?>
-		<ul class="m-entry-share m-entry-share-top">
+		<ul class="m-entry-share m-entry-share-top<?php echo $layout_class; ?>">
 			<li class="a-share a-share-facebook">
 				<a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $share_url; ?>" aria-label="<?php echo __( 'Share this article on Facebook.', 'minnpost-largo' ); ?>" data-share-action="<?php echo __( 'Facebook', 'minnpost-largo' ); ?>">
 					<i class="fab fa-facebook-f" aria-hidden="true"></i>
