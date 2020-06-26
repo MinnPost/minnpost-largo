@@ -172,9 +172,9 @@ function manageEmails() {
 	} );
 }
 
-$( document ).ready( function( $ ) {
+document.addEventListener( 'DOMContentLoaded', function( event ) {
 	'use strict';
-	if ( 0 < $( '.m-form-email' ).length ) {
+	if ( 0 < $( '.m-form-account-settings' ).length ) {
 		manageEmails();
 	}
 } );
