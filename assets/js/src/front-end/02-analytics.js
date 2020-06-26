@@ -1,3 +1,10 @@
+/**
+ * This is used to cause Google Analytics events to run
+ *
+ * This file does not require jQuery.
+ *
+ */
+
 function mpAnalyticsTrackingEvent( type, category, action, label, value ) {
 	if ( 'undefined' !== typeof ga ) {
 		if ( 'undefined' === typeof value ) {
@@ -10,8 +17,7 @@ function mpAnalyticsTrackingEvent( type, category, action, label, value ) {
 	}
 }
 
-$( document ).ready( function() {
-
+document.addEventListener( 'DOMContentLoaded', function( event ) {
 	if ( 'undefined' !== typeof minnpost_membership_data && '' !== minnpost_membership_data.url_access_level ) {
 		var type = 'event';
 		var category = 'Member Content';
