@@ -2,6 +2,7 @@
  * File navigation.js.
  *
  * Navigation scripts. Includes mobile or toggle behavior, analytics tracking of specific menus.
+ * This file does require jQuery.
  */
 
 function setupPrimaryNav() {

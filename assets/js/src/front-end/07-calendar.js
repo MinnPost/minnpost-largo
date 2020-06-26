@@ -1,3 +1,10 @@
+/**
+ * Methods for events
+ *
+ * This file does not require jQuery.
+ *
+ */
+
 var target    = document.querySelector( '.a-events-cal-links' );
 if ( null !== target ) {
     var li        = document.createElement( 'li' );

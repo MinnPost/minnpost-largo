@@ -1,3 +1,10 @@
+/**
+ * Methods for forms
+ *
+ * This file does require jQuery.
+ *
+ */
+
 jQuery.fn.textNodes = function() {
 	return this.contents().filter( function() {
 		return ( this.nodeType === Node.TEXT_NODE && '' !== this.nodeValue.trim() );

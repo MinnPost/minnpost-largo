@@ -1,3 +1,10 @@
+/**
+ * Methods for comments
+ *
+ * This file does require jQuery.
+ *
+ */
+
 // based on which button was clicked, set the values for the analytics event and create it
 function trackShowComments( always, id, clickValue ) {
 	var action          = '';

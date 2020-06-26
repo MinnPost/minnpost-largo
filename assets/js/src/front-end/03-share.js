@@ -1,3 +1,11 @@
+/**
+ * Methods for sharing content
+ *
+ * This file does require jQuery.
+ *
+ */
+
+// track a share via analytics event
 function trackShare( text, position = '' ) {
 
 	// if a not logged in user tries to email, don't count that as a share
@@ -25,6 +33,7 @@ function trackShare( text, position = '' ) {
 	}
 }
 
+// copy the current URL to the user's clipboard
 function copyCurrentURL() {
 	var dummy = document.createElement( 'input' ),
 		text = window.location.href;
@@ -35,17 +44,20 @@ function copyCurrentURL() {
 	document.body.removeChild( dummy );
 }
 
+// top share button click
 $( '.m-entry-share-top a' ).click( function() {
 	var text = $( this ).data( 'share-action' );
 	var position = 'top';
 	trackShare( text, position );
 } );
 
+// cause the current page to print
 $( '.m-entry-share .a-share-print a' ).click( function( e ) {
 	e.preventDefault();
 	window.print();
 } );
 
+// when the copy link button is clicked
 $( '.m-entry-share .a-share-copy-url a' ).click( function( e ) {
 	copyCurrentURL();
 	tlite.show( ( e.target ), { grav: 'w' } );
@@ -55,6 +67,7 @@ $( '.m-entry-share .a-share-copy-url a' ).click( function( e ) {
 	return false;
 } );
 
+// when sharing via facebook, twitter, or email, open the destination url in a new window
 $( '.m-entry-share .a-share-facebook a, .m-entry-share .a-share-twitter a, .m-entry-share .a-share-email a' ).click( function( e ) {
 	e.preventDefault();
 	var url = $( this ).attr( 'href' );
