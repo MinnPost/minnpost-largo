@@ -2341,6 +2341,11 @@ if ( ! function_exists( 'minnpost_largo_check_remove_sidebar' ) ) :
 			$remove_sidebar = true;
 		}*/
 
+		$remove_sidebar_meta_v2 = get_post_meta( $post_id, '_mp_remove_right_sidebar_v2', true );
+		if ( isset( $remove_sidebar_meta_v2 ) && 'on' === $remove_sidebar_meta_v2 ) {
+			$remove_sidebar = true;
+		}
+
 		return $remove_sidebar;
 	}
 endif;
