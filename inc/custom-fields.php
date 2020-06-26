@@ -692,6 +692,14 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		);
 		$sidebar_settings->add_field(
 			array(
+				'name' => __( 'Remove whole right sidebar from this post? (V2)', 'minnpost-largo' ),
+				'id'   => '_mp_remove_right_sidebar_v2',
+				'type' => 'checkbox',
+				'desc' => '',
+			)
+		);
+		$sidebar_settings->add_field(
+			array(
 				'name' => __( 'Sidebar Content Box', 'minnpost-largo' ),
 				'desc' => __( 'Content for a single right sidebar box', 'minnpost-largo' ),
 				'id'   => '_mp_post_sidebar',
