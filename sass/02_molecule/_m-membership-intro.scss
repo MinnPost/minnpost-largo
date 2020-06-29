@@ -15,3 +15,11 @@
 		max-width: calc((100% - #{colspan( 1, 16 )}) - #{$size__site-sidebar} );
 	}
 }
+
+footer {
+
+	.m-membership-intro {
+		width: 100%;
+		max-width: none;
+	}
+}
