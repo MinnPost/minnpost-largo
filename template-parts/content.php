@@ -44,10 +44,15 @@
 
 			<?php minnpost_deck(); ?>
 
-			<?php if ( '' !== get_the_excerpt() ) : ?>
-				<div class="m-entry-excerpt">
-					<?php the_excerpt(); ?>
-				</div><!-- .m-entry-excerpt -->
+			<?php
+			$hide_excerpt  = get_post_meta( $id, '_mp_remove_excerpt_from_display', true );
+			if ( 'on' !== $hide_excerpt ) :
+				?>
+				<?php if ( '' !== get_the_excerpt() ) : ?>
+					<div class="m-entry-excerpt">
+						<?php the_excerpt(); ?>
+					</div><!-- .m-entry-excerpt -->
+				<?php endif; ?>
 			<?php endif; ?>
 
 			<?php if ( '' !== minnpost_get_posted_by() ) : ?>
