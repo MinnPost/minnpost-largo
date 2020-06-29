@@ -78,10 +78,12 @@
 		<?php do_action( 'wp_message_inserter', 'article_bottom' ); ?>
 	<?php endif; ?>
 
-	<?php
-	minnpost_related( 'multimedia' );
-	minnpost_related( 'content' );
-	?>
+	<?php if ( 'on' !== get_post_meta( get_the_ID(), '_mp_prevent_related_content', true ) ) : ?>
+		<?php
+		minnpost_related( 'multimedia' );
+		minnpost_related( 'content' );
+		?>
+	<?php endif; ?>
 
 	<?php
 	$tags = get_the_tag_list( '<aside class="a-related-tags"><h4>Related Tags:</h4><ul><li>', '</li><li>', '</li></ul></aside>' );
