@@ -2,25 +2,23 @@
 
 	&.m-ad-region-leaderboard {
 		text-align: center;
-		background: $color__gray-lightest;
+		background: neutral-color(border);
 	}
 
 	&.m-ad-region-sidebar {
+
 		@include breakpoint-min( lg ) {
 			margin-top: 0;
 			&:last-of-type {
 			    margin-top: auto;
 			}
 		}
+
+		@include breakpoint-min( xxl ) {
+			display: block;
+			width: auto;
+		}
 	}
-
-	/*.o-wrapper {
-
-		@include clearfix;
-		margin: 0;
-		width: inherit;
-		max-width: none;
-	}*/
 }
 
 .m-ad-region:empty {
@@ -37,18 +35,16 @@
 	}
 }
 
-// media queries for ad regions
-
-@media screen and (min-width: $size__ad-flexing) {
-
-	#secondary-first {
-
+#secondary-first {
+	@include breakpoint-min( sm ) {
 		.m-ad-region-sidebar {
 			display: block;
 			width: auto;
 		}
 	}
 }
+
+// media queries for ad regions
 
 @media screen and (min-width: $ad-top-width) {
 
@@ -57,21 +53,5 @@
 		&.m-ad-region-leaderboard {
 			padding: 10px 0;
 		}
-	}
-}
-
-@media screen and (min-width: $max-width-page) {
-
-	/*.m-ad-region {
-
-		.o-wrapper {
-
-			@include outer-container($max-width-page);
-		}
-	}*/
-
-	.m-ad-region-sidebar {
-		display: block;
-		width: auto;
 	}
 }
