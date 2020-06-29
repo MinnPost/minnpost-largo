@@ -562,6 +562,14 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		);
 		$display_settings->add_field(
 			array(
+				'name' => __( 'Remove excerpt from display?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_excerpt_from_display',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, the post excerpt will not display.', 'minnpost-largo' ),
+			)
+		);
+		$display_settings->add_field(
+			array(
 				'name' => __( 'Remove author(s) from display?', 'minnpost-largo' ),
 				'id'   => '_mp_remove_author_from_display',
 				'type' => 'checkbox',
@@ -844,6 +852,14 @@ if ( ! function_exists( 'cmb2_page_fields' ) ) :
 			array(
 				'name' => __( 'Remove whole right sidebar from this page?', 'minnpost-largo' ),
 				'id'   => '_mp_remove_right_sidebar',
+				'type' => 'checkbox',
+				'desc' => '',
+			)
+		);
+		$page_sidebar->add_field(
+			array(
+				'name' => __( 'Remove whole right sidebar from this page? (V2)', 'minnpost-largo' ),
+				'id'   => '_mp_remove_right_sidebar_v2',
 				'type' => 'checkbox',
 				'desc' => '',
 			)
@@ -1835,7 +1851,7 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 				'title'        => __( 'Sidebar Settings', 'minnpost-largo' ),
 				'object_types' => array( $object_type ),
 				'context'      => 'normal',
-				'priority'     => 'low',
+				'priority'     => 'high',
 				'closed'       => true,
 			)
 		);
@@ -1843,6 +1859,14 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 			array(
 				'name' => __( 'Remove whole right sidebar from this event?', 'minnpost-largo' ),
 				'id'   => '_mp_remove_right_sidebar',
+				'type' => 'checkbox',
+				'desc' => '',
+			)
+		);
+		$sidebar_settings->add_field(
+			array(
+				'name' => __( 'Remove whole right sidebar from this event? (V2)', 'minnpost-largo' ),
+				'id'   => '_mp_remove_right_sidebar_v2',
 				'type' => 'checkbox',
 				'desc' => '',
 			)
