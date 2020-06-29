@@ -751,6 +751,14 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				)
 			)
 		);
+		$related_settings->add_field(
+			array(
+				'name' => __( 'Prevent related content?', 'minnpost-largo' ),
+				'id'   => '_mp_prevent_related_content',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not contain any related content. This prevents manual and automated recommendations, as well as "more ___ articles" links within the related content area.', 'minnpost-largo' ),
+			)
+		);
 		// todo: put fields related to automatic related content here
 
 		/**
