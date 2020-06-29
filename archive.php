@@ -73,15 +73,15 @@ get_header(); ?>
 					?>
 					<ul class="a-archive-links a-author-links">
 						<?php if ( '' !== $author_email ) : ?>
-							<li class="a-email-link"><a href="mailto:<?php echo $author_email; ?>">Email</a></li>
+							<li class="a-email-link"><a href="mailto:<?php echo $author_email; ?>"><?php echo __( 'Email', 'minnpost-largo' ); ?></a></li>
 						<?php endif; ?>
 						<?php if ( '' !== $author_twitter ) : ?>
-							<li class="a-twitter-link"><a href="<?php echo $author_twitter; ?>">Twitter</a></li>
+							<li class="a-twitter-link"><a href="<?php echo $author_twitter; ?>"><?php echo __( 'Twitter', 'minnpost-largo' ); ?></a></li>
 						<?php endif; ?>
 					</ul>
 				<?php endif; ?>
 			</aside>
-			<h2 class="a-archive-subtitle">Articles by this author:</h2>
+			<h2 class="a-archive-subtitle"><?php echo __( 'Articles by this author:', 'minnpost-largo' ); ?></h2>
 		<?php endif; ?>
 
 		<?php

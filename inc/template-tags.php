@@ -1612,6 +1612,15 @@ add_filter(
 			$title = single_tag_title( '', false );
 		} elseif ( is_author() ) {
 			$title = '<span class="vcard">' . get_the_author() . '</span>';
+		} elseif ( is_year() ) {
+			/* translators: Yearly archive title. %s: Year. */
+			$title = sprintf( __( 'Yearly Archives: %s', 'minnpost-largo' ), get_the_date( _x( 'Y', 'yearly archives date format' ) ) );
+		} elseif ( is_month() ) {
+			/* translators: Monthly archive title. %s: Month name and year. */
+			$title = sprintf( __( 'Monthly Archives: %s', 'minnpost-largo' ), get_the_date( _x( 'F Y', 'monthly archives date format' ) ) );
+		} elseif ( is_day() ) {
+			/* translators: Daily archive title. %s: Date. */
+			$title = sprintf( __( 'Daily Archives: %s', 'minnpost-largo' ), get_the_date( _x( 'F j, Y', 'daily archives date format' ) ) );
 		}
 		return $title;
 	}
