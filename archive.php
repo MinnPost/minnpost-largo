@@ -121,7 +121,7 @@ get_header(); ?>
 					</select>
 					<input type="submit" value="<?php echo __( 'Go', 'minnpost-largo' ); ?>">
 				</div>
-			</form
+			</form>
 		<?php endif; ?>
 
 		<?php
