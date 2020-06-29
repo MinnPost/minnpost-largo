@@ -82,6 +82,46 @@ get_header(); ?>
 				<?php endif; ?>
 			</aside>
 			<h2 class="a-archive-subtitle"><?php echo __( 'Articles by this author:', 'minnpost-largo' ); ?></h2>
+		<?php elseif ( is_year() ) : ?>
+			<form method="post" class="m-form m-form-archive" action="<?php echo admin_url( 'admin-post.php' ); ?>">
+				<input type="hidden" name="action" value="date_archive_submit">
+				<label for="archive-dropdown"><?php echo __( 'Select a different year', 'minnpost-largo' ); ?></label>
+				<div class="a-input-with-button a-button-sentence">
+					<select id="archive-dropdown" name="archive_dropdown" onchange="document.location.href=this.options[this.selectedIndex].value;">
+						<option value=""><?php esc_attr( _e( 'Select Year', 'minnpost-largo' ) ); ?></option>
+						<?php
+						wp_get_archives(
+							array(
+								'type'            => 'yearly',
+								'format'          => 'option',
+								'show_post_count' => 0,
+							)
+						);
+						?>
+					</select>
+					<input type="submit" value="<?php echo __( 'Go', 'minnpost-largo' ); ?>">
+				</div>
+			</form>
+		<?php elseif ( is_month() ) : ?>
+			<form method="post" class="m-form m-form-archive" action="<?php echo admin_url( 'admin-post.php' ); ?>">
+				<input type="hidden" name="action" value="date_archive_submit">
+				<label for="archive-dropdown"><?php echo __( 'Select a different month', 'minnpost-largo' ); ?></label>
+				<div class="a-input-with-button a-button-sentence">
+					<select id="archive-dropdown" name="archive_dropdown">
+						<option value=""><?php esc_attr( _e( 'Select Month', 'minnpost-largo' ) ); ?></option>
+						<?php
+						wp_get_archives(
+							array(
+								'type'            => 'monthly',
+								'format'          => 'option',
+								'show_post_count' => 0,
+							)
+						);
+						?>
+					</select>
+					<input type="submit" value="<?php echo __( 'Go', 'minnpost-largo' ); ?>">
+				</div>
+			</form
 		<?php endif; ?>
 
 		<?php

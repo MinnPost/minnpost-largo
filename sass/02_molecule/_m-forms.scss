@@ -125,6 +125,18 @@
 	}
 }
 
+.m-form-archive {
+	border: $border-default-style;
+	border-radius: $border-radius;
+	padding: $standard-block-padding * 2;
+	margin-bottom: $standard-block-margin;
+	width: colspan( 4, 12 );
+
+	label {
+		margin-bottom: $standard-block-padding;
+	}
+}
+
 // gravity forms styles
 .gform_confirmation_wrapper {
 	margin: 16px 0; // these are the same as the form wrapper
