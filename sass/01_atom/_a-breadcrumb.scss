@@ -7,6 +7,7 @@
 	margin-right: $standard-block-padding / 2;
 
 	a {
+		white-space: nowrap;
 
 		&:link,
 		&:visited {
@@ -29,10 +30,6 @@
 				background-color: neutral-color(dark);
 			}
 		}
-	}
-
-	&.a-category-name {
-		line-height: 1;
 	}
 }
 

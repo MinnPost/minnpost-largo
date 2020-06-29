@@ -33,7 +33,7 @@
 
 	$remove_title_from_display = get_post_meta( get_the_ID(), '_mp_remove_title_from_display', true );
 	if ( ! isset( $remove_title_from_display ) || 'on' !== $remove_title_from_display ) {
-	?>
+		?>
 
 	<header class="m-entry-header<?php if ( is_singular() || is_404() ) { ?> m-entry-header-singular<?php } ?>">
 		<?php

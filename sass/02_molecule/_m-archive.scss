@@ -1,13 +1,25 @@
 .m-archive {
 	//	margin-bottom: 20px;
 	//	border-bottom: 1px solid $color__gray-lightest;
+
+	&.m-archive-events {
+
+		article {
+			display: flex;
+			justify-content: space-between;
+			padding-bottom: $standard-heading-margin;
+			border-bottom: $border-default-style;
+			margin-bottom: $standard-block-margin;
+			flex-wrap: wrap;
+		}
+	}
 }
 
 .m-archive-top article,
 .m-archive-excerpt article {
-	border-bottom: 1px solid $color__gray-lightest;
+	/*border-bottom: 1px solid $color__gray-lightest;
 	margin-bottom: 20px;
-	clear: both;
+	clear: both;*/
 }
 
 .o-archive-listing {

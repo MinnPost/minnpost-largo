@@ -44,7 +44,13 @@ button.a-button,
 .a-button-sentence {
 
 	input[type="text"],
-	input[type="search"] {
+	input[type="search"],
+	input[type="email"],
+	input[type="tel"],
+	input[type="url"],
+	input[type="number"],
+	select {
+		margin-right: 0;
 		border-top-right-radius: 0;
 		border-bottom-right-radius: 0;
 	}
@@ -70,7 +76,7 @@ button.a-button,
 
 .a-input-with-button {
 	width: 100%;
-	margin-bottom: 0.375em;
+	margin-bottom: $standard-block-padding;
 	display: flex;
 
 	input[type="submit"],
@@ -101,7 +107,9 @@ button.a-button,
 	@include link-underline();
 	background: none;
 	padding: 0;
-	margin: 0 0 $standard-block-padding 0;
+	margin: 0 0 $standard-block-margin 0;
+	font-size: var(--scale0);
+	text-align: left;
 
 	&:active,
 	&:focus,

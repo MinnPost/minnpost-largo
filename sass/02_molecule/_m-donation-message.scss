@@ -1,10 +1,10 @@
 .m-donation-message {
-	max-width: $medium-screen;
 	display: flex;
 	justify-content: space-between;
 	flex-wrap: wrap;
-	margin-bottom: $standard-page-margin;
-	border-bottom: 1px solid $color__gray-lightest;
+	margin-bottom: $standard-block-margin;
+	border-bottom: $border-default-style;
+	font-size: $interface-copy-size-larger;
 
 	&:last-of-type {
 		border-bottom: none;
@@ -12,31 +12,34 @@
 
 	section {
 		text-align: center;
-		padding: 0.5em;
-		width: 100%;
-		margin-bottom: 1.5em;
+		margin-bottom: $standard-block-margin;
+		width: auto;
+		flex-basis: 33%;
+		flex-grow: 1;
 
 		&.m-donation-actions {
-			padding-left: 1em;
-			padding-right: 1em;
+			padding-left: $standard-block-padding;
+			padding-right: $standard-block-padding;
 		}
 	}
 
 	.m-donation {
-		background: $color__gray-lightest;
+		background: neutral-color(highlight);
+		border-radius: $border-radius;
 	}
 
 	.a-donation-amount {
+		@include meta-preset( $bold: true );
 		font-size: 3em;
 		width: 4em;
-		margin-left: auto;
-		margin-right: auto;
+		margin: 0 auto;
 		line-height: normal;
-		padding: 0 0 0.25em;
+		padding: 0 0 $standard-block-padding / 2;
 	}
 
 	.a-donation-frequency,
 	.a-next-transaction-date {
+		@include meta-preset( $bold: true );
 		font-size: 1.5em;
 		line-height: normal;
 	}
@@ -44,37 +47,31 @@
 	.a-button {
 		font-size: 1em;
 		margin-right: 0;
-		padding: 0.25em 0.5em;
+		padding: $standard-block-padding;
 	}
 
 	.a-button-update-payment {
-		margin-bottom: 0.5em;
+		margin-bottom: $standard-block-padding;
 		display: block;
 	}
 
 	.a-button-sentence {
 		display: flex;
 		justify-content: space-between;
+
+		.a-button:first-of-type {
+			margin-right: $standard-block-padding * 2;
+		}
 	}
 
 	.a-form-caption {
 		display: block;
 		text-align: left;
-		font-size: 72%;
+		font-size: $interface-copy-size-smaller;
 		line-height: normal;
 		margin-top: 1em;
 	}
 }
-
-/*.a-donation-amount,
-.a-donation-frequency,
-.a-next-transaction-date {
-	font-family: $font__headings;
-	font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
-	font-weight: normal;
-	font-style: normal;
-	font-variant: normal;
-}*/
 
 // media queries
 @media screen and (min-width: $medium-screen) {
@@ -82,10 +79,9 @@
 	.m-donation-message {
 
 		section {
-			width: auto;
 
 			&.m-donation-actions {
-				max-width: $medium-screen * 0.3;
+				//max-width: $medium-screen * 0.3;
 			}
 		}
 	}

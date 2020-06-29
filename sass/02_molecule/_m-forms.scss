@@ -83,6 +83,7 @@
 
 .m-form-instory.m-form-minnpost-form-processor-mailchimp {
 	border: $border-default-style;
+	border-radius: $border-radius;
 
 	&.legacy {
 		margin-bottom: 1em;
@@ -121,6 +122,18 @@
 		border: 0;
 		margin: 0;
 		padding: 0;
+	}
+}
+
+.m-form-archive {
+	border: $border-default-style;
+	border-radius: $border-radius;
+	padding: $standard-block-padding * 2;
+	margin-bottom: $standard-block-margin;
+	width: colspan( 4, 12 );
+
+	label {
+		margin-bottom: $standard-block-padding;
 	}
 }
 

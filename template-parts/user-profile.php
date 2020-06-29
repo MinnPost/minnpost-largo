@@ -10,7 +10,7 @@
 ?>
 <article id="user-<?php echo $user->ID; ?>" class="m-user m-user-profile">
 	<h1 class="a-user-title"><?php echo $user->display_name; ?></h1>
-	<p class="registered-since">On MinnPost since <?php echo date( 'm/d/y', strtotime( $user->user_registered ) ); ?></p>
+	<p class="registered-since">On MinnPost since <?php echo minnpost_largo_get_ap_date( $user->user_registered ); ?></p>
 
 	<?php
 	# The comment functions use the query var 'cpage', so we'll ensure that's set

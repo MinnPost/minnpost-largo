@@ -9,24 +9,37 @@
 
 ?>
 
-<li id="post-<?php the_ID(); ?>" <?php post_class( 'm-interest-post' ); ?>>
-
-	<a href="<?php echo esc_url( get_permalink() ); ?>">
-		<?php $image_data = get_minnpost_post_image( 'author-teaser' ); ?>
-
-		<div class="a-interest-image">
-			<?php echo $image_data['markup']; ?>
-		</div>
-
-		<?php the_title( '<h3 class="a-entry-title a-entry-title-excerpt">', '</h3>' ); ?>
-
-		<?php if ( 'post' === get_post_type() ) : ?>
-
-		<div class="m-entry-meta">
-			<?php minnpost_posted_on(); ?>
-		</div>
-	</a>
-
+<li id="post-<?php the_ID(); ?>">
+	<?php
+	if ( ! isset( $show_image ) || true === $show_image ) {
+		$image_size = 'feature-medium';
+		minnpost_post_image(
+			$image_size,
+			array(
+				'location' => 'interest',
+			),
+			$post->id
+		);
+	}
+	?>
+	<?php if ( '' === minnpost_get_replace_category_text() ) : ?>
+		<?php minnpost_category_breadcrumb(); ?>
+	<?php else : ?>
+		<?php minnpost_replace_category_text(); ?>
 	<?php endif; ?>
-
-</li><!-- #post-## -->
+	<header class="m-entry-header">
+		<h4 class="a-entry-title"><a href="<?php echo get_permalink( $post->id ); ?>"><?php echo get_the_title( $post->id ); ?></a></h4>
+		<?php if ( 'post' === get_post_type( $post->id ) ) : ?>
+			<?php if ( '' !== minnpost_get_posted_by() ) : ?>
+				<div class="m-entry-byline">
+					<?php minnpost_posted_by( $post->id ); ?>
+				</div>
+			<?php endif; ?>
+			<div class="m-entry-meta">
+				<?php if ( '' !== minnpost_get_posted_on() ) : ?>
+					<?php minnpost_posted_on(); ?>
+				<?php endif; ?>
+			</div><!-- .m-entry-meta -->
+		<?php endif; ?>
+	</header>
+</li>

@@ -40,9 +40,7 @@
 }
 
 .a-author-title {
-	text-transform: none;
-	margin: 0;
-	font-weight: bold;
+	margin-bottom: $standard-block-padding;
 }
 
 .a-related-title {
@@ -229,7 +227,7 @@ h2.a-user-section-title {
 h2.a-membership-choose {
 	color: $_color-base-red;
 	//font-size: 138.5%;
-	margin-bottom: $standard-page-margin / 2;
+	margin-bottom: $standard-block-margin / 2;
 }
 
 h2.a-membership-reasons {
@@ -257,19 +255,15 @@ h2.a-offer {
 }
 
 h4.a-donation-heading {
-	padding: 0.5em 0;
-	color: $color__gray-meta;
-	//font-size: 76.9%;
-	//text-transform: uppercase;
-	//font-family: $font__sans;
-	//line-height: 1.3em;
-	//font-weight: normal;
+	@include meta-preset( $bold: true );
+	padding: $standard-block-padding 0;
+	color: neutral-color(dark);
+	margin-bottom: $standard-block-padding / 2;
 }
 
 .a-donation-history-heading {
-	margin: 1em 0;
-	background: $color__minnpost-white;
-	padding: 1em;
-	//font-weight: normal;
-	//font-size: 100%;
+	background: neutral-color(light);
+	padding: $standard-block-padding;
+	@include meta-preset( $size: -2, $bold: false, $italic: false, $line-height: 1 );
+	border-radius: $border-radius;
 }

@@ -12,16 +12,6 @@
 		<input type="hidden" name="state" value="<?php echo isset( $_POST['state'] ) && wp_verify_nonce( sanitize_key( $_POST['wp_create_nonce'] ), 'uam-account-settings-nonce' ) ? sanitize_text_field( $_POST['state'] ) : isset( $attributes['user_meta']['_state'] ) ? esc_html( $attributes['user_meta']['_state'][0] ) : ''; ?>">
 	<?php endif; ?>
 
-	<!-- humans should not fill these in and expect good things -->
-	<div class="m-user-field-shift" aria-label="Please leave the following three fields empty">
-		<label for="mhp_name">Name: </label>
-		<input type="text" name="mhp_name" tabindex="-1" value="" placeholder="Mni Sota Makoce" id="mhp_name">
-		<label for="mhp_email">Email: </label>
-		<input type="email" name="mhp_email" tabindex="-1" value="" placeholder="mnisota@makoce.com" id="mhp_email">
-		<label for="mhp_comment">Comment: </label>
-		<textarea name="mhp_comment" tabindex="-1" placeholder="Please comment" id="mhp_comment"></textarea>
-	</div>
-
 	<?php if ( ! empty( $attributes['instructions'] ) ) : ?>
 		<?php echo wp_kses_post( $attributes['instructions'] ); ?>
 	<?php endif; ?>
@@ -87,7 +77,7 @@
 					<input type="email" name="email" id="email" value="<?php echo isset( $_POST['email'] ) && wp_verify_nonce( sanitize_key( $_POST['wp_create_nonce'] ), 'uam-account-settings-nonce' ) ? sanitize_email( $_POST['email'] ) : isset( $attributes['user']->user_email ) ? esc_html( $attributes['user']->user_email ) : ''; ?>" required>
 			<?php endif; ?>
 			<div class="a-form-caption a-add-email">
-				<small><a href="#">Add another email address</a></small>
+				<a href="#">Add another email address</a>
 			</div>
 		</div>
 

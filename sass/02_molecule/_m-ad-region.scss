@@ -5,6 +5,15 @@
 		background: $color__gray-lightest;
 	}
 
+	&.m-ad-region-sidebar {
+		@include breakpoint-min( lg ) {
+			margin-top: 0;
+			&:last-of-type {
+			    margin-top: auto;
+			}
+		}
+	}
+
 	/*.o-wrapper {
 
 		@include clearfix;

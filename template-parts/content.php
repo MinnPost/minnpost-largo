@@ -9,7 +9,7 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post' ); ?>>
+<article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post m-post-single' ); ?>>
 
 	<?php if ( '' !== minnpost_get_category_name() || '' !== minnpost_get_replace_category_text() ) : ?>
 		<div class="m-post-classification">
@@ -20,7 +20,6 @@
 			<?php endif; ?>
 			<?php minnpost_plus_icon(); ?>
 		</div>
-		<?php minnpost_post_category_sponsorship(); ?>
 	<?php endif; ?>
 
 	<?php
@@ -45,10 +44,15 @@
 
 			<?php minnpost_deck(); ?>
 
-			<?php if ( '' !== get_the_excerpt() ) : ?>
-				<div class="m-entry-excerpt">
-					<?php the_excerpt(); ?>
-				</div><!-- .m-entry-excerpt -->
+			<?php
+			$hide_excerpt  = get_post_meta( $id, '_mp_remove_excerpt_from_display', true );
+			if ( 'on' !== $hide_excerpt ) :
+				?>
+				<?php if ( '' !== get_the_excerpt() ) : ?>
+					<div class="m-entry-excerpt">
+						<?php the_excerpt(); ?>
+					</div><!-- .m-entry-excerpt -->
+				<?php endif; ?>
 			<?php endif; ?>
 
 			<?php if ( '' !== minnpost_get_posted_by() ) : ?>
@@ -67,8 +71,26 @@
 	}
 	?>
 
-	<div class="o-entry">
-		<div class="m-entry-meta">
+	<?php minnpost_content_sponsorship( 'post' ); ?>
+
+	<?php
+	// keep share buttons horizontal if instructed
+	$layout_class = '';
+	$share_buttons_always_horizontal = get_post_meta( $id, '_mp_share_buttons_always_horizontal', true );
+	if ( 'on' === $share_buttons_always_horizontal ) {
+		$layout_class .= ' o-entry-horizontal';
+	}
+	?>
+	<div class="o-entry<?php echo $layout_class; ?>">
+		<?php
+		// keep share buttons horizontal if instructed
+		$layout_class_meta = '';
+		$share_buttons_always_horizontal = get_post_meta( $id, '_mp_share_buttons_always_horizontal', true );
+		if ( 'on' === $share_buttons_always_horizontal ) {
+			$layout_class_meta .= ' m-entry-meta-horizontal';
+		}
+		?>
+		<div class="m-entry-meta<?php echo $layout_class_meta; ?>">
 			<?php if ( '' !== minnpost_get_posted_on() ) : ?>
 				<?php minnpost_posted_on(); ?>
 			<?php endif; ?>

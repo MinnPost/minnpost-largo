@@ -1,17 +1,8 @@
 .m-entry-content {
-	//font-size: $content-font-size;
-	//line-height: $base-line-height-em;
-	//max-width: $max-width-content;
-	//align-self: flex-end;
-	//margin: 0 $content-gutter $standard-block-margin 0;
 	margin-bottom: $standard-block-margin;
 
-	@include breakpoint-range( sm, lg ) {
-		max-width: colspan( 10, 12 );
-	}
-
-	@include breakpoint-min( xl ) {
-		max-width: colspan( 10, 12 );
+	&.m-membership-support-wrapper {
+		font-family: $webfont__sans;
 	}
 }
 

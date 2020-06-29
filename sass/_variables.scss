@@ -40,8 +40,16 @@ $neutral-colors: (
 	medium: #869298,
 	border: #d6d6da,
 	highlight: #ebebfb,
+	light: #efeff0,
 	white: #fff
 );
+
+// Membership levels
+$color__minnpost-bronze: #cd7f32;
+$color__minnpost-silver: #c0c0c0;
+$color__minnpost-gold: #ffd700;
+$color__minnpost-platinum: #e5e4e2;
+
 $background-unpublished: neutral-color(white) url(/wp-content/themes/minnpost-largo/assets/img/unpublished.png);
 
 
@@ -56,6 +64,13 @@ $font__sans: helvetica, arial, sans-serif;
 $font__serif: georgia, cambria, "Times New Roman", times, serif;
 $webfont__serif: "ff-meta-serif-web-pro", georgia, cambria, "Times New Roman", times, serif;
 $webfont__sans: "ff-meta-web-pro", helvetica, arial, sans-serif;
+
+$html-root-size: 125%; // 100% is 16px
+$html-root-size-large-screen: 150%;
+
+$interface-copy-size: 80%;
+$interface-copy-size-larger: 85%;
+$interface-copy-size-smaller: 75%;
 
 // type scale.
 // uses Rob Weychert's code at https://24ways.org/2019/a-modern-typographic-scale/
@@ -251,7 +266,6 @@ $standard-block-margin: 1.5em; // 36px at desktop
 $standard-heading-margin: 0.75em; // 18px at desktop
 $standard-block-padding: 0.5em; // 12px at body
 
-$standard-page-margin: 1.538461538461538em; // 20px
 $home-content-sidebar-padding: 35px;
 $archive-content-sidebar-padding: 15px;
 $form-text-indent: 6px;

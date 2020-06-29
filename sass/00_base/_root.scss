@@ -22,10 +22,10 @@ body {
 }
 
 hr {
-	background-color: $color__background-hr;
+	background-color: neutral-color(border);
 	border: 0;
 	height: 1px;
-	margin-bottom: $base-line-height-em;
+	margin-bottom: $standard-block-margin;
 }
 
 // images
@@ -43,17 +43,15 @@ figure {
 
 // forms
 label {
-	line-height: $base-line-height-em;
 	display: inline-block;
 }
 
-input,
+input:not([type=submit]),
 select,
 textarea {
 	max-width: 100%; // sometimes there'll be more specific sizes, but we should never go over 100% here
-	//font-family: $font__sans;
-	//font-size: 99%;
 	line-height: normal;
 	color: neutral-color(black);
 	border-radius: $border-radius;
+	border: $border-default-style;
 }

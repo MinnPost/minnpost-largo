@@ -1,31 +1,38 @@
+/**
+ * Methods for comments
+ *
+ * This file does require jQuery.
+ *
+ */
+
 // based on which button was clicked, set the values for the analytics event and create it
-function trackShowComments( always, id, click_value ) {
+function trackShowComments( always, id, clickValue ) {
 	var action          = '';
-	var category_prefix = '';
-	var category_suffix = '';
+	var categoryPrefix = '';
+	var categorySuffix = '';
 	var position        = '';
 	position = id.replace( 'always-show-comments-', '' );
-	if ( '1' === click_value ) {
+	if ( '1' === clickValue ) {
 		action = 'On';
-	} else if ( '0' === click_value ) {
+	} else if ( '0' === clickValue ) {
 		action = 'Off';
 	} else {
 		action = 'Click';
 	}
 	if ( true === always ) {
-		category_prefix = 'Always ';
+		categoryPrefix = 'Always ';
 	}
 	if ( '' !== position ) {
 		position = position.charAt( 0 ).toUpperCase() + position.slice( 1 );
-		category_suffix = ' - ' + position;
+		categorySuffix = ' - ' + position;
 	}
-	mp_analytics_tracking_event( 'event', category_prefix + 'Show Comments' + category_suffix, action, location.pathname );
+	mpAnalyticsTrackingEvent( 'event', categoryPrefix + 'Show Comments' + categorySuffix, action, location.pathname );
 }
 
 // when showing comments once, track it as an analytics event
 $( document ).on( 'click', '.a-button-show-comments', function() {
 	trackShowComments( false, '', '' );
-});
+} );
 
 // Set user meta value for always showing comments if that button is clicked
 $( document ).on( 'click', '.a-checkbox-always-show-comments', function() {
@@ -40,20 +47,20 @@ $( document ).on( 'click', '.a-checkbox-always-show-comments', function() {
 	trackShowComments( true, that.attr( 'id' ), that.val() );
 
 	// we already have ajaxurl from the theme
-	$.ajax({
+	$.ajax( {
 		type: 'POST',
 		url: ajaxurl,
 		data: {
-        	'action': 'minnpost_largo_load_comments_set_user_meta',
-        	'value': that.val()
+			'action': 'minnpost_largo_load_comments_set_user_meta',
+			'value': that.val()
 		},
 		success: function( response ) {
-        	$( '.a-always-show-comments-result', that.parent() ).html( response.data.message );
-        	if ( true === response.data.show ) {
+			$( '.a-always-show-comments-result', that.parent() ).html( response.data.message );
+			if ( true === response.data.show ) {
 				$( '.a-checkbox-always-show-comments' ).val( 0 );
 			} else {
 				$( '.a-checkbox-always-show-comments' ).val( 1 );
 			}
 		}
-	});
-});
+	} );
+} );

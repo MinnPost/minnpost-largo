@@ -4,17 +4,17 @@
 	&.m-support-cta-top {
 
 		@include breakpoint-min( md ) {
-			font-size: 80%;
+			font-size: $interface-copy-size;
 			max-width: colspan( 5, 8 );
 		}
 
 		@include breakpoint-min( lg ) {
-			font-size: 80%;
+			font-size: $interface-copy-size;
 			max-width: colspan( 8, 12 );
 		}
 
 		@include breakpoint-min( xl ) {
-			font-size: 85%;
+			font-size: $interface-copy-size-larger;
 			max-width: colspan( 12, 16 );
 		}
 
@@ -25,6 +25,8 @@
 
 		// tagline
 		h2 {
+			margin: 0;
+
 			@include meta-preset( $size: 0, $bold: false, $italic: false, $line-height: 1 );
 
 			@include breakpoint-min( xs ) {
@@ -41,12 +43,12 @@
 	&.m-support-cta-bottom {
 
 		@include breakpoint-min( md ) {
-			font-size: 75%;
+			font-size: $interface-copy-size-smaller;
 			max-width: colspan( 4, 8 );
 		}
 
 		@include breakpoint-min( lg ) {
-			font-size: 85%;
+			font-size: $interface-copy-size-larger;
 			max-width: colspan( 7, 12 );
 		}
 
@@ -113,5 +115,17 @@
 		.m-form-actions {
 			text-align: center;
 		}
+	}
+}
+
+.o-header-support .m-support-cta.m-support-cta-top {
+	text-align: left;
+	flex-direction: row;
+	width: auto;
+
+	// tagline
+	h2 {
+		margin: 0;
+		@include meta-preset( $size: 0, $bold: true, $italic: false, $line-height: 1 );
 	}
 }

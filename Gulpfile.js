@@ -28,19 +28,23 @@ const wpPot = require('gulp-wp-pot');
 // Some config data for our tasks
 const config = {
 	styles: {
+		admin: 'sass_admin/*.scss',
 		front_end: 'assets/sass/*.scss',
 		main: 'sass/**/*.scss',
 		srcDir: 'assets/sass',
+		admin_lint_dest: './sass_admin/',
 		front_end_lint_dest: 'assets/sass/',
 		front_end_dest: 'assets/css',
 		main_lint_dest: './sass',
+		admin_dest: './',
 		main_dest: './'
 	},
 	scripts: {
 		admin_src: './assets/js/src/admin/**/*.js',
 		admin_lint: "./assets/js/src/admin/",
 		main: [ './assets/js/vendor/front-end/**/*.js', './assets/js/src/front-end/**/*.js' ],
-		main_lint: "./assets/js/src/front-end/",
+		main_lint_src: [ './assets/js/src/front-end/**/*.js' ],
+		main_lint_dest: "./assets/js/src/front-end/",
 		uglify: [ 'assets/js/*.js', '!assets/js/*.min.js', '!assets/js/customizer.js' ],
 		dest: './assets/js'
 	},
@@ -83,14 +87,8 @@ function adminstyles() {
 				}) // Minify
 			])
 		)
-		.pipe(
-			rename({
-				// Rename to .min.css
-				suffix: ".min"
-			})
-		)
 		.pipe(sourcemaps.write()) // Write the sourcemap files
-		.pipe(gulp.dest(config.styles.dest)) // Drop the resulting CSS file in the specified dir
+		.pipe(gulp.dest(config.styles.admin_dest)) // Drop the resulting CSS file in the specified dir
 		.pipe(browserSync.stream());
 }
 
@@ -99,7 +97,7 @@ function adminsasslint() {
 		.pipe(gulpStylelint({
 			fix: true
 		}))
-		.pipe(gulp.dest(config.styles.lint_dest));
+		.pipe(gulp.dest(config.styles.admin_lint_dest));
 }
 
 function frontendstyles() {
@@ -234,10 +232,10 @@ function adminscriptlint() {
 
 function mainscriptlint() {
 	return gulp
-		.src(config.scripts.main)
+		.src(config.scripts.main_lint_src)
 		.pipe(eslint({fix:true}))
 		.pipe(eslint.format())
-		.pipe(gulp.dest(config.scripts.main_lint))
+		.pipe(gulp.dest(config.scripts.main_lint_dest))
 		// Brick on failure to be super strict
 		//.pipe(eslint.failOnError());
 };
@@ -417,10 +415,10 @@ function watch() {
 }
 
 // define complex gulp tasks
-const lint       = gulp.series(gulp.parallel(frontendsasslint, mainsasslint, adminscriptlint, mainscriptlint));
-const stylelint  = gulp.series(gulp.parallel(frontendsasslint, mainsasslint));
+const lint       = gulp.series(gulp.parallel(frontendsasslint, adminsasslint, mainsasslint, adminscriptlint, mainscriptlint));
+const stylelint  = gulp.series(gulp.parallel(frontendsasslint, adminsasslint, mainsasslint));
 const scriptlint = gulp.series(gulp.parallel(adminscriptlint, mainscriptlint));
-const styles     = gulp.series(gulp.parallel(frontendstyles, mainstyles));
+const styles     = gulp.series(gulp.parallel(frontendstyles, adminstyles, mainstyles));
 const scripts    = gulp.series(gulp.parallel(mainscripts, adminscripts), uglifyscripts);
 const build      = gulp.series(gulp.parallel(styles, scripts, images, svgminify, translate));
 

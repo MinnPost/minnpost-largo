@@ -5,7 +5,7 @@
 
 	.m-zone {
 		//padding-bottom: 20px;
-		margin-bottom: $standard-page-margin;
+		margin-bottom: $standard-block-margin;
 		border-bottom: 1px solid $color__gray-lightest;
 
 		&.m-zone-homepage-top { // no margin or border because the article already has it
@@ -28,7 +28,7 @@
 
 		&.m-zone-homepage-middle article {
 			width: 47.5%;
-			margin-bottom: $standard-page-margin;
+			margin-bottom: $standard-block-margin;
 		}
 	}
 }
@@ -41,7 +41,7 @@
 		.m-zone {
 
 			&.m-zone-sidebar-recommended {
-				margin-left: $standard-page-margin;
+				margin-left: $standard-block-margin;
 			}
 		}
 	}

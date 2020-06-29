@@ -1,46 +1,18 @@
 .m-entry-content .m-staff-list-bios {
 	list-style: none;
-	margin: 20px 0 0 0;
 	padding: 0;
-	font-size: 81.25%;
-
-	a,
-	a:visited,
-	a:hover,
-	a:focus,
-	a:active {
-		color: $color__base-font-color;
-	}
+	margin: 0;
 
 	li {
 		list-style: none;
-		padding-bottom: 12px;
-		margin-bottom: 20px;
-		border-bottom: 1px solid $color__gray-lightest;
+		border-bottom: $border-default-style;
 
 		figure {
 
 			img {
 				max-width: 130px; // in case the author has an image but not a thumbnail
-			}
-		}
-
-		h3 {
-			font-size: 123.1%;
-		}
-
-		p {
-			font-size: $content-font-size;
-			line-height: 1.3em;
-
-			a {
-				color: $color__link;
-
-				&:active,
-				&:focus,
-				&:hover {
-					color: $color__link;
-				}
+				height: 100%;
+				width: 100%;
 			}
 		}
 	}

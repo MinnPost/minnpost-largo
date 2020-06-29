@@ -4,14 +4,14 @@
 
 		section.m-widget-glean-home-content {
 			border-top: 1px solid $color__gray-lightest;
-			padding-top: $standard-page-margin;
+			padding-top: $standard-block-margin;
 		}
 	}
 
 	section.m-widget-glean-home-content {
 		border-bottom: 1px solid $color__gray-lightest;
-		padding-bottom: $standard-page-margin;
-		margin-bottom: $standard-page-margin;
+		padding-bottom: $standard-block-margin;
+		margin-bottom: $standard-block-margin;
 
 		.a-widget-title {
 			/*font-size: 123.1%;

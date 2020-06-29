@@ -1,4 +1,11 @@
-function mp_analytics_tracking_event( type, category, action, label, value ) {
+/**
+ * This is used to cause Google Analytics events to run
+ *
+ * This file does not require jQuery.
+ *
+ */
+
+function mpAnalyticsTrackingEvent( type, category, action, label, value ) {
 	if ( 'undefined' !== typeof ga ) {
 		if ( 'undefined' === typeof value ) {
 			ga( 'send', type, category, action, label );
@@ -10,34 +17,7 @@ function mp_analytics_tracking_event( type, category, action, label, value ) {
 	}
 }
 
-$( document ).ready( function( e ) {
-
-	if ( 'undefined' !== typeof PUM ) {
-		var current_popup = PUM.getPopup( $( '.pum' ) );
-		var settings = PUM.getSettings( $( '.pum' ) );
-		var popup_id = settings.id;
-		$( document ).on( 'pumAfterOpen', function() {
-			mp_analytics_tracking_event( 'event', 'Popup', 'Show', popup_id, { 'nonInteraction': 1 });
-		});
-		$( document ).on( 'pumAfterClose', function() {
-			var close_trigger = $.fn.popmake.last_close_trigger;
-			if ( 'undefined' !== typeof close_trigger ) {
-				mp_analytics_tracking_event( 'event', 'Popup', close_trigger, popup_id, { 'nonInteraction': 1 });
-			}
-		});
-		$( '.message-close' ).click( function( e ) { // user clicks link with close class
-			var close_trigger = 'Close Button';
-			mp_analytics_tracking_event( 'event', 'Popup', close_trigger, popup_id, { 'nonInteraction': 1 });
-		});
-		$( '.message-login' ).click( function( e ) { // user clicks link with login class
-			var url = $( this ).attr( 'href' );
-			mp_analytics_tracking_event( 'event', 'Popup', 'Login Link', url );
-		});
-		$( '.pum-content a:not( .message-close, .pum-close, .message-login )' ).click( function( e ) { // user clicks something that is not close text or close icon
-			mp_analytics_tracking_event( 'event', 'Popup', 'Click', popup_id );
-		});
-	}
-
+document.addEventListener( 'DOMContentLoaded', function( event ) {
 	if ( 'undefined' !== typeof minnpost_membership_data && '' !== minnpost_membership_data.url_access_level ) {
 		var type = 'event';
 		var category = 'Member Content';
@@ -46,6 +26,6 @@ $( document ).ready( function( e ) {
 		if ( true === minnpost_membership_data.current_user.can_access ) {
 			action = 'Shown';
 		}
-		mp_analytics_tracking_event( type, category, action, label );
+		mpAnalyticsTrackingEvent( type, category, action, label );
 	}
-});
+} );

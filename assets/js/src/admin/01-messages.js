@@ -17,15 +17,15 @@ function showHideConditionalValue( value, parent = '' ) {
 }
 
 function setupMessageConditional() {
-	var conditional_selector = '.cmb2-message-conditional select';
-	if ( 0 < $( conditional_selector ).length ) {
-		showHideConditionalValue( $( conditional_selector ).val() );
-		$( document ).on( 'change', conditional_selector, function( event ) {
+	var conditionalSelector = '.cmb2-message-conditional select';
+	if ( 0 < $( conditionalSelector ).length ) {
+		showHideConditionalValue( $( conditionalSelector ).val() );
+		$( document ).on( 'change', conditionalSelector, function( event ) {
 			showHideConditionalValue( $( this ).val(), $( event.target ).closest( '.cmb-field-list' ) );
-		});
+		} );
 	}
 }
 
-$( document ).ready( function( e ) {
+$( document ).ready( function() {
 	setupMessageConditional();
-});
+} );

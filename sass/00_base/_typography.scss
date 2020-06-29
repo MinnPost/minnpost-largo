@@ -1,8 +1,8 @@
 html {
-	font-size: 125%; // 100% is 16px
+	font-size: $html-root-size;
 
 	@include breakpoint-min( xl ) {
-		font-size: 150%;
+		font-size: $html-root-size-large-screen;
 	}
 }
 
@@ -64,8 +64,9 @@ h5,
 .h5,
 h6,
 .h6 {
-	padding-bottom: $standard-heading-margin;
-	// if we want a top margin, we need to use padding too
+	// if we want a top margin, we need to use padding
+	margin: 0 0 $standard-heading-margin 0;
+	padding: 0;
 }
 
 /*h1,
@@ -147,23 +148,25 @@ q {
 blockquote {
 
 	@include body-preset( $size: 1 );
-	border-left: 5px solid $color__border-light;
+	border-left: 6px solid neutral-color(black);
+	background: neutral-color(light);
 	margin-left: 0;
-	padding: 0 0 $standard-block-padding $standard-block-margin;
-	margin-bottom: $standard-block-margin;
+	padding: 1em;
+	margin: 0 0 $standard-block-margin 0;
 }
 
 // form elements
 label {
 
-	@include body-preset( $size: 0 );
+	//@include body-preset( $size: 0 );
 }
 
 input,
 textarea,
-select {
-
-	@include body-preset( $size: 0, $line-height: normal );
+select,
+option {
+	padding: $standard-block-padding / 2;
+	@include meta-preset( $size: 0, $line-height: normal );
 }
 
 input[type="submit"],

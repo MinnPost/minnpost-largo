@@ -83,6 +83,11 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
+
+		// defaults
+		$image_id  = '';
+		$image_url = '';
+
 		// large is the story detail image. this is a built in size in WP
 		// home has its own size field
 		if ( is_home() && 'feature' === $size ) {
@@ -124,15 +129,10 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 			}
 		}
 
-		if ( ! isset( $image_id ) ) {
-			$image_id  = '';
-			$image_url = '';
-		}
-
 		// set up lazy load attributes
 		$attributes = apply_filters( 'minnpost_largo_lazy_load_attributes', $attributes, $id, 'post', $lazy_load );
 
-		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
+		if ( '' !== $image_id && '' !== wp_get_attachment_image( $image_id, $size ) ) {
 			// this requires that the custom image sizes in custom-fields.php work correctly
 			$image     = wp_get_attachment_image( $image_id, $size, false, $attributes );
 			$image_url = wp_get_attachment_url( $image_id );
@@ -252,6 +252,106 @@ if ( ! function_exists( 'minnpost_get_posted_on' ) ) :
 endif;
 
 /**
+* Get the AP date from a date string
+*
+* @return string $date_string
+* @return string $date
+*
+*/
+if ( ! function_exists( 'minnpost_largo_get_ap_date' ) ) :
+	function minnpost_largo_get_ap_date( $date_string ) {
+		$date_time = new DateTime( $date_string );
+		if ( function_exists( 'get_ap_date' ) ) {
+			$month   = $date_time->format( 'm' );
+			$ap_year = $date_time->format( 'Y' );
+			$ap_day  = $date_time->format( 'j' );
+			switch ( $month ) {
+				case '01':
+					$ap_month = 'Jan.';
+					break;
+				case '02':
+					$ap_month = 'Feb.';
+					break;
+				case '08':
+					$ap_month = 'Aug.';
+					break;
+				case '09':
+					$ap_month = 'Sept.';
+					break;
+				case '10':
+					$ap_month = 'Oct.';
+					break;
+				case '11':
+					$ap_month = 'Nov.';
+					break;
+				case '12':
+					$ap_month = 'Dec.';
+					break;
+				default:
+					$ap_month = $date_time->format( 'F' );
+					break;
+			}
+			$date = $ap_month . ' ' . $ap_day . ', ' . $ap_year;
+		} else {
+			$date_format = get_option( 'date_format', 'c' );
+			$date        = $date_time->format( $date_format );
+		}
+		return $date;
+	}
+endif;
+
+/**
+* Get the AP time from a time string
+*
+* @return string $time_string
+* @return string $time
+*
+*/
+if ( ! function_exists( 'minnpost_largo_get_ap_time' ) ) :
+	function minnpost_largo_get_ap_time( $time_string ) {
+		$date_time = new DateTime( $time_string );
+		if ( function_exists( 'get_ap_time' ) ) {
+			$capnoon    = get_option( 'ap_capnoon' );
+			$meridian   = $date_time->format( 'a' );
+			$ap_hour_12 = $date_time->format( 'g' );
+			$ap_minute  = $date_time->format( 'i' );
+			$ap_time_24 = $date_time->format( 'H:i' );
+			$ap_time_12 = $date_time->format( 'g:i' );
+
+			// Format am and pm to AP Style abbreviations
+			if ( 'am' === $meridian ) {
+				$meridian = 'a.m.';
+			} elseif ( 'pm' === $meridian ) {
+				$meridian = 'p.m.';
+			}
+
+			// Reformat 12:00 and 00:00 to noon and midnight
+			if ( '00:00' === $ap_time_24 ) {
+				if ( 'true' === $capnoon ) {
+					$time = 'Midnight';
+				} else {
+					$time = 'midnight';
+				}
+			} elseif ( '12:00' === $ap_time_24 ) {
+				if ( 'true' === $capnoon ) {
+					$time = 'Noon';
+				} else {
+					$time = 'noon';
+				}
+			} elseif ( '00' === $ap_minute ) {
+				$time = $ap_hour_12 . ' ' . $meridian;
+			} else {
+				$time = $ap_time_12 . ' ' . $meridian;
+			}
+		} else {
+			$date_format = get_option( 'date_format', 'c' );
+			$time        = $date_time->format( $date_format );
+		}
+		return $time;
+	}
+endif;
+
+/**
 * Output the author/authors who posted the article
 * This depends on the Co-Authors Plus plugin
 *
@@ -353,22 +453,36 @@ function minnpost_largo_author_display_name( $name ) {
 }*/
 
 /**
-* Output the share buttons for top or bottom
+* Output the share buttons
 *
-* @param int $id
+* @param int $post_id
 *
 */
 if ( ! function_exists( 'minnpost_share_buttons' ) ) :
-	function minnpost_share_buttons( $id = '' ) {
-		if ( '' === $id ) {
-			$id = get_the_ID();
+	function minnpost_share_buttons( $post_id = '' ) {
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
 		}
-		$display_share = true;
+
+		// don't show share buttons if instructed
+		$hide_share_buttons = get_post_meta( $post_id, '_mp_remove_share_buttons_from_display', true );
+		if ( 'on' === $hide_share_buttons ) {
+			return;
+		}
+
+		$layout_class = '';
+
+		// keep share buttons horizontal if instructed
+		$share_buttons_always_horizontal = get_post_meta( $post_id, '_mp_share_buttons_always_horizontal', true );
+		if ( 'on' === $share_buttons_always_horizontal ) {
+			$layout_class .= ' m-entry-share-horizontal';
+		}
+
 		$share_url     = urlencode( get_current_url() );
 		$share_excerpt = minnpost_largo_get_description();
 		$share_title   = minnpost_largo_get_title();
 		?>
-		<ul class="m-entry-share m-entry-share-top">
+		<ul class="m-entry-share m-entry-share-top<?php echo $layout_class; ?>">
 			<li class="a-share a-share-facebook">
 				<a href="https://www.facebook.com/sharer/sharer.php?u=<?php echo $share_url; ?>" aria-label="<?php echo __( 'Share this article on Facebook.', 'minnpost-largo' ); ?>" data-share-action="<?php echo __( 'Facebook', 'minnpost-largo' ); ?>">
 					<i class="fab fa-facebook-f" aria-hidden="true"></i>
@@ -420,7 +534,6 @@ if ( ! function_exists( 'minnpost_related' ) ) :
 	function minnpost_related( $type = 'content', $only_show_images_if_not_missing = false ) {
 		if ( 'automated' === $type && function_exists( 'minnpost_largo_get_jetpack_results' ) ) {
 			$related_posts = minnpost_largo_get_jetpack_results();
-			error_log( 'related posts is ' . print_r( $related_posts, true ) );
 		} else {
 			$related_ids   = minnpost_get_related( $type );
 			$related_posts = array();
@@ -598,6 +711,16 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 	 */
 	function minnpost_get_author_figure( $author_id = '', $photo_size = 'photo', $text_field = 'excerpt', $include_text = true, $include_name = false, $include_title = true, $lazy_load = true, $end = false ) {
 
+		// some empty defaults
+		$image_id  = '';
+		$image_url = '';
+		$image     = '';
+		$text      = '';
+		$name      = '';
+
+		// default job title
+		$default_title = esc_html__( 'About the author', 'minnpost-largo' );
+
 		// in drupal there was only one author image size
 		if ( '' === $author_id ) {
 			$author_id = get_the_author_meta( 'ID' );
@@ -610,23 +733,26 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 			$image     = $image_data['markup'];
 		}
 
-		if ( post_password_required() || is_attachment() || ( ! isset( $image_id ) && ! isset( $image_url ) ) ) {
-			return;
-		}
-
-		$name = '';
-		$name = get_post_meta( $author_id, 'cap-display_name', true );
-		$text = '';
-
 		if ( 'excerpt' === $text_field ) { // excerpt
 			$text .= get_post_meta( $author_id, '_mp_author_excerpt', true );
+		} elseif ( '' !== get_post_meta( $author_id, $text_field, true ) ) { // the field exists
+			$text .= get_post_meta( $author_id, $text_field, true );
 		} else { // full text
 			$text .= get_post_meta( $author_id, '_mp_author_bio', true );
 		}
+
+		if ( post_password_required() || is_attachment() || ( '' === $image_id && '' === $image_url && '' === $text ) ) {
+			return;
+		}
+
+		$name = get_post_meta( $author_id, 'cap-display_name', true );
+		$text = wpautop( $text );
 		$text = apply_filters( 'the_content', $text );
 
-		$caption = wp_get_attachment_caption( $image_id );
-		$credit  = get_media_credit_html( $image_id );
+		if ( '' !== $image_id ) {
+			$caption = wp_get_attachment_caption( $image_id );
+			$credit  = get_media_credit_html( $image_id );
+		}
 
 		// Make sure the guest author actually exists
 		if ( class_exists( 'CoAuthors_Guest_Authors' ) ) {
@@ -644,11 +770,17 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 		}
 
 		if ( ( is_singular() || is_archive() ) && ! is_singular( 'newsletter' ) ) {
-			$output  = '';
-			$output .= '<figure class="a-archive-figure a-author-figure a-author-figure-' . $photo_size . '">';
-			$output .= $image;
+			$output = '';
+			if ( '' !== $image ) {
+				$output .= '<figure class="a-archive-figure a-author-figure a-author-figure-' . $photo_size . '">';
+				$output .= $image;
+			}
 			if ( true === $include_text && ( '' !== $text || '' !== $name ) ) {
-				$output .= '<figcaption>';
+				if ( '' !== $image ) {
+					$output .= '<figcaption class="a-author-bio">';
+				} else {
+					$output .= '<div class="a-author-bio">';
+				}
 				if ( true === $include_name && '' !== $name ) {
 					$output .= '<h3 class="a-author-title">';
 					if ( 0 < $count ) {
@@ -656,11 +788,14 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 						$output    .= '<a href="' . $author_url . '">';
 					}
 					$output .= $name;
-					if ( true === $include_title && isset( get_the_coauthor_meta( 'job-title' )[ $author_id ] ) ) {
-						$title = get_the_coauthor_meta( 'job-title' )[ $author_id ];
-						if ( '' !== $title ) {
-							$output .= '&nbsp;|&nbsp;<span class="a-entry-author-job-title">' . $title . '</span>';
-						}
+					$title   = '';
+					if ( true === $include_title && isset( get_the_coauthor_meta( 'job-title', $author_id )[ $author_id ] ) && '' !== get_the_coauthor_meta( 'job-title', $author_id )[ $author_id ] ) {
+						$title = get_the_coauthor_meta( 'job-title', $author_id )[ $author_id ];
+					} elseif ( true === $include_title ) {
+						$title = $default_title;
+					}
+					if ( '' !== $title ) {
+						$output .= '&nbsp;|&nbsp;<span class="a-entry-author-job-title">' . $title . '</span>';
 					}
 					if ( 0 < $count ) {
 						$output .= '</a>';
@@ -668,11 +803,14 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 					$output .= '</h3>';
 				} elseif ( '' !== $name ) {
 					if ( 0 < $count ) {
-						if ( true === $include_title && isset( get_the_coauthor_meta( 'job-title' )[ $author_id ] ) ) {
-							$title = get_the_coauthor_meta( 'job-title' )[ $author_id ];
-							if ( '' !== $title ) {
-								$output .= '<h3 class="a-author-figure-job-title">' . $title . '</h3>';
-							}
+						$title = '';
+						if ( true === $include_title && isset( get_the_coauthor_meta( 'job-title', $author_id )[ $author_id ] ) && '' !== get_the_coauthor_meta( 'job-title', $author_id )[ $author_id ] ) {
+							$title = get_the_coauthor_meta( 'job-title', $author_id )[ $author_id ];
+						} elseif ( true === $include_title ) {
+							$title = $default_title;
+						}
+						if ( '' !== $title ) {
+							$output .= '<h3 class="a-author-figure-job-title">' . $title . '</h3>';
 						}
 						$author_url = get_author_posts_url( $author_id, sanitize_title( $name ) );
 						$text      .= sprintf(
@@ -684,9 +822,15 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 					}
 				}
 				$output .= $text;
-				$output .= '</figcaption>';
+				if ( '' !== $image ) {
+					$output .= '</figcaption>';
+				} else {
+					$output .= '</div>';
+				}
 			}
-			$output .= '</figure><!-- .author-figure -->';
+			if ( '' !== $image ) {
+				$output .= '</figure><!-- .author-figure -->';
+			}
 			return $output;
 		} elseif ( is_singular( 'newsletter' ) ) {
 			$output    = '';
@@ -1073,7 +1217,7 @@ if ( ! function_exists( 'minnpost_edit_link' ) ) :
 			}
 		}
 		$user = wp_get_current_user();
-		if ( 0 === $user->ID || in_array( 'comment_moderator', (array) $user->roles ) ) {
+		if ( 0 === $user->ID || in_array( 'comment_moderator', (array) $user->roles, true ) ) {
 			return;
 		}
 		edit_post_link(
@@ -1135,8 +1279,10 @@ if ( ! function_exists( 'minnpost_category_breadcrumb' ) ) :
 					echo '<div class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category_group->term_id ) ) . '">' . $category_group->name . '</a></div>';
 				}
 			}
-			$category_name = $category->name;
-			echo '<div class="a-breadcrumb a-category-name"><a href="' . $category_link . '">' . $category_name . '</a></div>';
+			$category_name = isset( $category->name ) ? $category->name : '';
+			if ( '' !== $category_name ) {
+				echo '<div class="a-breadcrumb a-category-name"><a href="' . $category_link . '">' . $category_name . '</a></div>';
+			}
 		}
 		if ( '' !== $category_group_id ) {
 			echo '</div>';
@@ -1268,60 +1414,112 @@ if ( ! function_exists( 'minnpost_replace_category_text' ) ) :
 endif;
 
 /**
-* Outputs HTML for sponsorship on a category or post
+* Outputs HTML for sponsorship on an object
 *
-* @param int $post_id
-* @param int $category_id
+* @param string $object_type
+* @param int $object_id
 *
 */
-if ( ! function_exists( 'minnpost_post_category_sponsorship' ) ) :
-	function minnpost_post_category_sponsorship( $post_id = '', $category_id = '' ) {
-		$sponsorship = minnpost_get_post_category_sponsorship( $post_id, $category_id );
+if ( ! function_exists( 'minnpost_content_sponsorship' ) ) :
+	function minnpost_content_sponsorship( $object_type = 'post', $object_id = '' ) {
+		$sponsorship = minnpost_get_content_sponsorship( $object_type, $object_id );
 		if ( '' !== $sponsorship ) {
+			$sponsorship = apply_filters( 'the_content', $sponsorship );
 			echo '<div class="a-sponsorship">' . $sponsorship . '</div>';
 		}
 	}
 endif;
 
 /**
-* Returns the sponsorship for a post's primary category, or for a post
+* Returns the sponsorship for an object
 *
-* @param int $post_id
-* @param int $category_id
+* @param string $object_type
+* @param int $object_id
 * @return string
 *
 */
-if ( ! function_exists( 'minnpost_get_post_category_sponsorship' ) ) :
-	function minnpost_get_post_category_sponsorship( $post_id = '', $category_id = '' ) {
-		if ( '' === $post_id ) {
-			$post_id = get_the_ID();
+if ( ! function_exists( 'minnpost_get_content_sponsorship' ) ) :
+	function minnpost_get_content_sponsorship( $object_type = 'post', $object_id = '' ) {
+		$sponsorship = '';
+		$post_id     = '';
+		$tag_id      = '';
+		$category_id = '';
+
+		$post_sponsorship_field     = '_mp_post_sponsorship';
+		$tag_sponsorship_field      = '_mp_tag_sponsorship';
+		$category_sponsorship_field = '_mp_category_sponsorship';
+
+		if ( 'post' === $object_type ) {
+			$post_id = $object_id;
 		}
-		if ( '' === $category_id ) {
+
+		if ( 'category' === $object_type ) {
+			$category_id = $object_id;
+		}
+
+		if ( 'post_tag' === $object_type ) {
+			$tag_id = $object_id;
+		}
+
+		if ( '' === $object_id && 'post' === $object_type ) {
+			$post_id     = get_the_ID();
 			$category_id = minnpost_get_permalink_category_id( $post_id );
-			if ( '' === $category_id ) {
-				return '';
+			// look for a tag on this post that has a non-empty sponsorship value
+			$tag_args  = array(
+				'hide_empty' => true, // also retrieve terms which are not used yet
+				'meta_query' => array(
+					array(
+						'key'     => $tag_sponsorship_field,
+						'value'   => '',
+						'compare' => '!=',
+					),
+				),
+				'fields'     => 'ids',
+			);
+			$post_tags = wp_get_post_terms( $post_id, 'post_tag', $tag_args );
+			if ( ! empty( $post_tags ) && ! is_wp_error( $post_tags ) ) {
+				$tag_id = $post_tags[0];
 			}
 		}
 
-		// allow a post to prevent sponsorship display
-		$prevent_sponsorship = get_post_meta( $post_id, '_mp_prevent_post_sponsorship', true );
-		if ( 'on' === $prevent_sponsorship ) {
-			return '';
+		// we have to supply a tag id if we want to use the tag for a sponsor
+
+		if ( '' === $post_id && '' === $category_id && '' === $tag_id ) {
+			return $sponsorship; // empty
 		}
 
-		// post sponsorship has higher priority than category
-		$sponsorship = get_post_meta( $post_id, '_mp_post_sponsorship', true );
-		if ( ! empty( $sponsorship ) ) {
-			return $sponsorship;
+		if ( 'post' === $object_type ) {
+			// allow a post to prevent sponsorship display
+			$prevent_sponsorship = get_post_meta( $post_id, '_mp_prevent_post_sponsorship', true );
+			if ( 'on' === $prevent_sponsorship ) {
+				return $sponsorship; // empty
+			}
+			// post sponsorship has the highest priority on a post
+			$sponsorship = get_post_meta( $post_id, $post_sponsorship_field, true );
+			if ( ! empty( $sponsorship ) ) {
+				return $sponsorship;
+			}
 		}
 
-		// followed by category sponsorship
-		$sponsorship = get_term_meta( $category_id, '_mp_category_sponsorship', true );
-		if ( ! empty( $sponsorship ) ) {
-			return $sponsorship;
+		if ( 'post' === $object_type || 'post_tag' === $object_type ) {
+			// followed by tag sponsorship of the post's tag
+			$sponsorship = get_term_meta( $tag_id, $tag_sponsorship_field, true );
+			if ( ! empty( $sponsorship ) ) {
+				return $sponsorship;
+			}
 		}
 
-		return '';
+		if ( 'post' === $object_type || 'category' === $object_type ) {
+			// followed by category sponsorship of the post's category
+			$sponsorship = get_term_meta( $category_id, $category_sponsorship_field, true );
+			if ( ! empty( $sponsorship ) ) {
+				return $sponsorship;
+			}
+		}
+
+		// we could also have sponsored authors later
+
+		return $sponsorship; // empty
 	}
 endif;
 
@@ -1333,6 +1531,9 @@ endif;
 */
 if ( ! function_exists( 'minnpost_deck' ) ) :
 	function minnpost_deck( $post_id = '' ) {
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
 		$deck = minnpost_get_deck( $post_id );
 		echo $deck;
 	}
@@ -1387,6 +1588,9 @@ if ( ! function_exists( 'minnpost_plus_icon' ) ) :
 			$class = '';
 
 			// set up lazy load attributes
+			if ( ! isset( $attributes ) ) {
+				$attributes = array();
+			}
 			$attributes = apply_filters( 'minnpost_largo_lazy_load_attributes', $attributes, $post_id, 'post', $lazy_load );
 
 			if ( isset( $attributes['class'] ) ) {
@@ -1418,6 +1622,15 @@ add_filter(
 			$title = single_tag_title( '', false );
 		} elseif ( is_author() ) {
 			$title = '<span class="vcard">' . get_the_author() . '</span>';
+		} elseif ( is_year() ) {
+			/* translators: Yearly archive title. %s: Year. */
+			$title = sprintf( __( 'Yearly Archives: %s', 'minnpost-largo' ), get_the_date( _x( 'Y', 'yearly archives date format' ) ) );
+		} elseif ( is_month() ) {
+			/* translators: Monthly archive title. %s: Month name and year. */
+			$title = sprintf( __( 'Monthly Archives: %s', 'minnpost-largo' ), get_the_date( _x( 'F Y', 'monthly archives date format' ) ) );
+		} elseif ( is_day() ) {
+			/* translators: Daily archive title. %s: Date. */
+			$title = sprintf( __( 'Daily Archives: %s', 'minnpost-largo' ), get_the_date( _x( 'F j, Y', 'daily archives date format' ) ) );
 		}
 		return $title;
 	}
@@ -1459,19 +1672,14 @@ if ( ! function_exists( 'numeric_pagination' ) ) :
 			$links[] = $paged + 1;
 		}
 
-		echo '<div class="m-pagination"><ul>' . "\n";
-
-		// link to page 1
-		if ( ! in_array( 1, $links ) ) {
-			printf( '<li><a href="%s">%s</a></li>' . "\n", esc_url( get_pagenum_link( 1 ) ), '&Lt; First' );
-		}
+		echo '<div class="m-pagination"><ol>' . "\n";
 
 		// "previous" link
 		if ( get_previous_posts_link() ) {
-			printf( '<li>%s</li>' . "\n", get_previous_posts_link( '&lt; Previous' ) );
+			printf( '<li class="a-pagination-previous">%s</li>' . "\n", get_previous_posts_link( '<i class="fas fa-chevron-left"></i> Previous' ) );
 			// elipses
-			if ( ! in_array( 2, $links ) ) {
-				echo '<li>&hellip;</li>';
+			if ( ! in_array( 2, $links, true ) ) {
+				echo '<li class="a-pagination-ellipsis"><span>&hellip;</span></li>';
 			}
 		}
 
@@ -1479,28 +1687,23 @@ if ( ! function_exists( 'numeric_pagination' ) ) :
 		sort( $links );
 		foreach ( (array) $links as $link ) {
 			if ( $paged === $link ) {
-				printf( '<li class="current">%s</li>' . "\n", $link );
+				printf( '<li class="current"><span>%s</span></li>' . "\n", $link );
 			} else {
 				printf( '<li><a href="%s">%s</a></li>' . "\n", esc_url( get_pagenum_link( $link ) ), $link );
 			}
 		}
 
 		// elipses
-		if ( ! in_array( $max - 1, $links ) ) {
-			echo '<li>&hellip;</li>' . "\n";
+		if ( ! in_array( $max - 1, $links, true ) ) {
+			echo '<li class="a-pagination-ellipsis"><span>&hellip;</span></li>' . "\n";
 		}
 
 		// "next" link
 		if ( get_next_posts_link() ) {
-			printf( '<li>%s</li>' . "\n", get_next_posts_link( 'Next &gt;' ) );
+			printf( '<li class="a-pagination-next">%s</li>' . "\n", get_next_posts_link( 'Next <i class="fas fa-chevron-right"></i>' ) );
 		}
 
-		// "last" link
-		if ( ! in_array( $max, $links ) ) {
-			printf( '<li><a href="%s">%s</a></li>' . "\n", esc_url( get_pagenum_link( $max ) ), 'Last &Gt;' );
-		}
-
-		echo '</ul></div>' . "\n";
+		echo '</ol></div>' . "\n";
 
 	}
 endif;
@@ -1675,9 +1878,9 @@ if ( ! function_exists( 'minnpost_account_management_menu' ) ) :
 						<?php echo $menu; ?>
 					</nav><!-- #navigation-user-account-management -->
 					<button class="nav-scroller-btn nav-scroller-btn--left" aria-label="Scroll left">
-						<i class="fas fa-chevron-left"></i></svg>
+						<i class="fas fa-chevron-left"></i>
 					</button>
-					<button class="nav-scroller-btn nav-scroller-btn--right" aria-label="Scroll right"><i class="fas fa-chevron-right"></i></svg>
+					<button class="nav-scroller-btn nav-scroller-btn--right" aria-label="Scroll right"><i class="fas fa-chevron-right"></i>
 					</button>
 				</div>
 			</div>
@@ -1715,7 +1918,7 @@ if ( ! function_exists( 'get_minnpost_account_management_menu' ) ) :
 					'menu_id'        => 'user-account-management',
 					'depth'          => 1,
 					'container'      => false,
-					'walker'         => new Minnpost_Walker_Nav_Menu ( $user_id ),
+					'walker'         => new Minnpost_Walker_Nav_Menu( $user_id ),
 					'items_wrap'     => '<ul id="%1$s" class="m-menu m-menu-sub-navigation m-menu-%1$s">%3$s</ul>',
 					'echo'           => false,
 				)

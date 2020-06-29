@@ -14,6 +14,11 @@
 		flex-direction: column;
 	}
 
+	&.m-entry-share-horizontal {
+		flex-direction: row;
+		justify-content: flex-start;
+	}
+
 	li {
 		margin-bottom: $standard-block-margin / 2;
 
@@ -37,6 +42,10 @@
 				border: 2px solid utility-color(blue, medium);
 			}
 		}
+	}
+
+	&:first-child {
+		margin-top: 0;
 	}
 }
 

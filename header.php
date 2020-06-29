@@ -82,21 +82,20 @@
 					?>
 				</nav><!-- #navigation-topics -->
 				<button class="nav-scroller-btn nav-scroller-btn--left" aria-label="Scroll left">
-					<i class="fas fa-chevron-left"></i></svg>
+					<i class="fas fa-chevron-left"></i>
 				</button>
-				<button class="nav-scroller-btn nav-scroller-btn--right" aria-label="Scroll right"><i class="fas fa-chevron-right"></i></svg>
+				<button class="nav-scroller-btn nav-scroller-btn--right" aria-label="Scroll right">
+					<i class="fas fa-chevron-right"></i>
 				</button>
 			</div>
 		</div>
 	</header><!-- #masthead -->
 
 	<?php
-	$full_class = '';
-	if ( is_singular() ) {
-		$remove_sidebar = get_post_meta( get_the_ID(), '_mp_remove_right_sidebar', true );
-		if ( isset( $remove_sidebar ) && 'on' === $remove_sidebar ) {
-			$full_class = ' o-wrapper-content-full';
-		}
+	$full_class     = '';
+	$remove_sidebar = apply_filters( 'minnpost_largo_remove_sidebar', false );
+	if ( true === $remove_sidebar ) {
+		$full_class = ' o-wrapper-content-full';
 	}
 	?>
 

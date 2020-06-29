@@ -39,7 +39,8 @@ get_header(); ?>
 						$from_to = number_format_i18n( $from ) . ' - ' . number_format_i18n( $to );
 					}
 
-					echo sprintf( 'Showing results %1$s of %2$s for <strong>%3$s</strong>',
+					echo sprintf(
+						'Showing results %1$s of %2$s for <strong>%3$s</strong>',
 						$from_to,
 						number_format_i18n( $wp_query->found_posts ),
 						get_search_query()

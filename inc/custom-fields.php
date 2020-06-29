@@ -297,7 +297,7 @@ function minnpost_largo_admin_hide_excerpt_field() {
 add_filter( 'admin_init', 'minnpost_largo_admin_hide_excerpt_field' );
 function _minnpost_largo_admin_hide_excerpt_field() {
 	$screen = get_current_screen();
-	if ( isset( $screen->post_type ) && 'post' === $screen->post_type ) {
+	if ( isset( $screen->post_type ) && 'post' === $screen->post_type || 'tribe_events' === $screen->post_type ) {
 		remove_meta_box( 'postexcerpt', null, 'normal' );
 	}
 }
@@ -434,6 +434,19 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'desc'         => esc_html__( 'When using this field, make sure the most important text is in the first 155 characters to ensure that Google can see it. If you do not fill it out, the post excerpt will be used.' ),
 			)
 		);
+		$seo_settings->add_field(
+			array(
+				'name'         => esc_html__( 'Meta images', 'minnpost-largo' ),
+				'desc'         => esc_html__( 'Using this field will remove images that are uploaded to this story from the story\'s metadata, and replace them with the images in this field.', 'minnpost-largo' ),
+				'id'           => '_mp_social_images',
+				'type'         => 'file_list',
+				'preview_size' => array( 130, 85 ),
+				// query_args are passed to wp.media's library query.
+				'query_args'   => array(
+					'type' => 'image',
+				),
+			)
+		);
 
 		/**
 		 * Image settings
@@ -558,6 +571,14 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		);
 		$display_settings->add_field(
 			array(
+				'name' => __( 'Remove excerpt from display?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_excerpt_from_display',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, the post excerpt will not display.', 'minnpost-largo' ),
+			)
+		);
+		$display_settings->add_field(
+			array(
 				'name' => __( 'Remove author(s) from display?', 'minnpost-largo' ),
 				'id'   => '_mp_remove_author_from_display',
 				'type' => 'checkbox',
@@ -590,18 +611,18 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		);
 		$display_settings->add_field(
 			array(
-				'name'             => __( 'Share button location', 'minnpost-largo' ),
-				'id'               => '_mp_share_display_location',
-				'type'             => 'select',
-				'show_option_none' => false,
-				'desc'             => __( 'Select a location for the share buttons to display', 'minnpost-largo' ),
-				'default'          => 'both',
-				'options'          => array(
-					'neither' => __( 'Neither', 'minnpost-largo' ),
-					'both'    => __( 'Both', 'minnpost-largo' ),
-					'top'     => __( 'Top', 'minnpost-largo' ),
-					'bottom'  => __( 'Bottom', 'minnpost-largo' ),
-				),
+				'name' => __( 'Remove share buttons from display?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_share_buttons_from_display',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, share buttons will not display on this post.', 'minnpost-largo' ),
+			)
+		);
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Keep share buttons horizontal on large screens', 'minnpost-largo' ),
+				'id'   => '_mp_share_buttons_always_horizontal',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will have horizontal share buttons above the post content, rather than vertical ones next to it, on large screens. This is similar to its mobile behavior.', 'minnpost-largo' ),
 			)
 		);
 
@@ -647,7 +668,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'name'    => __( 'Sponsorship', 'minnpost-largo' ),
 				'id'      => '_mp_post_sponsorship',
 				'type'    => 'wysiwyg',
-				'desc'    => __( 'This field overrides a sponsorship message from the category that contains a post.', 'minnpost-largo' ),
+				'desc'    => __( 'This field overrides a sponsorship message from the category or tag that contains a post.', 'minnpost-largo' ),
 				'options' => array(
 					'media_buttons' => false, // show insert/upload button(s)
 					'textarea_rows' => 5,
@@ -660,7 +681,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'name' => __( 'Prevent sponsorship display', 'minnpost-largo' ),
 				'id'   => '_mp_prevent_post_sponsorship',
 				'type' => 'checkbox',
-				'desc' => __( 'If checked, this post will not display any sponsorship message.', 'minnpost-largo' ),
+				'desc' => __( 'If checked, this post will not display any sponsorship message, regardless of its tags or categories.', 'minnpost-largo' ),
 			)
 		);
 
@@ -681,6 +702,14 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			array(
 				'name' => __( 'Remove whole right sidebar from this post?', 'minnpost-largo' ),
 				'id'   => '_mp_remove_right_sidebar',
+				'type' => 'checkbox',
+				'desc' => '',
+			)
+		);
+		$sidebar_settings->add_field(
+			array(
+				'name' => __( 'Remove whole right sidebar from this post? (V2)', 'minnpost-largo' ),
+				'id'   => '_mp_remove_right_sidebar_v2',
 				'type' => 'checkbox',
 				'desc' => '',
 			)
@@ -712,7 +741,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'name' => __( 'Prevent related content?', 'minnpost-largo' ),
 				'id'   => '_mp_prevent_related_content',
 				'type' => 'checkbox',
-				'desc' => __( 'If checked, this post will not contain any related content. This prevents manual and automated recommendations, as well as "more ___ articles" links.', 'minnpost-largo' ),
+				'desc' => __( 'If checked, this post will not contain any related content. This prevents manual and automated recommendations, as well as "more ___ articles" links, from showing within the related content area.', 'minnpost-largo' ),
 			)
 		);
 		$related_settings->add_field(
@@ -875,6 +904,14 @@ if ( ! function_exists( 'cmb2_page_fields' ) ) :
 			array(
 				'name' => __( 'Remove whole right sidebar from this page?', 'minnpost-largo' ),
 				'id'   => '_mp_remove_right_sidebar',
+				'type' => 'checkbox',
+				'desc' => '',
+			)
+		);
+		$page_sidebar->add_field(
+			array(
+				'name' => __( 'Remove whole right sidebar from this page? (V2)', 'minnpost-largo' ),
+				'id'   => '_mp_remove_right_sidebar_v2',
 				'type' => 'checkbox',
 				'desc' => '',
 			)
@@ -1801,7 +1838,7 @@ if ( ! function_exists( 'cmb2_sponsor_fields' ) ) :
 endif;
 
 /**
-* Add fields to events
+* Add custom fields to events
 * This all depends on the The Events Calendar plugin
 *
 */
@@ -1810,6 +1847,91 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 	function cmb2_event_fields() {
 
 		$object_type = 'tribe_events';
+
+		/**
+		 * Excerpt settings
+		 */
+		$excerpt = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_excerpt',
+				'title'        => __( 'Excerpt', 'minnpost-largo' ),
+				'object_types' => array( $object_type ), // Post type
+				'context'      => 'after_editor',
+				'priority'     => 'high',
+				'show_names'   => false,
+			)
+		);
+		$excerpt->add_field(
+			array(
+				'id'        => 'excerpt',
+				'name'      => __( 'Excerpt', 'minnpost-largo' ),
+				'desc'      => '',
+				'type'      => 'wysiwyg',
+				'escape_cb' => false,
+				'options'   => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'textarea_rows' => 5,
+					'teeny'         => true, // output the minimal editor config used in Press This
+				),
+			)
+		);
+
+		/**
+		 * SEO and social meta settings
+		 */
+		$seo_settings = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_seo_settings',
+				'title'        => 'SEO &amp; Social Settings',
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'closed'       => true,
+			)
+		);
+		$seo_settings->add_field(
+			array(
+				'name'         => 'Title',
+				'id'           => '_mp_seo_title',
+				'type'         => 'text',
+				'char_counter' => true,
+				'char_max'     => 78,
+				'desc'         => sprintf(
+					// translators: 1) the sitename
+					esc_html__( 'If you do not fill this out, the post title will be used. If you do fill it out and do not include %1$s in the value, it will be placed at the end in this way: Your Title | %1$s' ),
+					get_bloginfo( 'name' )
+				),
+				'attributes'   => array(
+					'maxlength' => 78, // retrieved from https://seopressor.com/blog/google-title-meta-descriptions-length/ on 9/27/2018
+				),
+			)
+		);
+		$seo_settings->add_field(
+			array(
+				'name'         => 'Description',
+				'id'           => '_mp_seo_description',
+				'type'         => 'textarea_small',
+				'char_counter' => true,
+				'char_max'     => 200,
+				'attributes'   => array(
+					'maxlength' => 200, // 155 is the number, but it's ok to go higher as long as the spider sees the most important stuff at the beginning. retrieved from https://moz.com/blog/how-to-write-meta-descriptions-in-a-changing-world on 5/8/2020
+				),
+				'desc'         => esc_html__( 'When using this field, make sure the most important text is in the first 155 characters to ensure that Google can see it. If you do not fill it out, the post excerpt will be used.' ),
+			)
+		);
+		$seo_settings->add_field(
+			array(
+				'name'         => esc_html__( 'Meta images', 'minnpost-largo' ),
+				'desc'         => esc_html__( 'Using this field will remove images that are uploaded to this story from the story\'s metadata, and replace them with the images in this field.', 'minnpost-largo' ),
+				'id'           => '_mp_social_images',
+				'type'         => 'file_list',
+				'preview_size' => array( 130, 85 ),
+				// query_args are passed to wp.media's library query.
+				'query_args'   => array(
+					'type' => 'image',
+				),
+			)
+		);
 
 		/**
 		 * Image settings
@@ -1877,6 +1999,183 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 		);
 
 		/**
+		 * Display settings
+		 */
+		$display_settings = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_display_settings',
+				'title'        => __( 'Display Settings', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'closed'       => true,
+			)
+		);
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Prevent lazy loading of images?', 'minnpost-largo' ),
+				'id'   => '_mp_prevent_lazyload',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not attempt to lazy load images.', 'minnpost-largo' ),
+			)
+		);
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Load HTML editor by default?', 'minnpost-largo' ),
+				'id'   => '_mp_post_use_html_editor',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will open with the HTML editor visible.', 'minnpost-largo' ),
+			)
+		);
+		/*$display_settings->add_field(
+			array(
+				'name' => __( 'Remove category from display?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_category_from_display',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not display its categories.', 'minnpost-largo' ),
+			)
+		);
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Replace category text', 'minnpost-largo' ),
+				'id'   => '_mp_replace_category_text',
+				'type' => 'text',
+				'desc' => __( 'This text will show in place of the category name(s).', 'minnpost-largo' ),
+			)
+		);*/
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Remove title from display?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_title_from_display',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, the event title will not display.', 'minnpost-largo' ),
+			)
+		);
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Remove notice(s) from display?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_notice_from_display',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this event will not display any notices it would otherwise contain from the events plugin.', 'minnpost-largo' ),
+			)
+		);
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Remove all event details from display?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_event_details_from_display',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this event will not display any of its details in their normal locations, including date, venue, and cost information.', 'minnpost-largo' ),
+			)
+		);
+		/*$display_settings->add_field(
+			array(
+				'name' => __( 'Remove author(s) from display?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_author_from_display',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, the post author(s) will not display.', 'minnpost-largo' ),
+			)
+		);
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Remove deck from display?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_deck_from_display',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, any deck content will be ignored.', 'minnpost-largo' ),
+			)
+		);
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Remove date from display?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_date_from_display',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, the post date will not display.', 'minnpost-largo' ),
+			)
+		);
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Remove newsletter signup from display?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_newsletter_signup_from_display',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not have a newsletter signup box.', 'minnpost-largo' ),
+			)
+		);*/
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Remove share buttons from display?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_share_buttons_from_display',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, share buttons will not display on this event.', 'minnpost-largo' ),
+			)
+		);
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Keep share buttons horizontal on large screens', 'minnpost-largo' ),
+				'id'   => '_mp_share_buttons_always_horizontal',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this event will have horizontal share buttons above the event content, rather than vertical ones next to it, on large screens. This is similar to its mobile behavior.', 'minnpost-largo' ),
+			)
+		);
+
+		/**
+		 * Ad & Sponsorship settings
+		 */
+		$ad_settings = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_ad_settings',
+				'title'        => __( 'Ad & Sponsorship Settings', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'closed'       => true,
+			)
+		);
+		$ad_settings->add_field(
+			array(
+				'name' => __( 'Prevent automatic embed ads?', 'minnpost-largo' ),
+				'id'   => '_mp_prevent_automatic_ads',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not contain automatic embed ads.', 'minnpost-largo' ),
+			)
+		);
+		$ad_settings->add_field(
+			array(
+				'name' => __( 'Prevent all embed ads?', 'minnpost-largo' ),
+				'id'   => '_mp_prevent_ads',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not contain any embed ads.', 'minnpost-largo' ),
+			)
+		);
+		$ad_settings->add_field(
+			array(
+				'name' => __( 'Prevent lazy loading of embed ads?', 'minnpost-largo' ),
+				'id'   => 'arcads_dfp_acm_provider_post_prevent_lazyload',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not attempt to lazy load embed ads.', 'minnpost-largo' ),
+			)
+		);
+		$ad_settings->add_field(
+			array(
+				'name'    => __( 'Sponsorship', 'minnpost-largo' ),
+				'id'      => '_mp_post_sponsorship',
+				'type'    => 'wysiwyg',
+				'desc'    => __( 'This field overrides a sponsorship message from the category or tag that contains an event.', 'minnpost-largo' ),
+				'options' => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'textarea_rows' => 5,
+					'teeny'         => true, // output the minimal editor config used in Press This
+				),
+			)
+		);
+		$ad_settings->add_field(
+			array(
+				'name' => __( 'Prevent sponsorship display', 'minnpost-largo' ),
+				'id'   => '_mp_prevent_post_sponsorship',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this event will not display any sponsorship message, regardless of its tags or categories.', 'minnpost-largo' ),
+			)
+		);
+
+		/**
 		 * Sidebar settings
 		 */
 		$sidebar_settings = new_cmb2_box(
@@ -1885,7 +2184,7 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 				'title'        => __( 'Sidebar Settings', 'minnpost-largo' ),
 				'object_types' => array( $object_type ),
 				'context'      => 'normal',
-				'priority'     => 'low',
+				'priority'     => 'high',
 				'closed'       => true,
 			)
 		);
@@ -1893,6 +2192,14 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 			array(
 				'name' => __( 'Remove whole right sidebar from this event?', 'minnpost-largo' ),
 				'id'   => '_mp_remove_right_sidebar',
+				'type' => 'checkbox',
+				'desc' => '',
+			)
+		);
+		$sidebar_settings->add_field(
+			array(
+				'name' => __( 'Remove whole right sidebar from this event? (V2)', 'minnpost-largo' ),
+				'id'   => '_mp_remove_right_sidebar_v2',
 				'type' => 'checkbox',
 				'desc' => '',
 			)
@@ -2047,5 +2354,38 @@ if ( ! function_exists( 'minnpost_largo_email_types' ) ) :
 			'republication'     => __( 'Republication', 'minnpost-largo' ),
 		);
 		return $types;
+	}
+endif;
+
+/**
+* Whether to remove the site sidebar
+*
+* @param bool $remove_sidebar
+* @param int $post_id
+* @return bool $remove_sidebar
+*
+*/
+if ( ! function_exists( 'minnpost_largo_check_remove_sidebar' ) ) :
+	add_filter( 'minnpost_largo_remove_sidebar', 'minnpost_largo_check_remove_sidebar' );
+	function minnpost_largo_check_remove_sidebar( $remove_sidebar = false, $post_id = '' ) {
+		if ( ! is_singular() ) {
+			return $remove_sidebar;
+		}
+
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
+
+		/*$remove_sidebar_meta = get_post_meta( $post_id, '_mp_remove_right_sidebar', true );
+		if ( isset( $remove_sidebar_meta ) && 'on' === $remove_sidebar_meta ) {
+			$remove_sidebar = true;
+		}*/
+
+		$remove_sidebar_meta_v2 = get_post_meta( $post_id, '_mp_remove_right_sidebar_v2', true );
+		if ( isset( $remove_sidebar_meta_v2 ) && 'on' === $remove_sidebar_meta_v2 ) {
+			$remove_sidebar = true;
+		}
+
+		return $remove_sidebar;
 	}
 endif;

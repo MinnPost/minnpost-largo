@@ -10,4 +10,29 @@
 	@include breakpoint-min( xl ) {
 		flex-direction: row;
 	}
+
+	.m-entry-content {
+
+		@include breakpoint-range( sm, lg ) {
+			max-width: colspan( 10, 12 );
+		}
+
+		@include breakpoint-min( xl ) {
+			max-width: colspan( 10, 12 );
+		}
+	}
+
+	&.o-entry-horizontal {
+		flex-direction: column;	
+
+		.m-entry-content {
+			max-width: 100%;
+		}
+	}
+	
+}
+
+.o-wrapper-content-full .o-entry .m-entry-content {
+	width: 100%;
+	max-width: none;
 }

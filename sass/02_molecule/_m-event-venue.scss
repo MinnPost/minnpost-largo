@@ -1,0 +1,16 @@
+article .m-event-venue {
+	margin: 0 0 $standard-block-margin 0;
+
+	p {
+		margin: 0;
+
+		.street-address {
+			display: block;
+			margin: 0;
+		}
+
+		&.adr {
+			margin-bottom: $standard-block-padding;
+		}
+	}
+}

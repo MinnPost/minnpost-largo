@@ -311,6 +311,84 @@ if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 		<?php else : ?>
 			<meta property="twitter:card" content="summary">
 		<?php endif; ?>
+
+		<?php
+		if ( ! empty( minnpost_largo_get_social_images() ) ) {
+			minnpost_largo_social_images();
+		} else {
+			minnpost_largo_default_meta_images();
+		}
+		?>
+
+		<?php if ( is_singular() ) : ?>
+			<?php
+			global $wp_query;
+			if ( array_key_exists( 'users', $wp_query->query_vars ) ) {
+				?>
+				<meta name="robots" content="noindex">
+				<?php
+			}
+			?>
+		<?php endif; ?>
+
+		<?php if ( is_search() ) : ?>
+			<meta name="robots" content="noindex, nofollow">
+		<?php endif; ?>
+
+		<?php if ( 'production' !== VIP_GO_ENV ) : ?>
+			<meta name="robots" content="noindex, nofollow">
+		<?php endif; ?>
+
+		<?php
+	}
+endif;
+
+/**
+* Output social image meta fields
+*
+* @param int $id
+*
+*/
+if ( ! function_exists( 'minnpost_largo_social_images' ) ) :
+	function minnpost_largo_social_images( $id = '' ) {
+		$meta_images = minnpost_largo_get_social_images( $id );
+		foreach ( $meta_images as $image_id => $url ) {
+			$image_url = wp_get_attachment_url( $image_id );
+			?>
+			<meta property="og:image" content="<?php echo $image_url; ?>">
+			<?php
+		}
+	}
+endif;
+
+/**
+* Get social image meta fields
+*
+* @param int $id
+* @param array $meta_images
+*
+*/
+if ( ! function_exists( 'minnpost_largo_get_social_images' ) ) :
+	function minnpost_largo_get_social_images( $id = '' ) {
+		$meta_images = array();
+		if ( '' === $id ) {
+			$id = get_the_ID();
+		}
+		if ( post_password_required() || is_attachment() || false === $id ) {
+			return $meta_images;
+		}
+		$meta_images = get_post_meta( $id, '_mp_social_images', true );
+		return $meta_images;
+	}
+endif;
+
+/**
+* Output default images into <meta> tags
+*
+*/
+if ( ! function_exists( 'minnpost_largo_default_meta_images' ) ) :
+	function minnpost_largo_default_meta_images() {
+		?>
 		<?php if ( '' !== minnpost_largo_get_og_image() ) : ?>
 			<meta property="og:image" content="<?php echo minnpost_largo_get_og_image(); ?>">
 			<meta property="twitter:image" content="<?php echo minnpost_largo_get_og_image(); ?>">
@@ -341,30 +419,14 @@ if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 		<?php if ( '' === minnpost_largo_get_og_image() && '' === minnpost_largo_get_og_image_thumbnail() && '' !== minnpost_largo_get_og_default() ) : ?>
 			<meta property="og:image" content="<?php echo minnpost_largo_get_og_default(); ?>">
 		<?php endif; ?>
-
-		<?php if ( is_singular() ) : ?>
-			<?php
-			global $wp_query;
-			if ( array_key_exists( 'users', $wp_query->query_vars ) ) {
-				?>
-				<meta name="robots" content="noindex">
-				<?php
-			}
-			?>
-		<?php endif; ?>
-
-		<?php if ( is_search() ) : ?>
-			<meta name="robots" content="noindex, nofollow">
-		<?php endif; ?>
-
-		<?php if ( 'production' !== VIP_GO_ENV ) : ?>
-			<meta name="robots" content="noindex, nofollow">
-		<?php endif; ?>
-
 		<?php
 	}
 endif;
 
+/**
+* Set a favicon.ico for wp-admin URLs
+*
+*/
 if ( ! function_exists( 'admin_favicon' ) ) :
 	add_action( 'admin_head', 'admin_favicon' );
 	function admin_favicon() {
@@ -372,6 +434,10 @@ if ( ! function_exists( 'admin_favicon' ) ) :
 	}
 endif;
 
+/**
+* Remove admin dashboard widgets we don't want. They're stored in $wp_meta_boxes.
+*
+*/
 if ( ! function_exists( 'remove_dashboard_widgets' ) ) :
 	add_action( 'wp_dashboard_setup', 'remove_dashboard_widgets' );
 	function remove_dashboard_widgets() {

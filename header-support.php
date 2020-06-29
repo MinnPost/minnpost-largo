@@ -20,16 +20,9 @@
 
 <body <?php body_class(); ?>>
 
-	<header id="masthead" class="o-header">
+	<header id="masthead" class="o-header o-header-support">
 		<div class="o-wrapper o-wrapper-site-header<?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">
-			<div class="a-site-branding">
-				<a class="a-logo a-logo-svg" rel="home" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-					<picture>
-						<source type="image/svg+xml" srcset="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/minnpost-logo.svg">
-						<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/logo.png" alt="<?php bloginfo( 'name' ); ?>">
-					</picture>
-				</a>
-			</div><!-- .a-site-branding -->
+			<?php get_template_part( 'template-parts/logo', 'top' ); ?>
 			<?php do_action( 'minnpost_membership_site_header', false ); ?>
 		</div>
 	</header><!-- #masthead -->

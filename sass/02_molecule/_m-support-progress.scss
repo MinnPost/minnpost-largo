@@ -1,20 +1,46 @@
 .m-support-progress {
-	font-size: $content-font-size;
-	line-height: $base-line-height;
+	margin-bottom: $standard-block-margin;
 
-	a,
-	span {
-		font-family: $font__sans;
-		color: $color__white;
-		border-right: 1px solid $color__gray-lightest;
+	ol {
+		@include meta-preset( $size: 0, $bold: false, $italic: false );
+
+		li {
+
+			a,
+			span {
+				background: neutral-color(dark);
+				color: neutral-color(white);
+				border-right: $border-default-style;
+				padding: $standard-block-padding;
+
+				@include breakpoint-min( sm ) {
+					padding: $standard-heading-margin $standard-heading-margin $standard-heading-margin  2em + $standard-heading-margin;
+				}
+
+				&:before {
+					@include meta-preset( $size: 4, $bold: true, $italic: false );
+					font-size: 250%;
+					color: neutral-color(white);
+					line-height: 1;
+					position: absolute;
+					top: -0.1em;
+				}
+			}
+
+			a:hover,
+			a:focus,
+			a:active,
+			a.active,
+			span.active {
+				background: neutral-color(black);
+			}
+
+			&:last-child a,
+			&:last-child span {
+				border-right: 0;
+			}
+		}
 	}
 
-	a::before,
-	span::before {
-		/*font-family: $font__headings;
-		font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
-		font-weight: normal;
-		font-style: normal;
-		font-variant: normal;*/
-	}
+	
 }

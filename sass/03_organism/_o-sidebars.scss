@@ -47,6 +47,9 @@
 	.o-site-sidebar {
 		width: $size__site-sidebar;
 		margin-left: auto;
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
 
 		&#secondary-first,
 		&#secondary-second {

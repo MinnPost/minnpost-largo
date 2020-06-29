@@ -113,11 +113,12 @@ if ( ! function_exists( 'user_account_error_messages' ) ) :
 	add_filter( 'user_account_management_custom_error_message', 'user_account_error_messages', 10, 3 );
 	function user_account_error_messages( $message, $error_code, $data ) {
 		if ( 'spam' === $error_code ) {
-			// translators: parameter is the email address
-			$error   = __(
-				'Our system flagged your account information as spam. You can try again, or email us at <a href="%1$s">%2$s</a>',
-				'user-account-management'
+			$error = sprintf(
+				// translators: param is our email address
+				esc_html__( 'Oops! For some reason our automated system has flagged your account information as spam. You can try to create an account using a different email address, or if you think this was in error contact us at %1$s.', 'user-account-management' ),
+				'<a href="mailto:feedback@minnpost.com">feedback@minnpost.com</a>'
 			);
+
 			$message = sprintf( $error, 'feedback@minnpost.com', 'feedback@minnpost.com' );
 		}
 		return $message;

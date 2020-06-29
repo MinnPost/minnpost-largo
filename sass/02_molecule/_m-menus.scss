@@ -8,11 +8,11 @@ nav {
 }
 
 .m-secondary-navigation,
-.m-featured-navigation,
-.m-pagination {
+.m-pagination,
+.m-pagination-all {
 	position: relative;
 
-	ul {
+	ul, ol {
 		list-style: none;
 		display: flex;
 		justify-content: flex-start;
@@ -34,38 +34,38 @@ nav {
 	width: 100%;
 	overflow: hidden;
 	@include meta-preset( $size: -2, $bold: false, $italic: false );
+}
 
-	.nav-scroller-btn {
-		-webkit-appearance: none;
-		display: inline-flex;
-		position: absolute;
-		z-index: $z-index__md;
-		cursor: pointer;
-		color: neutral-color(dark);
-		background: neutral-color(white);
-		padding: $standard-block-padding / 2;
-		font-size: var(--scale1);
-		border: $border-default-style;
-		border-radius: $border-radius;
-		transition: $double-transition;
+.nav-scroller-btn {
+	-webkit-appearance: none;
+	display: inline-flex;
+	position: absolute;
+	z-index: $z-index__md;
+	cursor: pointer;
+	color: neutral-color(dark);
+	background: neutral-color(white);
+	padding: $standard-block-padding / 2;
+	font-size: var(--scale1);
+	border: $border-default-style;
+	border-radius: $border-radius;
+	transition: $double-transition;
 
-		&:hover,
-		&:focus {
-			background: neutral-color(highlight);
-		}
+	&:hover,
+	&:focus {
+		background: neutral-color(highlight);
+	}
 
-		&:not(.active) {
-			opacity: 0;
-			pointer-events: none;
-		}
+	&:not(.active) {
+		opacity: 0;
+		pointer-events: none;
+	}
 
-		&.nav-scroller-btn--left {
-			left: 0;
-		}
+	&.nav-scroller-btn--left {
+		left: 0;
+	}
 
-		&.nav-scroller-btn--right {
-			right: 0;
-		}
+	&.nav-scroller-btn--right {
+		right: 0;
 	}
 }
 
@@ -90,6 +90,7 @@ nav {
 			padding: 0;
 
 			a {
+				white-space: nowrap;
 				display: inline-flex;
 				text-decoration: none;
 				line-height: normal;
@@ -155,6 +156,10 @@ nav {
 					font-weight: 700;
 				}
 			}
+		}
+
+		&.m-main-navigation-support {
+			border: 0;
 		}
 	}
 
@@ -264,25 +269,11 @@ nav {
 						}
 
 						.a-close-search {
-							margin: 0 0 0 $standard-block-padding / 2;
-							border-radius: 50%;
-							color: neutral-color(white);
-							background: neutral-color(black);
-							height: 2em;
-							width: 2em;
-							font-size: 1em;
-							text-align: center;
-							vertical-align: middle;
 							display: inline-block;
+							line-height: 2em;
 							min-height: 0;
 							align-self: center;
-
-							&:hover,
-							&:focus,
-							&:active {
-								background: neutral-color(medium);
-								color: neutral-color(black);
-							}
+							padding: 0;
 						}
 					}
 				}
@@ -459,10 +450,13 @@ nav {
 				}
 			}
 
+			&.active,
 			&.active-parent {
 				> a {
 					@include breakpoint-min( md ) {
 						background: transparent;
+						color: neutral-color(black);
+						font-weight: 700;
 					}
 				}
 			}
@@ -470,59 +464,162 @@ nav {
 	}
 }
 
-.m-featured-navigation {
-	display: none;
-	justify-content: flex-start;
-	line-height: normal;
-	//background: $color__minnpost-white;
+.m-pagination {
+	@include meta-preset( $size: -2, $bold: false, $italic: false, $line-height: 1 );
 
-	.a-nav-label {
-		//text-transform: uppercase;
-		font-weight: normal;
-		//line-height: 1.3em;
-		//padding: 2px 10px 0 0;
+	@include breakpoint-min( lg ) {
+		font-size: var(--scale0);
+	}
+
+	max-width: 100%;
+	width: 100%;
+	margin-bottom: $standard-block-margin;
+
+	ol {
+		justify-content: space-evenly;
+		align-content: center;
+		text-align: center;
 	}
 
 	li {
-		//line-height: 1.4em;
-		//font-weight: bold;
+		line-height: 1;
+		flex: 1 0 auto;
 
-		&.support-minnpost a {
-			color: $color__minnpost-red;
+		a,
+		span {
+			display: block;
+			padding: $standard-block-padding;
+			border: $border-default-style;
+			border-radius: $border-radius;
+			text-decoration: none;
+			margin-right: $standard-block-padding;
+
+			svg {
+				height: 1em;
+				width: 1em;
+			}
+
 		}
-	}
 
-	a {
-		color: $color__minnpost-black;
-		padding-right: 15px;
-	}
+		a:hover,
+		a:focus,
+		a:active {
+			background: utility-color(blue, dark);
+			color: neutral-color(white);
+		}
 
-	li.active > a {
-		color: $color__minnpost-red;
+		&.a-pagination-ellipsis {
+			span {
+				padding: 0.25em $standard-block-padding 0.75em $standard-block-padding;
+			}
+		}
+
+		&.current span {
+			font-weight: bold;
+		}
 	}
 }
 
-.m-pagination {
+.m-pagination-all {
+	display: flex;
+	align-items: center;
+	border-top: 2px solid neutral-color(border);
+	border-bottom: 2px solid neutral-color(border);
 	max-width: 100%;
 	width: 100%;
-	//background: $color__minnpost-white;
-	padding: 5px;
-	margin-bottom: 1.5em;
+	margin-bottom: $standard-block-margin;
 
-	ul {
-		justify-content: center;
-		text-align: center;
-		/*text-transform: uppercase;
-		font-family: $font__sans;*/
+	a,
+	button {
+		min-height: $touch-target-minimum-size;
+		align-items: center;
+		cursor: pointer;
 	}
 
-	li {
-		padding: 0.5em;
+	button {
+		min-width: $touch-target-minimum-size;
+		justify-content: center;
+	}
 
-		&.current,
-		span.current {
-			font-weight: bold;
+	@include breakpoint-min( lg ) {
+		a,
+		button {
+			min-height: $touch-target-minimum-size-desktop;
 		}
+		button {
+			min-width: $touch-target-minimum-size-desktop;
+		}
+	}
+
+	.m-pagination-navigation {
+		display: flex;
+		align-items: center;
+		position: relative;
+		width: 100%;
+		overflow: hidden;
+	}
+
+	.m-pagination-container {
+		display: flex;
+		width: 100%;
+		max-width: 100%;
+		position: relative;
+		overflow-x: auto;
+		overflow-y: hidden;
+		-webkit-overflow-scrolling: touch;
+		align-self: center;
+		align-items: center;
+		padding-bottom: $standard-block-padding * 2; // fixes the visible scrollbar
+		margin-bottom: -$standard-block-padding * 2;
+	}
+
+	ol {
+		@include meta-preset( $size: -2, $bold: false, $italic: false );
+		will-change: transform;
+		display: inline-flex;
+		align-items: center;
+		white-space: nowrap;
+
+		&:not(.no-transition) {
+		    transition: transform 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+		}
+
+		a {
+			display: inline-flex;
+			text-decoration: none;
+			line-height: normal;
+			padding: $standard-block-padding;
+
+			@include breakpoint-min( md ) {
+				padding: $standard-block-padding / 2 $standard-block-padding;
+			}
+
+			&:hover,
+			&:focus,
+			&:active {
+				background: utility-color(blue, dark);
+				color: neutral-color(white);
+			}
+		}
+
+		li {
+			flex-shrink: 0;
+
+			&.active,
+			&.active-parent {
+				> a {
+					font-weight: bold;
+					color: utility-color(blue, dark);
+
+					&:hover,
+					&:focus,
+					&:active {
+						color: neutral-color(white);
+					}
+				}
+			}
+		}
+
 	}
 }
 
