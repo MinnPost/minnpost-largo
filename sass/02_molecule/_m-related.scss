@@ -48,14 +48,8 @@
 			}
 		}
 	}
-}
 
-
-// media queries for related content
-@media screen and (min-width: $size__ad-flexing) {
-
-	.m-related {
-
+	@include breakpoint-min( sm ) {
 		> h3 {
 			padding: $standard-block-padding;
 			flex-grow: 1;

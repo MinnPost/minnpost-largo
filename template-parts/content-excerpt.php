@@ -13,13 +13,14 @@
 
 	<?php $is_spill = get_query_var( 'is_spill', false ); ?>
 
-	<?php if ( is_home() || true === $is_spill || is_tag() || is_author() || ( is_category() && isset( $featured_columns ) && '' !== $featured_columns ) ) : ?>
+	<?php if ( '' !== minnpost_get_category_name() || '' !== minnpost_get_replace_category_text() ) : ?>
 		<div class="m-post-classification">
 			<?php if ( '' === minnpost_get_replace_category_text() ) : ?>
 				<?php minnpost_category_breadcrumb(); ?>
 			<?php else : ?>
 				<?php minnpost_replace_category_text(); ?>
 			<?php endif; ?>
+			<?php minnpost_plus_icon(); ?>
 		</div>
 	<?php endif; ?>
 

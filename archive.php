@@ -25,11 +25,16 @@ get_header(); ?>
 		}
 
 		if ( isset( $object_type ) ) {
-			$sponsorship = minnpost_get_content_sponsorship( $object_type, $object_id );
+			$archive_type = $object_type;
+			$sponsorship  = minnpost_get_content_sponsorship( $object_type, $object_id );
 			if ( 'author' === $object_type ) {
 				$figure = minnpost_get_author_figure();
 			} else {
 				$figure = minnpost_get_term_figure( $object_id );
+			}
+		} else {
+			if ( is_year() || is_month() || is_day() ) {
+				$archive_type = 'date';
 			}
 		}
 		?>
@@ -135,12 +140,13 @@ get_header(); ?>
 		<?php if ( have_posts() ) : ?>
 
 			<?php
-			$paged        = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-			$featured_num = get_query_var( 'featured_num' );
+			$paged              = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+			$featured_num       = get_query_var( 'featured_num' );
+			$archive_type_class = isset( $archive_type ) ? ' m-archive-' . $archive_type : '';
 			?>
 
 			<?php if ( is_category() && 1 === $paged ) : ?>
-				<section class="m-archive m-archive-top m-category-top">
+				<section class="m-archive m-archive-top m-category-top<?php echo $archive_type_class; ?>">
 					<?php
 					while ( have_posts() ) :
 						the_post();
@@ -158,7 +164,7 @@ get_header(); ?>
 				<?php if ( '' !== $featured_columns || is_active_sidebar( 'sidebar-2' ) ) : ?>
 				<div class="m-archive-has-sidebar">
 				<?php endif; ?>
-				<section class="m-archive m-archive-excerpt">
+				<section class="m-archive m-archive-excerpt<?php echo $archive_type_class; ?>">
 					<?php
 					while ( have_posts() ) :
 						the_post();
@@ -195,7 +201,7 @@ get_header(); ?>
 				<?php endif; ?>
 
 			<?php else : ?>
-				<section class="m-archive m-archive-excerpt">
+				<section class="m-archive m-archive-excerpt<?php echo $archive_type_class; ?>">
 					<?php
 					while ( have_posts() ) :
 						the_post();
