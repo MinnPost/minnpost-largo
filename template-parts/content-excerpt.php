@@ -11,7 +11,7 @@
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post' ); ?>>
 
-	<?php $is_spill = get_query_var( 'is_spill', false ); ?>
+	<?php minnpost_post_image( 'feature-large' ); ?>
 
 	<?php if ( '' !== minnpost_get_category_name() || '' !== minnpost_get_replace_category_text() ) : ?>
 		<div class="m-post-classification">
@@ -36,8 +36,6 @@
 		<?php endif; ?>
 
 	</header><!-- .m-entry-header -->
-
-	<?php minnpost_post_image( 'thumbnail' ); ?>
 
 	<div class="m-entry-excerpt">
 		<?php the_excerpt(); ?>
