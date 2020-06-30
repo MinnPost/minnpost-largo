@@ -1579,7 +1579,6 @@ if ( ! function_exists( 'cmb2_user_fields' ) ) :
 			)
 		);
 
-
 		// donation fields
 		$user_donation_info = new_cmb2_box(
 			array(
