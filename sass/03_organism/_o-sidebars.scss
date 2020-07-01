@@ -32,7 +32,7 @@
 	}
 }
 
-@media screen and (min-width: $size__ad-flexing) {
+@include breakpoint-min( sm ) {
 
 	.o-site-sidebar {
 
@@ -64,9 +64,4 @@
 			}
 		}
 	}
-}
-
-@media screen and (min-width: $max-width-page) {
-
-	
 }

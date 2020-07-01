@@ -3,21 +3,18 @@
 	.m-zone-homepage-middle {
 
 		section.m-widget-glean-home-content {
-			border-top: 1px solid $color__gray-lightest;
+			border-top: $border-default-style;
 			padding-top: $standard-block-margin;
 		}
 	}
 
 	section.m-widget-glean-home-content {
-		border-bottom: 1px solid $color__gray-lightest;
+		border-bottom: $border-default-style;
 		padding-bottom: $standard-block-margin;
 		margin-bottom: $standard-block-margin;
 
 		.a-widget-title {
-			/*font-size: 123.1%;
-			font-family: $font__headings;
-			font-weight: normal;*/
-			background: $color__minnpost-red;
+			background: brand-color(red, medium);
 			margin-bottom: 0;
 
 			span {
@@ -26,21 +23,21 @@
 
 			a {
 				display: block;
-				color: $color__white;
-				padding: 10px 16px;
+				color: neutral-color(white);
+				padding: $standard-block-padding;
 			}
 		}
 
 		article.m-post-glean {
 			width: 100%;
-			padding: 10px;
-			border: 1px solid $color__gray-lightest;
+			padding: $standard-block-padding;
+			border: $border-default-style;
 			border-top: 0;
 			margin-bottom: 0;
 
 			.m-entry-excerpt {
 				font-size: 100%;
-				margin-bottom: 1em;
+				margin-bottom: $standard-block-margin;
 			}
 
 			p {
@@ -48,7 +45,7 @@
 			}
 
 			.a-glean-more {
-				margin-top: 0.75em;
+				margin-top: $standard-heading-margin;
 
 				a::after {
 					content: " ▸";

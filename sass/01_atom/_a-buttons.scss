@@ -25,17 +25,14 @@ button.a-button,
 	&.a-button-secondary,
 	&.sce-comment-cancel,
 	&.sce-comment-delete {
-		color: $color__gray-meta;
-		border-color: $color__border-button;
-		background: $color__background-screen;
-		box-shadow: 0 1px 0 #ccc;
-		border-width: 1px;
-		border-style: solid;
+		color: neutral-color(dark);
+		background: neutral-color(light);
+		border-width: $border-default-style;
 
 		&:hover,
 		&:focus,
 		&:active {
-			background: darken($color__background-screen, 10);
+			background: neutral-color(highlight);
 			text-decoration: none;
 		}
 	}
@@ -68,9 +65,9 @@ button.a-button,
 	.a-between-buttons {
 		display: inline-block;
 		margin: 0 $standard-block-padding;
-		color: $color__gray-meta;
+		color: neutral-color(dark);
 		text-transform: uppercase;
-		font-family: $font__sans;
+		@include meta-preset( $size: 0 );
 	}
 }
 

@@ -6,11 +6,11 @@
 		font-weight: normal;*/
 
 		a {
-			color: $color__minnpost-red;
+			color: brand-color(red, medium);
 		}
 	}
 
 	.m-widget-contents.m-custom-html-widget {
-		margin: 0.75em 0;
+		margin: $standard-heading-margin 0;
 	}
 }
