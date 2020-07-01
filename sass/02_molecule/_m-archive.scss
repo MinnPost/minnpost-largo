@@ -30,6 +30,14 @@
 			margin-bottom: $standard-block-margin;
 			flex-wrap: wrap;
 
+			.a-breadcrumbs,
+			.a-entry-title,
+			.m-entry-byline,
+			.m-entry-meta,
+			.m-entry-excerpt {
+				width: 100%;
+			}
+
 			.a-entry-title {
 				margin: $standard-block-padding / 2 0;
 			}
