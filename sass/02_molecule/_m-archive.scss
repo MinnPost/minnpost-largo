@@ -29,6 +29,19 @@
 			border-bottom: $border-default-style;
 			margin-bottom: $standard-block-margin;
 			flex-wrap: wrap;
+
+			.a-entry-title {
+				margin: $standard-block-padding / 2 0;
+			}
+
+			.m-entry-byline {
+				margin-bottom: $standard-block-padding / 2;
+			}
+
+			.m-entry-excerpt {
+				margin-top: 0;
+			}
+
 		}
 	}
 }

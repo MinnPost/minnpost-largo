@@ -26,15 +26,18 @@
 
 	<header class="m-entry-header">
 		<?php the_title( '<h3 class="a-entry-title a-entry-title-excerpt"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
-
-		<?php if ( 'post' === get_post_type() ) : ?>
-
-		<div class="m-entry-meta">
-			<?php minnpost_posted_by(); ?> | <?php minnpost_posted_on(); ?> <?php minnpost_edit_link(); ?>
-		</div>
-
+		<?php if ( 'post' === get_post_type( $post->id ) ) : ?>
+			<?php if ( '' !== minnpost_get_posted_by() ) : ?>
+				<div class="m-entry-byline">
+					<?php minnpost_posted_by( $post->id ); ?>
+				</div>
+			<?php endif; ?>
+			<div class="m-entry-meta">
+				<?php if ( '' !== minnpost_get_posted_on() ) : ?>
+					<?php minnpost_posted_on(); ?>
+				<?php endif; ?>
+			</div><!-- .m-entry-meta -->
 		<?php endif; ?>
-
 	</header><!-- .m-entry-header -->
 
 	<div class="m-entry-excerpt">
