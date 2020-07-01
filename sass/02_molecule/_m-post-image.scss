@@ -27,26 +27,25 @@
 
 .m-archive-top .m-post-image,
 .m-archive-excerpt .m-post-image {
-	margin-bottom: $standard-block-margin;
-	margin-right: $standard-block-margin;
+	margin-bottom: $standard-heading-margin;
 }
 
-.m-archive-top.m-archive-has-1-post .m-post-image {
+/*.m-archive-top.m-archive-has-1-post .m-post-image {
 	float: none;
 	margin: 0;
-}
+}*/
 
 
 // media queries for post images
-@media screen and (min-width: 350px) {
+/*@media screen and (min-width: 350px) {
 
 	.m-archive-top .m-post-image,
 	.m-archive-excerpt .m-post-image {
 		float: left;
 	}
-}
+}*/
 
-@media screen and (min-width: $medium-screen) {
+/*@media screen and (min-width: $medium-screen) {
 
 	.m-zone-homepage-top.m-archive-top.m-archive-has-1-post .m-post-thumbnail-feature-large,
 	.m-zone-homepage-top.m-archive-top.m-archive-has-1-post .m-post-thumbnail-feature-medium {
@@ -54,3 +53,4 @@
 		margin-right: $standard-block-margin;
 	}
 }
+*/
