@@ -47,29 +47,16 @@ get_header(); ?>
 		</header><!-- .m-archive-header -->
 
 		<?php if ( is_category() || is_tag() ) : ?>
-			<aside class="m-archive-info m-term-info m-term-full-info">
+			<div class="m-archive-info m-term-info m-term-full-info">
 				<?php
-				if ( '' !== $figure && isset( $object_type ) ) {
-					// description and image
-					echo $figure;
-				} else {
-					$text = minnpost_get_term_text( $object_id );
-					if ( '' !== $text ) {
-						echo '<div class="a-description">' . $text . '</div>';
-					}
+				$text = minnpost_get_term_text( $object_id );
+				if ( '' !== $text ) {
+					echo $text;
 				}
 				?>
-				<?php
-				$term_extra_links = minnpost_get_term_extra_links( $object_id );
-				if ( '' !== $term_extra_links ) :
-					?>
-					<ul class="a-archive-links a-category-links">
-						<?php minnpost_term_extra_links( $object_id ); ?>
-					</ul>
-				<?php endif; ?>
-			</aside>
+			</div>
 		<?php elseif ( is_author() ) : ?>
-			<aside class="m-archive-info m-author-info m-author-full-info">
+			<div class="m-archive-info m-author-info m-author-full-info">
 				<?php
 				minnpost_author_figure();
 				$author_email   = get_post_meta( $object_id, 'cap-user_email', true );
@@ -85,7 +72,7 @@ get_header(); ?>
 						<?php endif; ?>
 					</ul>
 				<?php endif; ?>
-			</aside>
+			</div>
 			<h2 class="a-archive-subtitle"><?php echo __( 'Articles by this author:', 'minnpost-largo' ); ?></h2>
 		<?php elseif ( is_year() ) : ?>
 			<form method="post" class="m-form m-form-archive" action="<?php echo admin_url( 'admin-post.php' ); ?>">
@@ -138,80 +125,19 @@ get_header(); ?>
 		?>
 
 		<?php if ( have_posts() ) : ?>
-
 			<?php
 			$paged              = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-			$featured_num       = get_query_var( 'featured_num' );
 			$archive_type_class = isset( $archive_type ) ? ' m-archive-' . $archive_type : '';
 			?>
-
-			<?php if ( is_category() && 1 === $paged ) : ?>
-				<section class="m-archive m-archive-top m-category-top<?php echo $archive_type_class; ?>">
-					<?php
-					while ( have_posts() ) :
-						the_post();
-						if ( $featured_num > $wp_the_query->current_post ) :
-							get_template_part( 'template-parts/content', 'top' );
-						endif;
-					endwhile;
-					?>
-				</section>
+			<section class="m-archive m-archive-excerpt<?php echo $archive_type_class; ?>">
 				<?php
-				$featured_columns = get_query_var( 'featured_columns' );
-				// getting rid of the icymi box
-				// then we do need to allow for widgets to be here but that's it
+				while ( have_posts() ) :
+					the_post();
+					get_template_part( 'template-parts/content', 'excerpt' );
+				endwhile;
 				?>
-				<?php if ( '' !== $featured_columns || is_active_sidebar( 'sidebar-2' ) ) : ?>
-				<div class="m-archive-has-sidebar">
-				<?php endif; ?>
-				<section class="m-archive m-archive-excerpt<?php echo $archive_type_class; ?>">
-					<?php
-					while ( have_posts() ) :
-						the_post();
-						if ( $featured_num <= $wp_the_query->current_post ) :
-							get_template_part( 'template-parts/content', 'excerpt' );
-						endif;
-					endwhile;
-					?>
-					<?php numeric_pagination(); ?>
-				</section>
-				<?php if ( '' !== $featured_columns || is_active_sidebar( 'sidebar-2' ) ) : ?>
-					<aside id="content-sidebar" class="o-content-sidebar" role="complementary">
-						<?php if ( '' !== $featured_columns ) : ?>
-							<section class="m-featured-columns">
-								<h2 class="a-sidebar-box-title">Featured Columns</h2>
-								<ul>
-									<?php foreach ( $featured_columns as $key => $value ) : ?>
-										<li>
-											<a href="<?php echo get_category_link( $value ); ?>">
-												<?php minnpost_term_figure( $value, 'category-featured-column', false, false ); ?>
-												<h3 class="a-featured-title"><?php echo get_cat_name( $value ); ?></h3>
-											</a>
-										</li>
-									<?php endforeach; ?>
-								</ul>
-							</section>
-						<?php endif; ?>
-						<?php dynamic_sidebar( 'sidebar-2' ); ?>
-					</aside>
-				<?php endif; ?>
-
-				<?php if ( '' !== $featured_columns || is_active_sidebar( 'sidebar-2' ) ) : ?>
-				</div>
-				<?php endif; ?>
-
-			<?php else : ?>
-				<section class="m-archive m-archive-excerpt<?php echo $archive_type_class; ?>">
-					<?php
-					while ( have_posts() ) :
-						the_post();
-						get_template_part( 'template-parts/content', 'excerpt' );
-					endwhile;
-					?>
-					<?php numeric_pagination(); ?>
-				</section>
-			<?php endif; ?>
-
+				<?php numeric_pagination(); ?>
+			</section>
 			<?php
 		else :
 			get_template_part( 'template-parts/content', 'none' );
@@ -219,7 +145,6 @@ get_header(); ?>
 		?>
 
 		</main><!-- #main -->
-
 	</div><!-- #primary -->
 
 <?php

@@ -14,9 +14,9 @@
 
 	.m-event-header {
 
-		@include breakpoint-min( md ) {
-			width: colspan( 7, 16 );
+		@include breakpoint-min( sm ) {
+			flex: 1 0;
+			margin-right: $standard-block-margin;
 		}
-
 	}
 }

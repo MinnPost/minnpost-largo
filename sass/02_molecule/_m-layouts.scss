@@ -32,7 +32,7 @@ body.page .m-layout-primary {
 // todo: if this does not cause conflicts, we should move it into the _root.scss
 main {
 	position: relative;
-	@include clearfix;
+	//@include clearfix;
 	max-width: 100%;
 	flex: 0 0 100%;
 }

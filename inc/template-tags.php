@@ -1085,8 +1085,9 @@ if ( ! function_exists( 'minnpost_get_term_text' ) ) :
 		if ( 'feature' === $size ) { // full text
 			$text = get_term_meta( $category_id, '_mp_category_body', true );
 		} else { // excerpt
-			$text = '<p>' . strip_tags( get_term_meta( $category_id, '_mp_category_excerpt', true ) ) . '</p>';
+			$text = get_term_meta( $category_id, '_mp_category_excerpt', true );
 		}
+		$text = apply_filters( 'the_content', $text );
 		return $text;
 	}
 endif;

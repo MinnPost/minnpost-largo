@@ -10,38 +10,30 @@
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post' ); ?>>
-
-	<?php $is_spill = get_query_var( 'is_spill', false ); ?>
-
-	<?php if ( '' !== minnpost_get_category_name() || '' !== minnpost_get_replace_category_text() ) : ?>
-		<div class="m-post-classification">
-			<?php if ( '' === minnpost_get_replace_category_text() ) : ?>
-				<?php minnpost_category_breadcrumb(); ?>
-			<?php else : ?>
-				<?php minnpost_replace_category_text(); ?>
-			<?php endif; ?>
-			<?php minnpost_plus_icon(); ?>
-		</div>
-	<?php endif; ?>
-
-	<header class="m-entry-header">
-		<?php the_title( '<h3 class="a-entry-title a-entry-title-excerpt"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
-
-		<?php if ( 'post' === get_post_type() ) : ?>
-
-		<div class="m-entry-meta">
-			<?php minnpost_posted_by(); ?> | <?php minnpost_posted_on(); ?> <?php minnpost_edit_link(); ?>
-		</div>
-
+	<div class="m-entry-content">
+		<?php if ( '' === minnpost_get_replace_category_text() ) : ?>
+			<?php minnpost_category_breadcrumb(); ?>
+		<?php else : ?>
+			<?php minnpost_replace_category_text(); ?>
 		<?php endif; ?>
-
-	</header><!-- .m-entry-header -->
-
-	<?php minnpost_post_image( 'thumbnail' ); ?>
-
-	<div class="m-entry-excerpt">
-		<?php the_excerpt(); ?>
-	</div><!-- .m-entry-excerpt -->
-
-
+		<header class="m-entry-header">
+			<?php the_title( '<h3 class="a-entry-title a-entry-title-excerpt"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
+			<?php if ( 'post' === get_post_type( $post->id ) ) : ?>
+				<?php if ( '' !== minnpost_get_posted_by() ) : ?>
+					<div class="m-entry-byline">
+						<?php minnpost_posted_by( $post->id ); ?>
+					</div>
+				<?php endif; ?>
+				<div class="m-entry-meta">
+					<?php if ( '' !== minnpost_get_posted_on() ) : ?>
+						<?php minnpost_posted_on(); ?>
+					<?php endif; ?>
+				</div><!-- .m-entry-meta -->
+			<?php endif; ?>
+		</header><!-- .m-entry-header -->
+		<div class="m-entry-excerpt">
+			<?php the_excerpt(); ?>
+		</div><!-- .m-entry-excerpt -->
+	</div>
+	<?php minnpost_post_image( 'feature-large' ); ?>
 </article><!-- #post-## -->

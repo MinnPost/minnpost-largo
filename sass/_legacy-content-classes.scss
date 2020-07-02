@@ -3,8 +3,8 @@
 .mp .alignright {
 	float: right;
 	clear: right;
-	margin-left: 20px;
-	margin-bottom: 20px;
+	margin-left: $standard-block-margin;
+	margin-bottom: $standard-block-margin;
 }
 
 .float-left,
@@ -12,8 +12,8 @@
 .mp .alignleft {
 	float: left;
 	clear: left;
-	margin-right: 20px;
-	margin-bottom: 20px;
+	margin-right: $standard-block-margin;
+	margin-bottom: $standard-block-margin;
 }
 
 .m-entry-content .image {
