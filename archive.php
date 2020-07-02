@@ -49,24 +49,11 @@ get_header(); ?>
 		<?php if ( is_category() || is_tag() ) : ?>
 			<div class="m-archive-info m-term-info m-term-full-info">
 				<?php
-				if ( '' !== $figure && isset( $object_type ) ) {
-					// description and image
-					echo $figure;
-				} else {
-					$text = minnpost_get_term_text( $object_id );
-					if ( '' !== $text ) {
-						echo '<div class="a-description">' . $text . '</div>';
-					}
+				$text = minnpost_get_term_text( $object_id );
+				if ( '' !== $text ) {
+					echo $text;
 				}
 				?>
-				<?php
-				$term_extra_links = minnpost_get_term_extra_links( $object_id );
-				if ( '' !== $term_extra_links ) :
-					?>
-					<ul class="a-archive-links a-category-links">
-						<?php minnpost_term_extra_links( $object_id ); ?>
-					</ul>
-				<?php endif; ?>
 			</div>
 		<?php elseif ( is_author() ) : ?>
 			<div class="m-archive-info m-author-info m-author-full-info">
