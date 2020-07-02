@@ -8,11 +8,8 @@ article .m-entry-excerpt {
 .m-archive-events {
 
 	article .m-entry-excerpt {
-
-		@include breakpoint-min( md ) {
-			&.m-entry-excerpt-event {
-				width: colspan( 7, 16 );
-			}
+		@include breakpoint-min( sm ) {
+			flex: 1 0;
 		}
 	}
 }

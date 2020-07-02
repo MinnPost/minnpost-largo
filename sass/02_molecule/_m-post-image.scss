@@ -28,6 +28,7 @@
 .m-archive-top .m-post-image,
 .m-archive-excerpt .m-post-image {
 	margin-bottom: $standard-heading-margin;
+	flex: 1 0;
 }
 
 /*.m-archive-top.m-archive-has-1-post .m-post-image {

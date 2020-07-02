@@ -13,17 +13,11 @@
 	}
 
 	&.m-archive-date {
-		display: flex;
-		flex-wrap: wrap;
-		justify-content: space-between;
-		align-items: flex-start;
 
 		article {
-			@include breakpoint-min( lg ) {
-				width: colspan( 6, 12 );
-			}
 			display: flex;
 			justify-content: space-between;
+			padding-bottom: $standard-heading-margin;
 			border-bottom: $border-default-style;
 			margin-bottom: $standard-block-margin;
 			flex-wrap: wrap;
