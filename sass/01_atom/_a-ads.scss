@@ -86,7 +86,7 @@ main .ad-x110 {
 .acm-ad-wrapper.ad-Middle3 {
 	margin-bottom: $standard-block-margin;
 	border-bottom: $border-default-style;
-	background-color: $color__minnpost-white; // todo: fix this color
+	background-color: neutral-colors(light);
 	padding-bottom: $standard-block-margin / 2;
 
 	.ad-middle3,
@@ -100,7 +100,7 @@ main .ad-x110 {
 		@include meta-preset( $size: -2, $bold: false, $italic: false, $line-height: 1 );
 		padding: $standard-block-margin / 2;
 		margin-bottom: $standard-block-margin / 2;
-		color: palette(grey, light); // todo: fix this color
+		color: neutral-color(medium);
 	}
 }
 

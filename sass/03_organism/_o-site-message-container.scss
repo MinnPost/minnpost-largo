@@ -48,8 +48,8 @@
 	}
 
 	input {
-		color: $color__minnpost-black; // set a default text color and background color for input fields
-		background: $color__base-background-color;
+		color: neutral-color(black); // set a default text color and background color for input fields
+		background: neutral-color(white);
 		border: 0; // by default, they shouldn't need a border
 	}
 
@@ -202,10 +202,10 @@
 
 			fieldset {
 				margin: 0;
-				padding: 1em 0;
+				padding: $standard-block-padding * 2 0;
 
 				input {
-					border: 1px solid $color__gray-lightest;
+					border: $border-default-style;
 				}
 			}
 		}

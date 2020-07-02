@@ -19,9 +19,8 @@
 		left: 0;
 		right: 0;
 		bottom: 0;
-		background-color: $color__gray-lightest;
-		-webkit-transition: 0.4s;
-		transition: 0.4s;
+		background-color: neutral-color(medium);
+		transition: $hover-transition;
 
 		&::before {
 			position: absolute;
@@ -30,9 +29,8 @@
 			width: 26px;
 			left: 4px;
 			bottom: 4px;
-			background-color: $color__white;
-			-webkit-transition: 0.4s;
-			transition: 0.4s;
+			background-color: neutral-color(white);
+			transition: $hover-transition;
 		}
 
 		&.round {
@@ -45,11 +43,11 @@
 	}
 
 	input:checked + .slider {
-		background-color: $color__minnpost-red;
+		background-color: brand-color(red, medium);
 	}
 
 	input:focus + .slider {
-		box-shadow: 0 0 1px $color__minnpost-red;
+		box-shadow: 0 0 1px brand-color(red, medium);
 	}
 
 	input:checked + .slider::before {

@@ -1,12 +1,11 @@
 .m-homepage-zones {
-	margin-top: 0.5em;
+	margin-top: $standard-block-padding;
 	flex-wrap: wrap;
 	display: flex;
 
 	.m-zone {
-		//padding-bottom: 20px;
 		margin-bottom: $standard-block-margin;
-		border-bottom: 1px solid $color__gray-lightest;
+		border-bottom: $border-default-style;
 
 		&.m-zone-homepage-top { // no margin or border because the article already has it
 			border-bottom: 0;
@@ -34,7 +33,7 @@
 }
 
 // media queries for zones
-@media screen and (min-width: $size__ad-flexing) {
+@include breakpoint-min( sm ) {
 
 	.m-homepage-zones {
 
