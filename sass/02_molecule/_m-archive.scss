@@ -1,6 +1,9 @@
 .m-archive {
 
-	&.m-archive-events {
+	&.m-archive-category,
+	&.m-archive-post_tag,
+	&.m-archive-events,
+	&.m-archive-date {
 
 		article {
 			display: flex;
@@ -12,15 +15,11 @@
 		}
 	}
 
+	&.m-archive-category,
+	&.m-archive-post_tag,
 	&.m-archive-date {
 
 		article {
-			display: flex;
-			justify-content: space-between;
-			padding-bottom: $standard-heading-margin;
-			border-bottom: $border-default-style;
-			margin-bottom: $standard-block-margin;
-			flex-wrap: wrap;
 
 			.a-breadcrumbs,
 			.a-entry-title,
