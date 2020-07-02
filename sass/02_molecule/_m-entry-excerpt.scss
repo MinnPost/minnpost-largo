@@ -3,8 +3,6 @@ article .m-entry-excerpt {
 	@include meta-preset( $size: -1 );
 	max-width: 70ch;
 	width: 100%;
-
-	
 }
 
 .m-archive-events {
@@ -16,6 +14,5 @@ article .m-entry-excerpt {
 				width: colspan( 7, 16 );
 			}
 		}
-
 	}
 }
