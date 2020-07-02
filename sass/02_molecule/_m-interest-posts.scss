@@ -52,7 +52,7 @@
 
 
 // media queries for interest post content
-@media screen and (min-width: $size__ad-flexing) {
+@include breakpoint-min( sm ) {
 
 	.m-interest-posts {
 

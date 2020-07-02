@@ -31,6 +31,9 @@ $utility-colors: (
 		highlight: #a880d0,
 		background: #ebe7ef
 	),
+	yellow: (
+		background: #fbd341
+	),
 );
 
 // neutral colors
@@ -193,6 +196,8 @@ $grid-color: red; // Grid overlay color
 // All breakpoints use the same proportions specified in the
 // variables above, but margin widths can be optionally
 // customized for each breakpoint.
+
+// ex: @include breakpoint-min( sm ) { }
 
 $breakpoints: (
 	xxs: (cols:  4, min-width:  0,  margin: $pad), // Includes optional custom margin

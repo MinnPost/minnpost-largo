@@ -9,7 +9,7 @@
 		margin: 0;
 
 		a {
-			color: $color__minnpost-black;
+			color: neutral-color(black);
 		}
 	}
 
@@ -18,7 +18,7 @@
 
 		article {
 			padding-bottom: $standard-block-margin;
-			border-bottom: 1px solid $color__gray-lightest;
+			border-bottom: $border-default-style;
 			margin-bottom: $standard-block-margin;
 
 			&:last-child {
@@ -29,7 +29,7 @@
 
 			.m-post-thumbnail {
 				float: right;
-				margin-left: 0.5em;
+				margin-left: $standard-block-padding;
 			}
 		}
 	}
@@ -38,8 +38,8 @@
 // media queries for sidebar zones
 @media screen and (min-width: $max-width-page) {
 
-	.m-zone-contents {
+	/*.m-zone-contents {
 		font-size: 84.6153846153846%;
 		line-height: 1;
-	}
+	}*/
 }

@@ -225,7 +225,7 @@ h2.a-user-section-title {
 }
 
 h2.a-membership-choose {
-	color: $_color-base-red;
+	color: brand-color(red, medium);
 	//font-size: 138.5%;
 	margin-bottom: $standard-block-margin / 2;
 }
@@ -238,20 +238,14 @@ h2.a-membership-reasons {
 
 h3.a-finish-strong {
 	clear: both;
-	//font-size: 123.1%;
-	background: $color__gray-sub-menu;
-	padding: 0.5em;
-	margin-bottom: 0.5em;
-	//font-family: $font__headings;
-	//font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
-	//font-weight: normal;
-	//font-style: normal;
-	//font-variant: normal;
+	background: neutral-color(border);
+	padding: $standard-block-padding;
+	margin-bottom: $standard-block-padding;
 }
 
 h2.a-offer {
-	color: $_color-base-gray;
-	margin-bottom: 0.25em;
+	color: neutral-color(medium);
+	margin-bottom: $standard-block-padding;
 }
 
 h4.a-donation-heading {

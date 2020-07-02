@@ -15,7 +15,6 @@
 		}
 
 		> li {
-			//margin: 0 0 $standard-block-margin 0;
 			margin: 0;
 		}
 
@@ -72,20 +71,19 @@
 		}
 
 		.sce-edit-button {
-			margin: 1em 0;
-			padding: 0.5em;
-			border: 1px solid $color__gray-lightest;
-			font-size: 76.9%;
+			margin: $standard-block-margin 0;
+			padding: $standard-block-padding;
+			border: $border-default-style;
+			@include meta-preset();
+			font-size: $interface-copy-size-smaller;
 			text-transform: uppercase;
-			line-height: 1.3em;
-			font-family: $font__sans;
 
 			span {
 				display: inline-block;
 			}
 
 			.sce-timer {
-				color: $color__gray-meta;
+				color: neutral-color(dark);
 			}
 		}
 
@@ -98,7 +96,7 @@
 			.sce-comment-edit-buttons {
 
 				button {
-					margin-bottom: 0.5em;
+					margin-bottom: $standard-block-padding;
 				}
 			}
 		}
