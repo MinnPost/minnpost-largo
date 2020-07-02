@@ -1,11 +1,14 @@
 .o-site-message-container {
-	@include meta-preset( $size: -1, $bold: false, $italic: false, $line-height: 1 );
-
+	@include meta-preset();
+	font-size: $interface-copy-size-smaller;
+	h1,
+	.h1,
 	h2,
 	.h2,
 	h3,
 	.h3 {
 		@include meta-preset( $size: inherit, $bold: true );
+		margin-bottom: $standard-heading-margin;
 	}
 
 	// add a default assumption of horizontally centering
@@ -14,6 +17,8 @@
 	.m-wp-insert-message-editor {
 		max-width: $max-width-page;
 	}
+	@include grid( m-wp-insert-message-images );
+	@include grid( m-wp-insert-message-editor );
 
 	// banner wrapper
 	.m-wp-insert-message-item-banner {
@@ -21,6 +26,7 @@
 		&.banner-width-page {
 			max-width: $max-width-page;
 		}
+		@include grid( banner-width-page );
 
 		.dual-wrap {
 
@@ -33,6 +39,7 @@
 				margin: 0 auto;
 			}
 		}
+		@include grid( dual-wrap );
 	}
 
 	// Popup specifics
@@ -44,6 +51,7 @@
 			.m-wp-insert-message-item {
 				max-width: $max-width-page;
 			}
+			@include grid( m-wp-insert-message-item );
 		}
 	}
 
