@@ -58,22 +58,9 @@ get_header(); ?>
 		<?php elseif ( is_author() ) : ?>
 			<div class="m-archive-info m-author-info m-author-full-info">
 				<?php
-				minnpost_author_figure();
-				$author_email   = get_post_meta( $object_id, 'cap-user_email', true );
-				$author_twitter = get_post_meta( $object_id, 'cap-twitter', true );
-				if ( '' !== $author_email || '' !== $author_twitter ) :
-					?>
-					<ul class="a-archive-links a-author-links">
-						<?php if ( '' !== $author_email ) : ?>
-							<li class="a-email-link"><a href="mailto:<?php echo $author_email; ?>"><?php echo __( 'Email', 'minnpost-largo' ); ?></a></li>
-						<?php endif; ?>
-						<?php if ( '' !== $author_twitter ) : ?>
-							<li class="a-twitter-link"><a href="<?php echo $author_twitter; ?>"><?php echo __( 'Twitter', 'minnpost-largo' ); ?></a></li>
-						<?php endif; ?>
-					</ul>
-				<?php endif; ?>
+				minnpost_author_figure( '', 'photo', 'excerpt', true, 'display_name', false, 'job-title', false );
+				?>
 			</div>
-			<h2 class="a-archive-subtitle"><?php echo __( 'Articles by this author:', 'minnpost-largo' ); ?></h2>
 		<?php elseif ( is_year() ) : ?>
 			<form method="post" class="m-form m-form-archive" action="<?php echo admin_url( 'admin-post.php' ); ?>">
 				<input type="hidden" name="action" value="date_archive_submit">

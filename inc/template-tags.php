@@ -810,13 +810,15 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 						if ( '' !== $title ) {
 							$output .= '<h3 class="a-author-figure-job-title">' . $title . '</h3>';
 						}
-						$author_url = get_author_posts_url( $author_id, sanitize_title( $name ) );
-						$text      .= sprintf(
-							// translators: 1) author archive url, 2) author name
-							'<p class="a-more-by-author"><a href="%1$s">' . esc_html__( 'More articles by %2$s', 'minnpost-largo' ) . '</a></p>',
-							esc_url( $author_url ),
-							$name
-						);
+						if ( is_single() ) {
+							$author_url = get_author_posts_url( $author_id, sanitize_title( $name ) );
+							$text      .= sprintf(
+								// translators: 1) author archive url, 2) author name
+								'<p class="a-more-by-author"><a href="%1$s">' . esc_html__( 'More articles by %2$s', 'minnpost-largo' ) . '</a></p>',
+								esc_url( $author_url ),
+								$name
+							);
+						}
 					}
 				}
 				$output .= $text;
