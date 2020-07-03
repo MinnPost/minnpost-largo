@@ -1362,7 +1362,7 @@ endif;
 */
 if ( ! function_exists( 'minnpost_largo_category_groups' ) ) :
 	function minnpost_largo_category_groups() {
-		$choices = array( 'news', 'opinion', 'arts-culture' );
+		$choices = array( 'news', 'arts-culture', 'opinion' );
 		return $choices;
 	}
 endif;

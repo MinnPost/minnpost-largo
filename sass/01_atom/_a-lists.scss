@@ -1,16 +1,10 @@
-/*.m-entry-content ul,
-.m-entry-content ol,
-.m-entry-content dl {
-	//margin: 0.5em;
-}
-
-.m-entry-content ul,
-.m-entry-content ol {
-	padding-left: $base-line-height-em;
-	margin-left: 0;
+.a-grouped-categories {
+	list-style: none;
+	margin: 0;
 
 	li {
-		list-style-position: outside;
+		padding: 0 0 $standard-block-padding 0;
+		border-bottom: $border-default-style;
+		margin: 0 0 $standard-block-padding 0;
 	}
 }
-*/

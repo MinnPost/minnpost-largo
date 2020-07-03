@@ -1,49 +1,6 @@
-.a-archive-title {
-	//font-size: 123.1%;
-	//text-transform: none;
-}
-
-.a-archive-subtitle {
-	//font-size: 123.1%;
-	//text-transform: uppercase;
-	//font-family: $font__headings;
-	//font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
-	//font-weight: normal;
-	//font-style: normal;
-	//font-variant: normal;
-	//margin-bottom: 12px;
-}
-
 .a-author-title,
-.a-about-author,
 .a-related-title,
-.a-comments-title,
-.a-comment-reply-title,
-.a-signup-title,
-.a-newsletter-title {
-	//font-size: 123.1%;
-}
-
-.a-about-author,
-.a-related-title,
-.a-comments-title,
-.a-comment-reply-title,
-.a-signup-title,
-.a-newsletter-title {
-	//text-transform: uppercase;
-	//font-family: $font__headings;
-	//font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
-	//font-weight: normal;
-	//font-style: normal;
-	//font-variant: normal;
-	//margin-top: 20px;
-}
-
-.a-author-title {
-	margin-bottom: $standard-block-padding;
-}
-
-.a-related-title {
+.a-group-category-title {
 	margin-bottom: $standard-block-padding;
 }
 
@@ -53,18 +10,6 @@
 }
 
 .a-comment-reply-title {
-
-	/*a {
-		color: $color__link;
-
-		&:visited,
-		&:active,
-		&:focus,
-		&:hover,
-		&.active {
-			color: $color__link-hover;
-		}
-	}*/
 
 	small a {
 		@include button( neutral-color(highlight), neutral-color(border), neutral-color(black));
@@ -74,22 +19,9 @@
 	}
 }
 
-.a-featured-title {
-	//font-size: 123.1%;
-	//text-transform: none;
-	//font-family: $font__sans;
-	//font-weight: bold;
-}
-
 .a-entry-title,
 .a-user-title {
-	//font-size: 123.1%;
-	//text-transform: none;
 	color: neutral-color(black);
-
-	/*a {
-		text-decoration: none;
-	}*/
 	a {
 
 		&:link,
@@ -107,133 +39,13 @@
 	}
 }
 
-.a-entry-title-largeimage {
-	//font-size: 138.5%;
-	//font-weight: bold;
-	//line-height: 1.15em;
-}
-
-.m-category-top .a-entry-title-largeimage,
-.m-zone-homepage-top .a-entry-title-largeimage {
-	//font-size: $large-title-font-size;
-	//line-height: 1.15em;
-	//font-family: $font__headings;
-	//font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
-	//font-weight: normal;
-	//font-style: normal;
-	//font-variant: normal;
-}
-
-.m-zone-homepage-top .a-entry-title-largeimage {
-	//line-height: 1em;
-}
-
-.m-entry-header-singular .a-entry-title,
-.m-user-profile .a-user-title,
-.a-standalone-title {
-	//font-family: $font__headings;
-	//font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
-	//font-weight: normal;
-	//font-style: normal;
-	//font-variant: normal;
-	//margin: 0;
-	//font-size: 338.5%;
-	//line-height: 0.9em;
-	//color: $color__minnpost-black;
-}
-
-.m-interest-posts .a-entry-title {
-	//font-family: $font__headings;
-	//font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
-	//font-weight: normal;
-	//font-style: normal;
-	//font-variant: normal;
-	//line-height: 0.9em;
-	//font-size: inherit;
-}
-
-.m-entry-header-single .a-entry-title {
-	//margin-bottom: 15px;
-}
-
-.m-entry-content h1,
-.m-entry-content .h1,
-.m-post-sidebar h1,
-.m-post-sidebar .h1,
-.m-entry-content h2,
-.m-entry-content .h2,
-.m-post-sidebar h2,
-.m-post-sidebar .h2,
-.m-entry-content h3,
-.m-entry-content .h3,
-.m-post-sidebar h3,
-.m-post-sidebar .h3,
-.m-entry-content h4,
-.m-entry-content .h4,
-.m-post-sidebar h4,
-.m-post-sidebar .h4,
-.m-entry-content h5,
-.m-entry-content .h5,
-.m-post-sidebar h5,
-.m-post-sidebar .h5,
-.m-entry-content h6,
-.m-entry-content .h6,
-.m-post-sidebar h6,
-.m-post-sidebar .h6 {
-
-	/*a {
-		color: $color__link;
-
-		&:visited,
-		&:active,
-		&:focus,
-		&:hover,
-		&.active {
-			color: $color__link-hover;
-		}
-	}*/
-}
-
-.m-entry-content h3,
-.m-entry-content .h3,
-.m-partner-offer-content h1,
-.m-partner-offer-content .h1 {
-	//font-size: $large-title-font-size;
-	//line-height: 1.15em;
-	//font-family: $font__headings;
-	//font-feature-settings: "calt" off, "dlig" off, "ss01" off, "liga" off;
-	//font-weight: normal;
-	//font-style: normal;
-	//font-variant: normal;
-}
-
-.m-entry-content h4,
-.m-entry-content .h4 {
-	//font-size: 138.5%;
-	//line-height: 1.15em;
-}
-
-.m-entry-content h5,
-.m-entry-content .h5 {
-	//font-size: 92.3%;
-	//text-transform: uppercase;
-	//line-height: 1.4em;
-}
-
-h2.a-user-section-title {
-	//margin-bottom: 12px;
-}
-
 h2.a-membership-choose {
 	color: brand-color(red, medium);
-	//font-size: 138.5%;
 	margin-bottom: $standard-block-margin / 2;
 }
 
 h2.a-membership-reasons {
 	margin: 2em 0 1em 0;
-	//font-family: $font__sans;
-	//font-weight: bold;
 }
 
 h3.a-finish-strong {
