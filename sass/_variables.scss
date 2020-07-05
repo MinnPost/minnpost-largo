@@ -214,29 +214,6 @@ $max-width: null; // For no max-width, use $max-width: null;
 
 $size__site-sidebar: 300px; // this needs to be pixel based because of ad dimensions
 $max-width-page: 80em; // this is 1280px
-$max-width-popup: 92%;
-
-// site structure
-$max-width-medium: 680px;
-$medium-margins-too-small: 700px;
-$max-width-medium-plus-margins: 720px;
-$max-width-story-2012: 452px;
-$max-width-content: 75%; // trying this percentage out for now
-$content-gutter: 5%;
-
-$header-height-smaller-screen: 50px;
-$header-height-small-screen: 76px;
-$header-height-before-nav-breaks: 66px;
-$header-height-after-nav-breaks: 71px;
-
-// Neat Breakpoints
-$small-screen: 480px; // replace with "sm"
-$more-than-logo-screen: 500px;
-$medium-screen: 865px; // added 225 for now
-$nav-breaks: 768px; // maybe replace with md
-$nav-move-end: 810px;
-$large-screen: 860px;
-$nav-wrap-screen: 950px; // replace with "lg" media query
 
 // ------------------------------------------------------------
 // Z-INDEXES
@@ -252,15 +229,6 @@ $z-index__xs: 1000;
 $z-index__xxs: 100;
 $z-index__xxxs: 10;
 
-// site region sizes
-$size__main-smaller-screen: 50%;
-$size__main-small-screen: 65%;
-$size__main-large-screen: 400px;
-$size__archive-medium-screen: 600px;
-$size__content-sidebar-small-screen: 280px;
-$size__content-sidebar-medium-screen: 35%;
-$size__content-sidebar-large-screen: 205px;
-
 /*------------------------------------*\
 	#SPACING
 \*------------------------------------*/
@@ -269,10 +237,6 @@ $size__content-sidebar-large-screen: 205px;
 $standard-block-margin: 1.5em; // 36px at desktop
 $standard-heading-margin: 0.75em; // 18px at desktop
 $standard-block-padding: 0.5em; // 12px at body
-
-$home-content-sidebar-padding: 35px;
-$archive-content-sidebar-padding: 15px;
-$form-text-indent: 6px;
 
 /*------------------------------------*\
 	#BORDERS

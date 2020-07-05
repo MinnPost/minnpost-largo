@@ -19,7 +19,7 @@
 
 // media queries for sidebars
 
-@media screen and (min-width: $more-than-logo-screen) {
+@include breakpoint-min( xs ) {
 
 	.o-site-sidebar {
 

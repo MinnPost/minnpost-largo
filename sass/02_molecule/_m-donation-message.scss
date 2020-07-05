@@ -72,17 +72,3 @@
 		margin-top: 1em;
 	}
 }
-
-// media queries
-@media screen and (min-width: $medium-screen) {
-
-	.m-donation-message {
-
-		section {
-
-			&.m-donation-actions {
-				//max-width: $medium-screen * 0.3;
-			}
-		}
-	}
-}
