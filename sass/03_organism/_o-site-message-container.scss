@@ -1,3 +1,4 @@
+// message container
 .o-site-message-container {
 	@include meta-preset();
 	font-size: $interface-copy-size-smaller;
@@ -12,13 +13,35 @@
 	}
 
 	// add a default assumption of horizontally centering
-	// both the image and editor containers
+	// the image and editor and banner containers
 	.m-wp-insert-message-images,
-	.m-wp-insert-message-editor {
+	.m-wp-insert-message-editor,
+	.m-wp-insert-message-item-banner {
 		max-width: $max-width-page;
 	}
 	@include grid( m-wp-insert-message-images );
 	@include grid( m-wp-insert-message-editor );
+
+	// regions, no matter what type of message they are
+	// this can override default grid styles when needed
+
+	// site header
+	&.wp-message-inserter-message-region-header {
+		margin-bottom: $standard-block-padding;
+	}
+
+	// above article body
+	// article bottom
+	&.wp-message-inserter-message-region-above_article_body,
+	&.wp-message-inserter-message-region-article_bottom {
+		margin-bottom: $standard-block-margin;
+
+		.m-wp-insert-message-images,
+		.m-wp-insert-message-editor {
+			margin-left: 0;
+			margin-right: 0;
+		}
+	}
 
 	// banner wrapper
 	.m-wp-insert-message-item-banner {
@@ -30,7 +53,7 @@
 
 		.dual-wrap {
 
-			@media screen and (min-width: $max-width-medium) {
+			@include breakpoint-min( sm ) {
 				display: flex;
 				justify-content: center;
 				align-items: center;
@@ -44,6 +67,30 @@
 
 	// Popup specifics
 	&.wp-message-inserter-message-region-popup {
+
+		// banner wrapper
+		.m-wp-insert-message-item-banner {
+
+			// column wrapper
+			.dual-wrap {
+
+				// columns
+				.col {
+					padding-top: $standard-block-padding * 2;
+					padding-bottom: $standard-block-padding * 2;
+				}
+
+				.col:first-of-type {
+					padding-left: 0
+				}
+
+				.col:last-of-type {
+					padding-left: 0
+				}
+			}
+		}
+
+
 
 		// default styles for the editor type
 		&.wp-message-inserter-message-editor {
@@ -63,7 +110,7 @@
 
 	// site header and homepage middle
 	&.wp-message-inserter-message-region-homepage_middle,
-	&.wp-message-inserter-message-header {
+	&.wp-message-inserter-message-region-header {
 
 		header {
 			//font-size: 1.2em;
@@ -226,7 +273,7 @@
 }
 
 // media queries for site message container
-@media screen and ( min-width: $more-than-logo-screen ) {
+@include breakpoint-min( xs ) {
 
 	.o-site-message-container {
 
@@ -255,7 +302,7 @@
 	}
 }
 
-@media screen and ( min-width: $max-width-medium ) {
+@include breakpoint-min( sm ) {
 
 	.o-site-message-container {
 
@@ -290,7 +337,7 @@
 	}
 }
 
-@media screen and ( min-width: $max-width-page ) {
+@include breakpoint-min( xxl ) {
 
 	.o-site-message-container {
 
