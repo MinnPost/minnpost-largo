@@ -226,7 +226,7 @@
 		}
 
 		.m-wp-insert-message-item {
-			padding: 1.25em; // this basically matches the sum of the legacy padding
+			padding: $standard-block-padding * 2;
 
 			// reset styles for legacy
 			.m-form-container,
