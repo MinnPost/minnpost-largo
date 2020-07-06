@@ -17,7 +17,7 @@ header .a-site-branding {
 
 	@include breakpoint-min( md ) {
 		max-width: colspan( 3, 8 );
-		margin-bottom: 0;
+		margin: 0;
 	}
 
 	@include breakpoint-min( lg ) {
