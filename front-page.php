@@ -20,7 +20,7 @@ get_header(); ?>
 						<?php
 						while ( $top_query->have_posts() ) :
 							$top_query->the_post();
-							get_template_part( 'template-parts/content', 'top' ); // content-top
+							get_template_part( 'template-parts/content', 'excerpt' ); // content-top
 						endwhile;
 						?>
 						<?php dynamic_sidebar( 'sidebar-4' ); ?>
@@ -35,7 +35,7 @@ get_header(); ?>
 							<?php
 							while ( $middle_query->have_posts() ) :
 								$middle_query->the_post();
-								get_template_part( 'template-parts/content', 'middle' ); // content-middle
+								get_template_part( 'template-parts/content', 'excerpt' ); // content-middle
 							endwhile;
 							?>
 						</section>
@@ -45,7 +45,7 @@ get_header(); ?>
 							$count = 1;
 							while ( $middle_query->have_posts() ) :
 								$middle_query->the_post();
-								get_template_part( 'template-parts/content', 'middle' ); // content-middle
+								get_template_part( 'template-parts/content', 'excerpt' ); // content-middle
 								?>
 								<?php if ( 2 === $count && ! $top_query->have_posts() ) : ?>
 									<?php dynamic_sidebar( 'sidebar-4' ); ?>
