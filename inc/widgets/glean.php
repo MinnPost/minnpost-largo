@@ -45,38 +45,34 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 
 		<?php if ( $glean_query->have_posts() ) : ?>
 			<article id="<?php the_ID(); ?>" class="m-post m-post-glean">
-				<!-- the loop -->
-				<?php
-				$i = 0;
-				while ( $glean_query->have_posts() ) :
-						$glean_query->the_post();
-					?>
-					<?php if ( 0 === $i ) : ?>
-						<header class="m-entry-header">
-							<?php the_title( '<h3 class="a-entry-title a-spill-entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
-
-							<?php if ( 'post' === get_post_type() ) : ?>
-
-							<div class="m-entry-meta">
-								<?php minnpost_posted_by(); ?> | <?php minnpost_posted_on(); ?> <?php minnpost_edit_link(); ?>
-							</div>
-
-							<?php endif; ?>
-
-						</header><!-- .m-entry-header -->
-
-						<div class="m-entry-excerpt">
-							<?php the_excerpt(); ?>
-						</div><!-- .m-entry-excerpt -->
-					<?php else : ?>
-						<p><a href="<?php the_permalink(); ?>">Read <?php the_date( 'l A' ); ?> edition</a></p>
-					<?php endif; ?>
+				<div class="m-entry-content">
+					<!-- the loop -->
 					<?php
-					$i++;
-			endwhile;
-				?>
-				<!-- end of the loop -->
-				<?php wp_reset_postdata(); ?>
+					$i = 0;
+					while ( $glean_query->have_posts() ) :
+							$glean_query->the_post();
+						?>
+						<?php if ( 0 === $i ) : ?>
+							<header class="m-entry-header">
+								<?php the_title( '<h3 class="a-entry-title a-spill-entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
+								<?php if ( 'post' === get_post_type() ) : ?>
+									<?php if ( '' !== minnpost_get_posted_by() ) : ?>
+										<div class="m-entry-byline">
+											<?php minnpost_posted_by( $post->id ); ?>
+										</div>
+									<?php endif; ?>
+								<?php endif; ?>
+							</header>
+						<?php else : ?>
+							<p><a href="<?php the_permalink(); ?>">Read <?php the_date( 'l A' ); ?> edition</a></p>
+						<?php endif; ?>
+						<?php
+						$i++;
+				endwhile;
+					?>
+					<!-- end of the loop -->
+					<?php wp_reset_postdata(); ?>
+				</div>
 			</article>
 
 		<?php endif; ?>
