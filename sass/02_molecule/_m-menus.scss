@@ -1,5 +1,3 @@
-//$nav-common-spacing: 6px;
-
 nav {
 
 	svg {
@@ -665,4 +663,8 @@ nav {
 			}
 		}
 	}
+}
+
+#wpadminbar {
+	z-index: 9999999; // this allows it to sit above our menu z-indexes
 }
