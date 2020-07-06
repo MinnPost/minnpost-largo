@@ -144,18 +144,12 @@
 	&.wp-message-inserter-message-region-homepage_middle {
 		width: 100%;
 		order: 1;
+		background: utility-color(blue, background);
 		border-radius: $border-radius;
-		padding-top: $standard-block-padding;
-		border-top: $border-default-style;
 		margin-bottom: $standard-block-margin;
-		border-bottom: $border-default-style;
 
 		.m-wp-insert-message-item {
-			background: utility-color(blue, medium);
-			border-radius: $border-radius;
-			color: neutral-color(white);
-			margin-bottom: $standard-block-margin;
-			padding: $standard-block-margin 0;
+			padding: $standard-block-padding * 2;
 		}
 
 		// mailchimp form inside a homepage middle
@@ -165,27 +159,13 @@
 				border: 0;
 				margin: 0;
 				padding: $standard-block-margin 0 $standard-heading-margin 0;
+				padding: $standard-block-padding * 2 0;
 				width: 100%;
 				max-width: 100%;
 
 				input {
 					width: 100%;
 					max-width: 100%;
-				}
-
-				label {
-					color: neutral-color(white);
-
-					a:link,
-					a:visited {
-						@include link-underline(neutral-color(white), neutral-color(highlight));
-					}
-
-					a:hover,
-					a:focus,
-					a:active {
-						@include link-underline(neutral-color(highlight), neutral-color(white));
-					}
 				}
 			}
 
@@ -244,17 +224,6 @@
 			> p {
 				margin: 0;
 				padding: 0;
-			}
-
-			> h3 {
-			    /*font-size: 138.5%;
-			    line-height: 1.15em;
-			    text-transform: uppercase;
-				font-family: $font__headings;
-				font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
-				font-weight: normal;
-				font-style: normal;
-				font-variant: normal;*/
 			}
 
 			fieldset {
