@@ -9,6 +9,6 @@ if ( empty( $before_events ) ) {
 	return;
 }
 ?>
-<aside class="m-archive-info m-events-info m-events-before-info">
+<div class="m-archive-info m-events-info m-events-before-info">
 	<?php echo $before_events; ?>
-</aside>
+</div>

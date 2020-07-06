@@ -142,16 +142,3 @@
 	margin: 16px 0; // these are the same as the form wrapper
 	max-width: 100%;
 }
-
-// for theme sizes
-@media screen and (min-width: $medium-screen ) {
-
-	.m-form-instory.m-form-minnpost-form-processor-mailchimp {
-
-		&.legacy {
-			width: 50%;
-			float: right;
-			margin-left: $standard-block-padding * 2;
-		}
-	}
-}

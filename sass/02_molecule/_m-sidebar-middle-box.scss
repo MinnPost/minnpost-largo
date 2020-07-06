@@ -1,15 +1,11 @@
 .o-content-sidebar section {
-	margin-bottom: 15px;
-	border: 1px solid $color__gray-lightest;
-	padding: 10px;
+	margin-bottom: $standard-block-margin;
+	border: $border-default-style;
+	padding: $standard-block-padding;
 
 	.a-widget-title,
 	.a-sidebar-box-title {
-		/*font-size: 123.1%;
-		text-transform: uppercase;
-		font-family: $font__headings;
-		font-weight: normal;*/
-		margin-bottom: 0.75em;
+		margin-bottom: $standard-heading-margin;
 	}
 
 	ul {
@@ -18,30 +14,30 @@
 		padding: 0;
 
 		li {
-			margin-bottom: 0.75em;
+			margin-bottom: $standard-heading-margin;
 		}
 	}
 
 	&.the-glean {
 		border: 0;
-		background: $color__white;
+		background: neutral-color(white);
 		padding: 0;
 
 		.a-widget-title {
-			background: $color__minnpost-red;
+			background: brand-color(red, medium);
 			margin-bottom: 0;
 
 			a {
 				display: inline-block;
-				color: $color__white;
-				padding: 10px 16px 5px 16px;
+				color: neutral-color(white);
+				padding: $standard-block-padding $standard-block-margin
 			}
 		}
 	}
 
 	.m-post-glean {
-		padding: 10px;
-		border: 1px solid $color__gray-lightest;
+		padding: $standard-block-padding;
+		border: $border-default-style;
 		border-top: 0;
 
 		.m-entry-excerpt {
@@ -53,7 +49,7 @@
 		}
 
 		.a-glean-more {
-			margin-top: 0.75em;
+			margin-top: $standard-heading-margin;
 
 			a::after {
 				content: " ▸";
@@ -67,14 +63,14 @@
 @media screen and (min-width: $max-width-page) {
 
 	.o-content-sidebar section {
-		padding: 15px;
+		padding: $standard-block-padding;
 
 		&.m-widget-custom-html {
-			padding: 20px;
+			padding: $standard-block-padding;
 		}
 
 		.m-post-glean {
-			padding: 5px 15px 15px 15px;
+			padding: $standard-block-padding;
 		}
 	}
 }

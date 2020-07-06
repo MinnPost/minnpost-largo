@@ -1,8 +1,8 @@
 .m-entry-content .m-member-info {
-	background: $color__minnpost-white;
-	padding: 1em;
+	background: neutral-colors(light);
+	padding: $standard-block-padding;
 	position: relative;
-	margin: 0 0 1.5em 0;
+	margin: 0 0 $standard-block-margin 0;
 
 	&.m-member-info-platinum {
 		background: $color__minnpost-platinum;
@@ -26,8 +26,8 @@
 	}
 
 	dt.a-member-level {
-		margin: 0 0 0.2em 0;
-		font-weight: bold;
+		margin: 0 0 $standard-block-padding / 2 0;
+		font-weight: 700;
 
 		&::after {
 			content: ":";
@@ -35,6 +35,6 @@
 	}
 
 	dd {
-		margin: 0 0 1em 0;
+		margin: 0 0 $standard-block-padding * 2 0;
 	}
 }

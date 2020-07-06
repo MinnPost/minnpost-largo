@@ -1,18 +1,50 @@
+// message container
 .o-site-message-container {
-	@include meta-preset( $size: -1, $bold: false, $italic: false, $line-height: 1 );
-
+	@include meta-preset();
+	font-size: $interface-copy-size-smaller;
+	h1,
+	.h1,
 	h2,
 	.h2,
 	h3,
-	.h3 {
+	.h3,
+	h4,
+	.h4 {
 		@include meta-preset( $size: inherit, $bold: true );
+		margin-bottom: $standard-heading-margin;
 	}
 
 	// add a default assumption of horizontally centering
-	// both the image and editor containers
+	// the image and editor and banner containers
 	.m-wp-insert-message-images,
-	.m-wp-insert-message-editor {
+	.m-wp-insert-message-editor,
+	.m-wp-insert-message-item-banner {
 		max-width: $max-width-page;
+	}
+	@include grid( m-wp-insert-message-images );
+	@include grid( m-wp-insert-message-editor );
+
+	// regions, no matter what type of message they are
+	// this can override default grid styles when needed
+
+	// site header
+	&.wp-message-inserter-message-region-header {
+		margin-bottom: $standard-block-padding;
+	}
+
+	// above article body
+	// article bottom
+	// homepage middle
+	&.wp-message-inserter-message-region-above_article_body,
+	&.wp-message-inserter-message-region-homepage_middle,
+	&.wp-message-inserter-message-region-article_bottom {
+		margin-bottom: $standard-block-margin;
+
+		.m-wp-insert-message-images,
+		.m-wp-insert-message-editor {
+			margin-left: 0;
+			margin-right: 0;
+		}
 	}
 
 	// banner wrapper
@@ -21,10 +53,11 @@
 		&.banner-width-page {
 			max-width: $max-width-page;
 		}
+		@include grid( banner-width-page );
 
 		.dual-wrap {
 
-			@media screen and (min-width: $max-width-medium) {
+			@include breakpoint-min( sm ) {
 				display: flex;
 				justify-content: center;
 				align-items: center;
@@ -33,10 +66,35 @@
 				margin: 0 auto;
 			}
 		}
+		@include grid( dual-wrap );
 	}
 
 	// Popup specifics
 	&.wp-message-inserter-message-region-popup {
+
+		// banner wrapper
+		.m-wp-insert-message-item-banner {
+
+			// column wrapper
+			.dual-wrap {
+
+				// columns
+				.col {
+					padding-top: $standard-block-padding * 2;
+					padding-bottom: $standard-block-padding * 2;
+				}
+
+				.col:first-of-type {
+					padding-left: 0
+				}
+
+				.col:last-of-type {
+					padding-left: 0
+				}
+			}
+		}
+
+
 
 		// default styles for the editor type
 		&.wp-message-inserter-message-editor {
@@ -44,40 +102,41 @@
 			.m-wp-insert-message-item {
 				max-width: $max-width-page;
 			}
+			@include grid( m-wp-insert-message-item );
 		}
 	}
 
 	input {
-		color: $color__minnpost-black; // set a default text color and background color for input fields
-		background: $color__base-background-color;
+		color: neutral-color(black); // set a default text color and background color for input fields
+		background: neutral-color(white);
 		border: 0; // by default, they shouldn't need a border
 	}
 
 	// site header and homepage middle
 	&.wp-message-inserter-message-region-homepage_middle,
-	&.wp-message-inserter-message-header {
+	&.wp-message-inserter-message-region-header {
 
 		header {
-			//font-size: 1.2em;
 			margin-right: 1em;
-			line-height: 1.2;
 		}
 
 		h3,
-		h4 {
-			/*font-family: $font__headings;
-			font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
-			font-weight: normal;
-			font-style: normal;
-			font-variant: normal;*/
+		.h3,
+		h4,
+		.h4 {
+			margin: 0;
 		}
 
-		h3 {
-			//font-size: 215.4%;
+		h3,
+		.h3 {
+
+			@include meta-preset( $size: 4, $bold: true );
 		}
 
-		h4 {
-			//font-size: 138.5%;
+		h4,
+		.h4 {
+
+			@include meta-preset( $size: 3, $bold: false );
 		}
 	}
 
@@ -105,7 +164,7 @@
 			fieldset {
 				border: 0;
 				margin: 0;
-				padding: 2.5em 0 1em 0;
+				padding: $standard-block-margin 0 $standard-heading-margin 0;
 				width: 100%;
 				max-width: 100%;
 
@@ -144,8 +203,6 @@
 				width: 100%;
 				max-width: 100%;
 				color: neutral-color(white);
-				//font-size: $content-font-size;
-				//line-height: $base-line-height;
 			}
 
 			fieldset {
@@ -169,7 +226,7 @@
 		}
 
 		.m-wp-insert-message-item {
-			padding: 1.25em; // this basically matches the sum of the legacy padding
+			padding: $standard-block-padding * 2;
 
 			// reset styles for legacy
 			.m-form-container,
@@ -202,10 +259,10 @@
 
 			fieldset {
 				margin: 0;
-				padding: 1em 0;
+				padding: $standard-block-padding * 2 0;
 
 				input {
-					border: 1px solid $color__gray-lightest;
+					border: $border-default-style;
 				}
 			}
 		}
@@ -218,7 +275,7 @@
 }
 
 // media queries for site message container
-@media screen and ( min-width: $more-than-logo-screen ) {
+@include breakpoint-min( xs ) {
 
 	.o-site-message-container {
 
@@ -231,7 +288,7 @@
 				.m-form-frontpage.m-form-minnpost-form-processor-mailchimp {
 
 					fieldset {
-						max-width: 75%;
+						max-width: colspan( 12, 16 );
 					}
 				}
 
@@ -239,7 +296,7 @@
 				.m-form-frontpage.m-form-minnpost-form-processor-mailchimp-submitted {
 
 					.m-form-message {
-						max-width: 75%;
+						max-width: colspan( 12, 16 );
 					}
 				}
 			}
@@ -247,7 +304,7 @@
 	}
 }
 
-@media screen and ( min-width: $max-width-medium ) {
+@include breakpoint-min( sm ) {
 
 	.o-site-message-container {
 
@@ -265,7 +322,7 @@
 						justify-content: space-around;
 
 						fieldset {
-							max-width: 55%;
+							max-width: colspan( 8, 16 );
 						}
 					}
 				}
@@ -274,7 +331,7 @@
 				.m-form-frontpage.m-form-minnpost-form-processor-mailchimp-submitted {
 
 					.m-form-message {
-						max-width: 55%;
+						max-width: colspan( 8, 16 );
 					}
 				}
 			}
@@ -282,7 +339,7 @@
 	}
 }
 
-@media screen and ( min-width: $max-width-page ) {
+@include breakpoint-min( xxl ) {
 
 	.o-site-message-container {
 

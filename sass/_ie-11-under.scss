@@ -5,21 +5,8 @@
 	body.page .m-layout-primary {
 		display: block;
 	}
-}
 
-// size media queries for ie 11 and 10
-@media only screen and (-ms-high-contrast: active), (-ms-high-contrast: none) and (min-width: $nav-breaks) {
-
-	.o-archive-listing {
-
-		&.m-layout-primary {
-			max-width: $medium-screen;
-			overflow-x: hidden;
-		}
-	}
-}
-
-@media only screen and (-ms-high-contrast: active), (-ms-high-contrast: none) and (max-width: $medium-margins-too-small) {
+	// size media queries for ie 11 and 10
 
 	.o-archive-listing {
 
@@ -27,15 +14,27 @@
 			display: block;
 		}
 	}
+
+	@include breakpoint-min( md ) {
+		.o-archive-listing {
+
+			&.m-layout-primary {
+				//max-width: $medium-screen;
+				overflow-x: hidden;
+			}
+		}
+	}
+
+	
 }
 
 // ie 10 and under only - dependent on modernizr
-@media screen and (min-width: $medium-margins-too-small) and (max-width: $max-width-page) {
+@include breakpoint-min( xxl ) {
 
 	.no-borderimage .archive {
 
 		.o-wrapper-content {
-			padding-right: $size__site-sidebar + $archive-content-sidebar-padding;
+			//padding-right: $size__site-sidebar + $archive-content-sidebar-padding;
 		}
 
 		.o-archive-listing {
@@ -54,4 +53,5 @@
 			display: block;
 		}
 	}
+	
 }

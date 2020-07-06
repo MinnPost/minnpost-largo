@@ -3,8 +3,8 @@
 	&.m-support-cta-top {
 
 		.a-support-button {
-			background: $color__minnpost-green;
-			color: $color__white;
+			background: utility-color(green, medium);
+			color: neutral-color(white);
 			@include meta-preset( $size: 1, $bold: true, $italic: false, $line-height: 1 );
 			margin-bottom: $standard-block-padding;
 
@@ -35,7 +35,7 @@
 			&:hover,
 			&:focus,
 			&:active {
-				background: darken($color__minnpost-green, 10%);
+				background: utility-color(green, dark);
 				text-decoration: none;
 			}
 		}

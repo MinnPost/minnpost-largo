@@ -29,7 +29,6 @@
 
 	label {
 		margin-bottom: $standard-block-padding;
-		//line-height: 1.5em;
 	}
 
 	input:not([type=checkbox]):not([type=radio]),
@@ -65,12 +64,8 @@
 			display: inline-block;
 		}
 	}
-}
 
-// media queries
-@media screen and (min-width: $medium-screen) {
-
-	.m-form-standalone .m-form-item {
+	@include breakpoint-min( md ) {
 		max-width: 70%;
 
 		&.m-form-change-email {

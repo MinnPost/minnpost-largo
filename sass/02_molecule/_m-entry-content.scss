@@ -6,6 +6,15 @@
 	}
 }
 
+.m-archive .m-entry-content {
+	margin-bottom: 0;
+
+	@include breakpoint-min( sm ) {
+		flex: 1 0;
+		margin-right: $standard-block-margin;
+	}
+}
+
 .m-entry-content-custom {
 	//font-size: 100%;
 	//line-height: 1.3em;

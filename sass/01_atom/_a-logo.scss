@@ -38,7 +38,7 @@ footer .a-logo-svg picture {
 }
 
 // this depends on modernizr
-.no-srcset {
+/*.no-srcset {
 
 	.a-site-branding {
 
@@ -51,21 +51,4 @@ footer .a-logo-svg picture {
 			}
 		}
 	}
-}
-
-// media queries for logo
-
-@media screen and (min-width: 330px) {
-
-	.a-site-branding {
-		//width: 330px;
-	}
-}
-
-@media screen and (min-width: $more-than-logo-screen) {
-
-	.a-site-branding {
-		margin-left: 0;
-		margin-right: 0;
-	}
-}
+}*/

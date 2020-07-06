@@ -684,8 +684,8 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_author_figure' ) ) :
-	function minnpost_author_figure( $author_id = '', $photo_size = 'photo', $text_field = 'excerpt', $include_text = true, $include_name = false, $include_title = true, $lazy_load = true, $end = false ) {
-		$output = minnpost_get_author_figure( $author_id, $photo_size, $text_field, $include_text, $include_name, $include_title, $lazy_load, $end );
+	function minnpost_author_figure( $author_id = '', $photo_size = 'photo', $text_field = 'excerpt', $include_text = true, $name_field = 'display_name', $include_name = false, $title_field = 'job-title', $include_title = true, $lazy_load = true, $end = false ) {
+		$output = minnpost_get_author_figure( $author_id, $photo_size, $text_field, $include_text, $name_field, $include_name, $title_field, $include_title, $lazy_load, $end );
 		echo $output;
 	}
 endif;
@@ -709,7 +709,7 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 	/**
 	 * Returns author image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
 	 */
-	function minnpost_get_author_figure( $author_id = '', $photo_size = 'photo', $text_field = 'excerpt', $include_text = true, $include_name = false, $include_title = true, $lazy_load = true, $end = false ) {
+	function minnpost_get_author_figure( $author_id = '', $photo_size = 'photo', $text_field = 'excerpt', $include_text = true, $name_field = 'display_name', $include_name = false, $title_field = 'job-title', $include_title = true, $lazy_load = true, $end = false ) {
 
 		// some empty defaults
 		$image_id  = '';
@@ -717,6 +717,7 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 		$image     = '';
 		$text      = '';
 		$name      = '';
+		$title     = '';
 
 		// default job title
 		$default_title = esc_html__( 'About the author', 'minnpost-largo' );
@@ -736,16 +737,25 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 		if ( 'excerpt' === $text_field ) { // excerpt
 			$text .= get_post_meta( $author_id, '_mp_author_excerpt', true );
 		} elseif ( '' !== get_post_meta( $author_id, $text_field, true ) ) { // the field exists
-			$text .= get_post_meta( $author_id, $text_field, true );
+			$text = get_post_meta( $author_id, $text_field, true );
 		} else { // full text
-			$text .= get_post_meta( $author_id, '_mp_author_bio', true );
+			$text = get_post_meta( $author_id, '_mp_author_bio', true );
 		}
 
 		if ( post_password_required() || is_attachment() || ( '' === $image_id && '' === $image_url && '' === $text ) ) {
 			return;
 		}
 
-		$name = get_post_meta( $author_id, 'cap-display_name', true );
+		if ( 'display_name' === $name_field ) { // name
+			$name = get_post_meta( $author_id, 'cap-display_name', true );
+		} elseif ( '' !== get_post_meta( $author_id, $name_field, true ) ) { // the field exists
+			$name = get_post_meta( $author_id, $name_field, true );
+		}
+
+		if ( '' !== get_post_meta( $author_id, $title_field, true ) ) { // the field exists
+			$title = get_post_meta( $author_id, $title_field, true );
+		}
+
 		$text = wpautop( $text );
 		$text = apply_filters( 'the_content', $text );
 
@@ -788,17 +798,15 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 						$output    .= '<a href="' . $author_url . '">';
 					}
 					$output .= $name;
-					$title   = '';
-					if ( true === $include_title && isset( get_the_coauthor_meta( 'job-title', $author_id )[ $author_id ] ) && '' !== get_the_coauthor_meta( 'job-title', $author_id )[ $author_id ] ) {
-						$title = get_the_coauthor_meta( 'job-title', $author_id )[ $author_id ];
-					} elseif ( true === $include_title ) {
-						$title = $default_title;
-					}
-					if ( '' !== $title ) {
-						$output .= '&nbsp;|&nbsp;<span class="a-entry-author-job-title">' . $title . '</span>';
-					}
 					if ( 0 < $count ) {
 						$output .= '</a>';
+					}
+					if ( is_single() && '' === $title ) { // if this is a byline on a story, do the default title
+						// default job title
+						$title = $default_title;
+					}
+					if ( true === $include_title && '' !== $title ) {
+						$output .= '&nbsp;|&nbsp;<span class="a-entry-author-job-title">' . $title . '</span>';
 					}
 					$output .= '</h3>';
 				} elseif ( '' !== $name ) {
@@ -812,13 +820,15 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 						if ( '' !== $title ) {
 							$output .= '<h3 class="a-author-figure-job-title">' . $title . '</h3>';
 						}
-						$author_url = get_author_posts_url( $author_id, sanitize_title( $name ) );
-						$text      .= sprintf(
-							// translators: 1) author archive url, 2) author name
-							'<p class="a-more-by-author"><a href="%1$s">' . esc_html__( 'More articles by %2$s', 'minnpost-largo' ) . '</a></p>',
-							esc_url( $author_url ),
-							$name
-						);
+						if ( is_single() ) {
+							$author_url = get_author_posts_url( $author_id, sanitize_title( $name ) );
+							$text      .= sprintf(
+								// translators: 1) author archive url, 2) author name
+								'<p class="a-more-by-author"><a href="%1$s">' . esc_html__( 'More articles by %2$s', 'minnpost-largo' ) . '</a></p>',
+								esc_url( $author_url ),
+								$name
+							);
+						}
 					}
 				}
 				$output .= $text;
@@ -1095,8 +1105,9 @@ if ( ! function_exists( 'minnpost_get_term_text' ) ) :
 		if ( 'feature' === $size ) { // full text
 			$text = get_term_meta( $category_id, '_mp_category_body', true );
 		} else { // excerpt
-			$text = '<p>' . strip_tags( get_term_meta( $category_id, '_mp_category_excerpt', true ) ) . '</p>';
+			$text = get_term_meta( $category_id, '_mp_category_excerpt', true );
 		}
+		$text = apply_filters( 'the_content', $text );
 		return $text;
 	}
 endif;
