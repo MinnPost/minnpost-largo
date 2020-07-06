@@ -178,13 +178,13 @@
 
 					a:link,
 					a:visited {
-						@include link-underline(neutral-color(white), neutral-color(white));
+						@include link-underline(neutral-color(white), neutral-color(highlight));
 					}
 
 					a:hover,
 					a:focus,
 					a:active {
-						@include link-underline(neutral-color(highlight), neutral-color(highlight));
+						@include link-underline(neutral-color(highlight), neutral-color(white));
 					}
 				}
 			}
