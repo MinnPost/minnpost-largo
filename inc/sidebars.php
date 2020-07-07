@@ -83,5 +83,16 @@ if ( ! function_exists( 'minnpost_largo_widgets_init' ) ) :
 				'after_title'   => '</h3>',
 			)
 		);
+		register_sidebar(
+			array(
+				'name'          => __( 'Homepage Spills', 'minnpost_largo' ),
+				'id'            => 'sidebar-5',
+				'description'   => __( 'This should contain spills that sit within the homepage content flow.', 'minnpost_largo' ),
+				'before_widget' => '<section id="%1$s" class="m-widget-spills m-widget-spills-home-content %2$s">',
+				'after_widget'  => '</section>',
+				'before_title'  => '<h3 class="widget-title">',
+				'after_title'   => '</h3>',
+			)
+		);
 	}
 endif;

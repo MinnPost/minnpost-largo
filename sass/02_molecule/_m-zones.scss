@@ -4,30 +4,36 @@
 	display: flex;
 
 	.m-zone {
-		margin-bottom: $standard-block-margin;
-		border-bottom: $border-default-style;
+		//margin-bottom: $standard-block-margin;
+		//border-bottom: $border-default-style;
 
 		&.m-zone-homepage-top { // no margin or border because the article already has it
-			border-bottom: 0;
-			margin-bottom: 0;
+			//border-bottom: 0;
+			//margin-bottom: 0;
 		}
 
-		&.m-zone-homepage-middle {
+		&.m-zone-homepage-more-top,
+		&.m-zone-homepage-opinion {
 			display: flex;
 			justify-content: space-between;
 			flex-flow: row wrap;
 			border-bottom: 0;
 			margin-bottom: 0;
+
+			article {
+				width: colspan( 6, 12 );
+				margin-bottom: $standard-block-margin;
+				align-content: flex-start;
+
+				&:last-of-type {
+					margin-bottom: $standard-heading-margin;
+				}
+			}
 		}
 
-		&.m-zone-homepage-bottom {
+		&.m-zone-homepage-opinion {
 			margin-bottom: 0;
 			border-bottom: 0;
-		}
-
-		&.m-zone-homepage-middle article {
-			width: 47.5%;
-			margin-bottom: $standard-block-margin;
 		}
 	}
 }
@@ -40,7 +46,7 @@
 		.m-zone {
 
 			&.m-zone-sidebar-recommended {
-				margin-left: $standard-block-margin;
+				//margin-left: $standard-block-margin;
 			}
 		}
 	}
@@ -53,7 +59,7 @@
 		.m-zone {
 
 			&.m-zone-sidebar-recommended {
-				margin-left: 0;
+				//margin-left: 0;
 			}
 		}
 	}
