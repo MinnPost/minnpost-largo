@@ -23,9 +23,6 @@
 		endwhile;
 		?>
 	<?php endif; ?>
-	<?php if ( is_singular() ) : ?>
-		<?php minnpost_post_sidebar(); ?>
-	<?php endif; ?>
 	<?php dynamic_sidebar( 'sidebar-1' ); ?>
 	<?php if ( ! is_single() ) : ?>
 		<div class="m-ad-region m-ad-region-sidebar">
