@@ -17,7 +17,7 @@
 		.a-widget-title {
 			background: neutral-color(medium);
 			border-radius: $border-radius;
-			margin-bottom: 0;
+			margin-bottom: $standard-block-padding / 2;
 
 			@include meta-preset( $bold: true );
 
@@ -39,13 +39,14 @@
 
 		article.m-post-glean {
 			width: 100%;
-			//padding: $standard-block-padding;
-			//border: $border-default-style;
-			//border-top: 0;
-			//margin-bottom: 0;
 			border: 0;
 			margin: 0;
 			padding: 0;
+			
+			.m-entry-content {
+				margin-right: 0;
+				width: 100%;
+			}
 
 			.m-entry-excerpt {
 				font-size: 100%;
