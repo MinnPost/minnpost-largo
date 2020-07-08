@@ -179,7 +179,7 @@ if ( ! function_exists( 'minnpost_largo_spill_posts' ) ) :
 			}
 			wp_reset_postdata();
 			$output .= '</div>';
-			if ( isset( $instance['button_label'] ) ) {
+			if ( isset( $instance['button_label'] ) && '' !== $instance['button_label'] ) {
 				$output .= '<div class="a-spill-actions"><a href="' . $instance['url'] . '" class="a-button-content">' . $instance['button_label'] . '</a></div>';
 			}
 		}
