@@ -369,7 +369,8 @@ endif;
 if ( ! function_exists( 'minnpost_largo_always_load_comments_for_user' ) ) :
 	add_filter( 'llc_can_lazy_load', 'minnpost_largo_always_load_comments_for_user' );
 	function minnpost_largo_always_load_comments_for_user( $can_lazyload ) {
-		$user_id = get_current_user_id();
+		$user_id      = get_current_user_id();
+		$can_lazyload = true; // set a default of true; user overrides it
 		if ( 0 !== $user_id ) {
 			$always_load_comments = filter_var( get_user_meta( $user_id, 'always_load_comments', true ), FILTER_VALIDATE_BOOLEAN );
 			if ( true === $always_load_comments ) {

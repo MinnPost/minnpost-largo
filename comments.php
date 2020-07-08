@@ -70,7 +70,11 @@ if ( post_password_required() ) {
 		?>
 
 	<?php elseif ( comments_open() ) : ?>
-		<h3 class="a-comments-title"><?php echo esc_html_e( 'No comments yet', 'minnpost-largo' ); ?></h3>
+		<?php if ( is_user_logged_in() ) : ?>
+			<h3 class="a-comments-title"><?php echo esc_html_e( 'Comments (none yet)', 'minnpost-largo' ); ?></h3>
+		<?php else : ?>
+			<h3 class="a-comments-title a-comments-title-none"><?php echo esc_html_e( 'Comments (none yet)', 'minnpost-largo' ); ?></h3>
+		<?php endif; ?>
 	<?php endif; ?>
 
 	<?php
