@@ -87,7 +87,7 @@ get_header(); ?>
 			<?php do_action( 'acm_tag', 'Middle3' ); ?>
 		</div>
 
-		<div id="home-fourth" class="o-homepage-listing o-homepage-listing-spills">
+		<div id="home-fourth" class="o-homepage-listing o-homepage-listing-categories">
 			<?php dynamic_sidebar( 'sidebar-spills' ); ?>
 		</div>
 
