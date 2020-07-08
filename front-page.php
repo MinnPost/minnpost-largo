@@ -40,7 +40,7 @@ get_header(); ?>
 				?>
 				<?php if ( $more_top_stories->have_posts() ) : ?>
 					<section class="m-archive m-archive-excerpt m-zone m-zone-homepage-more-top">
-						<h2 class="a-zone-title"><?php echo $zone->name; ?></h2>
+						<h2 class="a-zone-title"><?php echo $zone->description; ?></h2>
 						<?php
 						while ( $more_top_stories->have_posts() ) :
 							$more_top_stories->the_post();
@@ -67,7 +67,7 @@ get_header(); ?>
 				?>
 				<?php if ( $opinion_query->have_posts() ) : ?>
 					<section class="m-archive m-archive-excerpt m-zone m-zone-homepage-opinion">
-						<h2 class="a-zone-title"><?php echo $zone->name; ?></h2>
+						<h2 class="a-zone-title"><?php echo $zone->description; ?></h2>
 						<?php
 						while ( $opinion_query->have_posts() ) :
 							$opinion_query->the_post();
