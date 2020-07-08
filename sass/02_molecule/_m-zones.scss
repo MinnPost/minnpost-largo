@@ -22,7 +22,11 @@
 				padding-bottom: 0;
 
 				.m-entry-content {
-					flex: unset;
+					flex: 1 0;
+
+					@include breakpoint-min( md ) {
+						flex: unset;
+					}
 
 					@include breakpoint-min( xxl ) {
 						flex: 1 0;
@@ -56,6 +60,13 @@
 		&.m-zone-homepage-opinion {
 			margin-bottom: 0;
 			border-bottom: 0;
+
+			article {
+				@include breakpoint-min( sm ) {
+					width: colspan( 6, 12 );
+				}
+			}
+
 		}
 	}
 }

@@ -1,9 +1,12 @@
 .o-homepage-listing {
-	display: flex;
-	flex: 1 100%;
 	border-bottom: $border-default-style;
 	margin-bottom: $standard-block-margin;
 	//flex-wrap: wrap;
+
+	@include breakpoint-min( md ) {
+		display: flex;
+		flex: 1 100%;
+	}
 
 	&.o-homepage-listing-top-story {
 		border-bottom: 0;
