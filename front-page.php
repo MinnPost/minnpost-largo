@@ -44,7 +44,7 @@ get_header(); ?>
 						<?php
 						while ( $more_top_stories->have_posts() ) :
 							$more_top_stories->the_post();
-							get_template_part( 'template-parts/content', 'excerpt' ); // content-middle
+							get_template_part( 'template-parts/content', 'homepage' ); // content-middle
 						endwhile;
 						?>
 						<div class="a-zone-actions">
