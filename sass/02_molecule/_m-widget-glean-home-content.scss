@@ -13,27 +13,32 @@
 		padding: $standard-block-padding;
 		margin-bottom: $standard-block-margin;
 		background: neutral-color(highlight);
+		border-radius: $border-radius;
 
 		.a-widget-title {
 			background: neutral-color(medium);
 			border-radius: $border-radius;
 			margin-bottom: $standard-block-padding / 2;
+			color: neutral-color(black);
 
 			@include meta-preset( $bold: true );
 
 			a {
 				display: block;
 				padding: $standard-block-padding;
-				@include link-underline(neutral-color(white), neutral-color(light));
-				text-decoration: none;
 
-				&:hover,
-				&:focus,
-				&:active {
-					@include link-underline(neutral-color(white), neutral-color(light));
-					text-decoration: underline;
+				&:link,
+				&:visited {
+					color: inherit;
+					text-decoration: none;
 				}
 
+				&:active,
+				&:focus,
+				&:hover,
+				&.active {
+					@include link-underline();
+				}
 			}
 		}
 

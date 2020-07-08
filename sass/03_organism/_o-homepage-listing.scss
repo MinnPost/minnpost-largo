@@ -1,24 +1,25 @@
 .o-homepage-listing {
 	display: flex;
 	flex: 1 100%;
+	border-bottom: $border-default-style;
+	margin-bottom: $standard-block-margin;
 	//flex-wrap: wrap;
 
-	&#home-second {
+	&.o-homepage-listing-top-story {
+		border-bottom: 0;
+		margin-bottom: 0;;
+	}
+
+	&.o-homepage-listing-more-top-stories {
 		order: 4;
 		@include breakpoint-min( xxl ) {
 			order: unset;
 		}
 	}
 
-	.m-zone {
-		flex: 1 0;
+	&.o-homepage-listing-spills {
+		margin: 0 -$standard-heading-margin;
 	}
-
-	/*.m-zone-homepage-bottom {
-		@include breakpoint-min( xxl ) {
-			width: $size__main-large-screen;
-		}
-	}*/
 
 	aside {
 		margin-left: $standard-block-margin;

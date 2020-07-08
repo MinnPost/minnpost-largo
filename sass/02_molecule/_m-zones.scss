@@ -3,13 +3,24 @@
 	flex-wrap: wrap;
 	display: flex;
 
+	// where the zones differ from the archives
+	// see o-homepage-listing for groups of zones with their sidebars	
 	.m-zone {
-		//margin-bottom: $standard-block-margin;
-		//border-bottom: $border-default-style;
+		flex: 1 0;
 
-		&.m-zone-homepage-top { // no margin or border because the article already has it
-			//border-bottom: 0;
-			//margin-bottom: 0;
+		article {
+
+			.m-entry-excerpt {
+				//margin-bottom: 0; // maybe don't need this
+			}
+		}
+
+		&.m-zone-homepage-top { // because this section is not visually separate
+
+			article {
+				border-bottom: 0;
+				padding-bottom: 0;
+			}
 		}
 
 		&.m-zone-homepage-more-top,
@@ -26,7 +37,7 @@
 				align-content: flex-start;
 
 				&:last-of-type {
-					margin-bottom: $standard-heading-margin;
+					//margin-bottom: $standard-heading-margin;
 				}
 			}
 		}
