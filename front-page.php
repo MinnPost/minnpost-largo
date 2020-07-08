@@ -91,6 +91,10 @@ get_header(); ?>
 			<?php dynamic_sidebar( 'sidebar-spills' ); ?>
 		</div>
 
+		<!--<div id="home-fifth" class="o-homepage-listing o-homepage-listing-membership">
+			<?php dynamic_sidebar( 'sidebar-membership' ); ?>
+		</div>-->
+
 	</main>
 
 <?php
