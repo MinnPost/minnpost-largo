@@ -1,5 +1,8 @@
-.m-archive {
+.m-archive,
+.m-widget-spills {
 
+	&.m-zone,
+	&.m-widget-spills-home-content,
 	&.m-archive-category,
 	&.m-archive-author,
 	&.m-archive-post_tag,
@@ -16,6 +19,8 @@
 		}
 	}
 
+	&.m-zone,
+	&.m-widget-spills-home-content,
 	&.m-archive-category,
 	&.m-archive-author,
 	&.m-archive-post_tag,
@@ -46,18 +51,3 @@
 		}
 	}
 }
-
-.m-archive-top article,
-.m-archive-excerpt article {
-	/*border-bottom: 1px solid $color__gray-lightest;
-	margin-bottom: 20px;
-	clear: both;*/
-}
-
-/*.o-archive-listing {
-
-	.m-archive-top article,
-	.m-archive-excerpt article {
-		padding-bottom: 6px;
-	}
-}*/

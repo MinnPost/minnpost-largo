@@ -19,6 +19,11 @@
 			width: auto;
 		}
 	}
+
+	&.m-ad-region-home-full-width {
+		width: 100%;
+		margin-bottom: $standard-block-margin;
+	}
 }
 
 .m-ad-region:empty {
@@ -44,6 +49,15 @@
 	}
 }
 
+.m-homepage-zones {
+	.m-ad-region-sidebar {
+
+		@include breakpoint-min( lg ) {
+			margin-bottom: auto;
+		}
+	}
+}
+
 // media queries for ad regions
 
 @media screen and (min-width: $ad-top-width) {
@@ -51,7 +65,7 @@
 	.m-ad-region {
 
 		&.m-ad-region-leaderboard {
-			padding: 10px 0;
+			padding: $standard-block-padding 0;
 		}
 	}
 }
