@@ -79,5 +79,10 @@
 				width: 100%;
 			}
 		}
+
+		.o-site-sidebar#secondary-first :first-child,
+		.o-site-sidebar#secondary-second :first-child {
+			margin-top: 0;
+		}
 	}
 }
