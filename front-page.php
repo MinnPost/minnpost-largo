@@ -11,7 +11,6 @@
 
 get_header(); ?>
 	<main id="main" class="site-main m-homepage-zones">
-
 		<div id="home-first" class="o-homepage-listing o-homepage-listing-top-story">
 			<?php if ( function_exists( 'z_get_zone' ) ) : ?>
 				<?php $top_query = z_get_zone_query( 'homepage-top' ); ?>
@@ -29,9 +28,6 @@ get_header(); ?>
 				<?php endif; ?>
 			<?php endif; ?>
 			<?php get_sidebar( 'first' ); ?>
-		</div>
-
-		<div id="home-second" class="o-homepage-listing o-homepage-listing-more-top-stories">
 			<?php if ( function_exists( 'z_get_zone' ) ) : ?>
 				<?php
 				$top_stories_zone = 'homepage-todays-top-stories';
@@ -47,18 +43,14 @@ get_header(); ?>
 							get_template_part( 'template-parts/content', 'excerpt' ); // content-middle
 						endwhile;
 						?>
-						<div class="a-zone-actions">
+						<!--<div class="a-zone-actions">
 							<a href="<?php echo site_url( '/news/' ); ?>" class="a-button-content"><?php echo __( 'More news', 'minnpost-largo' ); ?></a>
-						</div>
+						</div>-->
 					</section>
 				<?php endif; ?>
 			<?php endif; ?>
 			<?php get_sidebar( 'second' ); ?>
-		</div>
-
-		<?php do_action( 'wp_message_inserter', 'homepage_middle' ); ?>
-
-		<div id="home-third" class="o-homepage-listing o-homepage-listing-opinion">
+			<?php do_action( 'wp_message_inserter', 'homepage_middle' ); ?>
 			<?php if ( function_exists( 'z_get_zone' ) ) : ?>
 				<?php
 				$opinion_zone  = 'homepage-opinion';
@@ -74,28 +66,23 @@ get_header(); ?>
 							get_template_part( 'template-parts/content', 'opinion' ); // content-excerpt
 						endwhile;
 						?>
-						<div class="a-zone-actions">
+						<!--<div class="a-zone-actions">
 							<a href="<?php echo site_url( '/opinion/' ); ?>" class="a-button-content"><?php echo __( 'More commentary', 'minnpost-largo' ); ?></a>
-						</div>
+						</div>-->
 					</section>
 				<?php endif; ?>
 			<?php endif; ?>
 			<?php get_sidebar( 'third' ); ?>
+			<div class="m-ad-region m-ad-region-home m-ad-region-home-full-width">
+				<?php do_action( 'acm_tag', 'Middle3' ); ?>
+			</div>
+			<div class="m-widget-group m-widget-group-homepage">
+				<?php dynamic_sidebar( 'sidebar-spills' ); ?>
+			</div>
+			<div class="m-widget-group m-widget-group-homepage">
+				<?php dynamic_sidebar( 'sidebar-membership' ); ?>
+			</div>
 		</div>
-
-		<div class="m-ad-region m-ad-region-home m-ad-region-home-full-width">
-			<?php do_action( 'acm_tag', 'Middle3' ); ?>
-		</div>
-
-		<div id="home-fourth" class="o-homepage-listing o-homepage-listing-categories">
-			<?php dynamic_sidebar( 'sidebar-spills' ); ?>
-		</div>
-
-		<!--<div id="home-fifth" class="o-homepage-listing o-homepage-listing-membership">
-			<?php dynamic_sidebar( 'sidebar-membership' ); ?>
-		</div>-->
-
 	</main>
-
 <?php
 get_footer();

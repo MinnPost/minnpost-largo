@@ -1,6 +1,5 @@
 .m-post-image {
 	display: table;
-	//align-self: center;
 	margin-top: 0;
 
 	@include breakpoint-range( sm, lg ) {
@@ -26,10 +25,43 @@
 }
 
 .m-archive-top .m-post-image,
-.m-archive-excerpt .m-post-image {
+.m-archive-excerpt .m-post-image,
+.m-archive-homepage .m-post-image {
 	margin-bottom: $standard-heading-margin;
 	flex: 1 0;
 }
+
+.m-zone .m-post-image {
+
+	@include breakpoint-min( sm ) {
+		margin-bottom: 0;
+	}
+
+	@include breakpoint-min( lg ) {
+		margin-bottom: $standard-heading-margin;
+	}
+}
+
+.m-zone-homepage-top .m-post-image {
+	margin-left: 0;
+
+	@include breakpoint-min( md ) {
+		margin-left: $standard-heading-margin;
+	}
+
+	@include breakpoint-min( lg ) {
+		margin-left: 0;
+	}
+
+	@include breakpoint-min( xxl ) {
+		margin-left: $standard-heading-margin;
+	}
+
+}
+
+
+
+
 
 /*.m-archive-top.m-archive-has-1-post .m-post-image {
 	float: none;
