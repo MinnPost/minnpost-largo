@@ -1,0 +1,8 @@
+.m-widget-group {
+    
+    &.m-widget-group-homepage {
+        margin: -$standard-heading-margin;
+        //border-bottom: 0;
+        display: flex;
+    }
+}

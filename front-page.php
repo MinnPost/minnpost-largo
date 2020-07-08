@@ -43,9 +43,9 @@ get_header(); ?>
 							get_template_part( 'template-parts/content', 'excerpt' ); // content-middle
 						endwhile;
 						?>
-						<div class="a-zone-actions">
+						<!--<div class="a-zone-actions">
 							<a href="<?php echo site_url( '/news/' ); ?>" class="a-button-content"><?php echo __( 'More news', 'minnpost-largo' ); ?></a>
-						</div>
+						</div>-->
 					</section>
 				<?php endif; ?>
 			<?php endif; ?>
@@ -66,9 +66,9 @@ get_header(); ?>
 							get_template_part( 'template-parts/content', 'opinion' ); // content-excerpt
 						endwhile;
 						?>
-						<div class="a-zone-actions">
+						<!--<div class="a-zone-actions">
 							<a href="<?php echo site_url( '/opinion/' ); ?>" class="a-button-content"><?php echo __( 'More commentary', 'minnpost-largo' ); ?></a>
-						</div>
+						</div>-->
 					</section>
 				<?php endif; ?>
 			<?php endif; ?>
@@ -76,8 +76,12 @@ get_header(); ?>
 			<div class="m-ad-region m-ad-region-home m-ad-region-home-full-width">
 				<?php do_action( 'acm_tag', 'Middle3' ); ?>
 			</div>
-			<?php dynamic_sidebar( 'sidebar-spills' ); ?>
-			<?php dynamic_sidebar( 'sidebar-membership' ); ?>
+			<div class="m-widget-group m-widget-group-homepage">
+				<?php dynamic_sidebar( 'sidebar-spills' ); ?>
+			</div>
+			<div class="m-widget-group m-widget-group-homepage">
+				<?php dynamic_sidebar( 'sidebar-membership' ); ?>
+			</div>
 		</div>
 	</main>
 <?php

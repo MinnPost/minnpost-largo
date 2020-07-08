@@ -2,7 +2,6 @@
 	margin-top: $standard-block-padding;
 
 	// where the zones differ from the archives
-	// see o-homepage-listing for groups of zones with their sidebars	
 	.m-zone {
 		flex-wrap: wrap;
 		display: flex;
@@ -13,19 +12,12 @@
 	
 		@include breakpoint-min( lg ) {
 			width: colspan( 8, 12 );
-			max-width: calc(100% - #{$size__site-sidebar} );
+			max-width: calc((100% - #{colspan( 1, 12 )}) - #{$size__site-sidebar} );
 		}
 	
 		@include breakpoint-min( xl ) {
 			width: colspan( 12, 16 );
-			max-width: calc(100% - #{$size__site-sidebar} );
-		}
-
-		article {
-
-			.m-entry-excerpt {
-				//margin-bottom: 0; // maybe don't need this
-			}
+			max-width: calc((100% - #{colspan( 1, 16 )}) - #{$size__site-sidebar} );
 		}
 
 		&.m-zone-homepage-top { // because this section is not visually separate
@@ -33,18 +25,6 @@
 			article {
 				border-bottom: 0;
 				padding-bottom: 0;
-
-				.m-entry-content {
-					flex: 1 0;
-
-					@include breakpoint-min( md ) {
-						flex: unset;
-					}
-
-					@include breakpoint-min( xxl ) {
-						flex: 1 0;
-					}
-				}
 			}
 		}
 		
@@ -53,8 +33,6 @@
 			display: flex;
 			justify-content: space-between;
 			flex-flow: row wrap;
-			border-bottom: 0;
-			margin-bottom: 0;
 
 			article {
 				margin-bottom: $standard-block-margin;
@@ -63,16 +41,10 @@
 				@include breakpoint-min( lg ) {
 					width: colspan( 6, 12 );
 				}
-
-				&:last-of-type {
-					//margin-bottom: $standard-heading-margin;
-				}
 			}
 		}
 
 		&.m-zone-homepage-opinion {
-			margin-bottom: 0;
-			border-bottom: 0;
 
 			article {
 				@include breakpoint-min( sm ) {
