@@ -138,35 +138,50 @@ function minnpost_widget_display_callback( $instance, $widget, $args ) {
 * Filter the output of a WP_Query for a spill widget
 * @param string $output
 * @param object $query
+* @param string $before_title
+* @param string $title
+* @param string $after_title
+* @param array $instance
 * @return string $output
 *
 */
 if ( ! function_exists( 'minnpost_largo_spill_posts' ) ) :
-	add_filter( 'minnpost_spills_display_spill_posts', 'minnpost_largo_spill_posts', 10, 2 );
-	function minnpost_largo_spill_posts( $output = '', $query ) {
+	add_filter( 'minnpost_spills_display_spill_posts', 'minnpost_largo_spill_posts', 10, 6 );
+	function minnpost_largo_spill_posts( $output = '', $query, $before_title = '', $title = '', $after_title = '', $instance = array() ) {
 		if ( isset( $query ) && $query->have_posts() ) {
 			$output = '';
-			while ( $query->have_posts() ) :
+			if ( $title ) {
+				$before_title = str_replace( 'widget-title', 'a-widget-title', $before_title );
+				$output      .= $before_title . $title . $after_title;
+			}
+			$output .= '<div class="m-widget-contents">';
+			if ( isset( $instance['content'] ) ) {
+				$output .= $instance['content'];
+			}
+			while ( $query->have_posts() ) {
 				$query->the_post();
-				?>
-				<header class="m-entry-header">
-					<?php the_title( '<h3 class="a-entry-title a-entry-title-excerpt"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
-					<?php if ( 'post' === get_post_type( get_the_ID() ) ) : ?>
-						<?php if ( '' !== minnpost_get_posted_by() ) : ?>
-							<div class="m-entry-byline">
-								<?php minnpost_posted_by( get_the_ID() ); ?>
-							</div>
-						<?php endif; ?>
-						<div class="m-entry-meta">
-							<?php if ( '' !== minnpost_get_posted_on() ) : ?>
-								<?php minnpost_posted_on(); ?>
-							<?php endif; ?>
-						</div>
-					<?php endif; ?>
-				</header>
-				<?php
-			endwhile;
+				$output .= '<article id="' . get_the_ID() . '" class="m-post m-post-spill">';
+				$output .= '<header class="m-entry-header">';
+				$output .= '<h5 class="a-entry-title a-spill-item-title"><a href="' . esc_url( get_the_permalink() ) . '">' . get_the_title() . '</a></h5>';
+				if ( '' !== minnpost_get_posted_by() ) {
+					$output .= '<div class="m-entry-byline">' . minnpost_get_posted_by() . '</div>';
+				}
+				if ( '' !== minnpost_get_posted_on() ) {
+					$date    = minnpost_get_posted_on();
+					$output .= sprintf(
+						'<time class="a-entry-date published updated" datetime="%1$s">%2$s</time>',
+						$date['published']['machine'],
+						$date['published']['human'],
+					);
+				}
+				$output .= '</header>';
+				$output .= '</article>';
+			}
 			wp_reset_postdata();
+			$output .= '</div>';
+			if ( isset( $instance['button_label'] ) ) {
+				$output .= '<div class="a-spill-actions"><a href="' . $instance['url'] . '" class="a-button-content">' . $instance['button_label'] . '</a></div>';
+			}
 		}
 		return $output;
 	}
