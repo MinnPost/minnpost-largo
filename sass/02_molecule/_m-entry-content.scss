@@ -19,10 +19,23 @@
 	&.m-archive-excerpt {
 
 		.m-entry-content {
+			flex: unset;
+
 			@include breakpoint-min( sm ) {
-				margin-right: $standard-block-margin;
+				flex: 1 0;
+				margin-right: $standard-heading-margin;
+			}
+
+			@include breakpoint-min( lg ) {
+				margin-right: 0;
+			}
+
+			@include breakpoint-min( xxl ) {
+				flex: 1 0;
+				margin-right: $standard-heading-margin;
 			}
 		}
+
 	}
 
 	&.m-archive-homepage {
@@ -55,7 +68,6 @@
 			}
 
 			@include breakpoint-min( lg ) {
-				flex: unset;
 				margin-right: 0;
 			}
 
