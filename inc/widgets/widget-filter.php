@@ -90,10 +90,9 @@ if ( ! function_exists( 'minnpost_widget_output_filter' ) ) :
 		// target the recommended widget
 		if ( false !== strpos( $widget_output, 'class="m-widget m-widget-zone-posts"' ) && 'zoninator_zoneposts_widget' == $widget_type ) {
 			$widget_output = str_replace( '<div id="zoninator_zoneposts_widget-', '<section id="zoninator-zoneposts-widget-', $widget_output );
+			$widget_output = preg_replace( '/\>\s+\</m', '><', $widget_output );
 			$widget_output = str_replace(
-				'</ul>
-
-			</div>',
+				'</ul></div>',
 				'</ul></div></section>',
 				$widget_output
 			);
