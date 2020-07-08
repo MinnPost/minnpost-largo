@@ -39,12 +39,12 @@ get_header(); ?>
 				$more_top_stories = z_get_zone_query( $top_stories_zone );
 				?>
 				<?php if ( $more_top_stories->have_posts() ) : ?>
-					<section class="m-archive m-archive-excerpt m-zone m-zone-homepage-more-top">
+					<section class="m-archive m-archive-homepage m-zone m-zone-homepage-more-top">
 						<h2 class="a-zone-title"><?php echo $zone->description; ?></h2>
 						<?php
 						while ( $more_top_stories->have_posts() ) :
 							$more_top_stories->the_post();
-							get_template_part( 'template-parts/content', 'homepage' ); // content-middle
+							get_template_part( 'template-parts/content', 'excerpt' ); // content-middle
 						endwhile;
 						?>
 						<div class="a-zone-actions">

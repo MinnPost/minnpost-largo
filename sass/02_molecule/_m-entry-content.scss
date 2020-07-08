@@ -6,12 +6,34 @@
 	}
 }
 
-.m-archive .m-entry-content {
-	margin-bottom: 0;
+.m-archive {
 
-	@include breakpoint-min( sm ) {
-		flex: 1 0;
-		margin-right: $standard-block-margin;
+	.m-entry-content {
+		margin-bottom: 0;
+
+		@include breakpoint-min( sm ) {
+			flex: 1 0;
+		}
+	}
+
+	&.m-archive-excerpt {
+
+		.m-entry-content {
+			@include breakpoint-min( sm ) {
+				margin-right: $standard-block-margin;
+			}
+		}
+	}
+
+	&.m-archive-homepage {
+
+		.m-entry-content {
+			order: 2;
+
+			@include breakpoint-min( sm ) {
+				margin-left: $standard-block-margin;
+			}
+		}
 	}
 }
 
