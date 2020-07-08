@@ -2,20 +2,8 @@
 	display: table;
 	margin-top: 0;
 
-	@include breakpoint-range( sm, lg ) {
-		//margin-left: colspan( 3, 12 );
-	}
-
-	@include breakpoint-min( xl ) {
-		//margin-left: colspan( 3, 12 );
-	}
-
 	img {
 		display: block;
-	}
-
-	&.m-post-image-large {
-		//font-size: $content-font-size;
 	}
 
 	figcaption {
@@ -36,44 +24,9 @@
 
 	@include breakpoint-min( sm ) {
 		margin-bottom: 0;
-		
 	}
 
 	@include breakpoint-min( lg ) {
 		margin-bottom: $standard-heading-margin;
 	}
-
-	@include breakpoint-min( xxl ) {
-
-	}
-
 }
-
-
-
-
-
-/*.m-archive-top.m-archive-has-1-post .m-post-image {
-	float: none;
-	margin: 0;
-}*/
-
-
-// media queries for post images
-/*@media screen and (min-width: 350px) {
-
-	.m-archive-top .m-post-image,
-	.m-archive-excerpt .m-post-image {
-		float: left;
-	}
-}*/
-
-/*@media screen and (min-width: $medium-screen) {
-
-	.m-zone-homepage-top.m-archive-top.m-archive-has-1-post .m-post-thumbnail-feature-large,
-	.m-zone-homepage-top.m-archive-top.m-archive-has-1-post .m-post-thumbnail-feature-medium {
-		float: left;
-		margin-right: $standard-block-margin;
-	}
-}
-*/
