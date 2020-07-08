@@ -31,30 +31,20 @@
 	flex: 1 0;
 }
 
-.m-zone .m-post-image {
+.m-archive-top .m-post-image {
+	margin-left: 0;
 
 	@include breakpoint-min( sm ) {
 		margin-bottom: 0;
+		
 	}
 
 	@include breakpoint-min( lg ) {
 		margin-bottom: $standard-heading-margin;
 	}
-}
-
-.m-zone-homepage-top .m-post-image {
-	margin-left: 0;
-
-	@include breakpoint-min( md ) {
-		margin-left: $standard-heading-margin;
-	}
-
-	@include breakpoint-min( lg ) {
-		margin-left: 0;
-	}
 
 	@include breakpoint-min( xxl ) {
-		margin-left: $standard-heading-margin;
+
 	}
 
 }

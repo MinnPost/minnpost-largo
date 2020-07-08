@@ -31,7 +31,7 @@
 			order: 2;
 
 			@include breakpoint-min( sm ) {
-				//margin-left: $standard-block-margin;
+				margin-left: $standard-block-margin;
 			}
 
 			@media screen and (min-width:50em) {
@@ -49,16 +49,19 @@
 		.m-entry-content {
 			flex: unset;
 
-			@include breakpoint-min( md ) {
+			@include breakpoint-min( sm ) {
 				flex: 1 0;
+				margin-right: $standard-heading-margin;
 			}
 
 			@include breakpoint-min( lg ) {
 				flex: unset;
+				margin-right: 0;
 			}
 
 			@include breakpoint-min( xxl ) {
 				flex: 1 0;
+				margin-right: $standard-heading-margin;
 			}
 		}
 	}
