@@ -482,10 +482,8 @@ if ( ! function_exists( 'minnpost_largo_load_comments_switch' ) ) :
 		if ( ! class_exists( 'Lazy_Load_Comments' ) ) {
 			return;
 		}
-		$always_load_comments  = get_user_meta( $user_id, 'always_load_comments', true );
-		error_log( '1. always load is ' . $always_load_comments );
+		$always_load_comments = get_user_meta( $user_id, 'always_load_comments', true );
 		$always_load_comments = user_always_loads_comments( $always_load_comments );
-		error_log( '2. always load is ' . $always_load_comments );
 		if ( comments_open() ) :
 			?>
 			<div class="m-user-always-show-comments m-user-always-show-comments-<?php echo $position; ?>">
