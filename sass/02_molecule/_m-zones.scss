@@ -1,12 +1,25 @@
 .m-homepage-zones {
 	margin-top: $standard-block-padding;
-	flex-wrap: wrap;
-	display: flex;
 
 	// where the zones differ from the archives
 	// see o-homepage-listing for groups of zones with their sidebars	
 	.m-zone {
-		flex: 1 0;
+		flex-wrap: wrap;
+		display: flex;
+
+		@include breakpoint-min( sm ) {
+			display: flex;
+		}
+	
+		@include breakpoint-min( lg ) {
+			width: colspan( 8, 12 );
+			max-width: calc((100% - #{colspan( 1, 12 )}) - #{$size__site-sidebar} );
+		}
+	
+		@include breakpoint-min( xl ) {
+			width: colspan( 12, 16 );
+			max-width: calc((100% - #{colspan( 1, 16 )}) - #{$size__site-sidebar} );
+		}
 
 		article {
 
@@ -34,7 +47,7 @@
 				}
 			}
 		}
-
+		
 		&.m-zone-homepage-more-top,
 		&.m-zone-homepage-opinion {
 			display: flex;
@@ -67,33 +80,6 @@
 				}
 			}
 
-		}
-	}
-}
-
-// media queries for zones
-@include breakpoint-min( sm ) {
-
-	.m-homepage-zones {
-
-		.m-zone {
-
-			&.m-zone-sidebar-recommended {
-				//margin-left: $standard-block-margin;
-			}
-		}
-	}
-}
-
-@media screen and (min-width: $max-width-page) {
-
-	.m-homepage-zones {
-
-		.m-zone {
-
-			&.m-zone-sidebar-recommended {
-				//margin-left: 0;
-			}
 		}
 	}
 }

@@ -1,41 +1,9 @@
 .o-homepage-listing {
-	border-bottom: $border-default-style;
-	margin-bottom: $standard-block-margin;
-	//flex-wrap: wrap;
-
-	@include breakpoint-min( md ) {
-		display: flex;
-		flex: 1 100%;
-	}
-
-	&.o-homepage-listing-top-story {
-		border-bottom: 0;
-		margin-bottom: 0;;
-	}
-
-	/*&.o-homepage-listing-more-top-stories {
-		order: 4;
-		@include breakpoint-min( xxl ) {
-			order: unset;
-		}
-	}*/
-
-	&.o-homepage-listing-categories {
-		margin: 0 -$standard-heading-margin;
-		border-bottom: 0;
-	}
-
-	aside {
-		margin-left: $standard-block-margin;
-	}
-
-	.o-content-sidebar {
-		@include breakpoint-min( xxl ) {
-			//padding-left: 0;
-			//margin-left: $home-content-sidebar-padding;
-			//width: $size__content-sidebar-large-screen;
-		}
-	}
+	//border-bottom: $border-default-style;
+	//margin-bottom: $standard-block-margin;
+	display: flex;
+	flex-wrap: wrap;
+	width: 100%;
 }
 
 // smallest screens just display as linear
