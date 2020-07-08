@@ -10,6 +10,7 @@
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post' ); ?>>
+	<?php minnpost_post_image( 'feature-large' ); ?>
 	<div class="m-entry-content">
 		<?php if ( '' === minnpost_get_replace_category_text() ) : ?>
 			<?php minnpost_category_breadcrumb(); ?>
@@ -35,5 +36,4 @@
 			<?php the_excerpt(); ?>
 		</div>
 	</div>
-	<?php minnpost_post_image( 'feature-large' ); ?>
 </article>
