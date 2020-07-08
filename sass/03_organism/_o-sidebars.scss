@@ -23,12 +23,11 @@
 
 	.o-site-sidebar {
 
-		&#secondary-second {
-
-			section {
-				width: calc(50% - 1em);
-			}
-		}
+		width: $size__site-sidebar;
+		margin-left: auto;
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
 	}
 }
 

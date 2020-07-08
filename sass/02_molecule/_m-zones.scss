@@ -20,6 +20,14 @@
 			article {
 				border-bottom: 0;
 				padding-bottom: 0;
+
+				.m-entry-content {
+					flex: unset;
+
+					@include breakpoint-min( xxl ) {
+						flex: 1 0;
+					}
+				}
 			}
 		}
 
@@ -32,9 +40,12 @@
 			margin-bottom: 0;
 
 			article {
-				width: colspan( 6, 12 );
 				margin-bottom: $standard-block-margin;
 				align-content: flex-start;
+
+				@include breakpoint-min( lg ) {
+					width: colspan( 6, 12 );
+				}
 
 				&:last-of-type {
 					//margin-bottom: $standard-heading-margin;

@@ -143,7 +143,7 @@
 	// homepage middle 
 	&.wp-message-inserter-message-region-homepage_middle {
 		width: 100%;
-		order: 1;
+		//order: 1;
 		background: utility-color(blue, background);
 		border-radius: $border-radius;
 		margin-bottom: $standard-block-margin;
@@ -314,7 +314,7 @@
 
 		// homepage middle
 		&.wp-message-inserter-message-region-homepage_middle {
-			order: unset;
+			//order: unset;
 		}
 	}
 }

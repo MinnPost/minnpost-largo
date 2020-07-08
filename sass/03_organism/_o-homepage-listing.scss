@@ -10,12 +10,12 @@
 		margin-bottom: 0;;
 	}
 
-	&.o-homepage-listing-more-top-stories {
+	/*&.o-homepage-listing-more-top-stories {
 		order: 4;
 		@include breakpoint-min( xxl ) {
 			order: unset;
 		}
-	}
+	}*/
 
 	&.o-homepage-listing-categories {
 		margin: 0 -$standard-heading-margin;
