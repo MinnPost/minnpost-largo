@@ -58,7 +58,7 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 								<?php if ( 'post' === get_post_type() ) : ?>
 									<?php if ( '' !== minnpost_get_posted_by() ) : ?>
 										<div class="m-entry-byline">
-											<?php minnpost_posted_by( $post->id ); ?>
+											<?php minnpost_posted_by( get_the_ID() ); ?>
 										</div>
 									<?php endif; ?>
 								<?php endif; ?>
@@ -70,11 +70,9 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 						$i++;
 				endwhile;
 					?>
-					<!-- end of the loop -->
 					<?php wp_reset_postdata(); ?>
 				</div>
 			</article>
-
 		<?php endif; ?>
 
 		<?php

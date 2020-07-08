@@ -23,12 +23,11 @@
 
 	.o-site-sidebar {
 
-		&#secondary-second {
-
-			section {
-				width: calc(50% - 1em);
-			}
-		}
+		width: $size__site-sidebar;
+		margin-left: auto;
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
 	}
 }
 
@@ -52,12 +51,29 @@
 		flex-direction: column;
 
 		&#secondary-first,
-		&#secondary-second {
+		&#secondary-second,
+		&#secondary-third {
 			order: unset;
-			display: block;
 		}
 
+		&#secondary-first,
 		&#secondary-second {
+
+			section {
+				margin-top: auto;
+			}
+		}
+
+		&#secondary-first {
+
+			.m-ad-region,
+			.acm-ad-container-bordered {
+				margin-top: 0;
+			}
+		}
+
+		&#secondary-second,
+		&#secondary-third {
 
 			section {
 				width: 100%;
