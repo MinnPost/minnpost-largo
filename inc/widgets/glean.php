@@ -70,11 +70,9 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 						$i++;
 				endwhile;
 					?>
-					<!-- end of the loop -->
 					<?php wp_reset_postdata(); ?>
 				</div>
 			</article>
-
 		<?php endif; ?>
 
 		<?php
