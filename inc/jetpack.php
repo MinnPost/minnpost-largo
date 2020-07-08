@@ -256,3 +256,6 @@ if ( ! function_exists( 'wpvip_filter_blacklisted_post_types_deleted' ) ) :
 		return $args;
 	}
 endif;
+
+add_filter( 'jetpack_sharing_counts', '__return_false', 99 );
+add_filter( 'jetpack_implode_frontend_css', '__return_false', 99 );
