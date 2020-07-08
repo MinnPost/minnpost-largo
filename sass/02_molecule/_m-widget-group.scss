@@ -1,7 +1,10 @@
 .m-widget-group {
     
     &.m-widget-group-homepage {
-        margin: -$standard-heading-margin;
+        margin-top: 0;
+        margin-right: -$standard-heading-margin;
+        margin-bottom: 0;
+        margin-left: -$standard-heading-margin;
         display: flex;
     }
 }
