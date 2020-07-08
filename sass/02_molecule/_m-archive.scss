@@ -15,6 +15,13 @@
 			padding-bottom: $standard-heading-margin;
 			border-bottom: $border-default-style;
 			margin-bottom: $standard-block-margin;
+		}
+	}
+
+	&.m-zone-homepage-more-top,
+	&.m-zone-homepage-opinion {
+
+		article {
 			flex-wrap: wrap;
 		}
 	}
