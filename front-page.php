@@ -30,7 +30,7 @@ get_header(); ?>
 			<?php get_sidebar( 'first' ); ?>
 			<?php if ( function_exists( 'z_get_zone' ) ) : ?>
 				<?php
-				$top_stories_zone = 'homepage-todays-top-stories';
+				$top_stories_zone = 'homepage-more-top-stories';
 				$zone             = z_get_zone( $top_stories_zone );
 				$more_top_stories = z_get_zone_query( $top_stories_zone );
 				?>
