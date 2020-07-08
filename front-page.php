@@ -12,7 +12,7 @@
 get_header(); ?>
 	<main id="main" class="site-main m-homepage-zones">
 
-		<div id="home-first" class="o-homepage-listing">
+		<div id="home-first" class="o-homepage-listing o-homepage-listing-top-story">
 			<?php if ( function_exists( 'z_get_zone' ) ) : ?>
 				<?php $top_query = z_get_zone_query( 'homepage-top' ); ?>
 				<?php if ( $top_query->have_posts() ) : ?>
@@ -24,14 +24,14 @@ get_header(); ?>
 							get_template_part( 'template-parts/content', 'top' ); // content-top
 						endwhile;
 						?>
-						<?php dynamic_sidebar( 'sidebar-4' ); ?>
+						<?php dynamic_sidebar( 'sidebar-glean' ); ?>
 					</section>
 				<?php endif; ?>
 			<?php endif; ?>
 			<?php get_sidebar( 'first' ); ?>
 		</div>
 
-		<div id="home-second" class="o-homepage-listing">
+		<div id="home-second" class="o-homepage-listing o-homepage-listing-more-top-stories">
 			<?php if ( function_exists( 'z_get_zone' ) ) : ?>
 				<?php
 				$top_stories_zone = 'homepage-todays-top-stories';
@@ -58,7 +58,7 @@ get_header(); ?>
 
 		<?php do_action( 'wp_message_inserter', 'homepage_middle' ); ?>
 
-		<div id="home-third" class="o-homepage-listing">
+		<div id="home-third" class="o-homepage-listing o-homepage-listing-opinion">
 			<?php if ( function_exists( 'z_get_zone' ) ) : ?>
 				<?php
 				$opinion_zone  = 'homepage-opinion';
@@ -87,8 +87,8 @@ get_header(); ?>
 			<?php do_action( 'acm_tag', 'Middle3' ); ?>
 		</div>
 
-		<div id="home-fourth" class="o-homepage-listing">
-			<?php dynamic_sidebar( 'sidebar-5' ); ?>
+		<div id="home-fourth" class="o-homepage-listing o-homepage-listing-spills">
+			<?php dynamic_sidebar( 'sidebar-spills' ); ?>
 		</div>
 
 	</main>
