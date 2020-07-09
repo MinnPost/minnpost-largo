@@ -96,7 +96,8 @@ if ( ! function_exists( 'custom_archive_query_vars' ) ) :
 		if ( $query->is_archive() && ! is_admin() && $query->is_main_query() ) {
 			if ( is_author() ) {
 				// author archives should not get byline posts
-				$query->set( 'meta_query',
+				$query->set(
+					'meta_query',
 					array(
 						array(
 							'key'     => '_mp_subtitle_settings_byline',
