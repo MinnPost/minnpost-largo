@@ -22,6 +22,8 @@
 		</div>
 	<?php endif; ?>
 
+	<?php minnpost_content_sponsorship( 'post' ); ?>
+
 	<?php
 	if ( ! is_singular() ) {
 		minnpost_post_image();
@@ -70,8 +72,6 @@
 		minnpost_post_image( 'large' );
 	}
 	?>
-
-	<?php minnpost_content_sponsorship( 'post' ); ?>
 
 	<?php
 	// keep share buttons horizontal if instructed
