@@ -1,11 +1,21 @@
 .m-support-cta {
 
+	.a-button.a-support-button {
+		background: utility-color(green, medium);
+		color: neutral-color(white);
+		@include meta-preset( $size: 1, $bold: true, $italic: false, $line-height: 1 );
+
+		&:hover,
+		&:focus,
+		&:active {
+			background: utility-color(green, dark);
+			text-decoration: none;
+		}
+	}
+
 	&.m-support-cta-top {
 
 		.a-support-button {
-			background: utility-color(green, medium);
-			color: neutral-color(white);
-			@include meta-preset( $size: 1, $bold: true, $italic: false, $line-height: 1 );
 			margin-bottom: $standard-block-padding;
 
 			@include breakpoint-min( xs ) {
@@ -30,14 +40,7 @@
 			// inside 12 column space
 			@include breakpoint-min( xl ) {
 				width: colspan( 2, 12 );
-			}
-
-			&:hover,
-			&:focus,
-			&:active {
-				background: utility-color(green, dark);
-				text-decoration: none;
-			}
+			}			
 		}
 	}
 }
