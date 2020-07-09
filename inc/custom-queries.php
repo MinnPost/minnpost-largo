@@ -82,6 +82,34 @@ if ( ! function_exists( 'minnpost_get_grouped_categories' ) ) :
 	}
 endif;
 
+/**
+* Change the post query used on category archive pages based on whether or not they have featured columns.
+* This arranges featured posts and not featured posts on those archives.
+*
+* @param object $query
+*
+* @return object $query
+*/
+if ( ! function_exists( 'custom_archive_query_vars' ) ) :
+	add_action( 'pre_get_posts', 'custom_archive_query_vars' );
+	function custom_archive_query_vars( $query ) {
+		if ( $query->is_archive() && ! is_admin() && $query->is_main_query() ) {
+			if ( is_author() ) {
+				// author archives should not get byline posts
+				$query->set( 'meta_query',
+					array(
+						array(
+							'key'     => '_mp_subtitle_settings_byline',
+							'compare' => 'NOT EXISTS',
+						),
+					),
+				);
+			}
+		}
+		return $query;
+	}
+endif;
+
 // Use simple tax queries for CAP to improve performance
 add_filter( 'coauthors_plus_should_query_post_author', '__return_false' );
 
