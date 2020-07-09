@@ -157,7 +157,8 @@ if ( ! function_exists( 'minnpost_largo_get_jetpack_results' ) ) :
 		$query['showposts'] = 4;
 
 		// Fetches related post IDs if JetPack Related Posts is active
-		if ( class_exists( 'Jetpack_RelatedPosts' ) && method_exists( 'Jetpack_RelatedPosts', 'init_raw' ) ) :
+		// only do this on production because Jetpack doesn't work on stage/dev
+		if ( 'production' === VIP_GO_ENV && class_exists( 'Jetpack_RelatedPosts' ) && method_exists( 'Jetpack_RelatedPosts', 'init_raw' ) ) :
 			$related = Jetpack_RelatedPosts::init_raw()
 				->set_query_name( 'minnpost-largo-related-automated' ) // optional, name can be anything
 				->get_for_post_id(
