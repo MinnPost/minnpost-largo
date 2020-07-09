@@ -783,7 +783,10 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 				}
 				if ( true === $include_name && '' !== $name ) {
 					$output .= '<h3 class="a-author-title">';
-					if ( 0 < $count ) {
+					if ( 1 < $count ) {
+						// at least as of July 2020, co-authors-plus never returns a count of zero
+						// see this github issue: https://github.com/Automattic/Co-Authors-Plus/issues/740
+						// we can update this code if that situation ever changes
 						$author_url = get_author_posts_url( $author_id, sanitize_title( $name ) );
 						$output    .= '<a href="' . $author_url . '">';
 					}
