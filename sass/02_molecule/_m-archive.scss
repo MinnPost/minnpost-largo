@@ -7,7 +7,8 @@
 	&.m-archive-author,
 	&.m-archive-post_tag,
 	&.m-archive-events,
-	&.m-archive-date {
+	&.m-archive-date,
+	&.m-archive-interests {
 
 		article {
 			display: flex;
@@ -24,7 +25,8 @@
 	&.m-archive-category,
 	&.m-archive-author,
 	&.m-archive-post_tag,
-	&.m-archive-date {
+	&.m-archive-date,
+	&.m-archive-interests {
 
 		article {
 
@@ -49,5 +51,9 @@
 			}
 
 		}
+	}
+
+	&.m-archive-interests {
+		width: 100%;
 	}
 }

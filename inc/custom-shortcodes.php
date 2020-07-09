@@ -270,7 +270,8 @@ if ( ! function_exists( 'minnpost_account_info' ) ) :
 				}
 				$attributes['topics_query'] = new WP_Query(
 					array(
-						'category__in' => array_keys( $attributes['reading_topics'] ),
+						'posts_per_page' => 10,
+						'category__in'   => array_keys( $attributes['reading_topics'] ),
 					)
 				);
 

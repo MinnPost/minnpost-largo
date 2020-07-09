@@ -38,7 +38,7 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 		$caption = wp_get_attachment_caption( $image_id );
 		$credit  = get_media_credit_html( $image_id );
 
-		if ( is_singular() && ! is_singular( 'newsletter' ) && ( ! isset( $attributes['location'] ) || 'related' !== $attributes['location'] ) ) : ?>
+		if ( is_singular() && ! is_singular( 'newsletter' ) && ( ! isset( $attributes['location'] ) || ( 'interest' !== $attributes['location'] && 'related' !== $attributes['location'] ) ) ) : ?>
 			<figure class="m-post-image m-post-image-<?php echo $size; ?>">
 				<?php echo $image; ?>
 				<?php if ( '' !== $caption || '' !== $credit ) { ?>
