@@ -61,7 +61,7 @@ endif;
 * @return array $classes
 */
 if ( ! function_exists( 'minnpost_largo_exclude_class_from_lazy_load' ) ) :
-	add_filter( 'jetpack_lazy_images_blacklisted_classes', 'minnpost_largo_exclude_class_from_lazy_load', 999, 1 );
+	add_filter( 'jetpack_lazy_images_blocked_classes', 'minnpost_largo_exclude_class_from_lazy_load', 999, 1 );
 	function minnpost_largo_exclude_class_from_lazy_load( $classes ) {
 		$classes[] = 'no-lazy';
 		return $classes;
@@ -241,14 +241,14 @@ endif;
 use Automattic\Jetpack\Sync\Settings;
 
 /**
- * Filter all blacklisted post types.
+ * Filter all blocked post types.
  *
  * @param array $args Hook arguments.
- * @return array|false Hook arguments, or false if the post type is a blacklisted one.
+ * @return array|false Hook arguments, or false if the post type is a blocked one.
  */
-if ( ! function_exists( 'wpvip_filter_blacklisted_post_types_deleted' ) ) :
-	add_filter( 'jetpack_sync_before_enqueue_deleted_post', 'wpvip_filter_blacklisted_post_types_deleted' );
-	function wpvip_filter_blacklisted_post_types_deleted( $args ) {
+if ( ! function_exists( 'wpvip_filter_blocked_post_types_deleted' ) ) :
+	add_filter( 'jetpack_sync_before_enqueue_deleted_post', 'wpvip_filter_blocked_post_types_deleted' );
+	function wpvip_filter_blocked_post_types_deleted( $args ) {
 		$post = get_post( $args[0] );
 		if ( ! is_wp_error( $post ) && ! empty( $post ) ) {
 			if ( in_array( $post->post_type, Settings::get_setting( 'post_types_blacklist' ), true ) ) {
