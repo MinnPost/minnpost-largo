@@ -1288,22 +1288,35 @@ if ( ! function_exists( 'minnpost_category_breadcrumb' ) ) :
 		$category_id       = minnpost_get_permalink_category_id( $post_id );
 		$category_group_id = '';
 		if ( '' !== $category_id ) {
-			$category      = get_category( $category_id );
-			$category_link = get_category_link( $category );
+			$category          = get_category( $category_id );
+			$category_link     = get_category_link( $category );
+			$category_is_group = false;
 			if ( true === $show_group ) {
 				$category_group_id = minnpost_get_category_group_id( $post_id, $category_id );
 				if ( '' !== $category_group_id ) {
 					$category_group = get_category( $category_group_id );
 					echo '<div class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '">';
 					echo '<div class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category_group->term_id ) ) . '">' . $category_group->name . '</a></div>';
+				} else {
+					if ( function_exists( 'minnpost_largo_category_groups' ) ) {
+						$groups = minnpost_largo_category_groups();
+						if ( in_array( $category->slug, $groups, true ) ) {
+							$category_is_group = true;
+						}
+					}
 				}
 			}
-			$category_name = isset( $category->name ) ? $category->name : '';
-			if ( '' !== $category_name ) {
-				echo '<div class="a-breadcrumb a-category-name"><a href="' . $category_link . '">' . $category_name . '</a></div>';
+			if ( false === $category_is_group ) {
+				$category_name = isset( $category->name ) ? $category->name : '';
+				if ( '' !== $category_name ) {
+					echo '<div class="a-breadcrumb a-category-name"><a href="' . $category_link . '">' . $category_name . '</a></div>';
+				}
+			} else {
+				echo '<div class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category->slug ) . '">';
+				echo '<div class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category->term_id ) ) . '">' . $category->name . '</a></div>';
 			}
 		}
-		if ( '' !== $category_group_id ) {
+		if ( '' !== $category_group_id || true == $category_is_group ) {
 			echo '</div>';
 		}
 	}
