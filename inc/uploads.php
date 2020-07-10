@@ -13,7 +13,6 @@
 if ( ! function_exists( 'minnpost_image_settings' ) ) :
 	add_action( 'after_setup_theme', 'minnpost_image_settings' );
 	function minnpost_image_settings() {
-		add_theme_support( 'post-thumbnails' );
 		add_theme_support( 'html5', array( 'caption' ) );
 		add_image_size( 'medium_large', '768', '0', false );
 		add_image_size( '1536x1536', '1536', '1536', false );

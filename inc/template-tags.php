@@ -956,6 +956,21 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 endif;
 
 /**
+* Set the image size for the staff list page
+*
+* @param string $image_size
+* @return string $image_size
+*
+*/
+if ( ! function_exists( 'minnpost_largo_staff_image_size' ) ) :
+	add_filter( 'staff_user_post_list_image_size', 'minnpost_largo_staff_image_size' );
+	function minnpost_largo_staff_image_size( $image_size ) {
+		$image_size = 'author-teaser';
+		return $image_size;
+	}
+endif;
+
+/**
 * Outputs term image, large or thumbnail, with/without the description or excerpt, all inside a <figure>
 *
 * @param int $category_id
