@@ -151,7 +151,11 @@ if ( ! function_exists( 'minnpost_largo_spill_posts' ) ) :
 			$output = '';
 			if ( $title ) {
 				$before_title = str_replace( 'widget-title', 'a-widget-title', $before_title );
-				$output      .= $before_title . $title . $after_title;
+				if ( isset( $instance['url'] ) && '' !== $instance['url'] ) {
+					$output .= $before_title . '<a href="' . site_url( $url ) . '">' . $title . '</a>' . $after_title;
+				} else {
+					$output .= $before_title . $title . $after_title;
+				}
 			}
 			$output .= '<div class="m-widget-contents">';
 			if ( isset( $instance['content'] ) ) {
