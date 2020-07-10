@@ -27,6 +27,12 @@ endif;
 add_filter( 'jetpack_sharing_counts', '__return_false' );
 
 /**
+* Implode front end CSS added by Jetpack.
+*
+*/
+add_filter( 'jetpack_implode_frontend_css', '__return_false', 99 );
+
+/**
 * Hide the sharing box from edit pages
 */
 if ( ! function_exists( 'minnpost_show_sharing_box' ) ) :
@@ -258,6 +264,3 @@ if ( ! function_exists( 'wpvip_filter_blocked_post_types_deleted' ) ) :
 		return $args;
 	}
 endif;
-
-add_filter( 'jetpack_sharing_counts', '__return_false', 99 );
-add_filter( 'jetpack_implode_frontend_css', '__return_false', 99 );
