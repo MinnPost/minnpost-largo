@@ -169,12 +169,14 @@ endif;
 */
 if ( ! function_exists( 'minnpost_get_grouping_categories_to_exclude' ) ) :
 	function minnpost_get_grouping_categories_to_exclude( $category_id = '' ) {
-		$choices     = minnpost_largo_category_groups();
 		$exclude_ids = array();
-		foreach ( $choices as $choice ) {
-			$category = minnpost_largo_group_category( $choice );
-			if ( (int) $category_id !== (int) $category->term_id ) {
-				$exclude_ids[] = array_values( minnpost_get_grouped_categories( $category->term_id ) );
+		if ( function_exists( 'minnpost_largo_category_groups' ) ) {
+			$choices = minnpost_largo_category_groups();
+			foreach ( $choices as $choice ) {
+				$category = minnpost_largo_group_category( $choice );
+				if ( (int) $category_id !== (int) $category->term_id ) {
+					$exclude_ids[] = array_values( minnpost_get_grouped_categories( $category->term_id ) );
+				}
 			}
 		}
 		$exclude_ids = array_merge( ... array_values( $exclude_ids ) );
