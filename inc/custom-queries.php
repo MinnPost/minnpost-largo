@@ -26,33 +26,48 @@ if ( ! function_exists( 'minnpost_largo_unpublished_posts' ) ) :
 endif;
 
 /**
-* Change the post query used on category archive pages based on whether or not it has grouped categories associated with the main category
+* Change the post query used on category and author archive pages to account for our custom meta fields.
 *
 * @param object $query
+* @return object $query
 */
-if ( ! function_exists( 'minnpost_grouped_category_query' ) ) :
-	add_action( 'pre_get_posts', 'minnpost_grouped_category_query' );
-	function minnpost_grouped_category_query( $query ) {
-		if ( $query->is_archive() && ! is_admin() && $query->is_main_query() && is_category() ) {
-			$category_id = $query->get_queried_object_id();
-			if ( function_exists( 'minnpost_get_grouped_categories' ) ) {
-				$grouped_categories = minnpost_get_grouped_categories( $category_id );
-				if ( empty( $grouped_categories ) ) {
-					return;
+if ( ! function_exists( 'custom_archive_query_vars' ) ) :
+	add_action( 'pre_get_posts', 'custom_archive_query_vars' );
+	function custom_archive_query_vars( $query ) {
+		if ( $query->is_archive() && ! is_admin() && $query->is_main_query() ) {
+			if ( is_category() ) {
+				$category_id = $query->get_queried_object_id();
+				if ( function_exists( 'minnpost_get_grouped_categories' ) ) {
+					$grouped_categories = minnpost_get_grouped_categories( $category_id );
+					if ( empty( $grouped_categories ) ) {
+						return;
+					}
+					$tax_query = $query->get( 'tax_query' );
+					if ( ! is_array( $tax_query ) ) {
+						$tax_query = array();
+					}
+					$taxquery[] = array(
+						'taxonomy' => 'category',
+						'field'    => 'term_id',
+						'terms'    => $grouped_categories,
+					);
+					$query->set( 'tax_query', $taxquery );
+					$query->set( 'category_name', false );
 				}
-				$tax_query = $query->get( 'tax_query' );
-				if ( ! is_array( $tax_query ) ) {
-					$tax_query = array();
-				}
-				$taxquery[] = array(
-					'taxonomy' => 'category',
-					'field'    => 'term_id',
-					'terms'    => $grouped_categories,
+			} elseif ( is_author() ) {
+				// author archives should not get byline posts
+				$query->set(
+					'meta_query',
+					array(
+						array(
+							'key'     => '_mp_subtitle_settings_byline',
+							'compare' => 'NOT EXISTS',
+						),
+					),
 				);
-				$query->set( 'tax_query', $taxquery );
-				$query->set( 'category_name', false );
 			}
 		}
+		return $query;
 	}
 endif;
 
@@ -79,35 +94,6 @@ if ( ! function_exists( 'minnpost_get_grouped_categories' ) ) :
 		);
 		$grouped_categories      = get_terms( $grouped_categories_args );
 		return $grouped_categories;
-	}
-endif;
-
-/**
-* Change the post query used on category archive pages based on whether or not they have featured columns.
-* This arranges featured posts and not featured posts on those archives.
-*
-* @param object $query
-*
-* @return object $query
-*/
-if ( ! function_exists( 'custom_archive_query_vars' ) ) :
-	add_action( 'pre_get_posts', 'custom_archive_query_vars' );
-	function custom_archive_query_vars( $query ) {
-		if ( $query->is_archive() && ! is_admin() && $query->is_main_query() ) {
-			if ( is_author() ) {
-				// author archives should not get byline posts
-				$query->set(
-					'meta_query',
-					array(
-						array(
-							'key'     => '_mp_subtitle_settings_byline',
-							'compare' => 'NOT EXISTS',
-						),
-					),
-				);
-			}
-		}
-		return $query;
 	}
 endif;
 
