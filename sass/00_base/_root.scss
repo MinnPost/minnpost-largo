@@ -21,6 +21,12 @@ body {
 	background: neutral-color(white);
 }
 
+main {
+	position: relative;
+	max-width: 100%;
+	flex: 0 0 100%;
+}
+
 hr {
 	background-color: neutral-color(border);
 	border: 0;

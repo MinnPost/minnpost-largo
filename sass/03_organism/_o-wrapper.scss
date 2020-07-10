@@ -28,6 +28,7 @@
 	}
 
 	&.o-wrapper-content {
+		margin-top: $standard-block-padding;
 		margin-bottom: $standard-block-margin;
 
 		@include breakpoint-min( lg ) {

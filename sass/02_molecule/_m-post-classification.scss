@@ -3,5 +3,13 @@
 	max-width: 100%;
 	display: flex;
 	justify-content: space-between;
-	padding: 10px 0;
+	padding: $standard-block-padding 0;
+}
+
+.single-post {
+
+	.m-post-classification,
+	.m-page-classification {
+		padding-top: 0;
+	}
 }
