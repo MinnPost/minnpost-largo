@@ -12,12 +12,12 @@
 	
 		@include breakpoint-min( lg ) {
 			width: colspan( 8, 12 );
-			max-width: calc((100% - #{colspan( 1, 12 )}) - #{$size__site-sidebar} );
+			max-width: calc((100%) - #{$size__site-sidebar} );
 		}
 	
 		@include breakpoint-min( xl ) {
 			width: colspan( 12, 16 );
-			max-width: calc((100% - #{colspan( 1, 16 )}) - #{$size__site-sidebar} );
+			max-width: calc((100%) - #{$size__site-sidebar} );
 		}
 
 		&.m-zone-homepage-top { // because this section is not visually separate
