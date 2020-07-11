@@ -61,6 +61,13 @@
 			}
 		}
 	}
+
+	&#secondary-third {
+		@include breakpoint-min( sm ) {
+			margin-right: 0;
+			margin-left: auto;
+		}
+	}
 }
 
 .o-site-sidebar#secondary-first :first-child,
