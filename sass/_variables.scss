@@ -210,7 +210,7 @@ $breakpoints: (
     xxxl: (cols: 16, min-width: 90em, margin: $mar) // 1440px
 );
 
-$max-width: null; // For no max-width, use $max-width: null;
+$max-width: 90em; // For no max-width, use $max-width: null;
 
 $size__site-sidebar: 300px; // this needs to be pixel based because of ad dimensions
 $max-width-page: 80em; // this is 1280px
