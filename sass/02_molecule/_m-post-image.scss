@@ -16,17 +16,8 @@
 .m-archive-excerpt .m-post-image,
 .m-archive-homepage .m-post-image {
 	margin-bottom: $standard-heading-margin;
-	//flex: 1 0 auto;
 
-	@include breakpoint-min( lg ) {
-		width: 100%;
-	}
-
-	@include breakpoint-min( xxl ) {
-		width: auto;
-	}
-
-	@include breakpoint-min( xxxl ) {
+	@include breakpoint-min( sm ) {
 		width: 100%;
 	}
 }
@@ -36,14 +27,7 @@
 
 	@include breakpoint-min( sm ) {
 		margin-bottom: 0;
-	}
-
-	@include breakpoint-min( lg ) {
 		margin-bottom: $standard-heading-margin;
-		width: auto;
-	}
-
-	@include breakpoint-min( xxxl ) {
 		width: auto;
 	}
 }

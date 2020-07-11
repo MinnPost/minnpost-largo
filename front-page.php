@@ -11,7 +11,7 @@
 
 get_header(); ?>
 	<main id="main" class="site-main m-homepage-zones">
-		<div id="home-first" class="o-homepage-listing o-homepage-listing-top-story">
+		<div id="home-list" class="o-homepage-listing o-homepage-listing-top-story">
 			<?php if ( function_exists( 'z_get_zone' ) ) : ?>
 				<?php $top_query = z_get_zone_query( 'homepage-top' ); ?>
 				<?php if ( $top_query->have_posts() ) : ?>

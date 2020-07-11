@@ -42,18 +42,7 @@
 
 		.m-entry-content {
 			order: 2;
-
-			@include breakpoint-min( sm ) {
-				margin-left: $standard-block-margin;
-			}
-
-			@media screen and (min-width:50em) {
-				margin-left: $standard-block-margin;
-			}
-
-			@include breakpoint-min( lg ) {
-				margin-left: 0;
-			}
+			margin-left: 0;
 		}
 	}
 
