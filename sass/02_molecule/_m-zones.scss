@@ -4,6 +4,7 @@
 	.m-zone {
 		flex-wrap: wrap;
 		display: flex;
+		width: 100%;
 
 		@include breakpoint-min( sm ) {
 			display: flex;

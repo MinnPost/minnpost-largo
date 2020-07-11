@@ -4,6 +4,9 @@
 
 // default, mobile-first styles for wrapper
 .o-wrapper {
+	max-width: $max-width-page;
+	margin-left: auto;
+	margin-right: auto;
 	position: relative;
 
 	// header and main content and footer
