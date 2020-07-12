@@ -58,14 +58,14 @@
 			}
 		}
 
-		&.m-zone-homepage-opinion {
+		/*&.m-zone-homepage-opinion {
 
 			article {
-				@include breakpoint-min( sm ) {
+				@include breakpoint-min( lg ) {
 					width: colspan( 6, 12 );
 				}
 			}
 
-		}
+		}*/
 	}
 }

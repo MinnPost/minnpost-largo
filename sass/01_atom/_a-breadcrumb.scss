@@ -1,13 +1,12 @@
 .a-breadcrumbs {
 	display: flex;
-	align-items: center;
+	align-items: flex-start;
 }
 .a-breadcrumb {
 	@include meta-preset( $size: 0, $bold: true, $italic: false, $line-height: 1 );
 	margin-right: $standard-block-padding / 2;
 
 	a {
-		white-space: nowrap;
 
 		&:link,
 		&:visited {
