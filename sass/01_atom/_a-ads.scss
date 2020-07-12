@@ -108,6 +108,8 @@ main .ad-x110 {
 
 	@include clearfix;
 	margin-bottom: $standard-block-margin;
+	display: flex;
+	justify-content: center;
 
 	&.acm-ad-placeholder {
 		text-align: center;

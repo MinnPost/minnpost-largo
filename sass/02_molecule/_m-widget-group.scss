@@ -5,6 +5,9 @@
         margin-right: -$standard-heading-margin;
         margin-bottom: 0;
         margin-left: -$standard-heading-margin;
-        display: flex;
+
+        @include breakpoint-min( sm ) {
+            display: flex;
+        }
     }
 }

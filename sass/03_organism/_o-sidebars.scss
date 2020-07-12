@@ -1,16 +1,19 @@
 .o-site-sidebar {
+	min-width: $size__site-sidebar;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: $standard-block-margin;
 
 	@include breakpoint-min( xs ) {
-		width: $size__site-sidebar;
-		margin-left: auto;
 		display: flex;
 		flex-wrap: wrap;
 		flex-direction: column;
 	}
 
 	@include breakpoint-min( sm ) {
+		width: $size__site-sidebar;
 		margin-left: 0;
-		margin-right: auto;
+		margin-bottom: 0;
 	}
 
 	@include breakpoint-min( lg ) {
