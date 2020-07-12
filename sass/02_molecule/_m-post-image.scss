@@ -22,7 +22,8 @@
 	}
 }
 
-.m-archive-top .m-post-image {
+.m-archive-top .m-post-image,
+.m-archive-excerpt .m-post-image {
 	margin-left: 0;
 
 	@include breakpoint-min( sm ) {
