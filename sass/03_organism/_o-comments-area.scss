@@ -107,6 +107,14 @@
 	}
 }
 
+#llc_comments {
+	margin-bottom: $standard-block-margin;
+
+	@include breakpoint-min( lg ) {
+		margin-bottom: 0;
+	}
+}
+
 .single {
 
 	article {
