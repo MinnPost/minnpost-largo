@@ -925,10 +925,9 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 				'placement' => 'post',
 			),
 			array(
-				'name'      => 'author-teaser',
-				'media'     => '',
-				'width'     => 75,
-				'placement' => 'post',
+				'name'  => 'author-teaser',
+				'media' => '',
+				'width' => 75,
 			),
 		);
 
