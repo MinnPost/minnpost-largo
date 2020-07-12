@@ -16,14 +16,6 @@
 .m-archive-excerpt .m-post-image,
 .m-archive-homepage .m-post-image {
 	margin-bottom: $standard-heading-margin;
-
-	@include breakpoint-min( sm ) {
-		width: 100%;
-	}
-}
-
-.m-archive-top .m-post-image,
-.m-archive-excerpt .m-post-image {
 	margin-left: 0;
 
 	@include breakpoint-min( sm ) {
