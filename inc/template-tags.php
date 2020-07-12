@@ -746,7 +746,6 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 			$title = get_post_meta( $author_id, $title_field, true );
 		}
 
-		$text = wpautop( $text );
 		$text = apply_filters( 'the_content', $text );
 
 		if ( '' !== $image_id ) {
@@ -1250,7 +1249,8 @@ if ( ! function_exists( 'minnpost_post_sidebar' ) ) :
 			$post_id = get_the_ID();
 		}
 
-		$sidebar = wpautop( get_post_meta( $post_id, '_mp_post_sidebar', true ) );
+		$sidebar = apply_filters( 'the_content', get_post_meta( $post_id, '_mp_post_sidebar', true ) );
+
 		if ( null !== $sidebar && '' !== $sidebar ) {
 			echo '<section id="post-sidebar" class="m-post-sidebar">' . $sidebar . '</section>';
 		}
