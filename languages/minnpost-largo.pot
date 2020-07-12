@@ -14,31 +14,43 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: archive.php:87
+msgid "Select a different month"
+msgstr ""
+
+#: archive.php:90
 msgid "Select Month"
 msgstr ""
 
-#: archive.php:76, inc/template-tags.php:497
-msgid "Email"
+#: archive.php:101, archive.php:81
+msgid "Go"
 msgstr ""
 
-#: archive.php:79, inc/template-tags.php:492
-msgid "Twitter"
+#: archive.php:67
+msgid "Select a different year"
 msgstr ""
 
-#: archive.php:84
-msgid "Articles by this author:"
+#: archive.php:70
+msgid "Select Year"
 msgstr ""
 
-#: comments.php:73
-msgid "No comments yet"
+#: comments.php:76, comments.php:74
+msgid "Comments (none yet)"
 msgstr ""
 
 #: comments.php:67
 msgid "Comments are closed."
 msgstr ""
 
-#: comments.php:92
+#: comments.php:96
 msgid "Leave a Comment"
+msgstr ""
+
+#: front-page.php:47
+msgid "More news"
+msgstr ""
+
+#: front-page.php:70
+msgid "More commentary"
 msgstr ""
 
 #: header-user.php:37, header.php:37
@@ -108,7 +120,7 @@ msgstr ""
 msgid "Spam"
 msgstr ""
 
-#: inc/comment-list.php:131, inc/comments.php:495
+#: inc/comment-list.php:131, inc/comments.php:509
 msgid "Edit"
 msgstr ""
 
@@ -116,45 +128,45 @@ msgstr ""
 msgid "Trash"
 msgstr ""
 
-#: inc/comments.php:406
+#: inc/comments.php:419
 msgid "Show comments or leave a comment"
 msgstr ""
 
-#: inc/comments.php:450
+#: inc/comments.php:463
 msgid "You will not see comments loaded when you are logged in unless you click the button."
 msgstr ""
 
-#: inc/comments.php:445
+#: inc/comments.php:458
 msgid "You will always see comments loaded when you are logged in"
 msgstr ""
 
-#: inc/comments.php:476
+#: inc/comments.php:490
 msgid "Always show comments when you are logged in"
 msgstr ""
 
-#: inc/comments.php:507, user-account-management-templates/front-end/account-settings-form.php:132
+#: inc/comments.php:521, user-account-management-templates/front-end/account-settings-form.php:132
 msgid "Save Changes"
 msgstr ""
 
-#: inc/comments.php:519
+#: inc/comments.php:533
 msgid "Cancel Changes"
 msgstr ""
 
-#: inc/comments.php:531
+#: inc/comments.php:545
 msgid "Delete Comment"
 msgstr ""
 
 #. translators: 1) the font awesome icon, 2) the name of the commenter
-#: inc/comments.php:577
+#: inc/comments.php:591
 msgid "%1$s Reply to %2$s"
 msgstr ""
 
-#: inc/comments.php:578, inc/comments.php:585
+#: inc/comments.php:592, inc/comments.php:599
 msgid "<i class=\"far fa-comment\" aria-hidden=\"true\"></i>"
 msgstr ""
 
 #. translators: 1) the font awesome icon, 2) the name of the commenter
-#: inc/comments.php:584
+#: inc/comments.php:598
 msgid "%1$s Log in to reply to %2$s"
 msgstr ""
 
@@ -703,43 +715,43 @@ msgstr ""
 msgid "Reading preferences:"
 msgstr ""
 
-#: inc/custom-fields.php:1593, inc/custom-shortcodes.php:349
+#: inc/custom-fields.php:1593, inc/custom-shortcodes.php:350
 msgid "Arts & Culture"
 msgstr ""
 
-#: inc/custom-fields.php:1594, inc/custom-shortcodes.php:350
+#: inc/custom-fields.php:1594, inc/custom-shortcodes.php:351
 msgid "Economy"
 msgstr ""
 
-#: inc/custom-fields.php:1595, inc/custom-shortcodes.php:351
+#: inc/custom-fields.php:1595, inc/custom-shortcodes.php:352
 msgid "Education"
 msgstr ""
 
-#: inc/custom-fields.php:1596, inc/custom-shortcodes.php:352
+#: inc/custom-fields.php:1596, inc/custom-shortcodes.php:353
 msgid "Environment"
 msgstr ""
 
-#: inc/custom-fields.php:1597, inc/custom-shortcodes.php:353
+#: inc/custom-fields.php:1597, inc/custom-shortcodes.php:354
 msgid "Greater Minnesota news"
 msgstr ""
 
-#: inc/custom-fields.php:1598, inc/custom-shortcodes.php:354
+#: inc/custom-fields.php:1598, inc/custom-shortcodes.php:355
 msgid "Health"
 msgstr ""
 
-#: inc/custom-fields.php:1599, inc/custom-shortcodes.php:355
+#: inc/custom-fields.php:1599, inc/custom-shortcodes.php:356
 msgid "MinnPost announcements"
 msgstr ""
 
-#: inc/custom-fields.php:1600, inc/custom-shortcodes.php:356
+#: inc/custom-fields.php:1600, inc/custom-shortcodes.php:357
 msgid "Opinion/Commentary"
 msgstr ""
 
-#: inc/custom-fields.php:1601, inc/custom-shortcodes.php:357
+#: inc/custom-fields.php:1601, inc/custom-shortcodes.php:358
 msgid "Politics & Policy"
 msgstr ""
 
-#: inc/custom-fields.php:1602, inc/custom-shortcodes.php:358
+#: inc/custom-fields.php:1602, inc/custom-shortcodes.php:359
 msgid "Sports"
 msgstr ""
 
@@ -891,11 +903,11 @@ msgstr ""
 msgid "Email Sending Name"
 msgstr ""
 
-#: inc/custom-shortcodes.php:242, inc/custom-shortcodes.php:318
+#: inc/custom-shortcodes.php:242, inc/custom-shortcodes.php:319
 msgid "You do not have permission to access this page."
 msgstr ""
 
-#: inc/custom-shortcodes.php:328
+#: inc/custom-shortcodes.php:329
 msgid "You are not signed in."
 msgstr ""
 
@@ -1013,7 +1025,7 @@ msgstr ""
 msgid "Export to Calendar"
 msgstr ""
 
-#: inc/jetpack.php:178
+#: inc/jetpack.php:186
 msgid "Related Posts"
 msgstr ""
 
@@ -1061,99 +1073,19 @@ msgstr ""
 msgid "Unpublished"
 msgstr ""
 
-#: inc/popups-site-messages.php:117, inc/popups-site-messages.php:123, inc/popups-site-messages.php:129, inc/popups-site-messages.php:135, inc/popups-site-messages.php:141, inc/popups-site-messages.php:157, inc/popups-site-messages.php:173
-msgid "User"
-msgstr ""
-
-#: inc/popups-site-messages.php:118
-msgid "User: Is Logged In"
-msgstr ""
-
-#: inc/popups-site-messages.php:124
-msgid "User: Is Member"
-msgstr ""
-
-#: inc/popups-site-messages.php:130
-msgid "User: Is Sustaining Member"
-msgstr ""
-
-#: inc/popups-site-messages.php:136
-msgid "User: In This Campaign"
-msgstr ""
-
-#: inc/popups-site-messages.php:142
-msgid "User: Has Role"
-msgstr ""
-
-#: inc/popups-site-messages.php:145
-msgid "Select Role"
-msgstr ""
-
-#: inc/popups-site-messages.php:158
-msgid "User: Eligible For Benefit"
-msgstr ""
-
-#: inc/popups-site-messages.php:161
-msgid "Select Benefit"
-msgstr ""
-
-#: inc/popups-site-messages.php:174
-msgid "User: Gets Emails"
-msgstr ""
-
-#: inc/popups-site-messages.php:177
-msgid "Select Email"
-msgstr ""
-
-#: inc/popups-site-messages.php:189, inc/popups-site-messages.php:201, inc/popups-site-messages.php:213, inc/popups-site-messages.php:225
-msgid "URL"
-msgstr ""
-
-#: inc/popups-site-messages.php:190
-msgid "URL: Is"
-msgstr ""
-
-#: inc/popups-site-messages.php:193
-msgid "Enter the exact URL"
-msgstr ""
-
-#: inc/popups-site-messages.php:202
-msgid "URL: Contains"
-msgstr ""
-
-#: inc/popups-site-messages.php:205
-msgid "Check for text in the URL"
-msgstr ""
-
-#: inc/popups-site-messages.php:214
-msgid "URL: Begins With"
-msgstr ""
-
-#: inc/popups-site-messages.php:217
-msgid "Check for text at the beginning of the URL"
-msgstr ""
-
-#: inc/popups-site-messages.php:226
-msgid "URL: Ends With"
-msgstr ""
-
-#: inc/popups-site-messages.php:229
-msgid "Check for text at the end of the URL"
-msgstr ""
-
-#: inc/popups-site-messages.php:423
+#: inc/popups-site-messages.php:216
 msgid "Emails to Match"
 msgstr ""
 
-#: inc/popups-site-messages.php:426
+#: inc/popups-site-messages.php:219
 msgid "This will match users who get ANY of the checked emails. If you want to require that the user gets multiple email addresses, use another conditional with an AND operator."
 msgstr ""
 
-#: inc/popups-site-messages.php:437
+#: inc/popups-site-messages.php:230
 msgid "Roles to Match"
 msgstr ""
 
-#: inc/popups-site-messages.php:440
+#: inc/popups-site-messages.php:233
 msgid "This will match users who have ANY of the checked roles. If you want to require that the user has multiple roles, use another conditional with an AND operator."
 msgstr ""
 
@@ -1173,8 +1105,16 @@ msgstr ""
 msgid "Share this article on Twitter."
 msgstr ""
 
+#: inc/template-tags.php:492
+msgid "Twitter"
+msgstr ""
+
 #: inc/template-tags.php:497
 msgid "Email this article."
+msgstr ""
+
+#: inc/template-tags.php:497
+msgid "Email"
 msgstr ""
 
 #: inc/template-tags.php:502
@@ -1197,96 +1137,96 @@ msgstr ""
 msgid "Link copied"
 msgstr ""
 
-#: inc/template-tags.php:712
+#: inc/template-tags.php:713
 msgid "About the author"
 msgstr ""
 
 #. translators: 1) author archive url, 2) author name
-#: inc/template-tags.php:808
+#: inc/template-tags.php:820
 msgid "More articles by %2$s"
 msgstr ""
 
 #. translators: used between list items, there is a space after the comma
 #. translators: used between list items, there is a space after the comma
-#: inc/template-tags.php:1150, inc/template-tags.php:1157
+#: inc/template-tags.php:1164, inc/template-tags.php:1171
 msgid ", "
 msgstr ""
 
 #. translators: placeholder is the list of categories
-#: inc/template-tags.php:1153
+#: inc/template-tags.php:1167
 msgid "Posted in %1$s"
 msgstr ""
 
 #. translators: placeholder is the list of tags
-#: inc/template-tags.php:1160
+#: inc/template-tags.php:1174
 msgid "Tagged %1$s"
 msgstr ""
 
 #. translators: %s: post title
-#: inc/template-tags.php:1170
+#: inc/template-tags.php:1184
 msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
 #. translators: %s: Name of current post
 #. translators: %s: Name of current post
-#: inc/template-tags.php:1186, inc/template-tags.php:1216
+#: inc/template-tags.php:1200, inc/template-tags.php:1230
 msgid "Edit %s"
 msgstr ""
 
-#: inc/template-tags.php:1590
+#: inc/template-tags.php:1617
 msgid "MinnPostPlus"
 msgstr ""
 
 #. translators: Daily archive title. %s: Date.
-#: inc/template-tags.php:1623
+#: inc/template-tags.php:1650
 msgid "Daily Archives: %s"
 msgstr ""
 
-#: inc/template-tags.php:1620
+#: inc/template-tags.php:1647
 msgid "Monthly Archives: %s"
 msgstr ""
 
-#: inc/template-tags.php:1617
+#: inc/template-tags.php:1644
 msgid "Yearly Archives: %s"
 msgstr ""
 
-#: inc/template-tags.php:1909
+#: inc/template-tags.php:1892
 msgid "Your&nbsp;MinnPost&nbsp;Account"
 msgstr ""
 
-#: inc/uploads.php:42
+#: inc/uploads.php:41
 msgid "Feature"
 msgstr ""
 
-#: inc/uploads.php:43
+#: inc/uploads.php:42
 msgid "Feature large"
 msgstr ""
 
-#: inc/uploads.php:44
+#: inc/uploads.php:43
 msgid "Feature medium"
 msgstr ""
 
-#: inc/uploads.php:45
+#: inc/uploads.php:44
 msgid "Newsletter thumbnail"
 msgstr ""
 
-#: inc/uploads.php:46
+#: inc/uploads.php:45
 msgid "Featured column"
 msgstr ""
 
-#: inc/uploads.php:47
+#: inc/uploads.php:46
 msgid "Author photo"
 msgstr ""
 
-#: inc/uploads.php:48
+#: inc/uploads.php:47
 msgid "Author teaser"
 msgstr ""
 
-#: inc/uploads.php:49
+#: inc/uploads.php:48
 msgid "Author thumbnail"
 msgstr ""
 
-#: inc/uploads.php:50
+#: inc/uploads.php:49
 msgid "Partner logo"
 msgstr ""
 
@@ -1357,6 +1297,10 @@ msgstr ""
 
 #: user-account-management-templates/front-end/account-settings-form.php:117
 msgid "Country:"
+msgstr ""
+
+#: tribe/events/v2/list.php:29
+msgid "There are no upcoming events at this time. Check back soon, or browse our previous events by the year when they occurred."
 msgstr ""
 
 #. translators: 1) cost
