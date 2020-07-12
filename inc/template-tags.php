@@ -957,7 +957,7 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 		$attributes = apply_filters( 'minnpost_largo_lazy_load_attributes', $attributes, $author_id, 'post', $lazy_load );
 		error_log( 'attr is ' . print_r( $attributes, true ) );
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
-			$alt_text = get_post_meta( $image_id , '_wp_attachment_image_alt', true );
+			$alt_text  = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
 			$image_url = wp_get_attachment_url( $image_id );
 			if ( ( is_singular() || is_archive() ) && ! is_singular( 'newsletter' ) ) {
 				if ( isset( $attributes['class'] ) ) {
@@ -970,7 +970,6 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 				} else {
 					$loading = '';
 				}
-				
 				$image = '<picture>';
 				foreach ( $author_sizes as $size ) {
 					if ( 'post' === $size['placement'] && ! is_single() ) {
@@ -1352,7 +1351,7 @@ if ( ! function_exists( 'minnpost_category_breadcrumb' ) ) :
 				echo '<div class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category->term_id ) ) . '">' . $category->name . '</a></div>';
 			}
 		}
-		if ( '' !== $category_group_id || true == $category_is_group ) {
+		if ( '' !== $category_group_id || true === $category_is_group ) {
 			echo '</div>';
 		}
 	}
