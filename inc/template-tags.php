@@ -913,19 +913,22 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 
 		$author_sizes = array(
 			array(
-				'name'  => 'photo',
-				'media' => '(min-width: 80em)',
-				'width' => 225,
+				'name'      => 'photo',
+				'media'     => '(min-width: 80em)',
+				'width'     => 225,
+				'placement' => 'archive',
 			),
 			array(
-				'name'  => 'author-photo',
-				'media' => '(min-width: 40em)',
-				'width' => 190,
+				'name'      => 'author-photo',
+				'media'     => '(min-width: 40em)',
+				'width'     => 190,
+				'placement' => 'post',
 			),
 			array(
-				'name'  => 'author-teaser',
-				'media' => '',
-				'width' => 75,
+				'name'      => 'author-teaser',
+				'media'     => '',
+				'width'     => 75,
+				'placement' => 'post',
 			),
 		);
 
@@ -953,23 +956,37 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 
 		// set up lazy load attributes
 		$attributes = apply_filters( 'minnpost_largo_lazy_load_attributes', $attributes, $author_id, 'post', $lazy_load );
-
+		error_log( 'attr is ' . print_r( $attributes, true ) );
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
 			$alt_text = get_post_meta( $image_id , '_wp_attachment_image_alt', true );
 			$image_url = wp_get_attachment_url( $image_id );
 			if ( ( is_singular() || is_archive() ) && ! is_singular( 'newsletter' ) ) {
-				// <img srcset="elva-fairy-480w.jpg 480w, elva-fairy-800w.jpg 800w" sizes="(max-width: 600px) 480px, 800px" src="elva-fairy-800w.jpg" alt="Elva dressed as a fairy">
+				if ( isset( $attributes['class'] ) ) {
+					$class = ' class="' . $attributes['class'] . '"';
+				} else {
+					$class = '';
+				}
+				if ( isset( $attributes['loading'] ) ) {
+					$loading = ' loading="' . $attributes['loading'] . '"';
+				} else {
+					$loading = '';
+				}
+				
 				$image = '<picture>';
 				foreach ( $author_sizes as $size ) {
-					$image_url_width = $image_url . '&amp;w=' . $size['width'];
-					// $image .= $src[0] . ' ' . $src[1] . 'w';
+					if ( 'post' === $size['placement'] && ! is_single() ) {
+						continue;
+					} elseif ( 'archive' === $size['placement'] && ! is_archive() ) {
+						continue;
+					}
+					$image_url_width = $image_url . '?w=' . $size['width'];
 					if ( '' !== $size['media'] ) {
 						$image .= '<source media="' . $size['media'] . '" srcset="' . $image_url_width . '">';
 					} else {
 						$image .= '<source srcset="' . $image_url_width . '">';
 					}
 				}
-				$image .= '<img src="' . $image_url . '" alt="' . $alt_text . '">';
+				$image .= '<img src="' . $image_url . '" alt="' . $alt_text . '"' . $class . $loading . '>';
 				$image .= '</picture>';
 			} else {
 				// this requires that the custom image sizes in custom-fields.php work correctly
