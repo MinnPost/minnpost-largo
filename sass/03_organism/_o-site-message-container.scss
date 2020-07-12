@@ -229,7 +229,7 @@
 				padding: 1em;
 				width: 100%;
 				max-width: 100%;
-				color: neutral-color(white);
+				color: neutral-color(black);
 			}
 
 			fieldset {
@@ -348,7 +348,8 @@
 				.m-form-frontpage.m-form-minnpost-form-processor-mailchimp-submitted {
 
 					.m-form-message {
-						max-width: colspan( 8, 16 );
+						//max-width: colspan( 8, 16 );
+						max-width: none;
 					}
 				}
 			}
@@ -376,6 +377,14 @@
 						fieldset {
 							max-width: colspan( 8, 16 );
 						}
+					}
+				}
+
+				// after submitting
+				.m-form-frontpage.m-form-minnpost-form-processor-mailchimp-submitted {
+
+					.m-form-message {
+						max-width: colspan( 8, 16 );
 					}
 				}
 			}
