@@ -200,7 +200,8 @@ $grid-color: red; // Grid overlay color
 // ex: @include breakpoint-min( sm ) { }
 
 $breakpoints: (
-	xxs: (cols:  4, min-width:  0,  margin: $pad), // Includes optional custom margin
+	xxxs: (cols:  4, min-width:  0,  margin: $pad), // Includes optional custom margin
+	xxs: (cols:  6, min-width: 24em, margin: $gut), // 384px
 	xs: (cols:  6, min-width: 30em, margin: $gut), // 480px
 	sm: (cols:  6, min-width: 40em, margin: $gut), // 640px
 	md: (cols:  8, min-width: 50em, margin: $gut), // 800px
