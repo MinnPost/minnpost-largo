@@ -1,4 +1,5 @@
-.m-author-info {
+.m-author-info,
+.m-staff-member-info {
 
 	@include breakpoint-min( lg ) {
 		width: 100%;
@@ -33,7 +34,8 @@
 		}
 	}
 
-	&.m-author-info-single .a-author-figure {
+	&.m-author-info-single .a-author-figure,
+	&.m-staff-member-info-single .a-author-figure {
 
 		img {
 			max-width: $author-thumb-size;

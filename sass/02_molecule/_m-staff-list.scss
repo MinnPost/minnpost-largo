@@ -6,14 +6,5 @@
 	li {
 		list-style: none;
 		border-bottom: $border-default-style;
-
-		figure {
-
-			img {
-				max-width: 130px; // in case the author has an image but not a thumbnail
-				height: 100%;
-				width: 100%;
-			}
-		}
 	}
 }

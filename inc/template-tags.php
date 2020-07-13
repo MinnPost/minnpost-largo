@@ -746,6 +746,7 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 			$title = get_post_meta( $author_id, $title_field, true );
 		}
 
+		$text = wpautop( $text ); // for some reason the paragraphs don't work without this
 		$text = apply_filters( 'the_content', $text );
 
 		if ( '' !== $image_id ) {

@@ -350,3 +350,19 @@ endif;
 
 // don't break responsive images by adding a width to the figure tag
 add_filter( 'img_caption_shortcode_width', '__return_false' );
+
+/**
+* Set the image size for the staff list page
+*
+* @param string $image_size
+* @return string $image_size
+*
+*/
+if ( ! function_exists( 'minnpost_largo_staff_image_size' ) ) :
+	add_filter( 'staff_user_post_list_image_size', 'minnpost_largo_staff_image_size' );
+	function minnpost_largo_staff_image_size( $image_size ) {
+		$image_size = 'photo';
+		return $image_size;
+	}
+endif;
+
