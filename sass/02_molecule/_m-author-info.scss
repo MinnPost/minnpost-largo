@@ -36,8 +36,12 @@
 	&.m-author-info-single .a-author-figure {
 
 		img {
-			max-width: $author-photo-size;
+			max-width: $author-thumb-size;
 			margin-bottom: 0;
+
+			@include breakpoint-min( sm ) {
+				max-width: $author-photo-size;
+			}
 		}
 	}
 }
