@@ -40,8 +40,9 @@ if ( ! function_exists( 'minnpost_largo_menu_custom_fields' ) ) :
 	add_action( 'wp_nav_menu_item_custom_fields', 'minnpost_largo_menu_custom_fields', 10, 4 );
 	function minnpost_largo_menu_custom_fields( $item_id, $item, $depth, $args ) {
 		wp_nonce_field( 'minnpost_largo_menu_meta_nonce', '_minnpost_largo_menu_meta_nonce_name' );
-		$minnpost_largo_menu_item_priority = get_post_meta( $item_id, '_minnpost_largo_menu_item_priority', true );
-		$minnpost_largo_menu_item_icon     = get_post_meta( $item_id, '_minnpost_largo_menu_item_icon', true );
+		$minnpost_largo_menu_item_priority    = get_post_meta( $item_id, '_minnpost_largo_menu_item_priority', true );
+		$minnpost_largo_menu_item_mobile_text = get_post_meta( $item_id, '_minnpost_largo_menu_item_mobile_text', true );
+		$minnpost_largo_menu_item_icon        = get_post_meta( $item_id, '_minnpost_largo_menu_item_icon', true );
 		?>
 		<input type="hidden" name="minnpost-largo-menu-meta-nonce" value="<?php echo wp_create_nonce( 'minnpost-largo-menu-meta-name' ); ?>">
 		<input type="hidden" class="nav-menu-id" value="<?php echo $item_id; ?>">
@@ -52,6 +53,14 @@ if ( ! function_exists( 'minnpost_largo_menu_custom_fields' ) ) :
 				<input type="number" name="minnpost_largo_menu_item_priority[<?php echo $item_id; ?>]" id="minnpost-largo-menu-meta-item-priority-for-<?php echo $item_id; ?>" value="<?php echo esc_attr( $minnpost_largo_menu_item_priority ); ?>">
 			</label>
 			<small class="description" style="display: inline-block;"><?php echo esc_html__( 'A low priority (ex 1) will cause the site to try to show this menu item at the smallest screen sizes. A higher priority will potentially hide this item on smaller screens, and show it as the screen gets bigger.', 'minnpost-largo' ); ?></small>
+		</p>
+		<p class="field-minnpost_largo_menu_item_mobile_text description description-wide">
+			<label for="minnpost-largo-menu-meta-item-mobile-text-for-<?php echo $item_id; ?>">
+				<?php echo esc_html__( 'Navigation Label On Smallest Screens', 'minnpost-largo' ); ?>
+				<br>
+				<input type="text" name="minnpost_largo_menu_item_mobile_text[<?php echo $item_id; ?>]" id="minnpost-largo-menu-meta-item-mobile-text-for-<?php echo $item_id; ?>" value="<?php echo esc_attr( $minnpost_largo_menu_item_mobile_text ); ?>">
+			</label>
+			<small class="description" style="display: inline-block;"><?php echo esc_html__( 'Text in this field will be used as the label at the smallest screen sizes. It is useful for shortening a label rather than removing it.', 'minnpost-largo' ); ?></small>
 		</p>
 		<p class="field-minnpost_largo_menu_item_icon description description-wide">
 			<label for="minnpost-largo-menu-meta-item-icon-for-<?php echo $item_id; ?>">
@@ -86,6 +95,14 @@ if ( ! function_exists( 'minnpost_largo_nav_update' ) ) :
 			update_post_meta( $menu_item_db_id, '_minnpost_largo_menu_item_priority', $sanitized_data );
 		} else {
 			delete_post_meta( $menu_item_db_id, '_minnpost_largo_menu_item_priority' );
+		}
+
+		// menu item mobile text
+		if ( isset( $_POST['minnpost_largo_menu_item_mobile_text'][ $menu_item_db_id ] ) ) {
+			$sanitized_data = sanitize_text_field( $_POST['minnpost_largo_menu_item_mobile_text'][ $menu_item_db_id ] );
+			update_post_meta( $menu_item_db_id, '_minnpost_largo_menu_item_mobile_text', $sanitized_data );
+		} else {
+			delete_post_meta( $menu_item_db_id, '_minnpost_largo_menu_item_mobile_text' );
 		}
 
 		// menu item icon
@@ -258,6 +275,11 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 		$data                              = '';
 		if ( '' !== $minnpost_largo_menu_item_priority ) {
 			$data = ' data-menu-item-priority="' . $minnpost_largo_menu_item_priority . '"';
+		}
+
+		$minnpost_largo_menu_item_mobile_text = get_post_meta( $item->ID, '_minnpost_largo_menu_item_mobile_text', true );
+		if ( '' !== $minnpost_largo_menu_item_mobile_text ) {
+			$item->title = '<span class="a-label-xxs">' . $minnpost_largo_menu_item_mobile_text . '</span><span class="a-label-xs">' . $item->title . '</span>';
 		}
 
 		$minnpost_largo_menu_item_icon = get_post_meta( $item->ID, '_minnpost_largo_menu_item_icon', true );

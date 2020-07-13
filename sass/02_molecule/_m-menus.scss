@@ -186,6 +186,24 @@ nav {
 				}
 			}
 
+			span.a-label-xxs {
+				display: inline-flex;
+			}
+
+			span.a-label-xs {
+				display: none;
+			}
+
+			@include breakpoint-min( xs ) {
+				span.a-label-xxs {
+					display: none;
+				}
+
+				span.a-label-xs {
+					display: inline-flex;
+				}
+			}
+
 			> a {
 				display: inline-flex;
 				color: neutral-color(dark);
