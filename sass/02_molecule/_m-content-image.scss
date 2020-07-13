@@ -21,32 +21,39 @@
 	}
 
 	&.alignleft {
-		float: left;
-		clear: right;
-		margin: $standard-block-margin / 2 $standard-block-margin $standard-block-margin 0;
+		@include breakpoint-min( xs ) {
+			float: left;
+			clear: right;
+			margin: $standard-block-margin / 2 $standard-block-margin $standard-block-margin 0;
+		}
 	}
 
 	&.alignright {
-		float: right;
-		clear: right;
-		margin: $standard-block-margin / 2 0 $standard-block-margin $standard-block-margin;
+		@include breakpoint-min( xs ) {
+			float: right;
+			clear: right;
+			margin: $standard-block-margin / 2 0 $standard-block-margin $standard-block-margin;
+		}
 	}
 }
 
 .m-entry-content .content-image {
-	margin-bottom: 10px;
+	margin-bottom: $standard-block-margin;
 
 	&.content-image-right {
-		float: right;
-		clear: right;
-		margin-left: 20px;
-		margin-bottom: 20px;
+
+		@include breakpoint-min( xs ) {
+			float: right;
+			clear: right;
+			margin-left: $standard-block-margin;
+		}
 	}
 
 	&.content-image-left {
-		float: left;
-		clear: left;
-		margin-right: 20px;
-		margin-bottom: 20px;
+		@include breakpoint-min( xs ) {
+			float: left;
+			clear: left;
+			margin-right: $standard-block-margin;
+		}
 	}
 }
