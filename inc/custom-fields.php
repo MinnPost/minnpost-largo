@@ -1969,7 +1969,7 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 				'id'               => '_mp_post_homepage_image_size',
 				'type'             => 'select',
 				'show_option_none' => true,
-				'desc'             => 'Select an option',
+				'desc'             => __( 'Select an option', 'minnpost-largo' ),
 				'default'          => 'feature-large',
 				'options'          => array(
 					'feature-medium' => __( 'Medium', 'minnpost-largo' ),
