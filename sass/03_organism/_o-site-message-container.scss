@@ -34,8 +34,10 @@
 
 	// above article body
 	// article bottom
+	// above homepage articles
 	// homepage middle
 	&.wp-message-inserter-message-region-above_article_body,
+	&.wp-message-inserter-message-region-above_homepage_articles,
 	&.wp-message-inserter-message-region-homepage_middle,
 	&.wp-message-inserter-message-region-article_bottom {
 		margin-bottom: $standard-block-margin;
@@ -112,9 +114,10 @@
 		border: 0; // by default, they shouldn't need a border
 	}
 
-	// site header and homepage middle
-	&.wp-message-inserter-message-region-homepage_middle,
-	&.wp-message-inserter-message-region-header {
+	// site header, homepage above articles, and homepage middle
+	&.wp-message-inserter-message-region-header,
+	&.wp-message-inserter-message-region-above_homepage_articles,
+	&.wp-message-inserter-message-region-homepage_middle {
 
 		header {
 			margin-right: 1em;
@@ -141,6 +144,7 @@
 	}
 
 	// homepage middle 
+	// expectation of what is going in there exists
 	&.wp-message-inserter-message-region-homepage_middle {
 		width: 100%;
 		background: utility-color(blue, background);
