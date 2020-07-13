@@ -912,17 +912,17 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 	function minnpost_get_author_image( $author_id = '', $size = 'photo', $lazy_load = true ) {
 
 		$author_sizes = array(
-			array(
+			/*array(
 				'name'      => 'photo',
 				'media'     => '(min-width: 80em)',
 				'width'     => 225,
 				'placement' => 'archive',
-			),
+			),*/
 			array(
-				'name'      => 'author-photo',
-				'media'     => '(min-width: 40em)',
-				'width'     => 190,
-				'placement' => 'post',
+				'name'  => 'author-photo',
+				'media' => '(min-width: 40em)',
+				'width' => 190,
+				//'placement' => 'post',
 			),
 			array(
 				'name'  => 'author-teaser',
@@ -955,7 +955,6 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 
 		// set up lazy load attributes
 		$attributes = apply_filters( 'minnpost_largo_lazy_load_attributes', $attributes, $author_id, 'post', $lazy_load );
-		error_log( 'attr is ' . print_r( $attributes, true ) );
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
 			$alt_text  = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
 			$image_url = wp_get_attachment_url( $image_id );

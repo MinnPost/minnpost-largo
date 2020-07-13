@@ -12,7 +12,11 @@
 	.a-author-figure {
 
 		img {
-			max-width: $author-photo-size;
+			max-width: $author-thumb-size;
+
+			@include breakpoint-min( sm ) {
+				max-width: $author-photo-size;
+			}
 		}
 	}
 
