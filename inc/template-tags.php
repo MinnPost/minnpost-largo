@@ -969,9 +969,9 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 				}
 				$image = '<picture class="a-author-sizes">';
 				foreach ( $author_sizes as $size ) {
-					if ( 'post' === $size['placement'] && ! is_single() ) {
+					if ( isset( $size['placement'] ) && 'post' === $size['placement'] && ! is_single() ) {
 						continue;
-					} elseif ( 'archive' === $size['placement'] && ! is_archive() ) {
+					} elseif ( isset( $size['placement'] ) && 'archive' === $size['placement'] && ! is_archive() ) {
 						continue;
 					}
 					$image_url_width = $image_url . '?w=' . $size['width'];
