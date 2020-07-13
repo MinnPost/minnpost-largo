@@ -1,19 +1,26 @@
 .float-right,
 .alignright,
 .mp .alignright {
-	float: right;
-	clear: right;
-	margin-left: $standard-block-margin;
 	margin-bottom: $standard-block-margin;
+
+	@include breakpoint-min( xs ) {
+		float: right;
+		clear: right;
+		margin-left: $standard-block-margin;
+	}
+	
 }
 
 .float-left,
 .alignleft,
 .mp .alignleft {
-	float: left;
-	clear: left;
-	margin-right: $standard-block-margin;
 	margin-bottom: $standard-block-margin;
+
+	@include breakpoint-min( xs ) {
+		float: left;
+		clear: left;
+		margin-right: $standard-block-margin;
+	}
 }
 
 .m-entry-content .image {
