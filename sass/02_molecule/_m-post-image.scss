@@ -32,3 +32,17 @@
 		width: auto;
 	}
 }
+
+.m-zone-homepage-top-image-first .m-post-image {
+	@include breakpoint-min( sm ) {
+		margin-right: $standard-heading-margin;
+	}
+
+	@include breakpoint-min( lg ) {
+		margin-right: $standard-heading-margin;
+	}
+
+	@include breakpoint-min( xxl ) {
+		margin-right: $standard-heading-margin;
+	}
+}

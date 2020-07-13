@@ -41,6 +41,13 @@
 				padding-bottom: 0;
 			}
 		}
+
+		&.m-zone-homepage-top-image-first {
+			article {
+				flex-direction: row-reverse;
+				justify-content: flex-end;
+			}
+		}
 		
 		&.m-zone-homepage-more-top,
 		&.m-zone-homepage-opinion {
