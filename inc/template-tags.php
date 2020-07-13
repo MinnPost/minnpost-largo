@@ -970,7 +970,7 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 				} else {
 					$loading = '';
 				}
-				$image = '<picture>';
+				$image = '<picture class="a-author-sizes">';
 				foreach ( $author_sizes as $size ) {
 					if ( 'post' === $size['placement'] && ! is_single() ) {
 						continue;

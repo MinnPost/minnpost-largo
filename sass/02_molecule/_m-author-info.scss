@@ -14,10 +14,17 @@
 
 		img {
 			max-width: $author-thumb-size;
+			height: 100%;
 
 			@include breakpoint-min( sm ) {
-				max-width: $author-photo-size;
+				//max-width: $author-photo-size;
 			}
+		}
+
+		.a-author-sizes,
+		.a-author-sizes source,
+		.a-author-sizes img {
+			height: auto;
 		}
 	}
 
