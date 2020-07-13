@@ -16,7 +16,7 @@ get_header(); ?>
 				<?php $top_query = z_get_zone_query( 'homepage-top' ); ?>
 				<?php if ( $top_query->have_posts() ) : ?>
 					<?php $post_count = $top_query->post_count; ?>
-					<section class="m-archive m-archive-top m-archive-has-<?php echo (int) $post_count; ?>-post m-zone m-zone-homepage-top ">
+					<section class="m-archive m-archive-top m-archive-has-<?php echo (int) $post_count; ?>-post m-zone m-zone-homepage-top">
 						<?php do_action( 'wp_message_inserter', 'above_homepage_articles' ); ?>
 						<?php
 						while ( $top_query->have_posts() ) :
