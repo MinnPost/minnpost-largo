@@ -9,7 +9,14 @@
 
 ?>
 
-<article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post' ); ?>>
+<?php
+$image_position = esc_html( get_post_meta( get_the_ID(), '_mp_post_homepage_image_position', true ) );
+$post_class     = 'm-post';
+if ( 'before' === $image_position ) {
+	$post_class .= ' m-post-image-first';
+}
+?>
+<article id="post-<?php the_ID(); ?>" <?php post_class( $post_class ); ?>>
 	<div class="m-entry-content">
 		<?php if ( '' === minnpost_get_replace_category_text() ) : ?>
 			<?php minnpost_category_breadcrumb(); ?>

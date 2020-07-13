@@ -10,6 +10,10 @@
 		display: table-caption;
 		caption-side: bottom;
 	}
+
+	&.m-post-thumbnail-full {
+		width: 100%;
+	}
 }
 
 .m-archive-top .m-post-image,
@@ -31,9 +35,13 @@
 		margin-bottom: $standard-heading-margin;
 		width: auto;
 	}
+
+	&.m-post-thumbnail-full {
+		width: 100%;
+	}
 }
 
-.m-zone-homepage-top-image-first .m-post-image {
+.m-post-image-first .m-post-image {
 	@include breakpoint-min( sm ) {
 		margin-right: $standard-heading-margin;
 	}

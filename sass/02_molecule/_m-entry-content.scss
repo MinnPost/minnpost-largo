@@ -65,24 +65,24 @@
 				margin-right: $standard-heading-margin;
 			}
 		}
-	}
 
-	&.m-zone-homepage-top-image-first {
-		.m-entry-content {
-			flex: unset;
-
-			@include breakpoint-min( sm ) {
-				flex: 1 0;
-				margin-right: 0;
-			}
-
-			@include breakpoint-min( lg ) {
-				margin-right: 0;
-			}
-
-			@include breakpoint-min( xxl ) {
-				flex: 1 0;
-				margin-right: 0;
+		.m-post-image-first {
+			.m-entry-content {
+				order: 2;
+	
+				@include breakpoint-min( sm ) {
+					flex: 1 0;
+					margin-right: 0;
+				}
+	
+				@include breakpoint-min( lg ) {
+					margin-right: 0;
+				}
+	
+				@include breakpoint-min( xxl ) {
+					flex: 1 0;
+					margin-right: 0;
+				}
 			}
 		}
 	}

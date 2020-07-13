@@ -498,6 +498,20 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		);
 		$image_settings->add_field(
 			array(
+				'name'             => __( 'Homepage Image Position', 'minnpost-largo' ),
+				'id'               => '_mp_post_homepage_image_position',
+				'type'             => 'radio_inline',
+				'show_option_none' => false,
+				'desc'             => __( 'Pick whether the image should go before or after the text. If before, it will be flush left on large screens, unless it is too wide. If after, it will be flush right, unless it is too wide.', 'minnpost-largo' ),
+				'default'          => 'after',
+				'options'          => array(
+					'before' => __( 'Before', 'minnpost-largo' ),
+					'after'  => __( 'After', 'minnpost-largo' ),
+				),
+			)
+		);
+		$image_settings->add_field(
+			array(
 				'name'         => __( 'Main Image', 'minnpost-largo' ),
 				'desc'         => __( 'Upload an image or enter an URL.', 'minnpost-largo' ),
 				'id'           => '_mp_post_main_image',
@@ -1975,6 +1989,20 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 					'feature-medium' => __( 'Medium', 'minnpost-largo' ),
 					'none'           => __( 'Do not display image', 'minnpost-largo' ),
 					'feature-large'  => __( 'Large', 'minnpost-largo' ),
+				),
+			)
+		);
+		$image_settings->add_field(
+			array(
+				'name'             => __( 'Homepage Image Position', 'minnpost-largo' ),
+				'id'               => '_mp_post_homepage_image_position',
+				'type'             => 'radio_inline',
+				'show_option_none' => false,
+				'desc'             => __( 'Pick whether the image should go before or after the text. If before, it will be flush left on large screens, unless it is too wide. If after, it will be flush right, unless it is too wide.', 'minnpost-largo' ),
+				'default'          => 'after',
+				'options'          => array(
+					'before' => __( 'Before', 'minnpost-largo' ),
+					'after'  => __( 'After', 'minnpost-largo' ),
 				),
 			)
 		);

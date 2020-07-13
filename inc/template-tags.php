@@ -90,18 +90,15 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 
 		// large is the story detail image. this is a built in size in WP
 		// home has its own size field
-		if ( is_home() && 'feature' === $size ) {
+		if ( is_home() && 'feature' === $size || 'feature-large' === $size ) {
 			$size = esc_html( get_post_meta( $id, '_mp_post_homepage_image_size', true ) );
-			if ( 'full' === $size ) {
-				$size = 'large';
-			}
 		} elseif ( is_home() && 'thumbnail' === $size ) {
 			$size = 'thumbnail';
 		} else {
 			$size = $size;
 		}
 
-		if ( 'large' === $size ) {
+		if ( 'large' === $size || 'full' === $size ) {
 			$image_url = get_post_meta( $id, '_mp_post_main_image', true );
 			if ( is_home() && '' === $image_url ) {
 				$image_url = get_post_meta( $id, '_mp_post_thumbnail_image', true );
@@ -115,7 +112,7 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 		$main_image_id      = get_post_meta( $id, '_mp_post_main_image_id', true );
 		$thumbnail_image_id = get_post_meta( $id, '_mp_post_thumbnail_image_id', true );
 
-		if ( 'large' === $size ) {
+		if ( 'large' === $size || 'full' === $size ) {
 			if ( '' !== $main_image_id ) {
 				$image_id = $main_image_id;
 			} elseif ( is_home() && '' !== $thumbnail_image_id ) {
