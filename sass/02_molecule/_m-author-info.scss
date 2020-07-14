@@ -21,10 +21,12 @@
 			}
 		}
 
-		.a-author-sizes,
-		.a-author-sizes source,
-		.a-author-sizes img {
-			height: auto;
+		.a-author-sizes {
+			
+			source,
+			img {
+				height: auto;
+			}
 		}
 	}
 

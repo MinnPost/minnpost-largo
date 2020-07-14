@@ -981,14 +981,14 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 						$image .= '<source srcset="' . $image_url_width . '">';
 					}
 				}
-				$image .= '<img src="' . $image_url . '" alt="' . $alt_text . '"' . $class . $loading . '>';
+				$image .= '<div class="a-author-sizes"><img src="' . $image_url . '" alt="' . $alt_text . '"' . $class . $loading . '></div>';
 				$image .= '</picture>';
 			} else {
 				// this requires that the custom image sizes in custom-fields.php work correctly
-				$image = wp_get_attachment_image( $image_id, $size, false, $attributes );
+				$image = '<div class="a-author-sizes">' . wp_get_attachment_image( $image_id, $size, false, $attributes ) . '</div>';
 			}
 		} else {
-			$image = minnpost_largo_manual_image_tag( $image_id, $image_url, $attributes );
+			$image = '<div class="a-author-sizes">' . minnpost_largo_manual_image_tag( $image_id, $image_url, $attributes ) . '</div>';
 		}
 
 		$image_data = array(
