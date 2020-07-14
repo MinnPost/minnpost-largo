@@ -6,7 +6,21 @@
 		display: block;
 	}
 
-	// size media queries for ie 11 and 10
+	.m-homepage-zones {
+
+		// where the zones differ from the archives
+		.m-zone {
+			
+			&.m-zone-homepage-more-top,
+			&.m-zone-homepage-opinion {
+	
+				article {
+					overflow: hidden;
+				}
+			}
+		}
+	}
+	
 
 	.o-archive-listing {
 
