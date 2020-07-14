@@ -237,6 +237,7 @@ nav {
 					//transform: translateY(100%);
 					z-index: 0;
 					opacity: 0;
+					visibility: hidden;
 					height: 0;
 					transition: $hover-transition;
 
@@ -247,6 +248,7 @@ nav {
 					&.is-open {
 						z-index: $z-index__xxxl;
 						opacity: 1;
+						visibility: visible;
 						height: 100%;
 					}
 
