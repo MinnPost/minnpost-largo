@@ -37,6 +37,19 @@ if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
 endif;
 
 /**
+* Add polyfill for CSS properties
+*
+*/
+if ( ! function_exists( 'minnpost_largo_custom_properties_polyfill' ) ) :
+	add_filter( 'wp_head', 'minnpost_largo_custom_properties_polyfill' );
+	function minnpost_largo_custom_properties_polyfill() {
+		?>
+		<script>window.MSInputMethodContext && document.documentMode && document.write('<script src="https://cdn.jsdelivr.net/gh/nuxodin/ie11CustomProperties@4.1.0/ie11CustomProperties.min.js"><\x2fscript>');</script>
+		<?php
+	}
+endif;
+
+/**
 * Add typekit to link preconnect
 *
 */
@@ -45,6 +58,7 @@ if ( ! function_exists( 'minnpost_largo_typekit_head' ) ) :
 	function minnpost_largo_typekit_head() {
 		?>
 		<link rel="preconnect" href="https://use.typekit.net">
+		<script>window.MSInputMethodContext && document.documentMode && document.write('<script src="https://cdn.jsdelivr.net/gh/nuxodin/ie11CustomProperties@4.1.0/ie11CustomProperties.min.js"><\x2fscript>');</script>
 		<?php
 	}
 endif;
