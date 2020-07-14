@@ -16,8 +16,7 @@
 		$recommended_query = z_get_zone_query( $recommended_zone );
 		?>
 		<?php if ( $recommended_query->have_posts() ) : ?>
-			<!--<section class="m-zone m-zone-sidebar m-zone-sidebar-recommended">-->
-				<section class="m-widget m-widget-zone-posts">
+			<section class="m-widget m-widget-zone-posts">
 				<h3 class="a-zone-title"><?php echo $zone->name; ?></h3>
 				<div class="m-zone-contents">
 					<ul>
