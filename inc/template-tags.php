@@ -981,7 +981,7 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 						$image .= '<source srcset="' . $image_url_width . '">';
 					}
 				}
-				$image .= '<div class="a-author-sizes"><img src="' . $image_url . '" alt="' . $alt_text . '"' . $class . $loading . '></div>';
+				$image .= '<img src="' . $image_url . '" alt="' . $alt_text . '"' . $class . $loading . '>';
 				$image .= '</picture>';
 			} else {
 				// this requires that the custom image sizes in custom-fields.php work correctly
