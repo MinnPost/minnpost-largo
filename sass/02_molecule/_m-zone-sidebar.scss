@@ -1,10 +1,6 @@
 .m-zone-sidebar {
 
 	h3.a-zone-title {
-		/*font-size: 123.1%;
-		text-transform: uppercase;
-		font-family: $font__headings;
-		font-weight: normal;*/
 		padding: $standard-block-margin;
 		margin: 0;
 
@@ -33,13 +29,4 @@
 			}
 		}
 	}
-}
-
-// media queries for sidebar zones
-@media screen and (min-width: $max-width-page) {
-
-	/*.m-zone-contents {
-		font-size: 84.6153846153846%;
-		line-height: 1;
-	}*/
 }
