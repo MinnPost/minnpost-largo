@@ -60,7 +60,7 @@
 				margin-right: 0;
 			}
 
-			@include breakpoint-min( xxl ) {
+			@include breakpoint-min( xl ) {
 				flex: 1 0;
 				margin-right: $standard-heading-margin;
 			}
@@ -79,7 +79,7 @@
 					margin-right: 0;
 				}
 	
-				@include breakpoint-min( xxl ) {
+				@include breakpoint-min( xl ) {
 					flex: 1 0;
 					margin-right: 0;
 				}
