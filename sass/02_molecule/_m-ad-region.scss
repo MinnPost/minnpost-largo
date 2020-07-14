@@ -31,7 +31,8 @@
 }
 
 #secondary-first,
-#secondary-second {
+#secondary-second,
+#secondary-first-and-second {
 
 	.m-ad-region-sidebar {
 		display: flex;
@@ -40,7 +41,8 @@
 	}
 }
 
-#secondary-first {
+#secondary-first,
+#secondary-first-and-second {
 	@include breakpoint-min( sm ) {
 		.m-ad-region-sidebar {
 			display: block;
