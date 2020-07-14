@@ -1,5 +1,6 @@
 .o-site-sidebar {
 	min-width: $size__site-sidebar;
+	width: $size__site-sidebar;
 	margin-right: auto;
 	margin-left: auto;
 	margin-bottom: $standard-block-margin;
@@ -91,5 +92,17 @@
 		display: flex;
 		flex-wrap: wrap;
 		flex-direction: column;
+	}
+}
+
+.o-homepage-listing-without-top {
+	
+	.o-site-sidebar#secondary-first-and-second {
+
+		@include breakpoint-min( sm ) {
+			margin-left: auto;
+			margin-right: 0;
+		}
+	
 	}
 }
