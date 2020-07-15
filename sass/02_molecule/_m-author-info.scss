@@ -11,6 +11,7 @@
 	}
 
 	.a-author-figure {
+		width: 100%;
 
 		img {
 			max-width: $author-thumb-size;
@@ -18,6 +19,14 @@
 
 			@include breakpoint-min( sm ) {
 				//max-width: $author-photo-size;
+			}
+		}
+
+		figcaption {
+			word-break: break-word;
+
+			@include breakpoint-min( xs ) {
+				word-break: normal;
 			}
 		}
 

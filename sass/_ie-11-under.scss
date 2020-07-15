@@ -1,6 +1,13 @@
 // all sizes for ie 11 and 10
 @media only screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
 
+	.o-wrapper {
+
+		&.o-wrapper-content {
+			flex-direction: row;
+		}
+	}
+
 	body.single-post .m-layout-primary,
 	body.page .m-layout-primary {
 		display: block;
