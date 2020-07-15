@@ -60,3 +60,8 @@ textarea {
 	border-radius: $border-radius;
 	border: $border-default-style;
 }
+
+[data-autoresize] {
+	resize: none;
+	box-sizing: border-box;
+}

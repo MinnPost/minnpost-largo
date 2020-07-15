@@ -874,6 +874,75 @@ if ( ! function_exists( 'cmb2_page_fields' ) ) :
 
 		$object_type = 'page';
 
+		$excerpt = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_excerpt',
+				'title'        => __( 'Excerpt', 'minnpost-largo' ),
+				'object_types' => array( $object_type ), // Post type
+				'context'      => 'after_editor',
+				'priority'     => 'high',
+				'show_names'   => false,
+			)
+		);
+		$excerpt->add_field(
+			array(
+				'id'        => 'excerpt',
+				'name'      => __( 'Excerpt', 'minnpost-largo' ),
+				'desc'      => __( 'By default, this is only used as the description for search results. But we can also configure its use in other ways. For example, the Commenting Policy excerpt is used at the top of our comments list.', 'minnpost-largo' ),
+				'type'      => 'wysiwyg',
+				'escape_cb' => false,
+				'options'   => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'textarea_rows' => 5,
+					'teeny'         => true, // output the minimal editor config used in Press This
+				),
+			)
+		);
+
+		/**
+		 * SEO and social meta settings
+		 */
+		$seo_settings = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_seo_settings',
+				'title'        => 'SEO &amp; Social Settings',
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'closed'       => true,
+			)
+		);
+		$seo_settings->add_field(
+			array(
+				'name'         => 'Title',
+				'id'           => '_mp_seo_title',
+				'type'         => 'text',
+				'char_counter' => true,
+				'char_max'     => 78,
+				'desc'         => sprintf(
+					// translators: 1) the sitename
+					esc_html__( 'If you do not fill this out, the page title will be used. If you do fill it out and do not include %1$s in the value, it will be placed at the end in this way: Your Title | %1$s' ),
+					get_bloginfo( 'name' )
+				),
+				'attributes'   => array(
+					'maxlength' => 78, // retrieved from https://seopressor.com/blog/google-title-meta-descriptions-length/ on 9/27/2018
+				),
+			)
+		);
+		$seo_settings->add_field(
+			array(
+				'name'         => 'Description',
+				'id'           => '_mp_seo_description',
+				'type'         => 'textarea_small',
+				'char_counter' => true,
+				'char_max'     => 200,
+				'attributes'   => array(
+					'maxlength' => 200, // 155 is the number, but it's ok to go higher as long as the spider sees the most important stuff at the beginning. retrieved from https://moz.com/blog/how-to-write-meta-descriptions-in-a-changing-world on 5/8/2020
+				),
+				'desc'         => esc_html__( 'When using this field, make sure the most important text is in the first 155 characters to ensure that Google can see it. If you do not fill it out, the page excerpt will be used.' ),
+			)
+		);
+
 		/**
 		 * Page settings
 		 */

@@ -47,6 +47,22 @@ if ( post_password_required() ) {
 	?>
 	<?php if ( 0 < $count_visible_comments ) : ?>
 		<h3 class="a-comments-title">Comments (<?php echo $count_visible_comments; ?>)</h3>
+
+		<?php
+		$commenting_policy = get_page_by_path( '/commenting-policy/', OBJECT, 'page' );
+		$excerpt           = '';
+		if ( null !== $commenting_policy ) {
+			$page_id                   = $commenting_policy->ID;
+			$commenting_policy_excerpt = get_the_excerpt( $page_id );
+			if ( '' !== $commenting_policy_excerpt ) {
+				$excerpt = apply_filters( 'the_content', $commenting_policy_excerpt );
+			}
+		}
+		if ( '' !== $excerpt ) :
+			?>
+		<div class="a-comment-policy-excerpt"><?php echo $excerpt; ?></div>
+		<?php endif; ?>
+
 		<?php minnpost_largo_load_comments_switch( 'before' ); ?>
 		<ol>
 			<?php
@@ -96,7 +112,7 @@ if ( post_password_required() ) {
 			'title_reply'        => __( 'Leave a Comment', 'minnpost-largo' ),
 			'title_reply_before' => '<h3 id="reply-title" class="a-comment-reply-title">',
 			'class_form'         => 'm-form m-form-comment-form m-form-standalone',
-			'comment_field'      => '<div class="m-form-item m-form-item-comment"><label for="comment">' . _x( 'Comment', 'noun' ) . '</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" aria-required="true" required="required"></textarea></div>',
+			'comment_field'      => '<div class="m-form-item m-form-item-comment"><label for="comment">' . _x( 'Comment', 'noun' ) . '</label> <textarea id="comment" name="comment" cols="45" rows="8" maxlength="65525" aria-required="true" required="required" data-autoresize></textarea></div>',
 			'submit_field'       => '<div class="m-form-actions">%1$s %2$s</div>',
 		);
 		comment_form( $comment_form_args );
