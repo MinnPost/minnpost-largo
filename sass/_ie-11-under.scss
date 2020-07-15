@@ -43,6 +43,26 @@
 		}
 	}
 
+	.m-form-minnpost-form-processor-mailchimp {
+
+		// full page forms
+		&.m-form-fullpage {
+	
+			.m-subscribe-grouping {
+	
+				.m-subscribe-items {
+					max-width: 50%;
+					display: block;
+				}
+	
+				.m-subscribe {
+					max-width: 45%;
+				}
+			}
+		}
+	}
+	
+
 	
 }
 
