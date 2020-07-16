@@ -918,7 +918,7 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 			),*/
 			array(
 				'name'  => 'author-photo',
-				'media' => '(min-width: 40em)',
+				'media' => '(min-width: 640px)',
 				'width' => 190,
 				//'placement' => 'post',
 			),
