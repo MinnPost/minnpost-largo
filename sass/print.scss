@@ -1,3 +1,11 @@
+@import "functions"; // put functions first because they get used in color variable calculations
+@import "variables";
+@import "column-setter";
+@import "mixins";
+
+// ------------------------------------------------------------
+// BASE
+// ------------------------------------------------------------
 p {
 	orphans: 2;
 	widows: 2;
@@ -9,45 +17,243 @@ div.image {
 	break-inside: avoid;
 }
 
+// ------------------------------------------------------------
+// ATOMS
+// ------------------------------------------------------------
+.acm-ad-container,
 .acm-ad,
-article .acm-ad {
-	display: none;
+article .acm-ad,
+.o-site-sidebar .acm-ad {
+	display: none !important;
+}
+
+.a-site-branding {
+	width: 100%;
+	height: auto;
+	position: relative;
+	margin: 0 auto $standard-block-padding auto;
+
+	.a-logo-svg {
+		display: block;
+	}
+}
+
+header .a-site-branding {
+	margin: 0;
+	max-width: colspan( 5, 16 );
+}
+
+header.o-header-support .a-site-branding {
+	margin-right: auto;
 }
 
 .m-support-cta .a-support-button,
 .m-support-cta-bottom {
-	display: none;
+	display: none !important;
 }
 
-header {
+// ------------------------------------------------------------
+// MOLECULES
+// ------------------------------------------------------------
+.m-ad-region {
+	display: none !important;
+}
+
+.m-support-cta {
+
+	// cta in the site header
+	&.m-support-cta-top {
+		text-align: left;
+		flex-direction: row;
+		width: auto;
+		font-size: 100%;
+		max-width: none;
+
+		// tagline
+		h2 {
+			@include meta-preset( $size: 0, $bold: true, $italic: false, $line-height: 1 );
+			padding-bottom: 0;
+		}
+	}
+
+	// cta in the site footer
+	&.m-support-cta-bottom {
+		display: none !important;
+	}
+}
+
+.o-header-support .m-support-cta.m-support-cta-top {
+	text-align: left;
+	flex-direction: row;
+	width: auto;
+
+	// tagline
+	h2 {
+		margin: 0;
+		@include meta-preset( $size: 0, $bold: true, $italic: false, $line-height: 1 );
+	}
+}
+
+
+nav {
+	display: none !important;
+}
+
+
+.m-widget-site-branding {
+	max-width: colspan( 6, 16 );
 
 	.a-site-branding {
-		float: none;
-		height: 51px;
+		max-width: colspan( 5, 6 );
+	}
+}
 
-		.a-logo {
-			height: 100%;
+.m-entry-content {
+	margin-bottom: $standard-block-margin;
+	overflow-wrap: break-word;
+
+	&.m-membership-support-wrapper {
+		font-family: $webfont__sans;
+	}
+}
+
+.o-entry {
+
+	.m-entry-meta {
+		width: colspan( 2, 12 );
+
+		&.m-entry-meta-horizontal {
+			width: 100%;
+		}
+	}
+}
+
+.m-entry-header {
+
+	.m-entry-meta {
+		width: colspan( 12, 12 );
+	}
+}
+
+.m-archive {
+
+	.m-entry-content {
+		margin-bottom: 0;
+		flex: 1 0;
+	}
+
+	&.m-archive-excerpt {
+
+		.m-entry-content {
+			flex: 1 0;
+			margin-right: $standard-heading-margin;
+		}
+
+	}
+
+	&.m-archive-homepage {
+
+		.m-entry-content {
+			order: 2;
+			margin-left: 0;
 		}
 	}
 
-	.m-support-cta.m-support-cta-top .a-support-button {
-		display: none;
-	}
+	&.m-zone-homepage-top {
+		
+		.m-entry-content {
+			flex: 1 0;
+			margin-right: $standard-heading-margin;
+		}
 
-	nav {
-		display: none;
-
-		&#navigation-ext {
-			display: none;
+		.m-post-image-first {
+			.m-entry-content {
+				order: 2;
+				flex: 1 0;
+				margin-right: 0;
+			}
 		}
 	}
+}
 
-	#navigation-featured-account-access {
-		display: none;
+.m-archive-top .m-post-image,
+.m-archive-excerpt .m-post-image,
+.m-archive-homepage .m-post-image {
+	width: 100%;
+}
+
+.m-archive-top .m-post-image,
+.m-archive-excerpt .m-post-image {
+	margin-left: 0;
+	margin-bottom: 0;
+	margin-bottom: $standard-heading-margin;
+	width: auto;
+
+	&.m-post-thumbnail-full {
+		width: 100%;
 	}
+}
 
-	form {
-		display: none;
+.m-post-image-first .m-post-image {
+	margin-right: $standard-heading-margin;
+}
+
+.m-homepage-zones {
+
+	// where the zones differ from the archives
+	.m-zone {
+		flex-wrap: wrap;
+		display: flex;
+		width: 100%;
+		max-width: calc((100%) - #{$size__site-sidebar} );
+
+		&.m-zone-homepage-top { // because this section is not visually separate
+			max-width: calc((100% - #{colspan( 1, 12 )}) - #{$size__site-sidebar} );
+
+			article {
+				width: 100%;
+				border-bottom: 0;
+				padding-bottom: 0;
+			}
+		}
+		
+		&.m-zone-homepage-more-top,
+		&.m-zone-homepage-opinion {
+
+			article {
+				width: colspan( 6, 12 );
+			}
+		}
+	}
+}
+
+.m-widget-group {
+    
+    &.m-widget-group-homepage {
+        display: flex;
+    }
+}
+
+
+
+
+
+
+
+// ORGANISMS
+.o-wrapper-site-navigation,
+.o-wrapper-sub-navigation,
+.o-wrapper-site-navigation * {
+	display: none !important;
+}
+
+.o-wrapper {
+	// site header wrapper
+	&.o-wrapper-site-header {
+		align-items: center;
+		justify-content: space-between;
+		flex-direction: row;
+		margin-bottom: $standard-block-padding;
 	}
 }
 
@@ -79,28 +285,32 @@ header {
 	.m-related {
 		display: none;
 	}
-
-	.a-related-tags {
-		display: none;
-	}
-
-	.m-author-info {
-		page-break-after: always;
-	}
 }
 
-.o-site-sidebar {
+.o-entry {
+	flex-direction: row;
+	justify-content: flex-start;
 
-	.m-minnpost-spills-widget {
-		display: none;
-	}
+	.m-entry-content {
+		max-width: colspan( 10, 12 );
+	}	
+}
 
-	.m-widget-most-commented {
-		display: none;
-	}
+.o-site-message-container {
+	display: none;
+}
 
-	.m-widget-rpwe-widget {
-		display: none;
+
+body.single,
+body.page {
+
+	.o-site-sidebar {
+
+		.m-minnpost-spills-widget,
+		.m-widget-zone-posts,
+		.m-widget-most-commented {
+			display: none;
+		}
 	}
 }
 
@@ -112,10 +322,6 @@ footer {
 
 	.o-footer .o-footer-hat {
 		display: block;
-	}
-
-	.powered-by-wpcom {
-		display: none;
 	}
 }
 
