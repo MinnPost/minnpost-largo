@@ -53,7 +53,7 @@
 				align-content: flex-start;
 
 				@include breakpoint-min( lg ) {
-					width: colspan( 6, 12 );
+					width: colspan( 5.8, 12 );
 				}
 			}
 		}

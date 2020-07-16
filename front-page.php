@@ -37,8 +37,10 @@ get_header(); ?>
 					<section class="m-archive m-archive-homepage m-zone m-zone-homepage-more-top">
 						<?php if ( ! $top_query->have_posts() ) : ?>
 							<?php do_action( 'wp_message_inserter', 'above_homepage_articles' ); ?>
+							<h2 class="a-zone-title"><?php echo __( 'Today\'s top stories', 'minnpost-largo' ); ?></h2>
+						<?php else : ?>
+							<h2 class="a-zone-title"><?php echo __( 'More of today\'s top stories', 'minnpost-largo' ); ?></h2>
 						<?php endif; ?>
-						<h2 class="a-zone-title"><?php echo $zone->description; ?></h2>
 						<?php
 						$count = 1;
 						while ( $more_top_stories->have_posts() ) :
