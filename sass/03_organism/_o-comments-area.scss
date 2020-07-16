@@ -1,4 +1,5 @@
 .o-comments-area {
+	overflow-wrap: break-word;
 
 	@include body-preset( $size: -2 );
 
