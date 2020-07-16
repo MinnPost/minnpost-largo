@@ -36,19 +36,3 @@ header.o-header-support .a-site-branding {
 footer .a-logo-svg picture {
 	filter: brightness(0) invert(1);
 }
-
-// this depends on modernizr
-/*.no-srcset {
-
-	.a-site-branding {
-
-		.a-logo-svg {
-			z-index: 1;
-
-			img {
-				display: block;
-				margin-top: 1px;
-			}
-		}
-	}
-}*/
