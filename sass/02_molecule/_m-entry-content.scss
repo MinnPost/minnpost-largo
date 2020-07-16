@@ -1,5 +1,6 @@
 .m-entry-content {
 	margin-bottom: $standard-block-margin;
+	overflow-wrap: break-word;
 
 	&.m-membership-support-wrapper {
 		font-family: $webfont__sans;
