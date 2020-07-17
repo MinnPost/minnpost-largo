@@ -43,6 +43,7 @@ get_header(); ?>
 						} else {
 							$top_zone_title = __( 'More of today\'s top stories', 'minnpost-largo' );
 						}
+						$top_zone_title = wptexturize( $top_zone_title );
 						?>
 						<?php if ( ! $top_query->have_posts() ) : ?>
 							<?php do_action( 'wp_message_inserter', 'above_homepage_articles' ); ?>
