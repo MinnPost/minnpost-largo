@@ -39,9 +39,9 @@ get_header(); ?>
 						if ( '' !== $top_zone->description ) {
 							$top_zone_title = $top_zone->description;
 						} elseif ( ! $top_query->have_posts() ) {
-							$top_zone_title = __( 'Today\'s top stories', 'minnpost-largo' );
+							$top_zone_title = __( 'Top stories', 'minnpost-largo' );
 						} else {
-							$top_zone_title = __( 'More of today\'s top stories', 'minnpost-largo' );
+							$top_zone_title = __( 'More top stories', 'minnpost-largo' );
 						}
 						$top_zone_title = wptexturize( $top_zone_title );
 						?>
