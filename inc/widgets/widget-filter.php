@@ -134,6 +134,36 @@ function minnpost_widget_display_callback( $instance, $widget, $args ) {
 }
 
 /**
+* Filter the WP_Query for a spill widget
+* @param array $args
+* @return array $args
+*
+*/
+if ( ! function_exists( 'minnpost_largo_spill_query' ) ) :
+	add_filter( 'minnpost_spills_query', 'minnpost_largo_spill_query', 10, 1 );
+	function minnpost_largo_spill_query( $args ) {
+		$posts_to_ignore = array();
+		if ( function_exists( 'z_get_zones' ) ) {
+			$zones = z_get_zones();
+			foreach ( $zones as $zone ) {
+				if ( function_exists( 'z_get_posts_in_zone' ) ) {
+					$posts_in_zone = z_get_posts_in_zone( $zone );
+					foreach ( $posts_in_zone as $post ) {
+						if ( isset( $post->ID ) ) {
+							$posts_to_ignore[] = $post->ID;
+						}
+					}
+				}
+			}
+		}
+		if ( ! empty( $posts_to_ignore ) ) {
+			$args['post__not_in'] = $posts_to_ignore;
+		}
+		return $args;
+	}
+endif;
+
+/**
 * Filter the output of a WP_Query for a spill widget
 * @param string $output
 * @param object $query
