@@ -96,6 +96,23 @@ get_header(); ?>
 				<div class="m-ad-region m-ad-region-home m-ad-region-home-full-width">
 					<?php do_action( 'acm_tag', 'Middle3' ); ?>
 				</div>
+				<?php
+				$sticky_zone_name = 'homepage-sticky';
+				$sticky_zone      = z_get_zone( $sticky_zone_name );
+				$sticky_query     = z_get_zone_query( $sticky_zone_name );
+				?>
+				<?php if ( $sticky_query->have_posts() ) : ?>
+					<?php $sticky_post_count = $sticky_query->post_count; ?>
+					<div class="m-archive m-archive-excerpt m-zone m-zone-homepage-sticky m-zone-homepage-sticky-has-<?php echo (int) $post_count; ?>">
+						<h2 class="a-zone-title"><?php echo $sticky_zone->description; ?></h2>
+						<?php
+						while ( $sticky_query->have_posts() ) :
+							$sticky_query->the_post();
+							get_template_part( 'template-parts/content', 'opinion' ); // content-top
+						endwhile;
+						?>
+					</div>
+				<?php endif; ?>
 				<div class="m-widget-group m-widget-group-homepage">
 					<?php dynamic_sidebar( 'sidebar-spills' ); ?>
 				</div>
