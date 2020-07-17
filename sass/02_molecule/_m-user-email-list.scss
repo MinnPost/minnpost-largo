@@ -28,22 +28,13 @@
 					margin-bottom: 0;
 					line-height: normal;
 					display: inline-block;
-					//color: $color__link;
-					//text-decoration: none;
 					@include link-underline();
 					transition: $hover-transition;
 					cursor: pointer;
 
 					&:hover {
-						//color: $color__link-hover;
-						//text-decoration: underline;
 						@include link-underline(utility-color(blue, medium), utility-color(blue, background));
 					}
-				}
-
-				input:focus + label {
-					//color: $color__link-hover;
-					//text-decoration: underline;
 				}
 
 				&:last-child {

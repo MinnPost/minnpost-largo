@@ -1,31 +1,3 @@
-// hide text
-@mixin hide-text {
-	text-indent: 110%;
-	white-space: nowrap;
-	overflow: hidden;
-}
-// used like this
-// @include hide-text;
-
-
-@mixin gi-nums( $n, $max ) {
-
-	%num-#{$n} {
-		@content;
-	}
-	$i: $n;
-
-	@while $i <= $max {
-
-		.gi-#{$i} {
-			grid-column: col-start / span $i;
-		}
-		$i: $i+$n;
-	}
-}
-// used like this
-// @include gi-nums(1, 12);
-
 // clearfix
 @mixin clearfix {
 
@@ -39,17 +11,6 @@
 .clearfix {
 
 	@include clearfix;
-}
-
-@mixin outer-container( $local-max-width: $max-width ) {
-
-	@include clearfix;
-	max-width: $local-max-width;
-	margin: {
-		left: auto;
-		right: auto;
-	}
-	flex: 0 0 100%;
 }
 
 // responsive iframes by ratio
@@ -150,13 +111,6 @@
         line-height: map-get( $line-heights, $size ) * 1.5;
     } // 150%*/
 }
-
-// background colors
-@mixin rgba-background( $hexcolor, $opacity ) {
-	background-color: $hexcolor;
-	background-color: rgba($hexcolor, $opacity);
-}
-
 // link underline treatment
 @mixin link-underline( $color: utility-color(blue, dark), $hover: utility-color(blue, highlight) ) {
 	color: $color;

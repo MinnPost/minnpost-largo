@@ -31,8 +31,15 @@
 	margin-left: 0;
 
 	@include breakpoint-min( sm ) {
-		margin-bottom: 0;
 		margin-bottom: $standard-heading-margin;
+		width: auto;
+	}
+
+	@include breakpoint-min( lg ) {
+		width: 100%;
+	}
+
+	@include breakpoint-min( xl ) {
 		width: auto;
 	}
 
@@ -47,6 +54,10 @@
 	}
 
 	@include breakpoint-min( lg ) {
+		margin-right: 0;
+	}
+
+	@include breakpoint-min( xl ) {
 		margin-right: $standard-heading-margin;
 	}
 

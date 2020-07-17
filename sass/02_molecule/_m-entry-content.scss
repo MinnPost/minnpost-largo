@@ -31,12 +31,7 @@
 				margin-right: 0;
 			}
 
-			@media screen and (min-width: 66em) {
-				margin-right: $standard-heading-margin;
-			}
-
 			@include breakpoint-min( xl ) {
-				flex: 1 0;
 				margin-right: $standard-heading-margin;
 			}
 		}
@@ -92,4 +87,3 @@
 		}
 	}
 }
-

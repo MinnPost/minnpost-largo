@@ -15,14 +15,4 @@ span.a-subnav-label {
 	@include breakpoint-min( md ) {
 		padding: $standard-block-padding / 2 $standard-block-padding;
 	}
-
-	&:hover,
-	&:focus,
-	&:active {
-		//background-color: brand-color(red, dark);
-	}
-}
-
-.m-pagination-all .a-subnav-label {
-//	@include meta-preset( $size: 0, $bold: false, $italic: false );
 }
