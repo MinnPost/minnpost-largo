@@ -7,10 +7,14 @@
 	border-right: 0;
 	padding: $standard-block-padding / 2 $standard-block-padding;
 
+	label.always-show-comments,
+	span.always-show-comments {
+		@include meta-preset( $size: 0 );
+	}
+
 	label.always-show-comments {
 		cursor: pointer;
 		max-width: 60%;
-		@include meta-preset( $size: 0 );
 	}
 
 	&.m-user-always-show-comments-after {

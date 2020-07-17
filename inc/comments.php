@@ -476,9 +476,7 @@ if ( ! function_exists( 'minnpost_largo_load_comments_switch' ) ) :
 	function minnpost_largo_load_comments_switch( $position ) {
 		$always_load_comments = false;
 		$user_id              = get_current_user_id();
-		if ( 0 === $user_id ) {
-			return;
-		}
+		
 		if ( ! class_exists( 'Lazy_Load_Comments' ) ) {
 			return;
 		}
@@ -487,11 +485,25 @@ if ( ! function_exists( 'minnpost_largo_load_comments_switch' ) ) :
 		if ( comments_open() ) :
 			?>
 			<div class="m-user-always-show-comments m-user-always-show-comments-<?php echo $position; ?>">
+			<?php if ( 0 === $user_id ) : ?>
+				<span class="always-show-comments">
+				<?php
+				$login_url = site_url( '/user/login/' );
+				$login_url = add_query_arg( 'redirect_to', get_current_url() . '#comments', $login_url );
+				echo sprintf(
+					// translators: 1) the log in link
+					__( '<a href="%1$s">Log in</a> for the option to always show comments on MinnPost.', 'minnpost-largo' ),
+					$login_url
+				);
+				?>
+				</span>
+			<?php else : ?>
 				<label class="always-show-comments" for="always-show-comments-<?php echo $position; ?>"><?php echo esc_html__( 'Always show comments when you are logged in', 'minnpost-largo' ); ?></label>
 				<label class="a-switch a-switch-always-show-comments a-switch-always-show-comments-<?php echo $position; ?>">
 					<input type="checkbox" class="a-checkbox-always-show-comments" id="always-show-comments-<?php echo $position; ?>"<?php echo ( true === $always_load_comments ) ? ' value="0" checked' : ' value="1"'; ?>>
 					<span class="slider round"></span>
 				</label>
+			<?php endif; ?>
 			</div>
 			<?php
 		endif;
