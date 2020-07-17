@@ -100,7 +100,7 @@ main .ad-x110 {
 		@include meta-preset( $size: -2, $bold: false, $italic: false, $line-height: 1 );
 		padding: $standard-block-padding;
 		margin-bottom: $standard-heading-margin;
-		color: neutral-color(medium);
+		color: neutral-color(dark);
 	}
 }
 
