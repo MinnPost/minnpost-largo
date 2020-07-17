@@ -17,7 +17,7 @@
 		<?php minnpost_replace_category_text(); ?>
 	<?php endif; ?>
 	<header class="m-entry-header">
-		<h4 class="a-entry-title"><a href="<?php echo get_permalink( $post->id ); ?>"><?php echo get_the_title( $post->id ); ?></a></h4>
+		<h3 class="h4 a-entry-title"><a href="<?php echo get_permalink( $post->id ); ?>"><?php echo get_the_title( $post->id ); ?></a></h3>
 		<?php if ( 'post' === get_post_type( $post->id ) ) : ?>
 			<?php if ( '' !== minnpost_get_posted_by() ) : ?>
 				<div class="m-entry-byline">

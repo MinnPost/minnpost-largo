@@ -165,7 +165,7 @@ if ( ! function_exists( 'minnpost_largo_spill_posts' ) ) :
 				$query->the_post();
 				$output .= '<article id="' . get_the_ID() . '" class="m-post m-post-spill">';
 				$output .= '<header class="m-entry-header">';
-				$output .= '<h5 class="a-entry-title a-spill-item-title"><a href="' . esc_url( get_the_permalink() ) . '">' . get_the_title() . '</a></h5>';
+				$output .= '<h4 class="h5 a-entry-title a-spill-item-title"><a href="' . esc_url( get_the_permalink() ) . '">' . get_the_title() . '</a></h4>';
 				if ( '' !== minnpost_get_posted_by() ) {
 					$output .= '<div class="m-entry-byline">' . minnpost_get_posted_by() . '</div>';
 				}
