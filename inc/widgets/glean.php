@@ -54,7 +54,7 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 						?>
 						<?php if ( 0 === $i ) : ?>
 							<header class="m-entry-header">
-								<?php the_title( '<h3 class="a-entry-title a-spill-entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
+								<?php the_title( '<h4 class="a-entry-title a-spill-entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h4>' ); ?>
 								<?php if ( 'post' === get_post_type() ) : ?>
 									<?php if ( '' !== minnpost_get_posted_by() ) : ?>
 										<div class="m-entry-byline">
