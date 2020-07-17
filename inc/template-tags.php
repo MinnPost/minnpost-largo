@@ -55,7 +55,7 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 		<?php elseif ( is_singular( 'newsletter' ) ) : ?>
 			<?php echo $image; ?>
 		<?php else : ?>
-			<a class="m-post-image m-post-thumbnail m-post-thumbnail-<?php echo $size; ?>" href="<?php the_permalink( $id ); ?>" aria-hidden="true">
+			<a class="m-post-image m-post-thumbnail m-post-thumbnail-<?php echo $size; ?>" href="<?php the_permalink( $id ); ?>">
 				<?php
 				echo $image;
 				?>
