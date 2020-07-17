@@ -1,67 +1,104 @@
+// column-setter
+@include grid( o-wrapper );
+@include grid( o-wrapper-grid-overlay, overlay );
+
+// default, mobile-first styles for wrapper
 .o-wrapper {
-	max-width: 100%;
-	margin-left: $standard-page-margin / 2;
-	margin-right: $standard-page-margin / 2;
+	max-width: $max-width-page;
+	margin-left: auto;
+	margin-right: auto;
 	position: relative;
-	&.o-wrapper-site-header {
+
+	// header and main content and footer
+	&.o-wrapper-site-header,
+	&.o-wrapper-content,
+	&.o-wrapper-site-footer {
 		display: flex;
 		flex-wrap: wrap;
+		flex: 0 0 100%;
+		flex-direction: column; // on mobile, display as a column
 	}
+
+	// site header wrapper
+	&.o-wrapper-site-header {
+
+		@include breakpoint-min( md ) {
+			align-items: center;
+			justify-content: space-between;
+			flex-direction: row;
+			margin-bottom: $standard-block-padding;
+		}
+	}
+
 	&.o-wrapper-content {
+		margin-top: $standard-block-padding;
+		margin-bottom: $standard-block-margin;
+
+		@include breakpoint-min( lg ) {
+			// this is where we have a big enough screen to make it all horizontal
+			flex-direction: row;
+		}
+	}
+
+	&.o-wrapper-site-navigation,
+	&.o-wrapper-sub-navigation {
+
+		a,
+		button {
+			min-height: $touch-target-minimum-size;
+			align-items: center;
+		}
+
+		button {
+			min-width: $touch-target-minimum-size;
+			justify-content: center;
+		}
+
+		font-size: $interface-copy-size-smaller;
+		@include breakpoint-min( md ) {
+			font-size: $interface-copy-size;
+		}
+
+		@include breakpoint-min( lg ) {
+			font-size: $interface-copy-size;
+
+			a,
+			button {
+				min-height: $touch-target-minimum-size-desktop;
+			}
+			button {
+				min-width: $touch-target-minimum-size-desktop;
+			}
+		}
+
+		@include breakpoint-min( xl ) {
+			font-size: $interface-copy-size-larger;
+		}
+
+		@include breakpoint-min( xxl ) {
+			font-size: 100%;
+		}
+	}
+
+	&.o-wrapper-sub-navigation {
 		display: flex;
-		flex-direction: column;
-		margin-bottom: 40px;
+		align-items: center;
+		border-bottom: 2px solid neutral-color(border);
 	}
-}
 
-.o-wrapper-support-navigation {
-	border-top: 1.230769230769231em solid #1a1818;
-}
-
-body.post .o-wrapper-content, body.page .o-wrapper-content {
-	flex: 0 0 100%;
-}
-
-// media queries for wrapper
-@media screen and (min-width: $more-than-logo-screen) {
-	.o-wrapper {
-		margin-left: $standard-page-margin;
-		margin-right: $standard-page-margin;
-	}
-}
-
-@media screen and (min-width: $medium-margins-too-small) {
-	.archive .o-wrapper.o-wrapper-content {
-		flex-direction: row;
-	}
-}
-
-@media screen and (min-width: $medium-screen) and (max-width: $nav-breaks) {
-	.o-wrapper {
-		max-width: $max-width-medium;
-	}
-}
-
-@media screen and (min-width: $max-width-medium-plus-margins) {
-	.o-wrapper {
+	&.o-wrapper-site-navigation.o-wrapper-site-navigation-support {
+		margin-right: 0;
 		margin-left: auto;
-		margin-right: auto;
-	}
-}
+		width: auto;
+		font-size: var(--scale2);
 
-@media screen and (min-width: $nav-breaks) {
-	.o-wrapper {
-		max-width: inherit;
-		margin-left: $standard-page-margin;
-		margin-right: $standard-page-margin;
-	}
-}
+		width: colspan( 2, 6 );
 
-@media screen and (min-width: $max-width-page) {
-	.o-wrapper {
-		@include outer-container($max-width-page);
+		// inside a 5 column space now
+		@include breakpoint-min( md ) {
+			width: auto;
+		}
+
 	}
-	.o-wrapper.o-wrapper-content {
-		flex-direction: row;
-	}
+
 }

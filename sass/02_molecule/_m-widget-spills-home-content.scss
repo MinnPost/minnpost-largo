@@ -1,0 +1,29 @@
+.m-widget-spills-home-content,
+.m-widget-spills-membership-content {
+    padding: 0 $standard-heading-margin;
+    margin-bottom: $standard-block-margin * 2;
+
+    &:last-of-type {
+        margin-bottom: 0;
+    }
+
+    @include breakpoint-min( sm ) {
+        margin-bottom: $standard-block-margin;
+    }
+}
+
+.m-widget-spills-membership-content {
+    @include breakpoint-min( sm ) {
+        width: colspan( 8, 12 );
+        
+        .m-widget-contents {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+
+            article {
+                width: colspan( 5.8, 12 );
+            }
+        }
+    }
+}

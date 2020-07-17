@@ -1,59 +1,66 @@
 .m-homepage-zones {
+
 	.m-zone-homepage-middle {
+
 		section.m-widget-glean-home-content {
-			border-top: 1px solid $color__gray-lightest;
-			padding-top: $standard-page-margin;
+			border-top: $border-default-style;
+			padding-top: $standard-block-margin;
 		}
 	}
+
 	section.m-widget-glean-home-content {
-		border-bottom: 1px solid $color__gray-lightest;
-		padding-bottom: $standard-page-margin;
-		margin-bottom: $standard-page-margin;
+		border-bottom: $border-default-style;
+		padding: $standard-block-padding;
+		margin-bottom: $standard-block-margin;
+		background: neutral-color(highlight);
+		border-radius: $border-radius;
+
 		.a-widget-title {
-			font-size: 123.1%;
-			font-family: $font__headings;
-			font-weight: normal;
-			background: $color__minnpost-red;
-			margin-bottom: 0;
-			span {
-				text-transform: uppercase;
-			}
+			background: neutral-color(medium);
+			border-radius: $border-radius;
+			margin-bottom: $standard-block-padding / 2;
+			color: neutral-color(black);
+
+			@include meta-preset( $bold: true );
+
 			a {
 				display: block;
-				color: $color__white;
-				padding: 10px 16px;
+				padding: $standard-block-padding;
+
+				&:link,
+				&:visited {
+					color: inherit;
+					text-decoration: none;
+				}
+
+				&:active,
+				&:focus,
+				&:hover,
+				&.active {
+					@include link-underline();
+				}
 			}
 		}
+
 		article.m-post-glean {
 			width: 100%;
-			padding: 10px;
-			border: 1px solid $color__gray-lightest;
-			border-top: 0;
-			margin-bottom: 0;
+			border: 0;
+			margin: 0;
+			padding: 0;
+			
+			.m-entry-content {
+				margin-right: 0;
+				width: 100%;
+			}
+
 			.m-entry-excerpt {
 				font-size: 100%;
-				margin-bottom: 1em;
+				margin-bottom: $standard-block-padding;
 			}
+
 			p {
 				margin-bottom: 0;
-			}
-			.a-glean-more {
-				margin-top: 0.75em;
-				a:after {
-					content: ' ▸'
-				}
 			}
 		}
 	}
 }
-
-// media queries for sidebar middle boxes
-
-/*@media screen and (min-width: $max-width-page) {
-	section.m-widget-glean-home-content {
-		padding: 15px;
-		.m-post-glean {
-			padding: 5px 15px 15px 15px;
-		}
-	}
-}*/

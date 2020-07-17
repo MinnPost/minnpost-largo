@@ -20,32 +20,10 @@
 
 <body <?php body_class(); ?>>
 
-	<header id="masthead" class="o-header">
-		<div class="o-wrapper o-wrapper-site-header">
-			<div class="a-site-branding">
-				<a class="a-logo a-logo-svg" rel="home" href="<?php echo esc_url( home_url( '/' ) ); ?>">
-					<picture>
-						<source type="image/svg+xml" srcset="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/minnpost-logo.svg">
-						<img src="<?php echo get_stylesheet_directory_uri(); ?>/assets/img/logo.png" alt="<?php bloginfo( 'name' ); ?>">
-					</picture>
-				</a>
-			</div><!-- .a-site-branding -->
+	<header id="masthead" class="o-header o-header-support">
+		<div class="o-wrapper o-wrapper-site-header<?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">
+			<?php get_template_part( 'template-parts/logo', 'top' ); ?>
 			<?php do_action( 'minnpost_membership_site_header', false ); ?>
-		</div>
-		<div class="o-wrapper o-wrapper-site-navigation o-wrapper-support-navigation">
-			<?php
-				$user_account_access_menu = get_minnpost_account_access_menu();
-			?>
-			<?php if ( ! empty( $user_account_access_menu ) ) : ?>
-				<div id="navigation-featured-account-access">
-					<?php if ( ! empty( $user_account_access_menu ) ) : ?>
-					<nav id="navigation-user-account-access" class="m-secondary-navigation">
-						<?php echo $user_account_access_menu; ?>
-					</nav><!-- #navigation-user-account-access -->
-					<?php endif; ?>
-				</div>
-			<?php endif; ?>
-
 		</div>
 	</header><!-- #masthead -->
 
@@ -58,4 +36,4 @@
 
 	<?php do_action( 'wp_message_inserter', 'header' ); ?>
 
-	<div id="content" class="o-wrapper o-wrapper-content<?php echo $full_class; ?>">
+	<div id="content" class="o-wrapper o-wrapper-content<?php echo $full_class; ?><?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">

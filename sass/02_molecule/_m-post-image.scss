@@ -1,30 +1,67 @@
 .m-post-image {
-	display: block;
-	&.m-post-image-large {
-		font-size: $content-font-size;
+	display: table;
+	margin-top: 0;
+
+	img {
+		display: block;
 	}
-}
-.m-archive-top .m-post-image, .m-archive-excerpt .m-post-image {
-	margin-bottom: $standard-page-margin;
-	margin-right: $standard-page-margin;
-}
-.m-archive-top.m-archive-has-1-post .m-post-image {
-	float: none;
-	margin: 0;
-}
 
+	figcaption {
+		display: table-caption;
+		caption-side: bottom;
+	}
 
-// media queries for post images
-@media screen and (min-width: 350px) {
-	.m-archive-top .m-post-image, .m-archive-excerpt .m-post-image {
-		float: left;
+	&.m-post-thumbnail-full {
+		width: 100%;
 	}
 }
 
-@media screen and (min-width: $medium-screen) {
-	.m-zone-homepage-top.m-archive-top.m-archive-has-1-post .m-post-thumbnail-feature-large,
-	.m-zone-homepage-top.m-archive-top.m-archive-has-1-post .m-post-thumbnail-feature-medium {
-		float: left;
-		margin-right: $standard-page-margin;
+.m-archive-top .m-post-image,
+.m-archive-excerpt .m-post-image,
+.m-archive-homepage .m-post-image {
+	margin-bottom: $standard-heading-margin;
+
+	@include breakpoint-min( sm ) {
+		width: 100%;
+	}
+}
+
+.m-archive-top .m-post-image,
+.m-archive-excerpt .m-post-image {
+	margin-left: 0;
+
+	@include breakpoint-min( sm ) {
+		margin-bottom: $standard-heading-margin;
+		width: auto;
+	}
+
+	@include breakpoint-min( lg ) {
+		width: 100%;
+	}
+
+	@include breakpoint-min( xl ) {
+		width: auto;
+	}
+
+	&.m-post-thumbnail-full {
+		width: 100%;
+	}
+}
+
+.m-post-image-first .m-post-image {
+	@include breakpoint-min( sm ) {
+		margin-right: $standard-heading-margin;
+	}
+
+	@include breakpoint-min( lg ) {
+		margin-right: 0;
+	}
+
+	@include breakpoint-min( xl ) {
+		margin-right: $standard-heading-margin;
+	}
+
+	@include breakpoint-min( xxl ) {
+		margin-right: $standard-heading-margin;
 	}
 }

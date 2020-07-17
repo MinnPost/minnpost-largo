@@ -1,39 +1,38 @@
 .a-site-branding {
-	max-width: 330px;
 	width: 100%;
 	height: auto;
 	position: relative;
-	margin: 10px auto 5px auto;
+	margin: 0 auto $standard-block-padding auto;
+
 	.a-logo-svg {
-		width: 102%;
 		display: block;
 	}
 }
 
-@media screen and (min-width: 330px) {
-	.a-site-branding {
-		width: 330px;
+header .a-site-branding {
+
+	@include breakpoint-min( xs ) {
+		max-width: colspan( 4, 6 );
+	}
+
+	@include breakpoint-min( md ) {
+		max-width: colspan( 3, 8 );
+		margin: 0;
+	}
+
+	@include breakpoint-min( lg ) {
+		max-width: colspan( 4, 12 );
+	}
+
+	@include breakpoint-min( xl ) {
+		max-width: colspan( 5, 16 );
 	}
 }
 
-.no-srcset {
-	.a-site-branding {
-		.a-logo-svg {
-			z-index: 1;
-			img {
-				display: block;
-				margin-top: 1px;
-			}
-		}
-	}
+header.o-header-support .a-site-branding {
+	margin-right: auto;
 }
 
-// media queries for logo
-
-@media screen and (min-width: $more-than-logo-screen) {
-	.a-site-branding {
-		width: 330px;
-		margin-left: 0;
-		margin-right: 0;
-	}
+footer .a-logo-svg picture {
+	filter: brightness(0) invert(1);
 }

@@ -66,10 +66,11 @@ endif;
 if ( ! function_exists( 'minnpost_largo_comment_date_column' ) ) :
 	add_action( 'manage_comments_custom_column', 'minnpost_largo_comment_date_column', 10, 2 );
 	function minnpost_largo_comment_date_column( $column, $comment_id ) {
-		if ( 'custom_date' == $column ) {
-			$comment = get_comment( $comment_id );
-			/* translators: 1: comment date, 2: comment time */
-			$submitted = sprintf( __( 'Submitted on %1$s at %2$s' ),
+		if ( 'custom_date' === $column ) {
+			$comment   = get_comment( $comment_id );
+			$submitted = sprintf(
+				/* translators: 1: comment date, 2: comment time */
+				__( 'Submitted on %1$s at %2$s' ),
 				/* translators: comment date format. See https://secure.php.net/date */
 				get_comment_date( __( 'Y/m/d' ), $comment ),
 				get_comment_date( __( 'g:i a' ), $comment )
@@ -324,6 +325,293 @@ endif;
 * @param int $max
 * @return int $max
 */
-add_filter( 'thread_comments_depth_max', function( $max ) {
-	return 99;
-} );
+add_filter(
+	'thread_comments_depth_max',
+	function( $max ) {
+		return 99;
+	}
+);
+
+/**
+* Use a spinner image from Core instead of the one from the lazy load comments plugin
+* @param string $image_tag
+* @return string $image_tag
+*
+*/
+if ( ! function_exists( 'minnpost_largo_lazy_load_loading_image' ) ) :
+	add_filter( 'llc_loader_element_content', 'minnpost_largo_lazy_load_loading_image' );
+	function minnpost_largo_lazy_load_loading_image( $image_tag ) {
+		$image_tag = '<img src="' . admin_url( '/images/spinner.gif' ) . '" srcset="' . admin_url( '/images/spinner.gif' ) . ' 1x, ' . admin_url( 'images/spinner-2x.gif' ) . ' 2x,">';
+		return $image_tag;
+	}
+endif;
+
+/**
+* Use the 1x spinner image from Core instead of the one from the simple comment editing plugin
+* @param string $image_url
+* @return string $image_url
+*
+*/
+if ( ! function_exists( 'minnpost_largo_comment_edit_loading_image' ) ) :
+	add_filter( 'sce_loading_img', 'minnpost_largo_comment_edit_loading_image' );
+	function minnpost_largo_comment_edit_loading_image( $image_url ) {
+		$image_url = admin_url( '/images/spinner.gif' );
+		return $image_url;
+	}
+endif;
+
+/**
+* When lazy loading comments, allow users to indicate they always want to load comments.
+* @param bool $can_lazyload
+* @return bool $can_lazyload
+*
+*/
+if ( ! function_exists( 'minnpost_largo_always_load_comments_for_user' ) ) :
+	add_filter( 'llc_can_lazy_load', 'minnpost_largo_always_load_comments_for_user' );
+	function minnpost_largo_always_load_comments_for_user( $can_lazyload ) {
+		$user_id      = get_current_user_id();
+		$can_lazyload = true; // set a default of true; user overrides it
+		if ( 0 !== $user_id ) {
+			$always_load_comments = get_user_meta( $user_id, 'always_load_comments', true );
+			$always_load_comments = user_always_loads_comments( $always_load_comments );
+			if ( true === $always_load_comments ) {
+				$can_lazyload = false;
+			}
+		}
+		return $can_lazyload;
+	}
+endif;
+
+if ( ! function_exists( 'user_always_loads_comments' ) ) :
+	function user_always_loads_comments( $always_load_comments = false ) {
+		if ( 'on' === $always_load_comments || true === filter_var( $always_load_comments, FILTER_VALIDATE_BOOLEAN ) ) {
+			$always_load_comments = true;
+		} else {
+			$always_load_comments = false;
+		}
+		return $always_load_comments;
+	}
+endif;
+
+/**
+* Class for show comments button
+* @param string $class
+* @return string $class
+*
+*/
+if ( ! function_exists( 'minnpost_largo_load_comments_button_class' ) ) :
+	add_filter( 'llc_button_class', 'minnpost_largo_load_comments_button_class' );
+	function minnpost_largo_load_comments_button_class( $class ) {
+		$class = 'a-button a-button-next a-button-choose a-button-show-comments';
+		return $class;
+	}
+endif;
+
+/**
+* Text for show comments button
+* @param string $text
+* @return string $text
+*
+*/
+if ( ! function_exists( 'minnpost_largo_load_comments_button_text' ) ) :
+	add_filter( 'llc_button_text', 'minnpost_largo_load_comments_button_text' );
+	function minnpost_largo_load_comments_button_text( $text ) {
+		$text = esc_html__( 'Show comments or leave a comment', 'minnpost-largo' );
+		return $text;
+	}
+endif;
+
+/**
+* Don't center the comments div because why would anyone even do that
+* @param bool $center
+* @return bool $center
+*
+*/
+if ( ! function_exists( 'minnpost_largo_load_comments_button_center' ) ) :
+	add_filter( 'llc_enable_loader_center', 'minnpost_largo_load_comments_button_center' );
+	function minnpost_largo_load_comments_button_center( $center ) {
+		$center = false;
+		return $center;
+	}
+endif;
+
+/**
+* Ajax method to set user comment load preference
+*
+*/
+if ( ! function_exists( 'minnpost_largo_load_comments_set_user_meta' ) ) :
+	add_action( 'wp_ajax_minnpost_largo_load_comments_set_user_meta', 'minnpost_largo_load_comments_set_user_meta' );
+	add_action( 'wp_ajax_nopriv_minnpost_largo_load_comments_set_user_meta', 'minnpost_largo_load_comments_set_user_meta' );
+	function minnpost_largo_load_comments_set_user_meta() {
+		// if there is no logged in user, don't do anything
+		$user_id = get_current_user_id();
+		if ( 0 === $user_id ) {
+			die();
+		}
+
+		$always_show = isset( $_POST['value'] ) ? (int) $_POST['value'] : 0;
+		$update      = update_user_meta( $user_id, 'always_load_comments', $always_show );
+
+		if ( 1 === $always_show ) {
+			$return = array(
+				'show'    => true,
+				'message' => __( 'You will always see comments loaded when you are logged in', 'minnpost-largo' ),
+			);
+		} else {
+			$return = array(
+				'show'    => false,
+				'message' => __( 'You will not see comments loaded when you are logged in unless you click the button.', 'minnpost-largo' ),
+			);
+		}
+		wp_send_json_success( $return );
+	}
+endif;
+
+/**
+* HTML for the toggle switch used to always load comments
+* @param string $position
+*
+*/
+if ( ! function_exists( 'minnpost_largo_load_comments_switch' ) ) :
+	function minnpost_largo_load_comments_switch( $position ) {
+		$always_load_comments = false;
+		$user_id              = get_current_user_id();
+		
+		if ( ! class_exists( 'Lazy_Load_Comments' ) ) {
+			return;
+		}
+		$always_load_comments = get_user_meta( $user_id, 'always_load_comments', true );
+		$always_load_comments = user_always_loads_comments( $always_load_comments );
+		if ( comments_open() ) :
+			?>
+			<div class="m-user-always-show-comments m-user-always-show-comments-<?php echo $position; ?>">
+			<?php if ( 0 === $user_id ) : ?>
+				<span class="always-show-comments">
+				<?php
+				$login_url = site_url( '/user/login/' );
+				$login_url = add_query_arg( 'redirect_to', get_current_url() . '#comments', $login_url );
+				echo sprintf(
+					// translators: 1) the log in link
+					__( '<a href="%1$s">Log in</a> for the option to always show comments on MinnPost.', 'minnpost-largo' ),
+					$login_url
+				);
+				?>
+				</span>
+			<?php else : ?>
+				<label class="always-show-comments" for="always-show-comments-<?php echo $position; ?>"><?php echo esc_html__( 'Always show comments when you are logged in', 'minnpost-largo' ); ?></label>
+				<label class="a-switch a-switch-always-show-comments a-switch-always-show-comments-<?php echo $position; ?>">
+					<input type="checkbox" class="a-checkbox-always-show-comments" id="always-show-comments-<?php echo $position; ?>"<?php echo ( true === $always_load_comments ) ? ' value="0" checked' : ' value="1"'; ?>>
+					<span class="slider round"></span>
+				</label>
+			<?php endif; ?>
+			</div>
+			<?php
+		endif;
+	}
+endif;
+
+/**
+* Text for the edit button on comments
+* @param string $translated_text
+*
+*/
+add_filter(
+	'sce_text_edit',
+	function( $translated_text ) {
+		return esc_html__( 'Edit', 'minnpost-largo' );
+	}
+);
+
+/**
+* Text for the save button on comments
+* @param string $translated_text
+*
+*/
+add_filter(
+	'sce_text_save',
+	function( $translated_text ) {
+		return esc_html__( 'Save Changes', 'minnpost-largo' );
+	}
+);
+
+/**
+* Text for the cancel edit button on comments
+* @param string $translated_text
+*
+*/
+add_filter(
+	'sce_text_cancel',
+	function( $translated_text ) {
+		return esc_html__( 'Cancel Changes', 'minnpost-largo' );
+	}
+);
+
+/**
+* Text for the delete button on comments
+* @param string $translated_text
+*
+*/
+add_filter(
+	'sce_text_delete',
+	function( $translated_text ) {
+		return esc_html__( 'Delete Comment', 'minnpost-largo' );
+	}
+);
+
+/**
+* Filter: sce_content
+* Filter to overral simple comment edit output
+*
+* @param string  $sce_content SCE content
+* @param int     $comment_id Comment ID of the comment
+*/
+if ( ! function_exists( 'minnpost_largo_sce_output' ) ) :
+	add_filter( 'sce_content', 'minnpost_largo_sce_output', 10, 2 );
+	function minnpost_largo_sce_output( $sce_content, $comment_id ) {
+		$sce_content = '<div class="m-form-standalone m-form-comment-edit"><div class="m-form-item">' . $sce_content . '</div></div>';
+		return $sce_content;
+	}
+endif;
+
+/**
+* Change the comment reply link
+*
+* @param array   $args
+* @param object  $comment
+* @param object  $post
+* @return array $args
+*/
+if ( ! function_exists( 'minnpost_largo_comment_reply_link' ) ) :
+	add_filter( 'comment_reply_link_args', 'minnpost_largo_comment_reply_link', 10, 3 );
+	function minnpost_largo_comment_reply_link( $args, $comment, $post ) {
+
+		$comment = get_comment( $comment );
+
+		if ( empty( $comment->comment_author ) ) {
+			if ( ! empty( $comment->user_id ) ) {
+				$user           = get_userdata( $comment->user_id );
+				$commenter_name = $user->display_name;
+			} else {
+				$commenter_name = '';
+			}
+		} else {
+			$commenter_name = get_comment_author( $comment->comment_ID );
+		}
+
+		$args['reply_text'] = sprintf(
+			// translators: 1) the font awesome icon, 2) the name of the commenter
+			__( '%1$s Reply to %2$s', 'minnpost-largo' ),
+			__( '<i class="far fa-comment" aria-hidden="true"></i>', 'minnpost-largo' ),
+			$commenter_name
+		);
+
+		$args['login_text'] = sprintf(
+			// translators: 1) the font awesome icon, 2) the name of the commenter
+			__( '%1$s Log in to reply to %2$s', 'minnpost-largo' ),
+			__( '<i class="far fa-comment" aria-hidden="true"></i>', 'minnpost-largo' ),
+			$commenter_name
+		);
+
+		return $args;
+	}
+endif;

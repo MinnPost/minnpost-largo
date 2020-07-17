@@ -1,5 +1,15 @@
 article .m-entry-excerpt {
-	font-size: $content-font-size;
-	line-height: 1.3em;
-	margin-bottom: 20px;
+	margin: $standard-block-padding 0 $standard-block-padding * 2 0;
+	@include meta-preset( $size: -1 );
+	max-width: 70ch;
+	width: 100%;
+}
+
+.m-archive-events {
+
+	article .m-entry-excerpt {
+		@include breakpoint-min( sm ) {
+			flex: 1 0;
+		}
+	}
 }

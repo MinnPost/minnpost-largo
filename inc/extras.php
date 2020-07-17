@@ -173,54 +173,29 @@ endif;
 * @return array $headers
 *
 */
-add_filter('wp_headers', function( $headers, $wp_query ) {
-	if ( array_key_exists( 'X-Pingback', $headers ) ) {
-		unset( $headers['X-Pingback'] );
-	}
-	return $headers;
-}, 11, 2 );
+add_filter(
+	'wp_headers',
+	function( $headers, $wp_query ) {
+		if ( array_key_exists( 'X-Pingback', $headers ) ) {
+			unset( $headers['X-Pingback'] );
+		}
+		return $headers;
+	},
+	11,
+	2
+);
 
 /**
 * Remove the RSD link from <head>
 *
 */
-add_action( 'wp', function() {
-	remove_action( 'wp_head', 'rsd_link' );
-}, 11 );
-
-/**
-* Easy method to highlight the search string in the search result
-*
-* @param string $text
-*
-* @return string $text
-*/
-if ( ! function_exists( 'highlight_search_results' ) ) :
-	// this filter runs on the_excerpt and the_title
-	// to highlight inside both locations for search result pages
-	add_filter( 'the_excerpt', 'highlight_search_results' );
-	add_filter( 'the_title', 'highlight_search_results' );
-	function highlight_search_results( $text ) {
-		if ( is_search() && ! is_admin() ) {
-			$sr          = get_query_var( 's' );
-			$highlighted = preg_filter( '/' . preg_quote( $sr, '/' ) . '/i', '<span class="a-search-highlight">$0</span>', $text );
-			if ( ! empty( $highlighted ) ) {
-				$text = $highlighted;
-			}
-		}
-		return $text;
-	}
-endif;
-
-/**
- * Redirection Plugin Editor access
- */
-if ( ! function_exists( 'redirection_to_editor' ) ) :
-	add_filter( 'redirection_role', 'redirection_to_editor' );
-	function redirection_to_editor() {
-		return 'edit_pages';
-	}
-endif;
+add_action(
+	'wp',
+	function() {
+		remove_action( 'wp_head', 'rsd_link' );
+	},
+	11
+);
 
 /**
  * default editor for certain posts
@@ -248,13 +223,13 @@ if ( ! function_exists( 'minnpost_set_default_editor' ) ) :
 endif;
 
 /**
- * Use ElasticPress for Zoninator zone queries
+ * Use Elasticsearch for Zoninator zone queries
  * @param array $args
  * @return array $args
  */
-if ( ! function_exists( 'minnpost_zoninator_elasticpress' ) ) :
-	add_filter( 'zoninator_recent_posts_args', 'minnpost_zoninator_elasticpress' );
-	function minnpost_zoninator_elasticpress( $args ) {
+if ( ! function_exists( 'minnpost_zoninator_elasticsearch' ) ) :
+	add_filter( 'zoninator_recent_posts_args', 'minnpost_zoninator_elasticsearch' );
+	function minnpost_zoninator_elasticsearch( $args ) {
 		if ( 'production' === VIP_GO_ENV ) {
 			$args['es'] = true; // elasticsearch on production only
 		}
@@ -263,7 +238,7 @@ if ( ! function_exists( 'minnpost_zoninator_elasticpress' ) ) :
 endif;
 
 /**
- * Use ElasticPress for message queries
+ * Use Elasticsearch for message queries
  * @param array $args
  * @return array $args
  */
@@ -278,28 +253,19 @@ if ( ! function_exists( 'minnpost_message_args' ) ) :
 endif;
 
 /**
- * Turn off the view count because we don't use it anyway
- * @param bool $status
- * @return bool false
- */
-if ( ! function_exists( 'minnpost_turn_off_popular_views' ) ) :
-	add_filter( 'pop_set_post_view', 'minnpost_turn_off_popular_views' );
-	function minnpost_turn_off_popular_views( $status ) {
-		return false;
-	}
-endif;
-
-/**
  * Set external domains allowed for redirects
  * @param array $hosts
  * @return array $hosts
  */
-add_filter( 'allowed_redirect_hosts', function( $hosts ) {
-	$hosts[] = 'members.minnpost.com';
-	$hosts[] = 'support.minnpost.com';
-	$hosts[] = 'givemn.org';
-	return $hosts;
-});
+add_filter(
+	'allowed_redirect_hosts',
+	function( $hosts ) {
+		$hosts[] = 'members.minnpost.com';
+		$hosts[] = 'support.minnpost.com';
+		$hosts[] = 'givemn.org';
+		return $hosts;
+	}
+);
 
 wpcom_vip_load_gutenberg( false );
 
@@ -333,6 +299,18 @@ endif;
 // use the WP Core send_frame_options_header method to apply x-frame-options: sameorigin
 if ( function_exists( 'send_frame_options_header' ) ) :
 	add_action( 'send_headers', 'send_frame_options_header', 10, 0 );
+endif;
+
+/**
+ * Allow the url to set if we should overlay the grid
+ * @return array $vars
+ */
+if ( ! function_exists( 'minnpost_largo_grid_overlay_var' ) ) :
+	add_filter( 'query_vars', 'minnpost_largo_grid_overlay_var' );
+	function minnpost_largo_grid_overlay_var( $vars ) {
+		$vars[] = 'grid';
+		return $vars;
+	}
 endif;
 
 /**

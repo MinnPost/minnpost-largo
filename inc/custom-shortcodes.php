@@ -270,7 +270,8 @@ if ( ! function_exists( 'minnpost_account_info' ) ) :
 				}
 				$attributes['topics_query'] = new WP_Query(
 					array(
-						'category__in' => array_keys( $attributes['reading_topics'] ),
+						'posts_per_page' => 10,
+						'category__in'   => array_keys( $attributes['reading_topics'] ),
 					)
 				);
 
@@ -395,6 +396,78 @@ if ( ! function_exists( 'minnpost_logo' ) ) :
 		get_template_part( 'template-parts/logo', $args['position'] );
 		$output = ob_get_contents();
 		ob_end_clean();
+		return $output;
+	}
+endif;
+
+/**
+* Shortcode to display topics on a page
+*
+* @param array $atts
+*
+*/
+if ( ! function_exists( 'minnpost_largo_topics' ) ) :
+	add_shortcode( 'topics', 'minnpost_largo_topics' );
+	function minnpost_largo_topics( $atts ) {
+		$output = '';
+		$args   = shortcode_atts(
+			array(
+				'grouped' => '0',
+			),
+			$atts
+		);
+
+		$exclude_ids = array();
+		$exclusions  = do_shortcode( '[return_excluded_terms]' );
+		if ( '' !== $exclusions ) {
+			$exclusions = str_getcsv( $exclusions, ',', "'" );
+			foreach ( $exclusions as $exclusion ) {
+				$category = get_term_by( 'name', $exclusion, 'category' );
+				if ( isset( $category->term_id ) ) {
+					$exclude_ids[] = $category->term_id;
+				}
+			}
+		}
+
+		$grouped = filter_var( $args['grouped'], FILTER_VALIDATE_BOOLEAN );
+		if ( true === $grouped ) {
+			$group_categories = array();
+			$groups           = minnpost_largo_category_groups();
+			foreach ( $groups as $group ) {
+				$category = get_term_by( 'slug', $group, 'category' );
+				if ( false !== $category && ! in_array( $category->term_id, $exclude_ids, true ) ) {
+					$group_categories[] = $category;
+				}
+			}
+		}
+
+		if ( isset( $group_categories ) ) {
+			$output .= '<div class="o-grouped-categories">';
+			foreach ( $group_categories as $topic ) {
+				$output       .= '<section class="m-group-category">';
+				$output       .= '<h2 class="a-group-category-title">' . $topic->name . '</h2>';
+				$grouped_query = new WP_Term_Query(
+					array(
+						'taxonomy'     => 'category',
+						'meta_key'     => '_mp_category_group',
+						'meta_value'   => $topic->term_id,
+						'meta_compare' => '=',
+						'exclude'      => $exclude_ids,
+					)
+				);
+				if ( ! empty( $grouped_query->terms ) ) {
+					$output .= '<ol class="a-grouped-categories">';
+					foreach ( $grouped_query->terms as $category ) {
+						$output .= '<li>';
+						$output .= '<a href="' . site_url( $category->slug ) . '" class="a-grouped-category-title">' . $category->name . '</a>';
+						$output .= '</li>';
+					}
+					$output .= '</ol>';
+				}
+				$output .= '</section>';
+			}
+			$output .= '</div>';
+		}
 		return $output;
 	}
 endif;

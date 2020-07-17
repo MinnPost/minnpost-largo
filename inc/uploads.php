@@ -14,20 +14,18 @@ if ( ! function_exists( 'minnpost_image_settings' ) ) :
 	add_action( 'after_setup_theme', 'minnpost_image_settings' );
 	function minnpost_image_settings() {
 		add_theme_support( 'html5', array( 'caption' ) );
-		// images for posts
-		add_image_size( 'feature', 190, 9999 );
-		add_image_size( 'feature-large', 400, 400 );
-		add_image_size( 'feature-medium', 190, 125, true );
-		add_image_size( 'newsletter-thumbnail', 80, 60, true );
-		// images for categories
-		add_image_size( 'category-featured-column', 50, 9999 ); // scale so the width is 50px
-		// images for authors
-		add_image_size( 'author-image', 190, 9999 ); // scale so the width is 190px
-		add_image_size( 'author-teaser', 75, 9999 );
-		add_image_size( 'author-thumbnail', 130, 85, true ); // cropping the height appears to be necessary
-		remove_image_size( 'rpwe-thumbnail' ); // this is from the recent post widget; we don't need it
-		add_image_size( 'partner-logo', 200, 9999 ); // scale so the width is 200px
-		add_image_size( 'sponsor-thumb', '130', '130', false ); // max size is a 130x130 square, but don't crop the height
+		add_image_size( 'medium_large', '768', '0', false );
+		add_image_size( '1536x1536', '1536', '1536', false );
+		add_image_size( '2048x2048', '2048', '2048', false );
+		add_image_size( 'feature', '190', '9999', false );
+		add_image_size( 'feature-large', '400', '400', false );
+		add_image_size( 'feature-medium', '190', '125', true );
+		add_image_size( 'newsletter-thumbnail', '80', '60', true );
+		add_image_size( 'author-image', '190', '9999', false );
+		add_image_size( 'author-teaser', '75', '9999', false );
+		add_image_size( 'author-thumbnail', '130', '85', true );
+		add_image_size( 'partner-logo', '200', '9999', false );
+		add_image_size( 'sponsor-thumb', '130', '130', false ); 
 	}
 endif;
 
@@ -352,3 +350,19 @@ endif;
 
 // don't break responsive images by adding a width to the figure tag
 add_filter( 'img_caption_shortcode_width', '__return_false' );
+
+/**
+* Set the image size for the staff list page
+*
+* @param string $image_size
+* @return string $image_size
+*
+*/
+if ( ! function_exists( 'minnpost_largo_staff_image_size' ) ) :
+	add_filter( 'staff_user_post_list_image_size', 'minnpost_largo_staff_image_size' );
+	function minnpost_largo_staff_image_size( $image_size ) {
+		$image_size = 'photo';
+		return $image_size;
+	}
+endif;
+

@@ -1,0 +1,18 @@
+a.a-subnav-label,
+span.a-subnav-label {
+	text-decoration: none;
+	color: neutral-color(black);
+	background-color: neutral-color(highlight);
+	font-weight: 700;
+	display: inline-flex;
+	padding: $standard-block-padding;
+	margin-right: $standard-block-padding / 2;
+	border-right: 2px solid neutral-color(border);
+	white-space: nowrap;
+	@include meta-preset( $size: -2, $bold: false, $italic: false );
+	line-height: normal;
+
+	@include breakpoint-min( md ) {
+		padding: $standard-block-padding / 2 $standard-block-padding;
+	}
+}

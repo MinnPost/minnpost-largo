@@ -277,7 +277,7 @@ a[x-apple-data-detectors] {
 							if ( $key === $last_key ) {
 								$end = true;
 							}
-							minnpost_author_figure( $author_id, 'author-teaser', true, true, false, $end );
+							minnpost_author_figure( $author_id, 'author-teaser', 'excerpt', true, true, false, false, $end );
 						endforeach;
 						?>
 						<!--[if (gte mso 9)|(IE)]>

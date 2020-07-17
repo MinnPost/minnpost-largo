@@ -1,0 +1,168 @@
+/* @license
+ * MyFonts Webfont Build ID 1773029, 2011-12-21T17:04:15-0500
+ *
+ * The fonts listed in this notice are subject to the End User License
+ * Agreement(s) entered into by the website owner. All other parties are
+ * explicitly restricted from using the Licensed Webfonts(s).
+ *
+ * You may obtain a valid license at the URLs below.
+ *
+ * Webfont: Nimbus Sans Novus D Cond Bold by URW++
+ * URL: http://www.myfonts.com/fonts/urw/nimbus-sans-novus/d-condensed-bold/
+ * Copyright: Copyright 2010 URW++ Design &amp; Development Hamburg
+ * Licensed pageviews: 1,000,000
+ *
+ *
+ * License: http://www.myfonts.com/viewlicense?type=web&buildid=1773029
+ *
+ * © 2011 Bitstream Inc
+*/
+
+@font-face {
+	font-family: "NimbusSanNovConD-Bol";
+	src: url("assets/fonts/webfonts/28AEA4_0_0.eot");
+	src: url("assets/fonts/webfonts/28AEA4_0_0.eot?#iefix") format("embedded-opentype"), url("assets/fonts/webfonts/28AEA4_0_0.woff") format("woff"), url("assets/fonts/webfonts/28AEA4_0_0.ttf") format("truetype");
+}
+
+// color config
+$_color-base-gray: rgb(122, 122, 122); // 7a7a7a
+$_color-base-red: rgb(128, 16, 25); // 801018
+$_color-base-blue: rgb(0, 128, 163); // 0080A3
+$_color-base-yellow: rgb(251, 211, 65); // FBD341
+$palettes: (
+	grey: (
+		base:  $_color-base-gray,
+		light: lighten($_color-base-gray, 10%),
+		dark: darken($_color-base-gray, 10%)
+	),
+	red: (
+		base:  $_color-base-red,
+		light: lighten($_color-base-red, 10%),
+		dark: darken($_color-base-red, 10%)
+	),
+	blue: (
+		base:  $_color-base-blue,
+		light: lighten($_color-base-blue, 10%),
+		dark: darken($_color-base-blue, 10%)
+	),
+	purple: (
+		base: rgb(42, 40, 80),
+		light: rgb(51, 46, 140),
+		dark: rgb(40, 38, 65)
+	),
+);
+
+// Brand colors
+$color__minnpost-red: palette(red);
+$color__minnpost-black: #1a1818;
+$color__minnpost-white: #f0f0f5;
+$color__minnpost-blue: palette(blue);
+
+// more minnpost colors
+$color__minnpost-green: #1c8745;
+$color__minnpost-yellow: #fbd341; // 251, 211, 65
+$color__minnpost-red-error: #c00; // probably?
+$color__minnpost-red-required: #c00;
+
+// Color Names
+$color__black: #000;
+$color__white: #fff;
+$color__dark-gray: #333;
+
+// Font Colors
+$color__base-background-color: #fff;
+$color__base-font-color: $color__dark-gray;
+$color__heading-font-color: $color__dark-gray;
+$color__action-color: $color__minnpost-red;
+$color__text-main: #404040; // this is not used anywhere, i think
+
+// Grays
+$color__gray-lightest: #cdcdd0;
+$color__gray-light: #ababab;
+$color__gray-med: palette(gray);
+$color__gray-dark: #404040;
+$color__gray-darkest: #282828;
+$color__gray-meta: #555556;
+$color__gray-sub-menu: #ddd;
+$color__gray-membership: #d8d8d8;
+
+// background colors
+$color__background-body: #fff;
+$color__background-screen: #f1f1f1;
+$color__background-hr: #ccc;
+$color__background-button: $color__minnpost-white;
+$color__background-pre: #eee;
+$color__background-ins: #fff9c0;
+
+// form colors
+$color__text-screen: #21759b;
+$color__text-input: #666;
+$color__text-input-focus: #111;
+$color__form-text: #504949;
+
+// link colors
+$color__link: $color__minnpost-red;
+$color__link-visited: $color__minnpost-red;
+$color__link-hover: $color__minnpost-red;
+$color__link-active: $color__black;
+
+// border colors
+$color__border-light: #c8c8c8;
+$color__border-button: #ccc #ccc #bbb;
+$color__border-button-hover: #ccc #bbb #aaa;
+$color__border-button-focus: #aaa #bbb #bbb;
+$color__border-input: #ccc;
+$color__border-abbr: #666;
+
+// type
+$font__main: sans-serif;
+$font__code: monaco, consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+$font__pre: "Courier 10 Pitch", courier, monospace;
+$font__line-height-body: 1.5;
+$font__line-height-pre: 1.6;
+
+$font__sans: helvetica, arial, sans-serif;
+$font__serif: georgia, cambria, "Times New Roman", times, serif;
+$font__headings: "NimbusSanNovConD-Bol", helvetica, arial, geneva, sans-serif;
+
+// Font sizes
+$base-font-size: 13px; // 13px
+$content-font-size: 1.23em; // 16px
+$meta-font-size: 92.3%; // 12px
+
+// heading font sizes
+$large-title-font-size: 215.4%;
+
+// Line height
+$base-line-height: 1.5;
+$base-line-height-em: 1.5em;
+
+$grid-gap: 10px;
+
+// Neat Breakpoints
+$small-screen: 480px;
+$more-than-logo-screen: 500px;
+$medium-screen: 640px;
+$nav-breaks: 768px;
+$nav-move-end: 810px;
+$large-screen: 860px;
+$nav-wrap-screen: 950px;
+
+// site region sizes
+$size__main-smaller-screen: 50%;
+$size__main-small-screen: 65%;
+$size__main-large-screen: 400px;
+$size__archive-medium-screen: 600px;
+$size__ad-flexing: 660px;
+$size__content-sidebar-small-screen: 280px;
+$size__content-sidebar-medium-screen: 35%;
+$size__content-sidebar-large-screen: 205px;
+
+// footer
+$size__footer-column: 270px;
+
+// spacing
+$home-content-sidebar-padding: 35px;
+$archive-content-sidebar-padding: 15px;
+$footer-box-spacing: 15px;
+$form-text-indent: 6px;

@@ -6,12 +6,10 @@
  *
  * @package MinnPost Largo
  */
-get_header(); ?>
+get_header( 'user' ); ?>
 
-	<div id="primary" class="m-layout-primary o-user-profile">
+	<div id="primary" class="m-layout-primary o-user o-user-profile">
 		<main id="main" class="site-main">
-
-			<?php minnpost_account_management_menu(); ?>
 
 			<?php
 

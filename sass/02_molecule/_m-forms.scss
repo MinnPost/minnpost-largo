@@ -1,14 +1,13 @@
-.m-main-navigation .search-form {
+.m-main-navigation .m-form-search {
 
 	input[type="search"] {
 		-webkit-appearance: none;
-		border-radius: 0;
 		border: 0;
-		text-indent: $form-text-indent;
+		text-indent: $standard-block-padding;
 	}
 
 	::-webkit-search-decoration {
-		display:none;
+		display: none;
 	}
 }
 
@@ -21,9 +20,7 @@
 	}
 
 	h2.a-form-title {
-		color: $color__minnpost-black;
 		text-align: center;
-		margin-bottom: 0.75em;
 	}
 
 	&.m-form-newsletter-shortcode-default {
@@ -67,33 +64,29 @@
 		.m-form-message {
 			margin-bottom: 0;
 			border: 0;
-			padding: 0.5em;
+			padding: $standard-block-padding;
 		}
 
 		button {
-			padding: 0.15em 0.5em 0.20em 0.5em;
+			padding: 0.15em $standard-block-padding 0.2em $standard-block-padding;
 			font-size: 1em;
 			line-height: normal;
-			margin-left: 0.5em;
+			margin-left: $standard-block-padding;
 		}
 	}
 }
 
-// theme-specific styles for mailchimp plugin
-.o-content-sidebar .m-widget.m-form-minnpost-form-processor-mailchimp {
-	padding: 0;
-}
-
 .m-form-instory.m-form-minnpost-form-processor-mailchimp {
-	border: 1px solid $color__border-light;
+	border: $border-default-style;
+	border-radius: $border-radius;
 
 	&.legacy {
-	    margin-bottom: 1em;
-	    background: $color__background-pre;
+		margin-bottom: 1em;
+		background: neutral-color(border);
 
-	    figure {
-	    	margin: 0;
-	    }
+		figure {
+			margin: 0;
+		}
 	}
 }
 
@@ -105,16 +98,16 @@
 }
 
 .m-form-container {
-	padding: 0 0.5em;
+	padding: 0 $standard-block-padding;
 }
 
 .m-form-in-body {
 	margin-bottom: 1em;
 	padding: 1em 3em;
-	font-family: $font__sans;
-	font-size: 1.25em;
-	color: $color__form-text;
-	border: 1px solid $color__gray-lightest;
+	//font-family: $font__sans;
+	font-size: var(--scale1);
+	//color: $color__form-text;
+	border: $border-default-style;
 	position: relative;
 }
 
@@ -127,21 +120,20 @@
 	}
 }
 
+.m-form-archive {
+	border: $border-default-style;
+	border-radius: $border-radius;
+	padding: $standard-block-padding * 2;
+	margin-bottom: $standard-block-margin;
+	width: colspan( 4, 12 );
+
+	label {
+		margin-bottom: $standard-block-padding;
+	}
+}
+
 // gravity forms styles
 .gform_confirmation_wrapper {
 	margin: 16px 0; // these are the same as the form wrapper
 	max-width: 100%;
-}
-
-// for theme sizes
-@media screen and (min-width: $medium-screen ) {
-
-	.m-form-instory.m-form-minnpost-form-processor-mailchimp {
-
-		&.legacy {
-		    width: 50%;
-		    float: right;
-		    margin-left: 1em;
-		}
-	}	
 }

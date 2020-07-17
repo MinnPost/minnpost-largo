@@ -9,21 +9,20 @@
 <section class="o-user-section o-story-recommendations">
 	<h2 class="a-user-section-title">Story recommendations for you</h2>
 	<?php if ( ! empty( $attributes['reading_topics'] ) ) : ?>
-		<p class="a-has-interests"><strong>Based on Your Interests:</strong> <span class="interests"><?php echo implode( ', ', array_values( $attributes['reading_topics'] ) ); ?></span> | <a href="<?php echo site_url( '/user/preferences/' ); ?>">Edit interests</a></p>
-		<div class="m-interest-posts">
-			<ul>
-			<?php
-			if ( $attributes['topics_query']->have_posts() ) {
-				while ( $attributes['topics_query']->have_posts() ) {
-					$attributes['topics_query']->the_post();
-					?>
-					<?php get_template_part( 'template-parts/content', 'interests' ); ?>
-					<?php
-				}
-				wp_reset_postdata();
+		<p class="a-has-interests"><strong>Based on Your Interests:</strong> <span class="interests"><?php echo implode( ', ', array_values( $attributes['reading_topics'] ) ); ?></span></p>
+		<a href="<?php echo site_url( '/user/preferences/' ); ?>" class="a-edit-interests">Edit interests</a>
+		<div class="m-archive m-archive-excerpt m-archive-interests">
+		<?php
+		if ( $attributes['topics_query']->have_posts() ) {
+			while ( $attributes['topics_query']->have_posts() ) {
+				$attributes['topics_query']->the_post();
+				?>
+				<?php get_template_part( 'template-parts/content', 'interests' ); ?>
+				<?php
 			}
-			?>
-			</ul>
+			wp_reset_postdata();
+		}
+		?>
 		</div>
 	<?php else : ?>
 		<p class="a-button-sentence"><a href="/user/preferences/" class="a-button a-button-next a-button-interests">Tell us your interests</a> <span class="a-interest-explain">to see personalized recommendations</span></p>

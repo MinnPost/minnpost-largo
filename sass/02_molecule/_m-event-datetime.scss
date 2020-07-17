@@ -1,0 +1,53 @@
+.m-event-datetime {
+	width: auto;
+    display: inline-flex;
+	margin: 0 0 $standard-block-padding 0;
+	justify-content: space-between;
+
+	@include breakpoint-min( xs ) {
+		flex-direction: column;
+	}
+
+	@include breakpoint-min( xl ) {
+		flex-direction: row;
+	}
+
+	> a {
+		display: inline-flex;
+		width: auto;
+		justify-content: space-between;
+		text-decoration: none;
+	}
+
+	> span,
+	> a > span {
+		display: block;
+		margin: 0 $standard-block-margin $standard-block-padding 0;
+
+		&:last-child {
+			margin-right: 0;
+		}
+
+		svg {
+			display: inline-flex;
+			margin-right: $standard-block-padding;
+		}
+
+		span {
+			color: neutral-color(black);
+		}
+	}
+}
+
+.m-event-single {
+
+	.m-event-datetime {
+		display: flex;
+		justify-content: flex-start;
+		flex-direction: row;
+
+		> span {
+			margin: 0 $standard-block-margin $standard-block-padding 0;
+		}
+	}
+}

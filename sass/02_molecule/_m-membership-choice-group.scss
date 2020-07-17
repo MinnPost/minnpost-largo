@@ -1,65 +1,78 @@
 .m-membership-choice-group {
 	// all membership choice group syles
-	margin-bottom: $standard-page-margin;
+	margin-bottom: $standard-block-margin;
+
 	#amount-item #amount {
-		font-family: $font__sans;
-		font-weight: normal;
+		font-family: $webfont__sans;
 	}
-	select, button, input.a-button {
-		font-family: $font__headings;
-		font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
-		font-weight: normal;
-		font-style: normal;
-		font-variant: normal;
+
+	select,
+	button,
+	input.a-button {
+		font-family: $webfont__sans;
 	}
-	.m-form-radios, .m-form-checkboxes {
+
+	.m-form-radios,
+	.m-form-checkboxes {
+
 		label {
-			font-family: $font__sans;
-			font-weight: normal;
 			border: 0;
-			background: $color__gray-membership;
-			color: $color__black;
+			background: neutral-color(border);
+			color: neutral-color(black);
 		}
+
 		input:checked + label {
-			background: $_color-base-blue;
-			color: $color__white;
+			background: utility-color(blue, medium);
+			color: neutral-color(white);
 		}
 	}
 	// specific to choosing amount
 	&.m-membership-choose-amount {
+
 		.a-fast-select-intro {
-			font-family: $font__sans;
+			font-family: $webfont__sans;
 		}
+
 		#amount-item {
+
 			#amount {
-				border: 2px solid $_color-base-gray;
+				border: 2px solid neutral-color(border);
 				border-radius: 0;
 			}
+
 			.a-frequency-text-label {
 				margin: 0.9em 0;
-				font-family: $font__sans;
 			}
 		}
 	}
 	// specific to choosing thank you gift
 	&.m-membership-gift-selector {
-		border: 1px solid $color__border-light;
-		.m-form-radios .m-form-item, .m-form-checkboxes .m-form-item {
+		border: $border-default-style;
+
+		.m-form-radios .m-form-item,
+		.m-form-checkboxes .m-form-item {
+
 			label {
+
 				.support-tooltip {
+
 					.tooltip-text {
-						border: 1px solid $color__border-abbr;
+						border: $border-default-style;
+						background: neutral-color(white);
 					}
+
 					.tooltip-text::after {
-						border-color: transparent transparent $color__border-abbr transparent;
+						border-color: transparent transparent neutral-color(border) transparent;
 					}
 				}
 			}
+
 			input:checked + label {
-				border: 3px solid $color__border-button-focus;
+				border: 3px solid neutral-color(highlight);
 			}
+
 			input:disabled + label::after {
-				background-color: $color__gray-lightest;
+				background-color: neutral-color(light);
 			}
 		}
 	}

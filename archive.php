@@ -12,147 +12,119 @@ get_header(); ?>
 	<div id="primary" class="m-layout-primary o-archive-listing">
 		<main id="main" class="site-main">
 
-		<?php if ( have_posts() ) : ?>
+		<?php
+		if ( is_category() ) {
+			$object_id   = $wp_query->get_queried_object_id();
+			$object_type = 'category';
+		} elseif ( is_tag() ) {
+			$object_id   = $wp_query->get_queried_object_id();
+			$object_type = 'post_tag';
+		} elseif ( is_author() ) {
+			$object_id   = get_the_author_meta( 'ID' );
+			$object_type = 'author';
+		}
 
-			<?php
-			if ( is_category() ) {
-				$category_id = $wp_query->get_queried_object_id();
-				$figure      = minnpost_get_term_figure( $category_id );
-				if ( '' === $figure ) {
-					$sponsorship = minnpost_get_post_category_sponsorship( '', $category_id );
-					if ( '' !== $sponsorship ) {
-						echo '<div class="m-category-info">';
-						minnpost_post_category_sponsorship( '', $category_id );
-						echo '</div>';
-					}
-				}
+		if ( isset( $object_type ) ) {
+			$archive_type = $object_type;
+			$sponsorship  = minnpost_get_content_sponsorship( $object_type, $object_id );
+			if ( 'author' === $object_type ) {
+				$figure = minnpost_get_author_figure();
+			} else {
+				$figure = minnpost_get_term_figure( $object_id );
 			}
-			?>
+		} else {
+			if ( is_year() || is_month() || is_day() ) {
+				$archive_type = 'date';
+			}
+		}
+		?>
 
-			<header class="m-archive-header<?php if ( is_year() || is_month() || is_day() ) { echo ' m-archive-header-time'; } ?>">
-				<?php
-					the_archive_title( '<h1 class="a-archive-title">', '</h1>' );
-					the_archive_description( '<div class="archive-description">', '</div>' );
-				?>
-			</header><!-- .m-archive-header -->
-
-			<?php if ( is_category() ) : ?>
-				<aside class="m-archive-info m-category-info m-category-full-info">
-					<?php
-					if ( '' !== $figure ) {
-						// category meta
-						minnpost_post_category_sponsorship( '', $category_id );
-						echo $figure;
-					} else {
-						$text = minnpost_get_term_text( $category_id );
-						if ( '' !== $text ) {
-							echo '<div class="a-description">' . $text . '</div>';
-						}
-					}
-					?>
-					<?php
-					$term_extra_links = minnpost_get_term_extra_links( $category_id );
-					if ( '' !== $term_extra_links ) :
-						?>
-						<ul class="a-archive-links a-category-links">
-							<?php minnpost_term_extra_links( $category_id ); ?>
-						</ul>
-					<?php endif; ?>
-				</aside>
-			<?php elseif ( is_author() ) : ?>
-				<aside class="m-archive-info m-author-info m-author-full-info">
-					<?php
-					$author_id = get_the_author_meta( 'ID' );
-					minnpost_author_figure();
-					$author_email   = get_post_meta( $author_id, 'cap-user_email', true );
-					$author_twitter = get_post_meta( $author_id, 'cap-twitter', true );
-					if ( '' !== $author_email || '' !== $author_twitter ) :
-						?>
-						<ul class="a-archive-links a-author-links">
-							<?php if ( '' !== $author_email ) : ?>
-								<li class="a-email-link"><a href="mailto:<?php echo $author_email; ?>">Email</a></li>
-							<?php endif; ?>
-							<?php if ( '' !== $author_twitter ) : ?>
-								<li class="a-twitter-link"><a href="<?php echo $author_twitter; ?>">Twitter</a></li>
-							<?php endif; ?>
-						</ul>
-					<?php endif; ?>
-				</aside>
-				<h2 class="a-archive-subtitle">Articles by this author:</h2>
-			<?php endif; ?>
-
+		<header class="m-archive-header<?php if ( is_year() || is_month() || is_day() ) { echo ' m-archive-header-time'; } ?>">
 			<?php
-			$paged        = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
-			$featured_num = get_query_var( 'featured_num' );
+				the_archive_title( '<h1 class="a-archive-title">', '</h1>' );
+				the_archive_description( '<div class="archive-description">', '</div>' );
 			?>
+		</header><!-- .m-archive-header -->
 
-			<?php if ( is_category() && 1 === $paged ) : ?>
-				<section class="m-archive m-archive-top m-category-top">
-					<?php
-					while ( have_posts() ) :
-						the_post();
-						if ( $featured_num > $wp_the_query->current_post ) :
-							get_template_part( 'template-parts/content', 'top' );
-						endif;
-					endwhile;
-					?>
-				</section>
+		<?php if ( is_category() || is_tag() ) : ?>
+			<div class="m-archive-info m-term-info m-term-full-info">
 				<?php
-				$featured_columns = get_query_var( 'featured_columns' );
-				// getting rid of the icymi box
-				// then we do need to allow for widgets to be here but that's it
+				$text = minnpost_get_term_text( $object_id );
+				if ( '' !== $text ) {
+					echo $text;
+				}
 				?>
-				<?php if ( '' !== $featured_columns || is_active_sidebar( 'sidebar-2' ) ) : ?>
-				<div class="m-archive-has-sidebar">
-				<?php endif; ?>
-				<section class="m-archive m-archive-excerpt">
-					<?php
-					while ( have_posts() ) :
-						the_post();
-						if ( $featured_num <= $wp_the_query->current_post ) :
-							get_template_part( 'template-parts/content', 'excerpt' );
-						endif;
-					endwhile;
-					?>
-					<?php numeric_pagination(); ?>
-				</section>
-				<?php if ( '' !== $featured_columns || is_active_sidebar( 'sidebar-2' ) ) : ?>
-					<aside id="content-sidebar" class="o-content-sidebar" role="complementary">
-						<?php if ( '' !== $featured_columns ) : ?>
-							<section class="m-featured-columns">
-								<h2 class="a-sidebar-box-title">Featured Columns</h2>
-								<ul>
-									<?php foreach ( $featured_columns as $key => $value ) : ?>
-										<li>
-											<a href="<?php echo get_category_link( $value ); ?>">
-												<?php minnpost_term_figure( $value, 'category-featured-column', false, false ); ?>
-												<h3 class="a-featured-title"><?php echo get_cat_name( $value ); ?></h3>
-											</a>
-										</li>
-									<?php endforeach; ?>
-								</ul>
-							</section>
-						<?php endif; ?>
-						<?php dynamic_sidebar( 'sidebar-2' ); ?>
-					</aside>
-				<?php endif; ?>
-
-				<?php if ( '' !== $featured_columns || is_active_sidebar( 'sidebar-2' ) ) : ?>
+			</div>
+		<?php elseif ( is_author() ) : ?>
+			<div class="m-archive-info m-author-info m-author-full-info">
+				<?php
+				minnpost_author_figure( '', 'photo', 'excerpt', true, 'display_name', false, 'job-title', false );
+				?>
+			</div>
+		<?php elseif ( is_year() ) : ?>
+			<form method="post" class="m-form m-form-archive" action="<?php echo admin_url( 'admin-post.php' ); ?>">
+				<input type="hidden" name="action" value="date_archive_submit">
+				<label for="archive-dropdown"><?php echo __( 'Select a different year', 'minnpost-largo' ); ?></label>
+				<div class="a-input-with-button a-button-sentence">
+					<select id="archive-dropdown" name="archive_dropdown" onchange="document.location.href=this.options[this.selectedIndex].value;">
+						<option value=""><?php esc_attr( _e( 'Select Year', 'minnpost-largo' ) ); ?></option>
+						<?php
+						wp_get_archives(
+							array(
+								'type'            => 'yearly',
+								'format'          => 'option',
+								'show_post_count' => 0,
+							)
+						);
+						?>
+					</select>
+					<input type="submit" value="<?php echo __( 'Go', 'minnpost-largo' ); ?>">
 				</div>
-				<?php endif; ?>
+			</form>
+		<?php elseif ( is_month() ) : ?>
+			<form method="post" class="m-form m-form-archive" action="<?php echo admin_url( 'admin-post.php' ); ?>">
+				<input type="hidden" name="action" value="date_archive_submit">
+				<label for="archive-dropdown"><?php echo __( 'Select a different month', 'minnpost-largo' ); ?></label>
+				<div class="a-input-with-button a-button-sentence">
+					<select id="archive-dropdown" name="archive_dropdown">
+						<option value=""><?php esc_attr( _e( 'Select Month', 'minnpost-largo' ) ); ?></option>
+						<?php
+						wp_get_archives(
+							array(
+								'type'            => 'monthly',
+								'format'          => 'option',
+								'show_post_count' => 0,
+							)
+						);
+						?>
+					</select>
+					<input type="submit" value="<?php echo __( 'Go', 'minnpost-largo' ); ?>">
+				</div>
+			</form>
+		<?php endif; ?>
 
-			<?php else : ?>
-				<section class="m-archive m-archive-excerpt">
-					<?php
-					while ( have_posts() ) :
-						the_post();
-						get_template_part( 'template-parts/content', 'excerpt' );
-					endwhile;
-					?>
-					<?php numeric_pagination(); ?>
-				</section>
-			<?php endif; ?>
+		<?php
+		if ( isset( $sponsorship ) && '' !== $sponsorship && isset( $object_type ) ) {
+			echo '<div class="m-category-info">';
+				minnpost_content_sponsorship( $object_type, $object_id );
+			echo '</div>';
+		}
+		?>
 
+		<?php if ( have_posts() ) : ?>
+			<?php
+			$paged              = ( get_query_var( 'paged' ) ) ? get_query_var( 'paged' ) : 1;
+			$archive_type_class = isset( $archive_type ) ? ' m-archive-' . $archive_type : '';
+			?>
+			<section class="m-archive m-archive-excerpt<?php echo $archive_type_class; ?>">
+				<?php
+				while ( have_posts() ) :
+					the_post();
+					get_template_part( 'template-parts/content', 'excerpt' );
+				endwhile;
+				?>
+				<?php numeric_pagination(); ?>
+			</section>
 			<?php
 		else :
 			get_template_part( 'template-parts/content', 'none' );
@@ -160,7 +132,6 @@ get_header(); ?>
 		?>
 
 		</main><!-- #main -->
-
 	</div><!-- #primary -->
 
 <?php

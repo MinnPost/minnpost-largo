@@ -1,59 +1,82 @@
 .m-form-item {
-	margin: 0 0 0.5em 0;
+	margin: 0 0 $standard-block-padding 0;
 }
 
-.m-form-standalone .m-form-item, .m-form-widget .m-form-item {
+.m-form-standalone .m-form-item,
+.m-form-widget .m-form-item {
+
 	label input {
-		margin-top: 0.375em;
+		margin-top: $standard-block-padding;
 	}
 }
 
 .m-form-standalone .m-form-item {
-	margin-bottom: 1.25em;
+	margin-bottom: $standard-block-padding * 2;
 	width: 100%;
 	max-width: 100%;
-	label, input:not([type=checkbox]):not([type=radio]), select, textarea, span {
+
+	label,
+	input:not([type=checkbox]):not([type=radio]),
+	select,
+	textarea,
+	span {
 		display: block;
 	}
+
 	span.a-form-item-required {
 		display: inline;
 	}
+
 	label {
-		margin-bottom: 0.375em;
-		line-height: 1.5em;
+		margin-bottom: $standard-block-padding;
 	}
-	input:not([type=checkbox]):not([type=radio]), select, textarea {
-		padding: 0.5em;
-		border: 1px solid $color__border-input;
-		margin-bottom: 0.375em;
+
+	input:not([type=checkbox]):not([type=radio]),
+	select,
+	textarea {
+		padding: $standard-block-padding / 2;
+		border: $border-default-style;
+		margin-bottom: $standard-block-padding;
 		width: 100%;
 	}
-	input:not([type=checkbox]):not([type=radio]), textarea {
-		-webkit-appearance: none;
-		-webkit-border-radius: 0;
-	}
-	input[type="checkbox"], input[type="radio"] {
+
+	input[type="checkbox"],
+	input[type="radio"] {
 		display: inline-block;
 	}
-	p, span {
-		margin-bottom: 0.375em;
+
+	p,
+	span {
+		margin-bottom: $standard-block-padding;
 	}
-	input:last-child, select:last-child, textarea:last-child, p:last-child, span:last-child {
+
+	input:last-child,
+	select:last-child,
+	textarea:last-child,
+	p:last-child,
+	span:last-child {
 		margin-bottom: 0;
 	}
+
 	&.m-form-checkboxes {
+
 		span {
 			display: inline-block;
 		}
 	}
-}
 
-// media queries
-@media screen and (min-width: $medium-screen) {
-	.m-form-standalone .m-form-item {
+	@include breakpoint-min( md ) {
 		max-width: 70%;
+
 		&.m-form-change-email {
 			max-width: 80%;
+			margin-bottom: $standard-block-margin;
+			@include meta-preset( $size: -2 );
+		}
+
+		&.m-form-item-comment {
+			max-width: 100%;
+			margin-bottom: $standard-block-margin;
 		}
 	}
 }

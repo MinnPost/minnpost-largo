@@ -1,28 +1,131 @@
-.o-comments-area ol {
-	list-style: none;
-	margin: 0 0 $standard-page-margin 0;
-	padding: 0;
-	outline: 1px solid $color__gray-lightest;
-	border: $archive-content-sidebar-padding solid $color__minnpost-white;
-	background: $color__minnpost-white;
-	overflow-x: hidden;
-	li {
-		padding: $standard-page-margin;
-		padding-bottom: $standard-page-margin / 2;
-		background: $color__white;
-		margin: 0 0 $standard-page-margin 0;
-		&.o-comment-unpublished {
-			background: $background-unpublished;
-		}
-		&.o-comment-by-current-user {
-			background: $color__white;
-		}
-	}
-	ul.children {
+.o-comments-area {
+	overflow-wrap: break-word;
+
+	@include body-preset( $size: -2 );
+
+	ol {
 		list-style: none;
+		margin: $standard-block-padding 0;
 		padding: 0;
+		overflow-x: hidden;
+
+		li {
+			margin: 0;
+			padding: 0;
+			position: relative;
+		}
+
+		> li {
+			margin: 0;
+		}
+
+		.o-comment {
+			padding: $standard-block-margin $standard-block-padding;
+			border-bottom: $border-default-style;
+			margin: 0 0 0 $standard-block-padding;
+
+			&.o-comment-unpublished {
+				background: $background-unpublished;
+			}
+
+			&.o-comment-by-current-user {
+				background: neutral-color(white);
+			}
+		}
+
+		> li:first-child {
+			
+			> .o-comment {
+				padding-top: $standard-block-padding;
+			}
+		}
+
+		ul.children {
+			list-style: none;
+			padding: 0;
+			margin: 0;
+
+			.o-comment {
+				border-left: $border-default-style;
+			
+				$depths: 10; // from wordpress settings
+				$border-width: 1;
+				@for $d from 2 through $depths {
+					$border-width: $d * $d;
+					&.depth-#{$d} {
+						border-left-width: #{$border-width}px;
+					}
+				}
+			}
+		}
+
+		.m-comment-meta {
+			padding-bottom: $standard-block-padding;
+		}
+
+		.m-comment-entry {
+			padding: 0 0 $standard-block-padding 0;
+		}
+
+		.sce-edit-comment {
+			margin-top: 1em;
+		}
+
+		.sce-edit-button {
+			margin: $standard-block-margin 0;
+			padding: $standard-block-padding;
+			border: $border-default-style;
+			@include meta-preset();
+			font-size: $interface-copy-size-smaller;
+			text-transform: uppercase;
+
+			span {
+				display: inline-block;
+			}
+
+			.sce-timer {
+				color: neutral-color(dark);
+			}
+		}
+
+		.sce-textarea {
+
+			.sce-comment-textarea textarea {
+				margin-bottom: 1em;
+			}
+
+			.sce-comment-edit-buttons {
+
+				button {
+					margin-bottom: $standard-block-padding;
+				}
+			}
+		}
 	}
+
 	.comment-respond {
-		margin: 0 0 $standard-page-margin 0;
+		margin: 0 0 $standard-block-margin 0;
+	}
+}
+
+#llc_comments {
+	margin-bottom: $standard-block-margin;
+
+	@include breakpoint-min( lg ) {
+		margin-bottom: 0;
+	}
+}
+
+.single {
+
+	article {
+		> #llc_comments,
+		> .o-comments-area {
+			z-index: 10;
+
+			@include breakpoint-min( lg ) {
+				width: 100%;
+			}
+		}
 	}
 }

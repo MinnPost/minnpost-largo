@@ -1,6 +1,6 @@
 <?php
 /**
- * The second sidebar area for the homepage
+ * The first sidebar area for the homepage
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
@@ -9,32 +9,30 @@
 ?>
 
 <aside id="secondary-second" class="o-site-sidebar" role="complementary">
-
-	<?php if ( is_archive() || is_single() ) : ?>
+	<?php if ( is_home() && function_exists( 'z_get_zone' ) ) : ?>
 		<?php
-		$i = 1;
-		while ( $i <= 10 ) :
-			?>
-			<div class="m-ad-region m-ad-region-sidebar m-ad-region-x<?php echo str_pad( $i, 2, '0', STR_PAD_LEFT ); ?>">
-				<?php do_action( 'acm_tag', 'x' . str_pad( $i, 2, '0', STR_PAD_LEFT ) ); ?>
-			</div>
-			<?php
-			$i++;
-		endwhile;
+		$recommended_zone  = 'homepage-recommended';
+		$zone              = z_get_zone( $recommended_zone );
+		$recommended_query = z_get_zone_query( $recommended_zone );
 		?>
+		<?php if ( $recommended_query->have_posts() ) : ?>
+			<section class="m-widget m-widget-zone-posts">
+				<h3 class="a-zone-title"><?php echo $zone->name; ?></h3>
+				<div class="m-zone-contents">
+					<ul>
+					<?php
+					while ( $recommended_query->have_posts() ) :
+						$recommended_query->the_post();
+						get_template_part( 'template-parts/content', 'sidebar' ); // content-sidebar
+					endwhile;
+					?>
+					</ul>
+				</div>
+			</section>
+		<?php endif; ?>
 	<?php endif; ?>
-	<?php if ( is_singular() ) : ?>
-		<?php minnpost_post_sidebar(); ?>
-	<?php endif; ?>
-	<?php dynamic_sidebar( 'sidebar-1' ); ?>
-	<?php if ( ! is_single() ) : ?>
-		<div class="m-ad-region m-ad-region-sidebar">
-			<?php do_action( 'acm_tag', 'Middle' ); ?>
-		</div>
-	<?php endif; ?>
-	<?php if ( is_home() ) : ?>
-		<div class="m-ad-region m-ad-region-sidebar">
-			<?php do_action( 'acm_tag', 'BottomRight' ); ?>
-		</div>
-	<?php endif; ?>
-</aside><!-- #secondary -->
+	<div class="m-ad-region m-ad-region-sidebar">
+		<?php do_action( 'acm_tag', 'Middle' ); ?>
+	</div>
+
+</aside>

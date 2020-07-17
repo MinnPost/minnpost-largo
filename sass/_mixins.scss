@@ -1,52 +1,152 @@
-// hide text
-@mixin hide-text {
-	text-indent: 110%;
-	white-space: nowrap;
-	overflow: hidden;
-}
-// @include hide-text;
+// clearfix
+@mixin clearfix {
 
-
-@mixin gi-nums($n, $max) {
-	%num-#{$n} {
-	    @content;
-	}
-	$i: $n;
-	@while $i <= $max {
-	    .gi-#{$i} {
-	        grid-column: col-start / span $i;
-	    }
-	    $i: $i+$n;
+	&::after {
+		content: "";
+		display: table;
+		clear: both;
 	}
 }
-
 // used like this
-// @include gi-nums(1, 12);
-
-
-@mixin outer-container($local-max-width: $max-width) {
-  @include clearfix;
-  max-width: $local-max-width;
-  margin: {
-    left: auto;
-    right: auto;
-  }
-  flex: 0 0 100%;
-}
-
 .clearfix {
+
 	@include clearfix;
 }
 
 // responsive iframes by ratio
-@mixin generateRatios($width, $height, $prefix: "ratio-") {
-  $class-name: $prefix + $width + "x" + $height;
- 
-  .#{$class-name} {
-    padding-bottom: ratio($width, $height);
-  }
-  // Output example: .ratio-16x9 {}
+@mixin generateRatios( $width, $height, $prefix: "ratio-" ) {
+	$class-name: $prefix + $width + "x" + $height;
+
+	.#{$class-name} {
+		padding-bottom: ratio($width, $height);
+	}
+	// Output example: .ratio-16x9 {}
 }
 // used like this
 //@include generateRatios(16,9); // 16x9
 //@include generateRatios(4,3);  // 4x3
+
+// font families
+
+// body text
+@mixin body-preset( $size: inherit, $bold: inherit, $italic: inherit, $line-height: inherit ) {
+
+	@include text-preset( $size, $line-height );
+	font-family: $webfont__serif;
+	font-size-adjust: 0.46;
+
+	@if $bold == true {
+		font-weight: 700;
+	} @else if $bold == false {
+		font-weight: 500;
+	}
+
+	@if $italic == true {
+		font-style: italic;
+	} @else if $italic == false {
+		font-style: normal;
+	}
+	line-height: 1.3;
+}
+// used like this: body-preset( $size: 3 );
+
+// heading text
+@mixin heading-preset( $size: inherit, $bold: inherit, $italic: inherit, $line-height: inherit ) {
+
+	@include text-preset( $size, $line-height );
+	font-family: $webfont__serif;
+	font-size-adjust: 0.46;
+
+	@if $bold == true {
+		font-weight: 900;
+	} @else if $bold == false {
+		font-weight: 500;
+	}
+
+	@if $italic == true {
+		font-style: italic;
+	} @else if $italic == false {
+		font-style: normal;
+	}
+	line-height: 1.15;
+}
+// used like this: @include heading-preset( $size: 3, $bold: false );
+
+// meta text
+@mixin meta-preset( $size: inherit, $bold: false, $italic: false, $line-height: inherit ) {
+
+	@include text-preset( $size, $line-height );
+	font-family: $webfont__sans;
+	font-size-adjust: 0.495;
+
+	@if $bold == true {
+		font-weight: 700;
+	} @else if $bold == false {
+		font-weight: 400;
+	}
+
+	@if $italic == true {
+		font-style: italic;
+	} @else if $italic == false {
+		font-style: normal;
+	}
+}
+
+// text sizes
+@mixin text-preset( $size: inherit, $line-height: inherit ) {
+	//font-size: map-get( $text-sizes, $size ) + px;
+	//font-size: map-get( $text-sizes, $size )/10 + rem;
+	@if $size != "inherit" {
+		font-size: var(--scale#{ $size });
+		//line-height: var(--lh#{ $size });
+		line-height: 1.3;
+	}
+	
+	//line-height: map-get( $line-heights, $size );
+
+	/*@include breakpoint-min( xs ) {
+        line-height: map-get( $line-heights, $size ) * 1.25;
+    } // 125%
+    @include breakpoint-min( sm ) {
+        line-height: map-get( $line-heights, $size ) * 1.5;
+    } // 150%*/
+}
+// link underline treatment
+@mixin link-underline( $color: utility-color(blue, dark), $hover: utility-color(blue, highlight) ) {
+	color: $color;
+	text-decoration: underline;
+	text-decoration-color: $hover;
+	text-underline-offset: 0.25em;
+	text-decoration-thickness: 0.08em;
+}
+
+// button treatment
+@mixin button( $background: brand-color(red, medium), $hover: brand-color(red, dark), $color: neutral-color(white)) {
+	display: inline-block;
+	padding: $standard-block-padding / 2;
+	border: 0;
+	margin-right: $standard-block-padding;
+	cursor: pointer;
+	text-decoration: none;
+	transition: $hover-transition;
+	@include meta-preset( $size: 1, $bold: true, $italic: false, $line-height: 1 );
+	background: $background;
+	color: $color;
+	border-radius: $border-radius;
+
+	&:link,
+	&:visited {
+		background: $background;
+		color: $color;
+		text-decoration: none;
+	}
+
+	&:hover,
+	&:focus,
+	&:active,
+	&.active {
+		background: $hover;
+		color: $color;
+		text-decoration: none;
+	}
+}

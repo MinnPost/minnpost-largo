@@ -1,64 +1,66 @@
-.m-author-info {
-	padding-top: 2px;
+.m-author-info,
+.m-staff-member-info {
+
+	@include breakpoint-min( lg ) {
+		width: 100%;
+	}
+
 	.a-author-figure,
 	> .a-author-bio {
-		@include clearfix;
-		background: $color__minnpost-white;
+		margin: 0 0 $standard-block-margin 0;
 	}
+
 	.a-author-figure {
+		width: 100%;
+
 		img {
-			margin: 10px 20px 10px 10px;
-			float: left;
-			max-width: 190px;
-		}
-	}
-	.a-author-bio {
-		padding: 10px;
-		p {
-			a {
-				color: $color__link;
-				&:active,
-				&:focus,
-				&:hover {
-					color: $color__link;
-					text-decoration: underline;
-				}
-			}
-		}
-	}
-	a h3, a img {
-		color: $color__link;
-	}
-	a:visited h3 {
-		color: $color__link;
-	}
-	a:active h3,
-	a:focus h3,
-	a:hover h3 {
-		color: $color__link;
-		text-decoration: underline;
-	}
-	&.m-author-info-single {
+			max-width: $author-thumb-size;
+			height: 100%;
 
-		.a-author-figure,
-		> .a-author-bio {
-			border: 1px solid $color__gray-lightest;
-			margin-top: 10px;
-		}
-
-		.a-author-bio {
-			margin-bottom: 25px;
-			padding-bottom: 20px;
-			p {
-				font-size: $content-font-size;
-				line-height: 1.3em;
+			@include breakpoint-min( sm ) {
+				//max-width: $author-photo-size;
 			}
 		}
 
-		.a-author-figure {
+		figcaption {
+			word-break: break-word;
+
+			@include breakpoint-min( xs ) {
+				word-break: normal;
+			}
+		}
+
+		.a-author-sizes {
 			
+			source,
 			img {
-				max-width: 75px; // in case the author has an image but not a teaser
+				height: auto;
+			}
+		}
+	}
+
+	.a-author-bio {
+
+		h3,
+		p {
+			margin-bottom: $standard-heading-margin;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
+		}
+	}
+
+	&.m-author-full-info .a-author-figure,
+	&.m-author-info-single .a-author-figure,
+	&.m-staff-member-info-single .a-author-figure {
+
+		img {
+			max-width: $author-thumb-size;
+			margin-bottom: 0;
+
+			@include breakpoint-min( sm ) {
+				max-width: $author-photo-size;
 			}
 		}
 	}

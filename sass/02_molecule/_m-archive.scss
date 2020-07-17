@@ -1,16 +1,59 @@
-.m-archive {
-//	margin-bottom: 20px;
-//	border-bottom: 1px solid $color__gray-lightest;
-}
+.m-archive,
+.m-widget-spills {
 
-.m-archive-top article, .m-archive-excerpt article {
-	border-bottom: 1px solid $color__gray-lightest;
-	margin-bottom: 20px;
-	clear: both;
-}
+	&.m-zone,
+	&.m-widget-spills,
+	&.m-archive-category,
+	&.m-archive-author,
+	&.m-archive-post_tag,
+	&.m-archive-events,
+	&.m-archive-date,
+	&.m-archive-interests {
 
-.o-archive-listing {
-	.m-archive-top article, .m-archive-excerpt article {
-		padding-bottom: 6px;
+		article {
+			display: flex;
+			justify-content: space-between;
+			padding-bottom: $standard-heading-margin;
+			border-bottom: $border-default-style;
+			margin-bottom: $standard-block-margin;
+			flex-wrap: wrap;
+		}
+	}
+
+	&.m-zone,
+	&.m-widget-spills,
+	&.m-archive-category,
+	&.m-archive-author,
+	&.m-archive-post_tag,
+	&.m-archive-date,
+	&.m-archive-interests {
+
+		article {
+
+			.a-breadcrumbs,
+			.a-entry-title,
+			.m-entry-byline,
+			.m-entry-meta,
+			.m-entry-excerpt {
+				width: 100%;
+			}
+
+			.a-entry-title {
+				margin: $standard-block-padding / 2 0;
+			}
+
+			.m-entry-byline {
+				margin-bottom: $standard-block-padding / 2;
+			}
+
+			.m-entry-excerpt {
+				margin-top: 0;
+			}
+
+		}
+	}
+
+	&.m-archive-interests {
+		width: 100%;
 	}
 }

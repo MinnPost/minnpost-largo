@@ -230,10 +230,10 @@ if ( ! function_exists( 'restrict_comment_moderators' ) ) :
 	add_action( 'admin_init', 'restrict_comment_moderators', 1 );
 	function restrict_comment_moderators() {
 		global $pagenow;
-		$user         = class_exists( 'AAM' ) ? AAM::getUser() : wp_get_current_user();
+		$user         = wp_get_current_user();
 		$member_roles = array( 'member_bronze', 'member_silver', 'member_gold', 'member_platinum' );
 		$user->roles  = array_diff( (array) $user->roles, $member_roles );
-		if ( in_array( 'comment_moderator', (array) $user->roles ) ) {
+		if ( in_array( 'comment_moderator', (array) $user->roles, true ) ) {
 			if ( ( 'edit.php' === $pagenow || 'post.php' === $pagenow || 'post-new.php' === $pagenow ) ) {
 				wp_die( esc_html__( 'You are not allowed to access this part of the site', 'minnpost-largo' ) );
 			}
@@ -269,7 +269,7 @@ if ( ! function_exists( 'add_to_user_data' ) ) :
 			// if the user is changing their primary email, switch the new primary with the old primary.
 			if ( isset( $posted['primary_email'] ) ) {
 				$primary_email = sanitize_email( $posted['primary_email'] );
-				if ( in_array( $primary_email, $all_emails ) ) {
+				if ( in_array( $primary_email, $all_emails, true ) ) {
 					$user_data['user_email'] = $primary_email;
 				}
 			}
