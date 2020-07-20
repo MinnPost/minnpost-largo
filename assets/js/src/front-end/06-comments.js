@@ -49,7 +49,7 @@ $( document ).on( 'click', '.a-checkbox-always-show-comments', function() {
 	// we already have ajaxurl from the theme
 	$.ajax( {
 		type: 'POST',
-		url: ajaxurl,
+		url: params.ajaxurl,
 		data: {
 			'action': 'minnpost_largo_load_comments_set_user_meta',
 			'value': that.val()

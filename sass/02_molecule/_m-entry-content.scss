@@ -1,21 +1,89 @@
 .m-entry-content {
 	margin-bottom: $standard-block-margin;
+	overflow-wrap: break-word;
 
 	&.m-membership-support-wrapper {
 		font-family: $webfont__sans;
 	}
 }
 
-.m-archive .m-entry-content {
-	margin-bottom: 0;
+.m-archive {
 
-	@include breakpoint-min( sm ) {
-		flex: 1 0;
-		margin-right: $standard-block-margin;
+	.m-entry-content {
+		margin-bottom: 0;
+
+		@include breakpoint-min( sm ) {
+			flex: 1 0;
+		}
 	}
-}
 
-.m-entry-content-custom {
-	//font-size: 100%;
-	//line-height: 1.3em;
+	&.m-archive-excerpt {
+
+		.m-entry-content {
+			flex: unset;
+
+			@include breakpoint-min( sm ) {
+				flex: 1 0;
+				margin-right: $standard-heading-margin;
+			}
+
+			@include breakpoint-min( lg ) {
+				margin-right: 0;
+			}
+
+			@include breakpoint-min( xl ) {
+				margin-right: $standard-heading-margin;
+			}
+		}
+
+	}
+
+	&.m-archive-homepage {
+
+		.m-entry-content {
+			order: 2;
+			margin-left: 0;
+		}
+	}
+
+	&.m-zone-homepage-top {
+		
+		.m-entry-content {
+			flex: unset;
+
+			@include breakpoint-min( sm ) {
+				flex: 1 0;
+				margin-right: $standard-heading-margin;
+			}
+
+			@include breakpoint-min( lg ) {
+				margin-right: 0;
+			}
+
+			@include breakpoint-min( xl ) {
+				flex: 1 0;
+				margin-right: $standard-heading-margin;
+			}
+		}
+
+		.m-post-image-first {
+			.m-entry-content {
+				order: 2;
+	
+				@include breakpoint-min( sm ) {
+					flex: 1 0;
+					margin-right: 0;
+				}
+	
+				@include breakpoint-min( lg ) {
+					margin-right: 0;
+				}
+	
+				@include breakpoint-min( xl ) {
+					flex: 1 0;
+					margin-right: 0;
+				}
+			}
+		}
+	}
 }

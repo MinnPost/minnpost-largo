@@ -1,10 +1,14 @@
-.m-archive {
+.m-archive,
+.m-widget-spills {
 
+	&.m-zone,
+	&.m-widget-spills,
 	&.m-archive-category,
 	&.m-archive-author,
 	&.m-archive-post_tag,
 	&.m-archive-events,
-	&.m-archive-date {
+	&.m-archive-date,
+	&.m-archive-interests {
 
 		article {
 			display: flex;
@@ -16,10 +20,13 @@
 		}
 	}
 
+	&.m-zone,
+	&.m-widget-spills,
 	&.m-archive-category,
 	&.m-archive-author,
 	&.m-archive-post_tag,
-	&.m-archive-date {
+	&.m-archive-date,
+	&.m-archive-interests {
 
 		article {
 
@@ -45,19 +52,8 @@
 
 		}
 	}
-}
 
-.m-archive-top article,
-.m-archive-excerpt article {
-	/*border-bottom: 1px solid $color__gray-lightest;
-	margin-bottom: 20px;
-	clear: both;*/
-}
-
-/*.o-archive-listing {
-
-	.m-archive-top article,
-	.m-archive-excerpt article {
-		padding-bottom: 6px;
+	&.m-archive-interests {
+		width: 100%;
 	}
-}*/
+}

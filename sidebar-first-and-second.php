@@ -1,6 +1,6 @@
 <?php
 /**
- * The first sidebar area for the homepage
+ * The combined first and second sidebar area for the homepage
  *
  * @link https://developer.wordpress.org/themes/basics/template-files/#template-partials
  *
@@ -8,7 +8,10 @@
  */
 ?>
 
-<aside id="secondary-second" class="o-site-sidebar" role="complementary">
+<aside id="secondary-first-and-second" class="o-site-sidebar" role="complementary">
+	<div class="m-ad-region m-ad-region-sidebar">
+		<?php do_action( 'acm_tag', 'halfpage' ); ?>
+	</div>
 	<?php if ( is_home() && function_exists( 'z_get_zone' ) ) : ?>
 		<?php
 		$recommended_zone  = 'homepage-recommended';
@@ -34,5 +37,4 @@
 	<div class="m-ad-region m-ad-region-sidebar">
 		<?php do_action( 'acm_tag', 'Middle' ); ?>
 	</div>
-
 </aside>

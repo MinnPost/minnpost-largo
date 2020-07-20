@@ -29,13 +29,15 @@
 
 	// site header
 	&.wp-message-inserter-message-region-header {
-		margin-bottom: $standard-block-padding;
+		margin: $standard-block-padding 0;
 	}
 
 	// above article body
 	// article bottom
+	// above homepage articles
 	// homepage middle
 	&.wp-message-inserter-message-region-above_article_body,
+	&.wp-message-inserter-message-region-above_homepage_articles,
 	&.wp-message-inserter-message-region-homepage_middle,
 	&.wp-message-inserter-message-region-article_bottom {
 		margin-bottom: $standard-block-margin;
@@ -112,9 +114,10 @@
 		border: 0; // by default, they shouldn't need a border
 	}
 
-	// site header and homepage middle
-	&.wp-message-inserter-message-region-homepage_middle,
-	&.wp-message-inserter-message-region-header {
+	// site header, homepage above articles, and homepage middle
+	&.wp-message-inserter-message-region-header,
+	&.wp-message-inserter-message-region-above_homepage_articles,
+	&.wp-message-inserter-message-region-homepage_middle {
 
 		header {
 			margin-right: 1em;
@@ -141,56 +144,51 @@
 	}
 
 	// homepage middle 
+	// expectation of what is going in there exists
 	&.wp-message-inserter-message-region-homepage_middle {
 		width: 100%;
-		order: 1;
+		background: utility-color(blue, background);
 		border-radius: $border-radius;
-		padding-top: $standard-block-padding;
-		border-top: $border-default-style;
 		margin-bottom: $standard-block-margin;
-		border-bottom: $border-default-style;
 
 		.m-wp-insert-message-item {
-			background: utility-color(blue, medium);
-			border-radius: $border-radius;
-			color: neutral-color(white);
-			margin-bottom: $standard-block-margin;
-			padding: $standard-block-margin 0;
+			padding: $standard-block-padding * 2;
 		}
 
 		// mailchimp form inside a homepage middle
 		.m-form-frontpage.m-form-minnpost-form-processor-mailchimp {
 
+			.m-form-container {
+				padding: 0 $standard-block-margin;
+				
+				@include breakpoint-min( sm ) {
+					padding: 0;
+					display: flex;
+					flex-wrap: wrap;
+					justify-content: space-around;
+				}
+			}
+			
 			fieldset {
 				border: 0;
 				margin: 0;
 				padding: $standard-block-margin 0 $standard-heading-margin 0;
+				padding: $standard-block-padding * 2 0;
 				width: 100%;
 				max-width: 100%;
+
+				@include breakpoint-min( sm ) {
+					max-width: colspan( 8, 16 );
+				}
+	
+				@include breakpoint-min( lg ) {
+					max-width: colspan( 8, 16 );
+				}
 
 				input {
 					width: 100%;
 					max-width: 100%;
 				}
-
-				label {
-					color: neutral-color(white);
-
-					a:link,
-					a:visited {
-						@include link-underline(neutral-color(white), neutral-color(white));
-					}
-
-					a:hover,
-					a:focus,
-					a:active {
-						@include link-underline(neutral-color(highlight), neutral-color(highlight));
-					}
-				}
-			}
-
-			.m-form-container {
-				padding: 0 $standard-block-margin;
 			}
 		}
 
@@ -202,7 +200,7 @@
 				padding: 1em;
 				width: 100%;
 				max-width: 100%;
-				color: neutral-color(white);
+				color: neutral-color(black);
 			}
 
 			fieldset {
@@ -246,17 +244,6 @@
 				padding: 0;
 			}
 
-			> h3 {
-			    /*font-size: 138.5%;
-			    line-height: 1.15em;
-			    text-transform: uppercase;
-				font-family: $font__headings;
-				font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
-				font-weight: normal;
-				font-style: normal;
-				font-variant: normal;*/
-			}
-
 			fieldset {
 				margin: 0;
 				padding: $standard-block-padding * 2 0;
@@ -274,78 +261,96 @@
 	}
 }
 
-// media queries for site message container
-@include breakpoint-min( xs ) {
+.o-homepage-listing-with-top .o-site-message-container.wp-message-inserter-message-region-homepage_middle {
+	
+	@include breakpoint-min( sm ) {
+		max-width: calc((100% - #{colspan( 1, 12 )}) - #{$size__site-sidebar} );
+	}
+	
+	@include breakpoint-min( lg ) {
+		max-width: none;
+	}
 
-	.o-site-message-container {
+	h3,
+	.h3 {
+		
+		@include breakpoint-min( sm ) {
+			margin-bottom: $standard-block-padding;
+		}
 
-		// homepage middle
-		&.wp-message-inserter-message-region-homepage_middle {
+		@include breakpoint-min( lg ) {
+			margin-bottom: 0;
+		}
+	}
+	
+	.m-wp-insert-message-item {
+		@include breakpoint-min( sm ) {
+			font-size: $html-root-size-large-screen;
+		}
 
-			.m-wp-insert-message-item {
+		@include breakpoint-min( lg ) {
+			font-size: unset;
+		}
+	}
 
-				// mailchimp form inside homepage middle
-				.m-form-frontpage.m-form-minnpost-form-processor-mailchimp {
+	// mailchimp form inside a homepage middle
+	.m-form-frontpage.m-form-minnpost-form-processor-mailchimp {
 
-					fieldset {
-						max-width: colspan( 12, 16 );
-					}
+		.m-form-container {
+
+			@include breakpoint-min( lg ) {
+				padding: 0 $standard-block-margin;
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: space-around;					
+			}
+
+			header {
+
+				@include breakpoint-min( sm ) {
+					margin-bottom: $standard-block-margin;
 				}
-
-				// after submitting
-				.m-form-frontpage.m-form-minnpost-form-processor-mailchimp-submitted {
-
-					.m-form-message {
-						max-width: colspan( 12, 16 );
-					}
+	
+				@include breakpoint-min( lg ) {
+					margin-bottom: 0;
 				}
 			}
 		}
+
+		fieldset {
+
+			@include breakpoint-min( xs ) {
+				max-width: colspan( 12, 16 );
+			}
+
+			@include breakpoint-min( sm ) {
+				max-width: none;
+			}
+
+			@include breakpoint-min( lg ) {
+				max-width: colspan( 8, 16 );
+			}
+		}
+
 	}
-}
 
-@include breakpoint-min( sm ) {
+	// after the form has been submitted
+	.m-form-frontpage.m-form-minnpost-form-processor-mailchimp-submitted {
 
-	.o-site-message-container {
+		.m-form-message {
 
-		// homepage middle
-		&.wp-message-inserter-message-region-homepage_middle {
+			@include breakpoint-min( xs ) {
+				max-width: colspan( 12, 16 );
+			}
 
-			.m-wp-insert-message-item {
+			@include breakpoint-min( sm ) {
+				max-width: none;
+			}
 
-				// mailchimp form inside homepage middle
-				.m-form-frontpage.m-form-minnpost-form-processor-mailchimp {
-
-					.m-form-container {
-						display: flex;
-						flex-wrap: wrap;
-						justify-content: space-around;
-
-						fieldset {
-							max-width: colspan( 8, 16 );
-						}
-					}
-				}
-
-				// after submitting
-				.m-form-frontpage.m-form-minnpost-form-processor-mailchimp-submitted {
-
-					.m-form-message {
-						max-width: colspan( 8, 16 );
-					}
-				}
+			@include breakpoint-min( lg ) {
+				max-width: colspan( 8, 16 );
 			}
 		}
 	}
-}
-
-@include breakpoint-min( xxl ) {
-
-	.o-site-message-container {
-
-		// homepage middle
-		&.wp-message-inserter-message-region-homepage_middle {
-			order: unset;
-		}
-	}
+	
 }

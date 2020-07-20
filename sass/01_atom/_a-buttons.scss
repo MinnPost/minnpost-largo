@@ -38,6 +38,15 @@ button.a-button,
 	}
 }
 
+.a-button-content {
+	@include button( $background: utility-color(blue, dark), $hover: utility-color(blue, medium));
+
+	&.a-button-content-zone {
+		display: block;
+		margin-bottom: $standard-block-margin;
+	}
+}
+
 .a-button-sentence {
 
 	input[type="text"],

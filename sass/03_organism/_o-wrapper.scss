@@ -4,6 +4,9 @@
 
 // default, mobile-first styles for wrapper
 .o-wrapper {
+	max-width: $max-width-page;
+	margin-left: auto;
+	margin-right: auto;
 	position: relative;
 
 	// header and main content and footer
@@ -28,6 +31,7 @@
 	}
 
 	&.o-wrapper-content {
+		margin-top: $standard-block-padding;
 		margin-bottom: $standard-block-margin;
 
 		@include breakpoint-min( lg ) {
@@ -98,12 +102,3 @@
 	}
 
 }
-
-/*@media screen and (min-width: $medium-margins-too-small) {
-	// legacy variable: this is where we have a big enough screen to make some things horizontal
-	.archive .o-wrapper {
-		&.o-wrapper-content {
-			flex-direction: row;
-		}
-	}
-}*/

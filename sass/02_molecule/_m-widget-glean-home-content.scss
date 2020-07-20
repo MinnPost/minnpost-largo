@@ -10,58 +10,57 @@
 
 	section.m-widget-glean-home-content {
 		border-bottom: $border-default-style;
-		padding-bottom: $standard-block-margin;
+		padding: $standard-block-padding;
 		margin-bottom: $standard-block-margin;
+		background: neutral-color(highlight);
+		border-radius: $border-radius;
 
 		.a-widget-title {
-			background: brand-color(red, medium);
-			margin-bottom: 0;
+			background: neutral-color(medium);
+			border-radius: $border-radius;
+			margin-bottom: $standard-block-padding / 2;
+			color: neutral-color(black);
 
-			span {
-				text-transform: uppercase;
-			}
+			@include meta-preset( $bold: true );
 
 			a {
 				display: block;
-				color: neutral-color(white);
 				padding: $standard-block-padding;
+
+				&:link,
+				&:visited {
+					color: inherit;
+					text-decoration: none;
+				}
+
+				&:active,
+				&:focus,
+				&:hover,
+				&.active {
+					@include link-underline();
+				}
 			}
 		}
 
 		article.m-post-glean {
 			width: 100%;
-			padding: $standard-block-padding;
-			border: $border-default-style;
-			border-top: 0;
-			margin-bottom: 0;
+			border: 0;
+			margin: 0;
+			padding: 0;
+			
+			.m-entry-content {
+				margin-right: 0;
+				width: 100%;
+			}
 
 			.m-entry-excerpt {
 				font-size: 100%;
-				margin-bottom: $standard-block-margin;
+				margin-bottom: $standard-block-padding;
 			}
 
 			p {
 				margin-bottom: 0;
 			}
-
-			.a-glean-more {
-				margin-top: $standard-heading-margin;
-
-				a::after {
-					content: " ▸";
-				}
-			}
 		}
 	}
 }
-
-// media queries for sidebar middle boxes
-
-/*@media screen and (min-width: $max-width-page) {
-	section.m-widget-glean-home-content {
-		padding: 15px;
-		.m-post-glean {
-			padding: 5px 15px 15px 15px;
-		}
-	}
-}*/

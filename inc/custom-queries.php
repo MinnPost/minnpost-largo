@@ -26,38 +26,96 @@ if ( ! function_exists( 'minnpost_largo_unpublished_posts' ) ) :
 endif;
 
 /**
-* Change the post query used on category archive pages based on whether or not it has grouped categories associated with the main category
+* Change the post query used on category and author archive pages to account for our custom meta fields.
 *
 * @param object $query
+* @return object $query
 */
-if ( ! function_exists( 'minnpost_grouped_category_query' ) ) :
-	add_action( 'pre_get_posts', 'minnpost_grouped_category_query' );
-	function minnpost_grouped_category_query( $query ) {
-		if ( $query->is_archive() && ! is_admin() && $query->is_main_query() && is_category() ) {
-			$category_id = $query->get_queried_object_id();
-			if ( function_exists( 'minnpost_get_grouped_categories' ) ) {
-				$grouped_categories = minnpost_get_grouped_categories( $category_id );
-				if ( empty( $grouped_categories ) ) {
-					return;
+if ( ! function_exists( 'custom_archive_query_vars' ) ) :
+	add_action( 'pre_get_posts', 'custom_archive_query_vars' );
+	function custom_archive_query_vars( $query ) {
+		// only do stuff on archive templates when it's the main query
+		if ( $query->is_archive() && ! is_admin() && $query->is_main_query() ) {
+			// for category archives
+			if ( is_category() ) {
+				$category_id = $query->get_queried_object_id();
+				if ( function_exists( 'minnpost_get_grouped_categories' ) ) {
+
+					// term meta field where a category stores its parent
+					$grouping_field = '_mp_category_group';
+					// get the children of a parent category
+					$grouped_categories = minnpost_get_grouped_categories( $category_id );
+					// get the parent id of a child category
+					$grouping_category_id = get_term_meta( $category_id, $grouping_field, true );
+
+					// set up an array for changing the query
+					$taxonomy_parameters = array();
+
+					// if this category has a parent category id
+					// this means it's a child category like metro
+					if ( '' !== $grouping_category_id ) {
+						// get the children of the other parent categories that aren't this one
+						// this is an array of IDs to exclude
+						$exclude_ids = minnpost_get_grouping_categories_to_exclude( $grouping_category_id );
+					}
+
+					// if this category has child categories
+					// this means it's a parent, like news
+					if ( ! empty( $grouped_categories ) ) {
+						// get the children of the other parent categories that aren't this one
+						// this is an array of IDs to exclude
+						$exclude_ids    = minnpost_get_grouping_categories_to_exclude( $category_id );
+						$category_ids   = $grouped_categories;
+						$category_ids[] = $category_id; // in case posts are added to the parent
+
+						// if this is a parent category, the query should not be limited to itself
+						$query->set( 'category_name', false );
+
+						// these are the category IDs of the childrten to include in the query
+						$taxonomy_parameters[] = array(
+							'taxonomy' => 'category',
+							'field'    => 'term_id',
+							'terms'    => $category_ids,
+						);
+					}
+
+					// if we have category IDs to exclude, exclude them from the query
+					if ( ! empty( $exclude_ids ) ) {
+						$taxonomy_parameters[] = array(
+							'taxonomy' => 'category',
+							'field'    => 'term_id',
+							'terms'    => $exclude_ids,
+							'operator' => 'NOT IN',
+						);
+					}
+
+					// if there is a taxonomy query, use it
+					if ( ! empty( $taxonomy_parameters ) ) {
+						$query->set( 'tax_query', $taxonomy_parameters );
+					}
 				}
-				$tax_query = $query->get( 'tax_query' );
-				if ( ! is_array( $tax_query ) ) {
-					$tax_query = array();
-				}
-				$taxquery[] = array(
-					'taxonomy' => 'category',
-					'field'    => 'term_id',
-					'terms'    => $grouped_categories,
+			} elseif ( is_author() ) {
+				// for author archives
+				// author archives should not get byline posts
+				$query->set(
+					'meta_query',
+					array(
+						array(
+							'key'     => '_mp_subtitle_settings_byline',
+							'compare' => 'NOT EXISTS',
+						),
+					),
 				);
-				$query->set( 'tax_query', $taxquery );
-				$query->set( 'category_name', false );
 			}
 		}
+		return $query;
 	}
 endif;
 
 /**
-* Returns array of grouped categories for the given category
+* Returns array of grouped categories for the given category.
+* This means the categories that are children of a parent category.
+* Ex: all the categories that are "news" categories.
 *
 * @param int $category_id
 * @return array $grouped_categories
@@ -83,53 +141,46 @@ if ( ! function_exists( 'minnpost_get_grouped_categories' ) ) :
 endif;
 
 /**
-* Change the post query used on category archive pages based on whether or not they have featured columns.
-* This arranges featured posts and not featured posts on those archives.
+* Returns the grouping category for the given category.
+* This means the parent category.
+* Ex: returns the "news" category for the "metro" category.
 *
-* @param object $query
+* @param int $category_id
+* @return array $grouping_category
+*
 */
-if ( ! function_exists( 'custom_archive_query_vars' ) ) :
-	add_action( 'pre_get_posts', 'custom_archive_query_vars' );
-	function custom_archive_query_vars( $query ) {
-		if ( $query->is_archive() && ! is_admin() && $query->is_main_query() ) {
-			if ( is_category() ) {
-				$category_id = $query->get_queried_object_id();
-				$figure      = minnpost_get_term_figure( $category_id );
-				if ( '' === get_term_meta( $category_id, '_mp_category_body', true ) || '' === $figure ) {
-					$featured_num = 3;
-				} else {
-					$featured_num = 1;
-				}
-			} elseif ( is_author() ) {
-				$featured_num = 3;
-				// author archives should not get byline posts
-				$query->set(
-					'meta_query',
-					array(
-						array(
-							'key'     => '_mp_subtitle_settings_byline',
-							'compare' => 'NOT EXISTS',
-						),
-					)
-				);
-			} else {
-				$featured_num = 0;
-			}
-			$query->set( 'featured_num', $featured_num );
-			if ( isset( $category_id ) ) {
-				$featured_columns = get_term_meta( $category_id, '_mp_category_featured_columns', true );
-			} else {
-				$featured_columns = '';
-			}
-			$query->set( 'featured_columns', $featured_columns );
-			if ( is_category() ) {
-				if ( '' !== $featured_columns ) {
-					$query->set( 'posts_per_page', 10 + $featured_num );
-				} else {
-					$query->set( 'posts_per_page', 20 );
+if ( ! function_exists( 'minnpost_get_grouping_category' ) ) :
+	function minnpost_get_grouping_category( $category_id = '' ) {
+		$grouping_field       = '_mp_category_group';
+		$grouping_category_id = get_term_meta( $category_id, $grouping_field, true );
+		$grouping_category    = get_term_by( 'id', $grouping_category_id );
+		return $grouping_category;
+	}
+endif;
+
+/**
+* Returns the grouping category IDs to skip
+* This means the parent categories to skip based on the current category's parent
+* Ex: returns the "opinion" and "arts & culture" and "health" categories for the "metro" category.
+*
+* @param int $category_id
+* @return array $exclude_ids
+*
+*/
+if ( ! function_exists( 'minnpost_get_grouping_categories_to_exclude' ) ) :
+	function minnpost_get_grouping_categories_to_exclude( $category_id = '' ) {
+		$exclude_ids = array();
+		if ( function_exists( 'minnpost_largo_category_groups' ) ) {
+			$choices = minnpost_largo_category_groups();
+			foreach ( $choices as $choice ) {
+				$category = minnpost_largo_group_category( $choice );
+				if ( (int) $category_id !== (int) $category->term_id ) {
+					$exclude_ids[] = array_values( minnpost_get_grouped_categories( $category->term_id ) );
 				}
 			}
 		}
+		$exclude_ids = array_merge( ... array_values( $exclude_ids ) );
+		return $exclude_ids;
 	}
 endif;
 

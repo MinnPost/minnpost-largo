@@ -1,12 +1,37 @@
 // all sizes for ie 11 and 10
 @media only screen and (-ms-high-contrast: active), (-ms-high-contrast: none) {
 
+	.o-wrapper {
+
+		&.o-wrapper-content {
+			flex-direction: row;
+		}
+	}
+
 	body.single-post .m-layout-primary,
 	body.page .m-layout-primary {
 		display: block;
 	}
 
-	// size media queries for ie 11 and 10
+	.m-homepage-zones {
+
+		// where the zones differ from the archives
+		.m-zone {
+			
+			&.m-zone-homepage-more-top,
+			&.m-zone-homepage-opinion {
+	
+				article {
+					overflow: hidden;
+				}
+			}
+		}
+	}
+
+	.m-entry-content .m-content-media img {
+		width: 100%;
+	}
+	
 
 	.o-archive-listing {
 
@@ -24,6 +49,26 @@
 			}
 		}
 	}
+
+	.m-form-minnpost-form-processor-mailchimp {
+
+		// full page forms
+		&.m-form-fullpage {
+	
+			.m-subscribe-grouping {
+	
+				.m-subscribe-items {
+					max-width: 50%;
+					display: block;
+				}
+	
+				.m-subscribe {
+					max-width: 45%;
+				}
+			}
+		}
+	}
+	
 
 	
 }

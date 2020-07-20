@@ -73,5 +73,10 @@
 			margin-bottom: $standard-block-margin;
 			@include meta-preset( $size: -2 );
 		}
+
+		&.m-form-item-comment {
+			max-width: 100%;
+			margin-bottom: $standard-block-margin;
+		}
 	}
 }

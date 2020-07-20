@@ -1,5 +1,3 @@
-//$nav-common-spacing: 6px;
-
 nav {
 
 	svg {
@@ -188,6 +186,24 @@ nav {
 				}
 			}
 
+			span.a-label-xxs {
+				display: inline-flex;
+			}
+
+			span.a-label-xs {
+				display: none;
+			}
+
+			@include breakpoint-min( xs ) {
+				span.a-label-xxs {
+					display: none;
+				}
+
+				span.a-label-xs {
+					display: inline-flex;
+				}
+			}
+
 			> a {
 				display: inline-flex;
 				color: neutral-color(dark);
@@ -221,6 +237,7 @@ nav {
 					//transform: translateY(100%);
 					z-index: 0;
 					opacity: 0;
+					visibility: hidden;
 					height: 0;
 					transition: $hover-transition;
 
@@ -231,6 +248,7 @@ nav {
 					&.is-open {
 						z-index: $z-index__xxxl;
 						opacity: 1;
+						visibility: visible;
 						height: 100%;
 					}
 
@@ -665,4 +683,8 @@ nav {
 			}
 		}
 	}
+}
+
+#wpadminbar {
+	z-index: 9999999; // this allows it to sit above our menu z-indexes
 }

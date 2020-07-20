@@ -369,14 +369,27 @@ endif;
 if ( ! function_exists( 'minnpost_largo_always_load_comments_for_user' ) ) :
 	add_filter( 'llc_can_lazy_load', 'minnpost_largo_always_load_comments_for_user' );
 	function minnpost_largo_always_load_comments_for_user( $can_lazyload ) {
-		$user_id = get_current_user_id();
+		$user_id      = get_current_user_id();
+		$can_lazyload = true; // set a default of true; user overrides it
 		if ( 0 !== $user_id ) {
-			$always_load_comments = filter_var( get_user_meta( $user_id, 'always_load_comments', true ), FILTER_VALIDATE_BOOLEAN );
+			$always_load_comments = get_user_meta( $user_id, 'always_load_comments', true );
+			$always_load_comments = user_always_loads_comments( $always_load_comments );
 			if ( true === $always_load_comments ) {
 				$can_lazyload = false;
 			}
 		}
 		return $can_lazyload;
+	}
+endif;
+
+if ( ! function_exists( 'user_always_loads_comments' ) ) :
+	function user_always_loads_comments( $always_load_comments = false ) {
+		if ( 'on' === $always_load_comments || true === filter_var( $always_load_comments, FILTER_VALIDATE_BOOLEAN ) ) {
+			$always_load_comments = true;
+		} else {
+			$always_load_comments = false;
+		}
+		return $always_load_comments;
 	}
 endif;
 
@@ -463,21 +476,34 @@ if ( ! function_exists( 'minnpost_largo_load_comments_switch' ) ) :
 	function minnpost_largo_load_comments_switch( $position ) {
 		$always_load_comments = false;
 		$user_id              = get_current_user_id();
-		if ( 0 === $user_id ) {
-			return;
-		}
+		
 		if ( ! class_exists( 'Lazy_Load_Comments' ) ) {
 			return;
 		}
-		$always_load_comments = filter_var( get_user_meta( $user_id, 'always_load_comments', true ), FILTER_VALIDATE_BOOLEAN );
+		$always_load_comments = get_user_meta( $user_id, 'always_load_comments', true );
+		$always_load_comments = user_always_loads_comments( $always_load_comments );
 		if ( comments_open() ) :
 			?>
 			<div class="m-user-always-show-comments m-user-always-show-comments-<?php echo $position; ?>">
+			<?php if ( 0 === $user_id ) : ?>
+				<span class="always-show-comments">
+				<?php
+				$login_url = site_url( '/user/login/' );
+				$login_url = add_query_arg( 'redirect_to', get_current_url() . '#comments', $login_url );
+				echo sprintf(
+					// translators: 1) the log in link
+					__( '<a href="%1$s">Log in</a> for the option to always show comments on MinnPost.', 'minnpost-largo' ),
+					$login_url
+				);
+				?>
+				</span>
+			<?php else : ?>
 				<label class="always-show-comments" for="always-show-comments-<?php echo $position; ?>"><?php echo esc_html__( 'Always show comments when you are logged in', 'minnpost-largo' ); ?></label>
 				<label class="a-switch a-switch-always-show-comments a-switch-always-show-comments-<?php echo $position; ?>">
 					<input type="checkbox" class="a-checkbox-always-show-comments" id="always-show-comments-<?php echo $position; ?>"<?php echo ( true === $always_load_comments ) ? ' value="0" checked' : ' value="1"'; ?>>
 					<span class="slider round"></span>
 				</label>
+			<?php endif; ?>
 			</div>
 			<?php
 		endif;

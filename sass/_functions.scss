@@ -1,9 +1,4 @@
 // Color functions
-@function palette( $palette, $tone: "base" ) {
-
-	@return map-get( map-get( $palettes, $palette ), $tone );
-}
-
 @function brand-color( $brand-color, $tone: "medium" ) {
 
 	@return map-get( map-get( $brand-colors, $brand-color), $tone );
@@ -17,20 +12,6 @@
 @function neutral-color( $tone: "medium" ) {
 
 	@return map-get( $neutral-colors, $tone );
-}
-
-// used this way
-//a {
-//color: palette(purple);
-//&:hover {
-//color: palette(purple, light);
-//}
-//}
-
-// rgba function
-@function rgba_color($base, $alpha) {
-
-	@return rgba($base, $alpha);
 }
 
 /**

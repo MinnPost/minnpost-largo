@@ -28,12 +28,12 @@
 					<?php if ( '' !== minnpost_get_posted_on() ) : ?>
 						<?php minnpost_posted_on(); ?>
 					<?php endif; ?>
-				</div><!-- .m-entry-meta -->
+				</div>
 			<?php endif; ?>
-		</header><!-- .m-entry-header -->
+		</header>
 		<div class="m-entry-excerpt">
 			<?php the_excerpt(); ?>
-		</div><!-- .m-entry-excerpt -->
+		</div>
 	</div>
 	<?php minnpost_post_image( 'feature-large' ); ?>
-</article><!-- #post-## -->
+</article>

@@ -1,59 +1,60 @@
 .m-homepage-zones {
-	margin-top: $standard-block-padding;
-	flex-wrap: wrap;
-	display: flex;
 
+	// where the zones differ from the archives
 	.m-zone {
-		margin-bottom: $standard-block-margin;
-		border-bottom: $border-default-style;
+		flex-wrap: wrap;
+		display: flex;
+		width: 100%;
 
-		&.m-zone-homepage-top { // no margin or border because the article already has it
-			border-bottom: 0;
-			margin-bottom: 0;
+		@include breakpoint-min( sm ) {
+			display: flex;
+			max-width: calc((100% - #{colspan( 1, 12 )}) - #{$size__site-sidebar} );
+		}
+	
+		@include breakpoint-min( lg ) {
+			width: colspan( 8, 12 );
+			max-width: calc((100% - #{colspan( 1, 12 )}) - #{$size__site-sidebar} );
+		}
+	
+		@include breakpoint-min( xl ) {
+			width: colspan( 12, 16 );
+			max-width: calc((100% - #{colspan( 1, 16 )}) - #{$size__site-sidebar} );
 		}
 
-		&.m-zone-homepage-middle {
+		@include breakpoint-min( xxxl ) {
+			max-width: calc((100%) - #{$size__site-sidebar} );
+		}
+
+		&.m-zone-homepage-top { // because this section is not visually separate
+
+			@include breakpoint-min( sm ) {
+				max-width: none;
+			}
+
+			@include breakpoint-min( lg ) {
+				max-width: calc((100% - #{colspan( 1, 12 )}) - #{$size__site-sidebar} );
+			}
+
+			article {
+				width: 100%;
+				border-bottom: 0;
+				padding-bottom: 0;
+			}
+		}
+		
+		&.m-zone-homepage-more-top,
+		&.m-zone-homepage-opinion {
 			display: flex;
 			justify-content: space-between;
 			flex-flow: row wrap;
-			border-bottom: 0;
-			margin-bottom: 0;
-		}
 
-		&.m-zone-homepage-bottom {
-			margin-bottom: 0;
-			border-bottom: 0;
-		}
+			article {
+				margin-bottom: $standard-block-margin;
+				align-content: flex-start;
 
-		&.m-zone-homepage-middle article {
-			width: 47.5%;
-			margin-bottom: $standard-block-margin;
-		}
-	}
-}
-
-// media queries for zones
-@include breakpoint-min( sm ) {
-
-	.m-homepage-zones {
-
-		.m-zone {
-
-			&.m-zone-sidebar-recommended {
-				margin-left: $standard-block-margin;
-			}
-		}
-	}
-}
-
-@media screen and (min-width: $max-width-page) {
-
-	.m-homepage-zones {
-
-		.m-zone {
-
-			&.m-zone-sidebar-recommended {
-				margin-left: 0;
+				@include breakpoint-min( lg ) {
+					width: colspan( 5.8, 12 );
+				}
 			}
 		}
 	}

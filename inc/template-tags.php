@@ -38,7 +38,7 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 		$caption = wp_get_attachment_caption( $image_id );
 		$credit  = get_media_credit_html( $image_id );
 
-		if ( is_singular() && ! is_singular( 'newsletter' ) && ( ! isset( $attributes['location'] ) || 'related' !== $attributes['location'] ) ) : ?>
+		if ( is_singular() && ! is_singular( 'newsletter' ) && ( ! isset( $attributes['location'] ) || ( 'interest' !== $attributes['location'] && 'related' !== $attributes['location'] ) ) ) : ?>
 			<figure class="m-post-image m-post-image-<?php echo $size; ?>">
 				<?php echo $image; ?>
 				<?php if ( '' !== $caption || '' !== $credit ) { ?>
@@ -55,7 +55,7 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 		<?php elseif ( is_singular( 'newsletter' ) ) : ?>
 			<?php echo $image; ?>
 		<?php else : ?>
-			<a class="m-post-image m-post-thumbnail m-post-thumbnail-<?php echo $size; ?>" href="<?php the_permalink( $id ); ?>" aria-hidden="true">
+			<a class="m-post-image m-post-thumbnail m-post-thumbnail-<?php echo $size; ?>" href="<?php the_permalink( $id ); ?>">
 				<?php
 				echo $image;
 				?>
@@ -90,18 +90,15 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 
 		// large is the story detail image. this is a built in size in WP
 		// home has its own size field
-		if ( is_home() && 'feature' === $size ) {
+		if ( is_home() && 'feature' === $size || 'feature-large' === $size ) {
 			$size = esc_html( get_post_meta( $id, '_mp_post_homepage_image_size', true ) );
-			if ( 'full' === $size ) {
-				$size = 'large';
-			}
 		} elseif ( is_home() && 'thumbnail' === $size ) {
 			$size = 'thumbnail';
 		} else {
 			$size = $size;
 		}
 
-		if ( 'large' === $size ) {
+		if ( 'large' === $size || 'full' === $size ) {
 			$image_url = get_post_meta( $id, '_mp_post_main_image', true );
 			if ( is_home() && '' === $image_url ) {
 				$image_url = get_post_meta( $id, '_mp_post_thumbnail_image', true );
@@ -115,7 +112,7 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 		$main_image_id      = get_post_meta( $id, '_mp_post_main_image_id', true );
 		$thumbnail_image_id = get_post_meta( $id, '_mp_post_thumbnail_image_id', true );
 
-		if ( 'large' === $size ) {
+		if ( 'large' === $size || 'full' === $size ) {
 			if ( '' !== $main_image_id ) {
 				$image_id = $main_image_id;
 			} elseif ( is_home() && '' !== $thumbnail_image_id ) {
@@ -756,7 +753,7 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 			$title = get_post_meta( $author_id, $title_field, true );
 		}
 
-		$text = wpautop( $text );
+		$text = wpautop( $text ); // for some reason the paragraphs don't work without this
 		$text = apply_filters( 'the_content', $text );
 
 		if ( '' !== $image_id ) {
@@ -793,7 +790,10 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 				}
 				if ( true === $include_name && '' !== $name ) {
 					$output .= '<h3 class="a-author-title">';
-					if ( 0 < $count ) {
+					if ( 1 < $count ) {
+						// at least as of July 2020, co-authors-plus never returns a count of zero
+						// see this github issue: https://github.com/Automattic/Co-Authors-Plus/issues/740
+						// we can update this code if that situation ever changes
 						$author_url = get_author_posts_url( $author_id, sanitize_title( $name ) );
 						$output    .= '<a href="' . $author_url . '">';
 					}
@@ -919,6 +919,26 @@ endif;
 if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 	function minnpost_get_author_image( $author_id = '', $size = 'photo', $lazy_load = true ) {
 
+		$author_sizes = array(
+			/*array(
+				'name'      => 'photo',
+				'media'     => '(min-width: 80em)',
+				'width'     => 225,
+				'placement' => 'archive',
+			),*/
+			array(
+				'name'  => 'author-photo',
+				'media' => '(min-width: 640px)',
+				'width' => 190,
+				//'placement' => 'post',
+			),
+			array(
+				'name'  => 'author-teaser',
+				'media' => '',
+				'width' => 75,
+			),
+		);
+
 		$image_url = get_post_meta( $author_id, '_mp_author_image', true );
 		if ( 'photo' !== $size ) {
 			$image_url = get_post_meta( $author_id, '_mp_author_image_' . $size, true );
@@ -943,13 +963,42 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 
 		// set up lazy load attributes
 		$attributes = apply_filters( 'minnpost_largo_lazy_load_attributes', $attributes, $author_id, 'post', $lazy_load );
-
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
-			// this requires that the custom image sizes in custom-fields.php work correctly
-			$image     = wp_get_attachment_image( $image_id, $size, false, $attributes );
+			$alt_text  = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
 			$image_url = wp_get_attachment_url( $image_id );
+			if ( ( is_singular() || is_archive() ) && ! is_singular( 'newsletter' ) ) {
+				if ( isset( $attributes['class'] ) ) {
+					$class = ' class="' . $attributes['class'] . '"';
+				} else {
+					$class = '';
+				}
+				if ( isset( $attributes['loading'] ) ) {
+					$loading = ' loading="' . $attributes['loading'] . '"';
+				} else {
+					$loading = '';
+				}
+				$image = '<picture class="a-author-sizes">';
+				foreach ( $author_sizes as $size ) {
+					if ( isset( $size['placement'] ) && 'post' === $size['placement'] && ! is_single() ) {
+						continue;
+					} elseif ( isset( $size['placement'] ) && 'archive' === $size['placement'] && ! is_archive() ) {
+						continue;
+					}
+					$image_url_width = $image_url . '?w=' . $size['width'];
+					if ( '' !== $size['media'] ) {
+						$image .= '<source media="' . $size['media'] . '" srcset="' . $image_url_width . '">';
+					} else {
+						$image .= '<source srcset="' . $image_url_width . '">';
+					}
+				}
+				$image .= '<img src="' . $image_url . '" alt="' . $alt_text . '"' . $class . $loading . '>';
+				$image .= '</picture>';
+			} else {
+				// this requires that the custom image sizes in custom-fields.php work correctly
+				$image = '<div class="a-author-sizes">' . wp_get_attachment_image( $image_id, $size, false, $attributes ) . '</div>';
+			}
 		} else {
-			$image = minnpost_largo_manual_image_tag( $image_id, $image_url, $attributes );
+			$image = '<div class="a-author-sizes">' . minnpost_largo_manual_image_tag( $image_id, $image_url, $attributes ) . '</div>';
 		}
 
 		$image_data = array(
@@ -1257,7 +1306,8 @@ if ( ! function_exists( 'minnpost_post_sidebar' ) ) :
 			$post_id = get_the_ID();
 		}
 
-		$sidebar = wpautop( get_post_meta( $post_id, '_mp_post_sidebar', true ) );
+		$sidebar = apply_filters( 'the_content', get_post_meta( $post_id, '_mp_post_sidebar', true ) );
+
 		if ( null !== $sidebar && '' !== $sidebar ) {
 			echo '<section id="post-sidebar" class="m-post-sidebar">' . $sidebar . '</section>';
 		}
@@ -1280,22 +1330,35 @@ if ( ! function_exists( 'minnpost_category_breadcrumb' ) ) :
 		$category_id       = minnpost_get_permalink_category_id( $post_id );
 		$category_group_id = '';
 		if ( '' !== $category_id ) {
-			$category      = get_category( $category_id );
-			$category_link = get_category_link( $category );
+			$category          = get_category( $category_id );
+			$category_link     = get_category_link( $category );
+			$category_is_group = false;
 			if ( true === $show_group ) {
 				$category_group_id = minnpost_get_category_group_id( $post_id, $category_id );
 				if ( '' !== $category_group_id ) {
 					$category_group = get_category( $category_group_id );
 					echo '<div class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '">';
 					echo '<div class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category_group->term_id ) ) . '">' . $category_group->name . '</a></div>';
+				} else {
+					if ( function_exists( 'minnpost_largo_category_groups' ) ) {
+						$groups = minnpost_largo_category_groups();
+						if ( in_array( $category->slug, $groups, true ) ) {
+							$category_is_group = true;
+						}
+					}
 				}
 			}
-			$category_name = isset( $category->name ) ? $category->name : '';
-			if ( '' !== $category_name ) {
-				echo '<div class="a-breadcrumb a-category-name"><a href="' . $category_link . '">' . $category_name . '</a></div>';
+			if ( false === $category_is_group ) {
+				$category_name = isset( $category->name ) ? $category->name : '';
+				if ( '' !== $category_name ) {
+					echo '<div class="a-breadcrumb a-category-name"><a href="' . $category_link . '">' . $category_name . '</a></div>';
+				}
+			} else {
+				echo '<div class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category->slug ) . '">';
+				echo '<div class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category->term_id ) ) . '">' . $category->name . '</a></div>';
 			}
 		}
-		if ( '' !== $category_group_id ) {
+		if ( '' !== $category_group_id || true === $category_is_group ) {
 			echo '</div>';
 		}
 	}

@@ -14,11 +14,16 @@ html {
 }
 
 body {
-	max-width: $max-width-page;
 	margin: 0 auto;
 	padding: 0;
 	color: neutral-color(black);
 	background: neutral-color(white);
+}
+
+main {
+	position: relative;
+	max-width: 100%;
+	flex: 0 0 100%;
 }
 
 hr {
@@ -33,6 +38,7 @@ img {
 	height: auto; /* Make sure images are scaled correctly. */
 	max-width: 100%; /* Adhere to container width. */
 }
+
 a svg {
 	pointer-events: none;
 }
@@ -54,4 +60,9 @@ textarea {
 	color: neutral-color(black);
 	border-radius: $border-radius;
 	border: $border-default-style;
+}
+
+[data-autoresize] {
+	resize: none;
+	box-sizing: border-box;
 }

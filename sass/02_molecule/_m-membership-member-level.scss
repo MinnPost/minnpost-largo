@@ -49,11 +49,10 @@
 	.m-member-level-benefits {
 
 		ul {
-			color: #7A7A7A;
+			color: neutral-color(dark);
 
 			li {
 				padding: 0 $standard-block-padding;
-				//line-height: 1.5;
 				margin-bottom: $standard-block-margin;
 			}
 		}

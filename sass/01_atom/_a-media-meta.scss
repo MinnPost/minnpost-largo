@@ -1,19 +1,14 @@
 .a-media-meta {
 
 	&.a-media-caption {
-		//font-size: 75%;
-		//line-height: 1.3em;
 		@include body-preset( $size: -2 );
 		display: table-cell;
 		padding: $standard-block-margin / 4 0;
 	}
 
 	&.a-media-credit {
-		/*font-size: 62.5%;
-		line-height: normal;
-		text-align: right;*/
 		@include meta-preset( $size: -2, $bold: false, $italic: true );
-		color: neutral-color(medium);
+		color: neutral-color(dark);
 		display: table-footer-group;
 	}
 }

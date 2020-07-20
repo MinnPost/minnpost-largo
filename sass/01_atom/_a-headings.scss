@@ -1,3 +1,7 @@
+.a-zone-title {
+	width: 100%;
+}
+
 .a-author-title,
 .a-related-title,
 .a-group-category-title {
@@ -6,7 +10,11 @@
 
 .a-comments-title,
 .a-comment-reply-title {
-	margin-bottom: $standard-block-padding;
+	margin-bottom: $standard-heading-margin;
+}
+
+.a-comments-title-none {
+	margin-bottom: $standard-block-margin;
 }
 
 .a-comment-reply-title {
@@ -20,7 +28,8 @@
 }
 
 .a-entry-title,
-.a-user-title {
+.a-user-title,
+.a-widget-title {
 	color: neutral-color(black);
 	a {
 

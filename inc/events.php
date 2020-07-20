@@ -108,8 +108,8 @@ if ( ! function_exists( 'minnpost_largo_full_event_date' ) ) :
 		if ( '' === $event_id ) {
 			$event_id = get_the_ID();
 		}
-		$start_date = minnpost_largo_get_ap_date( tribe_get_start_date( $event_id, false, 'j-F' ) );
-		$end_date   = minnpost_largo_get_ap_date( tribe_get_end_date( $event_id, false, 'j-F' ) );
+		$start_date = minnpost_largo_get_ap_date( tribe_get_start_date( $event_id, false, 'm/d/Y' ) );
+		$end_date   = minnpost_largo_get_ap_date( tribe_get_end_date( $event_id, false, 'm/d/Y' ) );
 		if ( $end_date !== $start_date ) {
 			$time = sprintf(
 				// translators: 1) start date, 2) end date

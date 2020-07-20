@@ -19,6 +19,11 @@
 			width: auto;
 		}
 	}
+
+	&.m-ad-region-home-full-width {
+		width: 100%;
+		margin-bottom: $standard-block-margin;
+	}
 }
 
 .m-ad-region:empty {
@@ -26,7 +31,8 @@
 }
 
 #secondary-first,
-#secondary-second {
+#secondary-second,
+#secondary-first-and-second {
 
 	.m-ad-region-sidebar {
 		display: flex;
@@ -35,11 +41,21 @@
 	}
 }
 
-#secondary-first {
+#secondary-first,
+#secondary-first-and-second {
 	@include breakpoint-min( sm ) {
 		.m-ad-region-sidebar {
 			display: block;
 			width: auto;
+		}
+	}
+}
+
+.m-homepage-zones {
+	.m-ad-region-sidebar {
+
+		@include breakpoint-min( lg ) {
+			margin-bottom: auto;
 		}
 	}
 }
@@ -51,7 +67,7 @@
 	.m-ad-region {
 
 		&.m-ad-region-leaderboard {
-			padding: 10px 0;
+			padding: $standard-block-padding 0;
 		}
 	}
 }

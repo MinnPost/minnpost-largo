@@ -3,7 +3,7 @@
 	&.acm-ad-container-bordered {
 		border-bottom: $border-default-style;
     	border-left: 0;
-    	border-right: 0;
+		border-right: 0;
 	}
 
 	.a-text-around-ad {
@@ -86,8 +86,8 @@ main .ad-x110 {
 .acm-ad-wrapper.ad-Middle3 {
 	margin-bottom: $standard-block-margin;
 	border-bottom: $border-default-style;
-	background-color: neutral-colors(light);
-	padding-bottom: $standard-block-margin / 2;
+	background-color: neutral-color(light);
+	padding-bottom: $standard-block-padding;
 
 	.ad-middle3,
 	.ad-Middle3 {
@@ -98,9 +98,9 @@ main .ad-x110 {
 	header {
 		text-transform: uppercase;
 		@include meta-preset( $size: -2, $bold: false, $italic: false, $line-height: 1 );
-		padding: $standard-block-margin / 2;
-		margin-bottom: $standard-block-margin / 2;
-		color: neutral-color(medium);
+		padding: $standard-block-padding;
+		margin-bottom: $standard-heading-margin;
+		color: neutral-color(dark);
 	}
 }
 
@@ -108,6 +108,8 @@ main .ad-x110 {
 
 	@include clearfix;
 	margin-bottom: $standard-block-margin;
+	display: flex;
+	justify-content: center;
 
 	&.acm-ad-placeholder {
 		text-align: center;
@@ -120,5 +122,3 @@ main .ad-x110 {
 		margin-bottom: $standard-block-padding;
 	}
 }
-
-// media queries for ads
