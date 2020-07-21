@@ -204,10 +204,7 @@ if ( ! function_exists( 'minnpost_get_grouping_categories_to_exclude' ) ) :
 				}
 			}
 			$exclude_ids = array_merge( ... array_values( $exclude_ids ) );
-			error_log( 'cache set' );
 			wp_cache_set( $cache_key, $exclude_ids, $cache_group, DAY_IN_SECONDS * 1 );
-		} else {
-			error_log( 'cache is ' . print_r( $exclude_ids, true ) );
 		}
 		return $exclude_ids;
 	}
