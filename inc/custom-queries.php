@@ -50,6 +50,7 @@ if ( ! function_exists( 'custom_archive_query_vars' ) ) :
 
 					// set up an array for changing the query
 					$taxonomy_parameters = array();
+					$meta_parameters     = array();
 
 					// if this category has a parent category id
 					// this means it's a child category like metro
