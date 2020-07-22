@@ -14,12 +14,14 @@
 		margin-bottom: $standard-block-margin;
 		background: neutral-color(highlight);
 		border-radius: $border-radius;
+		width: 100%;
+		@include body-preset( $size: -1 );
 
 		.a-widget-title {
-			background: neutral-color(medium);
+			background: brand-color(red, medium);
 			border-radius: $border-radius;
 			margin-bottom: $standard-block-padding / 2;
-			color: neutral-color(black);
+			color: neutral-color(white);
 
 			@include meta-preset( $bold: true );
 
@@ -37,7 +39,7 @@
 				&:focus,
 				&:hover,
 				&.active {
-					@include link-underline();
+					@include link-underline(neutral-color(white), neutral-color(light));
 				}
 			}
 		}

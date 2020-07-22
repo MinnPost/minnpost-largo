@@ -56,13 +56,21 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 							<header class="m-entry-header">
 								<?php the_title( '<h4 class="a-entry-title a-spill-entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h4>' ); ?>
 								<?php if ( 'post' === get_post_type() ) : ?>
-									<?php if ( '' !== minnpost_get_posted_by() ) : ?>
-										<div class="m-entry-byline">
-											<?php minnpost_posted_by( get_the_ID() ); ?>
-										</div>
-									<?php endif; ?>
+									<?php
+									if ( '' !== minnpost_get_posted_on() ) {
+										$date    = minnpost_get_posted_on();
+										echo sprintf(
+											'<time class="a-entry-date published updated" datetime="%1$s">%2$s</time>',
+											$date['published']['machine'],
+											$date['published']['human'],
+										);
+									}
+									?>
 								<?php endif; ?>
 							</header>
+							<div class="m-entry-excerpt">
+								<?php the_excerpt(); ?>
+							</div>
 						<?php else : ?>
 							<p><a href="<?php the_permalink(); ?>">Read <?php the_date( 'l A' ); ?> edition</a></p>
 						<?php endif; ?>
