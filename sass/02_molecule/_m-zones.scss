@@ -3,11 +3,11 @@
 	// where the zones differ from the archives
 	.m-zone {
 		flex-wrap: wrap;
+		align-content: flex-start;
 		display: flex;
 		width: 100%;
 
 		@include breakpoint-min( sm ) {
-			display: flex;
 			max-width: calc((100% - #{colspan( 1, 12 )}) - #{$size__site-sidebar} );
 		}
 	
