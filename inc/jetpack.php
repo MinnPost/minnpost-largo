@@ -244,6 +244,24 @@ if ( ! function_exists( 'minnpost_largo_jetpack_exclude_category' ) ) :
 	}
 endif;
 
+/**
+ * Restrict related posts to a desired date range
+ *
+ * @param array $date_range
+ * @return array $date_range
+ *
+ */
+if ( ! function_exists( 'minnpost_largo_jetpack_related_date_range' ) ) :
+	add_filter( 'jetpack_relatedposts_filter_date_range', 'minnpost_largo_jetpack_related_date_range' );
+	function minnpost_largo_jetpack_related_date_range( $date_range ) {
+		$date_range = array(
+			'from' => strtotime( '-1 year' ),
+			'to'   => time(),
+		);
+		return $date_range;
+	}
+endif;
+
 use Automattic\Jetpack\Sync\Settings;
 
 /**
