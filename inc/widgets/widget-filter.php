@@ -30,7 +30,7 @@ if ( ! function_exists( 'minnpost_widget_output_filter' ) ) :
 		$widget_output = str_replace( ' class="widget widget-zone-posts">', ' class="m-widget m-widget-zone-posts">', $widget_output );
 
 		// target custom html widget
-		if ( false !== strpos( $widget_output, 'm-widget m-widget-text m-widget-custom-html' ) && 'custom_html' == $widget_type ) {
+		if ( false !== strpos( $widget_output, 'm-widget m-widget-text m-widget-custom-html' ) && 'custom_html' === $widget_type ) {
 
 			$widget_output = str_replace( '<div id="custom_html-', '<section id="custom_html-', $widget_output );
 			// site branding in sitewide footer
@@ -73,7 +73,7 @@ if ( ! function_exists( 'minnpost_widget_output_filter' ) ) :
 		}
 
 		// target minnpost spill widget
-		if ( false !== strpos( $widget_output, 'm-widget m-minnpost-spills-widget' ) && 'minnpostspills_widget' == $widget_type ) {
+		if ( false !== strpos( $widget_output, 'm-widget m-minnpost-spills-widget' ) && 'minnpostspills_widget' === $widget_type ) {
 			$widget_output = str_replace( '<div id="minnpostspills_widget-', '<section id="minnpostspills_widget-', $widget_output );
 			$widget_output = str_replace(
 				'</div>
@@ -88,7 +88,7 @@ if ( ! function_exists( 'minnpost_widget_output_filter' ) ) :
 		}
 
 		// target the recommended widget
-		if ( false !== strpos( $widget_output, 'class="m-widget m-widget-zone-posts"' ) && 'zoninator_zoneposts_widget' == $widget_type ) {
+		if ( false !== strpos( $widget_output, 'class="m-widget m-widget-zone-posts"' ) && 'zoninator_zoneposts_widget' === $widget_type ) {
 			$widget_output = str_replace( '<div id="zoninator_zoneposts_widget-', '<section id="zoninator-zoneposts-widget-', $widget_output );
 			$widget_output = preg_replace( '/\>\s+\</m', '><', $widget_output );
 			$widget_output = str_replace(
@@ -100,7 +100,7 @@ if ( ! function_exists( 'minnpost_widget_output_filter' ) ) :
 		}
 
 		// target most commented widget
-		if ( false !== strpos( $widget_output, 'class="m-widget m-widget-most-commented"' ) && 'most-commented' == $widget_type ) {
+		if ( false !== strpos( $widget_output, 'class="m-widget m-widget-most-commented"' ) && 'most-commented' === $widget_type ) {
 			$widget_output = str_replace( '<div id="most-commented-', '<section id="most-commented-widget-', $widget_output );
 			$widget_output = str_replace( '</ol></div>', '</ol></div></section>', $widget_output );
 			$widget_output = str_replace( '<ol', '<div class="m-widget-contents"><ol', $widget_output );
