@@ -19,14 +19,14 @@
 		$recommended_query = z_get_zone_query( $recommended_zone );
 		?>
 		<?php if ( $recommended_query->have_posts() ) : ?>
-			<section class="m-widget m-widget-zone-posts">
+			<section class="m-widget m-widget-zone-posts m-widget-zone-posts-with-image">
 				<h3 class="a-zone-title"><?php echo $zone->name; ?></h3>
 				<div class="m-zone-contents">
 					<ul>
 					<?php
 					while ( $recommended_query->have_posts() ) :
 						$recommended_query->the_post();
-						get_template_part( 'template-parts/content', 'sidebar' ); // content-sidebar
+						get_template_part( 'template-parts/content', 'sidebar-with-image' ); // content-sidebar
 					endwhile;
 					?>
 					</ul>
