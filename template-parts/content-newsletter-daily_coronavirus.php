@@ -262,7 +262,7 @@ a[x-apple-data-detectors] {
 			if ( '' !== $author_info ) {
 				?>
 				<tr>
-					<td class="twp-column content author" style="border-collapse: collapse; Margin: 0; padding: 0;">
+					<td class="two-column content author" style="border-collapse: collapse; Margin: 0; padding: 0;">
 					<!--[if (gte mso 9)|(IE)]>
 						<table cellpadding="0" cellspacing="0" width="100%">
 							<tr>
