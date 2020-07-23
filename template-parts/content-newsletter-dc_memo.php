@@ -317,7 +317,7 @@ a[x-apple-data-detectors] {
 			if ( 'on' !== $hide_author && empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) ) ) {
 				foreach ( $coauthors as $key => $coauthor ) {
 					$author_id    = $coauthor->ID;
-					$author_info .= minnpost_get_author_figure( $author_id, 'author-teaser', true, true );
+					$author_info .= minnpost_get_author_figure( $author_id, 'author-teaser', 'excerpt', true, 'cap-display_name', true, '', false, false );
 				}
 			}
 			if ( '' !== $author_info ) {
@@ -338,7 +338,7 @@ a[x-apple-data-detectors] {
 							if ( $key === $last_key ) {
 								$end = true;
 							}
-							minnpost_author_figure( $author_id, 'author-teaser', true, true, false, $end );
+							minnpost_author_figure( $author_id, 'author-teaser', 'excerpt', true, 'cap-display_name', true, '', false, false, $end );
 						endforeach;
 						?>
 						<!--[if (gte mso 9)|(IE)]>
