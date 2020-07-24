@@ -26,7 +26,7 @@
 
 	<?php
 	if ( ! is_singular() ) {
-		minnpost_post_image();
+		minnpost_post_image( 'full' );
 	}
 	?>
 
@@ -47,7 +47,7 @@
 			<?php minnpost_deck(); ?>
 
 			<?php
-			$hide_excerpt  = get_post_meta( $id, '_mp_remove_excerpt_from_display', true );
+			$hide_excerpt = get_post_meta( $id, '_mp_remove_excerpt_from_display', true );
 			if ( 'on' !== $hide_excerpt ) :
 				?>
 				<?php if ( '' !== get_the_excerpt() ) : ?>
@@ -69,13 +69,13 @@
 
 	<?php
 	if ( is_singular() ) {
-		minnpost_post_image( 'large' );
+		minnpost_post_image( 'full' );
 	}
 	?>
 
 	<?php
 	// keep share buttons horizontal if instructed
-	$layout_class = '';
+	$layout_class                    = '';
 	$share_buttons_always_horizontal = get_post_meta( $id, '_mp_share_buttons_always_horizontal', true );
 	if ( 'on' === $share_buttons_always_horizontal ) {
 		$layout_class .= ' o-entry-horizontal';
