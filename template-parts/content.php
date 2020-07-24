@@ -26,7 +26,7 @@
 
 	<?php
 	if ( ! is_singular() ) {
-		minnpost_post_image();
+		minnpost_post_image( 'full' );
 	}
 	?>
 
@@ -69,7 +69,7 @@
 
 	<?php
 	if ( is_singular() ) {
-		minnpost_post_image( 'large' );
+		minnpost_post_image( 'full' );
 	}
 	?>
 
