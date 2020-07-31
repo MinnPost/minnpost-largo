@@ -6,6 +6,7 @@
 	<input type="hidden" name="user_account_management_redirect" value="<?php echo $attributes['redirect']; ?>">
 	<input type="hidden" name="user_account_management_account_settings_nonce" value="<?php echo wp_create_nonce( 'uam-account-settings-nonce' ); ?>">
 	<input type="hidden" name="_reading_topics" value="">
+	<input type="hidden" name="always_load_comments" value="">
 
 	<?php if ( ! empty( $attributes['instructions'] ) ) : ?>
 		<?php echo $attributes['instructions']; ?>

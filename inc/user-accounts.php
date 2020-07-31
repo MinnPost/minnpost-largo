@@ -378,8 +378,6 @@ if ( ! function_exists( 'save_minnpost_user_data' ) ) :
 			update_user_meta( $user_data['ID'], 'always_load_comments', $user_data['always_load_comments'] );
 		} elseif ( isset( $user_data['ID'] ) && array_key_exists( 'always_load_comments', $user_data ) && '' === $user_data['always_load_comments'] ) {
 			update_user_meta( $user_data['ID'], 'always_load_comments', '' );
-		} elseif ( isset( $user_data['ID'] ) && ! array_key_exists( 'always_load_comments', $user_data ) ) {
-			update_user_meta( $user_data['ID'], 'always_load_comments', '' );
 		}
 
 		// reading preferences field. allow it to be emptied.
