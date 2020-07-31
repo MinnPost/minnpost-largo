@@ -34,6 +34,25 @@
 	<?php endif; ?>
 
 	<fieldset class="m-user-preferences">
+		<div class="m-form-item m-form-always-load-comments">
+			<label><?php _e( 'Always Load Comments:', 'minnpost-largo' ); ?>
+			<?php
+			$checked = '';
+			if ( function_exists( 'user_always_loads_comments' ) ) {
+				if ( isset( $_REQUEST['user_id'] ) ) {
+					$user_id = intval( wp_unslash( $_REQUEST['user_id'] ) );
+				} else {
+					$user_id = get_current_user_id();
+				}
+				$always_load_comments = get_user_meta( $user_id, 'always_load_comments', true );
+				$always_load_comments = user_always_loads_comments( $always_load_comments );
+				if ( true === $always_load_comments ) {
+					$checked = ' checked';
+				}
+			}
+			?>
+			<input type="checkbox" name="always_load_comments" id="always-load-comments-checkbox" value="on"<?php echo $checked; ?>></label>
+		</div>
 		<?php if ( ! empty( $attributes['reading_topics'] ) ) : ?>
 			<div class="m-form-item m-form-reading-preferences m-form-change-reading-preferences">
 				<label><?php _e( 'Reading Preferences:', 'minnpost-largo' ); ?></label>
