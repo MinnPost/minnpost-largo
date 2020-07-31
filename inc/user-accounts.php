@@ -293,6 +293,13 @@ if ( ! function_exists( 'add_to_user_data' ) ) :
 			$user_data['_consolidated_emails'] = $posted['_consolidated_emails'];
 		}
 
+		// always load comments
+		if ( array_key_exists( 'always_load_comments', $posted ) && ! empty( $posted['always_load_comments'] ) ) {
+			$user_data['always_load_comments'] = $posted['always_load_comments'];
+		} elseif ( array_key_exists( 'always_load_comments', $posted ) && empty( $posted['always_load_comments'] ) ) {
+			$user_data['always_load_comments'] = '';
+		}
+
 		// reading preferences field
 		if ( array_key_exists( '_reading_topics', $posted ) && ! empty( $posted['_reading_topics'] ) ) {
 			$user_data['_reading_topics'] = $posted['_reading_topics'];
@@ -364,6 +371,13 @@ if ( ! function_exists( 'save_minnpost_user_data' ) ) :
 			$all_emails = array_unique( $all_emails );
 			$all_emails = implode( ',', $all_emails );
 			update_user_meta( $user_data['ID'], '_consolidated_emails', $all_emails );
+		}
+
+		// always load comments field. allow it to be emptied.
+		if ( isset( $user_data['ID'] ) && array_key_exists( 'always_load_comments', $user_data ) && '' !== $user_data['always_load_comments'] ) {
+			update_user_meta( $user_data['ID'], 'always_load_comments', $user_data['always_load_comments'] );
+		} elseif ( isset( $user_data['ID'] ) && array_key_exists( 'always_load_comments', $user_data ) && '' === $user_data['always_load_comments'] ) {
+			update_user_meta( $user_data['ID'], 'always_load_comments', '' );
 		}
 
 		// reading preferences field. allow it to be emptied.

@@ -345,6 +345,13 @@ if ( ! function_exists( 'minnpost_account_preferences' ) ) :
 			}
 			$attributes['user_meta'] = get_user_meta( $attributes['user']->ID );
 
+			$attributes['always_load_comments'] = '';
+			if ( isset( $attributes['user_meta']['always_load_comments'] ) ) {
+				if ( is_array( maybe_unserialize( $attributes['user_meta']['always_load_comments'][0] ) ) ) {
+					$attributes['user_reading_topics']['always_load_comments'] = maybe_unserialize( $attributes['user_meta']['always_load_comments'][0] );
+				}
+			}
+
 			// todo: this should probably be in the database somewhere
 			$attributes['reading_topics'] = array(
 				'Arts & Culture'         => __( 'Arts & Culture', 'minnpost-largo' ),
