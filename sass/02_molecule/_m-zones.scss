@@ -41,6 +41,40 @@
 				padding-bottom: 0;
 			}
 		}
+
+		&.m-zone-homepage-sticky {
+			max-width: none;
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+
+			&.m-zone-homepage-sticky-has-1 {
+				
+				article {
+					width: colspan( 16, 16 );
+				}
+			}
+
+			&.m-zone-homepage-sticky-has-2 {
+				
+				article {
+
+					@include breakpoint-min( sm ) {
+						width: colspan( 6, 12 );
+					}
+				}
+			}
+
+			&.m-zone-homepage-sticky-has-3 {
+				
+				article {
+
+					@include breakpoint-min( sm ) {
+						width: colspan( 4, 12 );
+					}
+				}
+			}
+		}
 		
 		&.m-zone-homepage-more-top,
 		&.m-zone-homepage-opinion {
