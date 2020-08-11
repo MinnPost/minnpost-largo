@@ -3,11 +3,11 @@
 	// where the zones differ from the archives
 	.m-zone {
 		flex-wrap: wrap;
+		align-content: flex-start;
 		display: flex;
 		width: 100%;
 
 		@include breakpoint-min( sm ) {
-			display: flex;
 			max-width: calc((100% - #{colspan( 1, 12 )}) - #{$size__site-sidebar} );
 		}
 	
@@ -39,6 +39,40 @@
 				width: 100%;
 				border-bottom: 0;
 				padding-bottom: 0;
+			}
+		}
+
+		&.m-zone-homepage-sticky {
+			max-width: none;
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+
+			&.m-zone-homepage-sticky-has-1 {
+				
+				article {
+					width: colspan( 16, 16 );
+				}
+			}
+
+			&.m-zone-homepage-sticky-has-2 {
+				
+				article {
+
+					@include breakpoint-min( sm ) {
+						width: colspan( 6, 12 );
+					}
+				}
+			}
+
+			&.m-zone-homepage-sticky-has-3 {
+				
+				article {
+
+					@include breakpoint-min( sm ) {
+						width: colspan( 4, 12 );
+					}
+				}
 			}
 		}
 		

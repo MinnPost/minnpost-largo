@@ -50,6 +50,7 @@ if ( ! function_exists( 'custom_archive_query_vars' ) ) :
 
 					// set up an array for changing the query
 					$taxonomy_parameters = array();
+					$meta_parameters     = array();
 
 					// if this category has a parent category id
 					// this means it's a child category like metro
@@ -79,19 +80,36 @@ if ( ! function_exists( 'custom_archive_query_vars' ) ) :
 						);
 					}
 
+					// exclude IDs is a cached array for each category ID.
+					// see minnpost_get_grouping_categories_to_exclude()
+
 					// if we have category IDs to exclude, exclude them from the query
-					if ( ! empty( $exclude_ids ) ) {
-						$taxonomy_parameters[] = array(
+					if ( ! empty( $exclude_ids ) && is_array( $exclude_ids ) ) {
+						/*$taxonomy_parameters[] = array(
 							'taxonomy' => 'category',
 							'field'    => 'term_id',
 							'terms'    => $exclude_ids,
 							'operator' => 'NOT IN',
-						);
+						);*/
+						// this value is serialized, so I think we have to loop through the IDs
+						$meta_parameters['relation'] = 'AND';
+						foreach ( $exclude_ids as $id ) {
+							$meta_parameters[] = array(
+								'key'     => '_category_permalink',
+								'value'   => $id,
+								'compare' => 'NOT LIKE',
+							);
+						}
 					}
 
 					// if there is a taxonomy query, use it
 					if ( ! empty( $taxonomy_parameters ) ) {
 						$query->set( 'tax_query', $taxonomy_parameters );
+					}
+
+					// if there is a meta query, use it
+					if ( ! empty( $meta_parameters ) ) {
+						$query->set( 'meta_query', $meta_parameters );
 					}
 				}
 			} elseif ( is_author() ) {
@@ -169,17 +187,26 @@ endif;
 */
 if ( ! function_exists( 'minnpost_get_grouping_categories_to_exclude' ) ) :
 	function minnpost_get_grouping_categories_to_exclude( $category_id = '' ) {
-		$exclude_ids = array();
-		if ( function_exists( 'minnpost_largo_category_groups' ) ) {
-			$choices = minnpost_largo_category_groups();
-			foreach ( $choices as $choice ) {
-				$category = minnpost_largo_group_category( $choice );
-				if ( (int) $category_id !== (int) $category->term_id ) {
-					$exclude_ids[] = array_values( minnpost_get_grouped_categories( $category->term_id ) );
+		if ( '' === $category_id ) {
+			return array();
+		}
+		$cache_key   = md5( 'minnpost_largo_grouping_categories_exclude_' . $category_id );
+		$cache_group = 'minnpost';
+		$exclude_ids = wp_cache_get( $cache_key, $cache_group );
+		if ( false === $exclude_ids ) {
+			$exclude_ids = array();
+			if ( function_exists( 'minnpost_largo_category_groups' ) ) {
+				$choices = minnpost_largo_category_groups();
+				foreach ( $choices as $choice ) {
+					$category = minnpost_largo_group_category( $choice );
+					if ( (int) $category_id !== (int) $category->term_id ) {
+						$exclude_ids[] = array_values( minnpost_get_grouped_categories( $category->term_id ) );
+					}
 				}
 			}
+			$exclude_ids = array_merge( ... array_values( $exclude_ids ) );
+			wp_cache_set( $cache_key, $exclude_ids, $cache_group, DAY_IN_SECONDS * 1 );
 		}
-		$exclude_ids = array_merge( ... array_values( $exclude_ids ) );
 		return $exclude_ids;
 	}
 endif;

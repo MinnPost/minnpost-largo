@@ -370,8 +370,8 @@ if ( ! function_exists( 'minnpost_user_gets_emails' ) ) :
 					$mc_resource_items = $minnpost_form_processor_mailchimp->get_data->get_mc_resource_items( $resource_type, $resource_id );
 					foreach ( $mc_resource_items as $item ) {
 						// check until there's a match for the list we're checking against on the user's groups
-						if ( in_array( $item['text'], $lists_to_check ) ) {
-							error_log( 'yep' );
+						if ( in_array( $item['text'], $lists_to_check, true ) ) {
+							return true;
 						}
 					}
 				}

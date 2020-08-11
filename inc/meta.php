@@ -172,7 +172,6 @@ if ( ! function_exists( 'minnpost_largo_news_article_schema' ) ) :
 		// author
 		if ( isset( $input['author'] ) && function_exists( 'minnpost_largo_get_author_schema' ) ) {
 			$input['author'] = minnpost_largo_get_author_schema();
-			//error_log( 'author is ' . print_r( $input['author'], true ) );
 		}
 		// the tags are already present as the keywords
 		// images
