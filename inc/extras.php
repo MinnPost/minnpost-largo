@@ -332,3 +332,21 @@ if ( ! function_exists( 'minnpost_largo_remove_republish_button_from_category' )
 		return $hide_republication_widget;
 	}
 endif;
+
+/**
+* Add the republication modal at the bottom of the site
+*/
+if ( ! function_exists( 'minnpost_largo_republication_modal' ) ) :
+	add_action( 'wp_footer', 'minnpost_largo_republication_modal' );
+	function minnpost_largo_republication_modal() {
+		if ( ! class_exists( 'Republication_Tracker_Tool' ) ) {
+			return;
+		}
+		$republication_plugin_path = WP_PLUGIN_DIR . '/republication-tracker-tool/includes/shareable-content.php';
+		?>
+		<div id="republication-tracker-tool-modal" style="display:none;" data-postid="<?php echo get_the_ID(); ?>" data-pluginsdir="<?php echo esc_attr( plugins_url() ); ?>">
+			<?php include_once( $republication_plugin_path ); ?>
+		</div>
+		<?php
+	}
+endif;
