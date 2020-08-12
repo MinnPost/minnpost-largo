@@ -2,7 +2,7 @@
 /**
  * This file provides an AJAX response containing the body of a post as well as some sharing information.
  *
- * Expected URLs is something like /wp-content/plugins/republication-tracker-tool/includes/shareable-content.php?post=22078&_=1512494948576 or something
+ * Expected URL is something like /wp-content/plugins/republication-tracker-tool/includes/shareable-content.php?post=22078&_=1512494948576
  * We aren't passing a NONCE; this isn't a form.
  */
 
@@ -31,7 +31,7 @@ unset( $allowed_tags_excerpt['form'] );
 
 /**
  * Allow sites to configure which tags are allowed to be output in the republication content
- * 
+ *
  * Default value is the standard global $allowedposttags, except form elements.
  *
  * @link https://github.com/INN/republication-tracker-tool/issues/49
@@ -68,8 +68,6 @@ $content = htmlspecialchars( $content, ENT_HTML5, 'UTF-8', true );
 // grab our analytics id to pass as GA param
 $analytics_id = get_option( 'republication_tracker_tool_analytics_id' );
 
-
-
 /**
  * The article source
  *
@@ -92,23 +90,36 @@ $attribution_statement = sprintf(
 $pixel = sprintf(
 	// %1$s is the javascript source, %2$s is the post ID, %3$s is the plugins URL
 	'<img id="republication-tracker-tool-source" src="%1$s/?republication-pixel=true&post=%2$s&ga=%3$s" style="max-width:200px;">',
-	esc_attr( get_site_url( ) ),
+	esc_attr( get_site_url() ),
 	esc_attr( $post->ID ),
 	esc_attr( $analytics_id )
 );
 
+
+if ( function_exists( 'minnpost_get_posted_on' ) ) {
+	$date = minnpost_get_posted_on( $post->ID, true );
+	if ( '' === $date ) {
+		return;
+	}
+	$time_string = sprintf(
+		'<time class="a-entry-date published updated" datetime="%1$s">%2$s</time>',
+		$date['published']['machine'],
+		$date['published']['human'],
+	);
+} else {
+	$time_string = gmdate( 'F j, Y', strtotime( $post->post_date ) );
+}
 /**
  * The article title, byline, source site, and date
  *
  * @var HTML $article_info The article title, etc.
  */
 $article_info = sprintf(
-	// translators: %1$s is the post title, %2$s is the byline, %3$s is the site name, %4$s is the date in the format F j, Y
-	__( '<h1>%1$s</h1><p class="byline">by %2$s, %3$s <br />%4$s</p>', 'republication-tracker-tool' ),
+	// translators: %1$s is the post title, %2$s is the byline, %3$s is the date in our date format
+	__( '<h1>%1$s</h1><p class="a-entry-byline">%2$s</p><p class="a-entry-date">%3$s</p>', 'republication-tracker-tool' ),
 	wp_kses_post( get_the_title( $post ) ),
-	wp_kses_post( get_the_author_meta( 'display_name', $post->post_author ) ),
-	wp_kses_post( get_bloginfo( 'name' ) ),
-	wp_kses_post( date( 'F j, Y', strtotime( $post->post_date ) ) )
+	minnpost_get_posted_by( $post->ID, true, false ),
+	wp_kses_post( $time_string )
 );
 // strip empty tags after automatically applying p tags
 $article_info = str_replace( '<p></p>', '', wpautop( $article_info ) );
@@ -119,43 +130,33 @@ $article_info = str_replace( '<p></p>', '', wpautop( $article_info ) );
  * @var HTML $license_statement
  */
 $license_statement = wp_kses_post( get_option( 'republication_tracker_tool_policy' ) );
+?>
 
-echo '<div id="republication-tracker-tool-modal-content" style="display:none;">';
-	echo '<a href="#" class="a-close-button republication-tracker-tool-close"><i class="fas fa-times"></i></a>';
-	echo sprintf( '<h2>%s</h2>', esc_html__( 'Republish this article', 'republication-tracker-tool' ) );
-
-	// Explain Creative Commons
-	echo '<div class="cc-policy">';
-		echo '<div class="cc-license">';
-			echo sprintf( '<a rel="license" target="_blank" href="http://creativecommons.org/licenses/by-nd/4.0/"><img alt="%s" style="border-width:0" src="https://i.creativecommons.org/l/by-nd/4.0/88x31.png" /></a>', esc_html__( 'Creative Commons License' ) );
-			echo wp_kses_post( 
-				wpautop(
-					sprintf(
-						// translators: %1$s is the URL to the particular Creative Commons license.
-						__( 'This work is licensed under a <a rel="license" target="_blank" href="%1$s">Creative Commons Attribution-NoDerivatives 4.0 International License</a>.' ),
-						'http://creativecommons.org/licenses/by-nd/4.0/'
-					)
-				)
-			);
-		echo '</div>'; // .cc-license
-		echo wp_kses_post( $license_statement );
-	echo '</div>'; // .cc-policy
-
-	// what we display to the embedder
-	echo '<div class="article-info">';
-		echo wp_kses_post( $article_info );
-	echo '</div>'; // .article-info
-
-	// the text area that is copyable
-	echo wp_kses_post( 
-		sprintf(
-			'<textarea readonly id="republication-tracker-tool-shareable-content" rows="5">%1$s %2$s %3$s</textarea>',
-			esc_html( $article_info ),
-			$content . "\n\n" ,
-			wpautop( $attribution_statement . $pixel )
-		)
-	);
-	?>
-	<button class="a-button" onclick="copyToClipboard('#republication-tracker-tool-shareable-content')"><?php echo esc_html__( 'Copy to Clipboard', 'republication-tracker-tool' ); ?></button>
-	<?php
-echo '</div>'; // #republication-tracker-tool-modal-content
+<div id="republication-tracker-tool-modal-content" style="display:none;">
+	<a href="#" class="a-close-button republication-tracker-tool-close"><i class="fas fa-times"></i></a>
+	<div class="m-republication-info">
+	</div>
+	<header class="m-entry-header m-republication-entry-header">
+		<h1 class="a-entry-title"><?php echo esc_html__( 'Republish this article', 'minnpost-largo' ); ?></h1>
+	</header>
+	<div class="m-entry-content m-republication-entry-content">
+		<?php echo wp_kses_post( $license_statement ); ?>
+	</div>
+	<div class="m-republication-article-info">
+		<?php echo wp_kses_post( $article_info ); ?>
+		<?php
+		// the text area that is copyable
+		echo wp_kses_post(
+			sprintf(
+				'<textarea readonly id="republication-tracker-tool-shareable-content" rows="5">%1$s %2$s %3$s</textarea>',
+				esc_html( $article_info ),
+				$content . "\n\n",
+				wpautop( $attribution_statement . $pixel )
+			)
+		);
+		?>
+		<button class="a-button" onclick="copyToClipboard('#republication-tracker-tool-shareable-content')">
+			<?php echo esc_html__( 'Copy HTML', 'republication-tracker-tool' ); ?>
+		</button>
+	</div>
+</div>
