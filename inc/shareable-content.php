@@ -125,11 +125,12 @@ $article_info = sprintf(
 $article_info = str_replace( '<p></p>', '', wpautop( $article_info ) );
 
 /**
- * The licensing statement from this plugin
+ * The licensing statement from this plugin's settings
  *
  * @var HTML $license_statement
  */
-$license_statement = wp_kses_post( get_option( 'republication_tracker_tool_policy' ) );
+$license_statement = get_option( 'republication_tracker_tool_policy' );
+$license_statement = apply_filters( 'the_content', $license_statement );
 ?>
 
 <div id="republication-tracker-tool-modal-content" style="display:none;">
@@ -140,7 +141,7 @@ $license_statement = wp_kses_post( get_option( 'republication_tracker_tool_polic
 		<h1 class="a-entry-title"><?php echo esc_html__( 'Republish this article', 'minnpost-largo' ); ?></h1>
 	</header>
 	<div class="m-entry-content m-republication-entry-content">
-		<?php echo wp_kses_post( $license_statement ); ?>
+		<?php echo $license_statement; ?>
 	</div>
 	<div class="m-republication-article-info">
 		<?php echo wp_kses_post( $article_info ); ?>
