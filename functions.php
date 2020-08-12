@@ -136,6 +136,11 @@ require get_theme_file_path() . '/inc/apple-news.php';
 require get_theme_file_path() . '/inc/robots.php';
 
 /**
+ * Settings for wp-sitemap.xml
+ */
+require get_theme_file_path() . '/inc/sitemap.php';
+
+/**
  * The Events Calendar related methods
  */
 require get_theme_file_path() . '/inc/events.php';
