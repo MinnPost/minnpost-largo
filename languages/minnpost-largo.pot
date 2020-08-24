@@ -46,11 +46,11 @@ msgid "Leave a Comment"
 msgstr ""
 
 #: front-page.php:44
-msgid "More of today's top stories"
+msgid "More top stories"
 msgstr ""
 
 #: front-page.php:42
-msgid "Today's top stories"
+msgid "Top stories"
 msgstr ""
 
 #: front-page.php:66
@@ -747,43 +747,43 @@ msgstr ""
 msgid "Reading preferences:"
 msgstr ""
 
-#: inc/custom-fields.php:1676, inc/custom-shortcodes.php:350
+#: inc/custom-fields.php:1676, inc/custom-shortcodes.php:357
 msgid "Arts & Culture"
 msgstr ""
 
-#: inc/custom-fields.php:1677, inc/custom-shortcodes.php:351
+#: inc/custom-fields.php:1677, inc/custom-shortcodes.php:358
 msgid "Economy"
 msgstr ""
 
-#: inc/custom-fields.php:1678, inc/custom-shortcodes.php:352
+#: inc/custom-fields.php:1678, inc/custom-shortcodes.php:359
 msgid "Education"
 msgstr ""
 
-#: inc/custom-fields.php:1679, inc/custom-shortcodes.php:353
+#: inc/custom-fields.php:1679, inc/custom-shortcodes.php:360
 msgid "Environment"
 msgstr ""
 
-#: inc/custom-fields.php:1680, inc/custom-shortcodes.php:354
+#: inc/custom-fields.php:1680, inc/custom-shortcodes.php:361
 msgid "Greater Minnesota news"
 msgstr ""
 
-#: inc/custom-fields.php:1681, inc/custom-shortcodes.php:355
+#: inc/custom-fields.php:1681, inc/custom-shortcodes.php:362
 msgid "Health"
 msgstr ""
 
-#: inc/custom-fields.php:1682, inc/custom-shortcodes.php:356
+#: inc/custom-fields.php:1682, inc/custom-shortcodes.php:363
 msgid "MinnPost announcements"
 msgstr ""
 
-#: inc/custom-fields.php:1683, inc/custom-shortcodes.php:357
+#: inc/custom-fields.php:1683, inc/custom-shortcodes.php:364
 msgid "Opinion/Commentary"
 msgstr ""
 
-#: inc/custom-fields.php:1684, inc/custom-shortcodes.php:358
+#: inc/custom-fields.php:1684, inc/custom-shortcodes.php:365
 msgid "Politics & Policy"
 msgstr ""
 
-#: inc/custom-fields.php:1685, inc/custom-shortcodes.php:359
+#: inc/custom-fields.php:1685, inc/custom-shortcodes.php:366
 msgid "Sports"
 msgstr ""
 
@@ -1283,15 +1283,19 @@ msgstr ""
 msgid "Return to %1$s Homepage"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-preferences-form.php:31
+#: user-account-management-templates/front-end/account-preferences-form.php:32
 msgid "Your preferences were successfully updated."
 msgstr ""
 
 #: user-account-management-templates/front-end/account-preferences-form.php:39
+msgid "Always Load Comments:"
+msgstr ""
+
+#: user-account-management-templates/front-end/account-preferences-form.php:59
 msgid "Reading Preferences:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-preferences-form.php:61
+#: user-account-management-templates/front-end/account-preferences-form.php:81
 msgid "Save Reading Preferences"
 msgstr ""
 
