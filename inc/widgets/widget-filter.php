@@ -273,7 +273,7 @@ if ( 'production' !== VIP_GO_ENV ) {
 }
 
 /**
-* If we're not in production, extend the timeframe for most commented so we can actually see some
+* Override the widget HTML output for the zone posts widget
 * @param string $html
 * @param array $posts
 * @param object $query
