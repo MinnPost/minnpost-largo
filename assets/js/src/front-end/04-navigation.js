@@ -110,6 +110,12 @@ function setupPrimaryNav() {
 
 function setupScrollNav( selector, navSelector, contentSelector ) {
 
+	var ua = window.navigator.userAgent;
+	var isIE = /MSIE|Trident/.test(ua);
+	if ( isIE ) {
+		return;
+	}
+
 	// Init with all options at default setting
 	const priorityNavScrollerDefault = PriorityNavScroller( {
 		selector: selector,

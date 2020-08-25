@@ -44,7 +44,6 @@
 		.o-archive-listing {
 
 			&.m-layout-primary {
-				//max-width: $medium-screen;
 				overflow-x: hidden;
 			}
 		}
@@ -69,7 +68,12 @@
 		}
 	}
 	
+	.m-related {
 
+		.a-related-list {
+			flex: 1 0 100%;
+		}
+	}
 	
 }
 
@@ -77,10 +81,6 @@
 @include breakpoint-min( xxl ) {
 
 	.no-borderimage .archive {
-
-		.o-wrapper-content {
-			//padding-right: $size__site-sidebar + $archive-content-sidebar-padding;
-		}
 
 		.o-archive-listing {
 
