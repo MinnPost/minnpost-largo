@@ -27,7 +27,11 @@ if ( ! function_exists( 'minnpost_widget_output_filter' ) ) :
 		$widget_output = str_replace( '<div class="textwidget custom-html-widget">', '<div class="m-widget-contents m-textwidget m-custom-html-widget">', $widget_output );
 		$widget_output = str_replace( ' class="widget_text widget widget_custom_html">', ' class="m-widget m-widget-text m-widget-custom-html">', $widget_output );
 		$widget_output = str_replace( ' class="widget widget_most-commented">', ' class="m-widget m-widget-most-commented">', $widget_output );
-		$widget_output = str_replace( ' class="widget widget-zone-posts">', ' class="m-widget m-widget-zone-posts">', $widget_output );
+		if ( has_filter( 'widget_zone_posts_override_html' ) ) {
+			$widget_output = str_replace( ' class="widget widget-zone-posts">', ' class="m-widget m-widget-zone-posts m-widget-zone-posts-with-image">', $widget_output );
+		} else {
+			$widget_output = str_replace( ' class="widget widget-zone-posts">', ' class="m-widget m-widget-zone-posts">', $widget_output );
+		}
 
 		// target custom html widget
 		if ( false !== strpos( $widget_output, 'm-widget m-widget-text m-widget-custom-html' ) && 'custom_html' === $widget_type ) {
@@ -88,15 +92,22 @@ if ( ! function_exists( 'minnpost_widget_output_filter' ) ) :
 		}
 
 		// target the recommended widget
-		if ( false !== strpos( $widget_output, 'class="m-widget m-widget-zone-posts"' ) && 'zoninator_zoneposts_widget' === $widget_type ) {
+		if ( false !== strpos( $widget_output, 'class="m-widget m-widget-zone-posts' ) && 'zoninator_zoneposts_widget' === $widget_type ) {
 			$widget_output = str_replace( '<div id="zoninator_zoneposts_widget-', '<section id="zoninator-zoneposts-widget-', $widget_output );
 			$widget_output = preg_replace( '/\>\s+\</m', '><', $widget_output );
+			$widget_output = str_replace( '<ul', '<div class="m-widget-contents"><ul', $widget_output );
+			if ( has_filter( 'widget_zone_posts_override_html' ) ) {
+				$widget_output = str_replace(
+					'</ul></div></div>',
+					'</ul></div></section>',
+					$widget_output
+				);
+			}
 			$widget_output = str_replace(
 				'</ul></div>',
 				'</ul></div></section>',
 				$widget_output
 			);
-			$widget_output = str_replace( '<ul', '<div class="m-widget-contents"><ul', $widget_output );
 		}
 
 		// target most commented widget
@@ -259,3 +270,29 @@ if ( 'production' !== VIP_GO_ENV ) {
 		}
 	endif;
 }
+
+/**
+* Override the widget HTML output for the zone posts widget
+* @param string $html
+* @param array $posts
+* @param object $query
+* @return string $html
+*
+*/
+if ( ! function_exists( 'minnpost_largo_widget_zone_posts_html' ) ) :
+	add_filter( 'widget_zone_posts_override_html', 'minnpost_largo_widget_zone_posts_html', 10, 3 );
+	function minnpost_largo_widget_zone_posts_html( $html, $posts, $query ) {
+		if ( ! empty( $query ) ) {
+			?>
+			<ul>
+				<?php
+				while ( $query->have_posts() ) :
+					$query->the_post();
+					get_template_part( 'template-parts/content', 'sidebar-with-image' ); // content-sidebar
+				endwhile;
+				?>
+			</ul>
+			<?php
+		}
+	}
+endif;
