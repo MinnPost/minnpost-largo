@@ -1,0 +1,36 @@
+.m-widget-zone-posts {
+
+    &.m-widget-zone-posts-with-image {
+
+        ul {
+            list-style: none;
+            margin-left: 0;
+
+            li {
+                padding: 0;
+                margin-bottom: $standard-block-margin;
+
+                .a-entry-title {
+                    margin: $standard-block-padding / 2 0;
+                }
+    
+                .m-entry-byline {
+                    margin-bottom: $standard-block-padding / 2;
+                }
+    
+                .m-post-image {
+                    margin: 0;
+    
+                    img {
+                        margin: 0;
+                        max-width: 100%; // for older items without proper thumbnails
+    
+                        &:last-child {
+                            margin-bottom: $standard-block-padding;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
