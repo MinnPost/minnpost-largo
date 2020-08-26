@@ -378,10 +378,35 @@ if ( ! function_exists( 'minnpost_largo_always_load_comments_for_user' ) ) :
 				$can_lazyload = false;
 			}
 		}
+		// Test if the query exists at the URL
+		if ( get_query_var( 'replytocom' ) ) {
+			$can_lazyload = false;
+		}
 		return $can_lazyload;
 	}
 endif;
 
+/**
+* Allow for checking if the URL has a replytocom parameter. This means the user is replying to a comment.
+* @param array $vars
+* @return array $vars
+*
+*/
+if ( ! function_exists( 'add_query_vars_reply_comment' ) ) :
+	add_filter( 'query_vars', 'add_query_vars_reply_comment' );
+	function add_query_vars_reply_comment( $vars ) {
+		$vars[] = 'replytocom';
+		return $vars;
+	}
+endif;
+
+/**
+* This is used to determine whether the always load comment variable is true
+* regardless of which source it's coming from.
+* @param bool $always_load_comments
+* @return bool $always_load_comments
+*
+*/
 if ( ! function_exists( 'user_always_loads_comments' ) ) :
 	function user_always_loads_comments( $always_load_comments = false ) {
 		if ( 'on' === $always_load_comments || true === filter_var( $always_load_comments, FILTER_VALIDATE_BOOLEAN ) ) {
@@ -476,7 +501,7 @@ if ( ! function_exists( 'minnpost_largo_load_comments_switch' ) ) :
 	function minnpost_largo_load_comments_switch( $position ) {
 		$always_load_comments = false;
 		$user_id              = get_current_user_id();
-		
+
 		if ( ! class_exists( 'Lazy_Load_Comments' ) ) {
 			return;
 		}

@@ -46,11 +46,11 @@ msgid "Leave a Comment"
 msgstr ""
 
 #: front-page.php:44
-msgid "More of today's top stories"
+msgid "More top stories"
 msgstr ""
 
 #: front-page.php:42
-msgid "Today's top stories"
+msgid "Top stories"
 msgstr ""
 
 #: front-page.php:66
@@ -128,7 +128,7 @@ msgstr ""
 msgid "Spam"
 msgstr ""
 
-#: inc/comment-list.php:131, inc/comments.php:521
+#: inc/comment-list.php:131, inc/comments.php:546
 msgid "Edit"
 msgstr ""
 
@@ -136,49 +136,49 @@ msgstr ""
 msgid "Trash"
 msgstr ""
 
-#: inc/comments.php:419
+#: inc/comments.php:444
 msgid "Show comments or leave a comment"
 msgstr ""
 
-#: inc/comments.php:463
+#: inc/comments.php:488
 msgid "You will not see comments loaded when you are logged in unless you click the button."
 msgstr ""
 
-#: inc/comments.php:458
+#: inc/comments.php:483
 msgid "You will always see comments loaded when you are logged in"
 msgstr ""
 
-#: inc/comments.php:501
+#: inc/comments.php:526
 msgid "Always show comments when you are logged in"
 msgstr ""
 
-#: inc/comments.php:495
+#: inc/comments.php:520
 msgid "<a href=\"%1$s\">Log in</a> for the option to always show comments on MinnPost."
 msgstr ""
 
-#: inc/comments.php:533, user-account-management-templates/front-end/account-settings-form.php:132
+#: inc/comments.php:558, user-account-management-templates/front-end/account-settings-form.php:132
 msgid "Save Changes"
 msgstr ""
 
-#: inc/comments.php:545
+#: inc/comments.php:570
 msgid "Cancel Changes"
 msgstr ""
 
-#: inc/comments.php:557
+#: inc/comments.php:582
 msgid "Delete Comment"
 msgstr ""
 
 #. translators: 1) the font awesome icon, 2) the name of the commenter
-#: inc/comments.php:603
+#: inc/comments.php:628
 msgid "%1$s Reply to %2$s"
 msgstr ""
 
-#: inc/comments.php:604, inc/comments.php:611
+#: inc/comments.php:629, inc/comments.php:636
 msgid "<i class=\"far fa-comment\" aria-hidden=\"true\"></i>"
 msgstr ""
 
 #. translators: 1) the font awesome icon, 2) the name of the commenter
-#: inc/comments.php:610
+#: inc/comments.php:635
 msgid "%1$s Log in to reply to %2$s"
 msgstr ""
 
@@ -531,7 +531,7 @@ msgstr ""
 msgid "This text will show as a heading above the Related Content items. If you leave it blank, it will say %1$s."
 msgstr ""
 
-#: inc/custom-fields.php:769, inc/template-tags.php:537
+#: inc/custom-fields.php:769, inc/template-tags.php:547
 msgid "Read these stories next"
 msgstr ""
 
@@ -747,43 +747,43 @@ msgstr ""
 msgid "Reading preferences:"
 msgstr ""
 
-#: inc/custom-fields.php:1676, inc/custom-shortcodes.php:350
+#: inc/custom-fields.php:1676, inc/custom-shortcodes.php:357
 msgid "Arts & Culture"
 msgstr ""
 
-#: inc/custom-fields.php:1677, inc/custom-shortcodes.php:351
+#: inc/custom-fields.php:1677, inc/custom-shortcodes.php:358
 msgid "Economy"
 msgstr ""
 
-#: inc/custom-fields.php:1678, inc/custom-shortcodes.php:352
+#: inc/custom-fields.php:1678, inc/custom-shortcodes.php:359
 msgid "Education"
 msgstr ""
 
-#: inc/custom-fields.php:1679, inc/custom-shortcodes.php:353
+#: inc/custom-fields.php:1679, inc/custom-shortcodes.php:360
 msgid "Environment"
 msgstr ""
 
-#: inc/custom-fields.php:1680, inc/custom-shortcodes.php:354
+#: inc/custom-fields.php:1680, inc/custom-shortcodes.php:361
 msgid "Greater Minnesota news"
 msgstr ""
 
-#: inc/custom-fields.php:1681, inc/custom-shortcodes.php:355
+#: inc/custom-fields.php:1681, inc/custom-shortcodes.php:362
 msgid "Health"
 msgstr ""
 
-#: inc/custom-fields.php:1682, inc/custom-shortcodes.php:356
+#: inc/custom-fields.php:1682, inc/custom-shortcodes.php:363
 msgid "MinnPost announcements"
 msgstr ""
 
-#: inc/custom-fields.php:1683, inc/custom-shortcodes.php:357
+#: inc/custom-fields.php:1683, inc/custom-shortcodes.php:364
 msgid "Opinion/Commentary"
 msgstr ""
 
-#: inc/custom-fields.php:1684, inc/custom-shortcodes.php:358
+#: inc/custom-fields.php:1684, inc/custom-shortcodes.php:365
 msgid "Politics & Policy"
 msgstr ""
 
-#: inc/custom-fields.php:1685, inc/custom-shortcodes.php:359
+#: inc/custom-fields.php:1685, inc/custom-shortcodes.php:366
 msgid "Sports"
 msgstr ""
 
@@ -1133,6 +1133,10 @@ msgstr ""
 msgid "This will match users who have ANY of the checked roles. If you want to require that the user has multiple roles, use another conditional with an AND operator."
 msgstr ""
 
+#: inc/shareable-content.php:141
+msgid "Republish this article"
+msgstr ""
+
 #: inc/template-tags.php:399
 msgid "By&nbsp;"
 msgstr ""
@@ -1181,60 +1185,68 @@ msgstr ""
 msgid "Link copied"
 msgstr ""
 
-#: inc/template-tags.php:710
+#: inc/template-tags.php:513
+msgid "Republish this article."
+msgstr ""
+
+#: inc/template-tags.php:513
+msgid "Republish"
+msgstr ""
+
+#: inc/template-tags.php:720
 msgid "About the author"
 msgstr ""
 
 #. translators: 1) author archive url, 2) author name
-#: inc/template-tags.php:817
+#: inc/template-tags.php:827
 msgid "More articles by %2$s"
 msgstr ""
 
 #. translators: used between list items, there is a space after the comma
 #. translators: used between list items, there is a space after the comma
-#: inc/template-tags.php:1210, inc/template-tags.php:1217
+#: inc/template-tags.php:1220, inc/template-tags.php:1227
 msgid ", "
 msgstr ""
 
 #. translators: placeholder is the list of categories
-#: inc/template-tags.php:1213
+#: inc/template-tags.php:1223
 msgid "Posted in %1$s"
 msgstr ""
 
 #. translators: placeholder is the list of tags
-#: inc/template-tags.php:1220
+#: inc/template-tags.php:1230
 msgid "Tagged %1$s"
 msgstr ""
 
 #. translators: %s: post title
-#: inc/template-tags.php:1230
+#: inc/template-tags.php:1240
 msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
 #. translators: %s: Name of current post
 #. translators: %s: Name of current post
-#: inc/template-tags.php:1246, inc/template-tags.php:1276
+#: inc/template-tags.php:1256, inc/template-tags.php:1286
 msgid "Edit %s"
 msgstr ""
 
-#: inc/template-tags.php:1664
+#: inc/template-tags.php:1674
 msgid "MinnPostPlus"
 msgstr ""
 
 #. translators: Daily archive title. %s: Date.
-#: inc/template-tags.php:1697
+#: inc/template-tags.php:1707
 msgid "Daily Archives: %s"
 msgstr ""
 
-#: inc/template-tags.php:1694
+#: inc/template-tags.php:1704
 msgid "Monthly Archives: %s"
 msgstr ""
 
-#: inc/template-tags.php:1691
+#: inc/template-tags.php:1701
 msgid "Yearly Archives: %s"
 msgstr ""
 
-#: inc/template-tags.php:1939
+#: inc/template-tags.php:1949
 msgid "Your&nbsp;MinnPost&nbsp;Account"
 msgstr ""
 
@@ -1283,15 +1295,19 @@ msgstr ""
 msgid "Return to %1$s Homepage"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-preferences-form.php:31
+#: user-account-management-templates/front-end/account-preferences-form.php:32
 msgid "Your preferences were successfully updated."
 msgstr ""
 
 #: user-account-management-templates/front-end/account-preferences-form.php:39
+msgid "Always Load Comments:"
+msgstr ""
+
+#: user-account-management-templates/front-end/account-preferences-form.php:59
 msgid "Reading Preferences:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-preferences-form.php:61
+#: user-account-management-templates/front-end/account-preferences-form.php:81
 msgid "Save Reading Preferences"
 msgstr ""
 
