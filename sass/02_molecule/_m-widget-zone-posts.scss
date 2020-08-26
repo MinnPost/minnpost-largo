@@ -1,6 +1,7 @@
 .m-widget-zone-posts {
 
     &.m-widget-zone-posts-with-image {
+        text-align: center;
 
         ul {
             list-style: none;
@@ -9,6 +10,9 @@
             li {
                 padding: 0;
                 margin-bottom: $standard-block-margin;
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
 
                 .a-entry-title {
                     margin: $standard-block-padding / 2 0;
