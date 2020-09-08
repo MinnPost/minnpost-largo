@@ -291,6 +291,11 @@ if ( ! function_exists( 'add_to_user_data' ) ) :
 			$all_emails                        = array_unique( $all_emails );
 			$posted['_consolidated_emails']    = implode( ',', $all_emails );
 			$user_data['_consolidated_emails'] = $posted['_consolidated_emails'];
+		} else {
+			// if there are no consolidated emails but there is a user email, use that
+			if ( isset( $user_data['user_email'] ) ) {
+				$user_data['_consolidated_emails'] = $posted['user_email'];
+			}
 		}
 
 		// always load comments
