@@ -291,11 +291,6 @@ if ( ! function_exists( 'add_to_user_data' ) ) :
 			$all_emails                        = array_unique( $all_emails );
 			$posted['_consolidated_emails']    = implode( ',', $all_emails );
 			$user_data['_consolidated_emails'] = $posted['_consolidated_emails'];
-		} else {
-			// if there are no consolidated emails but there is an existing user email, use that
-			if ( isset( $existing_user_data['user_email'] ) ) {
-				$user_data['_consolidated_emails'] = $existing_user_data['user_email'];
-			}
 		}
 
 		// always load comments
@@ -372,6 +367,13 @@ if ( ! function_exists( 'save_minnpost_user_data' ) ) :
 		}
 
 		// make a string out of the email array and save it
+
+		// we at least need the main user email here
+		if ( ! isset( $all_emails ) ) {
+			$all_emails   = array();
+			$all_emails[] = isset( $user_data['user_email'] ) ? $user_data['user_email'] : $existing_user_data['user_email'];
+		}
+
 		if ( isset( $all_emails ) ) {
 			$all_emails = array_unique( $all_emails );
 			$all_emails = implode( ',', $all_emails );
@@ -436,7 +438,7 @@ if ( ! function_exists( 'minnpost_largo_check_consolidated_emails' ) ) :
 			// this is stored user data
 			$emails = array_map( 'trim', explode( ',', $user_data['_consolidated_emails'][0] ) );
 		}
-		if ( false !== ( $key = array_search( $current_email, $emails ) ) ) {
+		if ( false !== ( $key = array_search( $current_email, $emails, true ) ) ) {
 			unset( $emails[ $key ] );
 		}
 		return $emails;
