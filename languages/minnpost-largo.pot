@@ -128,7 +128,7 @@ msgstr ""
 msgid "Spam"
 msgstr ""
 
-#: inc/comment-list.php:131, inc/comments.php:521
+#: inc/comment-list.php:131, inc/comments.php:546
 msgid "Edit"
 msgstr ""
 
@@ -136,49 +136,49 @@ msgstr ""
 msgid "Trash"
 msgstr ""
 
-#: inc/comments.php:419
+#: inc/comments.php:444
 msgid "Show comments or leave a comment"
 msgstr ""
 
-#: inc/comments.php:463
+#: inc/comments.php:488
 msgid "You will not see comments loaded when you are logged in unless you click the button."
 msgstr ""
 
-#: inc/comments.php:458
+#: inc/comments.php:483
 msgid "You will always see comments loaded when you are logged in"
 msgstr ""
 
-#: inc/comments.php:501
+#: inc/comments.php:526
 msgid "Always show comments when you are logged in"
 msgstr ""
 
-#: inc/comments.php:495
+#: inc/comments.php:520
 msgid "<a href=\"%1$s\">Log in</a> for the option to always show comments on MinnPost."
 msgstr ""
 
-#: inc/comments.php:533, user-account-management-templates/front-end/account-settings-form.php:132
+#: inc/comments.php:558, user-account-management-templates/front-end/account-settings-form.php:132
 msgid "Save Changes"
 msgstr ""
 
-#: inc/comments.php:545
+#: inc/comments.php:570
 msgid "Cancel Changes"
 msgstr ""
 
-#: inc/comments.php:557
+#: inc/comments.php:582
 msgid "Delete Comment"
 msgstr ""
 
 #. translators: 1) the font awesome icon, 2) the name of the commenter
-#: inc/comments.php:603
+#: inc/comments.php:628
 msgid "%1$s Reply to %2$s"
 msgstr ""
 
-#: inc/comments.php:604, inc/comments.php:611
+#: inc/comments.php:629, inc/comments.php:636
 msgid "<i class=\"far fa-comment\" aria-hidden=\"true\"></i>"
 msgstr ""
 
 #. translators: 1) the font awesome icon, 2) the name of the commenter
-#: inc/comments.php:610
+#: inc/comments.php:635
 msgid "%1$s Log in to reply to %2$s"
 msgstr ""
 
