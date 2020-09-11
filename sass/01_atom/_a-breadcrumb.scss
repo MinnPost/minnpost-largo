@@ -110,4 +110,33 @@
 			}
 		}
 	}
+
+	&.a-breadcrumbs-sponsored-content {
+		
+		.a-category-group {
+
+			a {
+				background-color: utility-color(orange, medium);
+
+				&:hover,
+				&:focus,
+				&:active {
+					background-color: utility-color(orange, dark);
+				}
+			}
+		}
+
+		.a-category-name {
+
+			a {
+				color: utility-color(orange, medium);
+
+				&:hover,
+				&:focus,
+				&:active {
+					@include link-underline(utility-color(orange, dark), utility-color(orange, medium));
+				}
+			}
+		}
+	}
 }
