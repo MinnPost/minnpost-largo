@@ -96,12 +96,13 @@
 @mixin text-preset( $size: inherit, $line-height: inherit ) {
 	//font-size: map-get( $text-sizes, $size ) + px;
 	//font-size: map-get( $text-sizes, $size )/10 + rem;
+
 	@if $size != "inherit" {
 		font-size: var(--scale#{ $size });
 		//line-height: var(--lh#{ $size });
 		line-height: 1.3;
 	}
-	
+
 	//line-height: map-get( $line-heights, $size );
 
 	/*@include breakpoint-min( xs ) {
@@ -129,6 +130,7 @@
 	cursor: pointer;
 	text-decoration: none;
 	transition: $hover-transition;
+
 	@include meta-preset( $size: 1, $bold: true, $italic: false, $line-height: 1 );
 	background: $background;
 	color: $color;

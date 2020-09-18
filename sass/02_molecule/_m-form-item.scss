@@ -71,6 +71,7 @@
 		&.m-form-change-email {
 			max-width: 80%;
 			margin-bottom: $standard-block-margin;
+
 			@include meta-preset( $size: -2 );
 		}
 

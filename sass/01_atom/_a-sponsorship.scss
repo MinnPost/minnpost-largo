@@ -1,5 +1,6 @@
 .m-category-info .a-sponsorship,
 .m-post .a-sponsorship {
+
 	@include meta-preset( $size: -2, $bold: false, $italic: true );
 	margin-bottom: $standard-block-margin;
 	border-bottom: $border-default-style;

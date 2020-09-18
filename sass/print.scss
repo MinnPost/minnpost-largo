@@ -40,7 +40,7 @@ article .acm-ad,
 
 header .a-site-branding {
 	margin: 0;
-	max-width: colspan( 5, 16 );
+	max-width: colspan(5, 16);
 }
 
 header.o-header-support .a-site-branding {
@@ -71,6 +71,7 @@ header.o-header-support .a-site-branding {
 
 		// tagline
 		h2 {
+
 			@include meta-preset( $size: 0, $bold: true, $italic: false, $line-height: 1 );
 			padding-bottom: 0;
 		}
@@ -90,6 +91,7 @@ header.o-header-support .a-site-branding {
 	// tagline
 	h2 {
 		margin: 0;
+
 		@include meta-preset( $size: 0, $bold: true, $italic: false, $line-height: 1 );
 	}
 }
@@ -101,10 +103,10 @@ nav {
 
 
 .m-widget-site-branding {
-	max-width: colspan( 6, 16 );
+	max-width: colspan(6, 16);
 
 	.a-site-branding {
-		max-width: colspan( 5, 6 );
+		max-width: colspan(5, 6);
 	}
 }
 
@@ -120,7 +122,7 @@ nav {
 .o-entry {
 
 	.m-entry-meta {
-		width: colspan( 2, 12 );
+		width: colspan(2, 12);
 
 		&.m-entry-meta-horizontal {
 			width: 100%;
@@ -131,7 +133,7 @@ nav {
 .m-entry-header {
 
 	.m-entry-meta {
-		width: colspan( 12, 12 );
+		width: colspan(12, 12);
 	}
 }
 
@@ -160,13 +162,14 @@ nav {
 	}
 
 	&.m-zone-homepage-top {
-		
+
 		.m-entry-content {
 			flex: 1 0;
 			margin-right: $standard-heading-margin;
 		}
 
 		.m-post-image-first {
+
 			.m-entry-content {
 				order: 2;
 				flex: 1 0;
@@ -205,10 +208,10 @@ nav {
 		flex-wrap: wrap;
 		display: flex;
 		width: 100%;
-		max-width: calc((100%) - #{$size__site-sidebar} );
+		max-width: calc((100%) - #{$size__site-sidebar});
 
 		&.m-zone-homepage-top { // because this section is not visually separate
-			max-width: calc((100% - #{colspan( 1, 12 )}) - #{$size__site-sidebar} );
+			max-width: calc((100% - #{colspan(1, 12)}) - #{$size__site-sidebar});
 
 			article {
 				width: 100%;
@@ -216,28 +219,23 @@ nav {
 				padding-bottom: 0;
 			}
 		}
-		
+
 		&.m-zone-homepage-more-top,
 		&.m-zone-homepage-opinion {
 
 			article {
-				width: colspan( 5.8, 12 );
+				width: colspan(5.8, 12);
 			}
 		}
 	}
 }
 
 .m-widget-group {
-    
-    &.m-widget-group-homepage {
-        display: flex;
-    }
+
+	&.m-widget-group-homepage {
+		display: flex;
+	}
 }
-
-
-
-
-
 
 
 // ORGANISMS
@@ -268,7 +266,7 @@ nav {
 	}
 
 	#comments {
-		
+
 		.a-comment-links,
 		#respond {
 			display: none;
@@ -293,8 +291,8 @@ nav {
 	justify-content: flex-start;
 
 	.m-entry-content {
-		max-width: colspan( 10, 12 );
-	}	
+		max-width: colspan(10, 12);
+	}
 }
 
 .o-site-message-container {

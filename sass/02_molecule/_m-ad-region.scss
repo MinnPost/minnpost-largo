@@ -9,8 +9,9 @@
 
 		@include breakpoint-min( lg ) {
 			margin-top: 0;
+
 			&:last-of-type {
-			    margin-top: auto;
+				margin-top: auto;
 			}
 		}
 
@@ -43,7 +44,9 @@
 
 #secondary-first,
 #secondary-first-and-second {
+
 	@include breakpoint-min( sm ) {
+
 		.m-ad-region-sidebar {
 			display: block;
 			width: auto;
@@ -52,6 +55,7 @@
 }
 
 .m-homepage-zones {
+
 	.m-ad-region-sidebar {
 
 		@include breakpoint-min( lg ) {

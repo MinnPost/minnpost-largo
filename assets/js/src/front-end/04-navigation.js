@@ -111,7 +111,7 @@ function setupPrimaryNav() {
 function setupScrollNav( selector, navSelector, contentSelector ) {
 
 	var ua = window.navigator.userAgent;
-	var isIE = /MSIE|Trident/.test(ua);
+	var isIE = /MSIE|Trident/.test( ua );
 	if ( isIE ) {
 		return;
 	}
