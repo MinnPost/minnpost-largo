@@ -3,6 +3,7 @@
 	.a-button.a-support-button {
 		background: utility-color(green, medium);
 		color: neutral-color(white);
+
 		@include meta-preset( $size: 1, $bold: true, $italic: false, $line-height: 1 );
 
 		&:hover,
@@ -23,24 +24,24 @@
 			}
 
 			@include breakpoint-min( sm ) {
-				width: colspan( 2, 6 );
+				width: colspan(2, 6);
 			}
 
 			// inside a 5 column space now
 			@include breakpoint-min( md ) {
-				width: colspan( 2, 5 );
+				width: colspan(2, 5);
 				margin-bottom: 0;
 			}
 
 			// inside 8 column space
 			@include breakpoint-min( lg ) {
-				width: colspan( 2, 8 );
+				width: colspan(2, 8);
 			}
 
 			// inside 12 column space
 			@include breakpoint-min( xl ) {
-				width: colspan( 2, 12 );
-			}			
+				width: colspan(2, 12);
+			}
 		}
 	}
 }

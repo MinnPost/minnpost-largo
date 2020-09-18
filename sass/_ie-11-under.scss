@@ -17,10 +17,10 @@
 
 		// where the zones differ from the archives
 		.m-zone {
-			
+
 			&.m-zone-homepage-more-top,
 			&.m-zone-homepage-opinion {
-	
+
 				article {
 					overflow: hidden;
 				}
@@ -31,7 +31,7 @@
 	.m-entry-content .m-content-media img {
 		width: 100%;
 	}
-	
+
 
 	.o-archive-listing {
 
@@ -41,6 +41,7 @@
 	}
 
 	@include breakpoint-min( md ) {
+
 		.o-archive-listing {
 
 			&.m-layout-primary {
@@ -53,28 +54,28 @@
 
 		// full page forms
 		&.m-form-fullpage {
-	
+
 			.m-subscribe-grouping {
-	
+
 				.m-subscribe-items {
 					max-width: 50%;
 					display: block;
 				}
-	
+
 				.m-subscribe {
 					max-width: 45%;
 				}
 			}
 		}
 	}
-	
+
 	.m-related {
 
 		.a-related-list {
 			flex: 1 0 100%;
 		}
 	}
-	
+
 }
 
 // ie 10 and under only - dependent on modernizr
@@ -98,5 +99,5 @@
 			display: block;
 		}
 	}
-	
+
 }

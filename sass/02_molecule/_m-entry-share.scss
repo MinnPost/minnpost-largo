@@ -38,7 +38,9 @@
 			height: $share-icon-size;
 			line-height: $share-icon-size;
 
-			&:hover, &:focus, &:active {
+			&:hover,
+			&:focus,
+			&:active {
 				border: 2px solid utility-color(blue, medium);
 			}
 		}
@@ -50,7 +52,9 @@
 }
 
 .no-js {
+
 	.m-entry-share {
+
 		.a-share-print,
 		.a-share-copy-link {
 			display: none;
@@ -59,7 +63,9 @@
 }
 
 .js {
+
 	.m-entry-share {
+
 		.a-share-print,
 		.a-share-copy-link {
 			display: block;

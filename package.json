@@ -41,8 +41,7 @@
     "gulp-uglify": "^3.0.2",
     "gulp-wp-pot": "^2.4.3",
     "npm-check-updates": "^9.0.1",
-    "postcss-foft-classes": "^1.0.4",
-    "stylelint": "^13.7.0",
+    "stylelint": "^13.7.1",
     "stylelint-config-wordpress": "^17.0.0"
   },
   "browserslist": [

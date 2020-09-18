@@ -10,7 +10,8 @@ nav {
 .m-pagination-all {
 	position: relative;
 
-	ul, ol {
+	ul,
+	ol {
 		list-style: none;
 		display: flex;
 		justify-content: flex-start;
@@ -31,6 +32,7 @@ nav {
 	position: relative;
 	width: 100%;
 	overflow: hidden;
+
 	@include meta-preset( $size: -2, $bold: false, $italic: false );
 }
 
@@ -97,15 +99,17 @@ nav {
 
 				svg {
 					height: 1em;
-  					width: 1em;
+					width: 1em;
 				}
 			}
 		}
 	}
 
 	&.m-main-navigation {
+
 		@include meta-preset( $size: 0, $bold: true, $italic: false );
 		border-bottom: 2px solid neutral-color(dark);
+
 		@include breakpoint-min( md ) {
 			border-top: 2px solid neutral-color(dark);
 		}
@@ -140,7 +144,7 @@ nav {
 				display: none;
 			}
 		}
-		
+
 		> ul {
 			transition: $hover-transition;
 		}
@@ -149,6 +153,7 @@ nav {
 
 			&.active,
 			&.active-parent {
+
 				> a {
 					color: neutral-color(black);
 					font-weight: 700;
@@ -177,10 +182,11 @@ nav {
 
 		> li {
 			display: flex;
-    		align-self: stretch;
+			align-self: stretch;
 
 			&[data-menu-item-priority="20"] {
 				display: none;
+
 				@include breakpoint-min( xs ) {
 					display: flex;
 				}
@@ -195,6 +201,7 @@ nav {
 			}
 
 			@include breakpoint-min( xs ) {
+
 				span.a-label-xxs {
 					display: none;
 				}
@@ -259,22 +266,22 @@ nav {
 						min-height: 0;
 						min-width: 0;
 						display: flex;
-						width: colspan( 3, 4 );
+						width: colspan(3, 4);
 
 						@include breakpoint-min( xs ) {
-							width: colspan( 4, 6 );
+							width: colspan(4, 6);
 						}
 
 						@include breakpoint-min( md ) {
-							width: colspan( 4, 8 );
+							width: colspan(4, 8);
 						}
 
 						@include breakpoint-min( lg ) {
-							width: colspan( 6, 12 );
+							width: colspan(6, 12);
 						}
 
 						@include breakpoint-min( xl ) {
-							width: colspan( 8, 16 );
+							width: colspan(8, 16);
 						}
 
 						.a-input-with-button {
@@ -331,7 +338,7 @@ nav {
 			white-space: nowrap;
 
 			&:not(.no-transition) {
-			    transition: transform 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+				transition: transform 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
 			}
 		}
 
@@ -362,6 +369,7 @@ nav {
 
 			&.active,
 			&.active-parent {
+
 				> a {
 					font-weight: bold;
 					color: utility-color(blue, dark);
@@ -418,12 +426,14 @@ nav {
 				}
 
 				a {
+
 					@include breakpoint-min( md ) {
 						padding: $standard-block-padding / 2 $standard-block-padding;
 					}
 				}
 
 				@include breakpoint-min( md ) {
+
 					a {
 						font-weight: 700;
 						color: neutral-color(dark);
@@ -461,6 +471,7 @@ nav {
 
 			&.active,
 			&.active-parent {
+
 				> a {
 					background: neutral-color(border);
 					font-weight: 700;
@@ -470,7 +481,9 @@ nav {
 
 			&.active,
 			&.active-parent {
+
 				> a {
+
 					@include breakpoint-min( md ) {
 						background: transparent;
 						color: neutral-color(black);
@@ -483,6 +496,7 @@ nav {
 }
 
 .m-pagination {
+
 	@include meta-preset( $size: -2, $bold: false, $italic: false, $line-height: 1 );
 
 	@include breakpoint-min( lg ) {
@@ -527,6 +541,7 @@ nav {
 		}
 
 		&.a-pagination-ellipsis {
+
 			span {
 				padding: 0.25em $standard-block-padding 0.75em $standard-block-padding;
 			}
@@ -560,10 +575,12 @@ nav {
 	}
 
 	@include breakpoint-min( lg ) {
+
 		a,
 		button {
 			min-height: $touch-target-minimum-size-desktop;
 		}
+
 		button {
 			min-width: $touch-target-minimum-size-desktop;
 		}
@@ -592,6 +609,7 @@ nav {
 	}
 
 	ol {
+
 		@include meta-preset( $size: -2, $bold: false, $italic: false );
 		will-change: transform;
 		display: inline-flex;
@@ -599,7 +617,7 @@ nav {
 		white-space: nowrap;
 
 		&:not(.no-transition) {
-		    transition: transform 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
+			transition: transform 0.25s cubic-bezier(0.645, 0.045, 0.355, 1);
 		}
 
 		a {
@@ -625,6 +643,7 @@ nav {
 
 			&.active,
 			&.active-parent {
+
 				> a {
 					font-weight: bold;
 					color: utility-color(blue, dark);

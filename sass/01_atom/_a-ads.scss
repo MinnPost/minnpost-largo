@@ -2,7 +2,7 @@
 
 	&.acm-ad-container-bordered {
 		border-bottom: $border-default-style;
-    	border-left: 0;
+		border-left: 0;
 		border-right: 0;
 	}
 
@@ -16,6 +16,7 @@
 	width: auto;
 	height: auto;
 	overflow: hidden;
+
 	@include meta-preset( $size: -1, $bold: false, $italic: false, $line-height: 1 );
 
 	&.acm-ad-placeholder {
@@ -97,6 +98,7 @@ main .ad-x110 {
 
 	header {
 		text-transform: uppercase;
+
 		@include meta-preset( $size: -2, $bold: false, $italic: false, $line-height: 1 );
 		padding: $standard-block-padding;
 		margin-bottom: $standard-heading-margin;

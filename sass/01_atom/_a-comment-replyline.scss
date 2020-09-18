@@ -1,7 +1,8 @@
 .a-comment-replyline {
 	display: flex;
 	margin-top: $standard-block-padding / 2;
-	color: neutral-color( medium );
+	color: neutral-color(medium);
+
 	@include meta-preset( $size: 0 );
 
 	.a-comment-parent {

@@ -8,6 +8,7 @@
 	}
 
 	.a-related-list {
+
 		@include body-preset( $size: -2 );
 		list-style: none;
 		padding: $standard-block-padding 0 0 0;
@@ -50,6 +51,7 @@
 	}
 
 	@include breakpoint-min( sm ) {
+
 		> h3 {
 			padding: $standard-block-padding;
 			flex-grow: 1;

@@ -5,7 +5,6 @@ const browserSync = require('browser-sync').create();
 const concat = require('gulp-concat');
 const cssnano = require('cssnano');
 const eslint = require('gulp-eslint');
-const foftLoadedClasses = require('postcss-foft-classes');
 const fs = require('fs');
 const gulp = require('gulp');
 const iife = require('gulp-iife');
@@ -116,14 +115,6 @@ function frontendstyles() {
 				cssnano({
 					safe: true // Use safe optimizations.
 				}), // Minify
-				foftLoadedClasses({
-					groups: [
-					{
-						families: ["ff-meta-serif-web-pro", "ff-meta-web-pro"],
-						classNames: ["fonts-loaded"]
-					}
-				]
-				}) // font loading
 			])
 		)
 		.pipe(sourcemaps.write()) // Write the sourcemap files
@@ -155,14 +146,6 @@ function mainstyles() {
 				cssnano({
 					safe: true // Use safe optimizations.
 				}), // Minify
-				foftLoadedClasses({
-					groups: [
-					{
-						families: ["ff-meta-serif-web-pro", "ff-meta-web-pro"],
-						classNames: ["serif-fonts-loaded", "sans-fonts-loaded"]
-					}
-				]
-				}) // font loading
 			])
 		)
 		.pipe(sourcemaps.write()) // Write the sourcemap files

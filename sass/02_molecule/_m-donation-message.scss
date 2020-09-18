@@ -29,6 +29,7 @@
 	}
 
 	.a-donation-amount {
+
 		@include meta-preset( $bold: true );
 		font-size: 3em;
 		width: 4em;
@@ -39,6 +40,7 @@
 
 	.a-donation-frequency,
 	.a-next-transaction-date {
+
 		@include meta-preset( $bold: true );
 		font-size: 1.5em;
 		line-height: normal;
