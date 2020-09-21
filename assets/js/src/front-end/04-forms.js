@@ -208,3 +208,13 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 		addAutoResize();
 	}
 } );
+
+var forms = document.querySelectorAll( '.m-form' );
+forms.forEach( function ( form ) {
+	ValidForm( form, {
+		validationErrorParentClass: 'm-has-validation-error',
+		validationErrorClass: 'a-validation-error',
+		invalidClass: 'a-error',
+		errorPlacement: 'after'
+	} )
+} );

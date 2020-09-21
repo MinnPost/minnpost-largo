@@ -38,6 +38,11 @@
 		border: $border-default-style;
 		margin-bottom: $standard-block-padding;
 		width: 100%;
+
+		&.a-error {
+			border-color: brand-color(red, highlight);
+			box-shadow: none;
+		}
 	}
 
 	input[type="checkbox"],
