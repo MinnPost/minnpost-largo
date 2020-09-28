@@ -67,7 +67,9 @@ button.a-button,
 	a.a-button:visited,
 	button[type="submit"],
 	button[type="button"],
-	input[type="submit"] {
+	button[type="reset"],
+	input[type="submit"],
+	input[type="reset"] {
 		margin-right: 0;
 		border-top-left-radius: 0;
 		border-bottom-left-radius: 0;
