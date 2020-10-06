@@ -39,9 +39,9 @@
     "gulp-stylelint": "^13.0.0",
     "gulp-svgmin": "^3.0.0",
     "gulp-uglify": "^3.0.2",
-    "gulp-wp-pot": "^2.4.3",
-    "npm-check-updates": "^9.0.1",
-    "stylelint": "^13.7.1",
+    "gulp-wp-pot": "^2.5.0",
+    "npm-check-updates": "^9.0.4",
+    "stylelint": "^13.7.2",
     "stylelint-config-wordpress": "^17.0.0"
   },
   "browserslist": [

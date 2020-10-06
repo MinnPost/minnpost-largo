@@ -57,7 +57,7 @@ msgstr ""
 msgid "More news"
 msgstr ""
 
-#: front-page.php:91
+#: front-page.php:108
 msgid "More commentary"
 msgstr ""
 
@@ -1053,11 +1053,11 @@ msgstr ""
 msgid "%1$s to %2$s"
 msgstr ""
 
-#: inc/events.php:173
+#: inc/events.php:176
 msgid "Add to Google Calendar"
 msgstr ""
 
-#: inc/events.php:174
+#: inc/events.php:177
 msgid "Export to Calendar"
 msgstr ""
 
