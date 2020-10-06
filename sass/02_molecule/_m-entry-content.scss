@@ -47,7 +47,7 @@
 	}
 
 	&.m-zone-homepage-top {
-		
+
 		.m-entry-content {
 			flex: unset;
 
@@ -67,18 +67,19 @@
 		}
 
 		.m-post-image-first {
+
 			.m-entry-content {
 				order: 2;
-	
+
 				@include breakpoint-min( sm ) {
 					flex: 1 0;
 					margin-right: 0;
 				}
-	
+
 				@include breakpoint-min( lg ) {
 					margin-right: 0;
 				}
-	
+
 				@include breakpoint-min( xl ) {
 					flex: 1 0;
 					margin-right: 0;

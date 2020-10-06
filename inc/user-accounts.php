@@ -351,14 +351,18 @@ endif;
 *
 * @param array $user_data
 * @param array $existing_user_data
+* @param int $user_id
 *
 */
 if ( ! function_exists( 'save_minnpost_user_data' ) ) :
-	add_action( 'user_account_management_post_user_data_save', 'save_minnpost_user_data', 10, 2 );
-	function save_minnpost_user_data( $user_data, $existing_user_data ) {
+	add_action( 'user_account_management_post_user_data_save', 'save_minnpost_user_data', 10, 3 );
+	function save_minnpost_user_data( $user_data, $existing_user_data, $user_id ) {
 		// handle consolidated email addresses
 		if ( isset( $user_data['ID'] ) && array_key_exists( '_consolidated_emails', $user_data ) && '' !== $user_data['_consolidated_emails'] ) {
 			$all_emails = array_map( 'trim', explode( ',', $user_data['_consolidated_emails'] ) );
+		} elseif ( isset( $user_data['ID'] ) || 0 !== $user_id ) {
+			$all_emails   = array();
+			$all_emails[] = isset( $user_data['user_email'] ) ? $user_data['user_email'] : $existing_user_data['user_email'];
 		}
 
 		// handle removing email addresses from a user's account
@@ -370,7 +374,11 @@ if ( ! function_exists( 'save_minnpost_user_data' ) ) :
 		if ( isset( $all_emails ) ) {
 			$all_emails = array_unique( $all_emails );
 			$all_emails = implode( ',', $all_emails );
-			update_user_meta( $user_data['ID'], '_consolidated_emails', $all_emails );
+			if ( isset( $user_data['ID'] ) ) {
+				update_user_meta( $user_data['ID'], '_consolidated_emails', $all_emails );
+			} elseif ( 0 !== $user_id ) {
+				update_user_meta( $user_id, '_consolidated_emails', $all_emails );
+			}
 		}
 
 		// always load comments field. allow it to be emptied.
@@ -431,7 +439,7 @@ if ( ! function_exists( 'minnpost_largo_check_consolidated_emails' ) ) :
 			// this is stored user data
 			$emails = array_map( 'trim', explode( ',', $user_data['_consolidated_emails'][0] ) );
 		}
-		if ( false !== ( $key = array_search( $current_email, $emails ) ) ) {
+		if ( false !== ( $key = array_search( $current_email, $emails, true ) ) ) {
 			unset( $emails[ $key ] );
 		}
 		return $emails;

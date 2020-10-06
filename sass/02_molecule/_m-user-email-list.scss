@@ -28,11 +28,13 @@
 					margin-bottom: 0;
 					line-height: normal;
 					display: inline-block;
+
 					@include link-underline();
 					transition: $hover-transition;
 					cursor: pointer;
 
 					&:hover {
+
 						@include link-underline(utility-color(blue, medium), utility-color(blue, background));
 					}
 				}

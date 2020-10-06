@@ -1,6 +1,8 @@
 .a-comment-links {
+
 	@include meta-preset( $size: -1 );
 	padding-top: $standard-block-padding / 2;
+
 	div {
 
 		a {

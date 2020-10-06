@@ -4,6 +4,7 @@ button[type="button"],
 a.a-button,
 button.a-button,
 .sce-comment-edit-buttons button {
+
 	@include button();
 
 	&:disabled,
@@ -39,6 +40,7 @@ button.a-button,
 }
 
 .a-button-content {
+
 	@include button( $background: utility-color(blue, dark), $hover: utility-color(blue, medium));
 
 	&.a-button-content-zone {
@@ -65,7 +67,9 @@ button.a-button,
 	a.a-button:visited,
 	button[type="submit"],
 	button[type="button"],
-	input[type="submit"] {
+	button[type="reset"],
+	input[type="submit"],
+	input[type="reset"] {
 		margin-right: 0;
 		border-top-left-radius: 0;
 		border-bottom-left-radius: 0;
@@ -76,27 +80,9 @@ button.a-button,
 		margin: 0 $standard-block-padding;
 		color: neutral-color(dark);
 		text-transform: uppercase;
+
 		@include meta-preset( $size: 0 );
 	}
-}
-
-.a-input-with-button {
-	width: 100%;
-	margin-bottom: $standard-block-padding;
-	display: flex;
-
-	input[type="submit"],
-	button[type="submit"],
-	button[type="button"],
-	a.a-button {
-		margin: 0;
-	}
-}
-
-.m-form-standalone .m-form-item .a-input-with-button input:not([type=checkbox]):not([type=radio]),
-.m-form-standalone .m-form-item .a-input-with-button select,
-.m-form-standalone .m-form-item .a-input-with-button textarea {
-	margin-bottom: 0;
 }
 
 // overwrite gravityforms button style
@@ -104,12 +90,14 @@ button.a-button,
 .gform_wrapper .gform_page_footer input.button,
 .gform_wrapper .gform_footer input[type=submit],
 .gform_wrapper .gform_page_footer input[type=submit] {
+
 	@include meta-preset( $size: 2, $bold: true, $italic: false, $line-height: 1 );
 	margin-bottom: 0;
 }
 
 // show comments button
 .a-button.a-button-show-comments {
+
 	@include link-underline();
 	background: none;
 	padding: 0;
@@ -120,6 +108,7 @@ button.a-button,
 	&:active,
 	&:focus,
 	&:hover {
+
 		@include link-underline(utility-color(blue, medium), utility-color(blue, background));
 		background: none;
 	}

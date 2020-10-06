@@ -14,8 +14,8 @@
   },
   "homepage": "https://github.com/MinnPost/minnpost-largo#readme",
   "devDependencies": {
-    "@babel/core": "^7.11.4",
-    "@babel/preset-env": "^7.11.0",
+    "@babel/core": "^7.11.6",
+    "@babel/preset-env": "^7.11.5",
     "autoprefixer": "^9.8.6",
     "browser-sync": "^2.26.12",
     "css-mqpacker": "^7.0.0",
@@ -39,10 +39,9 @@
     "gulp-stylelint": "^13.0.0",
     "gulp-svgmin": "^3.0.0",
     "gulp-uglify": "^3.0.2",
-    "gulp-wp-pot": "^2.4.3",
-    "npm-check-updates": "^7.1.1",
-    "postcss-foft-classes": "^1.0.4",
-    "stylelint": "^13.6.1",
+    "gulp-wp-pot": "^2.5.0",
+    "npm-check-updates": "^9.0.4",
+    "stylelint": "^13.7.2",
     "stylelint-config-wordpress": "^17.0.0"
   },
   "browserslist": [

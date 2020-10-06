@@ -2,9 +2,11 @@
 	margin-bottom: $standard-block-margin;
 
 	ol {
+
 		@include meta-preset( $size: -1, $bold: false, $italic: false );
-		
+
 		@include breakpoint-min( xxs ) {
+
 			@include meta-preset( $size: 0, $bold: false, $italic: false );
 		}
 
@@ -21,7 +23,8 @@
 					padding: $standard-heading-margin $standard-heading-margin $standard-heading-margin  2em + $standard-heading-margin;
 				}
 
-				&:before {
+				&::before {
+
 					@include meta-preset( $size: 4, $bold: true, $italic: false );
 					font-size: 250%;
 					color: neutral-color(white);

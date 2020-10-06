@@ -20,6 +20,7 @@
 .a-comment-reply-title {
 
 	small a {
+
 		@include button( neutral-color(highlight), neutral-color(border), neutral-color(black));
 		@include meta-preset( $size: -2, $bold: false, $italic: false, $line-height: 1 );
 		border: $border-default-style;
@@ -31,6 +32,7 @@
 .a-user-title,
 .a-widget-title {
 	color: neutral-color(black);
+
 	a {
 
 		&:link,
@@ -43,6 +45,7 @@
 		&:focus,
 		&:hover,
 		&.active {
+
 			@include link-underline();
 		}
 	}
@@ -70,6 +73,7 @@ h2.a-offer {
 }
 
 h4.a-donation-heading {
+
 	@include meta-preset( $bold: true );
 	padding: $standard-block-padding 0;
 	color: neutral-color(dark);
@@ -79,6 +83,7 @@ h4.a-donation-heading {
 .a-donation-history-heading {
 	background: neutral-color(light);
 	padding: $standard-block-padding;
+
 	@include meta-preset( $size: -2, $bold: false, $italic: false, $line-height: 1 );
 	border-radius: $border-radius;
 }

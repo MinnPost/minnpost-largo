@@ -180,15 +180,15 @@ function manageEmails() {
 }
 
 function addAutoResize() {
-	document.querySelectorAll( '[data-autoresize]' ).forEach( function ( element ) {
+	document.querySelectorAll( '[data-autoresize]' ).forEach( function( element ) {
 		element.style.boxSizing = 'border-box';
 		var offset = element.offsetHeight - element.clientHeight;
-		element.addEventListener( 'input', function ( event ) {
+		element.addEventListener( 'input', function( event ) {
 			event.target.style.height = 'auto';
 			event.target.style.height = event.target.scrollHeight + offset + 'px';
-		});
+		} );
 		element.removeAttribute( 'data-autoresize' );
-	});
+	} );
 }
 
 $( document ).ajaxStop( function() {
@@ -196,7 +196,7 @@ $( document ).ajaxStop( function() {
 	if ( null !== commentArea ) {
 		addAutoResize();
 	}
-});
+} );
 
 document.addEventListener( 'DOMContentLoaded', function( event ) {
 	'use strict';
@@ -207,4 +207,43 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 	if ( null !== autoResizeTextarea ) {
 		addAutoResize();
 	}
+} );
+
+var forms = document.querySelectorAll( '.m-form' );
+forms.forEach( function ( form ) {
+	ValidForm( form, {
+		validationErrorParentClass: 'm-has-validation-error',
+		validationErrorClass: 'a-validation-error',
+		invalidClass: 'a-error',
+		errorPlacement: 'after'
+	} )
+} );
+
+var form = $( '.m-form' );
+// listen for `invalid` events on all form inputs
+form.find( ':input' ).on( 'invalid', function () {
+    var input = $( this );
+    // the first invalid element in the form
+	var first = form.find( '.a-error' ).first();
+	// the form item that contains it
+	var first_holder = first.parent();
+    // only handle if this is the first invalid input
+    if (input[0] === first[0]) {
+        // height of the nav bar plus some padding if there's a fixed nav
+        //var navbarHeight = navbar.height() + 50
+
+        // the position to scroll to (accounting for the navbar if it exists)
+        var elementOffset = first_holder.offset().top;
+
+        // the current scroll position (accounting for the navbar)
+        var pageOffset = window.pageYOffset;
+
+        // don't scroll if the element is already in view
+        if ( elementOffset > pageOffset && elementOffset < pageOffset + window.innerHeight ) {
+            return true;
+        }
+
+        // note: avoid using animate, as it prevents the validation message displaying correctly
+        $( 'html, body' ).scrollTop( elementOffset );
+    }
 } );

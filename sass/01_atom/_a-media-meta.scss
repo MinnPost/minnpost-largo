@@ -1,12 +1,14 @@
 .a-media-meta {
 
 	&.a-media-caption {
+
 		@include body-preset( $size: -2 );
 		display: table-cell;
 		padding: $standard-block-margin / 4 0;
 	}
 
 	&.a-media-credit {
+
 		@include meta-preset( $size: -3, $bold: false, $italic: true );
 		color: neutral-color(dark);
 		display: table-footer-group;

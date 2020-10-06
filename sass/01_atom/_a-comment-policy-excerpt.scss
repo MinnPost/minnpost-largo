@@ -1,4 +1,5 @@
 .a-comment-policy-excerpt {
-    margin-bottom: $standard-block-margin;
-    @include meta-preset( $size: -1 );
+	margin-bottom: $standard-block-margin;
+
+	@include meta-preset( $size: -1 );
 }

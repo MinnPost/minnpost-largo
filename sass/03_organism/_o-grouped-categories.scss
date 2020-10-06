@@ -1,16 +1,16 @@
 .o-grouped-categories {
-    margin: $standard-block-margin 0;
+	margin: $standard-block-margin 0;
 
-    @include breakpoint-min( sm ) {
-        display: flex;
-        justify-content: space-between;
-    }
-    
-    .m-group-category {
-        padding: 0 $standard-block-padding $standard-block-margin 0;
+	@include breakpoint-min( sm ) {
+		display: flex;
+		justify-content: space-between;
+	}
 
-        a {
-            text-decoration: none;
-        }
-    }
+	.m-group-category {
+		padding: 0 $standard-block-padding $standard-block-margin 0;
+
+		a {
+			text-decoration: none;
+		}
+	}
 }

@@ -163,6 +163,9 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_largo_single_event_links' ) ) :
+	if ( ! class_exists( 'tribe' ) ) {
+		return;
+	}
 	remove_action( 'tribe_events_single_event_after_the_content', array( tribe( 'tec.iCal' ), 'single_event_links' ) );
 	add_action( 'tribe_events_single_event_after_the_content', 'minnpost_largo_single_event_links' );
 	function minnpost_largo_single_event_links() {

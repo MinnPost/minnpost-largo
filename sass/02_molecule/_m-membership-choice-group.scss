@@ -53,6 +53,7 @@
 		.m-form-checkboxes .m-form-item {
 
 			label {
+				border-width: 6px;
 
 				.support-tooltip {
 
@@ -68,7 +69,7 @@
 			}
 
 			input:checked + label {
-				border: 3px solid neutral-color(highlight);
+				border: 6px solid utility-color(blue, medium);
 			}
 
 			input:disabled + label::after {

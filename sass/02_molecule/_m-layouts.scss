@@ -6,20 +6,21 @@
 	}
 
 	@include breakpoint-min( lg ) {
-		width: colspan( 8, 12 );
-		max-width: calc((100% - #{colspan( 1, 12 )}) - #{$size__site-sidebar} );
+		width: colspan(8, 12);
+		max-width: calc((100% - #{colspan(1, 12)}) - #{$size__site-sidebar});
 	}
 
 	@include breakpoint-min( xl ) {
-		width: colspan( 12, 16 );
-		max-width: calc((100% - #{colspan( 1, 16 )}) - #{$size__site-sidebar} );
+		width: colspan(12, 16);
+		max-width: calc((100% - #{colspan(1, 16)}) - #{$size__site-sidebar});
 	}
 
 }
 
 .o-wrapper-content-full .m-layout-primary {
+
 	@include breakpoint-min( lg ) {
-		width: colspan( 16, 16 );
+		width: colspan(16, 16);
 		max-width: (100%);
 	}
 }
