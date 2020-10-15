@@ -9,6 +9,7 @@
 
 	label.always-show-comments,
 	span.always-show-comments {
+
 		@include meta-preset( $size: 0 );
 	}
 

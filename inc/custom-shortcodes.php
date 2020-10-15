@@ -419,7 +419,8 @@ if ( ! function_exists( 'minnpost_largo_topics' ) ) :
 		$output = '';
 		$args   = shortcode_atts(
 			array(
-				'grouped' => '0',
+				'grouped'   => '0',
+				'sponsored' => '0',
 			),
 			$atts
 		);
@@ -438,9 +439,15 @@ if ( ! function_exists( 'minnpost_largo_topics' ) ) :
 
 		$grouped = filter_var( $args['grouped'], FILTER_VALIDATE_BOOLEAN );
 		if ( true === $grouped ) {
-			$group_categories = array();
-			$groups           = minnpost_largo_category_groups();
+			$group_categories  = array();
+			$groups            = minnpost_largo_category_groups();
+			$include_sponsored = filter_var( $args['sponsored'], FILTER_VALIDATE_BOOLEAN );
 			foreach ( $groups as $group ) {
+				if ( false === $include_sponsored ) {
+					if ( 'sponsored-content' === $group ) {
+						continue;
+					}
+				}
 				$category = get_term_by( 'slug', $group, 'category' );
 				if ( false !== $category && ! in_array( $category->term_id, $exclude_ids, true ) ) {
 					$group_categories[] = $category;

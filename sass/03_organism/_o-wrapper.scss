@@ -55,6 +55,7 @@
 		}
 
 		font-size: $interface-copy-size-smaller;
+
 		@include breakpoint-min( md ) {
 			font-size: $interface-copy-size;
 		}
@@ -66,6 +67,7 @@
 			button {
 				min-height: $touch-target-minimum-size-desktop;
 			}
+
 			button {
 				min-width: $touch-target-minimum-size-desktop;
 			}
@@ -92,7 +94,7 @@
 		width: auto;
 		font-size: var(--scale2);
 
-		width: colspan( 2, 6 );
+		width: colspan(2, 6);
 
 		// inside a 5 column space now
 		@include breakpoint-min( md ) {

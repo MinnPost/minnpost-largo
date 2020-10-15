@@ -1,6 +1,6 @@
 .o-footer {
-	background: neutral-color( black );
-	color: neutral-color( white );
+	background: neutral-color(black);
+	color: neutral-color(white);
 
 	.o-footer-hat {
 		display: flex;
@@ -15,27 +15,30 @@
 
 			&.m-widget-sponsor-list {
 				border: $border-default-style;
-				outline: $standard-block-padding solid neutral-color( highlight );
-				background: neutral-color( white );
-				color: neutral-color( black );
+				outline: $standard-block-padding solid neutral-color(highlight);
+				background: neutral-color(white);
+				color: neutral-color(black);
 				padding: $standard-block-padding;
 				width: 100%;
 				max-width: none;
 
 				h3 {
+
 					@include heading-preset();
 				}
 			}
 
 			.a-heading-donor-thanks {
-				background: neutral-color( highlight );
+				background: neutral-color(highlight);
 				padding: $standard-block-padding;
 			}
 
 			.a-tagline-bottom {
+
 				@include meta-preset( $size: 0, $bold: false, $italic: false, $line-height: 1 );
 
 				@include breakpoint-min( xs ) {
+
 					@include meta-preset( $size: 1, $bold: false, $italic: false, $line-height: 1 );
 				}
 			}
@@ -58,6 +61,7 @@
 	}
 
 	.o-footer-links {
+
 		@include meta-preset( $size: 0, $bold: false, $italic: false, $line-height: 1 );
 		word-wrap: break-word;
 		padding: $standard-block-padding / 2 0;
@@ -79,6 +83,7 @@
 		}
 
 		.a-footer-message {
+
 			@include meta-preset( $size: -1, $bold: false, $italic: false, $line-height: 1 );
 			text-align: center;
 			margin-bottom: $standard-block-margin;

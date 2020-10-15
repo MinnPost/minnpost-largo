@@ -3,11 +3,11 @@
 	.m-entry-meta {
 
 		@include breakpoint-range( sm, lg ) {
-			width: colspan( 2, 12 );
+			width: colspan(2, 12);
 		}
 
 		@include breakpoint-min( xl ) {
-			width: colspan( 2, 12 );
+			width: colspan(2, 12);
 		}
 
 		&.m-entry-meta-horizontal {
@@ -19,6 +19,6 @@
 .m-entry-header {
 
 	.m-entry-meta {
-		width: colspan( 12, 12 );
+		width: colspan(12, 12);
 	}
 }

@@ -1041,7 +1041,7 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 				'new_term_section' => false, // will display in add category sidebar
 			)
 		);
-		// for news/opinion display
+		// for news/opinion/arts/sponsored content display
 		$group_categories = minnpost_largo_category_groups();
 		$category_id      = '';
 		if ( isset( $_GET['tag_ID'] ) ) {
@@ -1052,7 +1052,7 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 		$category   = get_category( $category_id );
 		$is_current = false;
 		if ( isset( $category->slug ) ) {
-			$is_current = in_array( $category->slug, $group_categories );
+			$is_current = in_array( $category->slug, $group_categories, true );
 		}
 		if ( ! $is_current ) {
 			$category_setup->add_field(
@@ -1060,14 +1060,14 @@ if ( ! function_exists( 'cmb2_category_fields' ) ) :
 					'name'             => __( 'Category Group', 'minnpost-largo' ),
 					'id'               => '_mp_category_group',
 					'type'             => 'radio_inline',
-					'desc'             => __( 'Puts this category into this group. If Opinion is the group, this category will be excluded from automated story recommendations.', 'minnpost-largo' ),
+					'desc'             => __( 'Puts this category into this group. If Opinion or Sponsored Content is the group, this category will be excluded from automated story recommendations.', 'minnpost-largo' ),
 					'classes'          => 'cmb2-match-admin-width',
 					'options'          => minnpost_largo_category_group_options(),
 					'show_option_none' => true,
 				)
 			);
 		}
-		// for news/opinion display
+		// for news/opinion/sponsored content display
 		$category_setup->add_field(
 			array(
 				'name'              => __( 'Grouped Categories', 'minnpost-largo' ),
@@ -1445,7 +1445,7 @@ endif;
 */
 if ( ! function_exists( 'minnpost_largo_category_groups' ) ) :
 	function minnpost_largo_category_groups() {
-		$choices = array( 'news', 'arts-culture', 'opinion' );
+		$choices = array( 'news', 'arts-culture', 'opinion', 'sponsored-content' );
 		return $choices;
 	}
 endif;

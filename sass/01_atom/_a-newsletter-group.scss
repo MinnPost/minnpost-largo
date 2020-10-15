@@ -1,6 +1,7 @@
 .a-newsletter-group {
 	color: neutral-color(dark);
 	text-transform: uppercase;
+
 	@include meta-preset( $size: -2, $bold: false, $italic: false, $line-height: 1 );
 	margin-bottom: $standard-block-padding;
 }

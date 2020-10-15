@@ -209,18 +209,27 @@ if ( ! function_exists( 'minnpost_largo_jetpack_exclude_category' ) ) :
 			55630,
 			55628,
 		);
-		// also exclude categories that are grouped as opinion
-		$terms = get_terms(
-			array(
-				'taxonomy'   => 'category',
-				'meta_key'   => '_mp_category_group',
-				'meta_value' => 'opinion',
-			)
-		);
+		$opinion     = get_term_by( 'slug', 'opinion', 'category' );
+		$sponsored   = get_term_by( 'slug', 'sponsored-content', 'category' );
 
-		foreach ( $terms as $term ) {
-			$exclude_ids[] = $term->term_id;
-		}
+		// also exclude categories that are grouped as opinion or sponsored content
+		$term_args   = array(
+			'taxonomy'   => 'category',
+			'fields'     => 'ids',
+			'meta_query' => array(
+				'relation' => 'OR',
+				array(
+					'key'   => '_mp_category_group',
+					'value' => $opinion->term_id,
+				),
+				array(
+					'key'   => '_mp_category_group',
+					'value' => $sponsored->term_id,
+				),
+			),
+		);
+		$term_query  = new WP_Term_Query( $term_args );
+		$exclude_ids = array_merge( $exclude_ids, $term_query->terms );
 
 		$exclusions = do_shortcode( '[return_excluded_terms]' );
 		if ( '' !== $exclusions ) {

@@ -1,5 +1,6 @@
 article .m-entry-excerpt {
 	margin: $standard-block-padding 0 $standard-block-padding * 2 0;
+
 	@include meta-preset( $size: -1 );
 	max-width: 70ch;
 	width: 100%;
@@ -8,6 +9,7 @@ article .m-entry-excerpt {
 .m-archive-events {
 
 	article .m-entry-excerpt {
+
 		@include breakpoint-min( sm ) {
 			flex: 1 0;
 		}

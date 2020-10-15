@@ -34,7 +34,7 @@
 		}
 
 		> li:first-child {
-			
+
 			> .o-comment {
 				padding-top: $standard-block-padding;
 			}
@@ -47,9 +47,10 @@
 
 			.o-comment {
 				border-left: $border-default-style;
-			
+
 				$depths: 10; // from wordpress settings
 				$border-width: 1;
+
 				@for $d from 2 through $depths {
 					$border-width: $d * $d;
 					&.depth-#{$d} {
@@ -75,6 +76,7 @@
 			margin: $standard-block-margin 0;
 			padding: $standard-block-padding;
 			border: $border-default-style;
+
 			@include meta-preset();
 			font-size: $interface-copy-size-smaller;
 			text-transform: uppercase;
@@ -119,6 +121,7 @@
 .single {
 
 	article {
+
 		> #llc_comments,
 		> .o-comments-area {
 			z-index: 10;

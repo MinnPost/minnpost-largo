@@ -38,6 +38,11 @@
 		border: $border-default-style;
 		margin-bottom: $standard-block-padding;
 		width: 100%;
+
+		&.a-error {
+			border-color: brand-color(red, highlight);
+			box-shadow: none;
+		}
 	}
 
 	input[type="checkbox"],
@@ -71,6 +76,7 @@
 		&.m-form-change-email {
 			max-width: 80%;
 			margin-bottom: $standard-block-margin;
+
 			@include meta-preset( $size: -2 );
 		}
 

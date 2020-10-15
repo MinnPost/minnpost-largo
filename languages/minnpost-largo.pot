@@ -57,7 +57,7 @@ msgstr ""
 msgid "More news"
 msgstr ""
 
-#: front-page.php:91
+#: front-page.php:108
 msgid "More commentary"
 msgstr ""
 
@@ -636,7 +636,7 @@ msgid "Category Group"
 msgstr ""
 
 #: inc/custom-fields.php:1063
-msgid "Puts this category into this group. If Opinion is the group, this category will be excluded from automated story recommendations."
+msgid "Puts this category into this group. If Opinion or Sponsored Content is the group, this category will be excluded from automated story recommendations."
 msgstr ""
 
 #: inc/custom-fields.php:1073
@@ -1053,11 +1053,11 @@ msgstr ""
 msgid "%1$s to %2$s"
 msgstr ""
 
-#: inc/events.php:173
+#: inc/events.php:176
 msgid "Add to Google Calendar"
 msgstr ""
 
-#: inc/events.php:174
+#: inc/events.php:177
 msgid "Export to Calendar"
 msgstr ""
 

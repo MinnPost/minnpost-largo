@@ -74,6 +74,24 @@
 					}
 				}
 			}
+
+			&.m-zone-homepage-sticky-has-4 {
+				
+				article {
+
+					@include breakpoint-min( sm ) {
+						width: colspan( 6, 12 );
+					}
+
+					@include breakpoint-min( xxl ) {
+						width: colspan( 3, 12 );
+					}
+				}
+			}
+
+			article {
+				align-content: flex-start;
+			}
 		}
 		
 		&.m-zone-homepage-more-top,

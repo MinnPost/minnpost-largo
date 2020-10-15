@@ -34,6 +34,12 @@ $utility-colors: (
 	yellow: (
 		background: #fbd341
 	),
+	orange: (
+		dark: #873a02,
+		medium: #b94f03, // advertising
+		highlight: #fc9e5b,
+		background: #fee3cf
+	),
 );
 
 // neutral colors
@@ -250,8 +256,8 @@ $border-default-style: 1px solid neutral-color(border);
 	#Animation
 \*------------------------------------*/
 
-$hover-transition: .25s all;
-$double-transition: .5s all;
+$hover-transition: 0.25s all;
+$double-transition: 0.5s all;
 
 /*------------------------------------*\
 	#Fixed Sizes

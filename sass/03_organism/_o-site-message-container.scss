@@ -1,7 +1,9 @@
 // message container
 .o-site-message-container {
+
 	@include meta-preset();
 	font-size: $interface-copy-size-smaller;
+
 	h1,
 	.h1,
 	h2,
@@ -10,6 +12,7 @@
 	.h3,
 	h4,
 	.h4 {
+
 		@include meta-preset( $size: inherit, $bold: true );
 		margin-bottom: $standard-heading-margin;
 	}
@@ -21,6 +24,7 @@
 	.m-wp-insert-message-item-banner {
 		max-width: $max-width-page;
 	}
+
 	@include grid( m-wp-insert-message-images );
 	@include grid( m-wp-insert-message-editor );
 
@@ -55,6 +59,7 @@
 		&.banner-width-page {
 			max-width: $max-width-page;
 		}
+
 		@include grid( banner-width-page );
 
 		.dual-wrap {
@@ -68,6 +73,7 @@
 				margin: 0 auto;
 			}
 		}
+
 		@include grid( dual-wrap );
 	}
 
@@ -87,15 +93,14 @@
 				}
 
 				.col:first-of-type {
-					padding-left: 0
+					padding-left: 0;
 				}
 
 				.col:last-of-type {
-					padding-left: 0
+					padding-left: 0;
 				}
 			}
 		}
-
 
 
 		// default styles for the editor type
@@ -104,6 +109,7 @@
 			.m-wp-insert-message-item {
 				max-width: $max-width-page;
 			}
+
 			@include grid( m-wp-insert-message-item );
 		}
 	}
@@ -143,7 +149,7 @@
 		}
 	}
 
-	// homepage middle 
+	// homepage middle
 	// expectation of what is going in there exists
 	&.wp-message-inserter-message-region-homepage_middle {
 		width: 100%;
@@ -160,7 +166,7 @@
 
 			.m-form-container {
 				padding: 0 $standard-block-margin;
-				
+
 				@include breakpoint-min( sm ) {
 					padding: 0;
 					display: flex;
@@ -168,7 +174,7 @@
 					justify-content: space-around;
 				}
 			}
-			
+
 			fieldset {
 				border: 0;
 				margin: 0;
@@ -178,11 +184,11 @@
 				max-width: 100%;
 
 				@include breakpoint-min( sm ) {
-					max-width: colspan( 8, 16 );
+					max-width: colspan(8, 16);
 				}
-	
+
 				@include breakpoint-min( lg ) {
-					max-width: colspan( 8, 16 );
+					max-width: colspan(8, 16);
 				}
 
 				input {
@@ -262,18 +268,18 @@
 }
 
 .o-homepage-listing-with-top .o-site-message-container.wp-message-inserter-message-region-homepage_middle {
-	
+
 	@include breakpoint-min( sm ) {
-		max-width: calc((100% - #{colspan( 1, 12 )}) - #{$size__site-sidebar} );
+		max-width: calc((100% - #{colspan(1, 12)}) - #{$size__site-sidebar});
 	}
-	
+
 	@include breakpoint-min( lg ) {
 		max-width: none;
 	}
 
 	h3,
 	.h3 {
-		
+
 		@include breakpoint-min( sm ) {
 			margin-bottom: $standard-block-padding;
 		}
@@ -282,8 +288,9 @@
 			margin-bottom: 0;
 		}
 	}
-	
+
 	.m-wp-insert-message-item {
+
 		@include breakpoint-min( sm ) {
 			font-size: $html-root-size-large-screen;
 		}
@@ -302,7 +309,7 @@
 				padding: 0 $standard-block-margin;
 				display: flex;
 				flex-wrap: wrap;
-				justify-content: space-around;					
+				justify-content: space-around;
 			}
 
 			header {
@@ -310,7 +317,7 @@
 				@include breakpoint-min( sm ) {
 					margin-bottom: $standard-block-margin;
 				}
-	
+
 				@include breakpoint-min( lg ) {
 					margin-bottom: 0;
 				}
@@ -320,7 +327,7 @@
 		fieldset {
 
 			@include breakpoint-min( xs ) {
-				max-width: colspan( 12, 16 );
+				max-width: colspan(12, 16);
 			}
 
 			@include breakpoint-min( sm ) {
@@ -328,7 +335,7 @@
 			}
 
 			@include breakpoint-min( lg ) {
-				max-width: colspan( 8, 16 );
+				max-width: colspan(8, 16);
 			}
 		}
 
@@ -340,7 +347,7 @@
 		.m-form-message {
 
 			@include breakpoint-min( xs ) {
-				max-width: colspan( 12, 16 );
+				max-width: colspan(12, 16);
 			}
 
 			@include breakpoint-min( sm ) {
@@ -348,9 +355,9 @@
 			}
 
 			@include breakpoint-min( lg ) {
-				max-width: colspan( 8, 16 );
+				max-width: colspan(8, 16);
 			}
 		}
 	}
-	
+
 }
