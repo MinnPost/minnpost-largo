@@ -1,80 +1,45 @@
-.o-site-sidebar section, .o-site-sidebar section.m-zone-sidebar {
-	margin-bottom: $standard-page-margin;
-	outline: 1px solid $color__gray-lightest;
-	border: 15px solid $color__minnpost-white;
-	background: $color__white;
-	.a-widget-title {
-		font-size: 123.1%;
-		text-transform: none;
-		font-family: $font__sans;
-		font-weight: bold;
-		padding: 20px;
-		padding-bottom: 0;
-		margin: 0;
-		a {
-			color: $color__minnpost-black;
-		}
+.o-site-sidebar section {
+	margin-bottom: $standard-block-margin;
+	border: $border-default-style;
+	border-radius: $border-radius;
+	padding: $standard-heading-margin;
+	font-size: 75%;
+
+	@include breakpoint-min( lg ) {
+		margin-bottom: auto;
 	}
-	&.m-widget-custom-html {
-		.m-widget-contents {
-			padding-bottom: 0;
-		}
-		> p:last-child {
-			padding: 0 20px 10px 20px;
-		}
+
+	> p {
+		margin-bottom: $standard-heading-margin;
 	}
-	&.m-minnpost-spills-widget .a-widget-title, &.m-widget-most-commented .a-widget-title, &.m-widget-recent-posts-extended .a-widget-title {
-		text-transform: uppercase;
-		font-family: $font__headings;
-		font-weight: normal;
-		a {
-			color: $color__minnpost-red;
-		}
-	}
-	&.m-widget-recent-posts-extended .a-widget-title {
-		color: $color__minnpost-red;
-	}
+
 	.m-widget-contents {
-		padding: 0 20px;
-		padding-bottom: 10px;
+		padding-bottom: $standard-block-padding / 2;
+
 		&.m-custom-html-widget {
+
 			.image {
-				margin-bottom: 0.75em;
+				margin-bottom: $standard-block-margin;
 			}
 		}
 	}
-	&.m-widget-most-commented, &.m-widget-recent-posts-extended {
-		ul {
-			margin: 0;
-			padding: 0;
-			list-style: none;
-		}
-		li {
-			margin: 0.75em 0;
-			a {
-				color: $color__minnpost-black;
-			}
-		}
-	}
-	&.m-widget-recent-posts-extended li {
-		@include clearfix;
-	}
+
 	.m-post-spill {
-		margin: 0.75em 0;
+		margin: $standard-block-margin 0;
 	}
+
 	.a-spill-item-category {
 		margin: 0;
 	}
+
 	.a-spill-item-title {
 		margin: 0;
-		a {
-			color: $color__minnpost-black;
-		}
 	}
+
 	.a-spill-item-thumbnail {
 		display: block;
 		float: left;
-		margin: 0 20px 20px 0;
+		margin: 0 $standard-block-margin $standard-block-margin 0;
 		max-width: 75px;
 	}
 }

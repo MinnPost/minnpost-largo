@@ -1,19 +1,21 @@
 .m-form-message {
-	padding: 1em;
-	margin-bottom: 1.25em;
-	border: 1px solid $color__gray-lightest;
+	padding: $standard-block-padding;
+	margin-top: -$standard-block-padding;
+	margin-bottom: $standard-block-margin;
+	border: $border-default-style;
+
 	&.m-form-message-error {
-		background: rgba_color($_color-base-red, 0.2);
-		color: $color__gray-dark;
+		background: brand-color(red, highlight);
 	}
+
 	&.m-form-message-info {
-		background: rgba_color($_color-base-yellow, 0.4);
-		color: $color__gray-dark;
+		background: utility-color(blue, background);
 	}
 }
 
 .m-widget-form.m-form-newsletter-shortcode {
+
 	.m-form-message {
-		font-size: 76%;
+		font-size: $interface-copy-size-smaller;
 	}
 }

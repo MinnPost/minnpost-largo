@@ -1,0 +1,39 @@
+.o-entry {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	width: 100%;
+
+	@include breakpoint-range( sm, lg ) {
+		flex-direction: row;
+	}
+
+	@include breakpoint-min( xl ) {
+		flex-direction: row;
+	}
+
+	.m-entry-content {
+
+		@include breakpoint-range( sm, lg ) {
+			max-width: colspan(10, 12);
+		}
+
+		@include breakpoint-min( xl ) {
+			max-width: colspan(10, 12);
+		}
+	}
+
+	&.o-entry-horizontal {
+		flex-direction: column;
+
+		.m-entry-content {
+			max-width: 100%;
+		}
+	}
+
+}
+
+.o-wrapper-content-full .o-entry .m-entry-content {
+	width: 100%;
+	max-width: none;
+}

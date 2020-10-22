@@ -1,29 +1,44 @@
+.acm-ad-container {
+
+	&.acm-ad-container-bordered {
+		border-bottom: $border-default-style;
+		border-left: 0;
+		border-right: 0;
+	}
+
+	.a-text-around-ad {
+		color: neutral-color(medium);
+	}
+}
+
 .acm-ad {
 	position: relative;
-	font-size: $base-font-size;
-	line-height: normal;
 	width: auto;
 	height: auto;
 	overflow: hidden;
+
+	@include meta-preset( $size: -1, $bold: false, $italic: false, $line-height: 1 );
+
 	&.acm-ad-placeholder {
 		text-align: center;
-		background-color: $color__black;
-		color: $color__white;
+		background-color: neutral-color(black);
+		color: neutral-color(white);
 		padding: 29px 0;
 		line-height: 1.3em;
 	}
+
 	.ad-overlay {
 		position: absolute;
-		background-color: $color__black;
-		color: $color__white;
+		background-color: neutral-color(black);
+		color: neutral-color(white);
 		padding: 2px;
-		font-size: .5em;
+		font-size: 0.5em;
 		text-align: center;
 	}
 }
 
-// we center the embed ads this way because they don't have a region container like the other ads
-main .ad-middle, main .ad-Middle,
+main .ad-middle,
+main .ad-Middle,
 main .ad-x100,
 main .ad-x101,
 main .ad-x102,
@@ -35,10 +50,11 @@ main .ad-x107,
 main .ad-x108,
 main .ad-x109,
 main .ad-x110 {
-	margin: $standard-page-margin 0;
+	margin: $standard-block-padding / 2 0 $standard-block-margin 0;
 	display: flex;
 	justify-content: center;
 	flex-direction: row;
+
 	&.acm-ad-placeholder {
 		width: $ad-embed-width;
 		height: $ad-embed-height;
@@ -47,47 +63,64 @@ main .ad-x110 {
 	}
 }
 
-.ad-middle3, .ad-Middle3 {
-	margin-bottom: $standard-page-margin;
-	border-bottom: 1px solid $color__gray-lightest;
-	padding: 0.5em;
+.ad-middle3,
+.ad-Middle3 {
+	border-bottom: $border-default-style;
+	padding: $standard-block-margin / 2;
+
 	div {
+
 		@include clearfix;
 	}
 }
 
 .acm-ad.ad-halfpage {
+
 	&.acm-ad-placeholder {
 		width: $ad-halfpage-width;
 		height: $ad-halfpage-height;
 	}
 }
 
-.acm-ad-wrapper.ad-middle3, .acm-ad-wrapper.ad-Middle3 {
-	margin-bottom: $standard-page-margin;
-	border-bottom: 1px solid $color__gray-lightest;
-	background-color: $color__minnpost-white;
-	padding-bottom: 0.5em;
-	.ad-middle3, .ad-Middle3 {
+// sponsored ad on homepage
+.acm-ad-wrapper.ad-middle3,
+.acm-ad-wrapper.ad-Middle3 {
+	margin-bottom: $standard-block-margin;
+	border-bottom: $border-default-style;
+	background-color: neutral-color(light);
+	padding-bottom: $standard-block-padding;
+
+	.ad-middle3,
+	.ad-Middle3 {
 		margin-bottom: 0;
 		border-bottom: 0;
 	}
+
 	header {
 		text-transform: uppercase;
-		font-family: $font__sans;
-	    font-size: $meta-font-size;
-	    padding: 0.5em;
-	    margin-bottom: 0.5em;
-	    color: palette(grey, light);
+
+		@include meta-preset( $size: -2, $bold: false, $italic: false, $line-height: 1 );
+		padding: $standard-block-padding;
+		margin-bottom: $standard-heading-margin;
+		color: neutral-color(dark);
 	}
 }
 
 .o-site-sidebar .acm-ad {
-	//@include clearfix;
-	margin-bottom: $standard-page-margin;
+
+	@include clearfix;
+	margin-bottom: $standard-block-margin;
+	display: flex;
+	justify-content: center;
+
 	&.acm-ad-placeholder {
 		text-align: center;
 	}
 }
 
-// media queries for ads
+.acm-ad-container {
+
+	.acm-ad {
+		margin-bottom: $standard-block-padding;
+	}
+}

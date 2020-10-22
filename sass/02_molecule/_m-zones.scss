@@ -1,48 +1,112 @@
 .m-homepage-zones {
-	margin-top: 0.5em;
-	flex-wrap: wrap;
-	display: flex;
+
+	// where the zones differ from the archives
 	.m-zone {
-		//padding-bottom: 20px;
-		margin-bottom: $standard-page-margin;
-		border-bottom: 1px solid $color__gray-lightest;
-		&.m-zone-homepage-top { // no margin or border because the article already has it
-			border-bottom: 0;
-			margin-bottom: 0;
+		flex-wrap: wrap;
+		align-content: flex-start;
+		display: flex;
+		width: 100%;
+
+		@include breakpoint-min( sm ) {
+			max-width: calc((100% - #{colspan( 1, 12 )}) - #{$size__site-sidebar} );
 		}
-		&.m-zone-homepage-middle {
+	
+		@include breakpoint-min( lg ) {
+			width: colspan( 8, 12 );
+			max-width: calc((100% - #{colspan( 1, 12 )}) - #{$size__site-sidebar} );
+		}
+	
+		@include breakpoint-min( xl ) {
+			width: colspan( 12, 16 );
+			max-width: calc((100% - #{colspan( 1, 16 )}) - #{$size__site-sidebar} );
+		}
+
+		@include breakpoint-min( xxxl ) {
+			max-width: calc((100%) - #{$size__site-sidebar} );
+		}
+
+		&.m-zone-homepage-top { // because this section is not visually separate
+
+			@include breakpoint-min( sm ) {
+				max-width: none;
+			}
+
+			@include breakpoint-min( lg ) {
+				max-width: calc((100% - #{colspan( 1, 12 )}) - #{$size__site-sidebar} );
+			}
+
+			article {
+				width: 100%;
+				border-bottom: 0;
+				padding-bottom: 0;
+			}
+		}
+
+		&.m-zone-homepage-sticky {
+			max-width: none;
+			width: 100%;
+			display: flex;
+			justify-content: space-between;
+
+			&.m-zone-homepage-sticky-has-1 {
+				
+				article {
+					width: colspan( 16, 16 );
+				}
+			}
+
+			&.m-zone-homepage-sticky-has-2 {
+				
+				article {
+
+					@include breakpoint-min( sm ) {
+						width: colspan( 6, 12 );
+					}
+				}
+			}
+
+			&.m-zone-homepage-sticky-has-3 {
+				
+				article {
+
+					@include breakpoint-min( sm ) {
+						width: colspan( 4, 12 );
+					}
+				}
+			}
+
+			&.m-zone-homepage-sticky-has-4 {
+				
+				article {
+
+					@include breakpoint-min( sm ) {
+						width: colspan( 6, 12 );
+					}
+
+					@include breakpoint-min( xxl ) {
+						width: colspan( 3, 12 );
+					}
+				}
+			}
+
+			article {
+				align-content: flex-start;
+			}
+		}
+		
+		&.m-zone-homepage-more-top,
+		&.m-zone-homepage-opinion {
 			display: flex;
 			justify-content: space-between;
 			flex-flow: row wrap;
-			border-bottom: 0;
-			margin-bottom: 0;
-		}
-		&.m-zone-homepage-bottom {
-			margin-bottom: 0;
-			border-bottom: 0;
-		}
-		&.m-zone-homepage-middle article {
-			width: 47.5%;
-			margin-bottom: $standard-page-margin;
-		}
-	}
-}
 
-// media queries for zones
-@media screen and (min-width: $size__ad-flexing) {
-	.m-homepage-zones {
-		.m-zone {
-			&.m-zone-sidebar-recommended {
-				margin-left: $standard-page-margin;
-			}
-		}
-	}
-}
-@media screen and (min-width: $max-width-page) {
-	.m-homepage-zones {
-		.m-zone {
-			&.m-zone-sidebar-recommended {
-				margin-left: 0;
+			article {
+				margin-bottom: $standard-block-margin;
+				align-content: flex-start;
+
+				@include breakpoint-min( lg ) {
+					width: colspan( 5.8, 12 );
+				}
 			}
 		}
 	}

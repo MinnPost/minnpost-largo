@@ -1,53 +1,66 @@
-.m-author-info {
-	padding-top: 2px;
+.m-author-info,
+.m-staff-member-info {
+
+	@include breakpoint-min( lg ) {
+		width: 100%;
+	}
+
+	.a-author-figure,
+	> .a-author-bio {
+		margin: 0 0 $standard-block-margin 0;
+	}
+
 	.a-author-figure {
-		@include clearfix;
-		background: $color__minnpost-white;
+		width: 100%;
+
 		img {
-			margin: 10px 20px 10px 10px;
-			float: left;
-			max-width: 190px;
-		}
-		figcaption {
-			@include clearfix;
-			padding: 10px;
-			p {
-				a {
-					color: $color__link;
-					&:active,
-					&:focus,
-					&:hover {
-						color: $color__link;
-						text-decoration: underline;
-					}
-				}
+			max-width: $author-thumb-size;
+			height: 100%;
+
+			@include breakpoint-min( sm ) {
+				//max-width: $author-photo-size;
 			}
 		}
-		a h3, a img {
-			color: $color__link;
+
+		figcaption {
+			word-break: break-word;
+
+			@include breakpoint-min( xs ) {
+				word-break: normal;
+			}
 		}
-		a:visited h3 {
-			color: $color__link;
-		}
-		a:active h3,
-		a:focus h3,
-		a:hover h3 {
-			color: $color__link;
-			text-decoration: underline;
+
+		.a-author-sizes {
+
+			source,
+			img {
+				height: auto;
+			}
 		}
 	}
-	&.m-author-info-single .a-author-figure {
-		border: 1px solid $color__gray-lightest;
-		margin-top: 10px;
-		img {
-			max-width: 75px; // in case the author has an image but not a teaser
+
+	.a-author-bio {
+
+		h3,
+		p {
+			margin-bottom: $standard-heading-margin;
+
+			&:last-child {
+				margin-bottom: 0;
+			}
 		}
-		figcaption {
-			margin-bottom: 25px;
-			padding-bottom: 20px;
-			p {
-				font-size: $content-font-size;
-				line-height: 1.3em;
+	}
+
+	&.m-author-full-info .a-author-figure,
+	&.m-author-info-single .a-author-figure,
+	&.m-staff-member-info-single .a-author-figure {
+
+		img {
+			max-width: $author-thumb-size;
+			margin-bottom: 0;
+
+			@include breakpoint-min( sm ) {
+				max-width: $author-photo-size;
 			}
 		}
 	}

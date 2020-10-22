@@ -1,21 +1,12 @@
 .m-archive-header {
-	font-family: $font__sans;
-	.a-archive-title {
-		font-family: $font__headings;
-		font-size: 338.5%;
-		line-height: 0.9em;
-		font-weight: normal;
-		font-style: normal;
-		font-variant: normal;
+	margin-bottom: $standard-block-padding;
+
+	&.m-archive-header-spill {
+		margin-bottom: $standard-block-margin;
 	}
-	.m-archive-meta {
-		font-size: 76.9%;
-		text-transform: uppercase;
-		font-weight: bold;
-		line-height: 1.3em;
-		margin: .25em 0;
-	}
-	&.m-archive-header-spill, &.m-archive-header-time {
-		margin-bottom: $standard-page-margin;
+
+	&.tribe-events-header {
+		display: flex;
+		justify-content: space-between;
 	}
 }

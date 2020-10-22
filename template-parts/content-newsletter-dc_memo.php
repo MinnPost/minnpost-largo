@@ -210,6 +210,42 @@ a[x-apple-data-detectors] {
 				</td> <!-- end .one-column.header -->
 			</tr> <!-- end row -->
 
+			<?php if ( '' !== minnpost_get_posted_by() ) : ?>
+				<tr>
+					<td class="one-column header" style="border-collapse: collapse; border-bottom-width: 2px; border-bottom-color: #cccccf; border-bottom-style: solid; Margin: 0; padding: 0;">
+				<!--[if (gte mso 9)|(IE)]>
+				<table cellpadding="0" cellspacing="0" width="100%">
+					<tr>
+						<td width="100%" valign="bottom">
+				<![endif]-->
+						<div class="column tagline byline" style="width: 100%;">
+							<table cellpadding="0" cellspacing="0" width="100%" style="border-spacing: 0; Margin: 0; padding: 0; font-family: Helvetica, Arial, Geneva, sans-serif; color: #1A1818; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse;">
+								<tr>
+									<td class="inner" style="border-collapse: collapse; Margin: 0; padding: 2px 0; max-height: 50px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, &quot;Times New Roman&quot;, Times, serif; font-style: italic; font-size: 16px;">
+										<table cellpadding="0" cellspacing="0" class="contents" style="border-spacing: 0; Margin: 0; padding: 0; font-family: Helvetica, Arial, Geneva, sans-serif; color: #1A1818; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; width: 100%;">
+											<tr>
+												<td align="left" style="border-collapse: collapse; Margin: 0; padding: 2px 0; max-height: 50px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-family: Georgia, &quot;Times New Roman&quot;, Times, serif; font-style: normal; font-size: 16px;">
+													<?php
+													$byline = minnpost_get_posted_by();
+													$byline = str_replace( '<a href="', '<a style="color: #801019; text-decoration: none;" href="', $byline );
+													?>
+													<p style="vertical-align: middle; Margin: 0; padding: 0;"><?php echo $byline; ?></p>
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+						</div>
+				<!--[if (gte mso 9)|(IE)]>
+						</td>
+					</tr>
+				</table>
+				<![endif]-->
+					</td> <!-- end .one-column.header -->
+				</tr> <!-- end row -->
+			<?php endif; ?>
+
 			<?php do_action( 'wp_message_inserter', 'email_header', 'email' ); ?>
 
 			<?php
@@ -273,6 +309,48 @@ a[x-apple-data-detectors] {
 			<?php endif; ?>
 
 			<?php do_action( 'wp_message_inserter', 'email_before_bios', 'email' ); ?>
+
+			<?php
+			$hide_author = get_post_meta( $id, '_mp_remove_author_from_display', true );
+			$coauthors   = get_coauthors( get_the_ID() );
+			$author_info = '';
+			if ( 'on' !== $hide_author && empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) ) ) {
+				foreach ( $coauthors as $key => $coauthor ) {
+					$author_id    = $coauthor->ID;
+					$author_info .= minnpost_get_author_figure( $author_id, 'author-teaser', 'excerpt', true, 'cap-display_name', true, '', false, false );
+				}
+			}
+			if ( '' !== $author_info ) {
+				?>
+				<tr>
+					<td class="two-column content author" style="border-collapse: collapse; Margin: 0; padding: 0;">
+					<!--[if (gte mso 9)|(IE)]>
+						<table cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+								<td width="100%" valign="bottom">
+					<![endif]-->
+						<?php
+						$author_keys = array_keys( $coauthors );
+						$last_key    = end( $author_keys );
+						$end         = false;
+						foreach ( $coauthors as $key => $coauthor ) :
+							$author_id = $coauthor->ID;
+							if ( $key === $last_key ) {
+								$end = true;
+							}
+							minnpost_author_figure( $author_id, 'author-teaser', 'excerpt', true, 'cap-display_name', true, '', false, false, $end );
+						endforeach;
+						?>
+						<!--[if (gte mso 9)|(IE)]>
+								</td>
+							</tr>
+						</table>
+						<![endif]-->
+					</td> <!-- end .two-column.author -->
+				</tr> <!-- end row -->
+				<?php
+			}
+			?>
 
 			<?php do_action( 'wp_message_inserter', 'email_bottom', 'email' ); ?>
 

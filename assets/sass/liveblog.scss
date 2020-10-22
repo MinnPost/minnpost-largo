@@ -1,4 +1,5 @@
 @import "../../sass/functions"; // put functions first because they get used in color variable calculations
 @import "../../sass/variables";
+@import "../../sass/variables-legacy";
 @import "../../sass/mixins";
 @import "liveblog/*";

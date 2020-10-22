@@ -103,6 +103,29 @@ if ( ! function_exists( 'lost_password_form_action' ) ) :
 endif;
 
 /**
+* Customize error messages
+*
+* @param string $lost_password_form_action
+* @return string
+*
+*/
+if ( ! function_exists( 'user_account_error_messages' ) ) :
+	add_filter( 'user_account_management_custom_error_message', 'user_account_error_messages', 10, 3 );
+	function user_account_error_messages( $message, $error_code, $data ) {
+		if ( 'spam' === $error_code ) {
+			$error = sprintf(
+				// translators: param is our email address
+				esc_html__( 'Oops! For some reason our automated system has flagged your account information as spam. You can try to create an account using a different email address, or if you think this was in error contact us at %1$s.', 'user-account-management' ),
+				'<a href="mailto:feedback@minnpost.com">feedback@minnpost.com</a>'
+			);
+
+			$message = sprintf( $error, 'feedback@minnpost.com', 'feedback@minnpost.com' );
+		}
+		return $message;
+	}
+endif;
+
+/**
 * Return theme template for user pages
 *
 * @param string $template
@@ -207,10 +230,10 @@ if ( ! function_exists( 'restrict_comment_moderators' ) ) :
 	add_action( 'admin_init', 'restrict_comment_moderators', 1 );
 	function restrict_comment_moderators() {
 		global $pagenow;
-		$user         = class_exists( 'AAM' ) ? AAM::getUser() : wp_get_current_user();
+		$user         = wp_get_current_user();
 		$member_roles = array( 'member_bronze', 'member_silver', 'member_gold', 'member_platinum' );
 		$user->roles  = array_diff( (array) $user->roles, $member_roles );
-		if ( in_array( 'comment_moderator', (array) $user->roles ) ) {
+		if ( in_array( 'comment_moderator', (array) $user->roles, true ) ) {
 			if ( ( 'edit.php' === $pagenow || 'post.php' === $pagenow || 'post-new.php' === $pagenow ) ) {
 				wp_die( esc_html__( 'You are not allowed to access this part of the site', 'minnpost-largo' ) );
 			}
@@ -246,7 +269,7 @@ if ( ! function_exists( 'add_to_user_data' ) ) :
 			// if the user is changing their primary email, switch the new primary with the old primary.
 			if ( isset( $posted['primary_email'] ) ) {
 				$primary_email = sanitize_email( $posted['primary_email'] );
-				if ( in_array( $primary_email, $all_emails ) ) {
+				if ( in_array( $primary_email, $all_emails, true ) ) {
 					$user_data['user_email'] = $primary_email;
 				}
 			}
@@ -268,6 +291,13 @@ if ( ! function_exists( 'add_to_user_data' ) ) :
 			$all_emails                        = array_unique( $all_emails );
 			$posted['_consolidated_emails']    = implode( ',', $all_emails );
 			$user_data['_consolidated_emails'] = $posted['_consolidated_emails'];
+		}
+
+		// always load comments
+		if ( array_key_exists( 'always_load_comments', $posted ) && ! empty( $posted['always_load_comments'] ) ) {
+			$user_data['always_load_comments'] = $posted['always_load_comments'];
+		} elseif ( array_key_exists( 'always_load_comments', $posted ) && empty( $posted['always_load_comments'] ) ) {
+			$user_data['always_load_comments'] = '';
 		}
 
 		// reading preferences field
@@ -321,14 +351,18 @@ endif;
 *
 * @param array $user_data
 * @param array $existing_user_data
+* @param int $user_id
 *
 */
 if ( ! function_exists( 'save_minnpost_user_data' ) ) :
-	add_action( 'user_account_management_post_user_data_save', 'save_minnpost_user_data', 10, 2 );
-	function save_minnpost_user_data( $user_data, $existing_user_data ) {
+	add_action( 'user_account_management_post_user_data_save', 'save_minnpost_user_data', 10, 3 );
+	function save_minnpost_user_data( $user_data, $existing_user_data, $user_id ) {
 		// handle consolidated email addresses
 		if ( isset( $user_data['ID'] ) && array_key_exists( '_consolidated_emails', $user_data ) && '' !== $user_data['_consolidated_emails'] ) {
 			$all_emails = array_map( 'trim', explode( ',', $user_data['_consolidated_emails'] ) );
+		} elseif ( isset( $user_data['ID'] ) || 0 !== $user_id ) {
+			$all_emails   = array();
+			$all_emails[] = isset( $user_data['user_email'] ) ? $user_data['user_email'] : $existing_user_data['user_email'];
 		}
 
 		// handle removing email addresses from a user's account
@@ -340,7 +374,18 @@ if ( ! function_exists( 'save_minnpost_user_data' ) ) :
 		if ( isset( $all_emails ) ) {
 			$all_emails = array_unique( $all_emails );
 			$all_emails = implode( ',', $all_emails );
-			update_user_meta( $user_data['ID'], '_consolidated_emails', $all_emails );
+			if ( isset( $user_data['ID'] ) ) {
+				update_user_meta( $user_data['ID'], '_consolidated_emails', $all_emails );
+			} elseif ( 0 !== $user_id ) {
+				update_user_meta( $user_id, '_consolidated_emails', $all_emails );
+			}
+		}
+
+		// always load comments field. allow it to be emptied.
+		if ( isset( $user_data['ID'] ) && array_key_exists( 'always_load_comments', $user_data ) && '' !== $user_data['always_load_comments'] ) {
+			update_user_meta( $user_data['ID'], 'always_load_comments', $user_data['always_load_comments'] );
+		} elseif ( isset( $user_data['ID'] ) && array_key_exists( 'always_load_comments', $user_data ) && '' === $user_data['always_load_comments'] ) {
+			update_user_meta( $user_data['ID'], 'always_load_comments', '' );
 		}
 
 		// reading preferences field. allow it to be emptied.
@@ -394,7 +439,7 @@ if ( ! function_exists( 'minnpost_largo_check_consolidated_emails' ) ) :
 			// this is stored user data
 			$emails = array_map( 'trim', explode( ',', $user_data['_consolidated_emails'][0] ) );
 		}
-		if ( false !== ( $key = array_search( $current_email, $emails ) ) ) {
+		if ( false !== ( $key = array_search( $current_email, $emails, true ) ) ) {
 			unset( $emails[ $key ] );
 		}
 		return $emails;

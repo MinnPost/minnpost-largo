@@ -44,7 +44,6 @@
 							'menu_id'        => 'minnpost-network',
 							'depth'          => 1,
 							'container'      => false,
-							'item_classes'   => 'values',
 							'walker'         => new Minnpost_Walker_Nav_Menu,
 						)
 					);
@@ -60,7 +59,7 @@
 
 			</aside>
 
-			<?php echo vip_powered_wpcom( 4 ); ?>
+			<?php echo vip_powered_wpcom( 1 ); ?>
 
 		</div>
 	</footer>

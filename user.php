@@ -6,22 +6,17 @@
  *
  * @package MinnPost Largo
  */
-get_header(); ?>
+get_header( 'user' ); ?>
 
 	<div id="primary" class="m-layout-primary o-user">
 		<main id="main" class="site-main">
-
-			<?php minnpost_account_management_menu(); ?>
-
 			<?php
 			while ( have_posts() ) :
 				the_post();
 				get_template_part( 'template-parts/content', 'page' );
 			endwhile; // End of the loop.
 			?>
-
 		</main><!-- #main -->
-
 	</div><!-- #primary -->
 
 <?php

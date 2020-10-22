@@ -1,21 +1,25 @@
 .m-benefit-message-visible {
-	padding: 0.5em;
-	margin: 0.5em 0;
-	border: 1px solid $color__gray-lightest;
+	padding: $standard-block-padding;
+	margin: $standard-block-padding 0;
+	border: $border-default-style;
+
 	&.m-benefit-message-error {
-		background: rgba_color($_color-base-red, 0.2);
-		color: $color__gray-dark;
+		background: brand-color(red, highlight);
+		color: neutral-color(black);
 	}
+
 	&.m-benefit-message-info {
-		background: rgba_color($_color-base-yellow, 0.4);
-		color: $color__gray-dark;
+		background: utility-color(yellow, background);
+		color: neutral-color(black);
 	}
+
 	&.m-benefit-message-future {
-		background: $color__gray-dark;
-		color: $color__white;
+		background: neutral-color(dark);
+		color: neutral-color(white);
 	}
+
 	&.m-benefit-message-success {
-		background: rgba_color($color__minnpost-green, 0.4);
-		color: $color__gray-dark;
+		background: utility-color(green, highlight);
+		color: neutral-color(black);
 	}
 }

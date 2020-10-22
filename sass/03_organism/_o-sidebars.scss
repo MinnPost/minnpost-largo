@@ -1,55 +1,113 @@
-/*.o-site-sidebar {
-	&#secondary-first {
-		order: 2;
-	}
-	&#secondary-second {
-		order: 4;
+.o-site-sidebar {
+	min-width: $size__site-sidebar;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: $standard-block-margin;
+
+	@include breakpoint-min( xs ) {
 		display: flex;
 		flex-wrap: wrap;
+		flex-direction: column;
+	}
+
+	@include breakpoint-min( sm ) {
+		width: 100%;
+		margin-left: auto;
+		margin-bottom: $standard-block-margin;
+	}
+
+	@include breakpoint-min( lg ) {
+		margin-left: auto;
+		margin-right: 0;
+		width: $size__site-sidebar;
+	}
+
+	&#secondary-first,
+	&#secondary-second {
+		display: flex;
+
+		@include breakpoint-min( lg ) {
+
+			section {
+				margin-top: auto;
+			}
+		}
+
+		:first-child {
+
+			@include breakpoint-min( lg ) {
+				margin-top: 0;
+			}
+		}
+	}
+
+	&#secondary-first {
+
+		@include breakpoint-min( lg ) {
+
+			.m-ad-region,
+			.acm-ad-container-bordered {
+				margin-top: 0;
+			}
+		}
+	}
+
+	&#secondary-second {
+		flex-wrap: wrap;
 		justify-content: space-between;
+		padding-bottom: $standard-block-margin;
+
 		section {
 			width: 100%;
 		}
 	}
-}
 
+	&#secondary-second,
+	&#secondary-third {
 
-// media queries for sidebars
+		@include breakpoint-min( lg ) {
 
-@media screen and (min-width: $more-than-logo-screen) {
-	.o-site-sidebar {
-		&#secondary-second {
-			section {
-				width: calc(50% - 1em);
-			}
-		}
-	}
-}
-@media screen and (min-width: $size__ad-flexing) {
-	.o-site-sidebar {
-		&#secondary-first {
-			display: flex;
-		}
-	}
-}
-@media screen and (min-width: $max-width-page) {
-	.o-site-sidebar {
-	    width: $size__site-sidebar;
-	    margin-left: auto;
-	    &#secondary-first, &#secondary-second {
-			order: unset;
-			display: block;
-		}
-		&#secondary-second {
 			section {
 				width: 100%;
 			}
 		}
 	}
-}
-*/
 
-.o-site-sidebar {
-	width: colspan( 5, 16 );
-	//margin-left: colspan( g, 12 );
+	&#secondary-third {
+
+		@include breakpoint-min( sm ) {
+			margin-right: 0;
+			margin-left: auto;
+		}
+	}
+}
+
+.o-homepage-listing .o-site-sidebar {
+
+	@include breakpoint-min( sm ) {
+		width: $size__site-sidebar;
+		margin-left: 0;
+		margin-bottom: 0;
+	}
+
+	@include breakpoint-min( lg ) {
+		margin-left: auto;
+		margin-right: 0;
+		width: $size__site-sidebar;
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+	}
+}
+
+.o-homepage-listing-without-top {
+
+	.o-site-sidebar#secondary-first-and-second {
+
+		@include breakpoint-min( sm ) {
+			margin-left: auto;
+			margin-right: 0;
+		}
+
+	}
 }

@@ -10,31 +10,30 @@
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post' ); ?>>
-
-	<?php minnpost_post_image( 'thumbnail' ); ?>
-
-	<?php $is_spill = get_query_var( 'is_spill', false ); ?>
-
-	<?php if ( is_home() || true === $is_spill || is_tag() || is_author() || ( is_category() && isset( $featured_columns ) && '' !== $featured_columns ) ) : ?>
-		<p class="a-post-category a-zone-item-category"><?php echo minnpost_get_category_name(); ?></p>
-	<?php endif; ?>
-
-	<header class="m-entry-header">
-		<?php the_title( '<h3 class="a-entry-title a-entry-title-excerpt"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
-
-		<?php if ( 'post' === get_post_type() ) : ?>
-
-		<div class="m-entry-meta">
-			<?php minnpost_posted_by(); ?> | <?php minnpost_posted_on(); ?> <?php minnpost_edit_link(); ?>
-		</div>
-
+	<div class="m-entry-content">
+		<?php if ( '' === minnpost_get_replace_category_text() ) : ?>
+			<?php minnpost_category_breadcrumb(); ?>
+		<?php else : ?>
+			<?php minnpost_replace_category_text(); ?>
 		<?php endif; ?>
-
-	</header><!-- .m-entry-header -->
-
-	<div class="m-entry-excerpt">
-		<?php the_excerpt(); ?>
-	</div><!-- .m-entry-excerpt -->
-
-
-</article><!-- #post-## -->
+		<header class="m-entry-header">
+			<?php the_title( '<h3 class="a-entry-title a-entry-title-excerpt"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
+			<?php if ( 'post' === get_post_type( $post->id ) ) : ?>
+				<?php if ( '' !== minnpost_get_posted_by() ) : ?>
+					<div class="m-entry-byline">
+						<?php minnpost_posted_by( $post->id ); ?>
+					</div>
+				<?php endif; ?>
+				<div class="m-entry-meta">
+					<?php if ( '' !== minnpost_get_posted_on() ) : ?>
+						<?php minnpost_posted_on(); ?>
+					<?php endif; ?>
+				</div>
+			<?php endif; ?>
+		</header>
+		<div class="m-entry-excerpt">
+			<?php the_excerpt(); ?>
+		</div>
+	</div>
+	<?php minnpost_post_image( 'feature-large' ); ?>
+</article>

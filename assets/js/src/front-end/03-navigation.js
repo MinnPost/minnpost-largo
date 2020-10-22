@@ -1,182 +1,160 @@
 /**
  * File navigation.js.
  *
- * Handles toggling the navigation menu for small screens and enables TAB key
- * navigation support for dropdown menus.
+ * Navigation scripts. Includes mobile or toggle behavior, analytics tracking of specific menus.
+ * This file does require jQuery.
  */
 
-setupMenu( 'navigation-primary' );
-setupMenu( 'navigation-user-account-management' );
-setupNavSearch( 'navigation-primary' );
+function setupPrimaryNav() {
+	const primaryNavTransitioner = transitionHiddenElement( {
+		element: document.querySelector( '.m-menu-primary-links' ),
+		visibleClass: 'is-open',
+		displayValue: 'flex'
+	} );
 
-function setupNavSearch( container ) {
-
-	var navsearchcontainer, navsearchtoggle, navsearchform;
-
-	container = document.getElementById( container );
-	if ( ! container ) {
-		return;
-	}
-
-	navsearchcontainer = $( 'li.search', $( container ) );
-	navsearchtoggle    = $( 'li.search a', $( container ) );
-	navsearchform      = container.getElementsByTagName( 'form' )[0];
-
-	if ( 'undefined' === typeof navsearchtoggle || 'undefined' === typeof navsearchform ) {
-		return;
-	}
-
-	if ( $( navsearchform ).length > 0 ) {
-		$( document ).click( function( event ) {
-			var $target = $( event.target );
-			if ( ! $target.closest( navsearchcontainer ).length && $( navsearchform ).is( ':visible' ) ) {
-				navsearchform.className = navsearchform.className.replace( ' toggled-form', '' );
-				$( navsearchtoggle ).prop( 'aria-expanded', false );
-				$( navsearchtoggle ).removeClass( 'toggled-form' );
-			}        
-		});
-		$( navsearchtoggle ).on( 'click', function( event ) {
-			event.preventDefault();
-			if ( -1 !== navsearchform.className.indexOf( 'toggled-form' ) ) {
-				navsearchform.className = navsearchform.className.replace( ' toggled-form', '' );
-				$( navsearchtoggle ).prop( 'aria-expanded', false );
-				$( navsearchtoggle ).removeClass( 'toggled-form' );
+	var primaryNavToggle = document.querySelector( 'nav button' );
+	if ( null !== primaryNavToggle ) {
+		primaryNavToggle.addEventListener( 'click', function( e ) {
+			e.preventDefault();
+			let expanded = 'true' === this.getAttribute( 'aria-expanded' ) || false;
+			this.setAttribute( 'aria-expanded', ! expanded );
+			if ( true === expanded ) {
+				primaryNavTransitioner.transitionHide();
 			} else {
-				navsearchform.className += ' toggled-form';
-				$( navsearchtoggle ).prop( 'aria-expanded', true );
-				$( navsearchtoggle ).addClass( 'toggled-form' );
+				primaryNavTransitioner.transitionShow();
 			}
-		});
-	}
-}
-
-function setupMenu( container ) {
-	var button, menu, links, i, len;
-	container = document.getElementById( container );
-	if ( ! container ) {
-		return;
+		} );
 	}
 
-	button = container.getElementsByTagName( 'button' )[0];
-	if ( 'undefined' === typeof button ) {
-		return;
-	}
+	const userNavTransitioner = transitionHiddenElement( {
+		element: document.querySelector( '.your-minnpost-account ul' ),
+		visibleClass: 'is-open',
+		displayValue: 'flex'
+	} );
 
-	menu = container.getElementsByTagName( 'ul' )[0];
-
-	// Hide menu toggle button if menu is empty and return early.
-	if ( 'undefined' === typeof menu ) {
-		button.style.display = 'none';
-		return;
-	}
-
-	menu.setAttribute( 'aria-expanded', 'false' );
-	if ( -1 === menu.className.indexOf( 'menu' ) ) {
-		menu.className += ' menu';
-	}
-
-	button.onclick = function() {
-		if ( -1 !== container.className.indexOf( 'toggled' ) ) {
-			container.className = container.className.replace( ' toggled', '' );
-			button.setAttribute( 'aria-expanded', 'false' );
-			menu.setAttribute( 'aria-expanded', 'false' );
-		} else {
-			container.className += ' toggled';
-			button.setAttribute( 'aria-expanded', 'true' );
-			menu.setAttribute( 'aria-expanded', 'true' );
-		}
-	};
-
-	// Get all the link elements within the menu.
-	links    = menu.getElementsByTagName( 'a' );
-
-	// Each time a menu link is focused or blurred, toggle focus.
-	for ( i = 0, len = links.length; i < len; i++ ) {
-		links[i].addEventListener( 'focus', toggleFocus, true );
-		links[i].addEventListener( 'blur', toggleFocus, true );
-	}
-
-	/**
-	 * Toggles `focus` class to allow submenu access on tablets.
-	 */
-	( function( container ) {
-		var touchStartFn, i,
-			parentLink = container.querySelectorAll( '.menu-item-has-children > a, .page_item_has_children > a' );
-
-		if ( 'ontouchstart' in window ) {
-			touchStartFn = function( e ) {
-				var menuItem = this.parentNode, i;
-
-				if ( ! menuItem.classList.contains( 'focus' ) ) {
-					e.preventDefault();
-					for ( i = 0; i < menuItem.parentNode.children.length; ++i ) {
-						if ( menuItem === menuItem.parentNode.children[i] ) {
-							continue;
-						}
-						menuItem.parentNode.children[i].classList.remove( 'focus' );
-					}
-					menuItem.classList.add( 'focus' );
-				} else {
-					menuItem.classList.remove( 'focus' );
-				}
-			};
-
-			for ( i = 0; i < parentLink.length; ++i ) {
-				parentLink[i].addEventListener( 'touchstart', touchStartFn, false );
-			}
-		}
-	}( container ) );
-}
-
-/**
- * Sets or removes .focus class on an element.
- */
-function toggleFocus() {
-	var self = this;
-
-	// Move up through the ancestors of the current link until we hit .nav-menu.
-	while ( -1 === self.className.indexOf( 'menu' ) ) {
-
-		// On li elements toggle the class .focus.
-		if ( 'li' === self.tagName.toLowerCase() ) {
-			if ( -1 !== self.className.indexOf( 'focus' ) ) {
-				self.className = self.className.replace( ' focus', '' );
+	var userNavToggle = document.querySelector( '.your-minnpost-account > a' );
+	if ( null !== userNavToggle ) {
+		userNavToggle.addEventListener( 'click', function( e ) {
+			e.preventDefault();
+			let expanded = 'true' === this.getAttribute( 'aria-expanded' ) || false;
+			this.setAttribute( 'aria-expanded', ! expanded );
+			if ( true === expanded ) {
+				userNavTransitioner.transitionHide();
 			} else {
-				self.className += ' focus';
+				userNavTransitioner.transitionShow();
+			}
+		} );
+	}
+
+	var target    = document.querySelector( 'nav .m-form-search fieldset .a-button-sentence' );
+	if ( null !== target ) {
+		var div       = document.createElement( 'div' );
+		div.innerHTML = '<a href="#" class="a-close-button a-close-search"><i class="fas fa-times"></i></a>';
+		var fragment  = document.createDocumentFragment();
+		div.setAttribute( 'class', 'a-close-holder' );
+		fragment.appendChild( div );
+		target.appendChild( fragment );
+
+		const searchTransitioner = transitionHiddenElement( {
+			element: document.querySelector( '.m-menu-primary-actions .m-form-search' ),
+			visibleClass: 'is-open',
+			displayValue: 'flex'
+		} );
+
+		var searchVisible = document.querySelector( 'li.search > a' );
+		searchVisible.addEventListener( 'click', function( e ) {
+			e.preventDefault();
+			let expanded = 'true' === searchVisible.getAttribute( 'aria-expanded' ) || false;
+			searchVisible.setAttribute( 'aria-expanded', ! expanded );
+			if ( true === expanded ) {
+				searchTransitioner.transitionHide();
+			} else {
+				searchTransitioner.transitionShow();
+			}
+		} );
+
+		var searchClose  = document.querySelector( '.a-close-search' );
+		searchClose.addEventListener( 'click', function( e ) {
+			e.preventDefault();
+			let expanded = 'true' === searchVisible.getAttribute( 'aria-expanded' ) || false;
+			searchVisible.setAttribute( 'aria-expanded', ! expanded );
+			if ( true === expanded ) {
+				searchTransitioner.transitionHide();
+			} else {
+				searchTransitioner.transitionShow();
+			}
+		} );
+	}
+
+	// escape key press
+	$( document ).keyup( function( e ) {
+		if ( 27 === e.keyCode ) {
+			let primaryNavExpanded = 'true' === primaryNavToggle.getAttribute( 'aria-expanded' ) || false;
+			let userNavExpanded = 'true' === userNavToggle.getAttribute( 'aria-expanded' ) || false;
+			let searchIsVisible = 'true' === searchVisible.getAttribute( 'aria-expanded' ) || false;
+			if ( undefined !== typeof primaryNavExpanded && true === primaryNavExpanded ) {
+				primaryNavToggle.setAttribute( 'aria-expanded', ! primaryNavExpanded );
+				primaryNavTransitioner.transitionHide();
+			}
+			if ( undefined !== typeof userNavExpanded && true === userNavExpanded ) {
+				userNavToggle.setAttribute( 'aria-expanded', ! userNavExpanded );
+				userNavTransitioner.transitionHide();
+			}
+			if ( undefined !== typeof searchIsVisible && true === searchIsVisible ) {
+				searchVisible.setAttribute( 'aria-expanded', ! searchIsVisible );
+				searchTransitioner.transitionHide();
 			}
 		}
-
-		self = self.parentElement;
-	}
+	} );
 }
 
-$( '#navigation-featured a' ).click( function( e ) {
-	mp_analytics_tracking_event( 'event', 'Featured Bar Link', 'Click', this.href );
-});
+function setupScrollNav( selector, navSelector, contentSelector ) {
 
-$( 'a.glean-sidebar' ).click( function( e ) {
-	mp_analytics_tracking_event( 'event', 'Sidebar Support Link', 'Click', this.href );
-});
-
-$( 'a', $( '.o-site-sidebar' ) ).click( function( e ) {
-	var widget_title = $(this).closest('.m-widget').find('h3').text();
-	var zone_title   = $(this).closest('.m-zone').find('.a-zone-title').text();
-	var sidebar_section_title = '';
-	if ( '' !== widget_title ) {
-		sidebar_section_title = widget_title;
-	} else if ( '' !== zone_title ) {
-		sidebar_section_title = zone_title;
+	var ua = window.navigator.userAgent;
+	var isIE = /MSIE|Trident/.test( ua );
+	if ( isIE ) {
+		return;
 	}
-	mp_analytics_tracking_event('event', 'Sidebar Link', 'Click', sidebar_section_title);
-});
 
-// user account navigation can be a dropdown
-$( document ).ready(function() {
-	// hide menu
-	if ($('#user-account-access ul').length > 0 ) {
-		$('#user-account-access > li > a').on( 'click', function(event) {
-			$('#user-account-access ul').toggleClass( 'visible' );
-			event.preventDefault();
-		});
+	// Init with all options at default setting
+	const priorityNavScrollerDefault = PriorityNavScroller( {
+		selector: selector,
+		navSelector: navSelector,
+		contentSelector: contentSelector,
+		itemSelector: 'li, a',
+		buttonLeftSelector: '.nav-scroller-btn--left',
+		buttonRightSelector: '.nav-scroller-btn--right'
+
+		//scrollStep: 'average'
+	} );
+
+	// Init multiple nav scrollers with the same options
+	/*let navScrollers = document.querySelectorAll('.nav-scroller');
+
+	navScrollers.forEach((currentValue, currentIndex) => {
+	  PriorityNavScroller({
+	    selector: currentValue
+	  });
+	});*/
+}
+
+setupPrimaryNav();
+
+if ( 0 < $( '.m-sub-navigation' ).length ) {
+	setupScrollNav( '.m-sub-navigation', '.m-subnav-navigation', '.m-menu-sub-navigation' );
+}
+if ( 0 < $( '.m-pagination-navigation' ).length ) {
+	setupScrollNav( '.m-pagination-navigation', '.m-pagination-container', '.m-pagination-list' );
+}
+
+$( 'a', $( '.o-site-sidebar' ) ).click( function() {
+	var widgetTitle         = $( this ).closest( '.m-widget' ).find( 'h3' ).text();
+	var zoneTitle           = $( this ).closest( '.m-zone' ).find( '.a-zone-title' ).text();
+	var sidebarSectionTitle = '';
+	if ( '' !== widgetTitle ) {
+		sidebarSectionTitle = widgetTitle;
+	} else if ( '' !== zoneTitle ) {
+		sidebarSectionTitle = zoneTitle;
 	}
-});
+	mpAnalyticsTrackingEvent( 'event', 'Sidebar Link', 'Click', sidebarSectionTitle );
+} );

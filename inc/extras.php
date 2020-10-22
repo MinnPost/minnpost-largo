@@ -198,40 +198,6 @@ add_action(
 );
 
 /**
-* Easy method to highlight the search string in the search result
-*
-* @param string $text
-*
-* @return string $text
-*/
-if ( ! function_exists( 'highlight_search_results' ) ) :
-	// this filter runs on the_excerpt and the_title
-	// to highlight inside both locations for search result pages
-	add_filter( 'the_excerpt', 'highlight_search_results' );
-	add_filter( 'the_title', 'highlight_search_results' );
-	function highlight_search_results( $text ) {
-		if ( is_search() && ! is_admin() ) {
-			$sr          = get_query_var( 's' );
-			$highlighted = preg_filter( '/' . preg_quote( $sr, '/' ) . '/i', '<span class="a-search-highlight">$0</span>', $text );
-			if ( ! empty( $highlighted ) ) {
-				$text = $highlighted;
-			}
-		}
-		return $text;
-	}
-endif;
-
-/**
- * Redirection Plugin Editor access
- */
-if ( ! function_exists( 'redirection_to_editor' ) ) :
-	add_filter( 'redirection_role', 'redirection_to_editor' );
-	function redirection_to_editor() {
-		return 'edit_pages';
-	}
-endif;
-
-/**
  * default editor for certain posts
  */
 if ( ! function_exists( 'minnpost_set_default_editor' ) ) :
@@ -257,13 +223,13 @@ if ( ! function_exists( 'minnpost_set_default_editor' ) ) :
 endif;
 
 /**
- * Use ElasticPress for Zoninator zone queries
+ * Use Elasticsearch for Zoninator zone queries
  * @param array $args
  * @return array $args
  */
-if ( ! function_exists( 'minnpost_zoninator_elasticpress' ) ) :
-	add_filter( 'zoninator_recent_posts_args', 'minnpost_zoninator_elasticpress' );
-	function minnpost_zoninator_elasticpress( $args ) {
+if ( ! function_exists( 'minnpost_zoninator_elasticsearch' ) ) :
+	add_filter( 'zoninator_recent_posts_args', 'minnpost_zoninator_elasticsearch' );
+	function minnpost_zoninator_elasticsearch( $args ) {
 		if ( 'production' === VIP_GO_ENV ) {
 			$args['es'] = true; // elasticsearch on production only
 		}
@@ -272,7 +238,7 @@ if ( ! function_exists( 'minnpost_zoninator_elasticpress' ) ) :
 endif;
 
 /**
- * Use ElasticPress for message queries
+ * Use Elasticsearch for message queries
  * @param array $args
  * @return array $args
  */
@@ -283,18 +249,6 @@ if ( ! function_exists( 'minnpost_message_args' ) ) :
 			$args['es'] = true; // elasticsearch on production only
 		}
 		return $args;
-	}
-endif;
-
-/**
- * Turn off the view count because we don't use it anyway
- * @param bool $status
- * @return bool false
- */
-if ( ! function_exists( 'minnpost_turn_off_popular_views' ) ) :
-	add_filter( 'pop_set_post_view', 'minnpost_turn_off_popular_views' );
-	function minnpost_turn_off_popular_views( $status ) {
-		return false;
 	}
 endif;
 
@@ -342,6 +296,11 @@ if ( ! function_exists( 'is_membership' ) ) :
 	}
 endif;
 
+// use the WP Core send_frame_options_header method to apply x-frame-options: sameorigin
+if ( function_exists( 'send_frame_options_header' ) ) :
+	add_action( 'send_headers', 'send_frame_options_header', 10, 0 );
+endif;
+
 /**
  * Allow the url to set if we should overlay the grid
  * @return array $vars
@@ -355,95 +314,21 @@ if ( ! function_exists( 'minnpost_largo_grid_overlay_var' ) ) :
 endif;
 
 /**
- * Try to fix broken pre-Drupal urls with special characters if we have saved their posts
- * @return array $vars
- */
-if ( ! function_exists( 'minnpost_largo_special_character_url_redirect' ) ) :
-	add_action( 'template_redirect', 'minnpost_largo_special_character_url_redirect' );
-	function minnpost_largo_special_character_url_redirect() {
-		// check if is a 404 error
-		if ( is_404() ) {
-			$option    = 'minnpost_urls_to_redirect';
-			$full      = $_SERVER['REQUEST_URI'];
-			$requested = basename( parse_url( $_SERVER['REQUEST_URI'], PHP_URL_PATH ) );
-			$fixed     = sanitize_title( $requested );
-			if ( $requested !== $fixed ) {
-				$replaced = str_replace( $requested, $fixed, $full );
-				//wp_safe_redirect( site_url( $replaced ) );
-				//exit();
-				if ( class_exists( 'WPCOM_Legacy_Redirector' ) ) {
-					$urls     = get_option( $option, array() );
-					$this_url = array(
-						'from'       => $full,
-						'to'         => site_url( $replaced ),
-						'redirected' => false,
-						'updated'    => false,
-					);
-					$urls[]   = $this_url;
-					update_option( $option, $urls, false );
-				}
+* Hide the Republication sharing widget on posts that are
+* included in the category with the ID of 14 or 15.
+*
+* @return bool Whether or not the sharing widget should be hidden
+*/
+if ( ! function_exists( 'minnpost_largo_remove_republish_button_from_category' ) ) :
+	add_filter( 'hide_republication_widget', 'minnpost_largo_remove_republish_button_from_category', 10, 2 );
+	function minnpost_largo_remove_republish_button_from_category( $hide_republication_widget, $post ) {
+		if ( true !== $hide_republication_widget ) {
+			// if the current post is in either of these categories, return true
+			if ( in_category( array( 55628, 55630, 55622, 55619 ), $post->ID ) ) {
+				// returning true will cause the filter to hide the button
+				$hide_republication_widget = true;
 			}
 		}
+		return $hide_republication_widget;
 	}
-endif;
-
-/**
- * When admin loads, parse any special character redirects and try to create them
- *
- */
-if ( ! function_exists( 'minnpost_largo_admin_special_character_url_redirect' ) ) :
-	add_action( 'admin_init', 'minnpost_largo_admin_special_character_url_redirect' );
-	function minnpost_largo_admin_special_character_url_redirect() {
-		if ( is_admin() && class_exists( 'WPCOM_Legacy_Redirector' ) ) {
-			$option = 'minnpost_urls_to_redirect';
-			$urls   = get_option( $option, array() );
-			if ( ! empty( $urls ) ) {
-				foreach ( $urls as $key => $url ) {
-					if ( ! isset( $url['updated'] ) || ! isset( $url['redirected'] ) ) {
-						unset( $urls[ $key ] );
-						continue;
-					}
-					$redirect_inserted = false;
-					$post_updated      = 0;
-					if ( true !== $url['updated'] ) {
-						$post_name = urldecode( basename( parse_url( $url['from'], PHP_URL_PATH ) ) );
-						global $wpdb;
-						$posts = $wpdb->get_results( 'SELECT ID FROM ' . $wpdb->prefix . 'posts' . ' WHERE post_name = "' . $post_name . '"', ARRAY_A );
-						if ( empty( $posts ) ) {
-							continue;
-						}
-						$post         = $posts[0];
-						$post_id      = $post['ID'];
-						$post_updated = wp_update_post(
-							array(
-								'ID'        => $post_id,
-								'post_name' => basename( parse_url( $url['to'], PHP_URL_PATH ) ),
-							)
-						);
-						if ( 0 !== $post_updated ) {
-							$url['updated'] = true;
-						}
-					}
-					if ( true !== $url['redirected'] ) {
-						$redirect_inserted = WPCOM_Legacy_Redirector::insert_legacy_redirect( $url['from'], $url['to'] );
-						if ( true === filter_var( $redirect_inserted, FILTER_VALIDATE_BOOLEAN ) ) {
-							$url['redirected'] = true;
-						}
-					}
-					$urls[ $key ] = $url;
-					if ( true === filter_var( $redirect_inserted, FILTER_VALIDATE_BOOLEAN ) && 0 !== $post_updated ) {
-						unset( $urls[ $key ] );
-					}
-				}
-				update_option( $option, $urls, false );
-			} else {
-				return;
-			}
-		}
-	}
-endif;
-
-// use the WP Core send_frame_options_header method to apply x-frame-options: sameorigin
-if ( function_exists( 'send_frame_options_header' ) ) :
-	add_action( 'send_headers', 'send_frame_options_header', 10, 0 );
 endif;

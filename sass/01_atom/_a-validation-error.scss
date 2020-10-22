@@ -1,0 +1,5 @@
+.a-validation-error {
+    color: brand-color(red, medium);
+    margin-bottom: $standard-block-padding;
+    @include meta-preset( $size: -2, $bold: false, $italic: false, $line-height: 1 );
+}

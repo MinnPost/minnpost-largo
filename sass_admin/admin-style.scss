@@ -1,0 +1,86 @@
+// we have a custom comment date column
+#comments-form .fixed .column-custom_date {
+	width: 14%;
+}
+
+// we never want pings
+#commentstatusdiv label[for="ping_status"],
+#commentstatusdiv .inside br {
+	display: none;
+}
+
+// category checkbox fixes
+.cmb2-category-multicheck {
+
+	.cmb-td {
+
+		p.cmb2-metabox-description {
+			padding-top: 0;
+		}
+
+		ul {
+			min-height: 42px;
+			max-height: 200px;
+			overflow: auto;
+			padding: 0 0.9em;
+			border: 1px solid #ddd;
+			background-color: #fdfdfd;
+			margin: 10px 0;
+		}
+	}
+}
+
+// parent categories are more trouble than they are worth!
+.taxonomy-category .term-parent-wrap,
+.term-php .term-parent-wrap {
+	display: none;
+}
+
+/*
+ * for now, custom field length counter needs an override.
+ * see: https://github.com/CMB2/CMB2/issues/1306
+ */
+.cmb2-char-counter {
+	width: 5em !important;
+}
+
+// excerpt fixes
+#cmb2_excerpt .cmb2-context-wrap .cmb-row {
+	padding: 0;
+}
+
+#cmb2_excerpt .cmb2-context-wrap .cmb-td {
+	width: 100%;
+}
+
+// cmb2 post ajax search fields
+.cmb-type-post-ajax-search {
+
+	ul.cmb-ajax-search-results {
+		width: auto;
+	}
+
+	input.cmb-ajax-search {
+		width: 50em;
+	}
+}
+
+// cmb2 post search ajax fields
+.cmb-type-post-search-ajax ul.cmb-post-search-ajax-results {
+	width: auto;
+}
+
+.cmb-type-post-search-ajax input.cmb-post-search-ajax {
+	width: 50em;
+}
+
+/*
+ * cmb2 category fields.
+ * this media query pixel value comes from wp-admin/css/forms.css
+ */
+@media screen and (min-width: 782px) {
+
+	.term-php .cmb2-match-admin-width .cmb-td {
+		width: calc(100% - 240px);
+	}
+}

@@ -1,16 +1,32 @@
-.o-wrapper-content-full .m-layout-primary {
-//	@include outer-container($max-width-page);
-}
-/*body.single-post .m-layout-primary, body.page .m-layout-primary {
-	flex: 0 0 100%;
+.m-layout-primary {
+	width: 100%;
+
+	@include breakpoint-min( sm ) {
+		display: flex;
+	}
+
+	@include breakpoint-min( lg ) {
+		width: colspan(8, 12);
+		max-width: calc((100% - #{colspan(1, 12)}) - #{$size__site-sidebar});
+	}
+
+	@include breakpoint-min( xl ) {
+		width: colspan(12, 16);
+		max-width: calc((100% - #{colspan(1, 16)}) - #{$size__site-sidebar});
+	}
+
 }
 
-main {
-	position: relative;
-	@include clearfix;
-	max-width: 100%;
+.o-wrapper-content-full .m-layout-primary {
+
+	@include breakpoint-min( lg ) {
+		width: colspan(16, 16);
+		max-width: (100%);
+	}
 }
-body.single-post main, body.page main {
+
+body.single-post .m-layout-primary,
+body.page .m-layout-primary {
 	flex: 0 0 100%;
 }
 
@@ -22,26 +38,8 @@ body.single-post main, body.page main {
 	.m-form-membership {
 		width: 100%;
 	}
+
 	.a-finish-strong {
 		width: 100%;
 	}
-}
-
-// media queries for layouts
-
-@media screen and (min-width: $more-than-logo-screen) {
-	.m-layout-primary {
-		display: flex;
-	}
-}
-
-@media screen and (min-width: $max-width-page) {
-	.m-layout-primary {
-		max-width: $medium-screen;
-	}
-}
-*/
-
-.m-layout-primary {
-	width: colspan( 11, 16 );
 }

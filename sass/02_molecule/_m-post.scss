@@ -1,8 +1,7 @@
 .m-archive .m-post {
-	&.status-draft, &.status-future {
+
+	&.status-draft,
+	&.status-future {
 		background: $background-unpublished;
 	}
-}
-.m-archive-top .m-post, .m-archive-excerpt .m-post {
-	@include clearfix;
 }

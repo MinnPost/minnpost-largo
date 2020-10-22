@@ -136,6 +136,11 @@ require get_theme_file_path() . '/inc/apple-news.php';
 require get_theme_file_path() . '/inc/robots.php';
 
 /**
+ * The Events Calendar related methods
+ */
+require get_theme_file_path() . '/inc/events.php';
+
+/**
  * Jetpack related methods
  */
 require get_theme_file_path() . '/inc/jetpack.php';

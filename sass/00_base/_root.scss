@@ -1,60 +1,68 @@
-html {
-	box-sizing: border-box;
-	background: $color__background-body;
-	margin: 0;
-	padding: 0;
-}
-
 *,
-*:before,
-*:after { /* Inherit box-sizing to make it easier to change the property for components that leverage other behavior; see http://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
+*::before,
+*::after { /* Inherit box-sizing to make it easier to change the property for components that leverage other behavior; see http://css-tricks.com/inheriting-box-sizing-probably-slightly-better-best-practice/ */
 	box-sizing: inherit;
 }
 
-body {
-	//max-width: $max-width-page;
-	margin: 0 auto;
+// root elements
+html {
+	box-sizing: border-box;
+	margin: 0;
 	padding: 0;
-	color: $color__minnpost-black;
-	font-family: $font__serif;
-	font-size: $base-font-size;
-	line-height: $base-line-height;
-	background: $color__base-background-color;
+	color: neutral-color(black);
+	background: neutral-color(white);
 }
 
-blockquote, q {
-	quotes: "" "";
+body {
+	margin: 0 auto;
+	padding: 0;
+	color: neutral-color(black);
+	background: neutral-color(white);
+}
 
-	&:before,
-	&:after {
-		content: "";
-	}
+main {
+	position: relative;
+	max-width: 100%;
+	flex: 0 0 100%;
 }
 
 hr {
-	background-color: $color__background-hr;
+	background-color: neutral-color(border);
 	border: 0;
 	height: 1px;
-	margin-bottom: $base-line-height-em;
+	margin-bottom: $standard-block-margin;
 }
 
+// images
 img {
 	height: auto; /* Make sure images are scaled correctly. */
 	max-width: 100%; /* Adhere to container width. */
 }
 
-figure {
-	margin: 1em 0; /* Extra wide images within figure tags don't overflow the content area. */
+a svg {
+	pointer-events: none;
 }
 
+figure {
+	margin: $standard-block-margin 0; /* Extra wide images within figure tags don't overflow the content area. */
+}
+
+// forms
 label {
-	line-height: $base-line-height-em;
 	display: inline-block;
 }
 
-input, select, textarea {
+input:not([type=submit]),
+select,
+textarea {
 	max-width: 100%; // sometimes there'll be more specific sizes, but we should never go over 100% here
-	font-family: $font__sans;
-	font-size: 99%;
 	line-height: normal;
+	color: neutral-color(black);
+	border-radius: $border-radius;
+	border: $border-default-style;
+}
+
+[data-autoresize] {
+	resize: none;
+	box-sizing: border-box;
 }
