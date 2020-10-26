@@ -1319,10 +1319,10 @@ if ( ! function_exists( 'minnpost_category_breadcrumb' ) ) :
 		}
 		$category_id       = minnpost_get_permalink_category_id( $post_id );
 		$category_group_id = '';
+		$category_is_group = false;
 		if ( '' !== $category_id ) {
-			$category          = get_category( $category_id );
-			$category_link     = get_category_link( $category );
-			$category_is_group = false;
+			$category      = get_category( $category_id );
+			$category_link = get_category_link( $category );
 			if ( true === $show_group ) {
 				$category_group_id = minnpost_get_category_group_id( $post_id, $category_id );
 				if ( '' !== $category_group_id ) {
