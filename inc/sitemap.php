@@ -6,6 +6,10 @@
  * @package MinnPost Largo
  */
 
+// note: on VIP Go, the core sitemap is currently disabled.
+// https://github.com/Automattic/vip-go-mu-plugins/blob/master/000-vip-init.php#L255-L258
+// see PR https://github.com/Automattic/vip-go-mu-plugins/pull/1704
+
 /**
 * Change post types that are included in the sitemap
 *
