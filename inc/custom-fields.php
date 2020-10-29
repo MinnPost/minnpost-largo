@@ -783,6 +783,14 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			)
 		);
 		$related_settings->add_field(
+			array(
+				'name' => __( 'Show related posts on homepage?', 'minnpost-largo' ),
+				'id'   => '_mp_related_content_on_listing',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, and if this post is the lead story on the homepage, this post will list the above related content posts as related coverage.', 'minnpost-largo' ),
+			)
+		);
+		$related_settings->add_field(
 			minnpost_post_search_field(
 				array(
 					'name'       => __( 'Related Multimedia', 'minnpost-largo' ),
