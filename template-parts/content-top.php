@@ -43,4 +43,5 @@ if ( 'before' === $image_position ) {
 		</div>
 	</div>
 	<?php minnpost_post_image( 'feature-large' ); ?>
+	<?php minnpost_related_on_listing( 'lead-story', get_the_ID() ); ?>
 </article>
