@@ -3,6 +3,10 @@
 	flex-wrap: wrap;
 	margin: 0 0 $standard-block-margin 0;
 
+	&.m-related-on-listing {
+		margin: 0 0 $standard-heading-margin 0;
+	}
+
 	h3 {
 		font-size: var(--scale0);
 	}
@@ -45,6 +49,21 @@
 					&:last-child {
 						margin-bottom: $standard-block-padding;
 					}
+				}
+			}
+		}
+
+		&.a-related-list-lead-story {
+			@include body-preset( $size: -3 );
+			margin: 0;
+			padding: 0;
+
+			li {
+				padding: 0 $standard-heading-margin 0 0;
+				margin: 0;
+
+				&:last-of-type {
+					padding-right: 0;
 				}
 			}
 		}

@@ -520,38 +520,56 @@ endif;
 */
 if ( ! function_exists( 'minnpost_related_on_archive' ) ) :
 	function minnpost_related_on_listing( $placement, $post_id ) {
+		$related_posts = minnpost_get_related_on_listing( $placement, $post_id );
+		if ( ! empty( $related_posts ) ) :
+			?>
+			<div class="m-related m-related-on-listing">
+				<h4 class="a-related-title"><?php echo __( 'Related MinnPost Coverage', 'minnpost-largo' ); ?></h4>
+				<ul class="a-related-list a-related-list-<?php echo $placement; ?>">
+					<?php
+					global $post;
+					foreach ( $related_posts as $post ) :
+						setup_postdata( $post );
+						include(
+							locate_template(
+								array(
+									'template-parts/related-post-' . $placement . '.php',
+									'template-parts/related-post.php',
+								)
+							)
+						);
+					endforeach;
+					wp_reset_postdata();
+					?>
+				</ul>
+			</div>
+			<?php
+		endif;
+	}
+endif;
+
+/**
+* Get the manually picked related stories for a post in an archive context.
+* ex with lead story on homepage.
+*
+* @param string $placement
+* @param int $post_id
+*
+*/
+if ( ! function_exists( 'minnpost_get_related_on_archive' ) ) :
+	function minnpost_get_related_on_listing( $placement, $post_id ) {
+		$related_posts              = array();
 		$related_content_on_listing = get_post_meta( $post_id, '_mp_related_content_on_listing', true );
 		if ( 'on' !== $related_content_on_listing ) {
-			return '';
+			return $related_posts;
 		}
 		if ( 'lead-story' === $placement ) {
-			$related_ids   = minnpost_get_related( 'content', $post_id );
-			$related_posts = array();
+			$related_ids = minnpost_get_related( 'content', $post_id );
 			foreach ( $related_ids as $id ) {
 				$related_posts[] = get_post( $id );
 			}
 		}
-		if ( ! empty( $related_posts ) ) :
-			?>
-			<ul class="a-related-list a-related-list-<?php echo $placement; ?>">
-				<?php
-				global $post;
-				foreach ( $related_posts as $post ) :
-					setup_postdata( $post );
-					include(
-						locate_template(
-							array(
-								'template-parts/related-post-' . $placement . '.php',
-								'template-parts/related-post.php',
-							)
-						)
-					);
-				endforeach;
-				wp_reset_postdata();
-				?>
-			</ul>
-			<?php
-		endif;
+		return $related_posts;
 	}
 endif;
 
