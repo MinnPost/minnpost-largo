@@ -1580,7 +1580,7 @@ if ( ! function_exists( 'cmb2_author_fields' ) ) :
 				'name' => __( 'Prevent lazy loading of embed ads?', 'minnpost-largo' ),
 				'id'   => 'arcads_dfp_acm_provider_post_prevent_lazyload',
 				'type' => 'checkbox',
-				'desc' => __( 'If checked, the image for this author will not be lazy loaded.', 'minnpost-largo' ),
+				'desc' => __( 'If checked, this post will not attempt to lazy load embed ads.', 'minnpost-largo' ),
 			)
 		);
 	}
