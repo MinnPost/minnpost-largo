@@ -332,3 +332,14 @@ if ( ! function_exists( 'minnpost_largo_remove_republish_button_from_category' )
 		return $hide_republication_widget;
 	}
 endif;
+
+// Temporary fix for 404 status code on sitemap.xml
+// See https://core.trac.wordpress.org/ticket/51136
+add_action(
+	'init',
+	function() {
+		global $wp_sitemaps;
+		remove_action( 'template_redirect', array( $wp_sitemaps, 'render_sitemaps' ) );
+	},
+	100
+);
