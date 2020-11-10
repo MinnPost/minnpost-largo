@@ -7,8 +7,14 @@
  * @package MinnPost Largo
  */
 
+$seo_title = get_post_meta( $post->ID, '_mp_seo_title', true );
+if ( '' !== $seo_title ) {
+	$title = $seo_title;
+} else {
+	$title = get_the_title( $post->ID );
+}
 ?>
 
 <li>
-	<a href="<?php echo get_permalink( $post->id ); ?>"><?php echo get_the_title( $post->id ); ?></a>
+	<a href="<?php echo get_permalink( $post->ID ); ?>"><?php echo $title; ?></a>
 </li>
