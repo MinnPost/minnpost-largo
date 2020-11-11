@@ -30,6 +30,17 @@ body.page .m-layout-primary {
 	flex: 0 0 100%;
 }
 
+body.category-group-sponsored-content {
+
+	.m-layout-primary {
+		.m-archive-header *,
+		.m-entry-header *,
+		.o-entry * {
+			font-family: $font__sans;
+		}
+	}
+}
+
 .m-layout-membership .m-membership-support-wrapper {
 	display: flex;
 	justify-content: space-between;
