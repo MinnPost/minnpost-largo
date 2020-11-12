@@ -652,3 +652,18 @@ if ( ! function_exists( 'minnpost_popup_url_matches' ) ) :
 		return $is_match;
 	}
 endif;
+
+/**
+ * Use Elasticsearch for message queries
+ * @param array $args
+ * @return array $args
+ */
+if ( ! function_exists( 'minnpost_message_args' ) ) :
+	add_filter( 'wp_message_inserter_post_args', 'minnpost_message_args' );
+	function minnpost_message_args( $args ) {
+		if ( 'production' === VIP_GO_ENV ) {
+			$args['es'] = true; // elasticsearch on production only
+		}
+		return $args;
+	}
+endif;
