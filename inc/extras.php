@@ -198,31 +198,6 @@ add_action(
 );
 
 /**
- * default editor for certain posts
- */
-if ( ! function_exists( 'minnpost_set_default_editor' ) ) :
-	add_filter( 'wp_default_editor', 'minnpost_set_default_editor' );
-	function minnpost_set_default_editor( $editor ) {
-		//$screen = get_current_screen();
-
-		if ( is_admin() ) {
-			global $post;
-			if ( is_object( $post ) && isset( $post->ID ) ) {
-				$id       = $post->ID;
-				$use_html = get_post_meta( $id, '_mp_post_use_html_editor', true );
-				if ( 'on' === $use_html ) {
-					$editor = 'html';
-				} else {
-					$editor = 'tinymce';
-				}
-			}
-		}
-
-		return $editor;
-	}
-endif;
-
-/**
  * Use Elasticsearch for Zoninator zone queries
  * @param array $args
  * @return array $args
@@ -230,21 +205,6 @@ endif;
 if ( ! function_exists( 'minnpost_zoninator_elasticsearch' ) ) :
 	add_filter( 'zoninator_recent_posts_args', 'minnpost_zoninator_elasticsearch' );
 	function minnpost_zoninator_elasticsearch( $args ) {
-		if ( 'production' === VIP_GO_ENV ) {
-			$args['es'] = true; // elasticsearch on production only
-		}
-		return $args;
-	}
-endif;
-
-/**
- * Use Elasticsearch for message queries
- * @param array $args
- * @return array $args
- */
-if ( ! function_exists( 'minnpost_message_args' ) ) :
-	add_filter( 'wp_message_inserter_post_args', 'minnpost_message_args' );
-	function minnpost_message_args( $args ) {
 		if ( 'production' === VIP_GO_ENV ) {
 			$args['es'] = true; // elasticsearch on production only
 		}
@@ -266,8 +226,6 @@ add_filter(
 		return $hosts;
 	}
 );
-
-wpcom_vip_load_gutenberg( false );
 
 /**
  * Prevent VIP Support users from being redirected to /user/login. They can use wp-login.php.
@@ -343,3 +301,31 @@ add_action(
 	},
 	100
 );
+
+/**
+ * default editor for certain posts
+ */
+if ( ! function_exists( 'minnpost_set_default_editor' ) ) :
+	add_filter( 'wp_default_editor', 'minnpost_set_default_editor' );
+	function minnpost_set_default_editor( $editor ) {
+		//$screen = get_current_screen();
+
+		if ( is_admin() ) {
+			global $post;
+			if ( is_object( $post ) && isset( $post->ID ) ) {
+				$id       = $post->ID;
+				$use_html = get_post_meta( $id, '_mp_post_use_html_editor', true );
+				if ( 'on' === $use_html ) {
+					$editor = 'html';
+				} else {
+					$editor = 'tinymce';
+				}
+			}
+		}
+
+		return $editor;
+	}
+endif;
+
+// do not load gutenberg
+wpcom_vip_load_gutenberg( false );
