@@ -553,6 +553,11 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 			remove_menu_page( 'edit.php' );
 		}
 
+		// users who cannot manage redirects
+		if ( ! current_user_can( 'manage_redirects' ) ) {
+			remove_menu_page( 'edit.php?post_type=vip-legacy-redirect' );
+		}
+
 		// admins only
 		if ( ! current_user_can( 'administrator' ) ) {
 			// vip host stuff
@@ -577,6 +582,8 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 			remove_menu_page( 'stop_spammers' );
 			// font awesome
 			remove_menu_page( 'font-awesome' );
+			// structured data
+			remove_menu_page( 'edit.php?post_type=saswp' );
 		}
 
 	}
