@@ -291,6 +291,25 @@ if ( ! function_exists( 'minnpost_largo_remove_republish_button_from_category' )
 	}
 endif;
 
+/**
+ * Filter the Slack notification
+ * @param array $notification
+ * @param string $message
+ * @param array $attachments
+ * @param array $args
+ * @return array $notification
+*/
+if ( ! function_exists( 'minnpost_slack_notification' ) ) :
+	add_filter( 'slack_after_notification_generation', 'minnpost_slack_notification', 10, 4 );
+	function minnpost_slack_notification( $notification, $message, $attachments, $args ) {
+		// clear out the fields array
+		$notification['attachments'][0]['fields'] = array();
+		// edit the message that gets posted a bit
+		$notification['text']                     = str_replace( 'published right now!', 'just published.', $notification['text'] );
+		return $notification;
+	}
+endif;
+
 // Temporary fix for 404 status code on sitemap.xml
 // See https://core.trac.wordpress.org/ticket/51136
 add_action(
