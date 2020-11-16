@@ -322,6 +322,91 @@ add_action(
 );
 
 /**
+* Hide author and comments on sponsored content
+*
+* @param string $hide_author
+* @return string $hide_author
+*
+*/
+if ( ! function_exists( 'minnpost_largo_hide_sponsored_author' ) ) :
+	add_filter( 'minnpost_largo_hide_author', 'minnpost_largo_hide_sponsored_author' );
+	function minnpost_largo_hide_sponsored_author( $hide_author ) {
+		global $wp_query;
+		$object_id      = $wp_query->get_queried_object_id();
+		$category_id    = '';
+		$category_group = '';
+		if ( is_category() ) {
+			$category_id = $object_id;
+		}
+		if ( is_single() ) {
+			$category_id = minnpost_get_permalink_category_id( $object_id );
+		}
+		$category_group_id = '';
+		if ( '' !== $category_id ) {
+			$category          = get_category( $category_id );
+			$category_group_id = minnpost_get_category_group_id( '', $category_id );
+			if ( '' !== $category_group_id ) {
+				$category_group = get_category( $category_group_id );
+			} else {
+				if ( function_exists( 'minnpost_largo_category_groups' ) ) {
+					$groups = minnpost_largo_category_groups();
+					if ( in_array( $category->slug, $groups, true ) ) {
+						$category_group = $category;
+					}
+				}
+			}
+			if ( '' !== $category_group ) {
+				if ( 'sponsored-content' === $category_group->slug ) {
+					$hide_author = 'on';
+				}
+			}
+		}
+		return $hide_author;
+	}
+endif;
+
+/**
+* Remove comments on sponsored content
+*
+* @param bool $comments_open
+* @return bool $comments_open
+*
+*/
+if ( ! function_exists( 'minnpost_largo_remove_comments_sponsored' ) ) :
+	add_filter( 'comments_open', 'minnpost_largo_remove_comments_sponsored', 20, 1 );
+	function minnpost_largo_remove_comments_sponsored( $comments_open = true ) {
+		global $wp_query;
+		$object_id      = $wp_query->get_queried_object_id();
+		$category_id    = '';
+		$category_group = '';
+		if ( is_single() ) {
+			$category_id = minnpost_get_permalink_category_id( $object_id );
+		}
+		$category_group_id = '';
+		if ( '' !== $category_id ) {
+			$category          = get_category( $category_id );
+			$category_group_id = minnpost_get_category_group_id( '', $category_id );
+			if ( '' !== $category_group_id ) {
+				$category_group = get_category( $category_group_id );
+			} else {
+				if ( function_exists( 'minnpost_largo_category_groups' ) ) {
+					$groups = minnpost_largo_category_groups();
+					if ( in_array( $category->slug, $groups, true ) ) {
+						$category_group = $category;
+					}
+				}
+			}
+			if ( '' !== $category_group ) {
+				if ( 'sponsored-content' === $category_group->slug ) {
+					$comments_open = false;
+				}
+			}
+		}
+		return $comments_open;
+	}
+endif;
+
+/**
  * default editor for certain posts
  */
 if ( ! function_exists( 'minnpost_set_default_editor' ) ) :

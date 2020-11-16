@@ -106,6 +106,7 @@
 
 	<?php
 	$hide_author = get_post_meta( $id, '_mp_remove_author_from_display', true );
+	$hide_author = apply_filters( 'minnpost_largo_hide_author', '' );
 	$coauthors   = get_coauthors( get_the_ID() );
 	$author_info = '';
 	if ( 'on' !== $hide_author && empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) ) ) {
