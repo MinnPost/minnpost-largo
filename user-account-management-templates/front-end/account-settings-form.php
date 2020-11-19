@@ -41,7 +41,7 @@
 	<fieldset>
 		<div class="m-form-item m-form-email m-form-change-email">
 			<?php
-			$user_other_emails = minnpost_largo_check_consolidated_emails( $attributes['user_meta'], isset( $_POST['email'] ) && wp_verify_nonce( sanitize_key( $_POST['wp_create_nonce'] ), 'uam-account-settings-nonce' ) ? sanitize_email( $_POST['email'] ) : isset( $attributes['user']->user_email ) ? esc_html( $attributes['user']->user_email ) : '' );
+			$user_other_emails = minnpost_largo_check_consolidated_emails( $attributes['user_meta'], $attributes['email_value'] );
 			$email_count       = count( $user_other_emails );
 			if ( 0 === $email_count ) {
 				$label = sprintf( esc_html__( 'Email address:', 'minnpost-largo' ), $email_count );
@@ -74,7 +74,7 @@
 				<input type="hidden" name="email" id="email" value="<?php echo isset( $attributes['user']->user_email ) ? esc_html( $attributes['user']->user_email ) : ''; ?>">
 				<input type="hidden" name="_consolidated_emails" id="_consolidated_emails" value="<?php echo isset( $attributes['user']->user_email ) ? esc_html( $attributes['user']->user_email ) . ',' : ''; ?><?php echo implode( ',', array_map( 'esc_html', wp_unslash( $user_other_emails ) ) ); ?>">
 			<?php else : ?>
-					<input type="email" name="email" id="email" value="<?php echo isset( $_POST['email'] ) && wp_verify_nonce( sanitize_key( $_POST['wp_create_nonce'] ), 'uam-account-settings-nonce' ) ? sanitize_email( $_POST['email'] ) : isset( $attributes['user']->user_email ) ? esc_html( $attributes['user']->user_email ) : ''; ?>" required>
+					<input type="email" name="email" id="email" value="<?php echo $attributes['email_value']; ?>" required>
 			<?php endif; ?>
 			<div class="a-form-caption a-add-email">
 				<a href="#">Add another email address</a>
@@ -104,7 +104,16 @@
 
 		<div class="m-form-item m-form-street-address m-form-change-street-address">
 			<label for="street-address"><?php echo esc_html__( 'Street address:', 'minnpost-largo' ); ?></label>
-			<input type="text" name="street_address" id="street-address" value="<?php echo isset( $_POST['street_address'] ) ? $_POST['street_address'] : isset( $attributes['user_meta']['_street_address'] ) ? $attributes['user_meta']['_street_address'][0] : ''; ?>">
+			<?php 
+			if ( isset( $_POST['street_address'] ) ) {
+				$street_address = sanitize_text_field( $_POST['street_address'] );
+			} elseif ( isset( $attributes['user_meta']['_street_address'] ) ) {
+				$street_address = $attributes['user_meta']['_street_address'][0];
+			} else {
+				$street_address = '';
+			}
+			?>
+			<input type="text" name="street_address" id="street-address" value="<?php echo $street_address; ?>">
 		</div>
 
 		<div class="m-form-item m-form-zip-code m-form-change-zip-code">
