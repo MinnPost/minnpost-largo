@@ -156,7 +156,7 @@ msgstr ""
 msgid "<a href=\"%1$s\">Log in</a> for the option to always show comments on MinnPost."
 msgstr ""
 
-#: inc/comments.php:558, user-account-management-templates/front-end/account-settings-form.php:132
+#: inc/comments.php:558, user-account-management-templates/front-end/account-settings-form.php:141
 msgid "Save Changes"
 msgstr ""
 
@@ -1117,7 +1117,7 @@ msgstr ""
 msgid "A value here will cause the menu item to display as an icon."
 msgstr ""
 
-#: inc/menus.php:642
+#: inc/menus.php:649
 msgid "Unpublished"
 msgstr ""
 
@@ -1286,6 +1286,10 @@ msgstr ""
 msgid "You are not allowed to access this part of the site"
 msgstr ""
 
+#: template-parts/content-none.php:11
+msgid "This category is empty."
+msgstr ""
+
 #. translators: 1 is the site name
 #: template-parts/logo.php:5
 msgid "Return to %1$s Homepage"
@@ -1327,7 +1331,7 @@ msgstr ""
 msgid "First name:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:85, user-account-management-templates/front-end/account-settings-form.php:90, user-account-management-templates/front-end/account-settings-form.php:96, user-account-management-templates/front-end/account-settings-form.php:100, user-account-management-templates/front-end/account-settings-form.php:111, user-account-management-templates/front-end/account-settings-form.php:117
+#: user-account-management-templates/front-end/account-settings-form.php:85, user-account-management-templates/front-end/account-settings-form.php:90, user-account-management-templates/front-end/account-settings-form.php:96, user-account-management-templates/front-end/account-settings-form.php:100, user-account-management-templates/front-end/account-settings-form.php:120, user-account-management-templates/front-end/account-settings-form.php:126
 msgid "This field is required."
 msgstr ""
 
@@ -1347,11 +1351,11 @@ msgstr ""
 msgid "Street address:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:111
+#: user-account-management-templates/front-end/account-settings-form.php:120
 msgid "Zip code:"
 msgstr ""
 
-#: user-account-management-templates/front-end/account-settings-form.php:117
+#: user-account-management-templates/front-end/account-settings-form.php:126
 msgid "Country:"
 msgstr ""
 
