@@ -298,7 +298,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'name'       => __( 'Stories Manual Override', 'minnpost-largo' ),
 				'id'         => $prefix . 'news_posts_override',
 				'type'       => 'text',
-				'desc'       => __( 'Use this field if the search is not working. Enter one or more post IDs, and the newsletter template will use them instead of the search field value.', 'minnpost-largo' ),
+				'desc'       => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them instead of the search field value.', 'minnpost-largo' ),
 				'attributes' => array(
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
@@ -357,7 +357,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'name'       => __( 'Stories Manual Override', 'minnpost-largo' ),
 				'id'         => $prefix . 'news_posts_override',
 				'type'       => 'text',
-				'desc'       => __( 'Use this field if the search is not working. Enter one or more post IDs, and the newsletter template will use them instead of the search field value.', 'minnpost-largo' ),
+				'desc'       => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them instead of the search field value.', 'minnpost-largo' ),
 				'attributes' => array(
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
@@ -416,7 +416,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'name'       => __( 'Stories Manual Override', 'minnpost-largo' ),
 				'id'         => $prefix . 'news_posts_override',
 				'type'       => 'text',
-				'desc'       => __( 'Use this field if the search is not working. Enter one or more post IDs, and the newsletter template will use them instead of the search field value.', 'minnpost-largo' ),
+				'desc'       => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them instead of the search field value.', 'minnpost-largo' ),
 				'attributes' => array(
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
@@ -475,7 +475,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'name'       => __( 'Stories Manual Override', 'minnpost-largo' ),
 				'id'         => $prefix . 'news_posts_override',
 				'type'       => 'text',
-				'desc'       => __( 'Use this field if the search is not working. Enter one or more post IDs, and the newsletter template will use them instead of the search field value.', 'minnpost-largo' ),
+				'desc'       => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them instead of the search field value.', 'minnpost-largo' ),
 				'attributes' => array(
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
