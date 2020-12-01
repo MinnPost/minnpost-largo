@@ -783,6 +783,14 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			)
 		);
 		$related_settings->add_field(
+			array(
+				'name' => __( 'Show related posts on homepage?', 'minnpost-largo' ),
+				'id'   => '_mp_related_content_on_listing',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, and if this post is the lead story on the homepage, this post will list the above related content posts as related coverage. Each story will display its SEO Title value if there is one. Otherwise it will display its normal title.', 'minnpost-largo' ),
+			)
+		);
+		$related_settings->add_field(
 			minnpost_post_search_field(
 				array(
 					'name'       => __( 'Related Multimedia', 'minnpost-largo' ),
@@ -1580,7 +1588,7 @@ if ( ! function_exists( 'cmb2_author_fields' ) ) :
 				'name' => __( 'Prevent lazy loading of embed ads?', 'minnpost-largo' ),
 				'id'   => 'arcads_dfp_acm_provider_post_prevent_lazyload',
 				'type' => 'checkbox',
-				'desc' => __( 'If checked, the image for this author will not be lazy loaded.', 'minnpost-largo' ),
+				'desc' => __( 'If checked, this post will not attempt to lazy load embed ads.', 'minnpost-largo' ),
 			)
 		);
 	}

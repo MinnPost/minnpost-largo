@@ -521,6 +521,69 @@ if ( ! function_exists( 'minnpost_share_buttons' ) ) :
 endif;
 
 /**
+* Output the manually picked related stories for a post in an archive context.
+* ex with lead story on homepage.
+*
+* @param string $placement
+* @param int $post_id
+*
+*/
+if ( ! function_exists( 'minnpost_related_on_archive' ) ) :
+	function minnpost_related_on_listing( $placement, $post_id ) {
+		$related_posts = minnpost_get_related_on_listing( $placement, $post_id );
+		if ( ! empty( $related_posts ) ) :
+			?>
+			<div class="m-related m-related-on-listing">
+				<h4 class="a-related-title"><?php echo __( 'Related MinnPost Coverage', 'minnpost-largo' ); ?></h4>
+				<ul class="a-related-list a-related-list-<?php echo $placement; ?>">
+					<?php
+					global $post;
+					foreach ( $related_posts as $post ) :
+						setup_postdata( $post );
+						include(
+							locate_template(
+								array(
+									'template-parts/related-post-' . $placement . '.php',
+									'template-parts/related-post.php',
+								)
+							)
+						);
+					endforeach;
+					wp_reset_postdata();
+					?>
+				</ul>
+			</div>
+			<?php
+		endif;
+	}
+endif;
+
+/**
+* Get the manually picked related stories for a post in an archive context.
+* ex with lead story on homepage.
+*
+* @param string $placement
+* @param int $post_id
+*
+*/
+if ( ! function_exists( 'minnpost_get_related_on_archive' ) ) :
+	function minnpost_get_related_on_listing( $placement, $post_id ) {
+		$related_posts              = array();
+		$related_content_on_listing = get_post_meta( $post_id, '_mp_related_content_on_listing', true );
+		if ( 'on' !== $related_content_on_listing ) {
+			return $related_posts;
+		}
+		if ( 'lead-story' === $placement ) {
+			$related_ids = minnpost_get_related( 'content', $post_id );
+			foreach ( $related_ids as $id ) {
+				$related_posts[] = get_post( $id );
+			}
+		}
+		return $related_posts;
+	}
+endif;
+
+/**
 * Output the manually picked related stories for a post
 *
 * @see inc/jetpack.php for automated related stories
@@ -585,14 +648,18 @@ endif;
 * Get the related stories for a post
 *
 * @param string $type
+* @param int $post_id
 * @return array $related
 *
 */
 if ( ! function_exists( 'minnpost_get_related' ) ) :
-	function minnpost_get_related( $type = 'content' ) {
+	function minnpost_get_related( $type = 'content', $post_id = 0 ) {
+		if ( 0 === $post_id ) {
+			$post_id = get_the_ID();
+		}
 		$related = array();
-		if ( ! empty( get_post_meta( get_the_ID(), '_mp_related_' . $type, true ) ) ) {
-			$ids = get_post_meta( get_the_ID(), '_mp_related_' . $type, true );
+		if ( ! empty( get_post_meta( $post_id, '_mp_related_' . $type, true ) ) ) {
+			$ids = get_post_meta( $post_id, '_mp_related_' . $type, true );
 			if ( ! is_array( $ids ) ) {
 				$related = explode( ',', esc_html( $ids ) );
 			} else {
@@ -1329,10 +1396,10 @@ if ( ! function_exists( 'minnpost_category_breadcrumb' ) ) :
 		}
 		$category_id       = minnpost_get_permalink_category_id( $post_id );
 		$category_group_id = '';
+		$category_is_group = false;
 		if ( '' !== $category_id ) {
-			$category          = get_category( $category_id );
-			$category_link     = get_category_link( $category );
-			$category_is_group = false;
+			$category      = get_category( $category_id );
+			$category_link = get_category_link( $category );
 			if ( true === $show_group ) {
 				$category_group_id = minnpost_get_category_group_id( $post_id, $category_id );
 				if ( '' !== $category_group_id ) {

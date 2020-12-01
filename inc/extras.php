@@ -198,31 +198,6 @@ add_action(
 );
 
 /**
- * default editor for certain posts
- */
-if ( ! function_exists( 'minnpost_set_default_editor' ) ) :
-	add_filter( 'wp_default_editor', 'minnpost_set_default_editor' );
-	function minnpost_set_default_editor( $editor ) {
-		//$screen = get_current_screen();
-
-		if ( is_admin() ) {
-			global $post;
-			if ( is_object( $post ) && isset( $post->ID ) ) {
-				$id       = $post->ID;
-				$use_html = get_post_meta( $id, '_mp_post_use_html_editor', true );
-				if ( 'on' === $use_html ) {
-					$editor = 'html';
-				} else {
-					$editor = 'tinymce';
-				}
-			}
-		}
-
-		return $editor;
-	}
-endif;
-
-/**
  * Use Elasticsearch for Zoninator zone queries
  * @param array $args
  * @return array $args
@@ -230,21 +205,6 @@ endif;
 if ( ! function_exists( 'minnpost_zoninator_elasticsearch' ) ) :
 	add_filter( 'zoninator_recent_posts_args', 'minnpost_zoninator_elasticsearch' );
 	function minnpost_zoninator_elasticsearch( $args ) {
-		if ( 'production' === VIP_GO_ENV ) {
-			$args['es'] = true; // elasticsearch on production only
-		}
-		return $args;
-	}
-endif;
-
-/**
- * Use Elasticsearch for message queries
- * @param array $args
- * @return array $args
- */
-if ( ! function_exists( 'minnpost_message_args' ) ) :
-	add_filter( 'wp_message_inserter_post_args', 'minnpost_message_args' );
-	function minnpost_message_args( $args ) {
 		if ( 'production' === VIP_GO_ENV ) {
 			$args['es'] = true; // elasticsearch on production only
 		}
@@ -266,8 +226,6 @@ add_filter(
 		return $hosts;
 	}
 );
-
-wpcom_vip_load_gutenberg( false );
 
 /**
  * Prevent VIP Support users from being redirected to /user/login. They can use wp-login.php.
@@ -350,3 +308,146 @@ if ( ! function_exists( 'minnpost_largo_republication_modal' ) ) :
 		<?php
 	}
 endif;
+
+/**
+ * Filter the Slack notification
+ * @param array $notification
+ * @param string $message
+ * @param array $attachments
+ * @param array $args
+ * @return array $notification
+*/
+if ( ! function_exists( 'minnpost_slack_notification' ) ) :
+	add_filter( 'slack_after_notification_generation', 'minnpost_slack_notification', 10, 4 );
+	function minnpost_slack_notification( $notification, $message, $attachments, $args ) {
+		// clear out the fields array
+		$notification['attachments'][0]['fields'] = array();
+		// edit the message that gets posted a bit
+		$notification['text']                     = str_replace( 'published right now!', 'just published.', $notification['text'] );
+		return $notification;
+	}
+endif;
+
+// Temporary fix for 404 status code on sitemap.xml
+// See https://core.trac.wordpress.org/ticket/51136
+add_action(
+	'init',
+	function() {
+		global $wp_sitemaps;
+		remove_action( 'template_redirect', array( $wp_sitemaps, 'render_sitemaps' ) );
+	},
+	100
+);
+
+/**
+* Hide author and comments on sponsored content
+*
+* @param string $hide_author
+* @return string $hide_author
+*
+*/
+if ( ! function_exists( 'minnpost_largo_hide_sponsored_author' ) ) :
+	add_filter( 'minnpost_largo_hide_author', 'minnpost_largo_hide_sponsored_author' );
+	function minnpost_largo_hide_sponsored_author( $hide_author ) {
+		global $wp_query;
+		$object_id      = $wp_query->get_queried_object_id();
+		$category_id    = '';
+		$category_group = '';
+		if ( is_category() ) {
+			$category_id = $object_id;
+		}
+		if ( is_single() ) {
+			$category_id = minnpost_get_permalink_category_id( $object_id );
+		}
+		$category_group_id = '';
+		if ( '' !== $category_id ) {
+			$category          = get_category( $category_id );
+			$category_group_id = minnpost_get_category_group_id( '', $category_id );
+			if ( '' !== $category_group_id ) {
+				$category_group = get_category( $category_group_id );
+			} else {
+				if ( function_exists( 'minnpost_largo_category_groups' ) ) {
+					$groups = minnpost_largo_category_groups();
+					if ( in_array( $category->slug, $groups, true ) ) {
+						$category_group = $category;
+					}
+				}
+			}
+			if ( '' !== $category_group ) {
+				if ( 'sponsored-content' === $category_group->slug ) {
+					$hide_author = 'on';
+				}
+			}
+		}
+		return $hide_author;
+	}
+endif;
+
+/**
+* Remove comments on sponsored content
+*
+* @param bool $comments_open
+* @return bool $comments_open
+*
+*/
+if ( ! function_exists( 'minnpost_largo_remove_comments_sponsored' ) ) :
+	add_filter( 'comments_open', 'minnpost_largo_remove_comments_sponsored', 20, 1 );
+	function minnpost_largo_remove_comments_sponsored( $comments_open = true ) {
+		global $wp_query;
+		$object_id      = $wp_query->get_queried_object_id();
+		$category_id    = '';
+		$category_group = '';
+		if ( is_single() ) {
+			$category_id = minnpost_get_permalink_category_id( $object_id );
+		}
+		$category_group_id = '';
+		if ( '' !== $category_id ) {
+			$category          = get_category( $category_id );
+			$category_group_id = minnpost_get_category_group_id( '', $category_id );
+			if ( '' !== $category_group_id ) {
+				$category_group = get_category( $category_group_id );
+			} else {
+				if ( function_exists( 'minnpost_largo_category_groups' ) ) {
+					$groups = minnpost_largo_category_groups();
+					if ( in_array( $category->slug, $groups, true ) ) {
+						$category_group = $category;
+					}
+				}
+			}
+			if ( '' !== $category_group ) {
+				if ( 'sponsored-content' === $category_group->slug ) {
+					$comments_open = false;
+				}
+			}
+		}
+		return $comments_open;
+	}
+endif;
+
+/**
+ * default editor for certain posts
+ */
+if ( ! function_exists( 'minnpost_set_default_editor' ) ) :
+	add_filter( 'wp_default_editor', 'minnpost_set_default_editor' );
+	function minnpost_set_default_editor( $editor ) {
+		//$screen = get_current_screen();
+
+		if ( is_admin() ) {
+			global $post;
+			if ( is_object( $post ) && isset( $post->ID ) ) {
+				$id       = $post->ID;
+				$use_html = get_post_meta( $id, '_mp_post_use_html_editor', true );
+				if ( 'on' === $use_html ) {
+					$editor = 'html';
+				} else {
+					$editor = 'tinymce';
+				}
+			}
+		}
+
+		return $editor;
+	}
+endif;
+
+// do not load gutenberg
+wpcom_vip_load_gutenberg( false );
