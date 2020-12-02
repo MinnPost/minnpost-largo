@@ -34,6 +34,7 @@ if ( ! function_exists( 'create_newsletter' ) ) :
 					'not_found_in_trash' => __( 'No newsletters found in Trash.', 'minnpost-largo' ),
 				),
 				'show_ui'             => true,
+				'show_in_rest'        => true,
 				'public'              => true,
 				'exclude_from_search' => true,
 				'hierarchical'        => true,
