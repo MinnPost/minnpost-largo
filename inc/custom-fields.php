@@ -338,7 +338,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				array(
 					'name'       => __( 'Stories', 'minnpost-largo' ),
 					'desc'       => __( 'Search for posts here.', 'minnpost-largo' ),
-					'id'         => $prefix . 'news_posts',
+					'id'         => $prefix . 'opinion_posts',
 					'query_args' => array(
 						'orderby'     => 'modified',
 						'order'       => 'DESC',
@@ -355,7 +355,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 		$opinion_section->add_field(
 			array(
 				'name'       => __( 'Stories Manual Override', 'minnpost-largo' ),
-				'id'         => $prefix . 'news_posts_override',
+				'id'         => $prefix . 'opinion_posts_override',
 				'type'       => 'text',
 				'desc'       => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them instead of the search field value.', 'minnpost-largo' ),
 				'attributes' => array(
@@ -397,7 +397,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				array(
 					'name'       => __( 'Stories', 'minnpost-largo' ),
 					'desc'       => __( 'Search for posts here.', 'minnpost-largo' ),
-					'id'         => $prefix . 'news_posts',
+					'id'         => $prefix . 'arts_posts',
 					'query_args' => array(
 						'orderby'     => 'modified',
 						'order'       => 'DESC',
@@ -414,7 +414,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 		$arts_section->add_field(
 			array(
 				'name'       => __( 'Stories Manual Override', 'minnpost-largo' ),
-				'id'         => $prefix . 'news_posts_override',
+				'id'         => $prefix . 'arts_posts_override',
 				'type'       => 'text',
 				'desc'       => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them instead of the search field value.', 'minnpost-largo' ),
 				'attributes' => array(
@@ -456,7 +456,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				array(
 					'name'       => __( 'Stories', 'minnpost-largo' ),
 					'desc'       => __( 'Search for posts here.', 'minnpost-largo' ),
-					'id'         => $prefix . 'news_posts',
+					'id'         => $prefix . 'editors_posts',
 					'query_args' => array(
 						'orderby'     => 'modified',
 						'order'       => 'DESC',
@@ -473,7 +473,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 		$editors_section->add_field(
 			array(
 				'name'       => __( 'Stories Manual Override', 'minnpost-largo' ),
-				'id'         => $prefix . 'news_posts_override',
+				'id'         => $prefix . 'editors_posts_override',
 				'type'       => 'text',
 				'desc'       => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them instead of the search field value.', 'minnpost-largo' ),
 				'attributes' => array(
@@ -482,9 +482,17 @@ if ( function_exists( 'create_newsletter' ) ) :
 				),
 			)
 		);
+		$editors_section->add_field(
+			array(
+				'name' => __( 'Use Other Section Settings', 'minnpost-largo' ),
+				'id'   => $prefix . 'editors_use_other_section_settings',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this section will behave, by default, like the above sections instead. Individual stories can override this behavior.', 'minnpost-largo' ),
+			)
+		);
 
 		// legacy
-		$newsletter_posts = new_cmb2_box(
+		$legacy_newsletter_posts = new_cmb2_box(
 			array(
 				'id'           => $prefix . 'top_posts',
 				'title'        => __( 'Legacy Newsletter Content', 'minnpost-largo' ),
@@ -495,7 +503,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'closed'       => true,
 			)
 		);
-		$newsletter_posts->add_field(
+		$legacy_newsletter_posts->add_field(
 			minnpost_post_search_field(
 				array(
 					'name'       => __( 'Top Stories', 'minnpost-largo' ),
@@ -514,7 +522,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'post_search_ajax'
 			)
 		);
-		$newsletter_posts->add_field(
+		$legacy_newsletter_posts->add_field(
 			array(
 				'name'       => __( 'Top Stories Manual Override', 'minnpost-largo' ),
 				'id'         => $prefix . 'top_posts_override',
@@ -526,7 +534,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				),
 			)
 		);
-		$newsletter_posts->add_field(
+		$legacy_newsletter_posts->add_field(
 			minnpost_post_search_field(
 				array(
 					'name'       => __( 'More Stories', 'minnpost-largo' ),
@@ -544,7 +552,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				)
 			)
 		);
-		$newsletter_posts->add_field(
+		$legacy_newsletter_posts->add_field(
 			array(
 				'name'       => __( 'More Stories Manual Override', 'minnpost-largo' ),
 				'id'         => $prefix . 'more_posts_override',
@@ -556,7 +564,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				),
 			)
 		);
-		$newsletter_posts->add_field(
+		$legacy_newsletter_posts->add_field(
 			minnpost_post_search_field(
 				array(
 					'name'       => __( 'Republishable Stories', 'minnpost-largo' ),
@@ -575,7 +583,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'post_search_ajax'
 			)
 		);
-		$newsletter_posts->add_field(
+		$legacy_newsletter_posts->add_field(
 			array(
 				'name'        => __( 'Preview of Upcoming Stories', 'minnpost-largo' ),
 				'id'          => $prefix . 'upcoming',
@@ -595,6 +603,26 @@ if ( function_exists( 'create_newsletter' ) ) :
 		);
 	}
 endif;
+
+add_action( 'cmb2_after_form', 'minnpost_largo_after_newsletter_section_output', 10, 4 );
+function minnpost_largo_after_newsletter_section_output( $cmb_id, $object_id, $object_type, $cmb ) {
+	$object_type = 'newsletter';
+	$prefix      = '_mp_newsletter_';
+	// Only output above the _yourprefix_demo_metabox metabox.
+	$newsletter_sections = array(
+		$prefix . 'top_section'     => esc_html__( 'The default behavior for this section is: 1) Image size is large. 2) There is a teaser on the story. Use the Newsletter Settings section of the story to change this behavior.', 'minnpost-largo' ),
+		$prefix . 'news_section'    => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) Image size is a thumbnail on other stories in the section. 3) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
+		$prefix . 'opinion_section' => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) Image size is a thumbnail on other stories in the section. 3) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
+		$prefix . 'arts_section'    => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) Image size is a thumbnail on other stories in the section. 3) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
+		$prefix . 'editors_section' => esc_html__( 'The default behavior for this section is: stories will display with no image or teaser. The "Use Other Section Settings" checkbox will cause this section to behave, by default, like the above sections instead. Then you can use the Newsletter Settings section of each story to change how that story behaves.', 'minnpost-largo' ),
+	);
+	if ( ! in_array( $cmb_id, array_keys( $newsletter_sections ), true ) ) {
+		return;
+	}
+
+	$after = '<p class="description">' . $newsletter_sections[ $cmb_id ] . '</p>';
+	echo $after;
+}
 
 
 /**
