@@ -205,7 +205,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 		$top_section->add_field(
 			array(
 				'name'       => __( 'Section Title', 'minnpost-largo' ),
-				'id'         => $prefix . 'section_title',
+				'id'         => $prefix . 'top_section_title',
 				'type'       => 'text',
 				'desc'       => __( 'The default value will be used if you do not change it.', 'minnpost-largo' ),
 				'attributes' => array(
@@ -264,7 +264,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 		$news_section->add_field(
 			array(
 				'name'       => __( 'Section Title', 'minnpost-largo' ),
-				'id'         => $prefix . 'section_title',
+				'id'         => $prefix . 'news_section_title',
 				'type'       => 'text',
 				'desc'       => __( 'The default value will be used if you do not change it.', 'minnpost-largo' ),
 				'attributes' => array(
@@ -323,7 +323,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 		$opinion_section->add_field(
 			array(
 				'name'       => __( 'Section Title', 'minnpost-largo' ),
-				'id'         => $prefix . 'section_title',
+				'id'         => $prefix . 'opinion_section_title',
 				'type'       => 'text',
 				'desc'       => __( 'The default value will be used if you do not change it.', 'minnpost-largo' ),
 				'attributes' => array(
@@ -382,7 +382,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 		$arts_section->add_field(
 			array(
 				'name'       => __( 'Section Title', 'minnpost-largo' ),
-				'id'         => $prefix . 'section_title',
+				'id'         => $prefix . 'arts_section_title',
 				'type'       => 'text',
 				'desc'       => __( 'The default value will be used if you do not change it.', 'minnpost-largo' ),
 				'attributes' => array(
@@ -441,7 +441,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 		$editors_section->add_field(
 			array(
 				'name'       => __( 'Section Title', 'minnpost-largo' ),
-				'id'         => $prefix . 'section_title',
+				'id'         => $prefix . 'editors_section_title',
 				'type'       => 'text',
 				'desc'       => __( 'The default value will be used if you do not change it.', 'minnpost-largo' ),
 				'attributes' => array(
