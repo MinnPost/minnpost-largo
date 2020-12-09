@@ -196,7 +196,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'context'      => 'normal',
 				'priority'     => 'high',
 				'show_names'   => true, // Show field names on the left
-				'attributes' => array(
+				'attributes'   => array(
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
 				),
@@ -220,7 +220,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				array(
 					'name'       => __( 'Story', 'minnpost-largo' ),
 					'desc'       => __( 'Search for a post here.', 'minnpost-largo' ),
-					'id'         => $prefix . 'top_posts',
+					'id'         => $prefix . 'top_post',
 					'query_args' => array(
 						'orderby'     => 'modified',
 						'order'       => 'DESC',
@@ -237,7 +237,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 		$top_section->add_field(
 			array(
 				'name'       => __( 'Story Manual Override', 'minnpost-largo' ),
-				'id'         => $prefix . 'top_posts_override',
+				'id'         => $prefix . 'top_post_override',
 				'type'       => 'text',
 				'desc'       => __( 'Use this field if the search is not working. Enter a post ID, and the newsletter template will use it instead of the search field value.', 'minnpost-largo' ),
 				'attributes' => array(
