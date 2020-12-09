@@ -56,9 +56,12 @@
 		$preview_text = get_post_meta( get_the_ID(), '_mp_newsletter_preview_text', true );
 		if ( '' !== $preview_text ) {
 			?>
-		<!-- limit to 50 characters; only display if there is a value -->
-		<span style="display: none !important; font-size: 0; color: #fff;"> <!-- gmail only takes display none if it has !important; outlook still doesn't care -->
+		<span style="display: none !important; max-height: 0px; font-size: 0; overflow: hidden;"> <!-- gmail only takes display none if it has !important; outlook still doesn't care -->
 			<?php echo $preview_text; ?>
 		</span>
+		<!-- Insert &zwnj;&nbsp; hack after hidden preview text -->
+		<div style="display: none; max-height: 0px; overflow: hidden;">
+		&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+		</div>
 			<?php
 		}

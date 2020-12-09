@@ -472,6 +472,106 @@ if ( ! function_exists( 'minnpost_largo_menu_support' ) ) :
 endif;
 
 /**
+* Returns the user account management menu for each user
+* This depends on the User Account Management plugin
+*
+* @param int $user_id
+* @return object $menu
+*
+*/
+if ( ! function_exists( 'get_minnpost_account_management_menu' ) ) :
+	function get_minnpost_account_management_menu( $user_id = '' ) {
+		$menu       = '';
+		$can_access = false;
+
+		if ( function_exists( 'user_account_management' ) ) {
+			$account_management = user_account_management();
+			$can_access         = $account_management->user_data->check_user_permissions( $user_id );
+		} else {
+			if ( get_current_user_id() === $user_id || current_user_can( 'edit_user', $user_id ) ) {
+				$can_access = true;
+			}
+		}
+		// if we are on the current user, or if this user can edit users
+		if ( true === $can_access ) {
+			$menu = wp_nav_menu(
+				array(
+					'theme_location' => 'user_account_management',
+					'menu_id'        => 'user-account-management',
+					'depth'          => 1,
+					'container'      => false,
+					'walker'         => new Minnpost_Walker_Nav_Menu( $user_id ),
+					'items_wrap'     => '<ul id="%1$s" class="m-menu m-menu-sub-navigation m-menu-%1$s">%3$s</ul>',
+					'echo'           => false,
+				)
+			);
+		}
+		return $menu;
+	}
+endif;
+
+/**
+* Outputs the user account access menu
+*
+*/
+if ( ! function_exists( 'minnpost_account_access_menu' ) ) :
+	function minnpost_account_access_menu() {
+		$user_id = get_current_user_id();
+		$menu    = get_minnpost_account_access_menu();
+		?>
+		<?php if ( ! empty( $menu ) ) : ?>
+			<nav id="navigation-user-account-access" class="m-secondary-navigation" role="navigation">
+				<?php echo $menu; ?>
+			</nav><!-- #navigation-user-account-access -->
+		<?php endif; ?>
+		<?php
+	}
+endif;
+
+/**
+* Returns the user account access menu for each user
+* This depends on the User Account Management plugin
+*
+* @param int $user_id
+* @return object $menu
+*
+*/
+if ( ! function_exists( 'get_minnpost_account_access_menu' ) ) :
+
+	function get_minnpost_account_access_menu( $user_id = '' ) {
+
+		if ( '' === $user_id ) {
+			$user_id = get_current_user_id();
+		}
+
+		$menu       = '';
+		$can_access = false;
+		if ( function_exists( 'user_account_management' ) ) {
+			$account_management = user_account_management();
+			$can_access         = $account_management->user_data->check_user_permissions( $user_id );
+		} else {
+			if ( get_current_user_id() === $user_id || current_user_can( 'edit_user', $user_id ) ) {
+				$can_access = true;
+			}
+		}
+		// if we are on the current user, or if this user can edit users
+		if ( true === $can_access ) {
+			$menu = wp_nav_menu(
+				array(
+					'theme_location' => 'user_account_access',
+					'menu_id'        => 'user-account-access',
+					'depth'          => 2,
+					'container'      => false,
+					'walker'         => new Minnpost_Walker_Nav_Menu( $user_id ),
+					'echo'           => false,
+				)
+			);
+		}
+		return $menu;
+	}
+endif;
+
+/**
 * Remove pages from admin menu
 * This relies on user access levels, and on the MinnPost Roles and Capabilities plugin
 *

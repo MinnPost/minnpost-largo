@@ -69,18 +69,49 @@ if ( function_exists( 'create_newsletter' ) ) :
 		);
 		$newsletter_setup->add_field(
 			array(
-				'name' => __( 'Preview Text', 'minnpost-largo' ),
-				'id'   => $prefix . 'preview_text',
-				'type' => 'textarea_small',
-				'desc' => __( 'In some email clients, this snippet will appear in the inbox after the subject line. If there\'s no value, we won\'t use it. Email clients will limit how many characters they show.', 'minnpost-largo' ),
+				'name'         => __( 'Preview Text', 'minnpost-largo' ),
+				'id'           => $prefix . 'preview_text',
+				'type'         => 'textarea_small',
+				'char_counter' => true,
+				'char_max'     => 140,
+				'desc'         => __( 'In some email clients, this snippet will appear in the inbox after the subject line. If there\'s no value, we won\'t use it. Email clients will limit how many characters they show, from as little as 40 to 140 characters, sometimes depending on the length of the subject line.<br><br>This text will also appear as a teaser in the email body, right below today\'s date, unless you override it below.', 'minnpost-largo' ),
 			)
 		);
 		$newsletter_setup->add_field(
 			array(
-				'name'       => __( 'Show Main Category for Top Stories?', 'minnpost-largo' ),
-				'id'         => $prefix . 'show_department_for_top_stories',
+				'name'       => __( 'Newsletter Teaser', 'minnpost-largo' ),
+				'id'         => $prefix . 'newsletter_teaser',
+				'type'       => 'wysiwyg',
+				'options'    => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'textarea_rows' => 5,
+					'teeny'         => true, // output the minimal editor config used in Press This
+				),
+				'desc'       => __( 'Use this field if you need formatting in your teaser, or more characters than you are using for the email preview text. If used, this text will appear as a teaser in the email body, right below today\'s date.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
+			)
+		);
+		$newsletter_setup->add_field(
+			array(
+				'name'       => __( 'Do Not Add Automatic Date and Newsletter Type Text', 'minnpost-largo' ),
+				'id'         => $prefix . 'do_not_show_automatic_teaser_items',
 				'type'       => 'checkbox',
-				'desc'       => '',
+				'desc'       => __( 'If you check this box, the newsletter teaser area will not contain an automatic date, and will not state what type of newsletter this is.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
+			)
+		);
+		$newsletter_setup->add_field(
+			array(
+				'name'       => __( 'Do Not Show Any Teaser Text', 'minnpost-largo' ),
+				'id'         => $prefix . 'do_not_show_teaser_text',
+				'type'       => 'checkbox',
+				'desc'       => __( 'If you check this box, no teaser text will be shown in the body of the email. If there is a preview text value, it will only be shown before the email is opened.', 'minnpost-largo' ),
 				'attributes' => array(
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
@@ -157,17 +188,322 @@ if ( function_exists( 'create_newsletter' ) ) :
 		if ( 'production' === VIP_GO_ENV ) {
 			$newsletter_post_args['es'] = true; // elasticsearch on production only
 		}
-		$newsletter_posts = new_cmb2_box(
+		$top_section = new_cmb2_box(
 			array(
-				'id'           => $prefix . 'top_posts',
-				'title'        => __( 'Newsletter Content', 'minnpost-largo' ),
+				'id'           => $prefix . 'top_section',
+				'title'        => __( 'Top Post', 'minnpost-largo' ),
 				'object_types' => array( $object_type ), // Post type
 				'context'      => 'normal',
 				'priority'     => 'high',
 				'show_names'   => true, // Show field names on the left
+				'attributes'   => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
 			)
 		);
-		$newsletter_posts->add_field(
+		$top_section->add_field(
+			array(
+				'name'       => __( 'Section Title', 'minnpost-largo' ),
+				'id'         => $prefix . 'top_section_title',
+				'type'       => 'text',
+				'desc'       => __( 'The default value will be used if you do not change it.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
+				'default'    => __( 'Top Story', 'minnpost-largo' ),
+			)
+		);
+		$top_section->add_field(
+			minnpost_post_search_field(
+				array(
+					'name'       => __( 'Story', 'minnpost-largo' ),
+					'desc'       => __( 'Search for a post here.', 'minnpost-largo' ),
+					'id'         => $prefix . 'top_post',
+					'query_args' => array(
+						'orderby'     => 'modified',
+						'order'       => 'DESC',
+						'post_status' => 'any',
+					),
+					'attributes' => array(
+						'data-conditional-id'    => $prefix . 'type',
+						'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+					),
+				),
+				'post_search_ajax'
+			)
+		);
+		$top_section->add_field(
+			array(
+				'name'       => __( 'Story Manual Override', 'minnpost-largo' ),
+				'id'         => $prefix . 'top_post_override',
+				'type'       => 'text',
+				'desc'       => __( 'Use this field if the search is not working. Enter a post ID, and the newsletter template will use it instead of the search field value.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
+			)
+		);
+
+		$news_section = new_cmb2_box(
+			array(
+				'id'           => $prefix . 'news_section',
+				'title'        => __( 'News Posts', 'minnpost-largo' ),
+				'object_types' => array( $object_type ), // Post type
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'show_names'   => true, // Show field names on the left
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
+			)
+		);
+		$news_section->add_field(
+			array(
+				'name'       => __( 'Section Title', 'minnpost-largo' ),
+				'id'         => $prefix . 'news_section_title',
+				'type'       => 'text',
+				'desc'       => __( 'The default value will be used if you do not change it.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
+				'default'    => __( 'News', 'minnpost-largo' ),
+			)
+		);
+		$news_section->add_field(
+			minnpost_post_search_field(
+				array(
+					'name'       => __( 'Stories', 'minnpost-largo' ),
+					'desc'       => __( 'Search for posts here.', 'minnpost-largo' ),
+					'id'         => $prefix . 'news_posts',
+					'query_args' => array(
+						'orderby'     => 'modified',
+						'order'       => 'DESC',
+						'post_status' => 'any',
+					),
+					'attributes' => array(
+						'data-conditional-id'    => $prefix . 'type',
+						'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+					),
+				),
+				'post_search_ajax'
+			)
+		);
+		$news_section->add_field(
+			array(
+				'name'       => __( 'Stories Manual Override', 'minnpost-largo' ),
+				'id'         => $prefix . 'news_posts_override',
+				'type'       => 'text',
+				'desc'       => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them instead of the search field value.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
+			)
+		);
+
+		$opinion_section = new_cmb2_box(
+			array(
+				'id'           => $prefix . 'opinion_section',
+				'title'        => __( 'Opinion Posts', 'minnpost-largo' ),
+				'object_types' => array( $object_type ), // Post type
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'show_names'   => true, // Show field names on the left
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
+			)
+		);
+		$opinion_section->add_field(
+			array(
+				'name'       => __( 'Section Title', 'minnpost-largo' ),
+				'id'         => $prefix . 'opinion_section_title',
+				'type'       => 'text',
+				'desc'       => __( 'The default value will be used if you do not change it.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
+				'default'    => __( 'Opinion', 'minnpost-largo' ),
+			)
+		);
+		$opinion_section->add_field(
+			minnpost_post_search_field(
+				array(
+					'name'       => __( 'Stories', 'minnpost-largo' ),
+					'desc'       => __( 'Search for posts here.', 'minnpost-largo' ),
+					'id'         => $prefix . 'opinion_posts',
+					'query_args' => array(
+						'orderby'     => 'modified',
+						'order'       => 'DESC',
+						'post_status' => 'any',
+					),
+					'attributes' => array(
+						'data-conditional-id'    => $prefix . 'type',
+						'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+					),
+				),
+				'post_search_ajax'
+			)
+		);
+		$opinion_section->add_field(
+			array(
+				'name'       => __( 'Stories Manual Override', 'minnpost-largo' ),
+				'id'         => $prefix . 'opinion_posts_override',
+				'type'       => 'text',
+				'desc'       => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them instead of the search field value.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
+			)
+		);
+
+		$arts_section = new_cmb2_box(
+			array(
+				'id'           => $prefix . 'arts_section',
+				'title'        => __( 'Arts & Culture Posts', 'minnpost-largo' ),
+				'object_types' => array( $object_type ), // Post type
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'show_names'   => true, // Show field names on the left
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
+			)
+		);
+		$arts_section->add_field(
+			array(
+				'name'       => __( 'Section Title', 'minnpost-largo' ),
+				'id'         => $prefix . 'arts_section_title',
+				'type'       => 'text',
+				'desc'       => __( 'The default value will be used if you do not change it.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
+				'default'    => __( 'Arts & Culture', 'minnpost-largo' ),
+			)
+		);
+		$arts_section->add_field(
+			minnpost_post_search_field(
+				array(
+					'name'       => __( 'Stories', 'minnpost-largo' ),
+					'desc'       => __( 'Search for posts here.', 'minnpost-largo' ),
+					'id'         => $prefix . 'arts_posts',
+					'query_args' => array(
+						'orderby'     => 'modified',
+						'order'       => 'DESC',
+						'post_status' => 'any',
+					),
+					'attributes' => array(
+						'data-conditional-id'    => $prefix . 'type',
+						'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+					),
+				),
+				'post_search_ajax'
+			)
+		);
+		$arts_section->add_field(
+			array(
+				'name'       => __( 'Stories Manual Override', 'minnpost-largo' ),
+				'id'         => $prefix . 'arts_posts_override',
+				'type'       => 'text',
+				'desc'       => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them instead of the search field value.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
+			)
+		);
+
+		$editors_section = new_cmb2_box(
+			array(
+				'id'           => $prefix . 'editors_section',
+				'title'        => __( 'Editor\'s Picks Posts', 'minnpost-largo' ),
+				'object_types' => array( $object_type ), // Post type
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'show_names'   => true, // Show field names on the left
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
+			)
+		);
+		$editors_section->add_field(
+			array(
+				'name'       => __( 'Section Title', 'minnpost-largo' ),
+				'id'         => $prefix . 'editors_section_title',
+				'type'       => 'text',
+				'desc'       => __( 'The default value will be used if you do not change it.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
+				'default'    => __( 'Editor\'s Picks', 'minnpost-largo' ),
+			)
+		);
+		$editors_section->add_field(
+			minnpost_post_search_field(
+				array(
+					'name'       => __( 'Stories', 'minnpost-largo' ),
+					'desc'       => __( 'Search for posts here.', 'minnpost-largo' ),
+					'id'         => $prefix . 'editors_posts',
+					'query_args' => array(
+						'orderby'     => 'modified',
+						'order'       => 'DESC',
+						'post_status' => 'any',
+					),
+					'attributes' => array(
+						'data-conditional-id'    => $prefix . 'type',
+						'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+					),
+				),
+				'post_search_ajax'
+			)
+		);
+		$editors_section->add_field(
+			array(
+				'name'       => __( 'Stories Manual Override', 'minnpost-largo' ),
+				'id'         => $prefix . 'editors_posts_override',
+				'type'       => 'text',
+				'desc'       => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them instead of the search field value.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
+			)
+		);
+		$editors_section->add_field(
+			array(
+				'name' => __( 'Use Other Section Settings', 'minnpost-largo' ),
+				'id'   => $prefix . 'editors_use_other_section_settings',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this section will behave, by default, like the above sections instead. Individual stories can override this behavior.', 'minnpost-largo' ),
+			)
+		);
+
+		// legacy
+		$legacy_newsletter_posts = new_cmb2_box(
+			array(
+				'id'           => $prefix . 'top_posts',
+				'title'        => __( 'Legacy Newsletter Content', 'minnpost-largo' ),
+				'object_types' => array( $object_type ), // Post type
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'show_names'   => true, // Show field names on the left
+				'closed'       => true,
+			)
+		);
+		$legacy_newsletter_posts->add_field(
 			minnpost_post_search_field(
 				array(
 					'name'       => __( 'Top Stories', 'minnpost-largo' ),
@@ -186,7 +522,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'post_search_ajax'
 			)
 		);
-		$newsletter_posts->add_field(
+		$legacy_newsletter_posts->add_field(
 			array(
 				'name'       => __( 'Top Stories Manual Override', 'minnpost-largo' ),
 				'id'         => $prefix . 'top_posts_override',
@@ -198,7 +534,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				),
 			)
 		);
-		$newsletter_posts->add_field(
+		$legacy_newsletter_posts->add_field(
 			minnpost_post_search_field(
 				array(
 					'name'       => __( 'More Stories', 'minnpost-largo' ),
@@ -216,7 +552,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				)
 			)
 		);
-		$newsletter_posts->add_field(
+		$legacy_newsletter_posts->add_field(
 			array(
 				'name'       => __( 'More Stories Manual Override', 'minnpost-largo' ),
 				'id'         => $prefix . 'more_posts_override',
@@ -228,7 +564,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				),
 			)
 		);
-		$newsletter_posts->add_field(
+		$legacy_newsletter_posts->add_field(
 			minnpost_post_search_field(
 				array(
 					'name'       => __( 'Republishable Stories', 'minnpost-largo' ),
@@ -247,7 +583,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'post_search_ajax'
 			)
 		);
-		$newsletter_posts->add_field(
+		$legacy_newsletter_posts->add_field(
 			array(
 				'name'        => __( 'Preview of Upcoming Stories', 'minnpost-largo' ),
 				'id'          => $prefix . 'upcoming',
@@ -267,6 +603,26 @@ if ( function_exists( 'create_newsletter' ) ) :
 		);
 	}
 endif;
+
+add_action( 'cmb2_after_form', 'minnpost_largo_after_newsletter_section_output', 10, 4 );
+function minnpost_largo_after_newsletter_section_output( $cmb_id, $object_id, $object_type, $cmb ) {
+	$object_type = 'newsletter';
+	$prefix      = '_mp_newsletter_';
+	// Only output above the _yourprefix_demo_metabox metabox.
+	$newsletter_sections = array(
+		$prefix . 'top_section'     => esc_html__( 'The default behavior for this section is: 1) Image size is large. 2) There is a teaser on the story. Use the Newsletter Settings section of the story to change this behavior.', 'minnpost-largo' ),
+		$prefix . 'news_section'    => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) Image size is a thumbnail on other stories in the section. 3) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
+		$prefix . 'opinion_section' => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) Image size is a thumbnail on other stories in the section. 3) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
+		$prefix . 'arts_section'    => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) Image size is a thumbnail on other stories in the section. 3) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
+		$prefix . 'editors_section' => esc_html__( 'The default behavior for this section is: stories will display with no image or teaser. The "Use Other Section Settings" checkbox will cause this section to behave, by default, like the above sections instead. Then you can use the Newsletter Settings section of each story to change how that story behaves.', 'minnpost-largo' ),
+	);
+	if ( ! in_array( $cmb_id, array_keys( $newsletter_sections ), true ) ) {
+		return;
+	}
+
+	$after = '<p class="description">' . $newsletter_sections[ $cmb_id ] . '</p>';
+	echo $after;
+}
 
 
 /**
