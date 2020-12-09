@@ -1321,21 +1321,28 @@ if ( ! function_exists( 'format_email_content' ) ) :
 endif;
 
 /**
-* Get top story for newsletter
+* Get story ids for a newsletter section
 *
 * @param int $post_id
-* @return array $top_story
+* @param string $section
+* @param bool $singular
+* @return array $story_ids
 *
 */
-if ( ! function_exists( 'minnpost_largo_get_newsletter_top_story' ) ) :
-	function minnpost_largo_get_newsletter_top_story( $post_id ) {
-		$top_story          = get_post_meta( $post_id, '_mp_newsletter_top_posts', true );
-		$top_story_override = get_post_meta( $post_id, '_mp_newsletter_top_post_override', true );
-		if ( '' !== $top_story_override ) {
-			$top_story_override = explode( ',', $top_story_override );
-			$top_story          = array_map( 'trim', $top_story_override );
+if ( ! function_exists( 'minnpost_largo_get_newsletter_stories' ) ) :
+	function minnpost_largo_get_newsletter_stories( $post_id, $section, $singular = false ) {
+		if ( false === $singular ) {
+			$posts = 'posts';
+		} else {
+			$posts = 'post';
 		}
-		return $top_story;
+		$story_ids        = get_post_meta( $post_id, '_mp_newsletter_' . $section . '_' . $posts, true );
+		$stories_override = get_post_meta( $post_id, '_mp_newsletter_' . $section . '_' . $posts . '_override', true );
+		if ( '' !== $stories_override ) {
+			$stories_override = explode( ',', $stories_override );
+			$story_ids        = array_map( 'trim', $stories_override );
+		}
+		return $story_ids;
 	}
 endif;
 
@@ -1350,7 +1357,26 @@ endif;
 if ( ! function_exists( 'minnpost_largo_check_newsletter_legacy' ) ) :
 	add_filter( 'minnpost_largo_newsletter_legacy', 'minnpost_largo_check_newsletter_legacy', 10, 2 );
 	function minnpost_largo_check_newsletter_legacy( $is_legacy, $post_id ) {
-		$top_story = minnpost_largo_get_newsletter_top_story( $post_id );
-		return $is_legacy;
+		$top_story = minnpost_largo_get_newsletter_stories( $post_id, 'top', true );
+		if ( ! empty( $top_story ) ) {
+			return false;
+		}
+		$news_stories = minnpost_largo_get_newsletter_stories( $post_id, 'news' );
+		if ( ! empty( $news_stories ) ) {
+			return false;
+		}
+		$opinion_stories = minnpost_largo_get_newsletter_stories( $post_id, 'opinion' );
+		if ( ! empty( $opinion_stories ) ) {
+			return false;
+		}
+		$arts_stories = minnpost_largo_get_newsletter_stories( $post_id, 'arts' );
+		if ( ! empty( $arts_stories ) ) {
+			return false;
+		}
+		$editors_stories = minnpost_largo_get_newsletter_stories( $post_id, 'editors' );
+		if ( ! empty( $editors_stories ) ) {
+			return false;
+		}
+		return true;
 	}
 endif;
