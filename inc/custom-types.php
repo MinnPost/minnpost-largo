@@ -243,6 +243,7 @@ if ( ! function_exists( 'minnpost_message_regions' ) ) :
 			'user_account'            => __( 'User Account', 'minnpost-largo' ),
 			'popup'                   => __( 'Popup', 'minnpost-largo' ),
 			'email_header'            => __( 'Email Header', 'minnpost-largo' ),
+			'above_email_articles'    => __( 'Above Email Articles', 'minnpost-largo' ),
 			'email_middle'            => __( 'Email Middle', 'minnpost-largo' ),
 			'email_before_bios'       => __( 'Email Before Bios', 'minnpost-largo' ),
 			'email_bottom'            => __( 'Email Bottom', 'minnpost-largo' ),

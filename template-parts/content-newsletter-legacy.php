@@ -242,7 +242,7 @@
 				$top_query->the_post();
 				set_query_var( 'current_post', $top_query->current_post );
 				set_query_var( 'is_top_story', true );
-				get_template_part( 'template-parts/post-newsletter', $newsletter_type );
+				get_template_part( 'template-parts/post-newsletter-legacy', $newsletter_type );
 			}
 			wp_reset_postdata();
 		}

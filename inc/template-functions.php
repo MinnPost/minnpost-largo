@@ -1325,16 +1325,15 @@ endif;
 *
 * @param int $post_id
 * @param string $section
-* @param bool $singular
 * @return array $story_ids
 *
 */
 if ( ! function_exists( 'minnpost_largo_get_newsletter_stories' ) ) :
-	function minnpost_largo_get_newsletter_stories( $post_id, $section, $singular = false ) {
-		if ( false === $singular ) {
-			$posts = 'posts';
-		} else {
+	function minnpost_largo_get_newsletter_stories( $post_id, $section ) {
+		if ( 'top' === $section ) {
 			$posts = 'post';
+		} else {
+			$posts = 'posts';
 		}
 		$story_ids        = get_post_meta( $post_id, '_mp_newsletter_' . $section . '_' . $posts, true );
 		$stories_override = get_post_meta( $post_id, '_mp_newsletter_' . $section . '_' . $posts . '_override', true );
@@ -1357,7 +1356,7 @@ endif;
 if ( ! function_exists( 'minnpost_largo_check_newsletter_legacy' ) ) :
 	add_filter( 'minnpost_largo_newsletter_legacy', 'minnpost_largo_check_newsletter_legacy', 10, 2 );
 	function minnpost_largo_check_newsletter_legacy( $is_legacy, $post_id ) {
-		$top_story = minnpost_largo_get_newsletter_stories( $post_id, 'top', true );
+		$top_story = minnpost_largo_get_newsletter_stories( $post_id, 'top' );
 		if ( ! empty( $top_story ) ) {
 			return false;
 		}
