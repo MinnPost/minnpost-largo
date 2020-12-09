@@ -9,7 +9,8 @@
         }
     ],
     "require": {
-        "brain/cortex": "~1.0.0"
+        "brain/cortex": "~1.0.0",
+        "pelago/emogrifier": "5.0.0"
     },
     "minimum-stability": "dev"
 }

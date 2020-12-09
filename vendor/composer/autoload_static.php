@@ -11,9 +11,14 @@ class ComposerStaticInit4a18d788b77de8cfd63083b020564233
     );
 
     public static $prefixLengthsPsr4 = array (
+        'S' => 
+        array (
+            'Symfony\\Component\\CssSelector\\' => 30,
+        ),
         'P' => 
         array (
             'Psr\\Http\\Message\\' => 17,
+            'Pelago\\Emogrifier\\' => 18,
         ),
         'F' => 
         array (
@@ -26,9 +31,17 @@ class ComposerStaticInit4a18d788b77de8cfd63083b020564233
     );
 
     public static $prefixDirsPsr4 = array (
+        'Symfony\\Component\\CssSelector\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/symfony/css-selector',
+        ),
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
+        ),
+        'Pelago\\Emogrifier\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/pelago/emogrifier/src',
         ),
         'FastRoute\\' => 
         array (
@@ -40,11 +53,16 @@ class ComposerStaticInit4a18d788b77de8cfd63083b020564233
         ),
     );
 
+    public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit4a18d788b77de8cfd63083b020564233::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit4a18d788b77de8cfd63083b020564233::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit4a18d788b77de8cfd63083b020564233::$classMap;
 
         }, null, ClassLoader::class);
     }
