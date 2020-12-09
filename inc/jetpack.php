@@ -233,7 +233,7 @@ if ( ! function_exists( 'minnpost_largo_jetpack_exclude_category' ) ) :
 
 		$exclusions = do_shortcode( '[return_excluded_terms]' );
 		if ( ! empty( $exclusions ) ) {
-			$exclude_ids = str_getcsv( $exclusions, ',', "'" );
+			$exclude_ids = array_merge( $exclude_ids, str_getcsv( $exclusions, ',', "'" ) );
 		}
 
 		$filters[] = array(
