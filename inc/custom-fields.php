@@ -292,7 +292,7 @@ endif;
  * Remove the default WordPress excerpt field.
  */
 function minnpost_largo_admin_hide_excerpt_field() {
-	add_action( 'dbx_post_advanced', '_minnpost_largo_admin_hide_excerpt_field' );
+	add_action( 'add_meta_boxes', '_minnpost_largo_admin_hide_excerpt_field' );
 }
 add_filter( 'admin_init', 'minnpost_largo_admin_hide_excerpt_field' );
 function _minnpost_largo_admin_hide_excerpt_field() {

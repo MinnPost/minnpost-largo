@@ -72,7 +72,7 @@ if ( ! function_exists( 'custom_archive_query_vars' ) ) :
 						// if this is a parent category, the query should not be limited to itself
 						$query->set( 'category_name', false );
 
-						// these are the category IDs of the childrten to include in the query
+						// these are the category IDs of the children to include in the query
 						$taxonomy_parameters[] = array(
 							'taxonomy' => 'category',
 							'field'    => 'term_id',

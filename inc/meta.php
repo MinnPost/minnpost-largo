@@ -77,7 +77,7 @@ if ( ! function_exists( 'minnpost_largo_get_description' ) ) :
 		} elseif ( is_front_page() ) {
 			$excerpt = get_option( 'site_blurb' ) ? stripslashes( get_option( 'site_blurb' ) ) : '';
 		} elseif ( is_category() ) {
-			$id      = get_query_var( 'cat' );
+			$id      = get_queried_object_id();
 			$excerpt = minnpost_get_term_text( $id );
 		} elseif ( is_author() ) {
 			$author  = get_queried_object();

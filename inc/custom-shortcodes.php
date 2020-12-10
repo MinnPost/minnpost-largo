@@ -427,14 +427,8 @@ if ( ! function_exists( 'minnpost_largo_topics' ) ) :
 
 		$exclude_ids = array();
 		$exclusions  = do_shortcode( '[return_excluded_terms]' );
-		if ( '' !== $exclusions ) {
-			$exclusions = str_getcsv( $exclusions, ',', "'" );
-			foreach ( $exclusions as $exclusion ) {
-				$category = get_term_by( 'name', $exclusion, 'category' );
-				if ( isset( $category->term_id ) ) {
-					$exclude_ids[] = $category->term_id;
-				}
-			}
+		if ( ! empty( $exclusions ) ) {
+			$exclude_ids = str_getcsv( $exclusions, ',', "'" );
 		}
 
 		$grouped = filter_var( $args['grouped'], FILTER_VALIDATE_BOOLEAN );

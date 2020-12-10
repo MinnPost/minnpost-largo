@@ -67,11 +67,19 @@ if ( ! function_exists( 'minnpost_largo_remove_tribe_styles' ) ) :
 				'tribe-select2',
 				'tribe-utils-camelcase',
 				'tribe-app-shop-js',
+				'tribe-events-views-v2-accordion',
 				'tribe-events-views-v2-breakpoints',
-				'tribe-events-views-v2-viewport',
+				'tribe-events-views-v2-datepicker',
+				'tribe-events-views-v2-events-bar',
+				'tribe-events-views-v2-events-bar-inputs',
+				'tribe-events-views-v2-manager',
+				'tribe-events-views-v2-month-grid',
+				'tribe-events-views-v2-month-mobile-events',
 				'tribe-events-views-v2-navigation-scroll',
 				'tribe-events-views-v2-multiday-events',
-				'tribe-events-views-v2-manager',
+				'tribe-events-views-v2-tooltip',
+				'tribe-events-views-v2-viewport',
+				'tribe-events-views-v2-view-selector',
 			);
 			wp_deregister_script( $scripts );
 			wp_deregister_style( $styles );
