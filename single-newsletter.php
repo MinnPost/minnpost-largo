@@ -9,7 +9,7 @@
 
 use Pelago\Emogrifier\CssInliner;
 ob_start();
-$css = wp_strip_all_tags( wpcom_vip_file_get_contents( get_stylesheet_directory() . '/style.css' ) ); // phpcs:ignore
+$css = wp_strip_all_tags( file_get_contents( get_stylesheet_directory() . '/style.css' ) ); // phpcs:ignore
 get_header( 'newsletter' );
 
 while ( have_posts() ) :
