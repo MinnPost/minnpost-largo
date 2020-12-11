@@ -6,7 +6,7 @@
     'aliases' => 
     array (
     ),
-    'reference' => '85fbf035928e124dee74be8039086971eaef3ca4',
+    'reference' => 'e4f4c3416d529f5aad51c84cfa2a0223e2c11da5',
     'name' => 'minnpost/minnpost-largo',
   ),
   'versions' => 
@@ -20,6 +20,16 @@
       ),
       'reference' => '0f33ad8578fa051ab5e46e14c9478df4d728e49a',
     ),
+    'composer/installers' => 
+    array (
+      'pretty_version' => 'dev-main',
+      'version' => 'dev-main',
+      'aliases' => 
+      array (
+        0 => '1.x-dev',
+      ),
+      'reference' => '7f3c618fcbfc787cca2bb7a127e7eb3a146c7046',
+    ),
     'minnpost/minnpost-largo' => 
     array (
       'pretty_version' => 'dev-master',
@@ -27,7 +37,7 @@
       'aliases' => 
       array (
       ),
-      'reference' => '85fbf035928e124dee74be8039086971eaef3ca4',
+      'reference' => 'e4f4c3416d529f5aad51c84cfa2a0223e2c11da5',
     ),
     'nikic/fast-route' => 
     array (
@@ -56,6 +66,20 @@
         0 => '1.0.x-dev',
       ),
       'reference' => 'efd67d1dc14a7ef4fc4e518e7dee91c271d524e4',
+    ),
+    'roundcube/plugin-installer' => 
+    array (
+      'replaced' => 
+      array (
+        0 => '*',
+      ),
+    ),
+    'shama/baton' => 
+    array (
+      'replaced' => 
+      array (
+        0 => '*',
+      ),
     ),
     'symfony/css-selector' => 
     array (

@@ -24,6 +24,10 @@ class ComposerStaticInit4a18d788b77de8cfd63083b020564233
         array (
             'FastRoute\\' => 10,
         ),
+        'C' => 
+        array (
+            'Composer\\Installers\\' => 20,
+        ),
         'B' => 
         array (
             'Brain\\' => 6,
@@ -46,6 +50,10 @@ class ComposerStaticInit4a18d788b77de8cfd63083b020564233
         'FastRoute\\' => 
         array (
             0 => __DIR__ . '/..' . '/nikic/fast-route/src',
+        ),
+        'Composer\\Installers\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers',
         ),
         'Brain\\' => 
         array (
