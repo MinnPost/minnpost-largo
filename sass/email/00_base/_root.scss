@@ -1,0 +1,30 @@
+body {
+    Margin: 0;
+    padding: 0;
+    min-width: 100%;
+    background-color: neutral-color(white);
+}
+
+img {
+    line-height: 100%;
+    outline: none;
+    text-decoration: none;
+}
+
+center.wrapper {
+    -ms-text-size-adjust: 100%;
+    -webkit-text-size-adjust: 100%;
+    table-layout: fixed;
+    width: 100%;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    color:  neutral-color(black);
+    background-color: neutral-color(white);
+    font-family: Helvetica, Arial, Geneva, sans-serif;
+    Margin: 0 auto; 
+    max-width: $max-email-width;
+    mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; width: 100%; background-color: #ffffff;
+}

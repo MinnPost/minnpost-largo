@@ -1,0 +1,30 @@
+a:hover {
+    color: utility-color(blue, background) !important;
+    text-decoration: none !important;
+}
+
+a:active {
+    color: utility-color(blue, background) !important;
+    text-decoration: none !important;
+}
+
+a:visited {
+    color: utility-color(blue, dark) !important;
+}
+
+/*h3 a:active {
+    color: #1A1818;
+}
+
+h5 a:active {
+    color: #1A1818;
+}
+
+h3 a:visited {
+    color: #1A1818;
+}
+
+h5 a:visited {
+    color: #1A1818;
+}
+*/

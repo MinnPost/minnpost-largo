@@ -9,7 +9,8 @@
 
 use Pelago\Emogrifier\CssInliner;
 ob_start();
-$css = wp_strip_all_tags( file_get_contents( get_stylesheet_directory() . '/style.css' ) ); // phpcs:ignore
+$css = wp_strip_all_tags( file_get_contents( get_stylesheet_directory() . '/email.css' ) ); // phpcs:ignore
+$css = str_replace( 'margin', 'Margin', $css );
 get_header( 'newsletter' );
 
 while ( have_posts() ) :

@@ -1,0 +1,24 @@
+/*!
+This is an email-specific stylesheet. Using it with the Emogrifier library will cause the styles to be 
+inlined into email templates based on the selectors. This way we can still use theme variables.
+*/
+
+/*--------------------------------------------------------------
+>>> TABLE OF CONTENTS:
+--------------------------------------------------------------*/
+
+@import "functions"; // put functions first because they get used in color variable calculations
+@import "variables";
+@import "column-setter";
+@import "mixins";
+@import "email/variables";
+
+/*--------------------------------------------------------------
+# Email patterns
+--------------------------------------------------------------*/
+
+@import "00_base/*";
+@import "email/00_base/*";
+@import "email/01_atom/*";
+@import "email/02_molecule/*";
+@import "email/03_organism/*";

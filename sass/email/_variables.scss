@@ -1,0 +1,14 @@
+// override front-end variables, and add email-specific ones
+
+// neutral colors. this is here because we want #ffffff
+$neutral-colors: (
+	black: #1a1818, // logo
+	dark: #5e6e76,
+	medium: #869298,
+	border: #d6d6da,
+	highlight: #ebebfb,
+	light: #efeff0,
+	white: #ffffff
+);
+
+$max-email-width: 600px;
