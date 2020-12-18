@@ -1,0 +1,102 @@
+.m-main-navigation {
+
+	line-height: normal;
+    border-bottom: 2px solid neutral-color(dark);
+    border-top: 2px solid neutral-color(dark);
+
+    @include breakpoint-max( $max-email-width ) {
+        border-top: 0;
+    }
+
+	tr {
+        transition: $hover-transition;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+
+		td {
+			margin: 0;
+            padding: 0;
+            @include meta-preset( $bold: true, $italic: false );
+
+            @include breakpoint-max( $max-email-width ) {
+                //display: block;
+                //width: 100%;
+                @include meta-preset( $size: -1, $bold: true, $italic: false, $important: true );
+            }
+
+            @include breakpoint-max( $hide-stuff-width ) {
+                &.health {
+                    display: none;
+                }
+            }
+
+            a,
+            a:visited {
+                display: block;
+				white-space: nowrap;
+				text-decoration: none;
+				line-height: normal;
+                padding: $standard-block-padding / 2 $standard-block-padding;
+                width: auto;
+                font-weight: 700;
+                color: neutral-color(dark);
+                background: neutral-color(white);
+				text-align: center;
+				
+				@include breakpoint-max( $hide-stuff-width ) {
+					padding: $standard-block-padding / 2 !important;
+				}
+            }
+
+            a:hover,
+            a:focus,
+            a:active {
+                background: neutral-color(border) !important;
+                color: neutral-color(black) !important;
+            }
+		}
+	}
+}
+
+.o-footer .m-secondary-navigation {
+
+	#minnpost-network {
+		margin: 0;
+
+		a {
+			display: block;
+			font-size: $share-icon-size;
+			color: neutral-color(white);
+
+			&:hover {
+				opacity: 0.65;
+			}
+		}
+	}
+
+	ul {
+
+		li {
+			font-weight: bold;
+
+			a {
+				color: utility-color(blue, highlight);
+
+				&:hover,
+				&:focus,
+				&:active {
+					color: utility-color(blue, background);
+				}
+			}
+
+			&.active > a {
+				color: utility-color(blue, background);
+			}
+
+			&:not(:last-child) {
+				margin-right: $standard-block-margin;
+			}
+		}
+	}
+}

@@ -1,15 +1,19 @@
-a:hover {
-    color: utility-color(blue, background) !important;
-    text-decoration: none !important;
+a,
+a:visited,
+a[x-apple-data-detectors] {
+    font-size: inherit;
+    font-family: inherit;
+    font-weight: normal;
+    line-height: inherit;
+    color: utility-color(blue, dark);
+    text-decoration: underline;
 }
 
+a:hover,
+a:focus,
 a:active {
     color: utility-color(blue, background) !important;
     text-decoration: none !important;
-}
-
-a:visited {
-    color: utility-color(blue, dark) !important;
 }
 
 /*h3 a:active {

@@ -1,0 +1,76 @@
+// @include breakpoint-max(lg) { ... }
+//
+// ...compiles to something like this:
+//
+// @media screen and (max-width: 50em) { ... }
+
+@mixin breakpoint-max($bp:null) {
+	$all-is-well: true;
+
+	@if $bp {
+
+		/*@if not map-has-key($breakpoints, $bp) {
+			$all-is-well: false;
+
+			@warn invalid("breakpoint-max",$bp) + wrong-type("valid breakpoint name",$bp) + ". " + $bp-min-lesson;
+		}*/
+	} @else {
+		$all-is-well: false;
+
+		@warn invalid("breakpoint-max") + missing(1) + $bp-min-lesson;
+	}
+
+	@if $all-is-well == true {
+
+		@media screen and (max-width: $bp) {
+			@content;
+		}
+	}
+}
+
+
+// text sizes
+@mixin text-preset( $size: inherit, $line-height: inherit, $important: inherit ) {
+	@if $size != "inherit" {
+		@if $important != "inherit" {
+			font-size: map-get( $font-sizes, $size ) !important;
+		} @else {
+			font-size: map-get( $font-sizes, $size );
+		}
+		//font-size: #{ $size };
+		//line-height: var(--lh#{ $size });
+		line-height: 1.3;
+	}
+}
+
+// button treatment
+@mixin button( $background: brand-color(red, medium), $hover: brand-color(red, dark), $color: neutral-color(white)) {
+	display: inline-block;
+	padding: $standard-block-padding / 2;
+	border: 0;
+	margin-right: $standard-block-padding;
+	cursor: pointer;
+	text-decoration: none;
+	transition: $hover-transition;
+
+	@include meta-preset( $size: 1, $bold: true, $italic: false, $line-height: 1 );
+	background: $background;
+	color: $color;
+	border-radius: $border-radius;
+
+	&:link,
+	&:visited {
+		background: $background;
+		color: $color;
+		text-decoration: none;
+	}
+
+	&:hover,
+	&:focus,
+	&:active,
+	&.active {
+		background: $hover;
+		color: $color;
+		text-decoration: none;
+	}
+}

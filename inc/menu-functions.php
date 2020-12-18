@@ -326,6 +326,135 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 }
 
 /**
+* Nav Menu Walker for email
+*
+* @param int $user_id
+*
+*/
+class Minnpost_Email_Walker_Nav_Menu extends Minnpost_Walker_Nav_Menu {
+
+	// start and end submenu output with an unordered list
+	public function start_lvl( &$output, $depth = 0, $args = array() ) {
+		$output .= '<tr>';
+	}
+	public function end_lvl( &$output, $depth = 0, $args = array() ) {
+		$output .= '</tr>';
+	}
+
+	/**
+	* Start element and change its classes
+	* We use this to:
+	* - set the classes we want, mainly for current items
+	* - change the urls for user specific items
+	*
+	* @param string $output - don't ever remove the & because php will complain about the parent class
+	* @param object $item
+	* @param int $depth
+	* @param array $args
+	* @param int $id
+	*
+	* @return string $output
+	*
+	*/
+	public function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
+
+		$classes = array();
+		if ( ! empty( $item->classes ) ) {
+			$classes = (array) $item->classes;
+		}
+
+		$active_class = '';
+		if ( in_array( 'current-menu-item', $classes, true ) ) {
+			$active_class = 'active';
+		} elseif ( in_array( 'current-menu-parent', $classes, true ) && '/' !== $item->url ) {
+			// checking '/' because home menu should never be a parent menu
+			$active_class = 'active-parent';
+		} elseif ( in_array( 'current-menu-ancestor', $classes, true ) ) {
+			$active_class = 'active-ancestor';
+		}
+
+		// if we aren't on the main category, remove the active classes for other categories
+		if ( is_singular( 'post' ) ) {
+			$primary_category = get_post_meta( get_the_id(), '_category_permalink', true );
+			if ( isset( $primary_category['category'] ) ) {
+				$cat_id = $primary_category['category'];
+			} else {
+				$cat_id = 0;
+			}
+			if ( $cat_id !== $item->object_id ) {
+				$active_class = '';
+			}
+			$category_group_id = minnpost_get_category_group_id( get_the_id(), $cat_id );
+			if ( '' !== $category_group_id && $category_group_id === $item->object_id ) {
+				$active_class = 'active-parent';
+			}
+		}
+
+		$url = '';
+		if ( ! empty( $item->url ) ) {
+
+			$url    = rtrim( $item->url, '/' );
+			$length = strlen( $url );
+			if ( '' === $url ) {
+				$url = home_url();
+			}
+			if ( home_url() !== $url && substr( '/wp_logout_url()', 0, $length ) === $url ) {
+				$url = wp_logout_url();
+			}
+		}
+
+		if ( isset( $args->item_classes ) && 'values' === $args->item_classes ) {
+			if ( '' !== $active_class ) {
+				$active_class .= ' ' . sanitize_title( $item->title );
+			} else {
+				$active_class = sanitize_title( $item->title );
+			}
+		}
+
+		if ( ! isset( $args->item_classes ) || 'values' !== $args->item_classes ) {
+			$custom_classes = $this->get_custom_classes( $item->classes );
+			if ( '' !== $active_class ) {
+				$active_class .= ' ' . $custom_classes;
+			} else {
+				$active_class = $custom_classes;
+			}
+		}
+
+		if ( '' !== $active_class ) {
+			$active_class = ' class="' . $active_class . '"';
+		}
+
+		$output .= '<td' . $active_class . '><a href="' . $url . '">' . $item->title . '</a>';
+	}
+
+	// end item with a </li>
+	public function end_el( &$output, $item, $depth = 0, $args = array() ) {
+		$output .= '</td>';
+	}
+
+	/**
+	* Return the custom classes added in the admin by filtering out the default WordPress classes
+	*
+	* @param array $all_classes
+	* @return string $custom_classes
+	*
+	*/
+	private function get_custom_classes( $all_classes ) {
+		if ( is_array( $all_classes ) ) {
+			$custom_classes = array_filter(
+				$all_classes,
+				function( $value ) {
+					return ( str_replace( array( 'menu-', 'page_', 'page-' ), '', $value ) !== $value ) ? false : true;
+				}
+			);
+			return implode( ' ', $custom_classes );
+		} else {
+			return '';
+		}
+	}
+}
+
+/**
 * Show the admin bar only for users with see_admin_bar capability
 * This relies on the MinnPost Roles and Capabilities plugin which creates this capability and assigns it to roles
 *

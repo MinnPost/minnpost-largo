@@ -8,15 +8,19 @@
  */
 
 use Pelago\Emogrifier\CssInliner;
+$newsletter_type = get_post_meta( get_the_ID(), '_mp_newsletter_type', true );
+$is_legacy       = apply_filters( 'minnpost_largo_newsletter_legacy', false, get_the_ID() );
+
 ob_start();
-$css = wp_strip_all_tags( file_get_contents( get_stylesheet_directory() . '/email.css' ) ); // phpcs:ignore
-$css = str_replace( 'margin', 'Margin', $css );
+if ( false === $is_legacy ) {
+	$css = wp_strip_all_tags( file_get_contents( get_stylesheet_directory() . '/email.css' ) );
+	$css = str_replace( 'margin', 'Margin', $css );
+	$css = str_replace( '*,:after,:before{box-sizing:inherit}', '', $css );
+}
 get_header( 'newsletter' );
 
 while ( have_posts() ) :
 	the_post();
-	$newsletter_type = get_post_meta( get_the_ID(), '_mp_newsletter_type', true );
-	$is_legacy       = apply_filters( 'minnpost_largo_newsletter_legacy', false, get_the_ID() );
 	if ( false === $is_legacy ) {
 		get_template_part( 'template-parts/content-newsletter', $newsletter_type );
 	} else {
@@ -28,6 +32,7 @@ get_footer( 'newsletter' );
 
 $html = ob_get_contents();
 ob_end_clean();
-
-$html = CssInliner::fromHtml( $html )->inlineCss( $css )->render();
+if ( false === $is_legacy ) {
+	$html = CssInliner::fromHtml( $html )->inlineCss( $css )->render();
+}
 echo $html;
