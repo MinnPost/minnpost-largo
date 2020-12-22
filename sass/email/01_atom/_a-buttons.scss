@@ -9,3 +9,7 @@
 .content .button.read-story td td a:active {
     color: #ffffff !important; text-decoration: none !important;
 }
+
+table.a-button {
+    @include button();
+}

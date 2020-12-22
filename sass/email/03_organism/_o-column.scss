@@ -1,5 +1,3 @@
-@media only screen and (max-width: 600px) {
-    .one-column .column, .two-column .column, .two-column .column.ad, .two-column .column.more, .two-column .column.date, .two-column .column.logo {
-        max-width: 90% !important; Margin-right: auto !important; Margin-left: auto !important;
-    }
+.o-column {
+    @include column($max-width: 50%);
 }

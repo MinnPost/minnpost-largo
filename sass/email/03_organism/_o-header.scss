@@ -1,0 +1,10 @@
+.o-header {
+
+    .o-column.a-logo {
+        @include column($max-width: 74%);
+    }
+
+    .o-column.m-support-cta {
+        @include column($max-width: 24%);
+    }
+}

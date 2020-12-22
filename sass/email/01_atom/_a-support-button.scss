@@ -1,0 +1,6 @@
+.m-support-cta {
+
+	.a-button.a-support-button {
+		@include button(utility-color(green, medium), utility-color(green, dark));
+	}
+}

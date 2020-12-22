@@ -959,6 +959,46 @@ if ( ! function_exists( 'minnpost_largo_manual_image_tag' ) ) :
 endif;
 
 /**
+* Generate markup for a button in an email
+*
+* @param string $url
+* @param string $text
+* @param array $classes
+*
+*/
+if ( ! function_exists( 'minnpost_largo_button_markup' ) ) :
+	function minnpost_largo_button_markup( $url = '', $text = '', $classes = array() ) {
+		if ( '' === $url ) {
+			$url = esc_url( get_permalink() );
+		}
+		if ( '' === $text ) {
+			$text = __( 'Read story', 'minnpost-largo' );
+		}
+		array_unshift( $classes, 'a-button' );
+		$classes = implode( ' ', $classes );
+		?>
+		<table class="<?php echo $classes; ?>" cellspacing="0" cellpadding="0">
+			<tbody>
+				<tr>
+					<td>
+						<table cellspacing="0" cellpadding="0">
+							<tbody>
+								<tr>
+									<td align="center">
+										<a href="<?php echo $url; ?>"><!--[if mso]>&nbsp;<![endif]--><?php echo $text; ?><!--[if mso]>&nbsp;<![endif]--></a>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<?php
+	}
+endif;
+
+/**
 * Display a string for email-friendly formatting
 *
 * @param string $content

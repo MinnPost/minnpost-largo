@@ -72,6 +72,7 @@ td {
     mso-table-rspace: 0pt;
     border-collapse: collapse;
     border-spacing: 0;
+    word-break: break-all; // for outlook 2016
     color: neutral-color(black);
     background-color: neutral-color(white);
     @include body-preset( $size: 0 );
