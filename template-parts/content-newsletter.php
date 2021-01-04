@@ -26,7 +26,7 @@
 					</div>
 
 					<div class="o-column m-support-cta">
-						<?php minnpost_largo_button_markup( site_url( '/support/' ), 'donate', array( 'a-support-button' ) ); ?>
+						<?php minnpost_largo_button_markup( site_url( '/support/' ), __( '❤ Donate', 'minnpost-largo' ), array( 'a-support-button' ) ); ?>
 					</div>
 
 					
