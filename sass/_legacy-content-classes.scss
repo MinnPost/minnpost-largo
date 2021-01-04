@@ -29,3 +29,16 @@
 		display: block;
 	}
 }
+
+.m-entry-content .image-full {
+	margin-top: 0;
+
+	@include breakpoint-min( sm ) {
+		margin-bottom: $standard-heading-margin;
+		width: auto;
+	}
+
+	@include breakpoint-min( lg ) {
+		width: 100%;
+	}
+}
