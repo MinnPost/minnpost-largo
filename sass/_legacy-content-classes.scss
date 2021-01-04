@@ -24,6 +24,30 @@
 }
 
 .m-entry-content .image {
+	margin: $standard-block-margin 0;
+
+	&.aligncenter {
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	&.alignleft {
+
+		@include breakpoint-min( xs ) {
+			float: left;
+			clear: right;
+			margin: $standard-block-margin / 2 $standard-block-margin $standard-block-margin 0;
+		}
+	}
+
+	&.alignright {
+
+		@include breakpoint-min( xs ) {
+			float: right;
+			clear: right;
+			margin: $standard-block-margin / 2 0 $standard-block-margin $standard-block-margin;
+		}
+	}
 
 	img {
 		display: block;
