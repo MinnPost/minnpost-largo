@@ -24,7 +24,7 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 			$id = get_the_ID();
 		}
 		$image_data = get_minnpost_post_image( $size, $attributes, $id, $lazy_load );
-		if ( '' !== $image_data ) {
+		if ( '' !== $image_data && ! empty( $image_data ) ) {
 			$image_id  = $image_data['image_id'];
 			$image_url = $image_data['image_url'];
 			$image     = $image_data['markup'];

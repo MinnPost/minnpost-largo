@@ -159,14 +159,15 @@ if ( ! function_exists( 'minnpost_user_is_member' ) ) :
 			return false;
 		}
 
-		global $minnpost_membership;
-		$member_levels = array_column( $minnpost_membership->member_levels->get_member_levels( '', false ), 'slug' );
-
-		// Check each selected role against the user's roles
-		foreach ( $member_levels as $level ) {
-			// If the selected role matches, return true
-			if ( in_array( $level, (array) $user->roles, true ) ) {
-				return true;
+		if ( function_exists( 'minnpost_membership' ) ) {
+			$minnpost_membership = minnpost_membership();
+			$member_levels       = array_column( $minnpost_membership->member_levels->get_member_levels( '', false ), 'slug' );
+			// Check each selected role against the user's roles
+			foreach ( $member_levels as $level ) {
+				// If the selected role matches, return true
+				if ( in_array( $level, (array) $user->roles, true ) ) {
+					return true;
+				}
 			}
 		}
 
@@ -549,17 +550,21 @@ if ( ! function_exists( 'minnpost_user_eligible_for_benefit' ) ) :
 	function minnpost_user_eligible_for_benefit( $settings = array() ) {
 		$benefit_prefix = 'account-benefits-';
 		$benefit_name   = $settings['settings']['selected'][0];
-		global $minnpost_membership;
-		$user_claim_eligibility = $minnpost_membership->user_info->get_user_benefit_eligibility( $benefit_name );
-		if ( 'member_eligible' === $user_claim_eligibility['state'] ) {
-			$user_claim_status = $minnpost_membership->front_end->get_user_claim_status( $benefit_prefix, $benefit_name );
-			if ( is_array( $user_claim_status ) && ! empty( $user_claim_status ) ) {
-				if ( isset( $user_claim_status['status'] ) ) {
-					$user_claim_status = $user_claim_status['status'];
+		if ( function_exists( 'minnpost_membership' ) ) {
+			$minnpost_membership    = minnpost_membership();
+			$user_claim_eligibility = $minnpost_membership->user_info->get_user_benefit_eligibility( $benefit_name );
+			if ( 'member_eligible' === $user_claim_eligibility['state'] ) {
+				$user_claim_status = $minnpost_membership->front_end->get_user_claim_status( $benefit_prefix, $benefit_name );
+				if ( is_array( $user_claim_status ) && ! empty( $user_claim_status ) ) {
+					if ( isset( $user_claim_status['status'] ) ) {
+						$user_claim_status = $user_claim_status['status'];
+					}
 				}
-			}
-			if ( 'user_is_eligible' === $user_claim_status ) {
-				return true;
+				if ( 'user_is_eligible' === $user_claim_status ) {
+					return true;
+				} else {
+					return false;
+				}
 			} else {
 				return false;
 			}
