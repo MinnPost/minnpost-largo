@@ -1,8 +1,7 @@
 .m-membership-action {
-	font-size: $content-font-size;
-	line-height: 1.5em;
 	border: 0;
-	background: $color__gray-sub-menu;
+	background: neutral-color(light);
+
 	.a-button {
 		line-height: normal;
 	}

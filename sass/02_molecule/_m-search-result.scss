@@ -1,0 +1,16 @@
+.m-search-result {
+
+	article {
+		margin-bottom: $standard-block-margin;
+		border-bottom: $border-default-style;
+		padding-bottom: $standard-block-padding;
+	}
+
+	.a-entry-title {
+		margin: $standard-block-padding / 2 0;
+	}
+
+	.m-entry-byline {
+		margin-bottom: $standard-block-padding / 2;
+	}
+}

@@ -1,78 +1,115 @@
-input[type="submit"], button[type="submit"], button[type="button"], a.a-button {
-	padding: 0.25em;
-	font-size: $base-line-height-em;
-	font-weight: normal;
-	background: $color__minnpost-red;
-	color: $color__white;
-	font-family: $font__headings;
-	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
-	font-style: normal;
-	font-variant: normal;
-	border: 0;
-	display: inline-block;
-	margin-right: 0.5em;
-	cursor: pointer;
-	line-height: 23px;
-	&:link, &:visited {
-		background: $color__minnpost-red;
-		color: $color__white;
-		text-decoration: none;
-	}
-	&:hover, &:focus, &:active {
-		background: palette(red, dark);
-		color: $color__white;
-		text-decoration: none;
-	}
-	&:disabled, &.a-button-disabled {
+input[type="submit"],
+button[type="submit"],
+button[type="button"],
+a.a-button,
+button.a-button,
+.sce-comment-edit-buttons button {
+
+	@include button();
+
+	&:disabled,
+	&.a-button-disabled {
 		cursor: not-allowed;
 		opacity: 0.5;
 	}
+
 	&.a-button-flip {
-		background: $color__minnpost-blue;
-		&:hover, &:focus, &:active {
-			background: palette(blue, dark);
+		background-color: utility-color(blue, dark);
+
+		&:hover,
+		&:focus,
+		&:active {
+			background-color: utility-color(blue, medium);
 		}
 	}
-	&.a-button-secondary {
-		color: $color__gray-meta;
-		border-color: $color__border-button;
-		background: $color__background-screen;
-		box-shadow: 0 1px 0 #ccc;
-		border-width: 1px;
-		border-style: solid;
-		&:hover, &:focus, &:active {
-			background: darken($color__background-screen, 10);
+
+	&.a-button-secondary,
+	&.sce-comment-cancel,
+	&.sce-comment-delete {
+		color: neutral-color(dark);
+		background: neutral-color(light);
+		border-width: $border-default-style;
+
+		&:hover,
+		&:focus,
+		&:active {
+			background: neutral-color(highlight);
 			text-decoration: none;
 		}
 	}
 }
-.a-button-sentence {
-	a.a-button:link, a.a-button:visited, button[type="submit"], button[type="button"] {
-		margin-right: 0;
-	}
-	.a-between-buttons {
-		display: inline-block;
-		margin: 0 0.5em;
-		color: $color__gray-meta;
-		text-transform: uppercase;
-		font-family: $font__sans;
-	}
-}
-.a-input-with-button {
-	width: 100%;
-	margin-bottom: 0.375em;
-	display: flex;
-	input[type="submit"], button[type="submit"], button[type="button"], a.a-button {
-		margin: 0;
+
+.a-button-content {
+
+	@include button( $background: utility-color(blue, dark), $hover: utility-color(blue, medium));
+
+	&.a-button-content-zone {
+		display: block;
+		margin-bottom: $standard-block-margin;
 	}
 }
 
-.m-form-standalone .m-form-item .a-input-with-button input:not([type=checkbox]):not([type=radio]), .m-form-standalone .m-form-item .a-input-with-button select, .m-form-standalone .m-form-item .a-input-with-button textarea {
-	margin-bottom: 0;
+.a-button-sentence {
+
+	input[type="text"],
+	input[type="search"],
+	input[type="email"],
+	input[type="tel"],
+	input[type="url"],
+	input[type="number"],
+	select {
+		margin-right: 0;
+		border-top-right-radius: 0;
+		border-bottom-right-radius: 0;
+	}
+
+	a.a-button:link,
+	a.a-button:visited,
+	button[type="submit"],
+	button[type="button"],
+	button[type="reset"],
+	input[type="submit"],
+	input[type="reset"] {
+		margin-right: 0;
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+	}
+
+	.a-between-buttons {
+		display: inline-block;
+		margin: 0 $standard-block-padding;
+		color: neutral-color(dark);
+		text-transform: uppercase;
+
+		@include meta-preset( $size: 0 );
+	}
 }
 
 // overwrite gravityforms button style
-.gform_wrapper .gform_footer input.button, .gform_wrapper .gform_page_footer input.button, .gform_wrapper .gform_footer input[type=submit], .gform_wrapper .gform_page_footer input[type=submit] {
-	font-size: $base-line-height-em;
+.gform_wrapper .gform_footer input.button,
+.gform_wrapper .gform_page_footer input.button,
+.gform_wrapper .gform_footer input[type=submit],
+.gform_wrapper .gform_page_footer input[type=submit] {
+
+	@include meta-preset( $size: 2, $bold: true, $italic: false, $line-height: 1 );
 	margin-bottom: 0;
+}
+
+// show comments button
+.a-button.a-button-show-comments {
+
+	@include link-underline();
+	background: none;
+	padding: 0;
+	margin: 0 0 $standard-block-margin 0;
+	font-size: var(--scale0);
+	text-align: left;
+
+	&:active,
+	&:focus,
+	&:hover {
+
+		@include link-underline(utility-color(blue, medium), utility-color(blue, background));
+		background: none;
+	}
 }

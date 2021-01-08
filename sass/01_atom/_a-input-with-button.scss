@@ -1,0 +1,25 @@
+.a-input-with-button {
+	width: 100%;
+	margin-bottom: $standard-block-padding;
+    display: flex;
+    position: relative;;
+
+	input[type="submit"],
+	button[type="submit"],
+	button[type="button"],
+	a.a-button {
+		margin: 0;
+    }
+    
+    .a-validation-error {
+        position: absolute;
+        top: -2em;
+        left: 0;
+    }
+}
+
+.m-form-standalone .m-form-item .a-input-with-button input:not([type=checkbox]):not([type=radio]),
+.m-form-standalone .m-form-item .a-input-with-button select,
+.m-form-standalone .m-form-item .a-input-with-button textarea {
+	margin-bottom: 0;
+}

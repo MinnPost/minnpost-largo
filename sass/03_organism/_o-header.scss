@@ -1,6 +1,6 @@
 .o-header {
 	position: relative;
-	margin-top: 10px;
-	margin-bottom: 10px;
-	font-family: $font__sans;
+	padding-top: $standard-block-padding;
+	padding-bottom: $standard-block-padding;
+	justify-content: space-between;
 }

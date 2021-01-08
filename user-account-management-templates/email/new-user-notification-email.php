@@ -6,7 +6,7 @@
 			<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 		<!--<![endif]-->
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Welcome to MinnPost</title>
+		<title><?php echo __( 'Welcome to MinnPost', 'minnpost-largo' ); ?></title>
 		<style type="text/css" data-premailer="ignore">
 			.webkit {
 				max-width: 600px;
@@ -80,7 +80,7 @@ color: #ffffff !important; text-decoration: none !important;
 
 	<!-- limit to 50 characters; only display if there is a value -->
 	<span style="display: none !important; font-size: 0; color: #fff;"> <!-- gmail only takes display none if it has !important; outlook still doesn't care -->
-		Welcome to your MinnPost.com website account.
+		<?php echo __( 'Welcome to your MinnPost.com website account.', 'minnpost-largo' ); ?>
 	</span>
 
 	<center class="wrapper" style="width: 100%; table-layout: fixed; -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%;">
@@ -107,7 +107,7 @@ color: #ffffff !important; text-decoration: none !important;
 											<table cellpadding="0" cellspacing="0" class="contents" style="border-spacing: 0; margin: 0; padding: 0; font-family: Helvetica, Arial, Geneva, sans-serif; color: #1a1818; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; width: 100%; font-size: 16px; text-align: left;">
 												<tr>
 													<td style="border-collapse: collapse; margin: 0; padding: 0; max-height: 90px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-size: 0; line-height: 0px;" valign="bottom">
-														<a href="https://www.minnpost.com/" style="color: #801019; text-decoration: none;"><img src="https://www.minnpost.com/wp-content/uploads/sites/default/themes/siteskin/inc/images/newsletter-logo-daily.png" alt="MinnPost" width="390" height="90" align="left" style="height: auto; margin: 0; padding: 0; border: 0 none; line-height: 100%; outline: none; text-decoration: none; width: 100%; max-width: 390px; max-height: 90px; display: block; vertical-align: bottom;" /></a>
+														<a href="https://www.minnpost.com/" style="color: #801019; text-decoration: none;"><img src="https://www.minnpost.com/wp-content/uploads/sites/default/themes/siteskin/inc/images/newsletter-logo-daily.png" alt="<?php echo __( 'MinnPost', 'minnpost-largo' ); ?>" width="390" height="90" align="left" style="height: auto; margin: 0; padding: 0; border: 0 none; line-height: 100%; outline: none; text-decoration: none; width: 100%; max-width: 390px; max-height: 90px; display: block; vertical-align: bottom;" /></a>
 													</td>
 												</tr>
 											</table>
@@ -173,13 +173,40 @@ color: #ffffff !important; text-decoration: none !important;
 							<table cellpadding="0" cellspacing="0" width="100%" style="border-spacing: 0; margin: 0; padding: 0; font-family: Helvetica, Arial, Geneva, sans-serif; color: #1a1818; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse;">
 								<tr>
 									<td class="inner contents" style="border-collapse: collapse; width: 100%; font-size: 16px; margin: 0; padding: 0;" align="left">
-										<p style="margin: 10px 0; padding: 0;" align="center">
-											<a href="https://twitter.com/MinnPost" class="twitter" style="color: #801019; text-decoration: none; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 13px; font-weight: bold; line-height: 100%; margin-bottom: 10px; text-align: center;"><img width="25" height="25" title="Follow us on Twitter" alt="Follow us on Twitter" src="https://minnpost.com/wp-content/uploads/sites/default/themes/siteskin/inc/images/icons/twitter.png" style="height: auto; line-height: 100%; outline: none; text-decoration: none; display: inline; clear: none; border: 0 none;" align="none" /></a><!--[if mso]>&nbsp;&nbsp;<![endif]-->
-											<a href="https://www.facebook.com/MinnPost" class="facebook" style="color: #801019; text-decoration: none; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 13px; font-weight: bold; line-height: 100%; margin-bottom: 10px; text-align: center;"><img width="25" height="25" title="Friend us on Facebook" alt="Like us on Facebook" src="https://minnpost.com/wp-content/uploads/sites/default/themes/siteskin/inc/images/icons/facebook.png" style="height: auto; line-height: 100%; outline: none; text-decoration: none; display: inline; clear: none; border: 0 none;" align="none" /></a>
-											<a href="https://minnpost.com/support" class="support" style="color: #801019; text-decoration: none; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 13px; font-weight: bold; line-height: 100%; margin-bottom: 10px; text-align: center; padding-left: 15px;"><!--[if mso]>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<![endif]-->Become a Member</a>
-											<a href="mailto:feedback@minnpost.com" class="contact" style="color: #801019; text-decoration: none; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 13px; font-weight: bold; line-height: 100%; margin-bottom: 10px; text-align: center;">Contact Us</a>
+									<div class="footer-hat" style="Margin-top: 20px; padding: 10px; border: 1px solid #cccccf; background: #f0f0f5; font-family: Helvetica, Arial, Geneva, sans-serif;">
+										<p style="Margin: 0; padding: 0; font-weight: bold; line-height: 1.3em; color: #1a1818;font-family: Helvetica, Arial, Geneva, sans-serif;">
+										MinnPost is a nonprofit newsroom that digs deep into the news that matters. Here is how you can support us:
 										</p>
-										<p class="address" style="font-size: 12px; margin: 10px 0 15px; padding: 0;" align="center">MinnPost | 900 6th Avenue SE | Minneapolis, MN 55414 | 612.455.6950</p>
+										<table style="border-collapse: collapse; border-spacing: 0; color: #1a1818; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0;vertical-align: top;" width="100%" cellspacing="0" cellpadding="0">
+											<tbody>
+												<tr>
+													<td style="border-collapse: collapse; Margin: 0; padding: 0;vertical-align: top;">
+														<ul style="Margin: 0; padding: 15px 0 0 30px; list-style: disc outside;">
+															<li style="Margin: 0; padding: 0 0 8px 0;"><a href="https://www.minnpost.com/newsletters/" style="color: #801018;text-decoration: none;font-weight: bold;">Subscribe</a> to one of our other free newsletters</li>
+															<li style="Margin: 0; padding: 0 0 8px 0;"><a href="https://www.minnpost.com/support/" style="color: #801018;text-decoration: none;font-weight: bold;">Become</a> a MinnPost member</li>
+														</ul>
+													</td>
+												</tr>
+											</tbody>
+										</table>
+									</div>
+									<div class="footer-bottom" style="padding: 10px 0; text-align: center;">
+										<p style="Margin: 0; padding: 0;">
+											<a href="https://twitter.com/MinnPost" class="twitter" style="color: #801019; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 13px; font-weight: bold; line-height: 100%; text-align: center; text-decoration: none;">
+												<img class="no-lazy" src="https://www.minnpost.com/wp-content/uploads/2019/03/twitter.png?w=30" alt="Follow us on Twitter" width="25" height="25" align="none">
+											</a><!--[if mso]>&nbsp;&nbsp;<![endif]-->
+											<a href="https://www.facebook.com/MinnPost" class="facebook" style="color: #801019; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 13px; font-weight: bold; line-height: 100%; text-align: center; text-decoration: none;"><img class="no-lazy" src="https://www.minnpost.com/wp-content/uploads/2019/03/facebook.png?w=30" alt="Like us on Facebook" width="25" height="25" align="none"></a>
+											<!--[if mso]>&nbsp;&nbsp;<![endif]-->
+											<a href="https://www.instagram.com/MinnPost" class="instagram" style="color: #801019; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 13px; font-weight: bold; line-height: 100%; text-align: center; text-decoration: none;"><img class="no-lazy" src="https://www.minnpost.com/wp-content/uploads/2019/06/instagram.png?w=30" alt="Follow us on Instagram" width="25" height="25" align="none"></a>
+											<a href="mailto:feedback@minnpost.com" class="contact" style="color: #801019; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 13px; font-weight: bold; line-height: 100%; text-align: center; text-decoration: none;">Contact Us</a>
+										</p>
+									</div>
+										<?php
+										$footer_message = get_option( 'site_footer_message', '' );
+										if ( '' !== $footer_message ) :
+											?>
+											<p class="address" style="font-size: 12px; Margin: 10px 0 15px; padding: 0; text-align: center;" align="center"><?php echo $footer_message; ?></p>
+										<?php endif; ?>
 									</td>
 								</tr>
 							</table>

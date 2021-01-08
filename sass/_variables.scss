@@ -1,63 +1,57 @@
-// color config
-$_color-base-gray: rgb(122,122,122); // 7a7a7a
-$_color-base-red: rgb(128,16,25); // 801018
-$_color-base-blue: rgb(0,132,168); // 0084a8
-$_color-base-yellow: rgb(251, 211, 65); // FBD341
-$palettes: (
-    grey: (
-        base:  $_color-base-gray,
-        light: lighten($_color-base-gray, 10%), // 949494
-        dark: darken($_color-base-gray, 10%) // 616161
-    ),
-    red: (
-        base:  $_color-base-red,
-        light: lighten($_color-base-red, 10%),
-        dark: darken($_color-base-red, 10%)
-    ),
-    blue: (
-        base:  $_color-base-blue,
-        light: lighten($_color-base-blue, 10%),
-        dark: darken($_color-base-blue, 10%)
-    ),
-    purple: (
-        base:   rgb(42,40,80),
-        light:  rgb(51,46,140),
-        dark:   rgb(40,38,65)
-    ),
+/*------------------------------------*\
+	#Colors
+\*------------------------------------*/
+
+// brand colors
+$brand-colors: (
+	red: (
+		dark: #4c1016,
+		medium: #7f121c, // logo
+		highlight: #d7757e
+	),
 );
 
-// Brand colors
-$color__minnpost-red: palette(red);
-$color__minnpost-black: #1a1818;
-$color__minnpost-white: #f0f0f5;
-$color__minnpost-blue: palette(blue);
+// utility colors
+$utility-colors: (
+	green: (
+		dark: #24613b,
+		medium: #1c8745, // donate
+		highlight: #609f78,
+		background: #ddf8e7,
+	),
+	blue: (
+		dark: #135b7e, // link
+		medium: #0c7bb0,
+		highlight: #5e99b5,
+		background: #dcf0fa
+	),
+	purple: (
+		dark: #635077, // opinion
+		medium: #8c64b4,
+		highlight: #a880d0,
+		background: #ebe7ef
+	),
+	yellow: (
+		background: #fbd341
+	),
+	orange: (
+		dark: #873a02,
+		medium: #b94f03, // advertising
+		highlight: #fc9e5b,
+		background: #fee3cf
+	),
+);
 
-// more minnpost colors
-$color__minnpost-green: #1C8745;
-$color__minnpost-yellow: #FBD341; // 251, 211, 65
-$color__minnpost-red-error: #c00; // probably?
-$color__minnpost-red-required: #c00;
-
-// Color Names
-$color__black: #000;
-$color__white: #fff;
-$color__dark-gray: #333;
-
-// Font Colors
-$color__base-background-color: #fff;
-$color__base-font-color: $color__dark-gray;
-$color__heading-font-color: $color__dark-gray;
-$color__action-color: $color__minnpost-red;
-$color__text-main: #404040; // this is not used anywhere, i think
-
-// Grays
-$color__gray-lightest: #cdcdd0;
-$color__gray-light: #ababab;
-$color__gray-med: palette(gray);
-$color__gray-dark: #404040;
-$color__gray-darkest: #282828;
-$color__gray-meta: #555556;
-$color__gray-sub-menu: #ddd;
+// neutral colors
+$neutral-colors: (
+	black: #1a1818, // logo
+	dark: #5e6e76,
+	medium: #869298,
+	border: #d6d6da,
+	highlight: #ebebfb,
+	light: #efeff0,
+	white: #fff
+);
 
 // Membership levels
 $color__minnpost-bronze: #cd7f32;
@@ -65,108 +59,218 @@ $color__minnpost-silver: #c0c0c0;
 $color__minnpost-gold: #ffd700;
 $color__minnpost-platinum: #e5e4e2;
 
-// background colors
-$color__background-body: #fff;
-$color__background-screen: #f1f1f1;
-$color__background-hr: #ccc;
-$color__background-button: $color__minnpost-white;
-$color__background-pre: #eee;
-$color__background-ins: #fff9c0;
-
-// form colors
-$color__text-screen: #21759b;
-$color__text-input: #666;
-$color__text-input-focus: #111;
-$color__form-text: #504949;
-
-// link colors
-$color__link: $color__minnpost-red;
-$color__link-visited: $color__minnpost-red;
-$color__link-hover: $color__minnpost-red;
-$color__link-active: $color__black;
-
-// border colors
-$color__border-light: #c8c8c8;
-$color__border-button: #ccc #ccc #bbb;
-$color__border-button-hover: #ccc #bbb #aaa;
-$color__border-button-focus: #aaa #bbb #bbb;
-$color__border-input: #ccc;
-$color__border-abbr: #666;
+$background-unpublished: neutral-color(white) url(/wp-content/themes/minnpost-largo/assets/img/unpublished.png);
 
 
+/*------------------------------------*\
+	#TYPOGRAPHY
+\*------------------------------------*/
 
+// font families
+$font__code: monaco, consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
+$font__pre: "Courier 10 Pitch", courier, monospace;
+$font__sans: helvetica, arial, sans-serif;
+$font__serif: georgia, cambria, "Times New Roman", times, serif;
+$webfont__serif: "ff-meta-serif-web-pro", georgia, cambria, "Times New Roman", times, serif;
+$webfont__sans: "ff-meta-web-pro", helvetica, arial, sans-serif;
 
-// type
-$font__main: sans-serif;
-$font__code: Monaco, Consolas, "Andale Mono", "DejaVu Sans Mono", monospace;
-$font__pre: "Courier 10 Pitch", Courier, monospace;
-$font__line-height-body: 1.5;
-$font__line-height-pre: 1.6;
+$html-root-size: 125%; // 100% is 16px
+$html-root-size-large-screen: 150%;
 
-$font__sans: Helvetica, Arial, sans-serif;
-$font__serif: Georgia, Cambria, "Times New Roman", Times, serif;
-$font__headings: NimbusSanNovConD-Bol, Helvetica, Arial, Geneva, sans-serif;
+$interface-copy-size: 80%;
+$interface-copy-size-larger: 85%;
+$interface-copy-size-smaller: 75%;
 
-// Font sizes
-$base-font-size: 13px; // 13px
-$content-font-size: 1.23em; // 16px
-$meta-font-size: 92.3%; // 12px
+// type scale.
+// uses Rob Weychert's code at https://24ways.org/2019/a-modern-typographic-scale/
+$html-font-size: 100%;
+// starts with the <html> element's font size value, so we
+// should change that based on our media queries
+:root {
+	$font-size-interval: 1.125;    // Unitless for proportional, unit for fixed
+	$body-text: 1em;  // Must have a unit
+	$scale-min: -3;    // Unitless negative integer
+	$scale-max: 4;     // Unitless positive integer
 
-// heading font sizes
-$large-title-font-size: 215.4%;
+	--font-size-int: #{$font-size-interval};
+	--scale0: #{$body-text};
 
-// Line height
-$base-line-height: 1.5;
-$base-line-height-em: 1.5em;
+	@if $scale-min < 0 {
+		// Generate scale variables smaller than the base text size
+		@for $i from -1 through $scale-min {
 
+			@if type-of($font-size-interval) == number {
 
+				@if unitless($font-size-interval) {
+					--scale#{$i}: calc(var(--scale#{$i + 1}) / var(--font-size-int));
+				} @else {
+					--scale#{$i}: calc(var(--scale#{$i + 1}) - var(--font-size-int));
+				}
+			}
+		}
+	}
 
-// site structure
-$max-width-medium: 680px;
-$medium-margins-too-small: 700px;
-$max-width-medium-plus-margins: 720px;
-$max-width-page: 975px;
-$max-width-story-2012: 452px;
+	@if $scale-max > 0 {
+		// Generate scale variables larger than the base text size
+		@for $i from 1 through $scale-max {
 
-$header-height-smaller-screen: 50px;
-$header-height-small-screen: 76px;
-$header-height-before-nav-breaks: 66px;
-$header-height-after-nav-breaks: 71px;
+			@if type-of($font-size-interval) == number {
 
-$grid-gap: 10px;
+				@if unitless($font-size-interval) {
+					--scale#{$i}: calc(var(--scale#{$i - 1}) * var(--font-size-int));
+				} @else {
+					--scale#{$i}: calc(var(--scale#{$i - 1}) + var(--font-size-int));
+				}
+			}
+		}
+	}
+}
 
-// Neat Breakpoints
-$small-screen: 480px;
-$more-than-logo-screen: 500px;
-$medium-screen: 640px;
-$nav-breaks: 768px;
-$nav-move-end: 810px;
-$large-screen: 860px;
-$nav-wrap-screen: 950px;
+// line height scale
+:root {
+	$line-height-interval: 0.95;
+	$body-line-height: 1.3;
+	$line-height-scale-min: -3;    // Unitless negative integer
+	$line-height-scale-max: 4;     // Unitless positive integer
 
-$medium-screen-up: new-breakpoint(min-width $medium-screen 4);
-$large-screen-up: new-breakpoint(min-width $large-screen 8);
+	--line-height-int: #{$line-height-interval};
+	--lh0: #{$body-line-height};
 
-// site region sizes
-$size__main-smaller-screen: 50%;
-$size__main-small-screen: 65%;
-$size__main-large-screen: 400px;
-$size__archive-medium-screen: 600px;
-$size__site-sidebar: 300px;
-$size__content-sidebar-small-screen: 280px;
-$size__content-sidebar-medium-screen: 35%;
-$size__content-sidebar-large-screen: 205px;
+	@if $line-height-scale-min < 0 {
+		// Generate scale variables smaller than the base text size
+		@for $i from -1 through $line-height-scale-min {
 
-// footer
-$size__footer-column: 270px;
+			@if type-of($line-height-interval) == number {
 
+				@if unitless($line-height-interval) {
+					--lh#{$i}: calc(var(--lh#{$i + 1}) / var(--line-height-int));
+				} @else {
+					--lh#{$i}: calc(var(--lh#{$i + 1}) - var(--line-height-int));
+				}
+			}
+		}
+	}
 
-// spacing
-$standard-page-margin: 1.538461538461538em; // 20px
-$home-content-sidebar-padding: 35px;
-$archive-content-sidebar-padding: 15px;
-$footer-box-spacing: 15px;
-$form-text-indent: 6px;
+	@if $line-height-scale-max > 0 {
+		// Generate scale variables larger than the base text size
+		@for $i from 1 through $line-height-scale-max {
+
+			@if type-of($line-height-interval) == number {
+
+				@if unitless($line-height-interval) {
+					--lh#{$i}: calc(var(--lh#{$i - 1}) * var(--line-height-int));
+				} @else {
+					--lh#{$i}: calc(var(--lh#{$i - 1}) + var(--line-height-int));
+				}
+			}
+		}
+	}
+}
+
+/*------------------------------------*\
+	#Layout
+\*------------------------------------*/
+
+// ------------------------------------------------------------
+// GRID PROPORTIONS
+// ------------------------------------------------------------
+// Customize your grid’s proportions by editing the values of
+// the four variables below. Use only numbers for values, no
+// units (e.g. "10", not "10px"). IMPORTANT: Don't delete any
+// of these variables! For any you don't need to use, just
+// assign a value of 0.
+
+$mar: 4; // Margin width
+$col: 4; // Column width
+$gut: 1; // Gutter width
+$pad: 1; // Padding width
+
+$grid-color: red; // Grid overlay color
+
+// ------------------------------------------------------------
+// BREAKPOINTS
+// ------------------------------------------------------------
+// You can define as many (or as few) breakpoints as you like,
+// and name them whatever you want. Just be sure to:
+//
+// 1. use the syntax shown below,
+// 2. keep the breakpoints in order (smallest to largest), and
+// 3. include a name (e.g. "xl"), column count ("cols",
+//    unitless), and minimum width ("min-width", with units)
+//    for each breakpoint
+//
+// All breakpoints use the same proportions specified in the
+// variables above, but margin widths can be optionally
+// customized for each breakpoint.
+
+// ex: @include breakpoint-min( sm ) { }
+
+$breakpoints: (
+	xxxs: (cols:  4, min-width:  0,  margin: $pad), // Includes optional custom margin
+	xxs: (cols:  6, min-width: 24em, margin: $gut), // 384px
+	xs: (cols:  6, min-width: 30em, margin: $gut), // 480px
+	sm: (cols:  6, min-width: 40em, margin: $gut), // 640px
+	md: (cols:  8, min-width: 50em, margin: $gut), // 800px
+	lg: (cols: 12, min-width: 60em, margin: $mar), // 960px
+	xl: (cols: 16, min-width: 70em, margin: $mar), // 1120px
+	xxl: (cols: 16, min-width: 80em, margin: $mar), // 1280px
+    xxxl: (cols: 16, min-width: 90em, margin: $mar) // 1440px
+);
+
+$max-width: null; // For no max-width, use $max-width: null;
+
+$size__site-sidebar: 300px; // this needs to be pixel based because of ad dimensions
+$max-width-page: 80em; // this is 1280px
+
+// ------------------------------------------------------------
+// Z-INDEXES
+// ------------------------------------------------------------
+
+$z-index__xxxl: 1000000000;
+$z-index__xxl: 100000000;
+$z-index__xl: 10000000;
+$z-index__lg: 1000000;
+$z-index__md: 100000;
+$z-index__sm: 10000;
+$z-index__xs: 1000;
+$z-index__xxs: 100;
+$z-index__xxxs: 10;
+
+/*------------------------------------*\
+	#SPACING
+\*------------------------------------*/
+
+// margin/padding
+$standard-block-margin: 1.5em; // 36px at desktop
+$standard-heading-margin: 0.75em; // 18px at desktop
+$standard-block-padding: 0.5em; // 12px at body
+
+/*------------------------------------*\
+	#BORDERS
+\*------------------------------------*/
+
+$border-radius: 4px;
+$border-default-style: 1px solid neutral-color(border);
+
+/*------------------------------------*\
+	#Animation
+\*------------------------------------*/
+
+$hover-transition: 0.25s all;
+$double-transition: 0.5s all;
+
+/*------------------------------------*\
+	#Fixed Sizes
+\*------------------------------------*/
+
+// images
+$author-thumb-size: 75px;
+$author-photo-size: 190px;
+$author-full-size: 225px;
+
+// icons
+$share-icon-size: 2em;
+$inline-icon-size: 1em;
 
 // ads
 $ad-top-width: 728px;
@@ -175,6 +279,9 @@ $ad-top-right-width: 228px;
 $ad-top-right-iframe-height: 90px;
 $ad-embed-width: 300px;
 $ad-embed-height: 250px;
+$ad-halfpage-width: 300px;
+$ad-halfpage-height: 600px;
 
-// backgrounds
-$background-unpublished: #fff url('/wp-content/themes/minnpost-largo/assets/img/unpublished.png');
+// touch targets
+$touch-target-minimum-size: 44px;
+$touch-target-minimum-size-desktop: 32px;

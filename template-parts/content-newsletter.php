@@ -45,6 +45,15 @@
 	.content .button.read-story td td a:active {
 		color: #ffffff !important; text-decoration: none !important;
 	}
+	.footer a:hover {
+		color: #801018 !important; text-decoration: underline; !important;
+	}
+	.footer a:visited {
+		color: #801018 !important; text-decoration: none; !important;
+	}
+	.footer a:active {
+		color: #801018 !important; text-decoration: underline; !important;
+	}
 	@media only screen and (max-width: 600px) {
 		.two-column.header .logo td {
 			border-bottom: 10px solid #000 !important; Margin-bottom: 5px !important;
@@ -74,7 +83,7 @@
 				<tr>
 					<td>
 		<![endif]-->
-		<table cellpadding="0" cellspacing="0" class="outer" align="center" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0 auto; max-width: 600px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; width: 100%">
+		<table cellpadding="0" cellspacing="0" class="outer" align="center" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0 auto; max-width: 600px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; width: 100%; background-color: #ffffff;">
 			<tr>
 				<td class="two-column header" style="border-bottom-color: #000; border-bottom-style: solid; border-bottom-width: 10px; border-collapse: collapse; font-size: 0; Margin: 0; padding: 0; text-align: center" align="center">
 					<!--[if (gte mso 9)|(IE)]>
@@ -125,6 +134,8 @@
 			</td> <!-- end .two-column.header -->
 		</tr> <!-- end row -->
 
+		<?php do_action( 'wp_message_inserter', 'email_header', 'email' ); ?>
+
 		<?php
 		$body = apply_filters( 'the_content', get_the_content() );
 
@@ -149,20 +160,29 @@
 		</tr> <!-- end row -->
 			<?php
 		}
-		$top_offset     = 2;
-		$top_stories    = get_post_meta( get_the_ID(), '_mp_newsletter_top_posts', true );
+		$top_offset  = 2;
+		$top_stories = get_post_meta( get_the_ID(), '_mp_newsletter_top_posts', true );
+
+		$top_stories_override = get_post_meta( get_the_ID(), '_mp_newsletter_top_posts_override', true );
+		if ( '' !== $top_stories_override ) {
+			$top_stories_override = explode( ',', $top_stories_override );
+			$top_stories          = array_map( 'trim', $top_stories_override );
+		}
+
 		$top_query_args = array(
 			'post__in'       => $top_stories,
 			'posts_per_page' => $top_offset,
 			'orderby'        => 'post__in',
+			'post_status'    => 'any',
 		);
 		$top_query      = new WP_Query( $top_query_args );
 
 		$second_query_args = array(
-			'post__in' => $top_stories,
-			'paged'    => 1,
-			'offset'   => $top_offset,
-			'orderby'  => 'post__in',
+			'post__in'    => $top_stories,
+			'paged'       => 1,
+			'offset'      => $top_offset,
+			'orderby'     => 'post__in',
+			'post_status' => 'any',
 		);
 		$second_query      = new WP_Query( $second_query_args );
 		// the total does not stop at posts_per_page
@@ -171,11 +191,19 @@
 		$newsletter_type = get_post_meta( get_the_ID(), '_mp_newsletter_type', true );
 
 		$more_stories = get_post_meta( get_the_ID(), '_mp_newsletter_more_posts', true );
+
+		$more_stories_override = get_post_meta( get_the_ID(), '_mp_newsletter_more_posts_override', true );
+		if ( '' !== $more_stories_override ) {
+			$more_stories_override = explode( ',', $more_stories_override );
+			$more_stories          = array_map( 'trim', $more_stories_override );
+		}
+
 		if ( '' !== $more_stories ) {
 			$more_query_args = array(
 				'post__in'       => $more_stories,
 				'posts_per_page' => -1,
 				'orderby'        => 'post__in',
+				'post_status'    => 'any',
 			);
 			$more_query      = new WP_Query( $more_query_args );
 		}
@@ -277,7 +305,7 @@
 														<?php
 													endwhile;
 													wp_reset_postdata();
-?>
+													?>
 												</div> <!-- end .inner -->
 											</td>
 										</tr>
@@ -294,6 +322,10 @@
 				<![endif]-->
 			</td> <!-- end .two-column.content.supp -->
 		</tr> <!-- end row -->
+
+		<?php do_action( 'wp_message_inserter', 'email_before_bios', 'email' ); ?>
+
+		<?php do_action( 'wp_message_inserter', 'email_bottom', 'email' ); ?>
 
 		<tr>
 			<td class="one-column footer" style="border-collapse: collapse; Margin: 0; padding: 0">

@@ -1,17 +1,72 @@
-.float-right, .alignright, .mp .alignright {
-	float: right;
-	clear: right;
-	margin-left: 20px;
-	margin-bottom: 20px;
+.float-right,
+.alignright,
+.mp .alignright {
+	margin-bottom: $standard-block-margin;
+
+	@include breakpoint-min( xs ) {
+		float: right;
+		clear: right;
+		margin-left: $standard-block-margin;
+	}
+
 }
-.float-left, .alignleft, .mp .alignleft {
-	float: left;
-	clear: left;
-	margin-right: 20px;
-	margin-bottom: 20px;
+
+.float-left,
+.alignleft,
+.mp .alignleft {
+	margin-bottom: $standard-block-margin;
+
+	@include breakpoint-min( xs ) {
+		float: left;
+		clear: left;
+		margin-right: $standard-block-margin;
+	}
 }
+
 .m-entry-content .image {
+	margin: $standard-block-margin 0;
+
+	&.aligncenter {
+		margin-left: auto;
+		margin-right: auto;
+	}
+
+	&.alignleft {
+
+		@include breakpoint-min( xs ) {
+			float: left;
+			clear: right;
+			margin: $standard-block-margin / 2 $standard-block-margin $standard-block-margin 0;
+		}
+	}
+
+	&.alignright {
+
+		@include breakpoint-min( xs ) {
+			float: right;
+			clear: right;
+			margin: $standard-block-margin / 2 0 $standard-block-margin $standard-block-margin;
+		}
+	}
+
 	img {
 		display: block;
 	}
+}
+
+.m-entry-content .image-full {
+	margin-top: 0;
+
+	@include breakpoint-min( sm ) {
+		margin-bottom: $standard-heading-margin;
+		width: auto;
+	}
+
+	@include breakpoint-min( lg ) {
+		width: 100%;
+	}
+}
+
+.m-entry-content .text-block {
+	margin-bottom: $standard-block-margin;
 }

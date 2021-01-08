@@ -1,7 +1,7 @@
 .a-newsletter-group {
-	color: $color__gray-meta;
-	font-size: 76.9%;
+	color: neutral-color(dark);
 	text-transform: uppercase;
-	font-family: $font__sans;
-	line-height: 1.3em;
+
+	@include meta-preset( $size: -2, $bold: false, $italic: false, $line-height: 1 );
+	margin-bottom: $standard-block-padding;
 }

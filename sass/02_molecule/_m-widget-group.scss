@@ -1,0 +1,13 @@
+.m-widget-group {
+
+	&.m-widget-group-homepage {
+		margin-top: 0;
+		margin-right: -$standard-heading-margin;
+		margin-bottom: 0;
+		margin-left: -$standard-heading-margin;
+
+		@include breakpoint-min( sm ) {
+			display: flex;
+		}
+	}
+}

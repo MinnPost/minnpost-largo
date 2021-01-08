@@ -22,19 +22,19 @@
 
 	<div class="m-ad-region m-ad-region-leaderboard">
 		<div class="o-wrapper">
-			<?php do_action( 'acm_tag', 'Top' ); ?>
+			<?php do_action( 'acm_tag', 'leaderboard' ); ?>
 		</div>
 	</div>
 
 	<header id="masthead" class="o-header">
-		<div class="o-wrapper o-wrapper-site-header">
+		<div class="o-wrapper o-wrapper-site-header<?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">
 			<?php get_template_part( 'template-parts/logo', 'top' ); ?>
 			<?php do_action( 'minnpost_membership_site_header', true ); ?>
 		</div>
 		<div class="o-wrapper o-wrapper-site-navigation">
 			<nav id="navigation-primary" class="m-main-navigation">
 				<button class="menu-toggle" aria-controls="primary-links" aria-expanded="false">
-					<span><?php esc_html_e( 'Menu', 'minnpost-largo' ); ?></span>
+					<i class="fas fa-bars"></i><span><?php esc_html_e( 'Menu', 'minnpost-largo' ); ?></span>
 				</button>
 				<?php
 				wp_nav_menu(
@@ -44,56 +44,61 @@
 						'depth'          => 1,
 						'container'      => false,
 						'walker'         => new Minnpost_Walker_Nav_Menu,
+						'priority'       => '20',
+						'items_wrap'     => '<ul hidden id="%1$s" class="m-menu m-menu-%1$s">%3$s</ul>',
+						//'item_classes'   => 'values',
 					)
 				);
-				?>
-			</nav><!-- #site-navigation -->
-			<?php
-				$featured_menu = wp_nav_menu(
+				wp_nav_menu(
 					array(
-						'theme_location' => 'primary_links',
-						'menu_id'        => 'featured-links',
-						'depth'          => 2,
+						'theme_location' => 'primary_actions',
+						'menu_id'        => 'primary-actions',
+						//'depth'          => 1,
 						'container'      => false,
 						'walker'         => new Minnpost_Walker_Nav_Menu,
 						'item_classes'   => 'values',
-						'sub_menu'       => true,
-						'echo'           => false,
-						'fallback_cb'    => '__return_false',
+						'items_wrap'     => '<ul id="%1$s" class="m-menu m-menu-%1$s">%3$s</ul>',
 					)
 				);
-
-				$user_account_access_menu = get_minnpost_account_access_menu();
 				?>
-			<?php if ( ! empty( $featured_menu ) || ! empty( $user_account_access_menu ) ) : ?>
-				<div id="navigation-featured-account-access">
-					<?php if ( ! empty( $featured_menu ) ) : ?>
-					<nav id="navigation-featured" class="m-featured-navigation">
-						<span class="a-nav-label">Featured:</span>
-						<?php echo $featured_menu; ?>
-					</nav><!-- #navigation-featured -->
-					<?php endif; ?>
-					<?php if ( ! empty( $user_account_access_menu ) ) : ?>
-					<nav id="navigation-user-account-access" class="m-secondary-navigation">
-						<?php echo $user_account_access_menu; ?>
-					</nav><!-- #navigation-user-account-access -->
-					<?php endif; ?>
-				</div>
-			<?php endif; ?>
-
+			</nav><!-- #navigation-primary -->
+		</div>
+		<div class="o-wrapper o-wrapper-sub-navigation o-wrapper-topics-navigation">
+			<a class="a-subnav-label a-topics-label" href="/topics/"><?php echo __( 'Topics', 'minnpost-largo' ); ?></a>
+			<div class="m-sub-navigation m-topics">
+				<nav id="navigation-topics" class="m-subnav-navigation m-topics-navigation">
+					<?php
+					wp_nav_menu(
+						array(
+							'theme_location' => 'topics',
+							'menu_id'        => 'topics',
+							'depth'          => 1,
+							'container'      => false,
+							'walker'         => new Minnpost_Walker_Nav_Menu,
+							'items_wrap'     => '<ul id="%1$s" class="m-menu m-menu-sub-navigation m-menu-%1$s">%3$s</ul>',
+							//'item_classes'   => 'values',
+						)
+					);
+					?>
+				</nav><!-- #navigation-topics -->
+				<button class="nav-scroller-btn nav-scroller-btn--left" aria-label="Scroll left">
+					<i class="fas fa-chevron-left"></i>
+				</button>
+				<button class="nav-scroller-btn nav-scroller-btn--right" aria-label="Scroll right">
+					<i class="fas fa-chevron-right"></i>
+				</button>
+			</div>
 		</div>
 	</header><!-- #masthead -->
 
 	<?php
-	$full_class = '';
-	if ( is_singular() ) {
-		$remove_sidebar = get_post_meta( get_the_ID(), '_mp_remove_right_sidebar', true );
-		if ( isset( $remove_sidebar ) && 'on' === $remove_sidebar ) {
-			$full_class = ' o-wrapper-content-full';
-		}
+	$full_class     = '';
+	$remove_sidebar = apply_filters( 'minnpost_largo_remove_sidebar', false );
+	if ( true === $remove_sidebar ) {
+		$full_class = ' o-wrapper-content-full';
 	}
 	?>
 
 	<?php do_action( 'wp_message_inserter', 'header' ); ?>
 
-	<div id="content" class="o-wrapper o-wrapper-content<?php echo $full_class; ?>">
+	<div id="content" class="o-wrapper o-wrapper-content<?php echo $full_class; ?><?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">

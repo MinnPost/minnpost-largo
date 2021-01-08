@@ -1,0 +1,80 @@
+.m-membership-choice-group {
+	// all membership choice group syles
+	margin-bottom: $standard-block-margin;
+
+	#amount-item #amount {
+		font-family: $webfont__sans;
+	}
+
+	select,
+	button,
+	input.a-button {
+		font-family: $webfont__sans;
+	}
+
+	.m-form-radios,
+	.m-form-checkboxes {
+
+		label {
+			border: 0;
+			background: neutral-color(border);
+			color: neutral-color(black);
+		}
+
+		input:checked + label {
+			background: utility-color(blue, medium);
+			color: neutral-color(white);
+		}
+	}
+	// specific to choosing amount
+	&.m-membership-choose-amount {
+
+		.a-fast-select-intro {
+			font-family: $webfont__sans;
+		}
+
+		#amount-item {
+
+			#amount {
+				border: 2px solid neutral-color(border);
+				border-radius: 0;
+			}
+
+			.a-frequency-text-label {
+				margin: 0.9em 0;
+			}
+		}
+	}
+	// specific to choosing thank you gift
+	&.m-membership-gift-selector {
+		border: $border-default-style;
+
+		.m-form-radios .m-form-item,
+		.m-form-checkboxes .m-form-item {
+
+			label {
+				border-width: 6px;
+
+				.support-tooltip {
+
+					.tooltip-text {
+						border: $border-default-style;
+						background: neutral-color(white);
+					}
+
+					.tooltip-text::after {
+						border-color: transparent transparent neutral-color(border) transparent;
+					}
+				}
+			}
+
+			input:checked + label {
+				border: 6px solid utility-color(blue, medium);
+			}
+
+			input:disabled + label::after {
+				background-color: neutral-color(light);
+			}
+		}
+	}
+}

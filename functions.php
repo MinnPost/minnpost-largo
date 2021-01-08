@@ -108,6 +108,7 @@ require get_theme_file_path() . '/inc/comment-list.php';
  */
 require get_theme_file_path() . '/inc/widgets/widget-filter.php';
 require get_theme_file_path() . '/inc/widgets/glean.php';
+require get_theme_file_path() . '/inc/widgets/picked-for-you.php';
 
 /**
  * Custom ad providers for the ad-code-manager plugin
@@ -133,6 +134,11 @@ require get_theme_file_path() . '/inc/apple-news.php';
  * Settings for robots.txt
  */
 require get_theme_file_path() . '/inc/robots.php';
+
+/**
+ * The Events Calendar related methods
+ */
+require get_theme_file_path() . '/inc/events.php';
 
 /**
  * Jetpack related methods

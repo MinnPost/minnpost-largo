@@ -14,12 +14,13 @@ if ( ! function_exists( 'minnpost_menus' ) ) :
 	function minnpost_menus() {
 		register_nav_menus(
 			array(
-				'footer_primary'          => __( 'Footer Primary', 'minnpost-largo' ), // main footer. about, advertise, member benefits, etc
-				'featured_columns'        => __( 'Featured Columns', 'minnpost-largo' ), // featured columns on homepage, category pages
-				'minnpost_network'        => __( 'Network Menu', 'minnpost-largo' ), // social networks
-				'primary_links'           => __( 'Primary', 'minnpost-largo' ), // main nav below logo
-				'user_account_access'     => __( 'User Account Access Menu', 'minnpost-largo' ), // menu where users log in/register/log out
+				'primary_links'           => __( 'Primary Categories', 'minnpost-largo' ), // main nav below logo
+				'primary_actions'         => __( 'Primary Actions', 'minnpost-largo' ), // main nav below logo
+				'support_actions'         => __( 'Support Actions', 'minnpost-largo' ), // nav below logo on support pages
+				'topics'                  => __( 'Topics', 'minnpost-largo' ), // scrolling topics nav
 				'user_account_management' => __( 'User Account Management Menu', 'minnpost-largo' ), // menu where users manage their account info/preferences
+				'minnpost_network'        => __( 'Network Menu', 'minnpost-largo' ), // social networks
+				'footer_primary'          => __( 'Footer Primary', 'minnpost-largo' ), // main footer. about, advertise, member benefits, etc
 			)
 		);
 		unregister_nav_menu( 'menu-1' ); // we don't need whatever this is
@@ -27,90 +28,93 @@ if ( ! function_exists( 'minnpost_menus' ) ) :
 endif;
 
 /**
-* Deal with sub menus. This is the featured items we display.
+* Add custom fields to menu
 *
-* @param array $sorted_menu_items
+* @param int $item_id
+* @param object $item
+* @param int $depth
 * @param array $args
 *
-* @return array $sorted_menu_items
-*
 */
-if ( ! function_exists( 'minnpost_wp_nav_menu_objects_sub_menu' ) ) :
-	// get submenu functionality from https://christianvarga.com/how-to-get-submenu-items-from-a-wordpress-menu-based-on-parent-or-sibling/
-
-	// filter_hook function to react on sub_menu flag
-	add_filter( 'wp_nav_menu_objects', 'minnpost_wp_nav_menu_objects_sub_menu', 10, 2 );
-	function minnpost_wp_nav_menu_objects_sub_menu( $sorted_menu_items, $args ) {
-
-		global $wp_query;
-
-		if ( isset( $args->sub_menu ) ) {
-
-			// we only bother with submenus on:
-			// - home
-			// - category archives
-			if ( is_singular() || ( isset( $wp_query->query['is_membership'] ) && true === $wp_query->query['is_membership'] ) ) {
-				return;
-			}
-
-			// find the current menu item
-			foreach ( $sorted_menu_items as $menu_item ) {
-
-				$found_top_parent_id = false;
-				if ( ( 0 === $menu_item->menu_item_parent && 1 === $menu_item->current_item_ancestor ) || ( 0 === $menu_item->menu_item_parent && 1 === $menu_item->current ) ) {
-					$root_id = $menu_item->ID;
-				}
-
-				if ( $menu_item->current ) {
-					// set the root id based on whether the current menu item has a parent or not
-					$root_id = ( $menu_item->menu_item_parent ) ? $menu_item->menu_item_parent : $menu_item->ID;
-					continue;
-				}
-			}
-
-			if ( is_home() ) {
-				$root_id = 0;
-				$menu    = wp_get_nav_menu_items(
-					$args->menu->name,
-					array(
-						'posts_per_page' => -1,
-						'meta_key'       => '_menu_item_menu_item_parent',
-						'meta_value'     => $root_id,
-					)
-				);
-				$root_id = $menu[0]->ID;
-			}
-
-			// fix places that are not part of any category
-			if ( ! isset( $root_id ) ) {
-				return;
-			}
-
-			$menu_item_parents = array();
-			foreach ( $sorted_menu_items as $key => $item ) {
-				// init menu_item_parents
-				if ( (int) $root_id === (int) $item->ID ) {
-					$menu_item_parents[] = $item->ID;
-				} elseif ( (int) $root_id === (int) $item->menu_item_parent ) {
-					$menu_item_parents[] = $item->menu_item_parent;
-					continue;
-				}
-				if ( in_array( $item->menu_item_parent, $menu_item_parents ) ) {
-					// part of sub-tree: keep!
-					$menu_item_parents[] = $item->ID;
-				} elseif ( ! ( isset( $args->show_parent ) && in_array( $item->ID, $menu_item_parents ) ) ) {
-					// not part of sub-tree: away with it!
-					unset( $sorted_menu_items[ $key ] );
-					continue;
-				}
-			}
-
-			return $sorted_menu_items;
-		} else {
-			return $sorted_menu_items;
-		} // End if().
+if ( ! function_exists( 'minnpost_largo_menu_custom_fields' ) ) :
+	add_action( 'wp_nav_menu_item_custom_fields', 'minnpost_largo_menu_custom_fields', 10, 4 );
+	function minnpost_largo_menu_custom_fields( $item_id, $item, $depth, $args ) {
+		wp_nonce_field( 'minnpost_largo_menu_meta_nonce', '_minnpost_largo_menu_meta_nonce_name' );
+		$minnpost_largo_menu_item_priority    = get_post_meta( $item_id, '_minnpost_largo_menu_item_priority', true );
+		$minnpost_largo_menu_item_mobile_text = get_post_meta( $item_id, '_minnpost_largo_menu_item_mobile_text', true );
+		$minnpost_largo_menu_item_icon        = get_post_meta( $item_id, '_minnpost_largo_menu_item_icon', true );
+		?>
+		<input type="hidden" name="minnpost-largo-menu-meta-nonce" value="<?php echo wp_create_nonce( 'minnpost-largo-menu-meta-name' ); ?>">
+		<input type="hidden" class="nav-menu-id" value="<?php echo $item_id; ?>">
+		<p class="field-minnpost_largo_menu_item_priority description description-wide">
+			<label for="minnpost-largo-menu-meta-item-priority-for-<?php echo $item_id; ?>">
+				<?php echo esc_html__( 'Priority', 'minnpost-largo' ); ?>
+				<br>
+				<input type="number" name="minnpost_largo_menu_item_priority[<?php echo $item_id; ?>]" id="minnpost-largo-menu-meta-item-priority-for-<?php echo $item_id; ?>" value="<?php echo esc_attr( $minnpost_largo_menu_item_priority ); ?>">
+			</label>
+			<small class="description" style="display: inline-block;"><?php echo esc_html__( 'A low priority (ex 1) will cause the site to try to show this menu item at the smallest screen sizes. A higher priority will potentially hide this item on smaller screens, and show it as the screen gets bigger.', 'minnpost-largo' ); ?></small>
+		</p>
+		<p class="field-minnpost_largo_menu_item_mobile_text description description-wide">
+			<label for="minnpost-largo-menu-meta-item-mobile-text-for-<?php echo $item_id; ?>">
+				<?php echo esc_html__( 'Navigation Label On Smallest Screens', 'minnpost-largo' ); ?>
+				<br>
+				<input type="text" name="minnpost_largo_menu_item_mobile_text[<?php echo $item_id; ?>]" id="minnpost-largo-menu-meta-item-mobile-text-for-<?php echo $item_id; ?>" value="<?php echo esc_attr( $minnpost_largo_menu_item_mobile_text ); ?>">
+			</label>
+			<small class="description" style="display: inline-block;"><?php echo esc_html__( 'Text in this field will be used as the label at the smallest screen sizes. It is useful for shortening a label rather than removing it.', 'minnpost-largo' ); ?></small>
+		</p>
+		<p class="field-minnpost_largo_menu_item_icon description description-wide">
+			<label for="minnpost-largo-menu-meta-item-icon-for-<?php echo $item_id; ?>">
+				<?php echo esc_html__( 'Font Awesome Icon Name', 'minnpost-largo' ); ?>
+				<br>
+				<input type="text" name="minnpost_largo_menu_item_icon[<?php echo $item_id; ?>]" id="minnpost-largo-menu-meta-item-icon-for-<?php echo $item_id; ?>" value="<?php echo esc_attr( $minnpost_largo_menu_item_icon ); ?>">
+			</label>
+			<small class="description" style="display: inline-block;"><?php echo esc_html__( 'A value here will cause the menu item to display as an icon.', 'minnpost-largo' ); ?></small>
+		</p>
+		<?php
 	}
 endif;
+
+/**
+* Save the menu item meta fields
+*
+* @param int $menu_id
+* @param int $menu_item_db_id
+*/
+if ( ! function_exists( 'minnpost_largo_nav_update' ) ) :
+	add_action( 'wp_update_nav_menu_item', 'minnpost_largo_nav_update', 10, 2 );
+	function minnpost_largo_nav_update( $menu_id, $menu_item_db_id ) {
+
+		// Verify this came from our screen and with proper authorization.
+		if ( ! isset( $_POST['_minnpost_largo_menu_meta_nonce_name'] ) || ! wp_verify_nonce( $_POST['_minnpost_largo_menu_meta_nonce_name'], 'minnpost_largo_menu_meta_nonce' ) ) {
+			return $menu_id;
+		}
+
+		// menu item priority
+		if ( isset( $_POST['minnpost_largo_menu_item_priority'][ $menu_item_db_id ] ) ) {
+			$sanitized_data = sanitize_text_field( $_POST['minnpost_largo_menu_item_priority'][ $menu_item_db_id ] );
+			update_post_meta( $menu_item_db_id, '_minnpost_largo_menu_item_priority', $sanitized_data );
+		} else {
+			delete_post_meta( $menu_item_db_id, '_minnpost_largo_menu_item_priority' );
+		}
+
+		// menu item mobile text
+		if ( isset( $_POST['minnpost_largo_menu_item_mobile_text'][ $menu_item_db_id ] ) ) {
+			$sanitized_data = sanitize_text_field( $_POST['minnpost_largo_menu_item_mobile_text'][ $menu_item_db_id ] );
+			update_post_meta( $menu_item_db_id, '_minnpost_largo_menu_item_mobile_text', $sanitized_data );
+		} else {
+			delete_post_meta( $menu_item_db_id, '_minnpost_largo_menu_item_mobile_text' );
+		}
+
+		// menu item icon
+		if ( isset( $_POST['minnpost_largo_menu_item_icon'][ $menu_item_db_id ] ) ) {
+			$sanitized_data = sanitize_text_field( $_POST['minnpost_largo_menu_item_icon'][ $menu_item_db_id ] );
+			update_post_meta( $menu_item_db_id, '_minnpost_largo_menu_item_icon', $sanitized_data );
+		} else {
+			delete_post_meta( $menu_item_db_id, '_minnpost_largo_menu_item_icon' );
+		}
+	}
+endif;
+
 
 /**
 * Nav Menu Walker
@@ -127,9 +131,9 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 		$this->user_id = $user_id;
 	}
 
-	// start and end menu output with an unordered list
+	// start and end submenu output with an unordered list
 	public function start_lvl( &$output, $depth = 0, $args = array() ) {
-		$output .= '<ul>';
+		$output .= '<ul hidden>';
 	}
 	public function end_lvl( &$output, $depth = 0, $args = array() ) {
 		$output .= '</ul>';
@@ -158,12 +162,12 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 		}
 
 		$active_class = '';
-		if ( in_array( 'current-menu-item', $classes ) ) {
+		if ( in_array( 'current-menu-item', $classes, true ) ) {
 			$active_class = 'active';
-		} elseif ( in_array( 'current-menu-parent', $classes ) && '/' !== $item->url ) {
+		} elseif ( in_array( 'current-menu-parent', $classes, true ) && '/' !== $item->url ) {
 			// checking '/' because home menu should never be a parent menu
 			$active_class = 'active-parent';
-		} elseif ( in_array( 'current-menu-ancestor', $classes ) ) {
+		} elseif ( in_array( 'current-menu-ancestor', $classes, true ) ) {
 			$active_class = 'active-ancestor';
 		}
 
@@ -178,6 +182,10 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 			if ( $cat_id !== $item->object_id ) {
 				$active_class = '';
 			}
+			$category_group_id = minnpost_get_category_group_id( get_the_id(), $cat_id );
+			if ( '' !== $category_group_id && $category_group_id === $item->object_id ) {
+				$active_class = 'active-parent';
+			}
 		}
 
 		$url = '';
@@ -190,7 +198,7 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 			}
 			$user_id             = (int) $user_id;
 			$account_parent_item = get_page_by_title( 'Welcome', 'OBJECT', 'nav_menu_item' );
-			$account_parent_id   = $account_parent_item->ID;
+			$account_parent_id   = isset( $account_parent_item->ID ) ? $account_parent_item->ID : 0;
 
 			$url    = rtrim( $item->url, '/' );
 			$length = strlen( $url );
@@ -226,7 +234,7 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 			if ( site_url( '/users/userid' ) === $url || '/users/userid' === $url ) {
 				$url = site_url( '/users/' . $user_id . '/' );
 				if ( rtrim( get_current_url(), '/' ) . '/' === $url ) {
-					$active_class = ' class="active"';
+					$active_class = 'active';
 				}
 			}
 			if ( ( $account_parent_id !== (int) $item->menu_item_parent && $account_parent_id !== (int) $item->ID ) && strpos( $url, '/user/' ) && '' !== $user_id && get_current_user_id() !== $user_id ) {
@@ -263,14 +271,30 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 			$active_class = ' class="' . $active_class . '"';
 		}
 
-		$output .= '<li' . $active_class . '><a href="' . $url . '">' . $item->title . '</a>';
+		$minnpost_largo_menu_item_priority = get_post_meta( $item->ID, '_minnpost_largo_menu_item_priority', true );
+		$data                              = '';
+		if ( '' !== $minnpost_largo_menu_item_priority ) {
+			$data = ' data-menu-item-priority="' . $minnpost_largo_menu_item_priority . '"';
+		}
+
+		$minnpost_largo_menu_item_mobile_text = get_post_meta( $item->ID, '_minnpost_largo_menu_item_mobile_text', true );
+		if ( '' !== $minnpost_largo_menu_item_mobile_text ) {
+			$item->title = '<span class="a-label-xxs">' . $minnpost_largo_menu_item_mobile_text . '</span><span class="a-label-xs">' . $item->title . '</span>';
+		}
+
+		$minnpost_largo_menu_item_icon = get_post_meta( $item->ID, '_minnpost_largo_menu_item_icon', true );
+		if ( '' !== $minnpost_largo_menu_item_icon ) {
+			$item->title = '<i title="' . $item->title . '" class="' . $minnpost_largo_menu_item_icon . '"></i>';
+		}
+
+		$output .= '<li' . $active_class . $data . '><a href="' . $url . '">' . $item->title . '</a>';
 
 		if ( isset( $has_form ) && true === $has_form ) {
 			$output .= $form;
 		}
 
 		if ( 'Your MinnPost' === $item->title ) {
-			$output .= '<button class="menu-toggle" aria-controls="user-account-management" aria-expanded="false">' . esc_html( 'Sections', 'minnpost-largo' ) . '</button>';
+			//$output .= '<button class="menu-toggle" aria-controls="user-account-management" aria-expanded="false">' . esc_html( 'Sections', 'minnpost-largo' ) . '</button>';
 		}
 	}
 
@@ -287,13 +311,17 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 	*
 	*/
 	private function get_custom_classes( $all_classes ) {
-		$custom_classes = array_filter(
-			$all_classes,
-			function( $value ) {
-				return ( str_replace( [ 'menu-', 'page_', 'page-' ], '', $value ) != $value ) ? false : true;
-			}
-		);
-		return implode( ' ', $custom_classes );
+		if ( is_array( $all_classes ) ) {
+			$custom_classes = array_filter(
+				$all_classes,
+				function( $value ) {
+					return ( str_replace( array( 'menu-', 'page_', 'page-' ), '', $value ) !== $value ) ? false : true;
+				}
+			);
+			return implode( ' ', $custom_classes );
+		} else {
+			return '';
+		}
 	}
 }
 
@@ -330,15 +358,6 @@ if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
 	add_action( 'wp_before_admin_bar_render', 'minnpost_largo_admin_bar_render' );
 	function minnpost_largo_admin_bar_render() {
 		global $wp_admin_bar;
-		// remove security from non admins
-		if ( ! current_user_can( 'manage_options' ) ) {
-			$wp_admin_bar->remove_menu( 'itsec_admin_bar_menu' );
-		}
-
-		// remove autoptimize from non admins
-		if ( ! current_user_can( 'administrator' ) ) {
-			$wp_admin_bar->remove_menu( 'autoptimize' );
-		}
 
 		// remove comment count from users who cannot moderate
 		if ( ! current_user_can( 'moderate_comments' ) ) {
@@ -406,14 +425,9 @@ if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
 		$user = wp_get_current_user();
 
 		// comment moderators
-		if ( in_array( 'comment_moderator', (array) $user->roles ) ) {
+		if ( in_array( 'comment_moderator', (array) $user->roles, true ) ) {
 			$wp_admin_bar->remove_menu( 'new-content' );
 			$wp_admin_bar->remove_menu( 'edit' );
-		}
-
-		// business users
-		if ( ! in_array( 'business', (array) $user->roles ) ) {
-			$wp_admin_bar->remove_menu( 'popup-maker' );
 		}
 
 		// users who cannot create sponsors
@@ -433,6 +447,30 @@ if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
 	}
 endif;
 
+if ( ! function_exists( 'minnpost_largo_menu_support' ) ) :
+	add_action( 'minnpost_membership_site_header_support', 'minnpost_largo_menu_support' );
+	function minnpost_largo_menu_support() {
+		?>
+		<div class="o-wrapper o-wrapper-site-navigation o-wrapper-site-navigation-support">
+			<nav id="navigation-support" class="m-main-navigation m-main-navigation-support">
+				<?php
+				wp_nav_menu(
+					array(
+						'theme_location' => 'support_actions',
+						'menu_id'        => 'primary-actions',
+						'container'      => false,
+						'walker'         => new Minnpost_Walker_Nav_Menu,
+						'item_classes'   => 'values',
+						'items_wrap'     => '<ul id="%1$s" class="m-menu m-menu-%1$s">%3$s</ul>',
+					)
+				);
+				?>
+			</nav><!-- #navigation-support -->
+		</div>
+		<?php
+	}
+endif;
+
 /**
 * Remove pages from admin menu
 * This relies on user access levels, and on the MinnPost Roles and Capabilities plugin
@@ -445,11 +483,6 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 		if ( class_exists( 'Jetpack' ) && ! current_user_can( 'manage_jetpack' ) ) {
 			remove_menu_page( 'jetpack' );
 			remove_submenu_page( 'options-general.php', 'sharing' );
-		}
-
-		// users who cannot edit popup themes
-		if ( ! current_user_can( 'edit_popup_themes' ) ) {
-			remove_submenu_page( 'themes.php', 'edit.php?post_type=popup_theme' );
 		}
 
 		// users who cannot edit themes
@@ -481,6 +514,7 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 		// users who cannot moderate comments
 		if ( ! current_user_can( 'moderate_comments' ) ) {
 			remove_menu_page( 'edit-comments.php' );
+			remove_submenu_page( 'options-general.php', 'sce' );
 		}
 
 		// advertising
@@ -488,7 +522,7 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 			// tools
 			remove_submenu_page( 'tools.php', 'ad-code-manager' );
 			// settings
-			remove_submenu_page( 'options-general.php', 'appnexus-acm-provider' );
+			remove_submenu_page( 'options-general.php', 'arcads-dfp-acm-provider' );
 		}
 
 		// thumbnails
@@ -519,28 +553,37 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 			remove_menu_page( 'edit.php' );
 		}
 
+		// users who cannot manage redirects
+		if ( ! current_user_can( 'manage_redirects' ) ) {
+			remove_menu_page( 'edit.php?post_type=vip-legacy-redirect' );
+		}
+
 		// admins only
 		if ( ! current_user_can( 'administrator' ) ) {
+			// vip host stuff
+			remove_menu_page( 'vip-dashboard' );
 			// tools
 			remove_submenu_page( 'tools.php', 'tools.php' );
-			remove_submenu_page( 'tools.php', 'widget-settings-import' );
-			remove_submenu_page( 'tools.php', 'widget-settings-export' );
 			// settings
 			remove_submenu_page( 'options-general.php', 'options-writing.php' );
 			remove_submenu_page( 'options-general.php', 'options-permalink.php' );
+			remove_submenu_page( 'options-general.php', 'documentcloud' );
 			remove_submenu_page( 'options-general.php', 'duplicatepost' );
+			remove_submenu_page( 'options-general.php', 'font-awesome' );
 			remove_submenu_page( 'options-general.php', 'form-processor-mailchimp' );
+			remove_submenu_page( 'options-general.php', 'jquery-updater' );
 			remove_submenu_page( 'options-general.php', 'user-account-management' );
 			remove_submenu_page( 'options-general.php', 'widgetopts_plugin_settings' );
 			remove_submenu_page( 'options-general.php', 'wp-analytics-tracking-generator-admin' );
 			remove_submenu_page( 'options-general.php', 'image-credits' ); // these settings are ignored anyway because of how the theme works
 			// chartbeat
 			remove_menu_page( 'chartbeat_console' );
-			// remove those weird popup menus
-			remove_submenu_page( 'edit.php?post_type=popup', 'pum-extensions' );
-			remove_submenu_page( 'edit.php?post_type=popup', 'pum-support' );
-			remove_submenu_page( 'edit.php?post_type=popup', 'pum-settings' );
-			remove_submenu_page( 'edit.php?post_type=popup', 'pum-tools' );
+			// stop spammers
+			remove_menu_page( 'stop_spammers' );
+			// font awesome
+			remove_menu_page( 'font-awesome' );
+			// structured data
+			remove_menu_page( 'edit.php?post_type=saswp' );
 		}
 
 	}
@@ -572,31 +615,61 @@ if ( ! function_exists( 'minnpost_largo_manage_zones' ) ) :
 endif;
 
 /**
-* Flush Redis cache button in the admin menu
+* Add unpublished indicator to admin bar menu
 *
 */
-if ( function_exists( 'wp_cache_flush' ) ) :
-	add_action( 'admin_bar_menu', 'minnpost_flush_cache_button', 100 );
-	function minnpost_flush_cache_button( $wp_admin_bar ) {
+if ( ! function_exists( 'minnpost_largo_unpublished_indicator' ) ) :
+	add_action( 'admin_bar_menu', 'minnpost_largo_unpublished_indicator', 81 );
+	function minnpost_largo_unpublished_indicator( $wp_admin_bar ) {
 
-		if ( ! current_user_can( 'administrator' ) ) {
+		if ( ! current_user_can( 'edit_posts' ) || ! is_singular() ) {
 			return;
 		}
 
-		if ( isset( $_GET['flush-cache-button'] ) && 'flush' === $_GET['flush-cache-button'] && wp_verify_nonce( $_GET['_wpnonce'], 'flush-cache-button' ) ) {
-			wp_cache_flush();
-			add_action( 'admin_notices', function () {
-				echo '<div class="notice notice-success is-dismissible"><p>Object Cache flushed.</p></div>';
-			} );
+		$user = wp_get_current_user();
+		// not for comment moderators
+		if ( in_array( 'comment_moderator', (array) $user->roles, true ) ) {
+			return;
 		}
 
-		$dashboard_url = admin_url( add_query_arg( 'flush-cache-button', 'flush', 'index.php' ) );
-		$args          = array(
-			'id'    => 'flush_cache_button',
-			'title' => __( '&#x1F6BD; Flush Object Cache', 'minnpost-largo' ),
-			'href'  => wp_nonce_url( $dashboard_url, 'flush-cache-button' ),
-			'meta'  => array( 'class' => 'flush-cache-button' ),
+		$post_id = get_the_ID();
+
+		if ( false === $post_id ) {
+			return;
+		}
+
+		$post_status = get_post_status( $post_id );
+
+		if ( 'publish' === $post_status ) {
+			return;
+		}
+
+		$args = array(
+			'id'    => 'item_unpublishd',
+			'title' => __( 'Unpublished', 'minnpost-largo' ),
+			'meta'  => array(
+				'class' => 'unpublished-indicator',
+			),
 		);
 		$wp_admin_bar->add_node( $args );
+	}
+endif;
+
+/**
+* Any admin bar CSS customizations should go here so they're consistent on front and back end
+*
+*/
+if ( ! function_exists( 'minnpost_style_tool_bar' ) ) :
+	add_action( 'admin_head', 'minnpost_style_tool_bar' );
+	add_action( 'wp_head', 'minnpost_style_tool_bar' );
+	function minnpost_style_tool_bar() {
+		echo '
+		<style>
+		#wp-admin-bar-item_unpublishd div, #wpadminbar:not(.mobile) #wp-admin-bar-item_unpublishd:hover div {
+			text-transform: uppercase;
+			background: #b60;
+			color: #fff;
+		}
+	    </style>';
 	}
 endif;

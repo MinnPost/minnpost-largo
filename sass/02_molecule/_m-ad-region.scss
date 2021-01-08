@@ -1,34 +1,77 @@
 .m-ad-region {
+
 	&.m-ad-region-leaderboard {
 		text-align: center;
-		background: $color__gray-lightest;
+		background: neutral-color(border);
 	}
-	.o-wrapper {
-		@include clearfix;
-		margin: 0;
-		width: inherit;
-		max-width: none;
+
+	&.m-ad-region-sidebar {
+
+		@include breakpoint-min( lg ) {
+			margin-top: 0;
+
+			&:last-of-type {
+				margin-top: auto;
+			}
+		}
+
+		@include breakpoint-min( xxl ) {
+			display: block;
+			width: auto;
+		}
+	}
+
+	&.m-ad-region-home-full-width {
+		width: 100%;
+		margin-bottom: $standard-block-margin;
 	}
 }
 
 .m-ad-region:empty {
-   display: none;
+	display: none;
+}
+
+#secondary-first,
+#secondary-second,
+#secondary-first-and-second {
+
+	.m-ad-region-sidebar {
+		display: flex;
+		justify-content: center;
+		width: 100%;
+	}
+}
+
+#secondary-first,
+#secondary-first-and-second {
+
+	@include breakpoint-min( sm ) {
+
+		.m-ad-region-sidebar {
+			display: block;
+			width: auto;
+		}
+	}
+}
+
+.m-homepage-zones {
+
+	.m-ad-region-sidebar {
+
+		@include breakpoint-min( lg ) {
+			margin-bottom: auto;
+		}
+	}
 }
 
 // media queries for ad regions
 
 @media screen and (min-width: $ad-top-width) {
-	.m-ad-region {
-		&.m-ad-region-leaderboard {
-			padding: 10px 0;
-		}
-	}
-}
 
-@media screen and (min-width: $max-width-page) {
 	.m-ad-region {
-		.o-wrapper {
-			@include outer-container($max-width-page);
+
+		&.m-ad-region-leaderboard {
+			padding: $standard-block-padding 0;
 		}
 	}
 }

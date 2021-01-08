@@ -1,42 +1,95 @@
 .m-membership-member-level {
+	margin-bottom: $standard-block-margin;
+
 	.m-member-level-brief {
-		h2, h3, select {
-			color: $color__minnpost-black;
-			font-family: $font__headings;
-			font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
-			font-style: normal;
-			font-variant: normal;
-			font-weight: normal;
-		}
-		h2 {
-			font-size: 1em;
-		}
+		border: $border-default-style;
+		padding: $standard-block-padding;
+		margin-bottom: $standard-block-margin;
+
+		h2,
+		h3,
 		select {
-			color: $_color-base-gray;
+			color: neutral-color(black);
+			font-family: $webfont__sans;
+		}
+
+		input,
+		textarea {
+			font-family: $webfont__sans;
+		}
+
+		h2 {
+			margin: 0 0 $standard-block-padding 0;
+			padding: $standard-block-padding 0;
+		}
+
+		h3 {
+			font-size: var(--scale4);
+			padding: 0 0 $standard-block-padding 0;
+		}
+
+		select {
 			display: block;
-			margin: 0 auto 0.75em auto;
+			margin: 0 auto $standard-heading-margin auto;
 			text-align: center;
 		}
-		.enter .m-form-item input {
-			font-family: $font__headings;
+
+		.enter {
+
+			h3 .m-form-item input {
+				font-family: $webfont__sans;
+				border: $border-default-style;
+			}
+
+			.a-button {
+				margin: 0 auto $standard-block-padding auto;
+			}
 		}
 	}
+
+	.m-member-level-benefits {
+
+		ul {
+			color: neutral-color(dark);
+
+			li {
+				padding: 0 $standard-block-padding;
+				margin-bottom: $standard-block-margin;
+			}
+		}
+	}
+
+	&:hover .m-member-level-benefits,
+	&.active .m-member-level-benefits {
+
+		ul {
+			color: neutral-color(black);
+		}
+	}
+
 	&.m-membership-member-level-member_bronze .m-member-level-brief {
+
 		h2 {
 			background: $color__minnpost-bronze;
 		}
 	}
+
 	&.m-membership-member-level-member_silver .m-member-level-brief {
+
 		h2 {
 			background: $color__minnpost-silver;
 		}
 	}
+
 	&.m-membership-member-level-member_gold .m-member-level-brief {
+
 		h2 {
 			background: $color__minnpost-gold;
 		}
 	}
+
 	&.m-membership-member-level-member_platinum .m-member-level-brief {
+
 		h2 {
 			background: $color__minnpost-platinum;
 		}

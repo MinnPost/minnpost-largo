@@ -1,57 +1,12 @@
 .a-archive-figure {
-	@include clearfix;
-	a, a:hover, a:focus, a:active {
-		text-decoration: none;
-		color: $color__base-font-color;
-	}
+	display: flex;
+
 	img {
-		margin: 0 20px 20px 0;
-		float: left;
-	}
-	figcaption {
-		line-height: 1.3em;
-		p {
-			a {
-				color: $color__link;
-				&:active,
-				&:focus,
-				&:hover {
-					color: $color__link;
-					text-decoration: underline;
-				}
-			}
-		}
-	}
-	h3 a:active,
-	h3 a:focus,
-	h3 a:hover {
-		text-decoration: underline;
+		margin: 0 $standard-block-margin $standard-block-padding 0;
+		flex: 1 0 auto;
 	}
 }
 
 .m-archive-info {
-	.a-archive-figure {
-		padding-bottom: 40px;
-		margin-bottom: -16px;
-		background: $color__minnpost-white;
-		img {
-			margin: 10px 20px 10px 10px;
-		}
-		figcaption {
-			padding: 10px;
-			font-size: $content-font-size;
-			line-height: $base-line-height-em;
-		}
-	}
-	&.m-category-info {
-		padding-bottom: 30px;
-		margin-bottom: 20px;
-		border-bottom: 1px solid $color__gray-lightest;
-		.a-category-figure {
-			margin-bottom: -22px;
-		}
-	}
-	&.m-author-info {
-		margin-bottom: 25px;
-	}
+	margin: 0 0 $standard-block-margin 0;
 }

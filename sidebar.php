@@ -6,16 +6,18 @@
  *
  * @package MinnPost Largo
  */
+?>
 
-$remove_sidebar = get_post_meta( get_the_ID(), '_mp_remove_right_sidebar', true );
-if ( isset( $remove_sidebar ) && 'on' === $remove_sidebar ) {
+<?php
+$remove_sidebar = apply_filters( 'minnpost_largo_remove_sidebar', false );
+if ( true === $remove_sidebar ) {
 	return;
 }
 ?>
 
 <aside id="secondary" class="o-site-sidebar" role="complementary">
 	<div class="m-ad-region m-ad-region-sidebar">
-		<?php do_action( 'acm_tag', 'Right1' ); ?>
+		<?php do_action( 'acm_tag', 'halfpage' ); ?>
 	</div>
 	<?php if ( is_archive() || is_single() ) : ?>
 		<?php
@@ -37,11 +39,6 @@ if ( isset( $remove_sidebar ) && 'on' === $remove_sidebar ) {
 	<?php if ( ! is_single() ) : ?>
 		<div class="m-ad-region m-ad-region-sidebar">
 			<?php do_action( 'acm_tag', 'Middle' ); ?>
-		</div>
-	<?php endif; ?>
-	<?php if ( is_home() ) : ?>
-		<div class="m-ad-region m-ad-region-sidebar">
-			<?php do_action( 'acm_tag', 'BottomRight' ); ?>
 		</div>
 	<?php endif; ?>
 </aside><!-- #secondary -->

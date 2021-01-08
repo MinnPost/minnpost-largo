@@ -1,16 +1,113 @@
+.o-site-sidebar {
+	min-width: $size__site-sidebar;
+	margin-right: auto;
+	margin-left: auto;
+	margin-bottom: $standard-block-margin;
 
+	@include breakpoint-min( xs ) {
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+	}
 
+	@include breakpoint-min( sm ) {
+		width: 100%;
+		margin-left: auto;
+		margin-bottom: $standard-block-margin;
+	}
 
-// media queries for sidebars
-@media screen and (min-width: $more-than-logo-screen) {
-	.o-content-sidebar {
-		margin-top: 0.5em; // this might be universally good but i am not sure yet
+	@include breakpoint-min( lg ) {
+		margin-left: auto;
+		margin-right: 0;
+		width: $size__site-sidebar;
+	}
+
+	&#secondary-first,
+	&#secondary-second {
+		display: flex;
+
+		@include breakpoint-min( lg ) {
+
+			section {
+				margin-top: auto;
+			}
+		}
+
+		:first-child {
+
+			@include breakpoint-min( lg ) {
+				margin-top: 0;
+			}
+		}
+	}
+
+	&#secondary-first {
+
+		@include breakpoint-min( lg ) {
+
+			.m-ad-region,
+			.acm-ad-container-bordered {
+				margin-top: 0;
+			}
+		}
+	}
+
+	&#secondary-second {
+		flex-wrap: wrap;
+		justify-content: space-between;
+		padding-bottom: $standard-block-margin;
+
+		section {
+			width: 100%;
+		}
+	}
+
+	&#secondary-second,
+	&#secondary-third {
+
+		@include breakpoint-min( lg ) {
+
+			section {
+				width: 100%;
+			}
+		}
+	}
+
+	&#secondary-third {
+
+		@include breakpoint-min( sm ) {
+			margin-right: 0;
+			margin-left: auto;
+		}
 	}
 }
 
-@media screen and (min-width: $max-width-page) {
-	.o-site-sidebar {
-	    width: $size__site-sidebar;
-	    margin-left: auto;
+.o-homepage-listing .o-site-sidebar {
+
+	@include breakpoint-min( sm ) {
+		width: $size__site-sidebar;
+		margin-left: 0;
+		margin-bottom: 0;
+	}
+
+	@include breakpoint-min( lg ) {
+		margin-left: auto;
+		margin-right: 0;
+		width: $size__site-sidebar;
+		display: flex;
+		flex-wrap: wrap;
+		flex-direction: column;
+	}
+}
+
+.o-homepage-listing-without-top {
+
+	.o-site-sidebar#secondary-first-and-second {
+
+		@include breakpoint-min( sm ) {
+			margin-left: auto;
+			margin-right: 0;
+		}
+
 	}
 }

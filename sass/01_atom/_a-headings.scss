@@ -1,252 +1,89 @@
-h1, .h1, h2, .h2, h3, .h3, h4, .h4, h5, .h5, h6, .h6 {
-	font-family: $font__sans;
-	font-weight: bold;
-	font-size: 100%;
-	margin: 0;
-	padding: 0;
-	a {
-		color: inherit;
-		&:visited,
-		&:active,
-		&:focus,
-		&:hover,
-		&.active {
-			color: inherit;
-		}
-	}
+.a-zone-title {
+	width: 100%;
 }
 
-h1, .h1, h2, .h2, h3, .h3 {
-	margin-top: 0;
+.a-author-title,
+.a-related-title,
+.a-group-category-title {
+	margin-bottom: $standard-block-padding;
 }
 
-h1, .h1 {
-
-}
-h2, .h2 {
-	font-size: 123.1%;
-}
-h3, .h3 {
-	
-}
-h4, .h4 {
-	
-}
-h5, .h5 {
-	
-}
-h6, .h6 {
-	
-}
-
-.a-archive-title {
-	font-size: 123.1%;
-	text-transform: none;
-}
-.a-archive-subtitle {
-	font-size: 123.1%;
-	text-transform: uppercase;
-	font-family: $font__headings;
-	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
-	font-weight: normal;
-	font-style: normal;
-	font-variant: normal;
-	margin-bottom: 12px;
-}
-.a-author-title, .a-about-author, .a-related-title, .a-comments-title, .a-comment-reply-title, .a-signup-title, .a-newsletter-title {
-	font-size: 123.1%;
-}
-.a-about-author, .a-related-title, .a-comments-title, .a-comment-reply-title, .a-signup-title, .a-newsletter-title {
-	text-transform: uppercase;
-	font-family: $font__headings;
-	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
-	font-weight: normal;
-	font-style: normal;
-	font-variant: normal;
-	margin-top: 20px;
-}
-.a-author-title {
-	text-transform: none;
-    margin: 0;
-    font-weight: bold;
-}
-.a-related-title {
-	margin-bottom: 0.75em;
-}
-.a-comments-title, .a-comment-reply-title {
-	margin-bottom: 0.75em;
-}
+.a-comments-title,
 .a-comment-reply-title {
-	a {
-		color: $color__link;
-		&:visited,
-		&:active,
-		&:focus,
-		&:hover,
-		&.active {
-			color: $color__link-hover;
-		}
-	}
+	margin-bottom: $standard-heading-margin;
+}
+
+.a-comments-title-none {
+	margin-bottom: $standard-block-margin;
+}
+
+.a-comment-reply-title {
+
 	small a {
-		background: $color__background-button;
-		padding: 1px 8px 0 5px;
-		font-size: 12px;
-		color: #777;
-		font-family: $font__headings;
-		font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
-		font-weight: normal;
-		font-style: normal;
-		font-variant: normal;
-		border: 1px solid $color__gray-sub-menu;
-		display: inline-block;
-		line-height: 1.75em;
-		box-shadow: 0 1px 0 rgba(0, 0, 0, .08);
-		&:visited,
-		&:active,
-		&:focus,
-		&:hover,
-		&.active {
-			color: #777;
-			border: 1px solid $color__gray-light;
+
+		@include button( neutral-color(highlight), neutral-color(border), neutral-color(black));
+		@include meta-preset( $size: -2, $bold: false, $italic: false, $line-height: 1 );
+		border: $border-default-style;
+		margin: 0 0 0 $standard-block-padding;
+	}
+}
+
+.a-entry-title,
+.a-user-title,
+.a-widget-title {
+	color: neutral-color(black);
+
+	a {
+
+		&:link,
+		&:visited {
+			color: inherit;
 			text-decoration: none;
 		}
-	}
-}
 
-.a-featured-title {
-	font-size: 123.1%;
-	text-transform: none;
-	font-family: $font__sans;
-	font-weight: bold;
-}
-
-.a-entry-title, .a-user-title {
-	font-size: 123.1%;
-	text-transform: none;
-	color: $color__minnpost-black;
-}
-.a-entry-title-largeimage {
-	font-size: 138.5%;
-	font-weight: bold;
-	line-height: 1.15em;
-}
-.m-category-top .a-entry-title-largeimage {
-	font-size: $large-title-font-size;
-	line-height: 1.15em;
-	font-family: $font__headings;
-	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
-	font-weight: normal;
-	font-style: normal;
-	font-variant: normal;
-}
-
-.m-entry-header-singular .a-entry-title, .m-user-profile .a-user-title, .a-standalone-title {
-	font-family: $font__headings;
-	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
-	font-weight: normal;
-	font-style: normal;
-	font-variant: normal;
-	margin: 0;
-	font-size: 338.5%;
-	line-height: 0.9em;
-	color: $color__minnpost-black;
-}
-
-.m-interest-posts .a-entry-title {
-	font-family: $font__headings;
-	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
-	font-weight: normal;
-	font-style: normal;
-	font-variant: normal;
-	line-height: 0.9em;
-	font-size: inherit;
-}
-
-.m-entry-header-single .a-entry-title {
-	margin-bottom: 15px;
-}
-
-.m-entry-content h1, .m-entry-content .h1, .m-post-sidebar h1, .m-post-sidebar .h1,
-.m-entry-content h2, .m-entry-content .h2, .m-post-sidebar h2, .m-post-sidebar .h2,
-.m-entry-content h3, .m-entry-content .h3, .m-post-sidebar h3, .m-post-sidebar .h3,
-.m-entry-content h4, .m-entry-content .h4, .m-post-sidebar h4, .m-post-sidebar .h4,
-.m-entry-content h5, .m-entry-content .h5, .m-post-sidebar h5, .m-post-sidebar .h5,
-.m-entry-content h6, .m-entry-content .h6, .m-post-sidebar h6, .m-post-sidebar .h6 {
-	a {
-		color: $color__link;
-		&:visited,
 		&:active,
 		&:focus,
 		&:hover,
 		&.active {
-			color: $color__link-hover;
+
+			@include link-underline();
 		}
 	}
 }
 
-.m-entry-content h3, .m-entry-content .h3, .m-partner-offer-content h1, .m-partner-offer-content .h1 {
-	font-size: $large-title-font-size;
-	line-height: 1.15em;
-	font-family: $font__headings;
-	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
-	font-weight: normal;
-	font-style: normal;
-	font-variant: normal;
-}
-
-.m-entry-content h4, .m-entry-content .h4 {
-	font-size: 138.5%;
-	line-height: 1.15em;
-}
-
-.m-entry-content h5, .m-entry-content .h5 {
-	font-size: 92.3%;
-	text-transform: uppercase;
-	line-height: 1.4em;
-}
-
-h2.a-user-section-title {
-	margin-bottom: 12px;
+h2.a-membership-choose {
+	color: brand-color(red, medium);
+	margin-bottom: $standard-block-margin / 2;
 }
 
 h2.a-membership-reasons {
 	margin: 2em 0 1em 0;
-	font-family: $font__sans;
-	font-weight: bold;
 }
 
 h3.a-finish-strong {
 	clear: both;
-	font-size: 123.1%;
-	background: $color__gray-sub-menu;
-	padding: 0.5em;
-	margin-bottom: 0.5em;
-	font-family: $font__headings;
-	font-feature-settings: "calt" off,"dlig" off,"ss01" off,"liga" off;
-	font-weight: normal;
-	font-style: normal;
-	font-variant: normal;
+	background: neutral-color(border);
+	padding: $standard-block-padding;
+	margin-bottom: $standard-block-padding;
 }
 
 h2.a-offer {
-	color: $_color-base-gray;
-	margin-bottom: 0.25em;
+	color: neutral-color(medium);
+	margin-bottom: $standard-block-padding;
 }
 
 h4.a-donation-heading {
-	padding: 0.5em 0;
-	color: $color__gray-meta;
-	font-size: 76.9%;
-	text-transform: uppercase;
-	font-family: $font__sans;
-	line-height: 1.3em;
-	font-weight: normal;
+
+	@include meta-preset( $bold: true );
+	padding: $standard-block-padding 0;
+	color: neutral-color(dark);
+	margin-bottom: $standard-block-padding / 2;
 }
 
 .a-donation-history-heading {
-	margin: 1em 0;
-	background: $color__minnpost-white;
-	padding: 1em;
-	font-weight: normal;
-	font-size: 100%;
+	background: neutral-color(light);
+	padding: $standard-block-padding;
+
+	@include meta-preset( $size: -2, $bold: false, $italic: false, $line-height: 1 );
+	border-radius: $border-radius;
 }

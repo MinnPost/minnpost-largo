@@ -1,118 +1,92 @@
 .o-footer {
+	background: neutral-color(black);
+	color: neutral-color(white);
+
 	.o-footer-hat {
 		display: flex;
 		justify-content: space-between;
 		flex-flow: row;
 		flex-wrap: wrap;
-		padding: 0 0 $standard-page-margin 0;
+		margin: $standard-block-margin 0 0 0;
+
 		section {
-			padding-top: $footer-box-spacing;
+			flex: auto;
+			margin-bottom: $standard-block-margin;
+
 			&.m-widget-sponsor-list {
-				border: 1px solid $color__gray-lightest;
-				outline: $footer-box-spacing solid $color__minnpost-white;
-				background: $color__white;
-				padding: $footer-box-spacing * 2 $footer-box-spacing $footer-box-spacing $footer-box-spacing;
-				margin: 0 $footer-box-spacing $standard-page-margin $footer-box-spacing;
-				font-size: $meta-font-size;
-				font-family: $font__sans;
-				font-size: 100%;
+				border: $border-default-style;
+				outline: $standard-block-padding solid neutral-color(highlight);
+				background: neutral-color(white);
+				color: neutral-color(black);
+				padding: $standard-block-padding;
 				width: 100%;
-				flex: auto;
-				.a-widget-title {
-					padding-top: 0;
+				max-width: none;
+
+				h3 {
+
+					@include heading-preset();
 				}
 			}
-			> &:first-of-type {
-				padding-top: $footer-box-spacing;
-			}
-			.a-widget-title {
-				//color: $color__minnpost-red;
-				font-size: 138.5%;
-				//text-transform: none;
-				font-family: $font__sans;
-				//font-weight: normal;
-				//font-style: normal;
-				//font-variant: normal;
-				margin-bottom: 0.75em;
-				padding-top: 1px;
-			}
+
 			.a-heading-donor-thanks {
-				
-				font-size: 123.1%;
-				//text-transform: none;
-				font-family: $font__sans;
-				//font-weight: normal;
-				//font-style: normal;
-				//font-variant: normal;
-				margin-bottom: 0.75em;
-				background: $color__gray-sub-menu;
-				padding: 0.5em;
-				a {
-					color: $color__minnpost-red;
+				background: neutral-color(highlight);
+				padding: $standard-block-padding;
+			}
+
+			.a-tagline-bottom {
+
+				@include meta-preset( $size: 0, $bold: false, $italic: false, $line-height: 1 );
+
+				@include breakpoint-min( xs ) {
+
+					@include meta-preset( $size: 1, $bold: false, $italic: false, $line-height: 1 );
 				}
 			}
-			.a-tagline-bottom {
-				font-size: 138.5%;
-				font-family: $font__sans;
-			}
+
 			ul {
 				margin: 0;
 				padding: 0;
 				list-style: none;
+
 				li {
-					margin-bottom: 0.5em;
+					margin-bottom: $standard-block-padding;
 				}
 			}
 		}
-		&.o-footer-hat-two {
-			section {
-				flex: 1;
-				width: auto;
-				margin-right: $footer-box-spacing * 2;
-			}
-		}
 	}
+
+	nav {
+		margin: 0;
+		padding: $standard-block-padding 0;
+	}
+
 	.o-footer-links {
-		font-family: $font__sans;
+
+		@include meta-preset( $size: 0, $bold: false, $italic: false, $line-height: 1 );
 		word-wrap: break-word;
-		padding-top: $standard-page-margin / 2;
+		padding: $standard-block-padding / 2 0;
 		display: flex;
 		flex-wrap: wrap;
 		flex-direction: column;
-	}
-	.a-footer-message {
-		font-size: $meta-font-size;
-		text-align: center;
-		margin-bottom: $standard-page-margin;
-	}
-}
 
-@media screen and (min-width: $size__footer-column * 2 ) {
-	.o-footer {
-		.o-footer-hat {
-			/*display: flex;
-			justify-content: space-between;
-			flex-flow: row;
-			flex-wrap: wrap;*/
-			//padding: 0 $footer-box-spacing * 2 $standard-page-margin $footer-box-spacing;
-			section {
-				//padding: $footer-box-spacing;
-				//flex: $size__footer-column 1 1;
-			}
+		a:link,
+		a:visited {
+			color: utility-color(blue, highlight);
 		}
-	}
-}
 
-@media screen and (min-width: $size__footer-column * 3 ) {
-	.o-footer {
-		.o-footer-hat {
-			/*display: flex;
-			justify-content: space-between;
-			flex-flow: row;*/
-			//padding: 0 $footer-box-spacing * 2 $standard-page-margin $footer-box-spacing;
-			section {
-				//width: 29.0322580645161%;
-			}
+		a:hover,
+		a:focus,
+		a:active,
+		a.active,
+		.active > a {
+			color: utility-color(blue, background);
+		}
+
+		.a-footer-message {
+
+			@include meta-preset( $size: -1, $bold: false, $italic: false, $line-height: 1 );
+			text-align: center;
+			margin-bottom: $standard-block-margin;
 		}
 	}
 }

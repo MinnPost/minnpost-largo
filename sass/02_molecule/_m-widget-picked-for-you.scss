@@ -1,0 +1,13 @@
+.o-site-sidebar section.m-widget-picked-for-you {
+
+	.a-widget-title {
+
+		a {
+			color: brand-color(red, medium);
+		}
+	}
+
+	.m-widget-contents.m-custom-html-widget {
+		margin: $standard-heading-margin 0;
+	}
+}

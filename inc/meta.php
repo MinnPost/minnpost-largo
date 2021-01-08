@@ -77,7 +77,7 @@ if ( ! function_exists( 'minnpost_largo_get_description' ) ) :
 		} elseif ( is_front_page() ) {
 			$excerpt = get_option( 'site_blurb' ) ? stripslashes( get_option( 'site_blurb' ) ) : '';
 		} elseif ( is_category() ) {
-			$id      = get_query_var( 'cat' );
+			$id      = get_queried_object_id();
 			$excerpt = minnpost_get_term_text( $id );
 		} elseif ( is_author() ) {
 			$author  = get_queried_object();
@@ -152,6 +152,89 @@ if ( ! function_exists( 'minnpost_largo_get_og_image_thumbnail' ) ) :
 	}
 endif;
 
+// Schema filters. these currently depend on the https://wordpress.org/plugins/schema-and-structured-data-for-wp/ plugin.
+/**
+* Change the input array for the news article schema to theme methods when they're available
+*
+* @param array $input
+* @return array $input
+*/
+if ( ! function_exists( 'minnpost_largo_news_article_schema' ) ) :
+	add_filter( 'saswp_modify_news_article_schema_output', 'minnpost_largo_news_article_schema', 10, 1 );
+	function minnpost_largo_news_article_schema( $input ) {
+		// title/desc can be set as seo values, or they get the standard ones
+		if ( isset( $input['headline'] ) && function_exists( 'minnpost_largo_get_title' ) ) {
+			$input['headline'] = minnpost_largo_get_title();
+		}
+		if ( isset( $input['description'] ) && function_exists( 'minnpost_largo_get_description' ) ) {
+			$input['description'] = minnpost_largo_get_description();
+		}
+		// author
+		if ( isset( $input['author'] ) && function_exists( 'minnpost_largo_get_author_schema' ) ) {
+			$input['author'] = minnpost_largo_get_author_schema();
+		}
+		// the tags are already present as the keywords
+		// images
+
+		// thumbnail
+		if ( isset( $input['thumbnailUrl'] ) && function_exists( 'minnpost_largo_get_og_image' ) ) {
+			if ( '' !== minnpost_largo_get_og_image() && minnpost_largo_get_og_default() !== minnpost_largo_get_og_image() ) {
+				$input['thumbnailUrl'] = minnpost_largo_get_og_image();
+			} elseif ( '' !== minnpost_largo_get_og_image_thumbnail() ) {
+				$input['thumbnailUrl'] = minnpost_largo_get_og_image_thumbnail();
+			} else {
+				$input['thumbnailUrl'] = minnpost_largo_get_og_image();
+			}
+		}
+		return $input;
+	}
+endif;
+
+/**
+* Generate the author schema for co-authors-plus data.
+*
+* @return array $pieces
+*/
+if ( ! function_exists( 'minnpost_largo_author_schema' ) ) :
+	function minnpost_largo_get_author_schema() {
+
+		$coauthors = get_coauthors( get_the_ID() );
+		$pieces    = [];
+		foreach ( $coauthors as $coauthor ) {
+			$data = array(
+				//'@id' => $id,
+				'@type' => 'Person',
+				'name'  => $coauthor->display_name,
+			);
+			// meta fields
+			$bio       = get_post_meta( $coauthor->ID, '_mp_author_excerpt', true );
+			$job_title = get_post_meta( $coauthor->ID, 'cap-job-title', true );
+			$email     = get_post_meta( $coauthor->ID, 'cap-user_email', true );
+			if ( '' !== $bio ) {
+				$data['description'] = strip_tags( $bio );
+			}
+			if ( '' !== $job_title ) {
+				$data['JobTitle'] = $job_title;
+			}
+			if ( '' !== $email ) {
+				$data['email'] = $email;
+			}
+			if ( ! empty( $coauthor->website ) ) {
+				$data['sameAs'] = $coauthor->website;
+			}
+			// image
+			if ( function_exists( 'minnpost_get_author_image' ) ) {
+				$image_data = minnpost_get_author_image( $coauthor->ID );
+				if ( ! empty( $image_data ) ) {
+					$data['image'] = $image_data['image_url'];
+				}
+			}
+			$pieces[] = $data;
+		}
+		return $pieces;
+	}
+endif;
+
 /**
 * Set meta tags in <head>
 *
@@ -161,23 +244,15 @@ if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 	function minnpost_largo_add_meta_tags() {
 		?>
 		<meta property="og:site_name" content="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>">
-		<link rel="shortcut icon" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/favicon.ico' ) ); ?>" type="image/x-icon">
-
-		<link rel="icon" type="image/png" sizes="16x16" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/favicon-16x16.png' ) ); ?>">
-		<link rel="icon" type="image/png" sizes="32x32" href="<?php echo esc_url( get_theme_file_uri( 'assets/img/app-icons/favicon-32x32.png' ) ); ?>">
-		<link rel="apple-touch-icon" sizes="76x76" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/icon-76x76.png' ) ); ?>">
-		<link rel="apple-touch-icon" sizes="120x120" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/icon-120x120.png' ) ); ?>">
-		<link rel="icon" sizes="128x128" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/icon-128x128.png' ) ); ?>">
-		<link rel="apple-touch-icon" sizes="152x152" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/icon-152x152.png' ) ); ?>">
-		<link rel="apple-touch-icon" sizes="180x180" href="<?php echo esc_url( get_theme_file_uri( 'assets/img/app-icons/apple-touch-icon.png' ) ); ?>">
-		<link rel="icon" sizes="192x192" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/icon-192x192.png' ) ); ?>">
-
-		<link rel="mask-icon" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/mp.svg' ) ); ?>" color="#5bbad5">
-		<meta name="msapplication-TileColor" content="#da532c">
-		<meta name="msapplication-TileImage" content="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/mstile-144x144.png' ) ); ?>">
-		<meta name="msapplication-config" content="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/browserconfig.xml' ) ); ?>">
+		<link rel="shortcut icon" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/favicon.ico?v=' . filemtime( get_theme_file_path() . '/assets/img/app-icons/favicon.ico' ) ) ); ?>" type="image/x-icon">
+		<link rel="icon" type="image/png" sizes="16x16" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/favicon-16x16.png?v=' . filemtime( get_theme_file_path() . '/assets/img/app-icons/favicon-16x16.png' ) ) ); ?>">
+		<link rel="icon" type="image/png" sizes="32x32" href="<?php echo esc_url( get_theme_file_uri( 'assets/img/app-icons/favicon-32x32.png?v=' . filemtime( get_theme_file_path() . '/assets/img/app-icons/favicon-32x32.png' ) ) ); ?>">
+		<link rel="apple-touch-icon" sizes="180x180" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/apple-touch-icon.png?v=' . filemtime( get_theme_file_path() . '/assets/img/app-icons/apple-touch-icon.png' ) ) ); ?>">
+		<link rel="mask-icon" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/safari-pinned-tab.svg?v=' . filemtime( get_theme_file_path() . '/assets/img/app-icons/safari-pinned-tab.svg' ) ) ); ?>" color="#801018">
+		<meta name="msapplication-TileColor" content="#801018">
+		<meta name="msapplication-TileImage" content="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/mstile-144x144.png?v=' . filemtime( get_theme_file_path() . '/assets/img/app-icons/mstile-144x144.png' ) ) ); ?>">
+		<meta name="msapplication-config" content="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/browserconfig.xml?v=' . filemtime( get_theme_file_path() . '/assets/img/app-icons/browserconfig.xml' ) ) ); ?>">
 		<meta name="theme-color" content="#ffffff">
-
 		<?php
 		echo sprintf(
 			'<link rel="alternate" type="application/rss+xml" title="%1$s articles | RSS Feed" href="%2$s">',
@@ -235,6 +310,84 @@ if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 		<?php else : ?>
 			<meta property="twitter:card" content="summary">
 		<?php endif; ?>
+
+		<?php
+		if ( ! empty( minnpost_largo_get_social_images() ) ) {
+			minnpost_largo_social_images();
+		} else {
+			minnpost_largo_default_meta_images();
+		}
+		?>
+
+		<?php if ( is_singular() ) : ?>
+			<?php
+			global $wp_query;
+			if ( array_key_exists( 'users', $wp_query->query_vars ) ) {
+				?>
+				<meta name="robots" content="noindex">
+				<?php
+			}
+			?>
+		<?php endif; ?>
+
+		<?php if ( is_search() ) : ?>
+			<meta name="robots" content="noindex, nofollow">
+		<?php endif; ?>
+
+		<?php if ( 'production' !== VIP_GO_ENV ) : ?>
+			<meta name="robots" content="noindex, nofollow">
+		<?php endif; ?>
+
+		<?php
+	}
+endif;
+
+/**
+* Output social image meta fields
+*
+* @param int $id
+*
+*/
+if ( ! function_exists( 'minnpost_largo_social_images' ) ) :
+	function minnpost_largo_social_images( $id = '' ) {
+		$meta_images = minnpost_largo_get_social_images( $id );
+		foreach ( $meta_images as $image_id => $url ) {
+			$image_url = wp_get_attachment_url( $image_id );
+			?>
+			<meta property="og:image" content="<?php echo $image_url; ?>">
+			<?php
+		}
+	}
+endif;
+
+/**
+* Get social image meta fields
+*
+* @param int $id
+* @param array $meta_images
+*
+*/
+if ( ! function_exists( 'minnpost_largo_get_social_images' ) ) :
+	function minnpost_largo_get_social_images( $id = '' ) {
+		$meta_images = array();
+		if ( '' === $id ) {
+			$id = get_the_ID();
+		}
+		if ( post_password_required() || is_attachment() || false === $id ) {
+			return $meta_images;
+		}
+		$meta_images = get_post_meta( $id, '_mp_social_images', true );
+		return $meta_images;
+	}
+endif;
+
+/**
+* Output default images into <meta> tags
+*
+*/
+if ( ! function_exists( 'minnpost_largo_default_meta_images' ) ) :
+	function minnpost_largo_default_meta_images() {
+		?>
 		<?php if ( '' !== minnpost_largo_get_og_image() ) : ?>
 			<meta property="og:image" content="<?php echo minnpost_largo_get_og_image(); ?>">
 			<meta property="twitter:image" content="<?php echo minnpost_largo_get_og_image(); ?>">
@@ -265,30 +418,14 @@ if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 		<?php if ( '' === minnpost_largo_get_og_image() && '' === minnpost_largo_get_og_image_thumbnail() && '' !== minnpost_largo_get_og_default() ) : ?>
 			<meta property="og:image" content="<?php echo minnpost_largo_get_og_default(); ?>">
 		<?php endif; ?>
-
-		<?php if ( is_singular() ) : ?>
-			<?php
-			global $wp_query;
-			if ( array_key_exists( 'users', $wp_query->query_vars ) ) {
-				?>
-				<meta name="robots" content="noindex">
-				<?php
-			}
-			?>
-		<?php endif; ?>
-
-		<?php if ( is_search() ) : ?>
-			<meta name="robots" content="noindex, nofollow">
-		<?php endif; ?>
-
-		<?php if ( 'production' !== VIP_GO_ENV ) : ?>
-			<meta name="robots" content="noindex, nofollow">
-		<?php endif; ?>
-
 		<?php
 	}
 endif;
 
+/**
+* Set a favicon.ico for wp-admin URLs
+*
+*/
 if ( ! function_exists( 'admin_favicon' ) ) :
 	add_action( 'admin_head', 'admin_favicon' );
 	function admin_favicon() {
@@ -296,6 +433,10 @@ if ( ! function_exists( 'admin_favicon' ) ) :
 	}
 endif;
 
+/**
+* Remove admin dashboard widgets we don't want. They're stored in $wp_meta_boxes.
+*
+*/
 if ( ! function_exists( 'remove_dashboard_widgets' ) ) :
 	add_action( 'wp_dashboard_setup', 'remove_dashboard_widgets' );
 	function remove_dashboard_widgets() {

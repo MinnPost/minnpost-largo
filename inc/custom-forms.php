@@ -22,3 +22,19 @@ if ( ! function_exists( 'minnpost_largo_gf_honeypot' ) ) :
 		return $form;
 	}
 endif;
+
+/**
+ * Archive date forms should send users to the destination URL
+ *
+ */
+if ( ! function_exists( 'minnpost_largo_date_archive_submit' ) ) :
+	add_action( 'admin_post_nopriv_date_archive_submit', 'minnpost_largo_date_archive_submit' );
+	add_action( 'admin_post_date_archive_submit', 'minnpost_largo_date_archive_submit' );
+	function minnpost_largo_date_archive_submit() {
+		if ( isset( $_POST['archive_dropdown'] ) ) {
+			$redirect_url = wp_validate_redirect( $_POST['archive_dropdown'] );
+			wp_redirect( $redirect_url );
+			exit;
+		}
+	}
+endif;
