@@ -569,7 +569,7 @@ if ( ! function_exists( 'minnpost_user_eligible_for_benefit' ) ) :
 				return false;
 			}
 		} else {
-			return $false;
+			return false;
 		}
 	}
 endif;
