@@ -1818,7 +1818,7 @@ if ( ! function_exists( 'get_member_levels' ) ) :
 			if ( file_exists( $file ) ) {
 				require_once( $file );
 			} else {
-				return array();
+				return $values;
 			}
 		}
 		if ( function_exists( 'minnpost_membership' ) ) {
