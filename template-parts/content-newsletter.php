@@ -24,12 +24,8 @@
 							</tr>
 						</table>
 					</div>
-
-					<div class="o-column m-support-cta">
-						<?php minnpost_largo_button_markup( site_url( '/support/' ), __( '❤ Donate', 'minnpost-largo' ), array( 'a-support-button' ) ); ?>
-					</div>
-
-					
+					<?php do_action( 'minnpost_membership_email_header' ); ?>
+				</td>
 			</tr> <!-- end row -->
 
 			<tr>
