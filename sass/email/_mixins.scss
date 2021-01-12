@@ -44,7 +44,7 @@
 }
 
 // button treatment
-@mixin button( $background: brand-color(red, medium), $hover: brand-color(red, dark), $color: neutral-color(white)) {
+@mixin button( $background: brand-color(red, medium), $hover: brand-color(red, dark), $color: neutral-color(white), $button-height: 122px) {
 	border-collapse: collapse;
 	border-spacing: 0;
 	padding: 0;
@@ -53,6 +53,14 @@
 	@include meta-preset( $size: 1, $bold: true, $italic: false, $line-height: 1 );
 	mso-table-lspace: 0pt;
 	mso-table-rspace: 0pt;
+
+	> tbody > tr > td {
+		height: $button-height;
+
+		@media only screen and (max-width: $max-email-width) {
+			height: inherit !important;
+		}
+	}
 
 	td {
 		border-collapse: collapse;

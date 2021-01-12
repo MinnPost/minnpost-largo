@@ -1,6 +1,10 @@
 .m-support-cta {
 
 	.a-button.a-support-button {
-		@include button(utility-color(green, medium), utility-color(green, dark));
+		@include button(utility-color(green, medium), utility-color(green, dark), $button-height: $logo-height);
+		
+		@media only screen and (max-width: $max-email-width) {
+			margin-bottom: $standard-block-padding !important;
+		}
 	}
 }
