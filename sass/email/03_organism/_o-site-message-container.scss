@@ -1,0 +1,129 @@
+// message container
+.o-site-message-container {
+
+	@include meta-preset();
+	font-size: $interface-copy-size-smaller;
+
+	h1,
+	.h1,
+	h2,
+	.h2,
+	h3,
+	.h3,
+	h4,
+	.h4 {
+
+		@include meta-preset( $size: inherit, $bold: true );
+		margin-bottom: $standard-heading-margin;
+	}
+
+	// add a default assumption of horizontally centering
+	// the image and editor and banner containers
+	.m-wp-insert-message-images,
+	.m-wp-insert-message-editor,
+	.m-wp-insert-message-item-banner {
+		max-width: $max-width-email;
+	}
+
+	// regions, no matter what type of message they are
+	// this can override default grid styles when needed
+
+	// site header
+	&.wp-message-inserter-message-region-header {
+		margin: $standard-block-padding 0;
+	}
+
+	// above article body
+	// article bottom
+	// above homepage articles
+	// homepage middle
+	&.wp-message-inserter-message-region-above_article_body,
+	&.wp-message-inserter-message-region-above_homepage_articles,
+	&.wp-message-inserter-message-region-homepage_middle,
+	&.wp-message-inserter-message-region-article_bottom {
+		margin-bottom: $standard-block-margin;
+
+		.m-wp-insert-message-images,
+		.m-wp-insert-message-editor {
+			margin-left: 0;
+			margin-right: 0;
+		}
+	}
+
+	// banner wrapper
+	.m-wp-insert-message-item-banner {
+
+		&.banner-width-page {
+			max-width: $max-width-email;
+		}
+
+		.dual-wrap {
+
+			// need a media query here
+		}
+	}
+
+	// Popup specifics
+	&.wp-message-inserter-message-region-popup {
+
+		// banner wrapper
+		.m-wp-insert-message-item-banner {
+
+			// column wrapper
+			.dual-wrap {
+
+				// columns
+				.col {
+					padding-top: $standard-block-padding * 2;
+					padding-bottom: $standard-block-padding * 2;
+				}
+
+				.col:first-of-type {
+					padding-left: 0;
+				}
+
+				.col:last-of-type {
+					padding-left: 0;
+				}
+			}
+		}
+
+
+		// default styles for the editor type
+		&.wp-message-inserter-message-editor {
+
+			.m-wp-insert-message-item {
+				max-width: $max-width-email;
+			}
+		}
+	}
+
+	// site header, homepage above articles, and homepage middle
+	&.wp-message-inserter-message-region-header,
+	&.wp-message-inserter-message-region-above_homepage_articles,
+	&.wp-message-inserter-message-region-homepage_middle {
+
+		header {
+			margin-right: 1em;
+		}
+
+		h3,
+		.h3,
+		h4,
+		.h4 {
+			margin: 0;
+		}
+
+		h3,
+		.h3 {
+
+			@include meta-preset( $size: 4, $bold: true );
+		}
+
+		h4,
+		.h4 {
+
+			@include meta-preset( $size: 3, $bold: false );
+		}
+	}
+}

@@ -8,7 +8,7 @@ body {
 }
 
 .webkit {
-    max-width: $max-email-width;
+    max-width: $max-width-email;
 }
 
 .ExternalClass {
@@ -46,7 +46,7 @@ table {
     color: neutral-color(black);
     background-color: neutral-color(white);
     Margin: 0 auto; 
-    max-width: $max-email-width;
+    max-width: $max-width-email;
     mso-table-lspace: 0pt;
     mso-table-rspace: 0pt;
     padding: 0;
