@@ -93,14 +93,18 @@ if ( ! function_exists( 'minnpost_largo_comment_date_column' ) ) :
 endif;
 
 /**
-* Remove comment support from pages
+* Remove comment support from post types where we don't want comments
 *
 */
 if ( ! function_exists( 'minnpost_remove_comment_support' ) ) :
 	add_action( 'init', 'minnpost_remove_comment_support', 100 );
 	function minnpost_remove_comment_support() {
+		// page
 		remove_post_type_support( 'page', 'comments' );
 		remove_post_type_support( 'page', 'trackbacks' );
+		// event
+		remove_post_type_support( 'tribe_events', 'comments' );
+		remove_post_type_support( 'tribe_events', 'trackbacks' );
 	}
 endif;
 
