@@ -94,6 +94,20 @@ add_filter(
 );
 
 /**
+ * Fix Parent Admin Menu Item for Co-Authors
+ */
+if ( ! function_exists( 'coauthors_cpt_parent_file' ) ) :
+	add_filter( 'parent_file', 'coauthors_cpt_parent_file' );
+	function coauthors_cpt_parent_file( $parent_file ) {
+		global $current_screen;
+		if ( in_array( $current_screen->base, array( 'post', 'edit' ), true ) && 'guest-author' === $current_screen->post_type ) {
+			$parent_file = 'users.php';
+		}
+		return $parent_file;
+	}
+endif;
+
+/**
 * Co-authors in RSS and other feeds
 * /wp-includes/feed-rss2.php uses the_author(), so we selectively filter the_author value
 */
