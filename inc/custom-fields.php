@@ -1991,7 +1991,7 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 				'char_max'     => 78,
 				'desc'         => sprintf(
 					// translators: 1) the sitename
-					esc_html__( 'If you do not fill this out, the post title will be used. If you do fill it out and do not include %1$s in the value, it will be placed at the end in this way: Your Title | %1$s' ),
+					esc_html__( 'If you do not fill this out, the event title will be used. If you do fill it out and do not include %1$s in the value, it will be placed at the end in this way: Your Title | %1$s' ),
 					get_bloginfo( 'name' )
 				),
 				'attributes'   => array(
@@ -2009,13 +2009,13 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 				'attributes'   => array(
 					'maxlength' => 200, // 155 is the number, but it's ok to go higher as long as the spider sees the most important stuff at the beginning. retrieved from https://moz.com/blog/how-to-write-meta-descriptions-in-a-changing-world on 5/8/2020
 				),
-				'desc'         => esc_html__( 'When using this field, make sure the most important text is in the first 155 characters to ensure that Google can see it. If you do not fill it out, the post excerpt will be used.' ),
+				'desc'         => esc_html__( 'When using this field, make sure the most important text is in the first 155 characters to ensure that Google can see it. If you do not fill it out, the event excerpt will be used.' ),
 			)
 		);
 		$seo_settings->add_field(
 			array(
 				'name'         => esc_html__( 'Meta images', 'minnpost-largo' ),
-				'desc'         => esc_html__( 'Using this field will remove images that are uploaded to this story from the story\'s metadata, and replace them with the images in this field.', 'minnpost-largo' ),
+				'desc'         => esc_html__( 'Using this field will remove images that are uploaded to this event from the event\'s metadata, and replace them with the images in this field.', 'minnpost-largo' ),
 				'id'           => '_mp_social_images',
 				'type'         => 'file_list',
 				'preview_size' => array( 130, 85 ),
@@ -2123,7 +2123,7 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 				'name' => __( 'Prevent lazy loading of images?', 'minnpost-largo' ),
 				'id'   => '_mp_prevent_lazyload',
 				'type' => 'checkbox',
-				'desc' => __( 'If checked, this post will not attempt to lazy load images.', 'minnpost-largo' ),
+				'desc' => __( 'If checked, this event will not attempt to lazy load images.', 'minnpost-largo' ),
 			)
 		);
 		$display_settings->add_field(
@@ -2131,7 +2131,7 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 				'name' => __( 'Load HTML editor by default?', 'minnpost-largo' ),
 				'id'   => '_mp_post_use_html_editor',
 				'type' => 'checkbox',
-				'desc' => __( 'If checked, this post will open with the HTML editor visible.', 'minnpost-largo' ),
+				'desc' => __( 'If checked, this event will open with the HTML editor visible.', 'minnpost-largo' ),
 			)
 		);
 		/*$display_settings->add_field(
@@ -2223,9 +2223,60 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 			)
 		);
 
+		// Don't add ads if this event is not a supported type
+		$post_types = get_option( 'arcads_dfp_acm_provider_post_types', array( 'post' ) );
+		if ( in_array( $object_type, $post_types, true ) ) {
+			cmb2_event_ad_fields();
+		}
+
 		/**
-		 * Ad & Sponsorship settings
+		 * Sidebar settings
 		 */
+		$sidebar_settings = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_sidebar_options',
+				'title'        => __( 'Sidebar Settings', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'closed'       => true,
+			)
+		);
+		$sidebar_settings->add_field(
+			array(
+				'name' => __( 'Remove whole right sidebar from this event?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_right_sidebar',
+				'type' => 'checkbox',
+				'desc' => '',
+			)
+		);
+		$sidebar_settings->add_field(
+			array(
+				'name' => __( 'Remove whole right sidebar from this event? (V2)', 'minnpost-largo' ),
+				'id'   => '_mp_remove_right_sidebar_v2',
+				'type' => 'checkbox',
+				'desc' => '',
+			)
+		);
+		$sidebar_settings->add_field(
+			array(
+				'name' => __( 'Sidebar Content Box', 'minnpost-largo' ),
+				'desc' => __( 'Content for a single right sidebar box', 'minnpost-largo' ),
+				'id'   => '_mp_post_sidebar',
+				'type' => 'wysiwyg',
+			)
+		);
+
+	}
+
+endif;
+
+/**
+* Ad & Sponsorship settings if ads are enabled on events
+*
+*/
+if ( ! function_exists( 'cmb2_event_ad_fields' ) ) :
+	function cmb2_event_ad_fields() {
 		$ad_settings = new_cmb2_box(
 			array(
 				'id'           => $object_type . '_ad_settings',
@@ -2281,47 +2332,7 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 				'desc' => __( 'If checked, this event will not display any sponsorship message, regardless of its tags or categories.', 'minnpost-largo' ),
 			)
 		);
-
-		/**
-		 * Sidebar settings
-		 */
-		$sidebar_settings = new_cmb2_box(
-			array(
-				'id'           => $object_type . '_sidebar_options',
-				'title'        => __( 'Sidebar Settings', 'minnpost-largo' ),
-				'object_types' => array( $object_type ),
-				'context'      => 'normal',
-				'priority'     => 'high',
-				'closed'       => true,
-			)
-		);
-		$sidebar_settings->add_field(
-			array(
-				'name' => __( 'Remove whole right sidebar from this event?', 'minnpost-largo' ),
-				'id'   => '_mp_remove_right_sidebar',
-				'type' => 'checkbox',
-				'desc' => '',
-			)
-		);
-		$sidebar_settings->add_field(
-			array(
-				'name' => __( 'Remove whole right sidebar from this event? (V2)', 'minnpost-largo' ),
-				'id'   => '_mp_remove_right_sidebar_v2',
-				'type' => 'checkbox',
-				'desc' => '',
-			)
-		);
-		$sidebar_settings->add_field(
-			array(
-				'name' => __( 'Sidebar Content Box', 'minnpost-largo' ),
-				'desc' => __( 'Content for a single right sidebar box', 'minnpost-largo' ),
-				'id'   => '_mp_post_sidebar',
-				'type' => 'wysiwyg',
-			)
-		);
-
 	}
-
 endif;
 
 /**
