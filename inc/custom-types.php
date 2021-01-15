@@ -179,7 +179,7 @@ if ( ! function_exists( 'minnpost_exclude_from_search' ) ) :
 			'nav_menu_item',
 		);
 
-		if ( ! in_array( $post_type, $types_to_exclude ) ) {
+		if ( ! in_array( $post_type, $types_to_exclude, true ) ) {
 			return;
 		}
 
