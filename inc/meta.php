@@ -199,7 +199,7 @@ if ( ! function_exists( 'minnpost_largo_author_schema' ) ) :
 	function minnpost_largo_get_author_schema() {
 
 		$coauthors = get_coauthors( get_the_ID() );
-		$pieces    = [];
+		$pieces    = array();
 		foreach ( $coauthors as $coauthor ) {
 			$data = array(
 				//'@id' => $id,
@@ -445,7 +445,7 @@ if ( ! function_exists( 'remove_dashboard_widgets' ) ) :
 		$allowed_normal_boxes = array( 'dashboard_right_now', 'dashboard_activity' );
 
 		foreach ( $normal as $key => $normal_box ) {
-			if ( ! in_array( $normal_box['id'], $allowed_normal_boxes ) ) {
+			if ( ! in_array( $normal_box['id'], $allowed_normal_boxes, true ) ) {
 				unset( $wp_meta_boxes['dashboard']['normal']['core'][ $key ] );
 			}
 		}
@@ -453,7 +453,7 @@ if ( ! function_exists( 'remove_dashboard_widgets' ) ) :
 		$side               = $wp_meta_boxes['dashboard']['side']['core'];
 		$allowed_side_boxes = array( 'dashboard_quick_press' );
 		foreach ( $side as $key => $side_box ) {
-			if ( ! in_array( $side_box['id'], $allowed_side_boxes ) ) {
+			if ( ! in_array( $side_box['id'], $allowed_side_boxes, true ) ) {
 				unset( $wp_meta_boxes['dashboard']['side']['core'][ $key ] );
 			}
 		}
