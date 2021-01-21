@@ -21,6 +21,7 @@ if ( ! function_exists( 'minnpost_menus' ) ) :
 				'user_account_management' => __( 'User Account Management Menu', 'minnpost-largo' ), // menu where users manage their account info/preferences
 				'minnpost_network'        => __( 'Network Menu', 'minnpost-largo' ), // social networks
 				'footer_primary'          => __( 'Footer Primary', 'minnpost-largo' ), // main footer. about, advertise, member benefits, etc
+				'festival'                => __( 'Festival', 'minnpost-largo' ), // minnpost festival menu
 			)
 		);
 		unregister_nav_menu( 'menu-1' ); // we don't need whatever this is

@@ -24,7 +24,7 @@ endif;
 if ( ! function_exists( 'minnpost_largo_get_title' ) ) :
 	add_filter( 'pre_get_document_title', 'minnpost_largo_get_title' );
 	function minnpost_largo_get_title() {
-		if ( is_page() || is_single() ) {
+		if ( is_page() || is_single() || is_post_type_archive( 'festival' ) ) {
 			$title     = get_the_title();
 			$post_id   = get_the_ID();
 			$seo_title = get_post_meta( $post_id, '_mp_seo_title', true );
@@ -66,7 +66,7 @@ endif;
 */
 if ( ! function_exists( 'minnpost_largo_get_description' ) ) :
 	function minnpost_largo_get_description() {
-		if ( is_page() || is_single() ) {
+		if ( is_page() || is_single() || is_post_type_archive( 'festival' ) ) {
 			global $post;
 			$excerpt  = ! empty( $post->post_excerpt ) ? get_the_excerpt() : null;
 			$post_id  = get_the_ID();
@@ -98,7 +98,7 @@ endif;
 if ( ! function_exists( 'minnpost_largo_get_og_image' ) ) :
 	function minnpost_largo_get_og_image() {
 		$image_url = '';
-		if ( is_single() ) {
+		if ( is_single() || is_post_type_archive( 'festival' ) ) {
 			$image_data = get_minnpost_post_image( 'large' );
 			$image_url  = isset( $image_data['image_url'] ) ? $image_data['image_url'] : '';
 		} elseif ( is_front_page() ) {
@@ -144,7 +144,7 @@ endif;
 if ( ! function_exists( 'minnpost_largo_get_og_image_thumbnail' ) ) :
 	function minnpost_largo_get_og_image_thumbnail() {
 		$image_url = '';
-		if ( is_single() ) {
+		if ( is_single() || is_post_type_archive( 'festival' ) ) {
 			$image_data = get_minnpost_post_image( 'feature-large' );
 			$image_url  = isset( $image_data['image_url'] ) ? $image_data['image_url'] : '';
 		}

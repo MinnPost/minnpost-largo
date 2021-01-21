@@ -25,6 +25,30 @@ if ( ! function_exists( 'minnpost_largo_unpublished_posts' ) ) :
 	}
 endif;
 
+/*
+ * Custom templates for posts in certain categories
+ */
+if ( ! function_exists( 'minnpost_largo_category_post_template' ) ) :
+	add_filter( 'single_template', 'minnpost_largo_category_post_template' );
+	function minnpost_largo_category_post_template( $template ) {
+		// Get the current single post
+		$post_id = $GLOBALS['wp_the_query']->get_queried_object_id();
+
+		// festival
+		if ( ! in_category( 'festival', $post_id ) ) {
+			return $template;
+		}
+		$locate_template = locate_template( 'single-festival.php' );
+
+		// Test if our template exist, if so, include it, otherwise bail
+		if ( ! $locate_template ) {
+			return $template;
+		}
+
+		return $locate_template;
+	};
+	endif;
+
 /**
 * Change the post query used on category and author archive pages to account for our custom meta fields.
 *
@@ -121,6 +145,17 @@ if ( ! function_exists( 'custom_archive_query_vars' ) ) :
 						array(
 							'key'     => '_mp_subtitle_settings_byline',
 							'compare' => 'NOT EXISTS',
+						),
+					),
+				);
+			} elseif ( is_post_type_archive( 'festival' ) ) {
+				$query->set( 'posts_per_page', 1 );
+				$query->set(
+					'meta_query',
+					array(
+						array(
+							'key'   => 'festival_load_as_directory_content',
+							'value' => 'on',
 						),
 					),
 				);
