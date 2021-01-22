@@ -186,3 +186,94 @@ if ( ! function_exists( 'minnpost_largo_single_event_links' ) ) :
 		echo '</ul>';
 	}
 endif;
+
+/**
+* Set the festival date range based on the specified page slug that contains the events.
+* @param string $event_slug
+* @return string $output
+*
+*/
+//if ( ! function_exists( 'minnpost_largo_get_festival_date_range' ) ) :
+function minnpost_largo_get_festival_date_range( $event_slug = '' ) {
+	$output      = '';
+	$post        = get_page_by_path( $event_slug, OBJECT, 'festival' );
+	$event_posts = get_post_meta( $post->ID, '_mp_festival_content_posts', true );
+	if ( ! empty( $event_posts ) ) {
+		$first_event_id = $event_posts[0];
+		$last_event_key = array_key_last( $event_posts );
+		$last_event_id  = $event_posts[ $last_event_key ];
+
+		$start_timestamp = tribe_get_start_date( $first_event_id, false, 'U' );
+		$end_timestamp   = tribe_get_end_date( $last_event_id, false, 'U' );
+		$start_date      = tribe_get_start_date( $first_event_id, false, 'c' );
+		$end_date        = tribe_get_end_date( $last_event_id, false, 'c' );
+
+		if ( $start_timestamp === $end_timestamp ) {
+			// same day - 1st April 2012
+			$output = minnpost_largo_get_ap_date( $start_date );
+		} elseif ( gmdate( 'Y-m', $start_timestamp ) === gmdate( 'Y-m', $end_timestamp ) ) {
+			// same year and month - 3rd - 21st March 2012
+			$output = sprintf(
+				// translators: parameters are start and end dates
+				esc_html__( '%1$s %2$s to %3$s, %4$s', 'minnpost-largo' ),
+				minnpost_largo_get_ap_date( $start_date, 'month' ),
+				minnpost_largo_get_ap_date( $start_date, 'day' ),
+				minnpost_largo_get_ap_date( $end_date, 'day' ),
+				minnpost_largo_get_ap_date( $start_date, 'year' ),
+			);
+		} elseif ( gmdate( 'Y', $start_timestamp ) === gmdate( 'Y', $end_timestamp ) ) {
+			// same year - 29th January - 2nd February 2012
+			$output = sprintf(
+				// translators: parameters are start and end dates
+				esc_html__( '%1$s to %2$s, %3$s', 'minnpost-largo' ),
+				minnpost_largo_get_ap_date( $start_date, '', 'year' ),
+				minnpost_largo_get_ap_date( $end_date, '', 'year' ),
+				minnpost_largo_get_ap_date( $start_date, 'year' ),
+			);
+		} else {
+			// completely different - 8th December 2012 - 2nd Janurary 2013
+			$output = sprintf(
+				// translators: parameters are start and end dates
+				esc_html__( '%1$s to %2$s', 'minnpost-largo' ),
+				minnpost_largo_get_ap_date( $start_date ),
+				minnpost_largo_get_ap_date( $end_date )
+			);
+		}
+	}
+	return $output;
+}
+//endif;
+
+/**
+* Set the festival logo
+* @param string $object_type
+* @return string $output
+*
+*/
+//if ( ! function_exists( 'minnpost_largo_get_festival_logo' ) ) :
+function minnpost_largo_get_festival_logo( $object_type = 'festival' ) {
+	$post_id = 0;
+	$output  = '';
+	// check to see if there is a post checked for /festival already
+	$directory_args  = array(
+		'posts_per_page' => 1,
+		'post_type'      => $object_type,
+		'meta_key'       => $object_type . '_load_as_directory_content',
+		'meta_value'     => 'on',
+	);
+	$directory_query = new WP_Query( $directory_args );
+	if ( $directory_query->have_posts() ) {
+		global $post;
+		$post_id           = isset( $post->ID ) ? $post->ID : '';
+		$directory_post_id = isset( $directory_query->posts[0]->ID ) ? (int) $directory_query->posts[0]->ID : '0';
+		$title             = get_the_title( $directory_post_id );
+	}
+
+	if ( 0 === $post_id ) {
+		$title = __( 'MinnPost Festival', 'minnpost-largo' );
+	}
+
+	$output = '<a href="' . get_post_type_archive_link( 'festival' ) . '">' . $title . '</a>';
+	return $output;
+}
+//endif;

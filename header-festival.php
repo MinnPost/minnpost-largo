@@ -22,8 +22,17 @@
 
 	<header id="masthead" class="o-header o-header-festival">
 		<div class="o-wrapper o-wrapper-site-header<?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">
-			<?php //get_template_part( 'template-parts/logo', 'top' ); ?>
-			<?php //do_action( 'minnpost_membership_site_header', false ); ?>
+			<div class="a-site-branding">
+				<?php echo minnpost_largo_get_festival_logo(); ?>
+			</div>
+			<?php
+			if ( function_exists( 'minnpost_largo_get_festival_date_range' ) ) :
+				$date = minnpost_largo_get_festival_date_range( 'sessions' );
+				?>
+				<div class="a-festival-dates">
+					<?php echo $date; ?>
+				</div>
+			<?php endif; ?>
 		</div>
 		<div class="o-wrapper o-wrapper-site-navigation">
 			<nav id="navigation-primary" class="m-main-navigation">
@@ -35,7 +44,6 @@
 					array(
 						'theme_location' => 'festival',
 						'menu_id'        => 'festival-menu',
-						//'depth'          => 1,
 						'container'      => false,
 						'walker'         => new Minnpost_Walker_Nav_Menu,
 						'item_classes'   => 'values',
@@ -47,13 +55,6 @@
 		</div>
 	</header><!-- #masthead -->
 
-	<?php
-	$full_class = '';
-	if ( is_singular() ) {
-		$full_class = ' o-wrapper-content-full';
-	}
-	?>
-
 	<?php do_action( 'wp_message_inserter', 'header' ); ?>
 
-	<div id="content" class="o-wrapper o-wrapper-content<?php echo $full_class; ?><?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">
+	<div id="content" class="o-wrapper o-wrapper-content o-wrapper-content-festival<?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">

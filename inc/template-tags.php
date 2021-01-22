@@ -251,12 +251,14 @@ endif;
 /**
 * Get the AP date from a date string
 *
-* @return string $date_string
+* @param string $date_string
+* @param string $part
+* @param string $part_to_remove
 * @return string $date
 *
 */
 if ( ! function_exists( 'minnpost_largo_get_ap_date' ) ) :
-	function minnpost_largo_get_ap_date( $date_string ) {
+	function minnpost_largo_get_ap_date( $date_string, $part = '', $part_to_remove = '' ) {
 		$date_time = new DateTime( $date_string );
 		if ( function_exists( 'get_ap_date' ) ) {
 			$month   = $date_time->format( 'm' );
@@ -288,7 +290,30 @@ if ( ! function_exists( 'minnpost_largo_get_ap_date' ) ) :
 					$ap_month = $date_time->format( 'F' );
 					break;
 			}
-			$date = $ap_month . ' ' . $ap_day . ', ' . $ap_year;
+
+			if ( '' !== $part_to_remove ) {
+				if ( 'month' === $part_to_remove ) {
+					$date = $ap_day . ', ' . $ap_year;
+				} elseif ( 'day' === $part_to_remove ) {
+					$date = $ap_month . ', ' . $ap_year;
+				} elseif ( 'year' === $part_to_remove ) {
+					$date = $ap_month . ' ' . $ap_day;
+				}
+			} else {
+				$date = $ap_month . ' ' . $ap_day . ', ' . $ap_year;
+			}
+
+			if ( '' !== $part ) {
+				if ( 'month' === $part ) {
+					return $ap_month;
+				}
+				if ( 'day' === $part ) {
+					return $ap_day;
+				}
+				if ( 'year' === $part ) {
+					return $ap_year;
+				}
+			}
 		} else {
 			$date_format = get_option( 'date_format', 'c' );
 			$date        = $date_time->format( $date_format );
