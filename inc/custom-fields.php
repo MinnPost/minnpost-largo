@@ -2525,9 +2525,9 @@ if ( ! function_exists( 'cmb2_festival_fields' ) ) :
 		);
 		$image_settings->add_field(
 			array(
-				'name'         => __( 'Main Image', 'minnpost-largo' ),
+				'name'         => __( 'Background Image', 'minnpost-largo' ),
 				'desc'         => __( 'Upload an image or enter an URL.', 'minnpost-largo' ),
-				'id'           => '_mp_post_main_image',
+				'id'           => '_mp_post_background_image',
 				'type'         => 'file',
 				'preview_size' => array( 130, 85 ),
 				'options'      => array(
