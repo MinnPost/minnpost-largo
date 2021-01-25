@@ -2600,6 +2600,48 @@ if ( ! function_exists( 'cmb2_festival_fields' ) ) :
 endif;
 
 /**
+* Add custom fields to speakers
+*
+*/
+if ( ! function_exists( 'cmb2_speaker_fields' ) ) :
+	add_action( 'cmb2_init', 'cmb2_speaker_fields' );
+	function cmb2_speaker_fields() {
+
+		$object_type = 'tribe_ext_speaker';
+		$prefix      = '_mp_speaker_';
+
+		/**
+		 * Speaker Settings
+		 */
+		$speaker_setup = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_speaker_settings',
+				'title'        => __( 'Additional Speaker Information', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'low',
+			)
+		);
+		$speaker_setup->add_field(
+			array(
+				'name' => __( 'Moderator?', 'minnpost-largo' ),
+				'id'   => $prefix . 'moderator',
+				'type' => 'checkbox',
+				'desc' => __( 'Check the box if this speaker is a moderator.', 'minnpost-largo' ),
+			)
+		);
+		// image
+		$speaker_setup->add_field(
+			array(
+				'name' => __( 'Photo', 'minnpost-largo' ),
+				'id'   => $prefix . 'photo',
+				'type' => 'file',
+			)
+		);
+	}
+endif;
+
+/**
 * Ad & Sponsorship settings if ads are enabled on events
 *
 */
