@@ -9,6 +9,7 @@
 * Handle adding and removing of front end CSS in this theme
 * This also handles whether the CSS should be served as minified based on WP_DEBUG value
 * We can't use SCRIPT_DEBUG because our server fails to minify, so we have to keep that set to true, but these files are already minified.
+* todo: we should figure out if the above is still true on VIP
 *
 */
 if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
@@ -33,6 +34,10 @@ if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
 			wp_enqueue_style( 'minnpost-liveblog', get_theme_file_uri() . '/assets/css/liveblog.css', array(), filemtime( get_theme_file_path() . '/assets/css/liveblog.css' ), 'all' );
 		}
 
+		// festival css
+		if ( is_post_type_archive( 'festival' ) || is_singular( 'festival' ) || is_singular( 'tribe_ext_speaker' ) ) {
+			wp_enqueue_style( 'minnpost-festival', get_theme_file_uri() . '/assets/css/festival.css', array(), filemtime( get_theme_file_path() . '/assets/css/festival.css' ), 'all' );
+		}
 	}
 endif;
 
