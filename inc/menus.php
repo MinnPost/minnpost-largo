@@ -268,6 +268,8 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 			}
 		}
 
+		$active_class = apply_filters( 'minnpost_largo_nav_item_classes', $active_class, $item );
+
 		if ( '' !== $active_class ) {
 			$active_class = ' class="' . $active_class . '"';
 		}
@@ -471,6 +473,24 @@ if ( ! function_exists( 'minnpost_largo_menu_support' ) ) :
 		<?php
 	}
 endif;
+
+/**
+* Change menu classes for festival menu
+* @param string $classes
+* @param object $item
+* @return string $classes
+*
+*/
+if ( ! function_exists( 'minnpost_largo_festival_menu_classes' ) ) :
+	add_filter( 'minnpost_largo_nav_item_classes', 'minnpost_largo_festival_menu_classes', 10, 2 );
+	function minnpost_largo_festival_menu_classes( $classes, $item ) {
+		if ( is_singular( 'tribe_ext_speaker' ) && 'Speakers' === $item->title ) {
+			$classes .= ' active';
+		}
+		return $classes;
+	}
+endif;
+
 
 /**
 * Remove pages from admin menu
