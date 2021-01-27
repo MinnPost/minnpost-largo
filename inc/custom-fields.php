@@ -2523,25 +2523,6 @@ if ( ! function_exists( 'cmb2_festival_fields' ) ) :
 				),
 			)
 		);
-		$image_settings->add_field(
-			array(
-				'name'         => __( 'Background Image', 'minnpost-largo' ),
-				'desc'         => __( 'Upload an image or enter an URL.', 'minnpost-largo' ),
-				'id'           => '_mp_post_background_image',
-				'type'         => 'file',
-				'preview_size' => array( 130, 85 ),
-				'options'      => array(
-					//'url' => false, // Hide the text input for the url
-				),
-				'text'         => array(
-					//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
-				),
-				// query_args are passed to wp.media's library query.
-				'query_args'   => array(
-					'type' => 'image',
-				),
-			)
-		);
 
 		/**
 		 * Display settings
