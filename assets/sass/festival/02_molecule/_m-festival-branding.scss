@@ -3,10 +3,13 @@
     max-width: colspan(4, 6);
 	height: auto;
 	position: relative;
-    //margin: 0 0 $standard-block-padding 0;
     margin: 0;
-    letter-spacing: -3px;
+    letter-spacing: -1px;
     @include meta-preset( $size: 1, $bold: true, $italic: false, $line-height: 1 );
+
+    &.m-festival-branding-landing-page {
+        letter-spacing: -3px;
+    }
     
     a {
         display: block;

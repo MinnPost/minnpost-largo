@@ -26,6 +26,9 @@
                     text-decoration: none;
                 }
             }
+            &.active a {
+                text-decoration: none;
+            }
         }
     }
 }
