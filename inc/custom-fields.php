@@ -2429,7 +2429,7 @@ if ( ! function_exists( 'cmb2_festival_fields' ) ) :
 				'char_max'     => 78,
 				'desc'         => sprintf(
 					// translators: 1) the sitename
-					esc_html__( 'If you do not fill this out, the event title will be used. If you do fill it out and do not include %1$s in the value, it will be placed at the end in this way: Your Title | %1$s' ),
+					esc_html__( 'If you do not fill this out, the festival page title will be used. If you do fill it out and do not include %1$s in the value, it will be placed at the end in this way: Your Title | %1$s' ),
 					get_bloginfo( 'name' )
 				),
 				'attributes'   => array(
@@ -2447,13 +2447,13 @@ if ( ! function_exists( 'cmb2_festival_fields' ) ) :
 				'attributes'   => array(
 					'maxlength' => 200, // 155 is the number, but it's ok to go higher as long as the spider sees the most important stuff at the beginning. retrieved from https://moz.com/blog/how-to-write-meta-descriptions-in-a-changing-world on 5/8/2020
 				),
-				'desc'         => esc_html__( 'When using this field, make sure the most important text is in the first 155 characters to ensure that Google can see it. If you do not fill it out, the event excerpt will be used.' ),
+				'desc'         => esc_html__( 'When using this field, make sure the most important text is in the first 155 characters to ensure that Google can see it. If you do not fill it out, the festival page excerpt will be used.' ),
 			)
 		);
 		$seo_settings->add_field(
 			array(
 				'name'         => esc_html__( 'Meta images', 'minnpost-largo' ),
-				'desc'         => esc_html__( 'Using this field will remove images that are uploaded to this event from the event\'s metadata, and replace them with the images in this field.', 'minnpost-largo' ),
+				'desc'         => esc_html__( 'Using this field will remove images that are uploaded to this festival page from the page\'s metadata, and replace them with the images in this field.', 'minnpost-largo' ),
 				'id'           => '_mp_social_images',
 				'type'         => 'file_list',
 				'preview_size' => array( 130, 85 ),
@@ -2527,7 +2527,7 @@ if ( ! function_exists( 'cmb2_festival_fields' ) ) :
 		/**
 		 * Display settings
 		 */
-		$display_settings = new_cmb2_box(
+		/*$display_settings = new_cmb2_box(
 			array(
 				'id'           => $object_type . '_display_settings',
 				'title'        => __( 'Display Settings', 'minnpost-largo' ),
@@ -2542,7 +2542,7 @@ if ( ! function_exists( 'cmb2_festival_fields' ) ) :
 				'name' => __( 'Prevent lazy loading of images?', 'minnpost-largo' ),
 				'id'   => '_mp_prevent_lazyload',
 				'type' => 'checkbox',
-				'desc' => __( 'If checked, this event will not attempt to lazy load images.', 'minnpost-largo' ),
+				'desc' => __( 'If checked, this festival page will not attempt to lazy load images.', 'minnpost-largo' ),
 			)
 		);
 		$display_settings->add_field(
@@ -2550,7 +2550,7 @@ if ( ! function_exists( 'cmb2_festival_fields' ) ) :
 				'name' => __( 'Load HTML editor by default?', 'minnpost-largo' ),
 				'id'   => '_mp_post_use_html_editor',
 				'type' => 'checkbox',
-				'desc' => __( 'If checked, this event will open with the HTML editor visible.', 'minnpost-largo' ),
+				'desc' => __( 'If checked, this festival page will open with the HTML editor visible.', 'minnpost-largo' ),
 			)
 		);
 		$display_settings->add_field(
@@ -2558,7 +2558,7 @@ if ( ! function_exists( 'cmb2_festival_fields' ) ) :
 				'name' => __( 'Remove title from display?', 'minnpost-largo' ),
 				'id'   => '_mp_remove_title_from_display',
 				'type' => 'checkbox',
-				'desc' => __( 'If checked, the event title will not display.', 'minnpost-largo' ),
+				'desc' => __( 'If checked, the festival page title will not display.', 'minnpost-largo' ),
 			)
 		);
 		$display_settings->add_field(
@@ -2566,7 +2566,7 @@ if ( ! function_exists( 'cmb2_festival_fields' ) ) :
 				'name' => __( 'Remove share buttons from display?', 'minnpost-largo' ),
 				'id'   => '_mp_remove_share_buttons_from_display',
 				'type' => 'checkbox',
-				'desc' => __( 'If checked, share buttons will not display on this event.', 'minnpost-largo' ),
+				'desc' => __( 'If checked, share buttons will not display on this festival page.', 'minnpost-largo' ),
 			)
 		);
 		$display_settings->add_field(
@@ -2576,7 +2576,7 @@ if ( ! function_exists( 'cmb2_festival_fields' ) ) :
 				'type' => 'checkbox',
 				'desc' => __( 'If checked, this event will have horizontal share buttons above the event content, rather than vertical ones next to it, on large screens. This is similar to its mobile behavior.', 'minnpost-largo' ),
 			)
-		);
+		);*/
 	}
 endif;
 
@@ -2600,7 +2600,7 @@ if ( ! function_exists( 'cmb2_speaker_fields' ) ) :
 				'title'        => __( 'Additional Speaker Information', 'minnpost-largo' ),
 				'object_types' => array( $object_type ),
 				'context'      => 'normal',
-				'priority'     => 'low',
+				'priority'     => 'high',
 			)
 		);
 		$speaker_setup->add_field(
@@ -2617,6 +2617,63 @@ if ( ! function_exists( 'cmb2_speaker_fields' ) ) :
 				'name' => __( 'Photo', 'minnpost-largo' ),
 				'id'   => $prefix . 'photo',
 				'type' => 'file',
+			)
+		);
+
+		/**
+		 * SEO and social meta settings
+		 */
+		$seo_settings = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_seo_settings',
+				'title'        => 'SEO &amp; Social Settings',
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'closed'       => true,
+			)
+		);
+		$seo_settings->add_field(
+			array(
+				'name'         => 'Title',
+				'id'           => '_mp_seo_title',
+				'type'         => 'text',
+				'char_counter' => true,
+				'char_max'     => 78,
+				'desc'         => sprintf(
+					// translators: 1) the sitename
+					esc_html__( 'If you do not fill this out, the speaker title will be used. If you do fill it out and do not include %1$s in the value, it will be placed at the end in this way: Your Title | %1$s' ),
+					get_bloginfo( 'name' )
+				),
+				'attributes'   => array(
+					'maxlength' => 78, // retrieved from https://seopressor.com/blog/google-title-meta-descriptions-length/ on 9/27/2018
+				),
+			)
+		);
+		$seo_settings->add_field(
+			array(
+				'name'         => 'Description',
+				'id'           => '_mp_seo_description',
+				'type'         => 'textarea_small',
+				'char_counter' => true,
+				'char_max'     => 200,
+				'attributes'   => array(
+					'maxlength' => 200, // 155 is the number, but it's ok to go higher as long as the spider sees the most important stuff at the beginning. retrieved from https://moz.com/blog/how-to-write-meta-descriptions-in-a-changing-world on 5/8/2020
+				),
+				'desc'         => esc_html__( 'When using this field, make sure the most important text is in the first 155 characters to ensure that Google can see it. If you do not fill it out, the speaker excerpt will be used.' ),
+			)
+		);
+		$seo_settings->add_field(
+			array(
+				'name'         => esc_html__( 'Meta images', 'minnpost-largo' ),
+				'desc'         => esc_html__( 'Using this field will remove images that are uploaded to this speaker from the speaker\'s metadata, and replace them with the images in this field.', 'minnpost-largo' ),
+				'id'           => '_mp_social_images',
+				'type'         => 'file_list',
+				'preview_size' => array( 130, 85 ),
+				// query_args are passed to wp.media's library query.
+				'query_args'   => array(
+					'type' => 'image',
+				),
 			)
 		);
 	}
