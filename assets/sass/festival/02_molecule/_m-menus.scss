@@ -2,6 +2,14 @@
     border: 0;
 
     .m-menu-festival-menu {
+        flex-direction: column; // vertical on mobile
+        text-align: right;
+
+        @include breakpoint-min( md ) {
+            flex-direction: row;
+            text-align: left;
+        }
+
         li {
 
             > a {

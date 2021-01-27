@@ -2,12 +2,16 @@
     display: flex;
     flex-wrap: wrap;
     flex: 0 0 100%;
-    flex-direction: column; // on mobile, display as a column
+    //flex-direction: column; // on mobile, display as a column-setter
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: $standard-block-padding;
 
     @include breakpoint-min( md ) {
-        align-items: center;
-        justify-content: space-between;
-        flex-direction: row;
-        margin-bottom: $standard-block-padding;
+        //align-items: flex-start;
+        //justify-content: space-between;
+        //flex-direction: row;
+        //margin-bottom: $standard-block-padding;
     }
 }
