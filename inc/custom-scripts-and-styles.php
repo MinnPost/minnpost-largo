@@ -27,15 +27,23 @@ if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
 		wp_dequeue_style( 'minnpost-donation-progress-widget' );
 		wp_dequeue_style( 'popular-widget' );
 		wp_dequeue_style( 'creativ_sponsor' );
-		wp_dequeue_script( 'pum-admin-theme-editor' );
 
 		$is_liveblog = get_post_meta( get_the_ID(), 'liveblog', true );
 		if ( 'enable' === $is_liveblog || 'archive' === $is_liveblog ) {
 			wp_enqueue_style( 'minnpost-liveblog', get_theme_file_uri() . '/assets/css/liveblog.css', array(), filemtime( get_theme_file_path() . '/assets/css/liveblog.css' ), 'all' );
 		}
+	}
+endif;
 
-		// festival css
+/**
+* Handle adding and removing of front end CSS for the MinnPost Festival pages only
+*
+*/
+if ( ! function_exists( 'minnpost_largo_festival_styles' ) ) :
+	add_action( 'wp_print_styles', 'minnpost_largo_festival_styles', 10 );
+	function minnpost_largo_festival_styles() {
 		if ( is_post_type_archive( 'festival' ) || is_singular( 'festival' ) || is_singular( 'tribe_ext_speaker' ) ) {
+			wp_dequeue_style( 'minnpost-style' );
 			wp_enqueue_style( 'minnpost-festival', get_theme_file_uri() . '/assets/css/festival.css', array(), filemtime( get_theme_file_path() . '/assets/css/festival.css' ), 'all' );
 		}
 	}
@@ -63,18 +71,7 @@ if ( ! function_exists( 'minnpost_largo_typekit_head' ) ) :
 	function minnpost_largo_typekit_head() {
 		?>
 		<link rel="preconnect" href="https://use.typekit.net">
-		<script>window.MSInputMethodContext && document.documentMode && document.write('<script src="https://cdn.jsdelivr.net/gh/nuxodin/ie11CustomProperties@4.1.0/ie11CustomProperties.min.js"><\x2fscript>');</script>
 		<?php
-	}
-endif;
-
-if ( ! function_exists( 'minnpost_largo_typekit_script' ) ) :
-	add_filter( 'script_loader_tag', 'minnpost_largo_typekit_script', 10, 2 );
-	function minnpost_largo_typekit_script( $tag, $handle ) {
-		if ( 'minnpost' === $handle ) {
-			$tag = '<link rel="stylesheet" href="https://use.typekit.net/cxj7fzg.css">' . $tag;
-		}
-		return $tag;
 	}
 endif;
 

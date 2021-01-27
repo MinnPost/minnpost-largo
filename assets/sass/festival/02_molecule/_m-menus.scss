@@ -1,0 +1,23 @@
+.m-main-navigation.m-main-navigation.m-main-navigation-festival {
+    border: 0;
+
+    .m-menu-festival-menu {
+        li {
+
+            > a {
+				color: neutral-color(white);
+                background: transparent;
+                text-decoration: underline;
+
+				&:hover,
+				&:focus,
+				&:active {
+					background: transparent;
+                    //color: neutral-color(black);
+                    color: neutral-color(white);
+                    text-decoration: none;
+                }
+            }
+        }
+    }
+}

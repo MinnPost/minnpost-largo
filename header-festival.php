@@ -21,24 +21,9 @@
 <body <?php body_class(); ?>>
 
 	<header id="masthead" class="o-header o-header-festival">
-		<div class="o-wrapper o-wrapper-site-header<?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">
-			<div class="a-site-branding">
-				<?php echo minnpost_largo_get_festival_logo(); ?>
-			</div>
-			<?php
-			if ( function_exists( 'minnpost_largo_get_festival_date_range' ) ) :
-				$date = minnpost_largo_get_festival_date_range( 'sessions' );
-				?>
-				<div class="a-festival-dates">
-					<?php echo $date; ?>
-				</div>
-			<?php endif; ?>
-		</div>
 		<div class="o-wrapper o-wrapper-site-navigation">
-			<nav id="navigation-primary" class="m-main-navigation">
-				<button class="menu-toggle" aria-controls="primary-links" aria-expanded="false">
-					<i class="fas fa-bars"></i><span><?php esc_html_e( 'Menu', 'minnpost-largo' ); ?></span>
-				</button>
+			<?php get_template_part( 'template-parts/logo', 'festival' ); ?>
+			<nav id="navigation-primary" class="m-main-navigation m-main-navigation-festival">
 				<?php
 				wp_nav_menu(
 					array(

@@ -1,4 +1,9 @@
 .o-header-festival {
     background: festival-color(top);
     background: linear-gradient(to bottom, festival-color(top), festival-color(bottom));
+    min-height: $header-height;
+}
+
+body.post-type-archive-festival .o-header-festival {
+    min-height: $header-height-homepage;
 }

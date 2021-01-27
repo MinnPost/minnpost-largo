@@ -245,35 +245,45 @@ function minnpost_largo_get_festival_date_range( $event_slug = '' ) {
 //endif;
 
 /**
-* Set the festival logo
+* Get the info for the festival logo
 * @param string $object_type
-* @return string $output
+* @return array $festival_logo_info
 *
 */
-//if ( ! function_exists( 'minnpost_largo_get_festival_logo' ) ) :
-function minnpost_largo_get_festival_logo( $object_type = 'festival' ) {
-	$post_id = 0;
-	$output  = '';
-	// check to see if there is a post checked for /festival already
-	$directory_args  = array(
-		'posts_per_page' => 1,
-		'post_type'      => $object_type,
-		'meta_key'       => $object_type . '_load_as_directory_content',
-		'meta_value'     => 'on',
-	);
-	$directory_query = new WP_Query( $directory_args );
-	if ( $directory_query->have_posts() ) {
-		global $post;
-		$post_id           = isset( $post->ID ) ? $post->ID : '';
-		$directory_post_id = isset( $directory_query->posts[0]->ID ) ? (int) $directory_query->posts[0]->ID : '0';
-		$title             = get_the_title( $directory_post_id );
-	}
+if ( ! function_exists( 'minnpost_largo_get_festival_logo_info' ) ) :
+	function minnpost_largo_get_festival_logo_info( $object_type = 'festival' ) {
+		$post_id            = 0;
+		$is_current_url     = false;
+		$festival_logo_info = array();
+		// check to see if there is a post checked for /festival already
+		$directory_args  = array(
+			'posts_per_page' => 1,
+			'post_type'      => $object_type,
+			'meta_key'       => $object_type . '_load_as_directory_content',
+			'meta_value'     => 'on',
+		);
+		$directory_query = new WP_Query( $directory_args );
+		if ( $directory_query->have_posts() ) {
+			global $post;
+			$post_id = isset( $post->ID ) ? $post->ID : '';
+			$post_id = isset( $directory_query->posts[0]->ID ) ? (int) $directory_query->posts[0]->ID : $post_id;
+			$title   = get_the_title( $post_id );
+			if ( get_the_ID() === $post_id ) {
+				$is_current_url = true;
+			}
+		}
 
-	if ( 0 === $post_id ) {
-		$title = __( 'MinnPost Festival', 'minnpost-largo' );
-	}
+		if ( 0 === $post_id ) {
+			$title = __( 'MinnPost Festival', 'minnpost-largo' );
+		}
 
-	$output = '<a href="' . get_post_type_archive_link( 'festival' ) . '">' . $title . '</a>';
-	return $output;
-}
-//endif;
+		$url = get_post_type_archive_link( $object_type );
+
+		$festival_logo_info = array(
+			'url'            => $url,
+			'title'          => $title,
+			'is_current_url' => $is_current_url,
+		);
+		return $festival_logo_info;
+	}
+endif;
