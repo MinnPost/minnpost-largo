@@ -12,11 +12,7 @@ $post_class = 'm-post m-festival-post m-festival-post-event';
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( $post_class ); ?>>
 	<header class="m-entry-header">
-		<?php if ( true === $args['use_permalink'] ) : ?>
-			<?php the_title( '<h3 class="a-entry-title a-entry-title-excerpt"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
-		<?php else : ?>
-			<?php the_title( '<h3 class="a-entry-title a-entry-title-excerpt">', '</h3>' ); ?>
-		<?php endif; ?>
+		<?php the_title( '<h1 class="a-entry-title a-entry-title-excerpt">', '</h1>' ); ?>
 		<?php
 		$hide_notices = get_post_meta( $id, '_mp_remove_notice_from_display', true );
 		if ( 'on' !== $hide_notices ) :
