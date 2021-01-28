@@ -21,8 +21,9 @@
 <body <?php body_class(); ?>>
 
 	<header id="masthead" class="o-header o-header-festival">
+		<?php $festival_logo_info = minnpost_largo_get_festival_logo_info( 'festival' ); ?>
 		<div class="o-wrapper o-wrapper-site-navigation">
-			<?php get_template_part( 'template-parts/logo', 'festival' ); ?>
+			<?php get_template_part( 'template-parts/logo', 'festival', $festival_logo_info ); ?>
 			<nav id="navigation-primary" class="m-main-navigation m-main-navigation-festival">
 				<?php
 				wp_nav_menu(
@@ -38,6 +39,11 @@
 				?>
 			</nav><!-- #navigation-primary -->
 		</div>
+		<?php if ( false === $festival_logo_info['is_current_url'] ) : ?>
+			<div class="o-wrapper o-wrapper-festival-page-title">
+				<?php the_title( '<h1 class="a-page-title">', '</h1>' ); ?>
+			</div>
+		<?php endif; ?>
 	</header><!-- #masthead -->
 
 	<?php do_action( 'wp_message_inserter', 'header' ); ?>
