@@ -294,3 +294,28 @@ if ( ! function_exists( 'minnpost_largo_get_festival_logo_info' ) ) :
 		return $festival_logo_info;
 	}
 endif;
+
+/**
+* Allow events to load if their category has a template
+* @param string $type
+* @return string $type
+*
+*/
+if ( ! function_exists( 'minnpost_event_category_single_template' ) ) :
+	add_filter( 'tribe_events_template', 'minnpost_event_category_single_template', 10, 2 );
+	function minnpost_event_category_single_template( $type ) {
+		global $post;
+		$post_id          = isset( $post->ID ) ? $post->ID : '';
+		$event_categories = get_the_terms( $post_id, 'tribe_events_cat' );
+		if ( ! empty( $event_categories ) ) {
+			foreach ( $event_categories as $event_category ) {
+				$slug   = $event_category->slug;
+				$locate = locate_template( 'tribe-events/single-event-' . $slug . '.php' );
+				if ( '' !== $locate ) {
+					return $locate;
+				}
+			}
+		}
+		return $type;
+	}
+endif;

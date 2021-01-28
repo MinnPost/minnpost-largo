@@ -1,6 +1,6 @@
 <?php
 /**
- * The template for displaying the festival single pages
+ * The template for displaying the festival single event
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
