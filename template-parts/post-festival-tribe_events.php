@@ -36,7 +36,7 @@ $post_class = 'm-post m-festival-post m-festival-post-event';
 			<div class="m-event-details">
 				<?php do_action( 'tribe_events_single_event_before_the_meta' ); ?>
 				<div class="m-event-date-and-calendar">
-					<?php get_template_part( 'tribe/events/modules/meta/date' ); ?>
+					<?php get_template_part( 'tribe/events/modules/meta/date', '', array( 'show_timezone' => true ) ); ?>
 					<?php do_action( 'tribe_events_single_event_after_the_content' ); ?>
 				</div>
 			</div>

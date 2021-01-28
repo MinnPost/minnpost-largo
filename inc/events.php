@@ -143,23 +143,30 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_largo_full_event_time' ) ) :
-	function minnpost_largo_full_event_time( $event_id = '' ) {
+	function minnpost_largo_full_event_time( $event_id = '', $args = array() ) {
 		if ( '' === $event_id ) {
 			$event_id = get_the_ID();
 		}
+		$timezone   = '';
 		$start_time = minnpost_largo_get_ap_time( tribe_get_start_date( $event_id, false, 'H:i' ) );
 		$end_time   = minnpost_largo_get_ap_time( tribe_get_end_date( $event_id, false, 'H:i' ) );
+		if ( true === $args['show_timezone'] ) {
+			$timezone = '&nbsp;' . minnpost_largo_get_timezone( tribe_get_start_date( $event_id, false, 'H:i' ) );
+		}
 		if ( $end_time !== $start_time ) {
 			$time = sprintf(
-				// translators: 1) start time, 2) end time
-				__( '%1$s to %2$s', 'minnpost-largo' ),
+				// translators: 1) start time, 2) end time, 3) timezone
+				__( '%1$s to %2$s%3$s', 'minnpost-largo' ),
 				$start_time,
-				$end_time
+				$end_time,
+				$timezone
 			);
 		} else {
+			// translators: 1) start time, 2) timezone
 			$time = sprintf(
-				'%1$s',
-				$start_time
+				'%1$s%2$s',
+				$start_time,
+				$timezone
 			);
 		}
 		return $time;

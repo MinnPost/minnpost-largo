@@ -374,6 +374,23 @@ if ( ! function_exists( 'minnpost_largo_get_ap_time' ) ) :
 endif;
 
 /**
+* Get timezone abbreviation from a time string
+*
+* @param string $time_string
+* @return string $timezone
+*
+*/
+if ( ! function_exists( 'minnpost_largo_get_timezone' ) ) :
+	function minnpost_largo_get_timezone( $time_string ) {
+		$date_time = new DateTime( $time_string );
+		$tz        = new DateTimeZone( get_option( 'timezone_string' ) );
+		$tz        = $date_time->setTimeZone( $tz );
+		$timezone  = $date_time->format( 'T' );
+		return $timezone;
+	}
+endif;
+
+/**
 * Output the author/authors who posted the article
 * This depends on the Co-Authors Plus plugin
 *
