@@ -16,7 +16,7 @@ get_header( 'festival' ); ?>
 		<?php
 		while ( have_posts() ) :
 			the_post();
-			get_template_part( 'template-parts/content', 'festival' );
+			get_template_part( 'template-parts/post-festival', 'tribe_ext_speaker' );
 		endwhile; // End of the loop.
 		?>
 	</main><!-- #main -->

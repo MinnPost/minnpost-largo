@@ -14,13 +14,13 @@ $post_class = 'm-post m-festival-post m-festival-post-speaker';
 	<div class="m-entry-content">
 		<header class="m-entry-header">
 			<?php if ( true === $args['use_permalink'] ) : ?>
-				<?php the_title( '<h1 class="a-entry-title a-entry-title-excerpt"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h1>' ); ?>
+				<?php the_title( '<h3 class="a-entry-title a-entry-title-excerpt"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
 			<?php else : ?>
-				<?php the_title( '<h1 class="a-entry-title a-entry-title-excerpt">', '</h1>' ); ?>
+				<?php the_title( '<h3 class="a-entry-title a-entry-title-excerpt">', '</h3>' ); ?>
 			<?php endif; ?>
 		</header>
 		<div class="m-entry-excerpt">
-			<?php the_content(); ?>
+			<?php the_excerpt(); ?>
 		</div>
 	</div>
 </article>

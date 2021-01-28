@@ -13,7 +13,7 @@ get_header( 'festival' ); ?>
 			<?php
 			while ( have_posts() ) :
 				the_post();
-				get_template_part( 'template-parts/content', 'festival' );
+				get_template_part( 'template-parts/post-festival', 'tribe_events' );
 			endwhile; // End of the loop.
 			?>
 		</main><!-- #main -->

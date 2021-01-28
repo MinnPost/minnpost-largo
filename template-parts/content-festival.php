@@ -41,7 +41,7 @@ if ( '' !== $content || ! empty( $content_posts ) ) :
 			while ( $content_query->have_posts() ) {
 				$content_query->the_post();
 				set_query_var( 'current_post', $content_query->current_post );
-				get_template_part( 'template-parts/post-festival', get_post_type(), $content_display_args );
+				get_template_part( 'template-parts/post-festival', get_post_type() . '-excerpt', $content_display_args );
 			}
 			wp_reset_postdata();
 		}

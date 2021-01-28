@@ -39,7 +39,7 @@
 				?>
 			</nav><!-- #navigation-primary -->
 		</div>
-		<?php if ( false === $festival_logo_info['is_current_url'] ) : ?>
+		<?php if ( false === $festival_logo_info['is_current_url'] && ! is_singular( array( 'tribe_events', 'tribe_ext_speaker' ) ) ) : ?>
 			<div class="o-wrapper o-wrapper-festival-page-title">
 				<?php the_title( '<h1 class="a-page-title">', '</h1>' ); ?>
 			</div>

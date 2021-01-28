@@ -46,6 +46,13 @@ if ( ! function_exists( 'minnpost_largo_festival_styles' ) ) :
 			wp_dequeue_style( 'minnpost-style' );
 			wp_enqueue_style( 'minnpost-festival', get_theme_file_uri() . '/assets/css/festival.css', array(), filemtime( get_theme_file_path() . '/assets/css/festival.css' ), 'all' );
 		}
+		if ( is_singular( 'tribe_events' ) ) {
+			$locate = locate_template( 'tribe-events/single-event-festival.php' );
+			if ( '' !== $locate ) {
+				wp_dequeue_style( 'minnpost-style' );
+				wp_enqueue_style( 'minnpost-festival', get_theme_file_uri() . '/assets/css/festival.css', array(), filemtime( get_theme_file_path() . '/assets/css/festival.css' ), 'all' );
+			}
+		}
 	}
 endif;
 
