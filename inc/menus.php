@@ -475,17 +475,22 @@ if ( ! function_exists( 'minnpost_largo_menu_support' ) ) :
 endif;
 
 /**
-* Change menu classes for festival menu
+* Change menu classes for festival/event menus
 * @param string $classes
 * @param object $item
 * @return string $classes
 *
 */
-if ( ! function_exists( 'minnpost_largo_festival_menu_classes' ) ) :
-	add_filter( 'minnpost_largo_nav_item_classes', 'minnpost_largo_festival_menu_classes', 10, 2 );
-	function minnpost_largo_festival_menu_classes( $classes, $item ) {
+if ( ! function_exists( 'minnpost_largo_event_menu_classes' ) ) :
+	add_filter( 'minnpost_largo_nav_item_classes', 'minnpost_largo_event_menu_classes', 10, 2 );
+	function minnpost_largo_event_menu_classes( $classes, $item ) {
 		if ( is_singular( 'tribe_ext_speaker' ) && 'Speakers' === $item->title ) {
 			$classes .= ' active';
+		}
+		if ( is_singular( 'tribe_events' ) || is_archive( 'tribe_events' ) ) {
+			if ( 'Sessions' === $item->title || 'Events' === $item->title ) {
+				$classes .= ' active';
+			}
 		}
 		return $classes;
 	}
