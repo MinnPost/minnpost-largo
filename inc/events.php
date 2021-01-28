@@ -150,7 +150,7 @@ if ( ! function_exists( 'minnpost_largo_full_event_time' ) ) :
 		$timezone   = '';
 		$start_time = minnpost_largo_get_ap_time( tribe_get_start_date( $event_id, false, 'H:i' ) );
 		$end_time   = minnpost_largo_get_ap_time( tribe_get_end_date( $event_id, false, 'H:i' ) );
-		if ( true === $args['show_timezone'] ) {
+		if ( isset( $args['show_timezone'] ) && true === $args['show_timezone'] ) {
 			$timezone = '&nbsp;' . minnpost_largo_get_timezone( tribe_get_start_date( $event_id, false, 'H:i' ) );
 		}
 		if ( $end_time !== $start_time ) {
