@@ -8,6 +8,7 @@
  */
 
 $content       = get_the_content();
+$content       = apply_filters( 'the_content', $content );
 $content_posts = get_post_meta( get_the_ID(), '_mp_festival_content_posts', true );
 if ( '' !== $content || ! empty( $content_posts ) ) :
 
