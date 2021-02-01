@@ -11,8 +11,8 @@ $post_class = 'm-post m-festival-post m-festival-post-event';
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( $post_class ); ?>>
-	<header class="m-entry-header">
-		<?php the_title( '<h1 class="a-entry-title a-entry-title-excerpt">', '</h1>' ); ?>
+	<header class="m-event-header m-entry-header tribe-events-calendar-list__event-header">
+		<?php the_title( '<h1 class="a-entry-title a-event-title tribe-events-single-event-title">', '</h1>' ); ?>
 		<?php
 		$hide_notices = get_post_meta( $id, '_mp_remove_notice_from_display', true );
 		if ( 'on' !== $hide_notices ) :
@@ -38,7 +38,7 @@ $post_class = 'm-post m-festival-post m-festival-post-event';
 			</div>
 			<?php endif; ?>
 			<?php do_action( 'tribe_events_single_event_before_the_content' ); ?>
-			<div class="tribe-events-single-event-description tribe-events-content">
+			<div class="m-event-content m-festival-event-content">
 				<?php the_content(); ?>
 			</div>
 			<?php get_template_part( 'tribe/events/modules/meta/speaker' ); ?>

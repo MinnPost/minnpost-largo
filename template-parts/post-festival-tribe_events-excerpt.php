@@ -42,7 +42,7 @@ $post_class = 'm-post m-festival-post m-festival-post-event';
 			</div>
 			<?php endif; ?>
 			<?php do_action( 'tribe_events_single_event_before_the_content' ); ?>
-			<div class="tribe-events-single-event-description tribe-events-content">
+			<div class="m-event-content m-festival-event-content">
 				<?php the_content(); ?>
 			</div>
 			<?php get_template_part( 'tribe/events/modules/meta/speaker' ); ?>
