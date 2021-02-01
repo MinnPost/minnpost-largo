@@ -2592,6 +2592,34 @@ if ( ! function_exists( 'cmb2_speaker_fields' ) ) :
 		$prefix      = '_mp_speaker_';
 
 		/**
+		 * Excerpt settings
+		 */
+		$excerpt = new_cmb2_box(
+			array(
+				'id'           => 'speaker_excerpt',
+				'title'        => __( 'Excerpt', 'minnpost-largo' ),
+				'object_types' => array( $object_type ), // Post type
+				'context'      => 'after_editor',
+				'priority'     => 'high',
+				'show_names'   => false,
+			)
+		);
+		$excerpt->add_field(
+			array(
+				'id'        => 'excerpt',
+				'name'      => __( 'Excerpt', 'minnpost-largo' ),
+				'desc'      => '',
+				'type'      => 'wysiwyg',
+				'escape_cb' => false,
+				'options'   => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'textarea_rows' => 5,
+					'teeny'         => true, // output the minimal editor config used in Press This
+				),
+			)
+		);
+
+		/**
 		 * Speaker Settings
 		 */
 		$speaker_setup = new_cmb2_box(
