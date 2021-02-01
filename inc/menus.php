@@ -487,7 +487,7 @@ if ( ! function_exists( 'minnpost_largo_event_menu_classes' ) ) :
 		if ( is_singular( 'tribe_ext_speaker' ) && 'Speakers' === $item->title ) {
 			$classes .= ' active';
 		}
-		if ( is_singular( 'tribe_events' ) || is_singular( 'festival' ) ) {
+		if ( is_singular( 'tribe_events' ) || is_singular( 'sessions' ) ) {
 			if ( 'Sessions' === $item->title || 'Events' === $item->title ) {
 				$classes .= ' active';
 			}
