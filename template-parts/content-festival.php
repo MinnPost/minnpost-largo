@@ -38,14 +38,26 @@ if ( '' !== $content || ! empty( $content_posts ) ) :
 		$content_display_args = array(
 			'use_permalink' => $use_permalink,
 		);
-		if ( $content_query->have_posts() ) {
-			while ( $content_query->have_posts() ) {
-				$content_query->the_post();
-				set_query_var( 'current_post', $content_query->current_post );
-				get_template_part( 'template-parts/post-festival', get_post_type() . '-excerpt', $content_display_args );
+
+		if ( $content_query->have_posts() ) :
+			$post_type_class = '';
+			$post_type       = get_post_type( $content_query->posts[0]->ID );
+			if ( '' !== $post_type ) {
+				$post_type_class = ' m-archive-festival-' . $post_type;
 			}
-			wp_reset_postdata();
-		}
+			?>
+			<section class="m-archive m-archive-festival<?php echo $post_type_class; ?>">
+				<?php
+				while ( $content_query->have_posts() ) {
+					$content_query->the_post();
+					set_query_var( 'current_post', $content_query->current_post );
+					get_template_part( 'template-parts/post-festival', get_post_type() . '-excerpt', $content_display_args );
+				}
+				wp_reset_postdata();
+				?>
+			</section>
+			<?php
+		endif;
 	endif;
 else :
 	get_template_part( 'template-parts/content', 'none' );
