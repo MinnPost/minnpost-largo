@@ -1111,6 +1111,211 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 endif;
 
 /**
+* Outputs speaker image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
+*
+* @param int $speaker_id
+* @param string $photo_size
+* @param string $text_field
+* @param bool $include_text
+* @param bool $include_name
+* @param bool $include_title
+* @param bool $lazy_load
+* @param bool $end
+*
+*/
+if ( ! function_exists( 'minnpost_speaker_figure' ) ) :
+	function minnpost_speaker_figure( $speaker_id = '', $photo_size = 'photo', $text_field = 'excerpt', $include_text = true, $name_field = 'display_name', $include_name = false, $title_field = 'job-title', $include_title = true, $lazy_load = true, $end = false ) {
+		$output = minnpost_get_speaker_figure( $speaker_id, $photo_size, $text_field, $include_text, $name_field, $include_name, $title_field, $include_title, $lazy_load, $end );
+		echo $output;
+	}
+endif;
+
+/**
+* Get speaker image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
+*
+* @param int $speaker_id
+* @param string $photo_size
+* @param string $text_field
+* @param bool $include_text
+* @param bool $include_name
+* @param bool $include_title
+* @param bool $lazy_load
+* @param bool $end
+*
+* @return string $output
+*
+*/
+if ( ! function_exists( 'minnpost_get_speaker_figure' ) ) :
+	function minnpost_get_speaker_figure( $speaker_id = '', $photo_size = 'full', $text_field = 'the_excerpt', $include_text = true, $name_field = 'the_title', $include_name = true, $title_field = '_tribe_ext_speaker_title', $include_title = true, $lazy_load = true, $end = false ) {
+
+		// some empty defaults
+		$image_id  = '';
+		$image_url = '';
+		$image     = '';
+		$text      = '';
+		$name      = '';
+		$title     = '';
+
+		$image_data = minnpost_get_speaker_image( $speaker_id, $photo_size );
+		if ( '' !== $image_data ) {
+			$image_id  = $image_data['image_id'];
+			$image_url = $image_data['image_url'];
+			$image     = $image_data['markup'];
+		}
+
+		if ( 'the_excerpt' === $text_field ) { // excerpt
+			$text .= get_the_excerpt( $speaker_id );
+		} elseif ( '' !== get_post_meta( $speaker_id, $text_field, true ) ) { // a different field exists
+			$text = get_post_meta( $speaker_id, $text_field, true );
+		} else { // full text
+			$text = get_the_content( $speaker_id );
+		}
+
+		if ( post_password_required() || is_attachment() || ( '' === $image_id && '' === $image_url && '' === $text ) ) {
+			return;
+		}
+
+		if ( 'the_title' === $name_field ) { // name
+			$name = get_the_title( $speaker_id );
+		} elseif ( '' !== get_post_meta( $speaker_id, $name_field, true ) ) { // a different field exists
+			$name = get_post_meta( $speaker_id, $name_field, true );
+		}
+
+		if ( '' !== get_post_meta( $speaker_id, $title_field, true ) ) { // the field exists
+			$title = get_post_meta( $speaker_id, $title_field, true );
+		}
+
+		//$text = wpautop( $text ); // for some reason the paragraphs don't work without this
+		$text = apply_filters( 'the_content', $text );
+
+		if ( '' !== $image_id ) {
+			$caption = wp_get_attachment_caption( $image_id );
+			$credit  = get_media_credit_html( $image_id );
+		}
+
+		if ( ( is_singular() || is_archive() ) && ! is_singular( 'newsletter' ) ) {
+			$output = '';
+			if ( '' !== $image ) {
+				$output .= '<figure class="a-archive-figure a-speaker-figure a-speaker-figure-' . $photo_size . '">';
+				$output .= $image;
+			}
+			if ( true === $include_text && ( '' !== $text || '' !== $name ) ) {
+				if ( '' !== $image ) {
+					$output .= '<figcaption class="a-speaker-bio">';
+				} else {
+					$output .= '<div class="a-speaker-bio">';
+				}
+				if ( true === $include_name && '' !== $name ) {
+					$output .= '<h3 class="a-speaker-title">';
+					/*if ( 1 < $count ) {
+						// at least as of July 2020, co-authors-plus never returns a count of zero
+						// see this github issue: https://github.com/Automattic/Co-Authors-Plus/issues/740
+						// we can update this code if that situation ever changes
+						$author_url = get_author_posts_url( $author_id, sanitize_title( $name ) );
+						$output    .= '<a href="' . $author_url . '">';
+					}
+					$output .= $name;
+					if ( 0 < $count ) {
+						$output .= '</a>';
+					}*/
+					/*if ( is_single() && '' === $title ) { // if this is a byline on a story, do the default title
+						// default job title
+						$title = $default_title;
+					}*/
+					if ( true === $include_title && '' !== $title ) {
+						$output .= '&nbsp;|&nbsp;<span class="a-entry-speaker-job-title">' . $title . '</span>';
+					}
+					$output .= '</h3>';
+				} elseif ( '' !== $name ) {
+					/*if ( 0 < $count ) {
+						$title = '';
+						if ( true === $include_title && isset( get_the_coauthor_meta( 'job-title', $author_id )[ $author_id ] ) && '' !== get_the_coauthor_meta( 'job-title', $author_id )[ $author_id ] ) {
+							$title = get_the_coauthor_meta( 'job-title', $author_id )[ $author_id ];
+						} elseif ( true === $include_title ) {
+							$title = $default_title;
+						}
+						if ( '' !== $title ) {
+							$output .= '<h3 class="a-author-figure-job-title">' . $title . '</h3>';
+						}
+						if ( is_single() ) {
+							$author_url = get_author_posts_url( $author_id, sanitize_title( $name ) );
+							$text      .= sprintf(
+								// translators: 1) author archive url, 2) author name
+								'<p class="a-more-by-author"><a href="%1$s">' . esc_html__( 'More articles by %2$s', 'minnpost-largo' ) . '</a></p>',
+								esc_url( $author_url ),
+								$name
+							);
+						}
+					}*/
+				}
+				$output .= $text;
+				if ( '' !== $image ) {
+					$output .= '</figcaption>';
+				} else {
+					$output .= '</div>';
+				}
+			}
+			if ( '' !== $image ) {
+				$output .= '</figure><!-- .speaker-figure -->';
+			}
+			return $output;
+		}
+	}
+endif;
+
+/**
+* Returns speaker image, large or thumbnail, to put inside the figure
+*
+* @param int $speaker_id
+* @param string $size
+* @param bool $lazy_load
+*
+* @return array $image_data
+*
+*/
+if ( ! function_exists( 'minnpost_get_speaker_image' ) ) :
+	function minnpost_get_speaker_image( $speaker_id = '', $size = 'full', $lazy_load = true ) {
+		$image     = '';
+		$image_url = get_post_meta( $speaker_id, '_mp_speaker_photo', true );
+		if ( 'full' !== $size ) {
+			$image_url = get_post_meta( $speaker_id, '_mp_speaker_photo_' . $size, true );
+		}
+		$image_id = get_post_meta( $speaker_id, '_mp_speaker_photo_id', true );
+
+		if ( post_password_required() || is_attachment() || ( ! $image_id && ! $image_url ) ) {
+			return '';
+		}
+
+		$attributes = array();
+
+		// set up lazy load attributes
+		$attributes = apply_filters( 'minnpost_largo_lazy_load_attributes', $attributes, $speaker_id, 'tribe_ext_speaker', $lazy_load );
+		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
+			$alt_text  = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+			$image_url = wp_get_attachment_url( $image_id );
+			if ( isset( $attributes['class'] ) ) {
+				$class = ' class="' . $attributes['class'] . '"';
+			} else {
+				$class = '';
+			}
+			if ( isset( $attributes['loading'] ) ) {
+				$loading = ' loading="' . $attributes['loading'] . '"';
+			} else {
+				$loading = '';
+			}
+			$image = '<img src="' . $image_url . '" alt="' . $alt_text . '"' . $class . $loading . '>';
+		}
+
+		$image_data = array(
+			'image_id'  => $image_id,
+			'image_url' => $image_url,
+			'markup'    => $image,
+		);
+		return $image_data;
+	}
+endif;
+
+/**
 * Outputs term image, large or thumbnail, with/without the description or excerpt, all inside a <figure>
 *
 * @param int $category_id
@@ -2207,10 +2412,10 @@ if ( ! function_exists( 'minnpost_largo_add_lazy_load_attributes' ) ) :
 	add_filter( 'minnpost_largo_lazy_load_attributes', 'minnpost_largo_add_lazy_load_attributes', 10, 3 );
 	function minnpost_largo_add_lazy_load_attributes( $attributes, $object_id, $object_type = 'post', $lazy_load = true ) {
 		// handle prevention of lazy loading from the object loading the image
-		if ( 'post' === $object_type ) {
-			$prevent_lazy_load = get_post_meta( $object_id, '_mp_prevent_lazyload', true );
-		} elseif ( 'term' === $object_type ) {
+		if ( 'term' === $object_type ) {
 			$prevent_lazy_load = get_term_meta( $object_id, '_mp_prevent_lazyload', true );
+		} else {
+			$prevent_lazy_load = get_post_meta( $object_id, '_mp_prevent_lazyload', true );
 		}
 		if ( 'on' === $prevent_lazy_load ) {
 			$lazy_load = false;

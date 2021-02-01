@@ -319,3 +319,19 @@ if ( ! function_exists( 'minnpost_event_category_single_template' ) ) :
 		return $type;
 	}
 endif;
+
+/**
+* Edit the events that are returned for a given speaker
+* @param array $events
+* @return array $events
+*
+*/
+if ( ! function_exists( 'minnpost_festival_get_speaker_events' ) ) :
+	add_filter( 'tribe_ext_tribe_ext_speaker_get_events', 'minnpost_festival_get_speaker_events', 10, 2 );
+	function minnpost_festival_get_speaker_events( $events, $args ) {
+		$args['post_status'] = 'any';
+		$args['post_type']   = array( 'tribe_events' );
+		$events_query        = new WP_Query( $args );
+		return $events_query;
+	}
+endif;
