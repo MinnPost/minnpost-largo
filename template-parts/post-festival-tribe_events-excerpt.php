@@ -28,7 +28,7 @@ $post_class = 'm-post m-festival-post m-festival-post-event m-festival-post-even
 	</header>
 
 	<div class="o-entry">
-		<div class="m-entry-content">
+		<div class="m-entry-excerpt">
 			<?php
 			$hide_details = get_post_meta( $id, '_mp_remove_event_details_from_display', true );
 			if ( 'on' !== $hide_details ) :
