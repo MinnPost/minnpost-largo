@@ -1124,8 +1124,8 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_speaker_figure' ) ) :
-	function minnpost_speaker_figure( $speaker_id = '', $photo_size = 'photo', $text_field = 'excerpt', $include_text = true, $name_field = 'display_name', $include_name = false, $title_field = 'job-title', $include_title = true, $lazy_load = true, $end = false ) {
-		$output = minnpost_get_speaker_figure( $speaker_id, $photo_size, $text_field, $include_text, $name_field, $include_name, $title_field, $include_title, $lazy_load, $end );
+	function minnpost_speaker_figure( $speaker_id = '', $photo_size = 'photo', $text_field = 'the_excerpt', $include_text = true, $name_field = 'display_name', $include_name = false, $include_link = true, $title_field = 'job-title', $include_title = true, $lazy_load = true, $end = false ) {
+		$output = minnpost_get_speaker_figure( $speaker_id, $photo_size, $text_field, $include_text, $name_field, $include_name, $include_link = true, $title_field, $include_title, $lazy_load, $end );
 		echo $output;
 	}
 endif;
@@ -1146,7 +1146,7 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_get_speaker_figure' ) ) :
-	function minnpost_get_speaker_figure( $speaker_id = '', $photo_size = 'full', $text_field = 'the_excerpt', $include_text = true, $name_field = 'the_title', $include_name = true, $title_field = '_tribe_ext_speaker_title', $include_title = true, $lazy_load = true, $end = false ) {
+	function minnpost_get_speaker_figure( $speaker_id = '', $photo_size = 'full', $text_field = 'the_excerpt', $include_text = true, $name_field = 'the_title', $include_name = true, $include_link = true, $title_field = '_tribe_ext_speaker_title', $include_title = true, $lazy_load = true, $end = false ) {
 
 		// some empty defaults
 		$image_id  = '';
@@ -1196,7 +1196,7 @@ if ( ! function_exists( 'minnpost_get_speaker_figure' ) ) :
 		if ( ( is_singular() || is_archive() ) && ! is_singular( 'newsletter' ) ) {
 			$output = '';
 			if ( '' !== $image ) {
-				$output .= '<figure class="a-archive-figure a-speaker-figure a-speaker-figure-' . $photo_size . '">';
+				$output .= '<figure class="a-archive-figure a-speaker-figure a-speaker-figure-' . $text_field . ' a-speaker-figure-' . $photo_size . '">';
 				$output .= $image;
 			}
 			if ( true === $include_text && ( '' !== $text || '' !== $name ) ) {
@@ -1207,21 +1207,14 @@ if ( ! function_exists( 'minnpost_get_speaker_figure' ) ) :
 				}
 				if ( true === $include_name && '' !== $name ) {
 					$output .= '<h3 class="a-speaker-title">';
-					/*if ( 1 < $count ) {
-						// at least as of July 2020, co-authors-plus never returns a count of zero
-						// see this github issue: https://github.com/Automattic/Co-Authors-Plus/issues/740
-						// we can update this code if that situation ever changes
-						$author_url = get_author_posts_url( $author_id, sanitize_title( $name ) );
-						$output    .= '<a href="' . $author_url . '">';
+					if ( true === $include_link ) {
+						$speaker_url = get_permalink( $speaker_id );
+						$output     .= '<a href="' . $speaker_url . '">';
 					}
 					$output .= $name;
-					if ( 0 < $count ) {
+					if ( true === $include_link ) {
 						$output .= '</a>';
-					}*/
-					/*if ( is_single() && '' === $title ) { // if this is a byline on a story, do the default title
-						// default job title
-						$title = $default_title;
-					}*/
+					}
 					if ( true === $include_title && '' !== $title ) {
 						$output .= '&nbsp;|&nbsp;<span class="a-entry-speaker-job-title">' . $title . '</span>';
 					}

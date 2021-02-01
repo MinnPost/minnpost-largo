@@ -16,8 +16,8 @@ $speaker_instance = Tribe__Extension__Speaker_Linked_Post_Type::instance();
 		<header class="m-entry-header">
 			<?php the_title( '<h1 class="a-entry-title a-entry-title-excerpt">', '</h1>' ); ?>
 		</header>
-		<div class="m-archive-info m-author-info m-author-full-info">
-			<?php minnpost_speaker_figure( get_the_ID() ); ?>
+		<div class="m-archive-info m-author-info m-author-excerpt">
+			<?php minnpost_speaker_figure( get_the_ID(), 'full', 'content' ); ?>
 		</div>
 
 		<?php $events = $speaker_instance->get_events( get_the_ID() ); ?>

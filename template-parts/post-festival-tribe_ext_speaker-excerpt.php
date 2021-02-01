@@ -7,20 +7,13 @@
  * @package MinnPost Largo
  */
 
-$post_class = 'm-post m-festival-post m-festival-post-speaker';
+$post_class = 'm-post m-festival-post m-festival-post-speaker m-festival-post-speaker-excerpt';
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( $post_class ); ?>>
-	<div class="m-entry-content">
-		<header class="m-entry-header">
-			<?php if ( true === $args['use_permalink'] ) : ?>
-				<?php the_title( '<h3 class="a-entry-title a-entry-title-excerpt"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
-			<?php else : ?>
-				<?php the_title( '<h3 class="a-entry-title a-entry-title-excerpt">', '</h3>' ); ?>
-			<?php endif; ?>
-		</header>
-		<div class="m-entry-excerpt">
-			<?php the_excerpt(); ?>
+	<div class="o-entry">
+		<div class="m-archive-info m-author-info m-author-excerpt">
+			<?php minnpost_speaker_figure( get_the_ID(), 'full', 'the_excerpt', true, 'the_title', true ); ?>
 		</div>
 	</div>
 </article>
