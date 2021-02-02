@@ -363,3 +363,23 @@ if ( ! function_exists( 'minnpost_festival_get_festival_pass_link' ) ) :
 		return $buy_festival_pass;
 	}
 endif;
+
+/**
+* Event category breadcrumb
+*
+*/
+if ( ! function_exists( 'minnpost_event_category_breadcrumb' ) ) :
+	function minnpost_get_event_category() {
+		global $post;
+		$post_id          = isset( $post->ID ) ? $post->ID : '';
+		$event_categories = get_the_terms( $post_id, 'tribe_events_cat' );
+		if ( ! empty( $event_categories ) ) {
+			foreach ( $event_categories as $event_category ) {
+				$category_name = $event_category->name;
+				$category_link = site_url( '/festival/' );
+				echo '<div class="a-breadcrumb a-event-category-name"><a href="' . $category_link . '">' . $category_name . '</a></div>';
+			}
+		}
+		return $category;
+	}
+endif;

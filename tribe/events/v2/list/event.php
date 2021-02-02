@@ -10,6 +10,7 @@ $event_classes = tribe_get_post_class( array( 'm-post, m-event, tribe-events-cal
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php tribe_classes( $event_classes ); ?>>
+	<?php echo minnpost_get_event_category(); ?>
 	<header class="m-event-header m-entry-header tribe-events-calendar-list__event-header">
 		<?php $this->template( 'list/event/title', array( 'event' => $event ) ); ?>
 		<div class="m-event-details">
