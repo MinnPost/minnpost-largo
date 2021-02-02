@@ -1124,8 +1124,8 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_speaker_figure' ) ) :
-	function minnpost_speaker_figure( $speaker_id = '', $photo_size = 'photo', $text_field = 'the_excerpt', $include_text = true, $name_field = 'display_name', $include_name = false, $include_link = true, $title_field = 'job-title', $include_title = true, $lazy_load = true, $end = false ) {
-		$output = minnpost_get_speaker_figure( $speaker_id, $photo_size, $text_field, $include_text, $name_field, $include_name, $include_link = true, $title_field, $include_title, $lazy_load, $end );
+	function minnpost_speaker_figure( $speaker_id = '', $photo_size = 'photo', $text_field = 'the_excerpt', $include_text = true, $name_field = 'display_name', $include_name = false, $include_link = false, $title_field = '_tribe_ext_speaker_title', $include_title = true, $include_twitter = false, $twitter_field = '_tribe_ext_speaker_twitter_username', $lazy_load = true ) {
+		$output = minnpost_get_speaker_figure( $speaker_id, $photo_size, $text_field, $include_text, $name_field, $include_name, $include_link, $title_field, $include_title, $include_twitter, $twitter_field, $lazy_load );
 		echo $output;
 	}
 endif;
@@ -1146,7 +1146,7 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_get_speaker_figure' ) ) :
-	function minnpost_get_speaker_figure( $speaker_id = '', $photo_size = 'full', $text_field = 'the_excerpt', $include_text = true, $name_field = 'the_title', $include_name = true, $include_link = true, $title_field = '_tribe_ext_speaker_title', $include_title = true, $lazy_load = true, $end = false ) {
+	function minnpost_get_speaker_figure( $speaker_id = '', $photo_size = 'full', $text_field = 'the_excerpt', $include_text = true, $name_field = 'the_title', $include_name = true, $include_link = false, $title_field = '_tribe_ext_speaker_title', $include_title = true, $include_twitter = false, $twitter_field = '_tribe_ext_speaker_twitter_username', $lazy_load = true ) {
 
 		// some empty defaults
 		$image_id  = '';
@@ -1180,7 +1180,6 @@ if ( ! function_exists( 'minnpost_get_speaker_figure' ) ) :
 		} elseif ( '' !== get_post_meta( $speaker_id, $name_field, true ) ) { // a different field exists
 			$name = get_post_meta( $speaker_id, $name_field, true );
 		}
-
 		if ( '' !== get_post_meta( $speaker_id, $title_field, true ) ) { // the field exists
 			$title = get_post_meta( $speaker_id, $title_field, true );
 		}
@@ -1197,51 +1196,57 @@ if ( ! function_exists( 'minnpost_get_speaker_figure' ) ) :
 			$output = '';
 			if ( '' !== $image ) {
 				$output .= '<figure class="a-archive-figure a-speaker-figure a-speaker-figure-' . $text_field . ' a-speaker-figure-' . $photo_size . '">';
+				if ( true === $include_link ) {
+					$speaker_url = get_permalink( $speaker_id );
+					$output     .= '<a href="' . $speaker_url . '" class="m-speaker-link">';
+				}
 				$output .= $image;
 			}
-			if ( true === $include_text && ( '' !== $text || '' !== $name ) ) {
+			if ( ( true === $include_text || true === $include_name || true === $include_title ) && ( '' !== $text || '' !== $name || '' !== $title ) ) {
 				if ( '' !== $image ) {
 					$output .= '<figcaption class="a-speaker-bio">';
 				} else {
 					$output .= '<div class="a-speaker-bio">';
 				}
-				if ( true === $include_name && '' !== $name ) {
-					$output .= '<h3 class="a-speaker-title">';
-					if ( true === $include_link ) {
-						$speaker_url = get_permalink( $speaker_id );
-						$output     .= '<a href="' . $speaker_url . '">';
-					}
-					$output .= $name;
-					if ( true === $include_link ) {
-						$output .= '</a>';
-					}
-					if ( true === $include_title && '' !== $title ) {
-						$output .= '&nbsp;|&nbsp;<span class="a-entry-speaker-job-title">' . $title . '</span>';
-					}
-					$output .= '</h3>';
-				} elseif ( '' !== $name ) {
-					/*if ( 0 < $count ) {
-						$title = '';
-						if ( true === $include_title && isset( get_the_coauthor_meta( 'job-title', $author_id )[ $author_id ] ) && '' !== get_the_coauthor_meta( 'job-title', $author_id )[ $author_id ] ) {
-							$title = get_the_coauthor_meta( 'job-title', $author_id )[ $author_id ];
-						} elseif ( true === $include_title ) {
-							$title = $default_title;
-						}
-						if ( '' !== $title ) {
-							$output .= '<h3 class="a-author-figure-job-title">' . $title . '</h3>';
-						}
-						if ( is_single() ) {
-							$author_url = get_author_posts_url( $author_id, sanitize_title( $name ) );
-							$text      .= sprintf(
-								// translators: 1) author archive url, 2) author name
-								'<p class="a-more-by-author"><a href="%1$s">' . esc_html__( 'More articles by %2$s', 'minnpost-largo' ) . '</a></p>',
-								esc_url( $author_url ),
-								$name
-							);
-						}
-					}*/
+				if ( ( true === $include_name && '' !== $name ) || ( true === $include_title && '' !== $title ) ) {
+					$output .= '<header class="m-speaker-headings">';
 				}
-				$output .= $text;
+				if ( true === $include_name && '' !== $name ) {
+					if ( 'content' === $text_field ) {
+						$output .= '<h1 class="a-speaker-heading a-speaker-title">' . $name . '</h1>';
+					} else {
+						$output .= '<h3 class="a-speaker-heading a-speaker-title">' . $name . '</h3>';
+					}
+				}
+				if ( true === $include_title && '' !== $title ) {
+					if ( 'content' === $text_field ) {
+						$output .= '<h2 class="a-speaker-heading a-speaker-job-title">' . $title . '</h2>';
+					} else {
+						$output .= '<h4 class="a-speaker-heading a-speaker-job-title">' . $title . '</h4>';
+					}
+				}
+
+				$twitter_username = get_post_meta( $speaker_id, '_tribe_ext_speaker_twitter_username', true );
+				if ( true === $include_twitter && '' !== $twitter_username ) {
+					$twitter_username = str_replace( '@', '', esc_attr( $twitter_username ) );
+					if ( ! empty( $twitter_username ) ) {
+						$output .= sprintf( '<h4 class="a-speaker-twitter"><a href="https://twitter.com/%1$s">@%1$s</a></h4>', $twitter_username );
+					}
+				}
+
+				if ( ( true === $include_name && '' !== $name ) || ( true === $include_title && '' !== $title ) ) {
+					$output .= '</header>';
+				}
+
+				if ( true === $include_text && '' !== $text && true === $include_link ) {
+					$output .= '<div class="a-speaker-bio-text">';
+				}
+				if ( true === $include_text && '' !== $text ) {
+					$output .= $text;
+				}
+				if ( true === $include_text && '' !== $text && true === $include_link ) {
+					$output .= '</div>';
+				}
 				if ( '' !== $image ) {
 					$output .= '</figcaption>';
 				} else {
@@ -1249,6 +1254,9 @@ if ( ! function_exists( 'minnpost_get_speaker_figure' ) ) :
 				}
 			}
 			if ( '' !== $image ) {
+				if ( true === $include_link ) {
+					$output .= '</a>';
+				}
 				$output .= '</figure><!-- .speaker-figure -->';
 			}
 			return $output;

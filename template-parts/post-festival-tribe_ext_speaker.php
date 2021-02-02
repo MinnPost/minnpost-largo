@@ -13,11 +13,8 @@ $speaker_instance = Tribe__Extension__Speaker_Linked_Post_Type::instance();
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( $post_class ); ?>>
 	<div class="m-entry-content">
-		<header class="m-entry-header">
-			<?php the_title( '<h1 class="a-entry-title a-entry-title-excerpt">', '</h1>' ); ?>
-		</header>
-		<div class="m-archive-info m-author-info m-author-excerpt">
-			<?php minnpost_speaker_figure( get_the_ID(), 'full', 'content' ); ?>
+		<div class="m-archive-info m-author-info m-author-excerpt">						   
+			<?php minnpost_speaker_figure( get_the_ID(), 'full', 'content', true, 'the_title', true, false, '_tribe_ext_speaker_title', true, true ); ?>
 		</div>
 
 		<?php $events = $speaker_instance->get_events( get_the_ID() ); ?>
