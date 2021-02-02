@@ -7,7 +7,7 @@
  * @package MinnPost Largo
  */
 
-$post_class       = 'm-post m-festival-post m-festival-post-speaker';
+$post_class       = 'm-post m-festival-post m-festival-post-speaker m-festival-post-speaker-full';
 $speaker_instance = Tribe__Extension__Speaker_Linked_Post_Type::instance();
 ?>
 

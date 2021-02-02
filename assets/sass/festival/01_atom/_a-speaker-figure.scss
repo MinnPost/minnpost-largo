@@ -1,0 +1,13 @@
+.a-speaker-figure {
+
+    &.a-speaker-figure-the_excerpt {
+        display: flex;
+    }
+
+    &.a-speaker-figure-content {
+        
+        @include breakpoint-min( md ) {
+            flex-direction: row;
+        }
+    }
+}

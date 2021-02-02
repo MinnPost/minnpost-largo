@@ -12,7 +12,7 @@ $post_class = 'm-post m-festival-post m-festival-post-event';
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( $post_class ); ?>>
 	<header class="m-event-header m-entry-header tribe-events-calendar-list__event-header">
-		<?php the_title( '<h1 class="a-entry-title a-event-title tribe-events-single-event-title">', '</h1>' ); ?>
+		<?php the_title( '<h1 class="a-entry-title a-event-title a-festival-title tribe-events-single-event-title">', '</h1>' ); ?>
 		<?php
 		$hide_notices = get_post_meta( $id, '_mp_remove_notice_from_display', true );
 		if ( 'on' !== $hide_notices ) :

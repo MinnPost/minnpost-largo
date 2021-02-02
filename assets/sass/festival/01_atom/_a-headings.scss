@@ -1,0 +1,18 @@
+.a-festival-title {
+
+    a {
+
+		&:link,
+		&:visited {
+			@include link-underline();
+		}
+
+		&:active,
+		&:focus,
+		&:hover,
+		&.active {
+
+			@include link-underline(utility-color(blue, medium), utility-color(blue, background));
+		}
+	}
+}
