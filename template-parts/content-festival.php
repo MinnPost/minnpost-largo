@@ -56,6 +56,7 @@ if ( '' !== $content || ! empty( $content_posts ) ) :
 				wp_reset_postdata();
 				?>
 			</section>
+			<?php minnpost_festival_pass_link(); ?>
 			<?php
 		endif;
 	endif;

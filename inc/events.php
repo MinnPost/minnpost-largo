@@ -335,3 +335,31 @@ if ( ! function_exists( 'minnpost_festival_get_speaker_events' ) ) :
 		return $events_query;
 	}
 endif;
+
+/**
+* Display a link to buy a festival pass
+*
+*/
+if ( ! function_exists( 'minnpost_festival_pass_link' ) ) :
+	function minnpost_festival_pass_link() {
+		echo minnpost_festival_get_festival_pass_link();
+	}
+endif;
+
+
+/**
+* Get a link to buy a festival pass
+* @return string $buy_festival_pass
+*
+*/
+if ( ! function_exists( 'minnpost_festival_get_festival_pass_link' ) ) :
+	function minnpost_festival_get_festival_pass_link() {
+		$buy_festival_pass = sprintf(
+			// translators: 1) url to buy a festival, 2) link text
+			__( '<a href="%1$s" class="a-button">%2$s</a>', 'minnpost-largo' ),
+			site_url( '/festival/' ),
+			esc_html__( 'Buy a festival pass' )
+		);
+		return $buy_festival_pass;
+	}
+endif;

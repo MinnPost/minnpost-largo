@@ -16,7 +16,6 @@ $speaker_instance = Tribe__Extension__Speaker_Linked_Post_Type::instance();
 		<div class="m-archive-info m-author-info m-author-excerpt">						   
 			<?php minnpost_speaker_figure( get_the_ID(), 'full', 'content', true, 'the_title', true, false, '_tribe_ext_speaker_title', true, true ); ?>
 		</div>
-
 		<?php $events = $speaker_instance->get_events( get_the_ID() ); ?>
 		<?php if ( $events->have_posts() ) : ?>
 			<section class="m-archive m-archive-events tribe-events-calendar-list">
@@ -42,6 +41,6 @@ $speaker_instance = Tribe__Extension__Speaker_Linked_Post_Type::instance();
 				?>
 			</section>
 		<?php endif; ?>
-
+		<?php minnpost_festival_pass_link(); ?>
 	</div>
 </article>

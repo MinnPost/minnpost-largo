@@ -7,7 +7,7 @@
  * @package MinnPost Largo
  */
 
-$post_class = 'm-post m-festival-post m-festival-post-event';
+$post_class = 'm-post m-festival-post m-festival-post-event m-festival-post-event-full';
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( $post_class ); ?>>
@@ -42,6 +42,7 @@ $post_class = 'm-post m-festival-post m-festival-post-event';
 				<?php the_content(); ?>
 			</div>
 			<?php get_template_part( 'tribe/events/modules/meta/speaker' ); ?>
+			<?php minnpost_festival_pass_link(); ?>
 		</div><!-- .m-entry-content -->
 	</div>
 </article> <!-- #post-x -->
