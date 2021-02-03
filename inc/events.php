@@ -376,8 +376,12 @@ if ( ! function_exists( 'minnpost_event_category_breadcrumb' ) ) :
 		if ( ! empty( $event_categories ) ) {
 			foreach ( $event_categories as $event_category ) {
 				$category_name = $event_category->name;
-				$category_link = site_url( '/festival/' );
-				echo '<div class="a-breadcrumb a-event-category-name"><a href="' . $category_link . '">' . $category_name . '</a></div>';
+				if ( 'festival' === $event_category->slug ) {
+					$category_link = site_url( '/festival/' );
+				} else {
+					$category_link = get_term_link( $event_category->term_id, 'tribe_events_cat' );
+				}
+				echo '<div class="a-breadcrumb a-event-category-name a-event-category-name-' . esc_attr( $event_category->slug ) . '"><a href="' . $category_link . '">' . $category_name . '</a></div>';
 			}
 		}
 		return $category;
