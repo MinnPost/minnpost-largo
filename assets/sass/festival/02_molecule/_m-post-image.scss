@@ -1,7 +1,8 @@
 .m-festival-post-event-with-image .m-post-image {
 	margin-left: 0;
+	width: 100%;
 
-	@include breakpoint-min( sm ) {
+	/*@include breakpoint-min( sm ) {
 		margin-bottom: $standard-heading-margin;
 		width: auto;
 	}
@@ -12,5 +13,5 @@
 
 	@include breakpoint-min( lg ) {
 		width: auto;
-	}
+	}*/
 }

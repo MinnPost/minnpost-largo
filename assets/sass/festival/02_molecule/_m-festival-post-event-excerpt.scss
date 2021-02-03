@@ -7,5 +7,9 @@
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
+
+        .o-entry {
+            margin-bottom: $standard-heading-margin;
+        }
     }
 }
