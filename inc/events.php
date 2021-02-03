@@ -369,7 +369,7 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_event_category_breadcrumb' ) ) :
-	function minnpost_get_event_category() {
+	function minnpost_event_category_breadcrumb() {
 		global $post;
 		$post_id          = isset( $post->ID ) ? $post->ID : '';
 		$event_categories = get_the_terms( $post_id, 'tribe_events_cat' );
@@ -384,6 +384,5 @@ if ( ! function_exists( 'minnpost_event_category_breadcrumb' ) ) :
 				echo '<div class="a-breadcrumb a-event-category-name a-event-category-name-' . esc_attr( $event_category->slug ) . '"><a href="' . $category_link . '">' . $category_name . '</a></div>';
 			}
 		}
-		return $category;
 	}
 endif;
