@@ -8,7 +8,7 @@
  */
 
 $post_class = 'm-post m-festival-post m-festival-post-event m-festival-post-event-excerpt';
-if ( '' !== get_minnpost_post_image() ) {
+if ( '' !== get_minnpost_post_image( 'feature-large' ) ) {
 	$post_class .= ' m-festival-post-event-with-image';
 }
 ?>
@@ -54,7 +54,7 @@ if ( '' !== get_minnpost_post_image() ) {
 			<?php get_template_part( 'tribe/events/modules/meta/speaker' ); ?>
 		</div><!-- .m-entry-content -->
 	</div>
-	<?php if ( '' !== get_minnpost_post_image() ) : ?>
+	<?php if ( '' !== get_minnpost_post_image( 'feature-large' ) ) : ?>
 		</div>
 		<?php minnpost_post_image( 'feature-large' ); ?>
 	<?php endif; ?>

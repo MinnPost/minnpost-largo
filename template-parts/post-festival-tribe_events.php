@@ -37,6 +37,11 @@ $post_class = 'm-post m-festival-post m-festival-post-event m-festival-post-even
 				</div>
 			</div>
 			<?php endif; ?>
+			<?php
+			if ( '' !== get_minnpost_post_image( 'full' ) && is_singular() ) {
+				minnpost_post_image( 'full' );
+			}
+			?>
 			<?php do_action( 'tribe_events_single_event_before_the_content' ); ?>
 			<div class="m-event-content m-festival-event-content">
 				<?php the_content(); ?>
