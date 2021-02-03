@@ -206,6 +206,13 @@ if ( ! function_exists( 'minnpost_largo_get_festival_date_range' ) ) :
 		$post        = get_page_by_path( $event_slug, OBJECT, 'festival' );
 		$event_posts = get_post_meta( $post->ID, '_mp_festival_content_posts', true );
 		if ( ! empty( $event_posts ) ) {
+
+			foreach ( $event_posts as $key => $event_post_id ) {
+				if ( 'publish' !== get_post_status( $event_post_id ) ) {
+					unset( $event_posts[ $key ] );
+				}
+			}
+
 			$first_event_id = $event_posts[0];
 			$last_event_key = array_key_last( $event_posts );
 			$last_event_id  = $event_posts[ $last_event_key ];
