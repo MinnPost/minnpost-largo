@@ -24,7 +24,7 @@ endif;
 if ( ! function_exists( 'minnpost_largo_get_title' ) ) :
 	add_filter( 'pre_get_document_title', 'minnpost_largo_get_title' );
 	function minnpost_largo_get_title() {
-		if ( is_page() || is_single() ) {
+		if ( is_page() || is_single() || is_post_type_archive( 'festival' ) ) {
 			$title     = get_the_title();
 			$post_id   = get_the_ID();
 			$seo_title = get_post_meta( $post_id, '_mp_seo_title', true );
@@ -66,7 +66,7 @@ endif;
 */
 if ( ! function_exists( 'minnpost_largo_get_description' ) ) :
 	function minnpost_largo_get_description() {
-		if ( is_page() || is_single() ) {
+		if ( is_page() || is_single() || is_post_type_archive( 'festival' ) ) {
 			global $post;
 			$excerpt  = ! empty( $post->post_excerpt ) ? get_the_excerpt() : null;
 			$post_id  = get_the_ID();
@@ -98,7 +98,7 @@ endif;
 if ( ! function_exists( 'minnpost_largo_get_og_image' ) ) :
 	function minnpost_largo_get_og_image() {
 		$image_url = '';
-		if ( is_single() ) {
+		if ( is_single() || is_post_type_archive( 'festival' ) ) {
 			$image_data = get_minnpost_post_image( 'large' );
 			$image_url  = isset( $image_data['image_url'] ) ? $image_data['image_url'] : '';
 		} elseif ( is_front_page() ) {
@@ -144,7 +144,7 @@ endif;
 if ( ! function_exists( 'minnpost_largo_get_og_image_thumbnail' ) ) :
 	function minnpost_largo_get_og_image_thumbnail() {
 		$image_url = '';
-		if ( is_single() ) {
+		if ( is_single() || is_post_type_archive( 'festival' ) ) {
 			$image_data = get_minnpost_post_image( 'feature-large' );
 			$image_url  = isset( $image_data['image_url'] ) ? $image_data['image_url'] : '';
 		}
@@ -199,7 +199,7 @@ if ( ! function_exists( 'minnpost_largo_author_schema' ) ) :
 	function minnpost_largo_get_author_schema() {
 
 		$coauthors = get_coauthors( get_the_ID() );
-		$pieces    = [];
+		$pieces    = array();
 		foreach ( $coauthors as $coauthor ) {
 			$data = array(
 				//'@id' => $id,
@@ -445,7 +445,7 @@ if ( ! function_exists( 'remove_dashboard_widgets' ) ) :
 		$allowed_normal_boxes = array( 'dashboard_right_now', 'dashboard_activity' );
 
 		foreach ( $normal as $key => $normal_box ) {
-			if ( ! in_array( $normal_box['id'], $allowed_normal_boxes ) ) {
+			if ( ! in_array( $normal_box['id'], $allowed_normal_boxes, true ) ) {
 				unset( $wp_meta_boxes['dashboard']['normal']['core'][ $key ] );
 			}
 		}
@@ -453,7 +453,7 @@ if ( ! function_exists( 'remove_dashboard_widgets' ) ) :
 		$side               = $wp_meta_boxes['dashboard']['side']['core'];
 		$allowed_side_boxes = array( 'dashboard_quick_press' );
 		foreach ( $side as $key => $side_box ) {
-			if ( ! in_array( $side_box['id'], $allowed_side_boxes ) ) {
+			if ( ! in_array( $side_box['id'], $allowed_side_boxes, true ) ) {
 				unset( $wp_meta_boxes['dashboard']['side']['core'][ $key ] );
 			}
 		}

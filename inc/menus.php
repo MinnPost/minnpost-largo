@@ -21,6 +21,7 @@ if ( ! function_exists( 'minnpost_menus' ) ) :
 				'user_account_management' => __( 'User Account Management Menu', 'minnpost-largo' ), // menu where users manage their account info/preferences
 				'minnpost_network'        => __( 'Network Menu', 'minnpost-largo' ), // social networks
 				'footer_primary'          => __( 'Footer Primary', 'minnpost-largo' ), // main footer. about, advertise, member benefits, etc
+				'festival'                => __( 'Festival', 'minnpost-largo' ), // minnpost festival menu
 			)
 		);
 		unregister_nav_menu( 'menu-1' ); // we don't need whatever this is
@@ -267,6 +268,8 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 			}
 		}
 
+		$active_class = apply_filters( 'minnpost_largo_nav_item_classes', $active_class, $item );
+
 		if ( '' !== $active_class ) {
 			$active_class = ' class="' . $active_class . '"';
 		}
@@ -470,6 +473,29 @@ if ( ! function_exists( 'minnpost_largo_menu_support' ) ) :
 		<?php
 	}
 endif;
+
+/**
+* Change menu classes for festival/event menus
+* @param string $classes
+* @param object $item
+* @return string $classes
+*
+*/
+if ( ! function_exists( 'minnpost_largo_event_menu_classes' ) ) :
+	add_filter( 'minnpost_largo_nav_item_classes', 'minnpost_largo_event_menu_classes', 10, 2 );
+	function minnpost_largo_event_menu_classes( $classes, $item ) {
+		if ( is_singular( 'tribe_ext_speaker' ) && 'Speakers' === $item->title ) {
+			$classes .= ' active';
+		}
+		if ( is_singular( 'tribe_events' ) || is_singular( 'sessions' ) ) {
+			if ( 'Sessions' === $item->title || 'Events' === $item->title ) {
+				$classes .= ' active';
+			}
+		}
+		return $classes;
+	}
+endif;
+
 
 /**
 * Remove pages from admin menu

@@ -1,0 +1,27 @@
+.a-archive-figure {
+    display: flex;
+    flex-direction: column; // vertical on mobile
+
+	img {
+        display: flex;
+		margin: 0 $standard-block-margin $standard-block-padding 0;
+        flex: 1 0 auto;
+        flex: 1 0 $speaker-headshot-width;
+    }
+    
+    .a-speaker-bio {
+        max-width: 70ch;
+    }
+}
+
+.m-archive-info {
+	margin: 0 0 $standard-block-margin 0;
+}
+
+.m-festival-post-speaker-full {
+    
+    .a-archive-figure img {
+        max-width: $speaker-headshot-width;
+    }
+}
+

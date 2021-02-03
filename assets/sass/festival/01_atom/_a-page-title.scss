@@ -1,0 +1,5 @@
+.a-page-title {
+    @include heading-preset( $size: 2, $bold: true, $italic: false, $line-height: 1 );
+    font-size: 250%;
+    margin: $standard-block-padding 0;
+}

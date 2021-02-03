@@ -1,0 +1,5 @@
+// Color functions
+@function festival-color( $tone: "top" ) {
+
+	@return map-get( $festival-colors, $tone );
+}

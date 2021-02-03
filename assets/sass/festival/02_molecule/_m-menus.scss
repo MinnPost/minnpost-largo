@@ -1,0 +1,49 @@
+.m-main-navigation.m-main-navigation.m-main-navigation-festival {
+    border: 0;
+
+    @include breakpoint-min( lg ) {
+        font-size: var(--scale-2);
+    }
+    
+    @include breakpoint-min( xl ) {
+        font-size: var(--scale-1);
+    }
+
+    @include breakpoint-min( xxl ) {
+        font-size: var(--scale-2);
+    }
+
+    @include breakpoint-min( xxxl ) {
+        font-size: var(--scale0);
+    }
+
+    .m-menu-festival-menu {
+        flex-direction: column; // vertical on mobile
+        text-align: right;
+
+        @include breakpoint-min( lg ) {
+            flex-direction: row;
+            text-align: left;
+        }
+
+        li {
+
+            > a {
+				color: neutral-color(white);
+                background: transparent;
+                text-decoration: underline;
+
+				&:hover,
+				&:focus,
+				&:active {
+					background: transparent;
+                    color: neutral-color(white);
+                    text-decoration: none;
+                }
+            }
+            &.active a {
+                text-decoration: none;
+            }
+        }
+    }
+}

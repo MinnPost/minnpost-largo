@@ -251,12 +251,14 @@ endif;
 /**
 * Get the AP date from a date string
 *
-* @return string $date_string
+* @param string $date_string
+* @param string $part
+* @param string $part_to_remove
 * @return string $date
 *
 */
 if ( ! function_exists( 'minnpost_largo_get_ap_date' ) ) :
-	function minnpost_largo_get_ap_date( $date_string ) {
+	function minnpost_largo_get_ap_date( $date_string, $part = '', $part_to_remove = '' ) {
 		$date_time = new DateTime( $date_string );
 		if ( function_exists( 'get_ap_date' ) ) {
 			$month   = $date_time->format( 'm' );
@@ -288,7 +290,30 @@ if ( ! function_exists( 'minnpost_largo_get_ap_date' ) ) :
 					$ap_month = $date_time->format( 'F' );
 					break;
 			}
-			$date = $ap_month . ' ' . $ap_day . ', ' . $ap_year;
+
+			if ( '' !== $part_to_remove ) {
+				if ( 'month' === $part_to_remove ) {
+					$date = $ap_day . ', ' . $ap_year;
+				} elseif ( 'day' === $part_to_remove ) {
+					$date = $ap_month . ', ' . $ap_year;
+				} elseif ( 'year' === $part_to_remove ) {
+					$date = $ap_month . ' ' . $ap_day;
+				}
+			} else {
+				$date = $ap_month . ' ' . $ap_day . ', ' . $ap_year;
+			}
+
+			if ( '' !== $part ) {
+				if ( 'month' === $part ) {
+					return $ap_month;
+				}
+				if ( 'day' === $part ) {
+					return $ap_day;
+				}
+				if ( 'year' === $part ) {
+					return $ap_year;
+				}
+			}
 		} else {
 			$date_format = get_option( 'date_format', 'c' );
 			$date        = $date_time->format( $date_format );
@@ -345,6 +370,23 @@ if ( ! function_exists( 'minnpost_largo_get_ap_time' ) ) :
 			$time        = $date_time->format( $date_format );
 		}
 		return $time;
+	}
+endif;
+
+/**
+* Get timezone abbreviation from a time string
+*
+* @param string $time_string
+* @return string $timezone
+*
+*/
+if ( ! function_exists( 'minnpost_largo_get_timezone' ) ) :
+	function minnpost_largo_get_timezone( $time_string ) {
+		$date_time = new DateTime( $time_string );
+		$tz        = new DateTimeZone( get_option( 'timezone_string' ) );
+		$tz        = $date_time->setTimeZone( $tz );
+		$timezone  = $date_time->format( 'T' );
+		return $timezone;
 	}
 endif;
 
@@ -1065,6 +1107,212 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 		);
 		return $image_data;
 
+	}
+endif;
+
+/**
+* Outputs speaker image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
+*
+* @param int $speaker_id
+* @param string $photo_size
+* @param string $text_field
+* @param bool $include_text
+* @param bool $include_name
+* @param bool $include_title
+* @param bool $lazy_load
+* @param bool $end
+*
+*/
+if ( ! function_exists( 'minnpost_speaker_figure' ) ) :
+	function minnpost_speaker_figure( $speaker_id = '', $photo_size = 'photo', $text_field = 'the_excerpt', $include_text = true, $name_field = 'display_name', $include_name = false, $include_link = false, $title_field = '_tribe_ext_speaker_title', $include_title = true, $include_twitter = false, $twitter_field = '_tribe_ext_speaker_twitter_username', $lazy_load = true ) {
+		$output = minnpost_get_speaker_figure( $speaker_id, $photo_size, $text_field, $include_text, $name_field, $include_name, $include_link, $title_field, $include_title, $include_twitter, $twitter_field, $lazy_load );
+		echo $output;
+	}
+endif;
+
+/**
+* Get speaker image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
+*
+* @param int $speaker_id
+* @param string $photo_size
+* @param string $text_field
+* @param bool $include_text
+* @param bool $include_name
+* @param bool $include_title
+* @param bool $lazy_load
+* @param bool $end
+*
+* @return string $output
+*
+*/
+if ( ! function_exists( 'minnpost_get_speaker_figure' ) ) :
+	function minnpost_get_speaker_figure( $speaker_id = '', $photo_size = 'full', $text_field = 'the_excerpt', $include_text = true, $name_field = 'the_title', $include_name = true, $include_link = false, $title_field = '_tribe_ext_speaker_title', $include_title = true, $include_twitter = false, $twitter_field = '_tribe_ext_speaker_twitter_username', $lazy_load = true ) {
+
+		// some empty defaults
+		$image_id  = '';
+		$image_url = '';
+		$image     = '';
+		$text      = '';
+		$name      = '';
+		$title     = '';
+
+		$image_data = minnpost_get_speaker_image( $speaker_id, $photo_size );
+		if ( '' !== $image_data ) {
+			$image_id  = $image_data['image_id'];
+			$image_url = $image_data['image_url'];
+			$image     = $image_data['markup'];
+		}
+
+		if ( 'the_excerpt' === $text_field ) { // excerpt
+			$text .= get_the_excerpt( $speaker_id );
+		} elseif ( '' !== get_post_meta( $speaker_id, $text_field, true ) ) { // a different field exists
+			$text = get_post_meta( $speaker_id, $text_field, true );
+		} else { // full text
+			$text = get_the_content( $speaker_id );
+		}
+
+		if ( post_password_required() || is_attachment() || ( '' === $image_id && '' === $image_url && '' === $text ) ) {
+			return;
+		}
+
+		if ( 'the_title' === $name_field ) { // name
+			$name = get_the_title( $speaker_id );
+		} elseif ( '' !== get_post_meta( $speaker_id, $name_field, true ) ) { // a different field exists
+			$name = get_post_meta( $speaker_id, $name_field, true );
+		}
+		if ( '' !== get_post_meta( $speaker_id, $title_field, true ) ) { // the field exists
+			$title = get_post_meta( $speaker_id, $title_field, true );
+		}
+
+		//$text = wpautop( $text ); // for some reason the paragraphs don't work without this
+		$text = apply_filters( 'the_content', $text );
+
+		if ( '' !== $image_id ) {
+			$caption = wp_get_attachment_caption( $image_id );
+			$credit  = get_media_credit_html( $image_id );
+		}
+
+		if ( ( is_singular() || is_archive() ) && ! is_singular( 'newsletter' ) ) {
+			$output = '';
+			if ( '' !== $image ) {
+				$output .= '<figure class="a-archive-figure a-speaker-figure a-speaker-figure-' . $text_field . ' a-speaker-figure-' . $photo_size . '">';
+				if ( true === $include_link ) {
+					$speaker_url = get_permalink( $speaker_id );
+					$output     .= '<a href="' . $speaker_url . '" class="m-speaker-link">';
+				}
+				$output .= $image;
+			}
+			if ( ( true === $include_text || true === $include_name || true === $include_title ) && ( '' !== $text || '' !== $name || '' !== $title ) ) {
+				if ( '' !== $image ) {
+					$output .= '<figcaption class="a-speaker-bio">';
+				} else {
+					$output .= '<div class="a-speaker-bio">';
+				}
+				if ( ( true === $include_name && '' !== $name ) || ( true === $include_title && '' !== $title ) ) {
+					$output .= '<header class="m-speaker-headings">';
+				}
+				if ( true === $include_name && '' !== $name ) {
+					if ( 'content' === $text_field ) {
+						$output .= '<h1 class="a-speaker-heading a-speaker-title">' . $name . '</h1>';
+					} else {
+						$output .= '<h3 class="a-speaker-heading a-speaker-title">' . $name . '</h3>';
+					}
+				}
+				if ( true === $include_title && '' !== $title ) {
+					if ( 'content' === $text_field ) {
+						$output .= '<h2 class="a-speaker-heading a-speaker-job-title">' . $title . '</h2>';
+					} else {
+						$output .= '<h4 class="a-speaker-heading a-speaker-job-title">' . $title . '</h4>';
+					}
+				}
+
+				$twitter_username = get_post_meta( $speaker_id, '_tribe_ext_speaker_twitter_username', true );
+				if ( true === $include_twitter && '' !== $twitter_username ) {
+					$twitter_username = str_replace( '@', '', esc_attr( $twitter_username ) );
+					if ( ! empty( $twitter_username ) ) {
+						$output .= sprintf( '<h4 class="a-speaker-twitter"><a href="https://twitter.com/%1$s">@%1$s</a></h4>', $twitter_username );
+					}
+				}
+
+				if ( ( true === $include_name && '' !== $name ) || ( true === $include_title && '' !== $title ) ) {
+					$output .= '</header>';
+				}
+
+				if ( true === $include_text && '' !== $text && true === $include_link ) {
+					$output .= '<div class="a-speaker-bio-text">';
+				}
+				if ( true === $include_text && '' !== $text ) {
+					$output .= $text;
+				}
+				if ( true === $include_text && '' !== $text && true === $include_link ) {
+					$output .= '</div>';
+				}
+				if ( '' !== $image ) {
+					$output .= '</figcaption>';
+				} else {
+					$output .= '</div>';
+				}
+			}
+			if ( '' !== $image ) {
+				if ( true === $include_link ) {
+					$output .= '</a>';
+				}
+				$output .= '</figure><!-- .speaker-figure -->';
+			}
+			return $output;
+		}
+	}
+endif;
+
+/**
+* Returns speaker image, large or thumbnail, to put inside the figure
+*
+* @param int $speaker_id
+* @param string $size
+* @param bool $lazy_load
+*
+* @return array $image_data
+*
+*/
+if ( ! function_exists( 'minnpost_get_speaker_image' ) ) :
+	function minnpost_get_speaker_image( $speaker_id = '', $size = 'full', $lazy_load = true ) {
+		$image     = '';
+		$image_url = get_post_meta( $speaker_id, '_mp_speaker_photo', true );
+		if ( 'full' !== $size ) {
+			$image_url = get_post_meta( $speaker_id, '_mp_speaker_photo_' . $size, true );
+		}
+		$image_id = get_post_meta( $speaker_id, '_mp_speaker_photo_id', true );
+
+		if ( post_password_required() || is_attachment() || ( ! $image_id && ! $image_url ) ) {
+			return '';
+		}
+
+		$attributes = array();
+
+		// set up lazy load attributes
+		$attributes = apply_filters( 'minnpost_largo_lazy_load_attributes', $attributes, $speaker_id, 'tribe_ext_speaker', $lazy_load );
+		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
+			$alt_text  = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+			$image_url = wp_get_attachment_url( $image_id );
+			if ( isset( $attributes['class'] ) ) {
+				$class = ' class="' . $attributes['class'] . '"';
+			} else {
+				$class = '';
+			}
+			if ( isset( $attributes['loading'] ) ) {
+				$loading = ' loading="' . $attributes['loading'] . '"';
+			} else {
+				$loading = '';
+			}
+			$image = '<img src="' . $image_url . '" alt="' . $alt_text . '"' . $class . $loading . '>';
+		}
+
+		$image_data = array(
+			'image_id'  => $image_id,
+			'image_url' => $image_url,
+			'markup'    => $image,
+		);
+		return $image_data;
 	}
 endif;
 
@@ -2165,10 +2413,10 @@ if ( ! function_exists( 'minnpost_largo_add_lazy_load_attributes' ) ) :
 	add_filter( 'minnpost_largo_lazy_load_attributes', 'minnpost_largo_add_lazy_load_attributes', 10, 3 );
 	function minnpost_largo_add_lazy_load_attributes( $attributes, $object_id, $object_type = 'post', $lazy_load = true ) {
 		// handle prevention of lazy loading from the object loading the image
-		if ( 'post' === $object_type ) {
-			$prevent_lazy_load = get_post_meta( $object_id, '_mp_prevent_lazyload', true );
-		} elseif ( 'term' === $object_type ) {
+		if ( 'term' === $object_type ) {
 			$prevent_lazy_load = get_term_meta( $object_id, '_mp_prevent_lazyload', true );
+		} else {
+			$prevent_lazy_load = get_post_meta( $object_id, '_mp_prevent_lazyload', true );
 		}
 		if ( 'on' === $prevent_lazy_load ) {
 			$lazy_load = false;

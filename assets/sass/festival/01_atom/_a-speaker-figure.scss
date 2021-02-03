@@ -1,0 +1,14 @@
+.a-speaker-figure {
+    margin-bottom: 0;
+
+    &.a-speaker-figure-the_excerpt {
+        display: flex;
+    }
+
+    &.a-speaker-figure-content {
+        
+        @include breakpoint-min( md ) {
+            flex-direction: row;
+        }
+    }
+}
