@@ -8,9 +8,15 @@
  */
 
 $post_class = 'm-post m-festival-post m-festival-post-event m-festival-post-event-excerpt';
+if ( '' !== get_minnpost_post_image() ) {
+	$post_class .= ' m-festival-post-event-with-image';
+}
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( $post_class ); ?>>
+	<?php if ( '' !== get_minnpost_post_image() ) : ?>
+		<div class="o-event-content-with-image">
+	<?php endif; ?>
 	<header class="m-entry-header">
 		<?php if ( true === $args['use_permalink'] ) : ?>
 			<?php the_title( '<h3 class="a-entry-title a-entry-title-excerpt a-festival-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
@@ -48,4 +54,8 @@ $post_class = 'm-post m-festival-post m-festival-post-event m-festival-post-even
 			<?php get_template_part( 'tribe/events/modules/meta/speaker' ); ?>
 		</div><!-- .m-entry-content -->
 	</div>
+	<?php if ( '' !== get_minnpost_post_image() ) : ?>
+		</div>
+		<?php minnpost_post_image( 'feature-large' ); ?>
+	<?php endif; ?>
 </article> <!-- #post-x -->
