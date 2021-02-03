@@ -153,11 +153,16 @@ if ( ! function_exists( 'minnpost_largo_full_event_time' ) ) :
 		if ( isset( $args['show_timezone'] ) && true === $args['show_timezone'] ) {
 			$timezone = '&nbsp;' . minnpost_largo_get_timezone( tribe_get_start_date( $event_id, false, 'H:i' ) );
 		}
+		$separator = esc_html__( 'to', 'minnpost-largo' );
+		if ( isset( $args['separator'] ) ) {
+			$separator = $args['separator'];
+		}
 		if ( $end_time !== $start_time ) {
 			$time = sprintf(
-				// translators: 1) start time, 2) end time, 3) timezone
-				__( '%1$s to %2$s%3$s', 'minnpost-largo' ),
+				// translators: 1) start time, 2) separator, 3) end time, 4) timezone
+				__( '%1$s %2$s %3$s%4$s', 'minnpost-largo' ),
 				$start_time,
+				$separator,
 				$end_time,
 				$timezone
 			);
