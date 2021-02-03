@@ -200,56 +200,56 @@ endif;
 * @return string $output
 *
 */
-//if ( ! function_exists( 'minnpost_largo_get_festival_date_range' ) ) :
-function minnpost_largo_get_festival_date_range( $event_slug = '' ) {
-	$output      = '';
-	$post        = get_page_by_path( $event_slug, OBJECT, 'festival' );
-	$event_posts = get_post_meta( $post->ID, '_mp_festival_content_posts', true );
-	if ( ! empty( $event_posts ) ) {
-		$first_event_id = $event_posts[0];
-		$last_event_key = array_key_last( $event_posts );
-		$last_event_id  = $event_posts[ $last_event_key ];
+if ( ! function_exists( 'minnpost_largo_get_festival_date_range' ) ) :
+	function minnpost_largo_get_festival_date_range( $event_slug = '' ) {
+		$output      = '';
+		$post        = get_page_by_path( $event_slug, OBJECT, 'festival' );
+		$event_posts = get_post_meta( $post->ID, '_mp_festival_content_posts', true );
+		if ( ! empty( $event_posts ) ) {
+			$first_event_id = $event_posts[0];
+			$last_event_key = array_key_last( $event_posts );
+			$last_event_id  = $event_posts[ $last_event_key ];
 
-		$start_timestamp = tribe_get_start_date( $first_event_id, false, 'U' );
-		$end_timestamp   = tribe_get_end_date( $last_event_id, false, 'U' );
-		$start_date      = tribe_get_start_date( $first_event_id, false, 'c' );
-		$end_date        = tribe_get_end_date( $last_event_id, false, 'c' );
+			$start_timestamp = tribe_get_start_date( $first_event_id, false, 'U' );
+			$end_timestamp   = tribe_get_end_date( $last_event_id, false, 'U' );
+			$start_date      = tribe_get_start_date( $first_event_id, false, 'c' );
+			$end_date        = tribe_get_end_date( $last_event_id, false, 'c' );
 
-		if ( $start_timestamp === $end_timestamp ) {
-			// same day - 1st April 2012
-			$output = minnpost_largo_get_ap_date( $start_date );
-		} elseif ( gmdate( 'Y-m', $start_timestamp ) === gmdate( 'Y-m', $end_timestamp ) ) {
-			// same year and month - 3rd - 21st March 2012
-			$output = sprintf(
-				// translators: parameters are start and end dates
-				esc_html__( '%1$s %2$s to %3$s, %4$s', 'minnpost-largo' ),
-				minnpost_largo_get_ap_date( $start_date, 'month' ),
-				minnpost_largo_get_ap_date( $start_date, 'day' ),
-				minnpost_largo_get_ap_date( $end_date, 'day' ),
-				minnpost_largo_get_ap_date( $start_date, 'year' ),
-			);
-		} elseif ( gmdate( 'Y', $start_timestamp ) === gmdate( 'Y', $end_timestamp ) ) {
-			// same year - 29th January - 2nd February 2012
-			$output = sprintf(
-				// translators: parameters are start and end dates
-				esc_html__( '%1$s to %2$s, %3$s', 'minnpost-largo' ),
-				minnpost_largo_get_ap_date( $start_date, '', 'year' ),
-				minnpost_largo_get_ap_date( $end_date, '', 'year' ),
-				minnpost_largo_get_ap_date( $start_date, 'year' ),
-			);
-		} else {
-			// completely different - 8th December 2012 - 2nd Janurary 2013
-			$output = sprintf(
-				// translators: parameters are start and end dates
-				esc_html__( '%1$s to %2$s', 'minnpost-largo' ),
-				minnpost_largo_get_ap_date( $start_date ),
-				minnpost_largo_get_ap_date( $end_date )
-			);
+			if ( $start_timestamp === $end_timestamp ) {
+				// same day - 1st April 2012
+				$output = minnpost_largo_get_ap_date( $start_date );
+			} elseif ( gmdate( 'Y-m', $start_timestamp ) === gmdate( 'Y-m', $end_timestamp ) ) {
+				// same year and month - 3rd - 21st March 2012
+				$output = sprintf(
+					// translators: parameters are start and end dates
+					esc_html__( '%1$s %2$s &ndash; %3$s, %4$s', 'minnpost-largo' ),
+					minnpost_largo_get_ap_date( $start_date, 'month' ),
+					minnpost_largo_get_ap_date( $start_date, 'day' ),
+					minnpost_largo_get_ap_date( $end_date, 'day' ),
+					minnpost_largo_get_ap_date( $start_date, 'year' ),
+				);
+			} elseif ( gmdate( 'Y', $start_timestamp ) === gmdate( 'Y', $end_timestamp ) ) {
+				// same year - 29th January - 2nd February 2012
+				$output = sprintf(
+					// translators: parameters are start and end dates
+					esc_html__( '%1$s &ndash; %2$s, %3$s', 'minnpost-largo' ),
+					minnpost_largo_get_ap_date( $start_date, '', 'year' ),
+					minnpost_largo_get_ap_date( $end_date, '', 'year' ),
+					minnpost_largo_get_ap_date( $start_date, 'year' ),
+				);
+			} else {
+				// completely different - 8th December 2012 - 2nd Janurary 2013
+				$output = sprintf(
+					// translators: parameters are start and end dates
+					esc_html__( '%1$s &ndash; %2$s', 'minnpost-largo' ),
+					minnpost_largo_get_ap_date( $start_date ),
+					minnpost_largo_get_ap_date( $end_date )
+				);
+			}
 		}
+		return $output;
 	}
-	return $output;
-}
-//endif;
+endif;
 
 /**
 * Get the info for the festival logo
