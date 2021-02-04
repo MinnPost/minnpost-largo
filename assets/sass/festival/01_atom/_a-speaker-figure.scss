@@ -9,6 +9,7 @@
         
         @include breakpoint-min( md ) {
             flex-direction: row;
+            align-items: flex-start;
         }
     }
 }
