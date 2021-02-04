@@ -170,7 +170,7 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 				$temp_title      = get_the_title( $post->ID );
 				$temp_sponsorurl = get_post_meta( $post->ID, 'cr3ativ_sponsorurl', true );
 				$temp_excerpt    = get_post_meta( $post->ID, 'cr3ativ_sponsortext', true );
-				$image_data      = get_minnpost_post_image( 'sponsor-thumbnail', array( 'location' => 'footer' ), $post->ID );
+				$image_data      = get_minnpost_post_image( 'sponsor-thumb', array( 'location' => 'footer' ), $post->ID );
 				$temp_image      = $image_data['markup'];
 				$output         .= '<li class="a-sponsor">';
 
