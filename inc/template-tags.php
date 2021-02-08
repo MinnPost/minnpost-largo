@@ -340,6 +340,26 @@ if ( ! function_exists( 'minnpost_author_figure' ) ) :
 endif;
 
 /**
+* Outputs speaker image, large or thumbnail, with/without the bio or excerpt bio, all inside a <figure>
+*
+* @param int $speaker_id
+* @param string $photo_size
+* @param string $text_field
+* @param bool $include_text
+* @param bool $include_name
+* @param bool $include_title
+* @param bool $lazy_load
+* @param bool $end
+*
+*/
+if ( ! function_exists( 'minnpost_speaker_figure' ) ) :
+	function minnpost_speaker_figure( $speaker_id = '', $photo_size = 'photo', $text_field = 'the_excerpt', $include_text = true, $name_field = 'display_name', $include_name = false, $include_link = false, $title_field = '_tribe_ext_speaker_title', $include_title = true, $include_twitter = false, $twitter_field = '_tribe_ext_speaker_twitter_username', $lazy_load = true ) {
+		$output = minnpost_get_speaker_figure( $speaker_id, $photo_size, $text_field, $include_text, $name_field, $include_name, $include_link, $title_field, $include_title, $include_twitter, $twitter_field, $lazy_load );
+		echo $output;
+	}
+endif;
+
+/**
 * Outputs term image, large or thumbnail, with/without the description or excerpt, all inside a <figure>
 *
 * @param int $category_id
