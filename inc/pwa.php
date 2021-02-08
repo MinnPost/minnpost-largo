@@ -17,7 +17,7 @@ if ( ! function_exists( 'minnpost_largo_web_app_manifest' ) ) :
 	add_filter( 'web_app_manifest', 'minnpost_largo_web_app_manifest', 10, 1 );
 	function minnpost_largo_web_app_manifest( $args ) {
 		$args['description'] = get_option( 'site_blurb', '' );
-		$args['display']     = 'browser';
+		$args['display']     = 'minimal-ui';
 		$args['icons']       = array(
 			array(
 				'src'   => get_theme_file_uri() . '/assets/img/app-icons/favicon.ico',

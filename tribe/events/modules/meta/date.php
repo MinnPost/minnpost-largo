@@ -14,7 +14,7 @@ $event_date_attr = tribe_get_start_date( get_the_ID(), false, Dates::DBDATEFORMA
 		</span>
 		<span class="a-event-time">
 			<i class="far fa-clock" title="<?php echo __( 'Add to your calendar', 'minnpost-largo' ); ?>"></i>
-			<span><?php echo minnpost_largo_full_event_time(); ?></span>
+			<span><?php echo minnpost_largo_full_event_time( '', $args ); ?></span>
 		</span>
 	</a>
 </time>

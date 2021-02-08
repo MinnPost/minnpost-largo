@@ -95,6 +95,20 @@ add_filter(
 );
 
 /**
+ * Fix Parent Admin Menu Item for Co-Authors
+ */
+if ( ! function_exists( 'coauthors_cpt_parent_file' ) ) :
+	add_filter( 'parent_file', 'coauthors_cpt_parent_file' );
+	function coauthors_cpt_parent_file( $parent_file ) {
+		global $current_screen;
+		if ( in_array( $current_screen->base, array( 'post', 'edit' ), true ) && 'guest-author' === $current_screen->post_type ) {
+			$parent_file = 'users.php';
+		}
+		return $parent_file;
+	}
+endif;
+
+/**
 * Co-authors in RSS and other feeds
 * /wp-includes/feed-rss2.php uses the_author(), so we selectively filter the_author value
 */
@@ -109,6 +123,86 @@ if ( ! function_exists( 'minnpost_coauthors_in_rss' ) ) :
 			}
 			return coauthors( null, null, null, null, false );
 		}
+	}
+endif;
+
+/**
+* Register custom post type 'festival'
+*
+*/
+if ( ! function_exists( 'create_festival_page' ) ) :
+	add_action( 'init', 'create_festival_page' );
+	function create_festival_page() {
+		$festival_taxonomy = 'tribe_events_cat';
+		$labels            = array(
+			'name'                  => __( 'Festival Pages', 'minnpost-largo' ),
+			'singular_name'         => __( 'Festival Page', 'minnpost-largo' ),
+			'menu_name'             => __( 'Festival Pages', 'minnpost-largo' ),
+			'name_admin_bar'        => __( 'Festival Page', 'minnpost-largo' ),
+			'add_new'               => __( 'Add New', 'minnpost-largo' ),
+			'add_new_item'          => __( 'Add New Festival Page', 'minnpost-largo' ),
+			'new_item'              => __( 'New Festival Page', 'minnpost-largo' ),
+			'edit_item'             => __( 'Edit Festival Page', 'minnpost-largo' ),
+			'update_item'           => __( 'Update Festival Page', 'minnpost-largo' ),
+			'view_item'             => __( 'View Festival Page', 'minnpost-largo' ),
+			'view_items'            => __( 'View Festival Pages', 'minnpost-largo' ),
+			'all_items'             => __( 'Festival Pages', 'minnpost-largo' ),
+			'archives'              => __( 'Festival Page Archives', 'minnpost-largo' ),
+			'search_items'          => __( 'Search Festival Pages', 'minnpost-largo' ),
+			'parent_item_colon'     => __( 'Parent Festival Pages:', 'minnpost-largo' ),
+			'not_found'             => __( 'No festival pages found.', 'minnpost-largo' ),
+			'not_found_in_trash'    => __( 'No festival pages found in Trash.', 'minnpost-largo' ),
+			'attributes'            => __( 'Festival Page Attributes', 'minnpost-largo' ),
+			'featured_image'        => __( 'Featured Image', 'minnpost-largo' ),
+			'set_featured_image'    => __( 'Set featured image', 'minnpost-largo' ),
+			'remove_featured_image' => __( 'Remove featured image', 'minnpost-largo' ),
+			'use_featured_image'    => __( 'Use as featured image', 'minnpost-largo' ),
+			'insert_into_item'      => __( 'Insert into message', 'minnpost-largo' ),
+			'uploaded_to_this_item' => __( 'Uploaded to this festival page', 'minnpost-largo' ),
+			'items_list'            => __( 'Festival pages list', 'minnpost-largo' ),
+			'items_list_navigation' => __( 'Festival pages list navigation', 'minnpost-largo' ),
+			'filter_items_list'     => __( 'Filter festival page list', 'minnpost-largo' ),
+		);
+		$capabilities      = array(
+			'edit_post'          => 'edit_festival_page',
+			'read_post'          => 'read_festival_page',
+			'delete_post'        => 'delete_festival_page',
+			'delete_posts'       => 'delete_festival_pages',
+			'edit_posts'         => 'edit_festival_pages',
+			'edit_others_posts'  => 'edit_others_festival_pages',
+			'publish_posts'      => 'publish_festival_pages',
+			'read_private_posts' => 'read_private_festival_pages',
+			'create_posts'       => 'create_festival_pages',
+		);
+		$args              = array(
+			'label'               => __( 'Festival Page', 'minnpost-largo' ),
+			'description'         => __( 'Festival page template', 'minnpost-largo' ),
+			'labels'              => $labels,
+			'supports'            => array(
+				'title',
+				'revisions',
+				'editor',
+				//'author',
+			),
+			/*'taxonomies'          => array(
+				$festival_taxonomy,
+			),*/
+			'hierarchical'        => false,
+			'public'              => true,
+			'show_ui'             => true,
+			'show_in_menu'        => 'edit.php?post_type=tribe_events',
+			'show_in_admin_bar'   => true,
+			'show_in_nav_menus'   => true,
+			'show_in_rest'        => true, // this will be required in gutenberg
+			'can_export'          => true,
+			'has_archive'         => true,
+			'exclude_from_search' => false,
+			'publicly_queryable'  => true,
+			'capability_type'     => 'page',
+			'menu_icon'           => 'dashicons-calendar-alt',
+			'capabilities'        => $capabilities,
+		);
+		register_post_type( 'festival', $args );
 	}
 endif;
 
@@ -166,7 +260,7 @@ if ( ! function_exists( 'minnpost_exclude_from_search' ) ) :
 			'nav_menu_item',
 		);
 
-		if ( ! in_array( $post_type, $types_to_exclude ) ) {
+		if ( ! in_array( $post_type, $types_to_exclude, true ) ) {
 			return;
 		}
 

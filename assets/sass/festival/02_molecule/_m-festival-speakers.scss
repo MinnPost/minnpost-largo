@@ -1,0 +1,15 @@
+.m-festival-speakers {
+    margin-bottom: $standard-block-padding;
+
+    .a-festival-speakers {
+        margin-bottom: $standard-block-padding;
+
+        &.a-festival-moderators {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.m-festival-post-event-full .m-festival-speakers {
+    margin-bottom: $standard-block-margin;
+}
