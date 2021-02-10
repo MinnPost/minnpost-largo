@@ -92,6 +92,7 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 			shortcode_atts(
 				array(
 					'display_level'          => 'default',
+					'show_level_heading'     => 'no',
 					'show_image'             => 'yes',
 					'image_size'             => '',
 					'show_title'             => 'yes',
@@ -122,8 +123,8 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 			$order = 'asc';
 		}
 		if ( 'none' !== $category_to_show ) {
-			$category_to_show = explode( ',', $category_to_show );
-			$args             = array(
+			$categories_to_show = explode( ',', $category_to_show );
+			$args               = array(
 				'post_type'      => 'cr3ativsponsor',
 				'posts_per_page' => $show_how_many,
 				'order'          => $order,
@@ -132,7 +133,7 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 					array(
 						'taxonomy' => 'cr3ativsponsor_level',
 						'field'    => 'slug',
-						'terms'    => $category_to_show,
+						'terms'    => $categories_to_show,
 					),
 				),
 			);
@@ -179,6 +180,13 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 		$output   = '';
 
 		if ( $sponsors->have_posts() ) {
+			if ( 'yes' === $show_level_heading ) {
+				$category      = get_term_by( 'slug', $category_to_show, $taxonomy_name );
+				$category_name = $category->name;
+			}
+			if ( isset( $category_name ) ) {
+				$output .= '<h2>' . $category_name . '</h2>';
+			}
 			$output .= '<ul class="a-sponsor-list a-sponsor-list-' . $display_level_class . '">';
 			while ( $sponsors->have_posts() ) {
 				$sponsors->the_post();
