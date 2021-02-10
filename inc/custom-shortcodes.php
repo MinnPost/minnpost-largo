@@ -91,24 +91,29 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 		extract(
 			shortcode_atts(
 				array(
-					'columns'  => '4',
-					'image'    => 'yes',
-					'title'    => 'yes',
-					'link'     => 'yes',
-					'bio'      => 'yes',
-					'show'     => '',
-					'orderby'  => '',
-					'order'    => '',
-					'category' => '',
+					'display_level'          => 'default',
+					'show_image'             => 'yes',
+					'image_size'             => '',
+					'show_title'             => 'yes',
+					'show_link'              => 'yes',
+					'show_link_display_text' => 'no',
+					'show_excerpt'           => 'no',
+					'show_body'              => 'no',
+					'category_to_show'       => 'none',
+					'category_to_exclude'    => '',
+					'show_how_many'          => '-1',
+					'orderby'                => '',
+					'order'                  => '',
 				),
 				$atts
 			)
 		);
 
 		global $post;
+		$taxonomy_name = 'cr3ativsponsor_level';
 
-		if ( '' === $category ) {
-			$category = 'all';
+		if ( '' === $category_to_show ) {
+			$category_to_show = 'none';
 		}
 		if ( '' === $orderby ) {
 			$orderby = 'rand';
@@ -116,17 +121,18 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 		if ( '' === $order ) {
 			$order = 'asc';
 		}
-		if ( 'all' !== $category ) {
-			$args = array(
+		if ( 'none' !== $category_to_show ) {
+			$category_to_show = explode( ',', $category_to_show );
+			$args             = array(
 				'post_type'      => 'cr3ativsponsor',
-				'posts_per_page' => $show,
+				'posts_per_page' => $show_how_many,
 				'order'          => $order,
 				'orderby'        => $orderby,
 				'tax_query'      => array(
 					array(
 						'taxonomy' => 'cr3ativsponsor_level',
 						'field'    => 'slug',
-						'terms'    => array( $category ),
+						'terms'    => $category_to_show,
 					),
 				),
 			);
@@ -138,68 +144,83 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 				'post_type'      => 'cr3ativsponsor',
 				'order'          => $order,
 				'orderby'        => $orderby,
-				'posts_per_page' => $show,
+				'posts_per_page' => $show_how_many,
+				'tax_query'      => array(
+					array(
+						'taxonomy' => $taxonomy_name,
+						'field'    => 'term_id',
+						'operator' => 'NOT IN',
+						'terms'    => get_terms(
+							$taxonomy_name,
+							array(
+								'fields' => 'ids',
+							)
+						),
+					),
+				),
 			);
 			/*if ( 'production' === VIP_GO_ENV ) {
 				$args['es'] = true; // elasticsearch on production only
 			}*/
 		}
 
-		$sponsors = new WP_Query( $args );
-
-		$output       = '';
-		$temp_title   = '';
-		$temp_link    = '';
-		$temp_excerpt = '';
-		$temp_image   = '';
-
-		if ( '1' === $columns ) {
-			$columns_class = 'columns-one';
-		} elseif ( '2' === $columns ) {
-			$columns_class = 'columns-two';
-		} elseif ( '3' === $columns ) {
-			$columns_class = 'columns-three';
-		} else {
-			$columns_class = 'columns-four';
+		$display_level_class = '';
+		if ( '1' === $display_level ) {
+			$display_level_class = 'level-one';
+		} elseif ( '2' === $display_level ) {
+			$display_level_class = 'level-two';
+		} elseif ( '3' === $display_level ) {
+			$display_level_class = 'level-three';
+		} elseif ( '4' === $display_level ) {
+			$display_level_class = 'level-four';
 		}
 
-		$output .= '<ul class="a-sponsor-list a-sponsor-list-' . $columns_class . '">';
-		if ( $sponsors->have_posts( $args ) ) :
-			while ( $sponsors->have_posts() ) :
-				$sponsors->the_post();
-				$temp_title      = get_the_title( $post->ID );
-				$temp_sponsorurl = get_post_meta( $post->ID, 'cr3ativ_sponsorurl', true );
-				$temp_excerpt    = get_post_meta( $post->ID, 'cr3ativ_sponsortext', true );
-				$image_data      = get_minnpost_post_image( 'sponsor-thumb', array( 'location' => 'footer' ), $post->ID );
-				$temp_image      = $image_data['markup'];
-				$output         .= '<li class="a-sponsor">';
+		$sponsors = new WP_Query( $args );
+		$output   = '';
 
-				if ( 'yes' === $link ) {
-					$output .= '<a href="' . $temp_sponsorurl . '">';
+		if ( $sponsors->have_posts() ) {
+			$output .= '<ul class="a-sponsor-list a-sponsor-list-' . $display_level_class . '">';
+			while ( $sponsors->have_posts() ) {
+				$sponsors->the_post();
+
+				$output .= '<li class="a-sponsor">';
+
+				$url = get_post_meta( get_the_ID(), 'cr3ativ_sponsorurl', true );
+				if ( 'yes' === $show_link && '' !== $url ) {
+					$output .= '<a href="' . $url . '">';
 				}
-				if ( 'yes' === $title ) {
-					$output .= '<h2 class="cr3_sponsorname">' . $temp_title . '</h2>';
+
+				if ( 'yes' === $show_title ) {
+					$output .= '<h2 class="cr3_sponsorname">' . get_the_title() . '</h2>';
 				}
-				if ( 'yes' === $image ) {
+
+				$image_data   = get_minnpost_post_image( $image_size, array( 'location' => 'sponsorlist' ), get_the_ID() );
+				$image_markup = $image_data['markup'];
+				$excerpt      = get_post_meta( $post->ID, 'cr3ativ_sponsortext', true );
+				$excerpt      = apply_filters( 'the_content', $excerpt );
+				if ( 'yes' === $show_image ) {
 					$output .= '<figure>';
-					if ( 'yes' === $bio ) {
+					$output .= $image_markup;
+					if ( 'yes' === $show_excerpt && '' !== $excerpt ) {
 						$output .= '<figcaption>' . $temp_excerpt . '</figcaption>';
 					}
-					$output .= $temp_image;
 					$output .= '</figure>';
 				} else {
-					if ( 'yes' === $bio ) {
-						$output .= '<p>' . $temp_excerpt . '</p>';
+					if ( 'yes' === $show_excerpt && '' !== $excerpt ) {
+						$output .= $excerpt;
 					}
 				}
 
-				if ( 'yes' === $link ) {
+				if ( 'yes' === $show_link && '' !== $url ) {
 					$output .= '</a>';
 				}
+
 				$output .= '</li>';
-			endwhile;
-		endif;
-		$output .= '</ul>';
+			}
+			$output .= '</ul>';
+			wp_reset_postdata();
+		}
+
 		return $output;
 	}
 
