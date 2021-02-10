@@ -2224,6 +2224,15 @@ if ( ! function_exists( 'cmb2_sponsor_fields' ) ) :
 				'type' => 'text',
 			)
 		);
+		// sponsor twitter username
+		$sponsor_info->add_field(
+			array(
+				'name' => __( 'Twitter Username', 'minnpost-largo' ),
+				'id'   => 'cr3ativ_sponsortwitter',
+				'type' => 'text',
+				'desc' => __( 'Enter the Twitter username only. No need to include the @ symbol.', 'minnpost-largo' ),
+			)
+		);
 
 		/**
 		 * Sponsor image settings
@@ -2243,6 +2252,25 @@ if ( ! function_exists( 'cmb2_sponsor_fields' ) ) :
 				'name'       => __( 'Thumbnail Image', 'minnpost-largo' ),
 				'desc'       => __( 'Upload an image or enter an URL.', 'minnpost-largo' ),
 				'id'         => '_mp_post_thumbnail_image',
+				'type'       => 'file',
+				'options'    => array(
+					//'url' => false, // Hide the text input for the url
+				),
+				'text'       => array(
+					//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
+				),
+				// query_args are passed to wp.media's library query.
+				'query_args' => array(
+					'type' => 'image',
+				),
+			)
+		);
+		// large image
+		$sponsor_image->add_field(
+			array(
+				'name'       => __( 'Large Image', 'minnpost-largo' ),
+				'desc'       => __( 'Upload an image or enter an URL.', 'minnpost-largo' ),
+				'id'         => '_mp_post_main_image',
 				'type'       => 'file',
 				'options'    => array(
 					//'url' => false, // Hide the text input for the url
