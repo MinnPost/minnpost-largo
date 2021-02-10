@@ -98,7 +98,7 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 					'show_link'              => 'yes',
 					'show_link_display_text' => 'no',
 					'show_excerpt'           => 'no',
-					'show_body'              => 'no',
+					'show_content'           => 'no',
 					'category_to_show'       => 'none',
 					'category_to_exclude'    => '',
 					'show_how_many'          => '-1',
@@ -185,7 +185,12 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 
 				$output .= '<li class="a-sponsor">';
 
-				$url = get_post_meta( get_the_ID(), 'cr3ativ_sponsorurl', true );
+				$url      = get_post_meta( get_the_ID(), 'cr3ativ_sponsorurl', true );
+				$linktext = get_post_meta( get_the_ID(), 'cr3ativ_sponsortext', true );
+				$content  = get_the_content();
+				$content  = apply_filters( 'the_content', $content );
+				$twitter  = get_post_meta( get_the_ID(), 'cr3ativ_sponsortwitter', true );
+
 				if ( 'yes' === $show_link && '' !== $url ) {
 					$output .= '<a href="' . $url . '">';
 				}
@@ -196,7 +201,7 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 
 				$image_data   = get_minnpost_post_image( $image_size, array( 'location' => 'sponsorlist' ), get_the_ID() );
 				$image_markup = $image_data['markup'];
-				$excerpt      = get_post_meta( $post->ID, 'cr3ativ_sponsortext', true );
+				$excerpt      = get_post_meta( get_the_ID(), 'cr3ativ_sponsortext', true );
 				$excerpt      = apply_filters( 'the_content', $excerpt );
 				if ( 'yes' === $show_image ) {
 					$output .= '<figure>';
@@ -213,6 +218,26 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 
 				if ( 'yes' === $show_link && '' !== $url ) {
 					$output .= '</a>';
+				}
+
+				if ( ( 'yes' === $show_content && '' !== $content ) || ( 'yes' === $show_link && '' !== $url ) ) {
+					$output .= '<div class="a-sponsor-content">';
+				}
+
+				if ( 'yes' === $show_content && '' !== $content ) {
+					$output .= $content;
+				}
+
+				if ( '' !== $twitter ) {
+					$output .= '<p class="a-sponsor-twitter"><a href="https://twitter.com/' . $twitter . '">@' . $twitter . '</a></p>';
+				}
+
+				if ( '' !== $show_link && 'yes' === $show_link_display_text ) {
+					$output .= '<p class="a-sponsor-url"><a href="' . $url . '">' . $linktext . '</a></p>';
+				}
+
+				if ( ( 'yes' === $show_content && '' !== $content ) || ( 'yes' === $show_link && '' !== $url ) ) {
+					$output .= '</div>';
 				}
 
 				$output .= '</li>';
