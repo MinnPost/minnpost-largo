@@ -369,10 +369,9 @@ if ( ! function_exists( 'minnpost_festival_get_festival_pass_link' ) ) :
 		$buy_festival_pass = sprintf(
 			// translators: 1) url to buy a festival, 2) link text
 			__( '<a href="%1$s" class="a-button">%2$s</a>', 'minnpost-largo' ),
-			site_url( '/festival/' ), // this will be an eventbrite link
-			esc_html__( 'Buy a Festival pass' )
+			esc_url_raw( 'https://www.eventbrite.com/e/minnpost-festival-2021-tickets-140928014485' ), // this will be an eventbrite link
+			esc_html__( 'Buy your Festival pass' )
 		);
-		$buy_festival_pass = '';
 		return $buy_festival_pass;
 	}
 endif;
