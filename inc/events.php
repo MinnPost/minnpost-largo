@@ -398,3 +398,27 @@ if ( ! function_exists( 'minnpost_event_category_breadcrumb' ) ) :
 		}
 	}
 endif;
+
+/**
+* Display the disclaimer
+*
+*/
+if ( ! function_exists( 'minnpost_festival_disclaimer_text' ) ) :
+	function minnpost_festival_disclaimer_text() {
+		echo minnpost_festival_get_disclaimer_text();
+	}
+endif;
+
+
+/**
+* Get the styled disclaimer text
+* @return string $disclaimer_text
+*
+*/
+if ( ! function_exists( 'minnpost_festival_get_disclaimer_text' ) ) :
+	function minnpost_festival_get_disclaimer_text() {
+		$disclaimer_text = esc_html__( 'MinnPost is a 501(c)(3) nonprofit that receives support from donors, members, foundations, advertisers and sponsors. Donors and sponsors that underwrite MinnPost events play no role in determining the content, featured guests or line of questioning.', 'minnpost-largo' );
+		$disclaimer_text = '<aside class="a-festival-minnpost-notice"><p>' . $disclaimer_text . '</p></aside>';
+		return $disclaimer_text;
+	}
+endif;

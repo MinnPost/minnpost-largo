@@ -48,6 +48,7 @@ $post_class = 'm-post m-festival-post m-festival-post-event m-festival-post-even
 			</div>
 			<?php get_template_part( 'tribe/events/modules/meta/speaker' ); ?>
 			<?php minnpost_festival_pass_link(); ?>
+			<?php minnpost_festival_disclaimer_text(); ?>
 		</div><!-- .m-entry-content -->
 	</div>
 </article> <!-- #post-x -->

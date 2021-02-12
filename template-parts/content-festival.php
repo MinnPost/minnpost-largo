@@ -57,6 +57,9 @@ if ( '' !== $content || ! empty( $content_posts ) ) :
 				?>
 			</section>
 			<?php minnpost_festival_pass_link(); ?>
+			<?php if ( 'tribe_events' === $post_type ) : ?>
+				<?php minnpost_festival_disclaimer_text(); ?>
+			<?php endif; ?>
 			<?php
 		endif;
 	endif;
