@@ -74,7 +74,7 @@ endif;
 */
 if ( ! function_exists( 'minnpost_posted_on' ) ) :
 	/**
-	 * Prints HTML with meta information for the current post-date/time and author.
+	 * Prints HTML with meta information for the current post-date/time.
 	 */
 	function minnpost_posted_on( $id = '', $time_ago = true ) {
 		if ( '' === $id ) {
@@ -90,7 +90,84 @@ if ( ! function_exists( 'minnpost_posted_on' ) ) :
 			$date['published']['human'],
 		);
 		echo $time_string;
+	}
+endif;
 
+/**
+* Output the dateline for a newsletter
+*
+* @param int $id
+*
+*/
+if ( ! function_exists( 'minnpost_newsletter_today' ) ) :
+	/**
+	 * Prints HTML with meta information for the current post-date/time.
+	 */
+	function minnpost_newsletter_today( $id = '' ) {
+		if ( '' === $id ) {
+			$id = get_the_ID();
+		}
+		$date = minnpost_get_posted_on( $id );
+		if ( '' === $date ) {
+			return;
+		}
+		$time_string = sprintf(
+			'Today is <time class="a-entry-date published updated" datetime="%1$s">%2$s</time>.',
+			$date['published']['machine'],
+			$date['published']['human'],
+		);
+		$time_string = apply_filters( 'the_content', $time_string );
+		echo $time_string;
+	}
+endif;
+
+/**
+* Output the teaser for a newsletter
+*
+* @param int $id
+*
+*/
+if ( ! function_exists( 'minnpost_newsletter_teaser' ) ) :
+	/**
+	 * Prints HTML with newsletter teaser
+	 */
+	function minnpost_newsletter_teaser( $id = '' ) {
+		if ( '' === $id ) {
+			$id = get_the_ID();
+		}
+		$teaser = minnpost_get_newsletter_teaser( $id );
+		if ( '' === $teaser ) {
+			return;
+		}
+		echo $teaser;
+	}
+endif;
+
+/**
+* Output the newsletter type welcome sentence for a newsletter
+*
+* @param int $id
+*
+*/
+if ( ! function_exists( 'minnpost_newsletter_type_welcome' ) ) :
+	/**
+	 * Prints HTML with newsletter type
+	 */
+	function minnpost_newsletter_type_welcome( $id = '' ) {
+		if ( '' === $id ) {
+			$id = get_the_ID();
+		}
+		$newsletter_type = minnpost_get_newsletter_type( $id );
+		if ( '' === $newsletter_type ) {
+			return;
+		}
+		$type_string = sprintf(
+			// translators: 1) is the newsletter type
+			'Welcome to MinnPost\'s %1$s email newsletter.',
+			ucwords( $newsletter_type ),
+		);
+		$type_string = apply_filters( 'the_content', $type_string );
+		echo $type_string;
 	}
 endif;
 

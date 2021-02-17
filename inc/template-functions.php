@@ -1508,6 +1508,47 @@ if ( ! function_exists( 'minnpost_largo_add_lazy_load_attributes' ) ) :
 endif;
 
 /**
+* Get teaser text for a newsletter
+*
+* @param int $post_id
+* @return string $teaser
+*
+*/
+if ( ! function_exists( 'minnpost_get_newsletter_teaser' ) ) :
+	function minnpost_get_newsletter_teaser( $post_id ) {
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
+		$teaser      = get_post_meta( $post_id, '_mp_newsletter_preview_text', true );
+		$teaser_text = get_post_meta( $post_id, '_mp_newsletter_newsletter_teaser', true );
+		if ( '' !== $teaser_text ) {
+			$teaser = $teaser_text;
+		}
+		if ( '' !== $teaser ) {
+			$teaser = apply_filters( 'the_content', $teaser );
+		}
+		return $teaser;
+	}
+endif;
+
+/**
+* Get newsletter type for a newsletter
+*
+* @param int $post_id
+* @return string $newsletter_type
+*
+*/
+if ( ! function_exists( 'minnpost_get_newsletter_type' ) ) :
+	function minnpost_get_newsletter_type( $post_id ) {
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
+		$newsletter_type = get_post_meta( get_the_ID(), '_mp_newsletter_type', true );
+		return $newsletter_type;
+	}
+endif;
+
+/**
 * Format a string for email-friendly display
 *
 * @param string $content

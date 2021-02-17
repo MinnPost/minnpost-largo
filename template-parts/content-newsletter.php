@@ -50,7 +50,42 @@
 			</tr>
 
 			<?php do_action( 'wp_message_inserter', 'email_header', 'email' ); ?>
-			<tr><td class="wrapper">today is <?php echo date( 'y' ); ?></td></tr>
+
+			<?php
+			$do_not_show_automatic_teaser_items = get_post_meta( get_the_ID(), '_mp_newsletter_do_not_show_automatic_teaser_items', true );
+			$do_not_show_teaser_text            = get_post_meta( get_the_ID(), '_mp_newsletter_do_not_show_teaser_text', true );
+			if ( 'on' !== $do_not_show_automatic_teaser_items || 'on' !== $do_not_show_teaser_text ) :
+				?>
+			<tr>
+				<td class="o-wrapper o-teaser" align="center">
+						<div class="o-teaser">
+							<table cellpadding="0" cellspacing="0" width="100%">
+								<tr>
+									<td valign="bottom">
+				<?php
+			endif;
+			?>
+			<?php if ( 'on' !== $do_not_show_automatic_teaser_items ) : ?>
+				<?php minnpost_newsletter_today(); ?>
+			<?php endif; ?>
+			<?php if ( 'on' !== $do_not_show_teaser_text ) : ?>
+				<?php minnpost_newsletter_teaser(); ?>
+			<?php endif; ?>
+			<?php if ( 'on' !== $do_not_show_automatic_teaser_items ) : ?>
+				<?php minnpost_newsletter_type_welcome(); ?>
+			<?php endif; ?>
+			<?php
+			if ( 'on' !== $do_not_show_automatic_teaser_items || 'on' !== $do_not_show_teaser_text ) :
+				?>
+								</td>
+							</tr>
+						</table>
+					</div>
+				</td>
+			</tr>
+				<?php
+			endif;
+			?>
 			<?php do_action( 'wp_message_inserter', 'above_email_articles', 'email' ); ?>
 
 			<?php
