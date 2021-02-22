@@ -57,8 +57,8 @@
 			if ( 'on' !== $do_not_show_automatic_teaser_items || 'on' !== $do_not_show_teaser_text ) :
 				?>
 			<tr>
-				<td class="o-wrapper o-teaser" align="center">
-						<div class="o-teaser">
+				<td class="o-wrapper m-teaser" align="center">
+						<div class="m-teaser">
 							<table cellpadding="0" cellspacing="0" width="100%">
 								<tr>
 									<td valign="bottom">
@@ -90,31 +90,54 @@
 
 			<?php
 			$body = apply_filters( 'the_content', get_the_content() );
-
-			if ( '' !== $body ) {
+			if ( '' !== $body ) :
 				?>
 			<tr>
-				<td class="wrapper one-column content promo">
-				<!--[if (gte mso 9)|(IE)]>
-					<table cellpadding="0" cellspacing="0" width="100%">
-						<tr>
-							<td width="100%" valign="bottom">
-				<![endif]-->
-					<div class="column promo" style="margin-top: 18px">
-						<?php echo $body; ?>
+				<td class="o-wrapper o-body" align="center">
+					<div class="m-body">
+						<table cellpadding="0" cellspacing="0" width="100%">
+							<tr>
+								<td valign="bottom">
+									<?php echo $body; ?>
+								</td>
+							</tr>
+						</table>
 					</div>
-					<!--[if (gte mso 9)|(IE)]>
-							</td>
-						</tr>
-					</table>
-					<![endif]-->
-				</td> <!-- end .one-column.promo -->
+				</td>
 			</tr> <!-- end row -->
 				<?php
-			}
-			$newsletter_type = get_post_meta( get_the_ID(), '_mp_newsletter_type', true );
-			$top_offset      = 2;
-			$top_stories     = minnpost_largo_get_newsletter_stories( get_the_ID(), 'top' );
+			endif;
+			?>
+
+			<?php $top_query = minnpost_newsletter_get_section_query( 'top' ); ?>
+			<?php if ( $top_query->have_posts() ) : ?>
+				<?php $post_count = $top_query->post_count; ?>
+				<tr>
+					<td class="m-newsletter-section m-newsletter-section-top m-newsletter-section-has-<?php echo (int) $post_count; ?>-post" align="center">
+						<?php if ( '' !== minnpost_newsletter_get_section_title( 'top' ) ) : ?>
+							<table cellpadding="0" cellspacing="0" width="100%" class="h2 a-section-title">
+								<tr>
+									<td>
+										<h2><?php echo minnpost_newsletter_get_section_title( 'top' ); ?></h2>
+									</td>
+								</tr>
+							</table>
+						<?php endif; ?>
+						<?php
+						while ( $top_query->have_posts() ) :
+							$top_query->the_post();
+							set_query_var( 'current_post', $top_query->current_post );
+							get_template_part( 'template-parts/post-newsletter', $args['newsletter_type'] );
+						endwhile;
+						wp_reset_postdata();
+						?>
+					</td>
+				</tr>
+			<?php endif; ?>
+
+			<?php
+			$top_offset  = 2;
+			$top_stories = minnpost_largo_get_newsletter_stories( get_the_ID(), 'top' );
 
 			$top_query_args = array(
 				'post__in'       => $top_stories,
@@ -139,32 +162,14 @@
 			$ad_divs  = $ad_xpath->query( "//section[contains(concat(' ', @class, ' '), ' m-widget ')]/div/p" );
 
 			$ads = array();
-			if ( 'dc_memo' !== $newsletter_type ) {
-				foreach ( $ad_divs as $key => $value ) {
-					$style = $value->getAttribute( 'style' );
-					$ads[] = '<p style="Margin: 0 0 10px; padding: 0">' . minnpost_dom_innerhtml( $value ) . '</p>';
-				}
-			} else {
-				foreach ( $ad_divs as $key => $value ) {
-					$style = $value->getAttribute( 'style' );
-					$ads[] = '<p style="Margin: 0 0 10px; padding: 0">' . minnpost_dom_innerhtml( $value ) . '</p>';
-				}
+			foreach ( $ad_divs as $key => $value ) {
+				$style = $value->getAttribute( 'style' );
+				$ads[] = '<p style="Margin: 0 0 10px; padding: 0">' . minnpost_dom_innerhtml( $value ) . '</p>';
 			}
 
 			set_query_var( 'newsletter_ads', $ads );
 
-			if ( $top_query->have_posts() ) {
-				set_query_var( 'show_top_departments', get_post_meta( get_the_ID(), '_mp_newsletter_show_department_for_top_stories', true ) );
-
-				while ( $top_query->have_posts() ) {
-					$top_query->the_post();
-					set_query_var( 'current_post', $top_query->current_post );
-					set_query_var( 'is_top_story', true );
-					get_template_part( 'template-parts/post-newsletter', $newsletter_type );
-				}
-				wp_reset_postdata();
-			}
-
+			
 			?>
 
 			<?php do_action( 'wp_message_inserter', 'email_before_bios', 'email' ); ?>

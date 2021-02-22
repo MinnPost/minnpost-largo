@@ -11,6 +11,11 @@ use Pelago\Emogrifier\CssInliner;
 $newsletter_type = get_post_meta( get_the_ID(), '_mp_newsletter_type', true );
 $is_legacy       = apply_filters( 'minnpost_largo_newsletter_legacy', false, get_the_ID() );
 
+$args = array(
+	'newsletter_type' => $newsletter_type,
+	'is_legacy'       => $is_legacy,
+);
+
 ob_start();
 if ( false === $is_legacy ) {
 	$css = wp_strip_all_tags( file_get_contents( get_stylesheet_directory() . '/email.css' ) );
@@ -22,9 +27,9 @@ get_header( 'newsletter' );
 while ( have_posts() ) :
 	the_post();
 	if ( false === $is_legacy ) {
-		get_template_part( 'template-parts/content-newsletter', $newsletter_type );
+		get_template_part( 'template-parts/content-newsletter', $newsletter_type, $args );
 	} else {
-		get_template_part( 'template-parts/content-newsletter-legacy', $newsletter_type );
+		get_template_part( 'template-parts/content-newsletter-legacy', $newsletter_type, $args );
 	}
 endwhile; // End of the loop.
 
