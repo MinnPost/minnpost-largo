@@ -3,7 +3,7 @@
 	.a-button.a-support-button {
 		@include button(utility-color(green, medium), utility-color(green, dark), $button-height: $logo-height);
 		
-		@media only screen and (max-width: $max-width-email) {
+		@media only screen and (max-width: $large-screen-width) {
 			margin-bottom: $standard-block-padding !important;
 		}
 	}

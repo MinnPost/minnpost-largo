@@ -22,7 +22,7 @@
 	.m-wp-insert-message-images,
 	.m-wp-insert-message-editor,
 	.m-wp-insert-message-item-banner {
-		max-width: $max-width-email;
+		max-width: $large-screen-width;
 	}
 
 	// regions, no matter what type of message they are
@@ -54,7 +54,7 @@
 	.m-wp-insert-message-item-banner {
 
 		&.banner-width-page {
-			max-width: $max-width-email;
+			max-width: $large-screen-width;
 		}
 
 		.dual-wrap {
@@ -93,7 +93,7 @@
 		&.wp-message-inserter-message-editor {
 
 			.m-wp-insert-message-item {
-				max-width: $max-width-email;
+				max-width: $large-screen-width;
 			}
 		}
 	}
