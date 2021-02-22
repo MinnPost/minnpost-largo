@@ -1649,3 +1649,48 @@ if ( ! function_exists( 'minnpost_largo_check_newsletter_legacy' ) ) :
 		return true;
 	}
 endif;
+
+/**
+* Load the title for a newsletter section.
+*
+* @param string $section
+* @param int $newsletter_id
+* @return string $section_title
+*
+*/
+if ( ! function_exists( 'minnpost_newsletter_get_section_title' ) ) :
+	function minnpost_newsletter_get_section_title( $section, $newsletter_id = '' ) {
+		if ( '' === $newsletter_id ) {
+			$newsletter_id = get_the_ID();
+		}
+		$section_title = get_post_meta( $newsletter_id, '_mp_newsletter_' . $section . '_section_title', true );
+		return $section_title;
+	}
+endif;
+
+
+/**
+* Load the query for a newsletter section. This should function similarly to z_get_zone_query
+*
+* @param string $section
+* @param int $newsletter_id
+* @return object $section_query
+*
+*/
+if ( ! function_exists( 'minnpost_newsletter_get_section_query' ) ) :
+	function minnpost_newsletter_get_section_query( $section, $newsletter_id = '' ) {
+		if ( '' === $newsletter_id ) {
+			$newsletter_id = get_the_ID();
+		}
+		$post_ids      = minnpost_largo_get_newsletter_stories( $newsletter_id, $section );
+		$query_args    = array(
+			'post__in'    => $post_ids,
+			'orderby'     => 'post__in',
+			'post_status' => 'any',
+		);
+		$section_query = new WP_Query( $query_args );
+		// the total does not stop at posts_per_page
+		set_query_var( 'found_posts', $section_query->found_posts );
+		return $section_query;
+	}
+endif;
