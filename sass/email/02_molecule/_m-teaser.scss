@@ -1,0 +1,3 @@
+.m-teaser * {
+    @include meta-preset( $bold: false, $italic: false );
+}

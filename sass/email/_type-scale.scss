@@ -12,8 +12,8 @@ $font-sizes: (
     -2: calc( #{$html-root-size} / ( 1.125 * 2 ) ),
 	-1: calc( #{$html-root-size} / ( 1.125 * 1 ) ),
 	0: calc( #{$html-root-size} ),
-	1: #{$html-root-size} * ( 1.125 * 2 ),
-	2: #{$html-root-size} * ( 1.125 * 2 ),
-	3: #{$html-root-size} * ( 1.125 * 3 ),
-	4: #{$html-root-size} * ( 1.125 * 4 ),
+	1: calc( #{$html-root-size} * ( 1.125 * 1 ) ),
+	2: calc( #{$html-root-size} * ( 1.125 * 2 ) ),
+	3: calc( #{$html-root-size} * ( 1.125 * 3 ) ),
+	4: calc( #{$html-root-size} * ( 1.125 * 4 ) ),
 );

@@ -42,3 +42,60 @@ h5 a:visited {
     color: #1A1818;
 }
 */
+
+// headings
+// margins and padding should be set on the td and reset on the h tag
+.h1 h1,
+.h1 td,
+.h2 h2,
+.h2 td,
+.h3 h3,
+.h3 td,
+.h4 h4,
+.h4 td,
+.h5 h5
+.h5 td,
+.h6 h6,
+.h6 td {
+	margin: 0;
+	padding: 0;
+}
+
+.h2 td,
+.h3 td,
+.h4 td,
+.h5 td,
+.h6 td {
+	margin: 0 0 $standard-heading-margin 0;
+	padding: 0;
+}
+
+.h1 h1 {
+
+	@include heading-preset( $size: 4 );
+}
+
+.h2 h2 {
+
+	@include heading-preset( $size: 3 );
+}
+
+.h3 h3 {
+
+	@include heading-preset( $size: 2 );
+}
+
+.h4 h4 {
+
+	@include heading-preset( $size: 1 );
+}
+
+.h5 h5 {
+
+	@include heading-preset( $size: 0 );
+}
+
+.h6 h6 {
+
+	@include heading-preset( $size: 0, $bold: false );
+}

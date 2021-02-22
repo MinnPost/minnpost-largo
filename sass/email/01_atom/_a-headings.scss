@@ -1,0 +1,10 @@
+table.h2.a-section-title td {
+    background: brand-color(red);
+    color: neutral-color(white);
+    border-radius: $border-radius;
+    padding: $standard-block-padding;
+
+    h2 {
+        @include meta-preset( $size: 0, $bold: true );
+    }
+}
