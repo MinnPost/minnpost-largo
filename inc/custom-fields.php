@@ -997,6 +997,51 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		);
 
 		/**
+		 * Newsletter Display settings
+		 */
+		$newsletter_settings = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_post_newsletter_settings',
+				'title'        => __( 'Newsletter Display Settings', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'normal',
+				'priority'     => 'high',
+				'closed'       => true,
+			)
+		);
+		$newsletter_settings->add_field(
+			array(
+				'name' => __( 'Prevent excerpt display?', 'minnpost-largo' ),
+				'id'   => '_mp_post_newsletter_prevent_excerpt',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will not display with an excerpt when it is included in a newsletter. By default, the excerpt will show except in the Editor\'s Picks section.', 'minnpost-largo' ),
+			)
+		);
+		$newsletter_settings->add_field(
+			array(
+				'name' => __( 'Use SEO title?', 'minnpost-largo' ),
+				'id'   => '_mp_post_newsletter_use_seo_title',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will use the SEO Title value when it is included in a newsletter, if there is one. Follow the guidelines for that value in the SEO & Social Settings section. If there is no value for the SEO title, the post will use its standard title even if this box is checked.', 'minnpost-largo' ),
+			)
+		);
+		$newsletter_settings->add_field(
+			array(
+				'name'             => __( 'Image Size', 'minnpost-largo' ),
+				'id'               => '_mp_post_newsletter_image_size',
+				'type'             => 'select',
+				'show_option_none' => true,
+				'desc'             => __( 'If selected, the image size will be used for this post regardless of where it is in the newsletter post order. By default, the Editor\'s Picks section has no image. In other sections, the default behavior is to use the Large image for the first post, then to use Medium for subsequent posts.', 'minnpost-largo' ),
+				'default'          => 'feature-large',
+				'options'          => array(
+					'feature-medium' => __( 'Medium', 'minnpost-largo' ),
+					'none'           => __( 'Do not display image', 'minnpost-largo' ),
+					'feature-large'  => __( 'Large', 'minnpost-largo' ),
+				),
+			)
+		);
+
+		/**
 		 * Ad & Sponsorship settings
 		 */
 		$ad_settings = new_cmb2_box(
