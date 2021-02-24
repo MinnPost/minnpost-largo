@@ -13,7 +13,7 @@
 *
 */
 if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
-	add_action( 'wp_print_styles', 'minnpost_largo_add_remove_styles', 10 );
+	add_action( 'wp_enqueue_scripts', 'minnpost_largo_add_remove_styles', 10 );
 	function minnpost_largo_add_remove_styles() {
 		// add
 		wp_enqueue_style( 'minnpost-fonts', 'https://use.typekit.net/cxj7fzg.css', array(), '1.0.0', 'all' );
@@ -210,5 +210,53 @@ if ( ! function_exists( 'minnpost_largo_body_classes' ) ) :
 			}
 		}
 		return $classes;
+	}
+endif;
+
+/**
+* Add inline CSS from a remote URL we're loading via shortcode
+*
+*/
+if ( ! function_exists( 'minnpost_shortcode_styles' ) ) :
+	add_action( 'wp_enqueue_scripts', 'minnpost_shortcode_styles', 10 );
+	function minnpost_shortcode_styles() {
+		global $post;
+		if ( ! is_main_query() || ! is_singular() ) {
+			return;
+		}
+		$result  = array();
+		$pattern = get_shortcode_regex();
+		if ( preg_match_all( '/' . $pattern . '/s', $post->post_content, $matches ) && in_array( 'minnpost_load_remote_url', $matches[2], true ) ) {
+			$keys   = array();
+			$result = array();
+			foreach ( $matches[0] as $key => $value ) {
+				// $matches[3] return the shortcode attribute as string
+				// replace space with '&' for parse_str() function
+				$get = str_replace( ' ', '&', $matches[3][ $key ] );
+				parse_str( $get, $output );
+
+				//get all shortcode attribute keys
+				$keys     = array_unique( array_merge( $keys, array_keys( $output ) ) );
+				$result[] = $output;
+			}
+			if ( ! empty( $keys ) && ! empty( $result ) ) {
+				// Loop the result array and add the missing shortcode attribute key
+				foreach ( $result as $key => $value ) {
+					// Loop the shortcode attribute key
+					foreach ( $keys as $attr_key ) {
+						$result[ $key ][ $attr_key ] = isset( $result[ $key ][ $attr_key ] ) ? $result[ $key ][ $attr_key ] : null;
+					}
+					//sort the array key
+					ksort( $result[ $key ] );              
+				}
+			}
+			$url        = $result[0]['url'];
+			$cache      = $result[0]['cache'];
+			$cache_time = isset( $result[0]['cache_time'] ) ? $result[0]['cache_time'] : '';
+			$css        = minnpost_load_shortcode_string( $url, 'css', $cache, $cache_time );
+			if ( '' !== $css ) {
+				wp_add_inline_style( 'minnpost-style', $css );
+			}
+		}
 	}
 endif;

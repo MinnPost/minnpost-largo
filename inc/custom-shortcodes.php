@@ -533,3 +533,100 @@ if ( ! function_exists( 'minnpost_largo_topics' ) ) :
 		return $output;
 	}
 endif;
+
+/**
+* Shortcode to load HTML content from a remote URL
+*
+* @param array $atts
+* @return string $output
+*
+*/
+if ( ! function_exists( 'minnpost_load_remote_url' ) ) :
+	add_shortcode( 'minnpost_load_remote_url', 'minnpost_load_remote_url' );
+	function minnpost_load_remote_url( $atts ) {
+		$output = '';
+		$args   = shortcode_atts(
+			array(
+				'url'        => '',
+				'cache'      => true,
+				'cache_time' => DAY_IN_SECONDS * 1,
+			),
+			$atts
+		);
+
+		if ( '' === $args['url'] ) {
+			return $output;
+		}
+
+		$url    = esc_url_raw( $args['url'] );
+		$cache  = filter_var( $args['cache'], FILTER_VALIDATE_BOOLEAN );
+		$output = minnpost_load_shortcode_string( $url, 'html', $cache, $args['cache_time'] );
+
+		return $output;
+	}
+endif;
+
+/**
+* Method for loading content from a URL
+*
+* @param string $url
+* @param string $part
+* @param bool $cache
+* @param string $cache_time
+* @return string $output
+*
+*/
+if ( ! function_exists( 'minnpost_load_shortcode_string' ) ) :
+	function minnpost_load_shortcode_string( $url, $part = '', $cache = true, $cache_time = '' ) {
+		$output = '';
+		$url    = esc_url_raw( $url );
+		$cache  = filter_var( $cache, FILTER_VALIDATE_BOOLEAN );
+		if ( '' === $cache_time ) {
+			$cache_time = DAY_IN_SECONDS * 1;
+		} else {
+			$cache_time = strtotime( $cache_time );
+		}
+
+		if ( true === $cache ) {
+			if ( '' !== $part ) {
+				$cache_part = '_' . $part;
+			} else {
+				$cache_part = '';
+			}
+			$cache_key   = md5( 'minnpost_remote_url_content_' . $url . $cache_part );
+			$cache_group = 'minnpost';
+			$output      = wp_cache_get( $cache_key, $cache_group );
+		}
+
+		if ( false === $cache || false === $output ) {
+			$response = wp_remote_get( $url );
+			if ( ! is_wp_error( $response ) ) {
+				//$output = wp_remote_retrieve_body( $response );
+				libxml_use_internal_errors( true );
+				$document = wp_remote_retrieve_body( $response );
+				// create a new DomDocument object
+				$html = new DOMDocument( '1.0', 'UTF-8' );
+				// load the HTML into the DomDocument object (this would be your source HTML)
+				$html->loadHTML( $document );
+				if ( 'html' === $part ) {
+					$style = $html->getElementsByTagName( 'style' );
+					for ( $list = $style, $i = $list->length; --$i >= 0; ) {
+						$node = $list->item( $i );
+						$node->parentNode->removeChild( $node );
+					}
+					ob_start();
+					echo $html->saveHTML();
+					$output = ob_get_contents();
+					ob_end_clean();
+				} elseif ( 'css' === $part ) {
+					$css = $html->getElementsByTagName('style');
+					$output = $css->item(0)->nodeValue;
+				}
+				if ( true === $cache ) {
+					wp_cache_set( $cache_key, $output, $cache_group, $cache_time );
+				}
+			}
+		}
+		return $output;
+	}
+endif;
