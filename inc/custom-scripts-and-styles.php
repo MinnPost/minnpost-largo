@@ -40,7 +40,7 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_largo_festival_styles' ) ) :
-	add_action( 'wp_print_styles', 'minnpost_largo_festival_styles', 10 );
+	add_action( 'wp_enqueue_scripts', 'minnpost_largo_festival_styles', 10 );
 	function minnpost_largo_festival_styles() {
 		if ( is_post_type_archive( 'festival' ) || is_singular( 'festival' ) || is_singular( 'tribe_ext_speaker' ) ) {
 			wp_dequeue_style( 'minnpost-style' );
