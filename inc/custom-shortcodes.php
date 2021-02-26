@@ -601,27 +601,39 @@ if ( ! function_exists( 'minnpost_load_shortcode_string' ) ) :
 		if ( false === $cache || false === $output ) {
 			$response = wp_remote_get( $url );
 			if ( ! is_wp_error( $response ) ) {
-				//$output = wp_remote_retrieve_body( $response );
+				$output = wp_remote_retrieve_body( $response );
+				return $output;
 				libxml_use_internal_errors( true );
 				$document = wp_remote_retrieve_body( $response );
 				// create a new DomDocument object
 				$html = new DOMDocument( '1.0', 'UTF-8' );
 				// load the HTML into the DomDocument object (this would be your source HTML)
-				$html->loadHTML( $document );
+				$html->loadHTML( $document, LIBXML_HTML_NODEFDTD );
 				if ( 'html' === $part ) {
-					$style = $html->getElementsByTagName( 'style' );
-					for ( $list = $style, $i = $list->length; --$i >= 0; ) {
-						$node = $list->item( $i );
-						$node->parentNode->removeChild( $node );
+					$xpath  = new DOMXPath( $html );
+					$remove = $xpath->query( "//*[style or script]" );
+					foreach ( $remove as $node ) {
+						$node->parentNode->removeChild($node);
 					}
-					ob_start();
-					echo $html->saveHTML();
-					$output = ob_get_contents();
-					ob_end_clean();
 				} elseif ( 'css' === $part ) {
-					$css = $html->getElementsByTagName('style');
-					$output = $css->item(0)->nodeValue;
+					$xpath  = new DOMXPath( $html );
+					$remove = $xpath->query( "//*[not(self::style)]" );
+					foreach ( $remove as $node ) {
+						$node->parentNode->removeChild($node);
+					}
+				} elseif ( 'js' === $part ) {
+					$xpath  = new DOMXPath( $html );
+					$remove = $xpath->query( "//*[not(self::script)]" );
+					foreach ( $remove as $node ) {
+						$node->parentNode->removeChild($node);
+					}
 				}
+
+				ob_start();
+				echo $html->saveHTML( $remove );
+				$output = ob_get_contents();
+				ob_end_clean();
+
 				if ( true === $cache ) {
 					wp_cache_set( $cache_key, $output, $cache_group, $cache_time );
 				}

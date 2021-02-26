@@ -260,3 +260,51 @@ if ( ! function_exists( 'minnpost_shortcode_styles' ) ) :
 		}
 	}
 endif;
+
+/**
+* Add inline JavaScript from a remote URL we're loading via shortcode
+*
+*/
+if ( ! function_exists( 'minnpost_shortcode_scripts' ) ) :
+	add_action( 'wp_enqueue_scripts', 'minnpost_shortcode_scripts', 10 );
+	function minnpost_shortcode_scripts() {
+		global $post;
+		if ( ! is_main_query() || ! is_singular() ) {
+			return;
+		}
+		$result  = array();
+		$pattern = get_shortcode_regex();
+		if ( preg_match_all( '/' . $pattern . '/s', $post->post_content, $matches ) && in_array( 'minnpost_load_remote_url', $matches[2], true ) ) {
+			$keys   = array();
+			$result = array();
+			foreach ( $matches[0] as $key => $value ) {
+				// $matches[3] return the shortcode attribute as string
+				// replace space with '&' for parse_str() function
+				$get = str_replace( ' ', '&', $matches[3][ $key ] );
+				parse_str( $get, $output );
+
+				//get all shortcode attribute keys
+				$keys     = array_unique( array_merge( $keys, array_keys( $output ) ) );
+				$result[] = $output;
+			}
+			if ( ! empty( $keys ) && ! empty( $result ) ) {
+				// Loop the result array and add the missing shortcode attribute key
+				foreach ( $result as $key => $value ) {
+					// Loop the shortcode attribute key
+					foreach ( $keys as $attr_key ) {
+						$result[ $key ][ $attr_key ] = isset( $result[ $key ][ $attr_key ] ) ? $result[ $key ][ $attr_key ] : null;
+					}
+					//sort the array key
+					ksort( $result[ $key ] );              
+				}
+			}
+			$url        = $result[0]['url'];
+			$cache      = $result[0]['cache'];
+			$cache_time = isset( $result[0]['cache_time'] ) ? $result[0]['cache_time'] : '';
+			$js         = minnpost_load_shortcode_string( $url, 'js', $cache, $cache_time );
+			if ( '' !== $js ) {
+				wp_add_inline_script( 'minnpost', $js );
+			}
+		}
+	}
+endif;
