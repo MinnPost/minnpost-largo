@@ -602,38 +602,34 @@ if ( ! function_exists( 'minnpost_load_shortcode_string' ) ) :
 			$response = wp_remote_get( $url );
 			if ( ! is_wp_error( $response ) ) {
 				$output = wp_remote_retrieve_body( $response );
-				return $output;
 				libxml_use_internal_errors( true );
-				$document = wp_remote_retrieve_body( $response );
+				$document = wp_remote_retrieve_body( $response ); // this is the remote HTML file
 				// create a new DomDocument object
 				$html = new DOMDocument( '1.0', 'UTF-8' );
 				// load the HTML into the DomDocument object (this would be your source HTML)
 				$html->loadHTML( $document, LIBXML_HTML_NODEFDTD );
 				if ( 'html' === $part ) {
-					$xpath  = new DOMXPath( $html );
-					$remove = $xpath->query( "//*[style or script]" );
-					foreach ( $remove as $node ) {
-						$node->parentNode->removeChild($node);
-					}
+					// get all <body> elements
+					$body_element = $html->getElementsByTagName( 'body' );
+					// it is to be assumed that there is only one <body> element.
+					$body = $body_element->item( 0 );
+					// get the HTML contained within that body element
+					$output = $body->ownerDocument->saveHTML( $body );
+
+					$trim_off_front = strpos( $output, '<body>' ) + 6;
+					$trim_off_end   = ( strrpos( $output, '</body>' ) ) - strlen( $output );
+					$output         = substr( $output, $trim_off_front, $trim_off_end );
 				} elseif ( 'css' === $part ) {
-					$xpath  = new DOMXPath( $html );
-					$remove = $xpath->query( "//*[not(self::style)]" );
-					foreach ( $remove as $node ) {
-						$node->parentNode->removeChild($node);
-					}
+					// get all <style> elements
+					$style_element = $html->getElementsByTagName( 'style' );
+					// it is to be assumed that there is only one <style> element.
+					$style  = $style_element->item( 0 );
+					$output = $style->nodeValue;
 				} elseif ( 'js' === $part ) {
-					$xpath  = new DOMXPath( $html );
-					$remove = $xpath->query( "//*[not(self::script)]" );
-					foreach ( $remove as $node ) {
-						$node->parentNode->removeChild($node);
-					}
+					$script_element = $html->getElementById( 'script-import' );
+					$script         = $script_element;
+					$output         = $script->nodeValue;
 				}
-
-				ob_start();
-				echo $html->saveHTML( $remove );
-				$output = ob_get_contents();
-				ob_end_clean();
-
 				if ( true === $cache ) {
 					wp_cache_set( $cache_key, $output, $cache_group, $cache_time );
 				}
