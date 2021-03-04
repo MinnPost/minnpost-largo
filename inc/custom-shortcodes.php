@@ -582,7 +582,7 @@ if ( ! function_exists( 'minnpost_load_shortcode_string' ) ) :
 		$url    = esc_url_raw( $url );
 		$cache  = filter_var( $cache, FILTER_VALIDATE_BOOLEAN );
 		if ( '' === $cache_time ) {
-			$cache_time = DAY_IN_SECONDS * 1;
+			$cache_time = MINUTE_IN_SECONDS * 1;
 		} else {
 			$cache_time = strtotime( $cache_time );
 		}
