@@ -549,7 +549,7 @@ if ( ! function_exists( 'minnpost_load_remote_url' ) ) :
 			array(
 				'url'        => '',
 				'cache'      => true,
-				'cache_time' => DAY_IN_SECONDS * 1,
+				'cache_time' => MINUTE_IN_SECONDS * 1,
 			),
 			$atts
 		);
