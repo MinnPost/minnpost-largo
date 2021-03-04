@@ -619,6 +619,7 @@ if ( ! function_exists( 'minnpost_load_shortcode_string' ) ) :
 					$trim_off_front = strpos( $output, '<body>' ) + 6;
 					$trim_off_end   = ( strrpos( $output, '</body>' ) ) - strlen( $output );
 					$output         = substr( $output, $trim_off_front, $trim_off_end );
+					$output = apply_filters( 'the_content', $output );
 				} elseif ( 'css' === $part ) {
 					// get all <style> elements
 					$style_element = $html->getElementsByTagName( 'style' );
