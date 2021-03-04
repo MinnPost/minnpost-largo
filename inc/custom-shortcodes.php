@@ -542,7 +542,7 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_load_remote_url' ) ) :
-	add_shortcode( 'minnpost_load_remote_url', 'minnpost_load_remote_url' );
+	//add_shortcode( 'minnpost_load_remote_url', 'minnpost_load_remote_url' );
 	function minnpost_load_remote_url( $atts ) {
 		$output = '';
 		$args   = shortcode_atts(

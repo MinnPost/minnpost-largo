@@ -218,7 +218,7 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_shortcode_styles' ) ) :
-	add_action( 'wp_enqueue_scripts', 'minnpost_shortcode_styles', 10 );
+	//add_action( 'wp_enqueue_scripts', 'minnpost_shortcode_styles', 10 );
 	function minnpost_shortcode_styles() {
 		global $post;
 		if ( ! is_main_query() || ! is_singular() ) {
@@ -270,7 +270,7 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_shortcode_scripts' ) ) :
-	add_action( 'wp_enqueue_scripts', 'minnpost_shortcode_scripts', 10 );
+	//add_action( 'wp_enqueue_scripts', 'minnpost_shortcode_scripts', 10 );
 	function minnpost_shortcode_scripts() {
 		global $post;
 		if ( ! is_main_query() || ! is_singular() ) {
