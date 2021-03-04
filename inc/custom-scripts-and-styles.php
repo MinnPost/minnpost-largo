@@ -247,14 +247,20 @@ if ( ! function_exists( 'minnpost_shortcode_styles' ) ) :
 						$result[ $key ][ $attr_key ] = isset( $result[ $key ][ $attr_key ] ) ? $result[ $key ][ $attr_key ] : null;
 					}
 					//sort the array key
-					ksort( $result[ $key ] );              
+					ksort( $result[ $key ] );
+					if ( ! isset( $result[ $key ]['url'] ) ) {
+						unset( $result[ $key ] );
+						continue;
+					}
 				}
 			}
-			$url        = $result[0]['url'];
-			$cache      = $result[0]['cache'];
-			$cache_time = isset( $result[0]['cache_time'] ) ? $result[0]['cache_time'] : '';
-			$css        = minnpost_load_shortcode_string( $url, 'css', $cache, $cache_time );
+			$result = array_values( $result );
+			$url    = $result[0]['url'];
+			$cache  = filter_var( $result[0]['cache'], FILTER_VALIDATE_BOOLEAN );
+			$css    = minnpost_load_shortcode_string( $url, 'css', $cache );
+			error_log( 'css is ' . $css );
 			if ( '' !== $css ) {
+				error_log( 'css is here' );
 				wp_add_inline_style( 'minnpost-style', $css );
 			}
 		}
