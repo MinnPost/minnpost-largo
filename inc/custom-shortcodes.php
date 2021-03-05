@@ -533,3 +533,109 @@ if ( ! function_exists( 'minnpost_largo_topics' ) ) :
 		return $output;
 	}
 endif;
+
+/**
+* Shortcode to load HTML content from a remote URL
+*
+* @param array $atts
+* @return string $output
+*
+*/
+if ( ! function_exists( 'minnpost_load_remote_url' ) ) :
+	//add_shortcode( 'minnpost_load_remote_url', 'minnpost_load_remote_url' );
+	function minnpost_load_remote_url( $atts ) {
+		$output = '';
+		$args   = shortcode_atts(
+			array(
+				'url'        => '',
+				'cache'      => true,
+				'cache_time' => MINUTE_IN_SECONDS * 1,
+			),
+			$atts
+		);
+
+		if ( '' === $args['url'] ) {
+			return $output;
+		}
+
+		$url    = esc_url_raw( $args['url'] );
+		$cache  = filter_var( $args['cache'], FILTER_VALIDATE_BOOLEAN );
+		$output = minnpost_load_shortcode_string( $url, 'html', $cache, $args['cache_time'] );
+
+		return $output;
+	}
+endif;
+
+/**
+* Method for loading content from a URL
+*
+* @param string $url
+* @param string $part
+* @param bool $cache
+* @param string $cache_time
+* @return string $output
+*
+*/
+if ( ! function_exists( 'minnpost_load_shortcode_string' ) ) :
+	function minnpost_load_shortcode_string( $url, $part = '', $cache = true, $cache_time = '' ) {
+		$output = '';
+		$url    = esc_url_raw( $url );
+		$cache  = filter_var( $cache, FILTER_VALIDATE_BOOLEAN );
+		if ( '' === $cache_time ) {
+			$cache_time = MINUTE_IN_SECONDS * 1;
+		} else {
+			$cache_time = strtotime( $cache_time );
+		}
+
+		if ( true === $cache ) {
+			if ( '' !== $part ) {
+				$cache_part = '_' . $part;
+			} else {
+				$cache_part = '';
+			}
+			$cache_key   = md5( 'minnpost_remote_url_content_' . $url . $cache_part );
+			$cache_group = 'minnpost';
+			$output      = wp_cache_get( $cache_key, $cache_group );
+		}
+
+		if ( false === $cache || false === $output ) {
+			$response = wp_remote_get( $url );
+			if ( ! is_wp_error( $response ) ) {
+				$output = wp_remote_retrieve_body( $response );
+				libxml_use_internal_errors( true );
+				$document = wp_remote_retrieve_body( $response ); // this is the remote HTML file
+				// create a new DomDocument object
+				$html = new DOMDocument( '1.0', 'UTF-8' );
+				// load the HTML into the DomDocument object (this would be your source HTML)
+				$html->loadHTML( $document, LIBXML_HTML_NODEFDTD );
+				if ( 'html' === $part ) {
+					// get all <body> elements
+					$body_element = $html->getElementsByTagName( 'body' );
+					// it is to be assumed that there is only one <body> element.
+					$body = $body_element->item( 0 );
+					// get the HTML contained within that body element
+					$output = $body->ownerDocument->saveHTML( $body );
+
+					$trim_off_front = strpos( $output, '<body>' ) + 6;
+					$trim_off_end   = ( strrpos( $output, '</body>' ) ) - strlen( $output );
+					$output         = substr( $output, $trim_off_front, $trim_off_end );
+					$output = apply_filters( 'the_content', $output );
+				} elseif ( 'css' === $part ) {
+					// get all <style> elements
+					$style_element = $html->getElementsByTagName( 'style' );
+					// it is to be assumed that there is only one <style> element.
+					$style  = $style_element->item( 0 );
+					$output = $style->nodeValue;
+				} elseif ( 'js' === $part ) {
+					$script_element = $html->getElementById( 'script-import' );
+					$script         = $script_element;
+					$output         = $script->nodeValue;
+				}
+				if ( true === $cache ) {
+					wp_cache_set( $cache_key, $output, $cache_group, $cache_time );
+				}
+			}
+		}
+		return $output;
+	}
+endif;
