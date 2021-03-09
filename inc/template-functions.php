@@ -1668,7 +1668,6 @@ if ( ! function_exists( 'minnpost_newsletter_get_section_title' ) ) :
 	}
 endif;
 
-
 /**
 * Load the query for a newsletter section. This should function similarly to z_get_zone_query
 *
@@ -1692,5 +1691,56 @@ if ( ! function_exists( 'minnpost_newsletter_get_section_query' ) ) :
 		// the total does not stop at posts_per_page
 		set_query_var( 'found_posts', $section_query->found_posts );
 		return $section_query;
+	}
+endif;
+
+/**
+* Load the title for a post in a newsletter.
+*
+* @param int $post_id
+* @return string $title
+*
+*/
+if ( ! function_exists( 'minnpost_newsletter_get_entry_title' ) ) :
+	function minnpost_newsletter_get_entry_title( $post_id = 0 ) {
+		if ( 0 === $post_id ) {
+			$post_id = get_the_ID();
+		}
+		$title         = get_the_title( $post_id );
+		$use_seo_title = get_post_meta( $post_id, '_mp_post_newsletter_use_seo_title', true );
+		if ( 'on' !== $use_seo_title ) {
+			return $title;
+		}
+		$seo_title = get_post_meta( $post_id, '_mp_seo_title', true );
+		if ( '' !== $seo_title ) {
+			$title = $seo_title;
+		}
+		return $title;
+	}
+endif;
+
+/**
+* Load the excerpt for a post in a newsletter.
+*
+* @param int $post_id
+* @return string $excerpt
+*
+*/
+if ( ! function_exists( 'minnpost_newsletter_get_entry_excerpt' ) ) :
+	function minnpost_newsletter_get_entry_excerpt( $post_id = 0 ) {
+		if ( 0 === $post_id ) {
+			$post_id = get_the_ID();
+		}
+		$excerpt      = get_the_excerpt( $post_id );
+		$use_seo_desc = get_post_meta( $post_id, '_mp_post_newsletter_use_seo_description', true );
+		if ( 'on' !== $use_seo_desc ) {
+			return $excerpt;
+		}
+		$seo_desc = get_post_meta( $post_id, '_mp_seo_description', true );
+		if ( '' !== $seo_desc ) {
+			$excerpt = $seo_desc;
+		}
+		$excerpt = apply_filters( 'the_content', $excerpt );
+		return $excerpt;
 	}
 endif;

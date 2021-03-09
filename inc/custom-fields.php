@@ -1027,6 +1027,14 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		);
 		$newsletter_settings->add_field(
 			array(
+				'name' => __( 'Use SEO description?', 'minnpost-largo' ),
+				'id'   => '_mp_post_newsletter_use_seo_description',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this post will use the SEO Description value when it is included in a newsletter, if there is one. Follow the guidelines for that value in the SEO & Social Settings section. If there is no value for the SEO description, the post will use its standard excerpt even if this box is checked.', 'minnpost-largo' ),
+			)
+		);
+		$newsletter_settings->add_field(
+			array(
 				'name'             => __( 'Image Size', 'minnpost-largo' ),
 				'id'               => '_mp_post_newsletter_image_size',
 				'type'             => 'select',
