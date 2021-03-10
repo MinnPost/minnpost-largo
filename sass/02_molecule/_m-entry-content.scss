@@ -3,6 +3,10 @@
 	overflow-wrap: break-word;
 	flex: 1 0 100%;
 
+	p:empty {
+		display: none;
+	 }
+
 	&.m-membership-support-wrapper {
 		font-family: $webfont__sans;
 	}
