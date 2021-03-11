@@ -3,8 +3,9 @@
 	overflow-wrap: break-word;
 	flex: 1 0 100%;
 
-	p:empty {
-		display: none;
+	// in WP 5.7. see https://core.trac.wordpress.org/ticket/52764#comment:12
+	p:empty:before {
+		content: none;
 	}
 
 	&.m-membership-support-wrapper {
