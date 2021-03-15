@@ -301,13 +301,17 @@ endif;
 if ( ! function_exists( 'minnpost_largo_fix_shortcode' ) ) :
 	add_filter( 'img_caption_shortcode', 'minnpost_largo_fix_shortcode', 10, 3 );
 	function minnpost_largo_fix_shortcode( $output, $attributes, $content ) {
-		$attributes          = shortcode_atts( array(
-			'id'      => '',
-			'align'   => 'alignnone',
-			'width'   => '',
-			'caption' => '',
-			'class'   => '',
-		), $attributes, 'caption' );
+		$attributes          = shortcode_atts(
+			array(
+				'id'      => '',
+				'align'   => 'alignnone',
+				'width'   => '',
+				'caption' => '',
+				'class'   => '',
+			),
+			$attributes,
+			'caption'
+		);
 		$attributes['width'] = (int) $attributes['width'];
 		if ( $attributes['width'] < 1 || empty( $attributes['caption'] ) ) {
 			return $content;
