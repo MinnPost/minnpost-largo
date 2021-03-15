@@ -639,22 +639,3 @@ if ( ! function_exists( 'minnpost_load_shortcode_string' ) ) :
 		return $output;
 	}
 endif;
-
-/**
-* Clean up paragraph tags that surround shortcodes
-*
-* @param string $content
-* @return string $content
-*
-*/
-if ( ! function_exists( 'minnpost_largo_clean_figure_shortcodes' ) ) :
-	add_filter( 'the_content', 'minnpost_largo_clean_figure_shortcodes', 100 );
-	function minnpost_largo_clean_figure_shortcodes( $content ) {
-		$array   = array(
-			'<p><figure' => '<figure',
-			'</figure>'  => '</figure><p>',
-		);
-		$content = strtr( $content, $array );
-		return $content;
-	}
-endif;
