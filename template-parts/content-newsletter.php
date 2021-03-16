@@ -109,16 +109,21 @@
 			endif;
 			?>
 
-			<?php $top_query = minnpost_newsletter_get_section_query( 'top' ); ?>
+			<?php
+			$section            = 'top';
+			$top_query          = minnpost_newsletter_get_section_query( $section );
+			$args['image_size'] = 'feature-large';
+			$args['section']    = $section;
+			?>
 			<?php if ( $top_query->have_posts() ) : ?>
 				<?php $post_count = $top_query->post_count; ?>
 				<tr>
 					<td class="m-newsletter-section m-newsletter-section-top m-newsletter-section-has-<?php echo (int) $post_count; ?>-post" align="center">
-						<?php if ( '' !== minnpost_newsletter_get_section_title( 'top' ) ) : ?>
+						<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
 							<table cellpadding="0" cellspacing="0" width="100%" class="h2 a-section-title">
 								<tr>
 									<td>
-										<h2><?php echo minnpost_newsletter_get_section_title( 'top' ); ?></h2>
+										<h2><?php echo minnpost_newsletter_get_section_title( $section ); ?></h2>
 									</td>
 								</tr>
 							</table>
@@ -127,7 +132,12 @@
 						while ( $top_query->have_posts() ) :
 							$top_query->the_post();
 							set_query_var( 'current_post', $top_query->current_post );
-							get_template_part( 'template-parts/post-newsletter', $args['newsletter_type'] );
+							// with newsletters, the individual post can override the image size for the newsletter section the post is in.
+							$override_size = esc_html( get_post_meta( $id, '_mp_post_newsletter_image_size', true ) );
+							if ( '' !== $override_size && 'default' !== $override_size ) {
+								$args['image_size'] = $override_size;
+							}
+							get_template_part( 'template-parts/post-newsletter', $args['newsletter_type'], $args );
 						endwhile;
 						wp_reset_postdata();
 						?>
@@ -136,41 +146,147 @@
 			<?php endif; ?>
 
 			<?php
-			$top_offset  = 2;
-			$top_stories = minnpost_largo_get_newsletter_stories( get_the_ID(), 'top' );
+			$section         = 'news';
+			$news_query      = minnpost_newsletter_get_section_query( $section );
+			$args['section'] = $section;
+			?>
+			<?php if ( $news_query->have_posts() ) : ?>
+				<?php
+					$post_count     = $news_query->post_count;
+					$this_news_post = 0;
+				?>
+				<tr>
+					<td class="m-newsletter-section m-newsletter-section-top m-newsletter-section-has-<?php echo (int) $post_count; ?>-post" align="center">
+						<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
+							<table cellpadding="0" cellspacing="0" width="100%" class="h2 a-section-title">
+								<tr>
+									<td>
+										<h2><?php echo minnpost_newsletter_get_section_title( $section ); ?></h2>
+									</td>
+								</tr>
+							</table>
+						<?php endif; ?>
+						<?php
+						while ( $news_query->have_posts() ) :
+							$this_news_post++;
+							$news_query->the_post();
+							set_query_var( 'current_post', $news_query->current_post );
 
-			$top_query_args = array(
-				'post__in'       => $top_stories,
-				'posts_per_page' => $top_offset,
-				'orderby'        => 'post__in',
-				'post_status'    => 'any',
-			);
-			$top_query      = new WP_Query( $top_query_args );
-			// the total does not stop at posts_per_page
-			set_query_var( 'found_posts', $top_query->found_posts );
+							// the first post in this section is differently sized than subsequents, by default.
+							if ( 1 === $this_news_post ) {
+								$args['image_size'] = 'feature-large';
+							} else {
+								$args['image_size'] = 'feature-medium';
+							}
 
-			ob_start();
-			dynamic_sidebar( 'sidebar-1' );
-			$sidebar = ob_get_contents();
-			ob_end_clean();
+							// with newsletters, the individual post can override the image size for the newsletter section the post is in.
+							$override_size = esc_html( get_post_meta( $id, '_mp_post_newsletter_image_size', true ) );
+							if ( '' !== $override_size && 'default' !== $override_size ) {
+								$args['image_size'] = $override_size;
+							}
+							get_template_part( 'template-parts/post-newsletter', $args['newsletter_type'], $args );
+						endwhile;
+						wp_reset_postdata();
+						?>
+					</td>
+				</tr>
+			<?php endif; ?>
 
-			$ad_dom = new DomDocument;
-			libxml_use_internal_errors( true );
-			$ad_dom->loadHTML( $sidebar, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
-			libxml_use_internal_errors( false );
-			$ad_xpath = new DOMXpath( $ad_dom );
-			$ad_divs  = $ad_xpath->query( "//section[contains(concat(' ', @class, ' '), ' m-widget ')]/div/p" );
+			<?php
+			$section         = 'opinion';
+			$opinion_query   = minnpost_newsletter_get_section_query( $section );
+			$args['section'] = $section;
+			?>
+			<?php if ( $opinion_query->have_posts() ) : ?>
+				<?php
+					$post_count        = $opinion_query->post_count;
+					$this_opinion_post = 0;
+				?>
+				<tr>
+					<td class="m-newsletter-section m-newsletter-section-top m-newsletter-section-has-<?php echo (int) $post_count; ?>-post" align="center">
+						<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
+							<table cellpadding="0" cellspacing="0" width="100%" class="h2 a-section-title">
+								<tr>
+									<td>
+										<h2><?php echo minnpost_newsletter_get_section_title( $section ); ?></h2>
+									</td>
+								</tr>
+							</table>
+						<?php endif; ?>
+						<?php
+						while ( $opinion_query->have_posts() ) :
+							$this_opinion_post++;
+							$opinion_query->the_post();
+							set_query_var( 'current_post', $opinion_query->current_post );
 
-			$ads = array();
-			foreach ( $ad_divs as $key => $value ) {
-				$style = $value->getAttribute( 'style' );
-				$ads[] = '<p style="Margin: 0 0 10px; padding: 0">' . minnpost_dom_innerhtml( $value ) . '</p>';
-			}
+							// the first post in this section is differently sized than subsequents, by default.
+							if ( 1 === $this_opinion_post ) {
+								$args['image_size'] = 'feature-large';
+							} else {
+								$args['image_size'] = 'feature-medium';
+							}
 
-			set_query_var( 'newsletter_ads', $ads );
+							// with newsletters, the individual post can override the image size for the newsletter section the post is in.
+							$override_size = esc_html( get_post_meta( $id, '_mp_post_newsletter_image_size', true ) );
+							if ( '' !== $override_size && 'default' !== $override_size ) {
+								$args['image_size'] = $override_size;
+							}
+							get_template_part( 'template-parts/post-newsletter', $args['newsletter_type'], $args );
+						endwhile;
+						wp_reset_postdata();
+						?>
+					</td>
+				</tr>
+			<?php endif; ?>
+
+			<?php
+			$section         = 'arts';
+			$arts_query      = minnpost_newsletter_get_section_query( $section );
+			$args['section'] = $section;
+			?>
+			<?php if ( $arts_query->have_posts() ) : ?>
+				<?php
+					$post_count     = $arts_query->post_count;
+					$this_arts_post = 0;
+				?>
+				<tr>
+					<td class="m-newsletter-section m-newsletter-section-top m-newsletter-section-has-<?php echo (int) $post_count; ?>-post" align="center">
+						<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
+							<table cellpadding="0" cellspacing="0" width="100%" class="h2 a-section-title">
+								<tr>
+									<td>
+										<h2><?php echo minnpost_newsletter_get_section_title( $section ); ?></h2>
+									</td>
+								</tr>
+							</table>
+						<?php endif; ?>
+						<?php
+						while ( $arts_query->have_posts() ) :
+							$this_arts_post++;
+							$arts_query->the_post();
+							set_query_var( 'current_post', $top_query->current_post );
+
+							// the first post in this section is differently sized than subsequents, by default.
+							if ( 1 === $this_arts_post ) {
+								$args['image_size'] = 'feature-large';
+							} else {
+								$args['image_size'] = 'feature-medium';
+							}
+
+							// with newsletters, the individual post can override the image size for the newsletter section the post is in.
+							$override_size = esc_html( get_post_meta( $id, '_mp_post_newsletter_image_size', true ) );
+							if ( '' !== $override_size && 'default' !== $override_size ) {
+								$args['image_size'] = $override_size;
+							}
+							get_template_part( 'template-parts/post-newsletter', $args['newsletter_type'], $args );
+						endwhile;
+						wp_reset_postdata();
+						?>
+					</td>
+				</tr>
+			<?php endif; ?>
 
 			
-			?>
 
 			<?php do_action( 'wp_message_inserter', 'email_before_bios', 'email' ); ?>
 
