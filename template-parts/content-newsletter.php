@@ -264,7 +264,7 @@
 						while ( $arts_query->have_posts() ) :
 							$this_arts_post++;
 							$arts_query->the_post();
-							set_query_var( 'current_post', $top_query->current_post );
+							set_query_var( 'current_post', $arts_query->current_post );
 
 							// the first post in this section is differently sized than subsequents, by default.
 							if ( 1 === $this_arts_post ) {
@@ -273,6 +273,49 @@
 								$args['image_size'] = 'feature-medium';
 							}
 
+							// with newsletters, the individual post can override the image size for the newsletter section the post is in.
+							$override_size = esc_html( get_post_meta( $id, '_mp_post_newsletter_image_size', true ) );
+							if ( '' !== $override_size && 'default' !== $override_size ) {
+								$args['image_size'] = $override_size;
+							}
+							get_template_part( 'template-parts/post-newsletter', $args['newsletter_type'], $args );
+						endwhile;
+						wp_reset_postdata();
+						?>
+					</td>
+				</tr>
+			<?php endif; ?>
+
+			<?php
+			$section         = 'editors';
+			$editors_query   = minnpost_newsletter_get_section_query( $section );
+			$args['section'] = $section;
+			?>
+			<?php if ( $editors_query->have_posts() ) : ?>
+				<?php
+					$post_count        = $editors_query->post_count;
+					$this_editors_post = 0;
+				?>
+				<tr>
+					<td class="m-newsletter-section m-newsletter-section-top m-newsletter-section-has-<?php echo (int) $post_count; ?>-post" align="center">
+						<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
+							<table cellpadding="0" cellspacing="0" width="100%" class="h2 a-section-title">
+								<tr>
+									<td>
+										<h2><?php echo minnpost_newsletter_get_section_title( $section ); ?></h2>
+									</td>
+								</tr>
+							</table>
+						<?php endif; ?>
+						<?php
+						while ( $editors_query->have_posts() ) :
+							$this_editors_post++;
+							$editors_query->the_post();
+							set_query_var( 'current_post', $editors_query->current_post );
+
+							// posts in this section, by default, do not have images.
+							$args['image_size'] = 'none';
+							
 							// with newsletters, the individual post can override the image size for the newsletter section the post is in.
 							$override_size = esc_html( get_post_meta( $id, '_mp_post_newsletter_image_size', true ) );
 							if ( '' !== $override_size && 'default' !== $override_size ) {
