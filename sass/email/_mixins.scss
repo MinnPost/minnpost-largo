@@ -116,8 +116,8 @@
 }
 
 // layout column
-@mixin column( $max-width: inherit, $max-mobile-width: 90%, $margin-left: 0, $margin-right: 0) {
-	width: 100%;
+@mixin column( $width: 100%, $max-width: inherit, $max-mobile-width: 90%, $margin-left: 0, $margin-right: 0) {
+	width: $width;
 	display: inline-block;
 	vertical-align: bottom;
 	Margin-left: $margin-left;
