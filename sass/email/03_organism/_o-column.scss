@@ -1,12 +1,5 @@
 .o-column {
     @include column($max-width: 50%, $width: 50%);
     vertical-align: top;
-}
-
-/* ADD MEDIA QUERIES TO YOUR STYLES! */
-
-@media only screen and (max-width: 600px) {
-    .o-column {
-        width: auto !important;
-    }
+    white-space: normal;
 }

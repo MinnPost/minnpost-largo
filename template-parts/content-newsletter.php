@@ -87,7 +87,8 @@
 
 		<tr>
 			<td class="o-wrapper">
-				<table class="o-column" cellpadding="0" cellspacing="0" align="left">
+				<div class="o-column">
+				<table cellpadding="0" cellspacing="0" align="left">
 		
 					<?php
 					$do_not_show_automatic_teaser_items = get_post_meta( get_the_ID(), '_mp_newsletter_do_not_show_automatic_teaser_items', true );
@@ -95,7 +96,7 @@
 					if ( 'on' !== $do_not_show_automatic_teaser_items || 'on' !== $do_not_show_teaser_text ) :
 						?>
 					<tr>
-						<td class="o-wrapper m-teaser" align="center">
+						<td class="m-teaser" align="center">
 							<div class="m-teaser">
 								<table cellpadding="0" cellspacing="0" width="100%">
 									<tr>
@@ -132,7 +133,7 @@
 					if ( '' !== $body ) :
 						?>
 					<tr>
-						<td class="o-wrapper o-body" align="center">
+						<td class="o-body" align="center">
 							<div class="m-body">
 								<table cellpadding="0" cellspacing="0" width="100%">
 									<tr>
@@ -184,8 +185,10 @@
 						</tr> <!-- end row -->
 					<?php endif; ?>
 				</table>
+				</div>
 
-				<table class="o-column ad" cellpadding="0" cellspacing="0" align="right">
+				<div class="o-column ad">
+				<table class="ad" cellpadding="0" cellspacing="0" align="right">
 					<tr>
 						<td>
 							<?php
@@ -196,6 +199,7 @@
 						</td>
 					</tr>
 				</table>
+				</div>
 
 			</td>
 		</tr>

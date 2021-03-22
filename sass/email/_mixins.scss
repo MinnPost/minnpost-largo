@@ -116,7 +116,7 @@
 }
 
 // layout column
-@mixin column( $width: 100%, $max-width: inherit, $max-mobile-width: 90%, $margin-left: 0, $margin-right: 0) {
+@mixin column( $width: 100%, $max-width: inherit, $max-mobile-width: 100%, $padding-left: 5%, $padding-right: 5%, $margin-left: 0, $margin-right: 0) {
 	width: $width;
 	display: inline-block;
 	vertical-align: bottom;
@@ -131,7 +131,10 @@
 
 	@media only screen and (max-width: $large-screen-width) {
 		max-width: $max-mobile-width !important;
+		width: $max-mobile-width !important;
+
 		Margin-right: auto !important;
 		Margin-left: auto !important;
+		
 	}
 }
