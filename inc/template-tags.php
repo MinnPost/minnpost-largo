@@ -1108,3 +1108,29 @@ if ( ! function_exists( 'email_formatted_content' ) ) :
 		echo $content;
 	}
 endif;
+
+/**
+* Display preview text in an email template
+*
+* @param int $post_id
+*
+*/
+if ( ! function_exists( 'email_preview_text' ) ) :
+	function email_preview_text( $post_id = 0 ) {
+		if ( 0 === $post_id ) {
+			$post_id = get_the_ID();
+		}
+		$preview_text = get_post_meta( $post_id, '_mp_newsletter_preview_text', true );
+		if ( '' !== $preview_text ) :
+			?>
+		<span style="display: none !important; max-height: 0px; font-size: 0; overflow: hidden;"> <!-- gmail only takes display none if it has !important; outlook still doesn't care -->
+			<?php echo $preview_text; ?>
+		</span>
+		<!-- Insert &zwnj;&nbsp; hack after hidden preview text -->
+		<div style="display: none; max-height: 0px; overflow: hidden;">
+		&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+		</div>
+			<?php
+		endif;
+	}
+endif;

@@ -1,5 +1,24 @@
-.o-column {
-    @include column($max-width: 50%, $width: 50%);
-    vertical-align: top;
-    white-space: normal;
+div.o-column {
+    width: 100%;
+	max-width: 50%;
+	display: inline-block;
+
+    @media only screen and (max-width: $large-screen-width) {
+        max-width: 100% !important;
+    }
+
+    &.m-support-cta {
+
+        @media only screen and (max-width: $large-screen-width) {
+            max-width: 80% !important;
+        }
+    }
+}
+
+table.o-column {
+    width: 50%;
+
+    @media only screen and (max-width: $large-screen-width) {
+        width: 100% !important;
+    }
 }

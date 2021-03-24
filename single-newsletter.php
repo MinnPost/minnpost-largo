@@ -39,5 +39,7 @@ $html = ob_get_contents();
 ob_end_clean();
 if ( false === $is_legacy ) {
 	$html = CssInliner::fromHtml( $html )->inlineCss( $css )->render();
+	$html = str_replace( '[outlook]', '<!--[if mso]>', $html );
+	$html = str_replace( '[/outlook]', '<![endif]-->', $html );
 }
 echo $html;

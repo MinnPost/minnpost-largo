@@ -1,89 +1,15 @@
 body {
-    Margin: 0;
-    padding: 0;
+    margin:0;
+    padding:0;
+    word-spacing:normal;
     min-width: 100%;
     background-color: neutral-color(white);
     color: neutral-color(black);
     @include body-preset( $size: 0 );
 }
 
-.webkit {
-    max-width: $max-width-email;
-}
-
-.ExternalClass {
-    width: 100%;
-}
-.ExternalClass {
-    p,
-    span,
-    font,
-    td,
-    div {
-        line-height: 100%;
-    }
-}
-
 img {
     line-height: 100%;
     outline: none;
     text-decoration: none;
-}
-
-center.wrapper {
-    -ms-text-size-adjust: 100%;
-    -webkit-text-size-adjust: 100%;
-    table-layout: fixed;
-    width: 100%;
-    background-color: neutral-color(white);
-    color: neutral-color(black);
-    @include body-preset( $size: 0 );
-}
-
-table {
-    border-collapse: collapse;
-    border-spacing: 0;
-    color: neutral-color(black);
-    background-color: neutral-color(white);
-    Margin: 0 auto; 
-    max-width: $max-width-email;
-    mso-table-lspace: 0pt;
-    mso-table-rspace: 0pt;
-    padding: 0;
-    width: 100%;
-    @include body-preset( $size: 0 );
-}
-
-table.contents {
-    font-size: 16px;
-    padding: 0;
-    text-align: left;
-}
-
-tr {
-    Margin: 0;
-    padding: 0;
-}
-
-td {
-    Margin: 0;
-    padding: 0;
-    mso-table-lspace: 0pt;
-    mso-table-rspace: 0pt;
-    border-collapse: collapse;
-    border-spacing: 0;
-    //word-break: break-all; // for outlook 2016
-    color: neutral-color(black);
-    background-color: neutral-color(white);
-    @include body-preset( $size: 0 );
-}
-
-td.inner {
-    font-size: 0;
-    line-height: 0px;
-    vertical-align: bottom;
-}
-
-td.text {
-    
 }

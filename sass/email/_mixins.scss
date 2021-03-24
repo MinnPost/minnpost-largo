@@ -43,8 +43,8 @@
 	}
 }
 
-// button treatment
-@mixin button( $background: brand-color(red, medium), $hover: brand-color(red, dark), $color: neutral-color(white), $button-height: 122px) {
+// button in a table treatment
+@mixin table_button( $background: brand-color(red, medium), $hover: brand-color(red, dark), $color: neutral-color(white), $button-height: 122px) {
 	border-collapse: collapse;
 	border-spacing: 0;
 	padding: 0;
@@ -115,26 +115,80 @@
 	}
 }
 
-// layout column
-@mixin column( $width: 100%, $max-width: inherit, $max-mobile-width: 100%, $padding-left: 5%, $padding-right: 5%, $margin-left: 0, $margin-right: 0) {
-	width: $width;
-	display: inline-block;
-	vertical-align: bottom;
-	Margin-left: $margin-left;
-	Margin-right: $margin-right;
-	max-width: $max-width;
+// button in a paragraph treatment
+@mixin paragraph_button( $background: brand-color(red, medium), $hover: brand-color(red, dark), $color: neutral-color(white)) {
+	padding: 0;
+	Margin: 0;
+	background: inherit;
+	color: inherit;
+	@include meta-preset( $size: 1, $bold: true, $italic: false, $line-height: 1 );
 
-	table,
-	td {
+	a {
+		background: $background;
+		color: $color;
+		border-radius: $border-radius;
+		border: 0;
+		cursor: pointer;
+		display: inline-block;
+		padding: $standard-block-padding / 2 0;
+		text-decoration: none;
+		mso-padding-alt: 0;
 		width: 100%;
+
+		&:link,
+		&:visited {
+			background: $background;
+			color: $color;
+			text-decoration: none;
+		}
+
+		&:hover,
+		&:focus,
+		&:active,
+		&.active {
+			background: $hover !important;
+			color: $color !important;
+			text-decoration: none !important;
+		}
+	}
+}
+
+// layout column
+/*@mixin column( $max-width: inherit, $width: 100%) {
+	width: $width;
+	max-width: $max-width;
+	display:inline-block;
+}*/
+
+/*@mixin column( $max-width: inherit, $width: 100%) {
+	@at-root div#{&} {
+		width: 100%;
+		max-width: $width;
+		display: inline-block;
 	}
 
-	@media only screen and (max-width: $large-screen-width) {
-		max-width: $max-mobile-width !important;
-		width: $max-mobile-width !important;
-
-		Margin-right: auto !important;
-		Margin-left: auto !important;
-		
+	@at-root table#{&} {
+		width: $width;
 	}
+}*/
+
+@mixin column( $selector: '.o-column', $max-width: inherit, $width: 100%, $vertical-align: middle, $text-align: 'center', $padding: 0 ) {
+	div#{$selector} {
+        width: $width;
+        max-width: $max-width-email * ($max-width / 100%);
+        display: inline-block;
+		vertical-align: $vertical-align;
+
+		div.item-contents {
+			padding: $padding;
+			text-align: $text-align;
+			@include body-preset( $size: 0 );
+		}
+    }
+    
+    td#{$selector} {
+        width: $max-width-email * ($max-width / 100%);
+		vertical-align: $vertical-align;
+		padding: $padding;
+    }
 }

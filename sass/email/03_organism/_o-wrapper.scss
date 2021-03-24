@@ -1,4 +1,15 @@
-.o-wrapper {
-    margin: 0 $standard-block-margin;
-    white-space: nowrap;
+div.o-wrapper {
+    margin: $standard-block-padding auto;
+    width: $max-width-email-percent;
+    max-width: $max-width-email;
+    background-color: neutral-color(white);
+    color: neutral-color(black);
+}
+
+table.o-wrapper {
+    width: $max-width-email;
+
+    > td {
+        padding: $standard-block-padding 0;
+    }
 }

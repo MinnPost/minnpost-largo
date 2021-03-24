@@ -9,59 +9,31 @@
  * @package MinnPost Largo
  */
 
-?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional //EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-	<html xmlns="http://www.w3.org/1999/xhtml" xmlns="http://www.w3.org/1999/xhtml">
-		<head>
-			<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-			<!--[if !mso]><!-->
-				<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-			<!--<![endif]-->
-			<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-			<link rel="shortcut icon" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/favicon.ico' ) ); ?>" type="image/x-icon" />
-			<!-- Facebook sharing information tags -->
-			<meta property="og:title" content="<?php echo get_the_title(); ?> | <?php bloginfo( 'name' ); ?>">
-			<title><?php echo get_the_title(); ?> | <?php bloginfo( 'name' ); ?></title>
-
-			<style type="text/css">
-			.webkit {
-				max-width: 600px;
-			}
-			.ExternalClass {
-				width: 100%;
-			}
-			.ExternalClass, .ExternalClass p, .ExternalClass span, .ExternalClass font, .ExternalClass td, .ExternalClass div {
-				line-height: 100%;
-			}
-
-			a[x-apple-data-detectors] {
-				color: #801019 !important;
-				text-decoration: none !important;
-				font-size: inherit !important;
-				font-family: inherit !important;
-				font-weight: normal !important;
-				line-height: inherit !important;
-			}
-			</style>
-
-			<!--[if (gte mso 9)|(IE)]>
-			<style type="text/css">
-			.header table { font-size:1px; line-height:0; mso-Margin-top-alt:1px; }
-			</style>
-			<![endif]-->
-
-		</head>
-		<body style="background: #ffffff; Margin: 0; min-width: 100%; padding: 0" bgcolor="#ffffff">
-
-		<?php
-		$preview_text = get_post_meta( get_the_ID(), '_mp_newsletter_preview_text', true );
-		if ( '' !== $preview_text ) {
-			?>
-		<span style="display: none !important; max-height: 0px; font-size: 0; overflow: hidden;"> <!-- gmail only takes display none if it has !important; outlook still doesn't care -->
-			<?php echo $preview_text; ?>
-		</span>
-		<!-- Insert &zwnj;&nbsp; hack after hidden preview text -->
-		<div style="display: none; max-height: 0px; overflow: hidden;">
-		&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
-		</div>
-			<?php
-		}
+?><!DOCTYPE html>
+<html lang="en" xmlns="https://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1">
+		<meta name="x-apple-disable-message-reformatting">
+		<link rel="shortcut icon" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/favicon.ico' ) ); ?>" type="image/x-icon" />
+		<!-- Facebook sharing information tags -->
+		<meta property="og:title" content="<?php echo get_the_title(); ?> | <?php bloginfo( 'name' ); ?>">
+		<title><?php echo get_the_title(); ?> | <?php bloginfo( 'name' ); ?></title>
+		<!--[if mso]>
+		<style type="text/css">
+			table {border-collapse:collapse;border-spacing:0;margin:0;}
+			div, td {padding:0;}
+			div {margin:0 !important;}
+		</style>
+		<noscript>
+		<xml>
+			<o:OfficeDocumentSettings>
+				<o:PixelsPerInch>96</o:PixelsPerInch>
+			</o:OfficeDocumentSettings>
+		</xml>
+		</noscript>
+		<![endif]-->
+	</head>
+	<body>
+		<?php email_preview_text(); ?>
+		<div class="o-email" role="article" aria-roledescription="email" lang="en">
