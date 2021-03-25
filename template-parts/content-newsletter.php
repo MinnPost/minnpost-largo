@@ -87,7 +87,7 @@
 
 				<div class="o-columns o-newsletter-section">
 					[outlook]
-						<table role="presentation" width="100%" class="o-columns o-header">
+						<table role="presentation" width="100%" class="o-columns o-newsletter-section">
 							<tr>
 								<td class="o-column o-newsletter-listing">
 					[/outlook]
@@ -98,7 +98,7 @@
 							$do_not_show_teaser_text            = get_post_meta( get_the_ID(), '_mp_newsletter_do_not_show_teaser_text', true );
 							if ( 'on' !== $do_not_show_automatic_teaser_items || 'on' !== $do_not_show_teaser_text ) :
 								?>
-								<div class="m-teaser">
+								<div class="m-newsletter-entry m-teaser">
 								<?php
 							endif;
 							?>
@@ -119,19 +119,20 @@
 							endif;
 							?>
 						</div>
-						<?php do_action( 'wp_message_inserter', 'above_email_articles', 'email' ); ?>
 					</div>
 					[outlook]
 								</td>
 								<td class="o-column m-newsletter-ad">
 					[/outlook]
-					<div class="o-column m-newsletter-ad">
+					<div class="o-column m-newsletter-ad-region">
 						<div class="item-contents">
-							<?php
-							if ( isset( $ads[0] ) && ! empty( $ads[0] ) ) {
-								echo $ads[0];
-							}
-							?>
+							<div class="m-newsletter-entry m-newsletter-ad">
+								<?php
+								if ( isset( $ads[0] ) && ! empty( $ads[0] ) ) {
+									echo $ads[0];
+								}
+								?>
+							</div>
 						</div>
 					</div>
 					[outlook]
@@ -140,6 +141,32 @@
 						</table>
 					[/outlook]
 				</div> <!-- end o-newsletter-section -->
+
+				<?php do_action( 'wp_message_inserter', 'above_email_articles', 'email' ); ?>
+
+				<?php
+				$body = apply_filters( 'the_content', get_the_content() );
+				if ( '' !== $body ) :
+					?>
+				<div class="o-columns o-newsletter-section">
+					[outlook]
+						<table role="presentation" width="100%" class="o-columns o-newsletter-section">
+							<tr>
+								<td class="o-column o-newsletter-body">
+					[/outlook]
+					<div class="o-column o-newsletter-body">
+						<div class="item-contents">
+										<?php echo $body; ?>
+									</td>
+								</tr>
+							</table>
+						</div>
+					</td>
+				</tr> <!-- end row -->
+					<?php
+				endif;
+				?>
+
 
 			</div> <!-- end o-wrapper -->
 			[outlook]

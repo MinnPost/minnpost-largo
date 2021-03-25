@@ -1,4 +1,6 @@
 .o-columns {
     text-align:center;
     font-size:0;
+
+    @include column( $selector: '.o-column', $max-width: 50%);
 }
