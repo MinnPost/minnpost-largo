@@ -1,10 +1,13 @@
 .m-support-cta {
 
 	.a-button.a-support-button {
+
 		@include paragraph_button(utility-color(green, medium), utility-color(green, dark));
 		
 		@media only screen and (max-width: $large-screen-width) {
-			margin-bottom: $standard-block-margin !important;
-		}
+            max-width: 80% !important;
+            text-align: center !important;
+			margin: 0 auto $standard-block-margin auto !important;
+        }
 	}
 }
