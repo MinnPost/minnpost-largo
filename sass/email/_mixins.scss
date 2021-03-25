@@ -154,25 +154,7 @@
 }
 
 // layout column
-/*@mixin column( $max-width: inherit, $width: 100%) {
-	width: $width;
-	max-width: $max-width;
-	display:inline-block;
-}*/
-
-/*@mixin column( $max-width: inherit, $width: 100%) {
-	@at-root div#{&} {
-		width: 100%;
-		max-width: $width;
-		display: inline-block;
-	}
-
-	@at-root table#{&} {
-		width: $width;
-	}
-}*/
-
-@mixin column( $selector: '.o-column', $max-width: inherit, $width: 100%, $vertical-align: middle, $text-align: 'center', $padding: 0 ) {
+@mixin column( $selector: '.o-column', $max-width: inherit, $width: 100%, $vertical-align: middle, $text-align: center, $padding: 0 ) {
 	div#{$selector} {
         width: $width;
         max-width: $max-width-email * ($max-width / 100%);

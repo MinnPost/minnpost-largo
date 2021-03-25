@@ -1744,3 +1744,41 @@ if ( ! function_exists( 'minnpost_newsletter_get_entry_excerpt' ) ) :
 		return $excerpt;
 	}
 endif;
+
+/**
+* Load the ads for a newsletter.
+*
+* @param string $newsletter_type
+* @return array $ads
+*
+*/
+if ( ! function_exists( 'minnpost_newsletter_get_ads' ) ) :
+	function minnpost_newsletter_get_ads( $newsletter_type = '' ) {
+		ob_start();
+		dynamic_sidebar( 'sidebar-1' );
+		$sidebar = ob_get_contents();
+		ob_end_clean();
+
+		$ad_dom = new DomDocument;
+		libxml_use_internal_errors( true );
+		$ad_dom->loadHTML( $sidebar, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+		libxml_use_internal_errors( false );
+		$ad_xpath = new DOMXpath( $ad_dom );
+		$ad_divs  = $ad_xpath->query( "//section[contains(concat(' ', @class, ' '), ' m-widget ')]/div/p" );
+
+		$ads = array();
+		if ( 'dc_memo' !== $newsletter_type ) {
+			foreach ( $ad_divs as $key => $value ) {
+				$style = $value->getAttribute( 'style' );
+				$ads[] = '<p>' . minnpost_dom_innerhtml( $value ) . '</p>';
+			}
+		} else {
+			foreach ( $ad_divs as $key => $value ) {
+				$style = $value->getAttribute( 'style' );
+				$ads[] = '<p>' . minnpost_dom_innerhtml( $value ) . '</p>';
+			}
+		}
+		set_query_var( 'newsletter_ads', $ads );
+		return $ads;
+	}
+endif;

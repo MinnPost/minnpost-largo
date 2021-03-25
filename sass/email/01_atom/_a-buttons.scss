@@ -10,9 +10,10 @@
     color: #ffffff !important; text-decoration: none !important;
 }
 
-/*table.a-button {
+table.a-button {
     @include table_button();
-}*/
-.a-button {
+}
+
+p.a-button {
     @include paragraph_button();
 }
