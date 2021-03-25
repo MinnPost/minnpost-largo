@@ -1,0 +1,4 @@
+.o-navigation {
+
+    @include column( $selector: '.o-column.o-navigation', $max-width: 100%);
+}

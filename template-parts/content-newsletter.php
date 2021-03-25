@@ -20,7 +20,6 @@
 			<div class="o-wrapper">
 
 				<div class="o-columns o-header">
-
 					[outlook]
 						<table role="presentation" width="100%" class="o-columns o-header">
 							<tr>
@@ -47,9 +46,41 @@
 							</tr>
 						</table>
 					[/outlook]
-				</div>
+				</div> <!-- end o-header -->
 
-			</div>
+				<div class="o-columns o-navigation">
+					[outlook]
+						<table role="presentation" width="100%" class="o-columns o-header">
+							<tr>
+								<td class="o-column o-navigation">
+					[/outlook]
+					<div class="o-column o-navigation">
+						<div class="item-contents">
+							<table id="navigation-primary" class="m-main-navigation">
+								<?php
+								wp_nav_menu(
+									array(
+										'theme_location' => 'primary_links',
+										'menu_id'        => 'primary-links',
+										'depth'          => 1,
+										'container'      => false,
+										'walker'         => new Minnpost_Email_Walker_Nav_Menu,
+										'priority'       => '20',
+										'items_wrap'     => '<tr id="%1$s" class="m-menu m-menu-%1$s">%3$s</tr>',
+										'item_classes'   => 'values',
+									)
+								);
+								?>
+							</table><!-- #navigation-primary -->
+						</div>
+					</div>
+					[outlook]
+								</td>
+							</tr>
+						</table>
+					[/outlook]
+				</div> <!-- end o-navigation -->
+			</div> <!-- end o-wrapper -->
 			[outlook]
 						</td>
 					</tr>
