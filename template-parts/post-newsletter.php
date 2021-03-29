@@ -17,7 +17,7 @@
 					</td>
 				</tr>
 			</table>
-			<table cellpadding="0" cellspacing="0" width="100%" class="a-entry-excerpt">
+			<table cellpadding="0" cellspacing="0" width="100%" class="m-entry-excerpt">
 				<tr>
 					<td>
 						<?php echo minnpost_newsletter_get_entry_excerpt(); ?>

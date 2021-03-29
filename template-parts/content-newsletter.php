@@ -158,7 +158,9 @@
 										<table role="presentation" width="100%" class="h2 a-section-title">
 											<tr>
 												<td>
-													<h2><?php echo minnpost_newsletter_get_section_title( $section ); ?></h2>
+													<div class="a-section-title-bg">
+														<h2><?php echo minnpost_newsletter_get_section_title( $section ); ?></h2>
+													</div>
 												</td>
 											</tr>
 										</table>
