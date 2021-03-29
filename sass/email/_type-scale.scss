@@ -1,19 +1,10 @@
-/*--scale0: 1em;
---scale-1: calc(var(--scale0)/var(--font-size-int));
---scale-2: calc(var(--scale-1)/var(--font-size-int));
---scale-3: calc(var(--scale-2)/var(--font-size-int));
---scale1: calc(var(--scale0)*var(--font-size-int));
---scale2: calc(var(--scale1)*var(--font-size-int));
---scale3: calc(var(--scale2)*var(--font-size-int));
---scale4: calc(var(--scale3)*var(--font-size-int));*/
-
 $font-sizes: (
-    -3: calc( #{$html-root-size} / ( 1.125 * 3 ) ),
-    -2: calc( #{$html-root-size} / ( 1.125 * 2 ) ),
-	-1: calc( #{$html-root-size} / ( 1.125 * 1 ) ),
-	0: calc( #{$html-root-size} ),
-	1: calc( #{$html-root-size} * ( 1.125 * 1 ) ),
-	2: calc( #{$html-root-size} * ( 1.125 * 2 ) ),
-	3: calc( #{$html-root-size} * ( 1.125 * 3 ) ),
-	4: calc( #{$html-root-size} * ( 1.125 * 4 ) ),
+    -3: 14px,
+    -2: 16px,
+	-1: 18px,
+	0: 20px,
+	1: 22px,
+	2: 24px,
+	3: 26px,
+	4: 28px,
 );

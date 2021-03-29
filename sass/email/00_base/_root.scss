@@ -13,3 +13,9 @@ img {
     outline: none;
     text-decoration: none;
 }
+
+div.spacer {
+    line-height: $standard-heading-margin;
+    height: $standard-heading-margin;
+    mso-line-height-rule: exactly;
+}

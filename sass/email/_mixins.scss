@@ -28,20 +28,60 @@
 	}
 }
 
-
-// text sizes
+// text sizes. this has to be before any mixins that include it
 @mixin text-preset( $size: inherit, $line-height: inherit, $important: inherit ) {
-	@if $size != "inherit" {
-		@if $important != "inherit" {
+	@if $size != inherit {
+		@if $important != inherit {
 			font-size: map-get( $font-sizes, $size ) !important;
 		} @else {
 			font-size: map-get( $font-sizes, $size );
 		}
-		//font-size: #{ $size };
-		//line-height: var(--lh#{ $size });
 		line-height: 1.3;
 	}
 }
+
+// heading text
+@mixin heading-preset( $size: inherit, $bold: inherit, $italic: inherit, $line-height: inherit, $important: inherit ) {
+	margin: 0;
+	padding: 0;
+
+	td {
+		font-size: inherit;
+		font-weight: inherit;
+		padding: 0 0 $standard-heading-margin 0;
+		margin: 0;
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			margin: 0;
+			padding: 0;
+			font-family: $webfont__serif;
+			font-size-adjust: 0.46;
+			@include text-preset( $size, $line-height, $important );
+
+			@if $bold == true {
+				font-weight: 900;
+			} @else if $bold == false {
+				font-weight: 500;
+			}
+			font-weight: bold !important;
+
+			@if $italic == true {
+				font-style: italic;
+			} @else if $italic == false {
+				font-style: normal;
+			}
+
+			
+		}
+	}
+}
+// used like this: @include heading-preset( $size: 3, $bold: false );
+
 
 // button in a table treatment
 @mixin table_button( $background: brand-color(red, medium), $hover: brand-color(red, dark), $color: neutral-color(white), $button-height: 122px) {
@@ -121,7 +161,7 @@
 	Margin: 0;
 	background: inherit;
 	color: inherit;
-	@include meta-preset( $size: 1, $bold: true, $italic: false, $line-height: 1 );
+	@include meta-preset( $size: 2, $bold: true, $italic: false, $line-height: 1 );
 
 	a {
 		background: $background;
@@ -181,4 +221,13 @@
 			width: 100% !important;
 		}
     }
+}
+
+// link underline treatment
+@mixin link-underline( $color: utility-color(blue, dark), $hover: utility-color(blue, highlight) ) {
+	color: $color !important;
+	text-decoration: underline !important;
+	text-decoration-color: $hover !important;
+	text-underline-offset: 0.25em !important;
+	text-decoration-thickness: 0.08em !important;
 }

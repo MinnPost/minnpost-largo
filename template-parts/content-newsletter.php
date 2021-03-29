@@ -50,7 +50,7 @@
 
 				<div class="o-columns o-navigation">
 					[outlook]
-						<table role="presentation" width="100%" class="o-columns o-header">
+						<table role="presentation" width="100%" class="o-columns o-navigation">
 							<tr>
 								<td class="o-column o-navigation">
 					[/outlook]
@@ -72,7 +72,7 @@
 								);
 								?>
 							</table><!-- #navigation-primary -->
-						</div>
+						</div> <!-- item-contents -->
 					</div>
 					[outlook]
 								</td>
@@ -83,22 +83,19 @@
 
 				<?php do_action( 'wp_message_inserter', 'email_header', 'email' ); ?>
 
-				<?php $ads = minnpost_newsletter_get_ads( $args['newsletter_type'] ); ?>
 
-				<div class="o-columns o-newsletter-section">
-					[outlook]
-						<table role="presentation" width="100%" class="o-columns o-newsletter-section">
-							<tr>
-								<td class="o-column o-newsletter-listing">
-					[/outlook]
-					<div class="o-column o-newsletter-listing">
-						<div class="item-contents">
+				<table role="presentation" width="100%" class="o-single-column">
+					<tr>
+						<td class="o-row">
+							<div class="item-contents">
+
 							<?php
+							// teaser text
 							$do_not_show_automatic_teaser_items = get_post_meta( get_the_ID(), '_mp_newsletter_do_not_show_automatic_teaser_items', true );
 							$do_not_show_teaser_text            = get_post_meta( get_the_ID(), '_mp_newsletter_do_not_show_teaser_text', true );
 							if ( 'on' !== $do_not_show_automatic_teaser_items || 'on' !== $do_not_show_teaser_text ) :
 								?>
-								<div class="m-newsletter-entry m-teaser">
+								<div class="o-row m-teaser">
 								<?php
 							endif;
 							?>
@@ -118,15 +115,80 @@
 								<?php
 							endif;
 							?>
+
+							<?php
+							// body text
+							$body = apply_filters( 'the_content', get_the_content() );
+							if ( '' !== $body ) :
+								?>
+								<div class="o-row m-newsletter-body">
+									<?php echo $body; ?>
+								</div>
+								<?php
+							endif;
+							?>
+							</div>
+						</td>
+    </tr>
+</table>
+
+				<?php $ads = minnpost_newsletter_get_ads( $args['newsletter_type'] ); ?>
+
+				<div class="o-columns o-newsletter-section">
+					[outlook]
+						<table role="presentation" width="100%" class="o-columns o-newsletter-section">
+							<tr>
+								<td class="o-column o-newsletter-listing">
+					[/outlook]
+					<div class="o-column o-newsletter-listing">
+						<div class="item-contents">
+							
+
+							<?php
+							// top post section
+							$section            = 'top';
+							$top_query          = minnpost_newsletter_get_section_query( $section );
+							$args['image_size'] = 'feature-large';
+							$args['section']    = $section;
+							?>
+							<?php if ( $top_query->have_posts() ) : ?>
+								<?php $post_count = $top_query->post_count; ?>
+								<div class="o-row m-newsletter-stories m-newsletter-stories-<?php echo $section; ?> m-newsletter-stories-has-<?php echo (int) $post_count; ?>-post">
+									<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
+										<table role="presentation" width="100%" class="h2 a-section-title">
+											<tr>
+												<td>
+													<h2><?php echo minnpost_newsletter_get_section_title( $section ); ?></h2>
+												</td>
+											</tr>
+										</table>
+									<?php endif; ?>
+									<?php
+									while ( $top_query->have_posts() ) :
+										$top_query->the_post();
+										set_query_var( 'current_post', $top_query->current_post );
+										$args['post_id'] = $id;
+										// with newsletters, the individual post can override the image size for the newsletter section the post is in.
+										$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
+										if ( '' !== $override_size && 'default' !== $override_size ) {
+											$args['image_size'] = $override_size;
+										}
+										get_template_part( 'template-parts/post-newsletter', $args['newsletter_type'], $args );
+									endwhile;
+									wp_reset_postdata();
+									?>
+								</div> <!-- end row -->
+							<?php endif; ?>
+
 						</div>
-					</div>
+					</div> <!-- .o-column -->
 					[outlook]
 								</td>
 								<td class="o-column m-newsletter-ad">
 					[/outlook]
 					<div class="o-column m-newsletter-ad-region">
 						<div class="item-contents">
-							<div class="m-newsletter-entry m-newsletter-ad">
+							<div class="o-row m-newsletter-ad">
 								<?php
 								if ( isset( $ads[0] ) && ! empty( $ads[0] ) ) {
 									echo $ads[0];
@@ -143,30 +205,6 @@
 				</div> <!-- end o-newsletter-section -->
 
 				<?php do_action( 'wp_message_inserter', 'above_email_articles', 'email' ); ?>
-
-				<?php
-				$body = apply_filters( 'the_content', get_the_content() );
-				if ( '' !== $body ) :
-					?>
-				<div class="o-columns o-newsletter-section">
-					[outlook]
-						<table role="presentation" width="100%" class="o-columns o-newsletter-section">
-							<tr>
-								<td class="o-column o-newsletter-body">
-					[/outlook]
-					<div class="o-column o-newsletter-body">
-						<div class="item-contents">
-										<?php echo $body; ?>
-									</td>
-								</tr>
-							</table>
-						</div>
-					</td>
-				</tr> <!-- end row -->
-					<?php
-				endif;
-				?>
-
 
 			</div> <!-- end o-wrapper -->
 			[outlook]

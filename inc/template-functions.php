@@ -1559,6 +1559,28 @@ endif;
 if ( ! function_exists( 'format_email_content' ) ) :
 	add_filter( 'format_email_content', 'format_email_content', 10, 3 );
 	function format_email_content( $content, $body = true, $message = false ) {
+
+		$is_legacy = apply_filters( 'minnpost_largo_newsletter_legacy', false, get_the_ID() );
+		if ( true === $is_legacy ) {
+			format_email_content_legacy( $content, $body, $message );
+		}
+
+		$content = str_replace( ' dir="ltr"', '', $content );
+
+		return $content;
+	}
+endif;
+
+/**
+* Format a string for email-friendly display on legacy templates
+*
+* @param string $content
+* @param bool $message
+* @return string $content
+*
+*/
+if ( ! function_exists( 'format_email_content_legacy' ) ) :
+	function format_email_content_legacy( $content, $body, $message ) {
 		$serif_stack = 'font-family: Georgia, \'Times New Roman\', Times, serif; ';
 		$sans_stack  = 'font-family: Helvetica, Arial, Geneva, sans-serif; ';
 		$font_stack  = $serif_stack;
