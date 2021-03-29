@@ -14,6 +14,10 @@ img {
     text-decoration: none;
 }
 
+table {
+    font-size: inherit;
+}
+
 div.spacer {
     line-height: $standard-heading-margin;
     height: $standard-heading-margin;

@@ -83,7 +83,6 @@
 
 				<?php do_action( 'wp_message_inserter', 'email_header', 'email' ); ?>
 
-
 				<table role="presentation" width="100%" class="o-single-column">
 					<tr>
 						<td class="o-row">
@@ -129,8 +128,10 @@
 							?>
 							</div>
 						</td>
-    </tr>
-</table>
+					</tr>
+				</table>
+
+				<?php do_action( 'wp_message_inserter', 'above_email_articles', 'email' ); ?>
 
 				<?php $ads = minnpost_newsletter_get_ads( $args['newsletter_type'] ); ?>
 
@@ -142,8 +143,6 @@
 					[/outlook]
 					<div class="o-column o-newsletter-listing">
 						<div class="item-contents">
-							
-
 							<?php
 							// top post section
 							$section            = 'top';
@@ -204,9 +203,84 @@
 							</tr>
 						</table>
 					[/outlook]
-				</div> <!-- end o-newsletter-section -->
+				</div> <!-- end o-columns.o-newsletter-section -->
 
-				<?php do_action( 'wp_message_inserter', 'above_email_articles', 'email' ); ?>
+				<div class="o-columns o-newsletter-section">
+					[outlook]
+						<table role="presentation" width="100%" class="o-columns o-newsletter-section">
+							<tr>
+								<td class="o-column o-newsletter-listing">
+					[/outlook]
+					<div class="o-column o-newsletter-listing">
+						<div class="item-contents">
+							<?php
+							// news post section
+							$section            = 'news';
+							$news_query         = minnpost_newsletter_get_section_query( $section );
+							$args['image_size'] = 'feature-large';
+							$args['section']    = $section;
+
+							//$prefix . 'news_section'    => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) Image size is a thumbnail on other stories in the section. 3) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
+							//$prefix . 'opinion_section' => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) Image size is a thumbnail on other stories in the section. 3) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
+							//$prefix . 'arts_section'    => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) Image size is a thumbnail on other stories in the section. 3) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
+							//$prefix . 'editors_section' => esc_html__( 'The default behavior for this section is: stories will display with no image or teaser. The "Use Other Section Settings" checkbox will cause this section to behave, by default, like the above sections instead. Then you can use the Newsletter Settings section of each story to change how that story behaves.', 'minnpost-largo' ),
+							?>
+							<?php if ( $news_query->have_posts() ) : ?>
+								<?php $post_count = $news_query->post_count; ?>
+								<div class="o-row m-newsletter-stories m-newsletter-stories-<?php echo $section; ?> m-newsletter-stories-has-<?php echo (int) $post_count; ?>-post">
+									<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
+										<table role="presentation" width="100%" class="h2 a-section-title">
+											<tr>
+												<td>
+													<div class="a-section-title-bg">
+														<h2><?php echo minnpost_newsletter_get_section_title( $section ); ?></h2>
+													</div>
+												</td>
+											</tr>
+										</table>
+									<?php endif; ?>
+									<?php
+									while ( $news_query->have_posts() ) :
+										$news_query->the_post();
+										set_query_var( 'current_post', $news_query->current_post );
+										$args['post_id'] = $id;
+										// with newsletters, the individual post can override the image size for the newsletter section the post is in.
+										$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
+										if ( '' !== $override_size && 'default' !== $override_size ) {
+											$args['image_size'] = $override_size;
+										}
+										get_template_part( 'template-parts/post-newsletter', $args['newsletter_type'], $args );
+									endwhile;
+									wp_reset_postdata();
+									?>
+								</div> <!-- end row -->
+							<?php endif; ?>
+
+						</div>
+					</div> <!-- .o-column -->
+					[outlook]
+								</td>
+								<td class="o-column m-newsletter-ad">
+					[/outlook]
+					<div class="o-column m-newsletter-ad-region">
+						<div class="item-contents">
+							<div class="o-row m-newsletter-ad">
+								<?php
+								if ( isset( $ads[1] ) && ! empty( $ads[1] ) ) {
+									echo $ads[1];
+								}
+								?>
+							</div>
+						</div>
+					</div>
+					[outlook]
+								</td>
+							</tr>
+						</table>
+					[/outlook]
+				</div> <!-- end o-columns.o-newsletter-section -->
+
+				
 
 			</div> <!-- end o-wrapper -->
 			[outlook]
