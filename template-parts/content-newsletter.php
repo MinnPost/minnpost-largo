@@ -550,6 +550,34 @@
 					[/outlook]
 				</div> <!-- end o-columns.o-newsletter-section -->
 
+				<?php do_action( 'wp_message_inserter', 'email_before_bios', 'email' ); ?>
+
+				<?php do_action( 'wp_message_inserter', 'email_bottom', 'email' ); ?>
+
+				<div class="o-columns o-footer">
+					[outlook]
+						<table role="presentation" width="100%" class="o-columns o-footer">
+							<tr>
+								<td class="o-column o-footer">
+					[/outlook]
+					<div class="o-column o-footer">
+						<div class="item-contents">
+							<?php dynamic_sidebar( 'sidebar-3' ); ?>
+							<?php
+							$footer_message = get_option( 'site_footer_message', '' );
+							if ( '' !== $footer_message ) :
+								?>
+								<p class="address"><?php echo $footer_message; ?></p>
+							<?php endif; ?>
+						</div> <!-- item-contents -->
+					</div>
+					[outlook]
+								</td>
+							</tr>
+						</table>
+					[/outlook]
+				</div> <!-- end o-footer -->
+
 			</div> <!-- end o-wrapper -->
 			[outlook]
 						</td>
