@@ -1,6 +1,6 @@
 <table>
 	<tr>
-		<td class="m-post m-post-newsletter m-post-newsletter-<?php echo $args['newsletter_type']; ?><?php echo $args['extra_class']; ?>">
+		<td class="m-post m-post-newsletter m-post-newsletter-<?php echo $args['newsletter_type']; ?><?php echo isset( $args['extra_class'] ) ? $args['extra_class'] : ''; ?>">
 			<div class="post-contents">
 				<?php if ( 'none' !== $args['image_size'] ) : ?>
 					<table cellpadding="0" cellspacing="0" width="100%" class="m-post-image m-post-image-<?php echo $args['image_size']; ?>">
