@@ -20,6 +20,7 @@ if ( ! function_exists( 'minnpost_menus' ) ) :
 				'topics'                  => __( 'Topics', 'minnpost-largo' ), // scrolling topics nav
 				'user_account_management' => __( 'User Account Management Menu', 'minnpost-largo' ), // menu where users manage their account info/preferences
 				'minnpost_network'        => __( 'Network Menu', 'minnpost-largo' ), // social networks
+				'minnpost_network_email'  => __( 'Network Menu for Emails', 'minnpost-largo' ), // social network menu on email footers
 				'footer_primary'          => __( 'Footer Primary', 'minnpost-largo' ), // main footer. about, advertise, member benefits, etc
 				'festival'                => __( 'Festival', 'minnpost-largo' ), // minnpost festival menu
 			)
@@ -425,6 +426,33 @@ class Minnpost_Email_Walker_Nav_Menu extends Minnpost_Walker_Nav_Menu {
 
 		if ( '' !== $active_class ) {
 			$active_class = ' class="' . $active_class . '"';
+		}
+
+		// if there is a value for the icon, check and see if we have it as a downloaded image and use it, if so.
+		$minnpost_largo_menu_item_icon = get_post_meta( $item->ID, '_minnpost_largo_menu_item_icon', true );
+		if ( '' !== $minnpost_largo_menu_item_icon ) {
+			$exploded  = explode( ' ', $minnpost_largo_menu_item_icon );
+			$icon_type = $exploded[0];
+			$icon_name = $exploded[1];
+			if ( false !== $icon_type ) {
+				$font_awesome_suffix = 'fa' . $icon_type[2];
+			}
+			switch ( $font_awesome_suffix ) {
+				case 'fab':
+					$end = '-brands';
+					break;
+				case 'fas':
+					$end = '-solid';
+					break;
+				default:
+					$end = '';
+			}
+			$icon_post_name = str_replace( 'fa-', '', $icon_name . $end );
+			$attachment_id  = wp_get_attachment_id_by_post_name( $icon_post_name );
+			if ( false !== $attachment_id ) {
+				$item->title  = wp_get_attachment_image( $attachment_id );
+				$active_class = ' class="with-icon"';
+			}
 		}
 
 		$output .= '<td' . $active_class . '><a href="' . $url . '">' . $item->title . '</a>';

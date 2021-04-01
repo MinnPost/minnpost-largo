@@ -562,12 +562,29 @@
 					[/outlook]
 					<div class="o-column o-footer">
 						<div class="item-contents">
-							<?php dynamic_sidebar( 'sidebar-3' ); ?>
+							<div align="center">
+								<table id="footer-network" class="m-secondary-navigation">
+									<?php
+									wp_nav_menu(
+										array(
+											'theme_location' => 'minnpost_network_email',
+											'menu_id'        => 'minnpost-network-emails',
+											'depth'          => 1,
+											'container'      => false,
+											'walker'         => new Minnpost_Email_Walker_Nav_Menu,
+											'priority'       => '20',
+											'items_wrap'     => '<tr id="%1$s" class="m-menu m-menu-%1$s">%3$s</tr>',
+											'item_classes'   => 'values',
+										)
+									);
+									?>
+								</table><!-- #footer-network -->
+							</div>
 							<?php
 							$footer_message = get_option( 'site_footer_message', '' );
 							if ( '' !== $footer_message ) :
 								?>
-								<p class="address"><?php echo $footer_message; ?></p>
+								<p class="a-footer-message"><?php echo $footer_message; ?></p>
 							<?php endif; ?>
 						</div> <!-- item-contents -->
 					</div>

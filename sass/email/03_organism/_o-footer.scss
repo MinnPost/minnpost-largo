@@ -1,0 +1,41 @@
+.o-columns.o-footer {
+
+    @include column( $selector: '.o-column.o-footer', $max-width: 100%, $vertical-align: top, $text-align: left, $padding: $standard-block-padding);
+    background: neutral-color(black);
+    color: neutral-color(white);
+
+    #footer-network {
+		margin: $standard-block-padding 0;
+        text-align: center;
+        width: auto;
+
+        td {
+            text-align: center;
+
+            &.with-icon {
+                width: 62px;
+            }
+        }
+	}
+
+    a,
+    a:visited,
+    a[x-apple-data-detectors] {
+        color: utility-color(blue, highlight);
+    }
+
+    a:hover,
+    a:focus,
+    a:active,
+    a.active,
+    .active > a {
+        color: utility-color(blue, background) !important;
+    }
+
+    .a-footer-message {
+
+        @include meta-preset( $size: -1, $bold: false, $italic: false, $line-height: 1 );
+        text-align: center;
+        margin-bottom: $standard-block-margin;
+    }
+}
