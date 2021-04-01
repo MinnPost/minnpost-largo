@@ -430,7 +430,7 @@ class Minnpost_Email_Walker_Nav_Menu extends Minnpost_Walker_Nav_Menu {
 		$output .= '<td' . $active_class . '><a href="' . $url . '">' . $item->title . '</a>';
 	}
 
-	// end item with a </li>
+	// end item with a </td>
 	public function end_el( &$output, $item, $depth = 0, $args = array() ) {
 		$output .= '</td>';
 	}
