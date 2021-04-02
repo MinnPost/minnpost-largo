@@ -39,10 +39,14 @@ usort(
 ?>
 
 <?php if ( 'image' === $type || 'editor' === $type ) : ?>
-
-	<tr>
-		<td class="o-site-message-container wp-message-inserter-message <?php echo $wp_classes; ?> wp-message-inserter-message-<?php echo $slug; ?> wp-message-inserter-message-region-<?php echo $region; ?> wp-message-inserter-message-id-<?php echo $id; ?> wp-message-inserter-message-<?php echo $type; ?> wp-message-inserter-message-<?php echo $message_counter; ?>">
-			<div>
+	<div class="o-columns o-site-message">
+		[outlook]
+			<table role="presentation" width="100%" class="o-columns o-site-message">
+				<tr>
+					<td class="o-column o-site-message">
+		[/outlook]
+		<div class="o-column o-site-message">
+			<div class="item-contents">
 				<?php if ( 'image' === $type ) : ?>
 					<div class="m-wp-insert-message-item m-wp-insert-message-images">
 						<?php if ( isset( $message['meta'][ $prefix . 'link_url' ] ) ) : ?>
@@ -92,9 +96,14 @@ usort(
 						<?php endforeach; ?>
 					<?php endif; ?>
 				<?php endif; ?>
-			</div>
-		</td> <!-- end .one-column.message -->
-	</tr> <!-- end row -->
+			</div> <!-- item-contents -->
+		</div>
+		[outlook]
+					</td>
+				</tr>
+		</table>
+		[/outlook]
+	</div> <!-- end o-site-message -->
 <?php elseif ( 'banner' === $type ) : ?>
 	<?php require( 'includes/banner.php' ); ?>
 <?php endif; ?>
