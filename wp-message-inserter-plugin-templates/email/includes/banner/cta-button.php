@@ -46,25 +46,13 @@
 		// email content filter
 		$value = apply_filters( 'format_email_content', $value, false, true );
 		?>
-		<center>
-			<table class="button read-story" style="border-collapse: collapse; border-spacing: 0; Margin: 0 0 15px 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0" cellspacing="0" cellpadding="0">
-				<tbody>
-					<tr>
-						<td style="border-collapse: collapse; Margin: 0; padding: 0">
-							<table style="border-collapse: collapse; border-spacing: 0; color: #<?php echo $button_textcolor; ?>; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0" cellspacing="0" cellpadding="0">
-								<tbody>
-									<tr>
-										<td style="-moz-border-radius: 4px; -webkit-border-radius: 4px; background: <?php echo $button_bgcolor; ?> border-collapse: collapse; border-radius:4px; Margin: 0; padding: 0" bgcolor="<?php echo $button_bgcolor; ?>" align="center">
-											<?php echo $value; ?>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</td>
-					</tr>
-				</tbody>
-			</table>
-		</center>
+
+		<p class="a-button a-button-site-message">
+			<?php echo $value; ?>
+		</p>
+
+		
+	
 	<?php endif; ?>
 	<?php
 endif;

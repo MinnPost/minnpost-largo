@@ -1,0 +1,9 @@
+.o-rows.o-site-message {
+
+    .o-row {
+    
+        .item-contents {
+            @include meta-preset( $size: 0 );
+        }
+    }
+}

@@ -13,80 +13,92 @@ $session_count_operator = isset( $message['meta'][ $prefix . 'operator_session' 
 ?>
 
 <?php if ( 0 < count( $screen_sizes ) ) : ?>
-	<div class="o-columns o-site-message">
-		[outlook]
-			<table role="presentation" width="100%" class="o-columns o-site-message">
-				<tr>
-					<td class="o-column o-site-message">
-		[/outlook]
-		<div class="o-column o-site-message">
-			<div class="item-contents">
-				<?php foreach ( $screen_sizes as $key => $screen_size ) : ?>
+	<?php foreach ( $screen_sizes as $key => $screen_size ) : ?>
 
-					<?php
-					// Banner BG Setup
-					$bgcolor     = isset( $screen_size[ $prefix . 'banner_bgcolor' ] ) ? 'linear-gradient(
-						' . $screen_size[ $prefix . 'banner_bgcolor' ] . ',
-						' . $screen_size[ $prefix . 'banner_bgcolor' ] . '
-					)' : '';
-					$banner_bg   = isset( $screen_size[ $prefix . 'banner_bgimage' ] ) ? 'background: ' . $bgcolor . ', url(' . $screen_size[ $prefix . 'banner_bgimage' ] . ') center center no-repeat; background-size: cover;' : 'background: ' . $bgcolor . ';';
-					$banner_text = isset( $screen_size[ $prefix . 'banner_textcolor' ] ) ? 'color: ' . $screen_size[ $prefix . 'banner_textcolor' ] . ';' : '';
+		<?php
+		// Banner BG Setup
+		$bgcolor     = isset( $screen_size[ $prefix . 'banner_bgcolor' ] ) ? 'linear-gradient(
+			' . $screen_size[ $prefix . 'banner_bgcolor' ] . ',
+			' . $screen_size[ $prefix . 'banner_bgcolor' ] . '
+		)' : '';
+		$banner_bg   = isset( $screen_size[ $prefix . 'banner_bgimage' ] ) ? 'background: ' . $bgcolor . ', url(' . $screen_size[ $prefix . 'banner_bgimage' ] . ') center center no-repeat; background-size: cover;' : 'background: ' . $bgcolor . ';';
+		$banner_text = isset( $screen_size[ $prefix . 'banner_textcolor' ] ) ? 'color: ' . $screen_size[ $prefix . 'banner_textcolor' ] . ';' : '';
 
-					$banner_size           = '';
-					$banner_max_width      = isset( $screen_size[ $prefix . 'banner_max_width' ] ) ? $screen_size[ $prefix . 'banner_max_width' ] : 'page';
-					$banner_max_width_text = isset( $screen_size[ $prefix . 'banner_max_width_text' ] ) ? $screen_size[ $prefix . 'banner_max_width_text' ] : '';
-					$banner_max_width_unit = isset( $screen_size[ $prefix . 'banner_max_width_unit' ] ) ? $screen_size[ $prefix . 'banner_max_width_unit' ] : '';
-					if ( 'page' !== $banner_max_width && 'custom' !== $banner_max_width ) {
-						$banner_size = 'max-width:' . $banner_max_width;
-					} elseif ( '' !== $banner_max_width_text && '' !== $banner_max_width_unit ) {
-						$banner_size = 'max-width:' . $banner_max_width_text . $banner_max_width_unit;
-					}
+		$banner_size           = '';
+		$banner_max_width      = isset( $screen_size[ $prefix . 'banner_max_width' ] ) ? $screen_size[ $prefix . 'banner_max_width' ] : 'page';
+		$banner_max_width_text = isset( $screen_size[ $prefix . 'banner_max_width_text' ] ) ? $screen_size[ $prefix . 'banner_max_width_text' ] : '';
+		$banner_max_width_unit = isset( $screen_size[ $prefix . 'banner_max_width_unit' ] ) ? $screen_size[ $prefix . 'banner_max_width_unit' ] : '';
+		if ( 'page' !== $banner_max_width && 'custom' !== $banner_max_width ) {
+			$banner_size = 'max-width:' . $banner_max_width;
+		} elseif ( '' !== $banner_max_width_text && '' !== $banner_max_width_unit ) {
+			$banner_size = 'max-width:' . $banner_max_width_text . $banner_max_width_unit;
+		}
 
-					$banner_style = $banner_bg . $banner_text . $banner_size . ';';
+		$banner_style = $banner_bg . $banner_text . $banner_size . ';';
 
-					// session data attributes
-					$session_data_attributes = '';
-					if ( '' !== $check_session && '' !== $session_count_check && '' !== $session_count_operator ) {
-						$session_data_attributes = ' data-session-count-to-check="' . $session_count_check . '" data-session-count-operator="' . $session_count_operator . '"';
-					}
+		?>
 
-					?>
-
-					<div class="m-wp-insert-message-item m-wp-insert-message-item-<?php echo $key; ?> m-wp-insert-message-item-<?php echo $type; ?><?php echo ( 'page' === $banner_max_width ) ? ' banner-width-page' : ''; ?>" style="<?php echo $banner_style; ?>">
-
-						<?php if ( 'dualcol' === $screen_size[ $prefix . 'banner_layout' ] ) : ?>
-							<!-- Dual Col -->
-							<div class="dual-wrap <?php echo ( isset( $screen_size[ $prefix . 'banner_flip_columns' ] ) && 'on' === $screen_size[ $prefix . 'banner_flip_columns' ] ) ? 'flip' : ''; ?>">
-								<div class="col">
-									<?php require( 'banner/text.php' ); ?>
-								</div>
-								<div class="col">
-									<?php if ( 'button' === $screen_size[ $prefix . 'cta_type_email' ] ) : ?>
-										<?php require( 'banner/cta-button.php' ); ?>
-									<?php endif; ?>
-									<?php require( 'banner/disclaimer.php' ); ?>
-								</div>
-							</div>
-						<?php endif; ?>
-
-						<?php if ( 'stacked' === $screen_size[ $prefix . 'banner_layout' ] ) : ?>
-							<!-- Stacked Banner -->
-							<div class="stack-wrap">
-								<?php require( 'banner/text.php' ); ?>
-								<?php if ( 'button' === $screen_size[ $prefix . 'cta_type_email' ] ) : ?>
-									<?php require( 'banner/cta-button.php' ); ?>
-								<?php endif; ?>
-								<?php require( 'banner/disclaimer.php' ); ?>
-							</div>
-						<?php endif; ?>
+		<?php if ( 'dualcol' === $screen_size[ $prefix . 'banner_layout' ] ) : ?>
+			<!-- Dual Col -->
+			<div class="o-columns o-site-message dual-wrap <?php echo ( isset( $screen_size[ $prefix . 'banner_flip_columns' ] ) && 'on' === $screen_size[ $prefix . 'banner_flip_columns' ] ) ? 'flip' : ''; ?>" style="<?php echo $banner_style; ?>">
+				[outlook]
+					<table role="presentation" width="100%" class="o-columns o-site-message">
+						<tr>
+							<td class="o-column o-site-message-column">
+				[/outlook]
+				<div class="o-column o-site-message-column">				
+					<div class="col item-contents">
+						<?php require( 'banner/text.php' ); ?>
 					</div>
-				<?php endforeach; ?>
-			</div> <!-- item-contents -->
-		</div>
+				</div> <!-- .o-column -->
+				[outlook]
+							</td>
+							<td class="o-column o-site-message-column">
+				[/outlook]
+				<div class="o-column o-site-message-column">
+					<div class="item-contents">
+						<?php if ( 'button' === $screen_size[ $prefix . 'cta_type_email' ] ) : ?>
+							<?php require( 'banner/cta-button.php' ); ?>
+						<?php endif; ?>
+						<?php require( 'banner/disclaimer.php' ); ?>
+					</div>
+				</div>
+				[outlook]
+							</td>
+						</tr>
+					</table>
+				[/outlook]
+			</div> <!-- end o-columns.o-site-message -->
+		<?php endif; ?>
+
+		<?php if ( 'stacked' === $screen_size[ $prefix . 'banner_layout' ] ) : ?>
+			<!-- Stacked Banner -->
+			<div class="o-rows o-site-message stack-wrap <?php echo ( isset( $screen_size[ $prefix . 'banner_flip_columns' ] ) && 'on' === $screen_size[ $prefix . 'banner_flip_columns' ] ) ? 'flip' : ''; ?>" style="<?php echo $banner_style; ?>">
+				[outlook]
+					<table role="presentation" width="100%" class="o-rows o-site-message">
+						<tr>
+							<td class="o-row o-site-message-row">
+				[/outlook]
+				<?php require( 'banner/text.php' ); ?>
+				<div class="o-row o-site-message-row">
+					<?php if ( 'button' === $screen_size[ $prefix . 'cta_type_email' ] ) : ?>
+						<?php require( 'banner/cta-button.php' ); ?>
+					<?php endif; ?>
+					<?php require( 'banner/disclaimer.php' ); ?>
+				</div>
+				[outlook]
+							</td>
+						</tr>
+					</table>
+				[/outlook]
+			</div>
+		<?php endif; ?>
+
 		[outlook]
 					</td>
 				</tr>
 			</table>
 		[/outlook]
 	</div> <!-- end o-site-message -->
+	<?php endforeach; ?>
 <?php endif; ?>
