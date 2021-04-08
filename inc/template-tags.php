@@ -693,8 +693,8 @@ if ( ! function_exists( 'minnpost_get_related' ) ) :
 
 		// allow for using zoninator posts as related posts.
 		$zoninator_related_enabled = true;
-		$cache_zoninator_related   = true;
 		if ( 'zoninator' === $type && true === $zoninator_related_enabled ) {
+			$cache_zoninator_related = true;
 			if ( true === $cache_zoninator_related ) {
 				$cache_key   = md5( 'minnpost_zoninator_related_posts_' . $post_id );
 				$cache_group = 'minnpost';
