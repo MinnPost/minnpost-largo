@@ -139,7 +139,9 @@
 			$related_multimedia_ids = minnpost_get_related( 'multimedia' );
 			$related_content_ids    = minnpost_get_related( 'content' );
 			if ( empty( $related_multimedia_ids ) && empty( $related_content_ids ) ) {
-				if ( ! empty( minnpost_largo_get_jetpack_results() ) ) {
+				if ( ! empty( minnpost_get_related( 'zoninator' ) ) ) {
+					minnpost_related( 'zoninator' );
+				} elseif ( ! empty( minnpost_largo_get_jetpack_results() ) ) {
 					minnpost_related( 'automated' );
 				} else {
 					echo do_shortcode( '[jetpack-related-posts]' );
