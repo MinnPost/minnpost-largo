@@ -620,14 +620,16 @@ endif;
 *
 * @see inc/jetpack.php for automated related stories
 * @param string $type
+* @param int $count
+* @param bool $only_show_images_if_not_missing
 *
 */
 if ( ! function_exists( 'minnpost_related' ) ) :
-	function minnpost_related( $type = 'content', $only_show_images_if_not_missing = false ) {
+	function minnpost_related( $type = 'content', $count = 3, $only_show_images_if_not_missing = false ) {
 		if ( 'automated' === $type && function_exists( 'minnpost_largo_get_jetpack_results' ) ) {
-			$related_posts = minnpost_largo_get_jetpack_results();
+			$related_posts = minnpost_largo_get_jetpack_results( $count );
 		} else {
-			$related_ids   = minnpost_get_related( $type );
+			$related_ids   = minnpost_get_related( $type, get_the_ID(), $count );
 			$related_posts = array();
 			foreach ( $related_ids as $id ) {
 				$related_posts[] = get_post( $id );
@@ -681,11 +683,12 @@ endif;
 *
 * @param string $type
 * @param int $post_id
+* @param int $count
 * @return array $related
 *
 */
 if ( ! function_exists( 'minnpost_get_related' ) ) :
-	function minnpost_get_related( $type = 'content', $post_id = 0 ) {
+	function minnpost_get_related( $type = 'content', $post_id = 0, $count = 3 ) {
 		if ( 0 === $post_id ) {
 			$post_id = get_the_ID();
 		}
@@ -742,7 +745,7 @@ if ( ! function_exists( 'minnpost_get_related' ) ) :
 					if ( true === $zoninator_related_random ) {
 						shuffle( $related );
 					}
-					$related = array_slice( $related, 0, 4 );
+					$related = array_slice( $related, 0, $count );
 				}
 				if ( true === $cache_zoninator_related ) {
 					wp_cache_set( $cache_key, $related, $cache_group, MINUTE_IN_SECONDS * 30 );

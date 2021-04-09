@@ -152,16 +152,17 @@ endif;
  * Generate a WP query object for jetpack related posts.
  * These results are displayed by the minnpost_related function in inc/template-tags.php
  *
+ * @param int $count
  * @return object $related_query
  */
 if ( ! function_exists( 'minnpost_largo_get_jetpack_results' ) ) :
 	add_shortcode( 'jetpack-related-posts', 'minnpost_largo_get_jetpack_results' );
-	function minnpost_largo_get_jetpack_results() {
+	function minnpost_largo_get_jetpack_results( $count = 3 ) {
 		$related_posts = array();
 		$query         = array();
 
 		// Number of posts to show
-		$query['showposts'] = 3;
+		$query['showposts'] = $count;
 
 		// Fetches related post IDs if JetPack Related Posts is active
 		// only do this on production because Jetpack doesn't work on stage/dev
