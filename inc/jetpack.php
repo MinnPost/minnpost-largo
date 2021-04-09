@@ -203,7 +203,7 @@ endif;
 if ( ! function_exists( 'minnpost_largo_jetpack_exclude_category' ) ) :
 	add_filter( 'jetpack_relatedposts_filter_filters', 'minnpost_largo_jetpack_exclude_category' );
 	function minnpost_largo_jetpack_exclude_category( $filters ) {
-		// glean, fonm, mp-picks
+		// glean, fonm, mp-picks.
 		$exclude_ids = array(
 			55575,
 			55630,
@@ -244,6 +244,52 @@ if ( ! function_exists( 'minnpost_largo_jetpack_exclude_category' ) ) :
 			),
 		);
 		return $filters;
+	}
+endif;
+
+/**
+ * Exclude Daily Coronavirus Updates from Jetpack-generated related posts
+ *
+ * @param array $exclude_post_ids
+ * @param int $post_id
+ * @return array $coronavirus_update_ids
+ *
+ */
+if ( ! function_exists( 'minnpost_related_exclude_coronavirus_updates' ) ) :
+	add_filter( 'jetpack_relatedposts_filter_exclude_post_ids', 'minnpost_related_exclude_coronavirus_updates' );
+	function minnpost_related_exclude_coronavirus_updates( $exclude_post_ids ) {
+
+		$coronavirus_update_ids = array();
+
+		$cache_coronavirus_update_ids = true;
+		if ( true === $cache_coronavirus_update_ids ) {
+			$cache_key              = md5( 'minnpost_cache_coronavirus_update_ids' );
+			$cache_group            = 'minnpost';
+			$coronavirus_update_ids = wp_cache_get( $cache_key, $cache_group );
+			if ( false === $coronavirus_update_ids ) {
+				$coronavirus_update_ids = array();
+			}
+		}
+
+		if ( empty( $coronavirus_update_ids ) ) {
+			// load all posts that start with "The daily coronavirus update: "
+			$coronavirus_update_query = new WP_Query(
+				array(
+					'title_starts_with' => 'The daily coronavirus update: ',
+					'fields'            => 'ids',
+					'posts_per_page'    => -1,
+					'post_status'       => 'publish',
+				)
+			);
+			// if there are no posts, it's an empty array.
+			$coronavirus_update_ids = $coronavirus_update_query->posts;
+
+			// cache the array of IDs for one hour.
+			if ( true === $cache_coronavirus_update_ids ) {
+				wp_cache_set( $cache_key, $coronavirus_update_ids, $cache_group, HOUR_IN_SECONDS * 30 );
+			}
+		}
+		return $coronavirus_update_ids;
 	}
 endif;
 
