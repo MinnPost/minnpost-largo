@@ -210,33 +210,82 @@ if ( ! function_exists( 'minnpost_largo_jetpack_exclude_category' ) ) :
 			55630,
 			55628,
 		);
-		$opinion     = get_term_by( 'slug', 'opinion', 'category' );
-		$sponsored   = get_term_by( 'slug', 'sponsored-content', 'category' );
 
-		// also exclude categories that are grouped as opinion or sponsored content
-		$term_args   = array(
+		// add in the plugin-based exclusions from the shortcode.
+		$exclusions = do_shortcode( '[return_excluded_terms ]' );
+		if ( ! empty( $exclusions ) ) {
+			$exclude_ids = array_merge( $exclude_ids, str_getcsv( $exclusions, ',', "'" ) );
+		}
+
+		// settings for include/exclude of the current post category for recommendations.
+		// if both are false, it uses the default Jetpack recommending system.
+		// if both are true, it would run the same category only and ignore the not same category flag.
+		$same_category_only = false;
+		$not_same_category  = false;
+
+		// load the current post's permalink category ID.
+		$permalink_category = minnpost_get_permalink_category_id( get_the_ID() );
+		if ( in_array( (int) $permalink_category, $exclude_ids, true ) ) {
+			// if the current category should be excluded, don't recommend stories only from this category.
+			$same_category_only = false;
+		}
+
+		// get the sponsored post group category; we always want to exclude it.
+		$sponsored = get_term_by( 'slug', 'sponsored-content', 'category' );
+
+		// start the WP_Term_Query arguments.
+		$term_args = array(
 			'taxonomy'   => 'category',
 			'fields'     => 'ids',
 			'meta_query' => array(
-				'relation' => 'OR',
-				array(
-					'key'   => '_mp_category_group',
-					'value' => $opinion->term_id,
-				),
 				array(
 					'key'   => '_mp_category_group',
 					'value' => $sponsored->term_id,
 				),
 			),
 		);
-		$term_query  = new WP_Term_Query( $term_args );
-		$exclude_ids = array_merge( $exclude_ids, $term_query->terms );
 
-		$exclusions = do_shortcode( '[return_excluded_terms]' );
-		if ( ! empty( $exclusions ) ) {
-			$exclude_ids = array_merge( $exclude_ids, str_getcsv( $exclusions, ',', "'" ) );
+		// this array will be merged in later.
+		$if_term_args = array();
+
+		// our default Jetpack behavior.
+		if ( false === $same_category_only && false === $not_same_category ) {
+			// get the opinion post group category; we currently exclude it by default
+			$opinion      = get_term_by( 'slug', 'opinion', 'category' );
+			$if_term_args = array(
+				'meta_query' => array(
+					'relation' => 'OR',
+					array(
+						'key'   => '_mp_category_group',
+						'value' => $opinion->term_id,
+					),
+					array(
+						'key'   => '_mp_category_group',
+						'value' => $sponsored->term_id,
+					),
+				),
+			);
+		} elseif ( true === $same_category_only ) {
+			// we only want to include the permalink category of the current post, so exclude all others.
+			$if_term_args = array(
+				'exclude' => $permalink_category,
+			);
+		} elseif ( true === $not_same_category ) {
+			// we want to exclude posts with the permalink category of the current post, in addition to other excludes.
+			$exclude_ids[] = $permalink_category;
 		}
 
+		// merge the WP_Term_Query args from the if statement.
+		$term_args = array_merge( $term_args, $if_term_args );
+
+		// generate a WP_Term_Query from the arguments.
+		$term_query = new WP_Term_Query( $term_args );
+		// merge the exclude IDs array with the WP_Term_Query results.
+		$exclude_ids = array_merge( $exclude_ids, $term_query->terms );
+		// make sure exclude ID array is unique.
+		$exclude_ids = array_unique( $exclude_ids );
+		sort( $exclude_ids );
+		// send the list of categories to exclude to the Jetpack filter.
 		$filters[] = array(
 			'not' => array(
 				'terms' => array(
