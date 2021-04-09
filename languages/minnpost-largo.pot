@@ -531,7 +531,7 @@ msgstr ""
 msgid "This text will show as a heading above the Related Content items. If you leave it blank, it will say %1$s."
 msgstr ""
 
-#: inc/custom-fields.php:769, inc/template-tags.php:642
+#: inc/custom-fields.php:769, inc/template-tags.php:644
 msgid "Read these stories next"
 msgstr ""
 
@@ -1267,7 +1267,7 @@ msgstr ""
 msgid "MinnPost is a 501(c)(3) nonprofit that receives support from donors, members, foundations, advertisers and sponsors. Donors and sponsors that underwrite MinnPost events play no role in determining the content, featured guests or line of questioning."
 msgstr ""
 
-#: inc/jetpack.php:186
+#: inc/jetpack.php:187
 msgid "Related Posts"
 msgstr ""
 
@@ -1395,60 +1395,60 @@ msgstr ""
 msgid "Related MinnPost Coverage"
 msgstr ""
 
-#: inc/template-tags.php:819
+#: inc/template-tags.php:882
 msgid "About the author"
 msgstr ""
 
 #. translators: 1) author archive url, 2) author name
-#: inc/template-tags.php:926
+#: inc/template-tags.php:989
 msgid "More articles by %2$s"
 msgstr ""
 
 #. translators: used between list items, there is a space after the comma
 #. translators: used between list items, there is a space after the comma
-#: inc/template-tags.php:1525, inc/template-tags.php:1532
+#: inc/template-tags.php:1588, inc/template-tags.php:1595
 msgid ", "
 msgstr ""
 
 #. translators: placeholder is the list of categories
-#: inc/template-tags.php:1528
+#: inc/template-tags.php:1591
 msgid "Posted in %1$s"
 msgstr ""
 
 #. translators: placeholder is the list of tags
-#: inc/template-tags.php:1535
+#: inc/template-tags.php:1598
 msgid "Tagged %1$s"
 msgstr ""
 
 #. translators: %s: post title
-#: inc/template-tags.php:1545
+#: inc/template-tags.php:1608
 msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
 #. translators: %s: Name of current post
 #. translators: %s: Name of current post
-#: inc/template-tags.php:1561, inc/template-tags.php:1591
+#: inc/template-tags.php:1624, inc/template-tags.php:1654
 msgid "Edit %s"
 msgstr ""
 
-#: inc/template-tags.php:1979
+#: inc/template-tags.php:2042
 msgid "MinnPostPlus"
 msgstr ""
 
 #. translators: Daily archive title. %s: Date.
-#: inc/template-tags.php:2012
+#: inc/template-tags.php:2075
 msgid "Daily Archives: %s"
 msgstr ""
 
-#: inc/template-tags.php:2009
+#: inc/template-tags.php:2072
 msgid "Monthly Archives: %s"
 msgstr ""
 
-#: inc/template-tags.php:2006
+#: inc/template-tags.php:2069
 msgid "Yearly Archives: %s"
 msgstr ""
 
-#: inc/template-tags.php:2254
+#: inc/template-tags.php:2317
 msgid "Your&nbsp;MinnPost&nbsp;Account"
 msgstr ""
 
