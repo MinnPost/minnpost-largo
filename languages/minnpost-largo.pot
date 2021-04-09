@@ -430,11 +430,11 @@ msgstr ""
 msgid "Homepage Image Size"
 msgstr ""
 
-#: inc/custom-fields.php:848, inc/custom-fields.php:1045, inc/custom-fields.php:2505, inc/custom-fields.php:2943
+#: inc/custom-fields.php:848, inc/custom-fields.php:1046, inc/custom-fields.php:2505, inc/custom-fields.php:2943
 msgid "Medium"
 msgstr ""
 
-#: inc/custom-fields.php:849, inc/custom-fields.php:1046, inc/custom-fields.php:2506, inc/custom-fields.php:2944
+#: inc/custom-fields.php:849, inc/custom-fields.php:2506, inc/custom-fields.php:2944
 msgid "Do not display image"
 msgstr ""
 
@@ -598,6 +598,10 @@ msgstr ""
 msgid "If selected, the image size will be used for this post regardless of where it is in the newsletter post order. By default, the Editor's Picks section has no image. In other sections, the default behavior is to use the Large image for the first post, then to use Medium for subsequent posts."
 msgstr ""
 
+#: inc/custom-fields.php:1045
+msgid "Default for the section"
+msgstr ""
+
 #: inc/custom-fields.php:1058, inc/custom-fields.php:3156
 msgid "Ad & Sponsorship Settings"
 msgstr ""
@@ -683,7 +687,7 @@ msgstr ""
 msgid "This text will show as a heading above the Related Content items. If you leave it blank, it will say %1$s."
 msgstr ""
 
-#: inc/custom-fields.php:1178, inc/template-tags.php:322
+#: inc/custom-fields.php:1178, inc/template-tags.php:324
 msgid "Read these stories next"
 msgstr ""
 
@@ -1419,7 +1423,7 @@ msgstr ""
 msgid "MinnPost is a 501(c)(3) nonprofit that receives support from donors, members, foundations, advertisers and sponsors. Donors and sponsors that underwrite MinnPost events play no role in determining the content, featured guests or line of questioning."
 msgstr ""
 
-#: inc/jetpack.php:186
+#: inc/jetpack.php:187
 msgid "Related Posts"
 msgstr ""
 
@@ -1444,38 +1448,42 @@ msgid "Network Menu"
 msgstr ""
 
 #: inc/menu-functions.php:23
-msgid "Footer Primary"
+msgid "Network Menu for Emails"
 msgstr ""
 
 #: inc/menu-functions.php:24
+msgid "Footer Primary"
+msgstr ""
+
+#: inc/menu-functions.php:25
 msgid "Festival"
 msgstr ""
 
-#: inc/menu-functions.php:52
+#: inc/menu-functions.php:53
 msgid "Priority"
 msgstr ""
 
-#: inc/menu-functions.php:56
+#: inc/menu-functions.php:57
 msgid "A low priority (ex 1) will cause the site to try to show this menu item at the smallest screen sizes. A higher priority will potentially hide this item on smaller screens, and show it as the screen gets bigger."
 msgstr ""
 
-#: inc/menu-functions.php:60
+#: inc/menu-functions.php:61
 msgid "Navigation Label On Smallest Screens"
 msgstr ""
 
-#: inc/menu-functions.php:64
+#: inc/menu-functions.php:65
 msgid "Text in this field will be used as the label at the smallest screen sizes. It is useful for shortening a label rather than removing it."
 msgstr ""
 
-#: inc/menu-functions.php:68
+#: inc/menu-functions.php:69
 msgid "Font Awesome Icon Name"
 msgstr ""
 
-#: inc/menu-functions.php:72
+#: inc/menu-functions.php:73
 msgid "A value here will cause the menu item to display as an icon."
 msgstr ""
 
-#: inc/menu-functions.php:903
+#: inc/menu-functions.php:931
 msgid "Unpublished"
 msgstr ""
 
@@ -1571,40 +1579,40 @@ msgstr ""
 
 #. translators: used between list items, there is a space after the comma
 #. translators: used between list items, there is a space after the comma
-#: inc/template-tags.php:481, inc/template-tags.php:488
+#: inc/template-tags.php:573, inc/template-tags.php:580
 msgid ", "
 msgstr ""
 
 #. translators: placeholder is the list of categories
-#: inc/template-tags.php:484
+#: inc/template-tags.php:576
 msgid "Posted in %1$s"
 msgstr ""
 
 #. translators: placeholder is the list of tags
-#: inc/template-tags.php:491
+#: inc/template-tags.php:583
 msgid "Tagged %1$s"
 msgstr ""
 
 #. translators: %s: post title
-#: inc/template-tags.php:501
+#: inc/template-tags.php:593
 msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
 #. translators: %s: Name of current post
 #. translators: %s: Name of current post
-#: inc/template-tags.php:517, inc/template-tags.php:547
+#: inc/template-tags.php:609, inc/template-tags.php:639
 msgid "Edit %s"
 msgstr ""
 
-#: inc/template-tags.php:715
+#: inc/template-tags.php:807
 msgid "MinnPostPlus"
 msgstr ""
 
-#: inc/template-tags.php:941
+#: inc/template-tags.php:1033
 msgid "Your&nbsp;MinnPost&nbsp;Account"
 msgstr ""
 
-#: inc/template-tags.php:1072
+#: inc/template-tags.php:1164
 msgid "Read story"
 msgstr ""
 

@@ -410,15 +410,76 @@ endif;
 *
 * @param string $type
 * @param int $post_id
+* @param int $count
 * @return array $related
 *
 */
 if ( ! function_exists( 'minnpost_get_related' ) ) :
-	function minnpost_get_related( $type = 'content', $post_id = 0 ) {
+	function minnpost_get_related( $type = 'content', $post_id = 0, $count = 3 ) {
 		if ( 0 === $post_id ) {
 			$post_id = get_the_ID();
 		}
 		$related = array();
+
+		// allow for using zoninator posts as related posts.
+		// if used, the array of IDs can be cached for each post for 30 minutes.
+		$zoninator_related_enabled = false;
+		if ( 'zoninator' === $type && true === $zoninator_related_enabled ) {
+			$cache_zoninator_related = true;
+			if ( true === $cache_zoninator_related ) {
+				$cache_key   = md5( 'minnpost_zoninator_related_posts_' . $post_id );
+				$cache_group = 'minnpost';
+				$related     = wp_cache_get( $cache_key, $cache_group );
+				if ( false === $related ) {
+					$related = array();
+				}
+			}
+			if ( empty( $related ) ) {
+				$zoninator_related_random = true;
+				$current_post_id          = get_the_ID();
+				$exclude_categories       = array(
+					'inside-minnpost',
+				);
+				if ( function_exists( 'z_get_zone' ) ) {
+					$top_query = z_get_zone_query( 'homepage-top' );
+					if ( $top_query->have_posts() ) {
+						while ( $top_query->have_posts() ) {
+							$top_query->the_post();
+							if ( get_the_ID() !== $current_post_id && ! in_category( $exclude_categories, get_the_ID() ) ) {
+								$related[] = get_the_ID();
+							}
+						}
+					}
+					$top_more_query = z_get_zone_query( 'homepage-more-top-stories' );
+					if ( $top_more_query->have_posts() ) {
+						while ( $top_more_query->have_posts() ) {
+							$top_more_query->the_post();
+							if ( get_the_ID() !== $current_post_id && ! in_category( $exclude_categories, get_the_ID() ) ) {
+								$related[] = get_the_ID();
+							}
+						}
+					}
+					$opinion_query = z_get_zone_query( 'homepage-opinion' );
+					if ( $opinion_query->have_posts() ) {
+						while ( $opinion_query->have_posts() ) {
+							$opinion_query->the_post();
+							if ( get_the_ID() !== $current_post_id && ! in_category( $exclude_categories, get_the_ID() ) ) {
+								$related[] = get_the_ID();
+							}
+						}
+					}
+					wp_reset_postdata();
+					if ( true === $zoninator_related_random ) {
+						shuffle( $related );
+					}
+					$related = array_slice( $related, 0, $count );
+				}
+				if ( true === $cache_zoninator_related ) {
+					wp_cache_set( $cache_key, $related, $cache_group, MINUTE_IN_SECONDS * 30 );
+				}
+			}
+		}
+		// manually selected related posts. these always override the other kinds.
 		if ( ! empty( get_post_meta( $post_id, '_mp_related_' . $type, true ) ) ) {
 			$ids = get_post_meta( $post_id, '_mp_related_' . $type, true );
 			if ( ! is_array( $ids ) ) {
