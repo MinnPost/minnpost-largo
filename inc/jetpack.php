@@ -152,16 +152,17 @@ endif;
  * Generate a WP query object for jetpack related posts.
  * These results are displayed by the minnpost_related function in inc/template-tags.php
  *
+ * @param int $count
  * @return object $related_query
  */
 if ( ! function_exists( 'minnpost_largo_get_jetpack_results' ) ) :
 	add_shortcode( 'jetpack-related-posts', 'minnpost_largo_get_jetpack_results' );
-	function minnpost_largo_get_jetpack_results() {
+	function minnpost_largo_get_jetpack_results( $count = 3 ) {
 		$related_posts = array();
 		$query         = array();
 
 		// Number of posts to show
-		$query['showposts'] = 3;
+		$query['showposts'] = $count;
 
 		// Fetches related post IDs if JetPack Related Posts is active
 		// only do this on production because Jetpack doesn't work on stage/dev
@@ -203,39 +204,88 @@ endif;
 if ( ! function_exists( 'minnpost_largo_jetpack_exclude_category' ) ) :
 	add_filter( 'jetpack_relatedposts_filter_filters', 'minnpost_largo_jetpack_exclude_category' );
 	function minnpost_largo_jetpack_exclude_category( $filters ) {
-		// glean, fonm, mp-picks
+		// glean, fonm, mp-picks.
 		$exclude_ids = array(
 			55575,
 			55630,
 			55628,
 		);
-		$opinion     = get_term_by( 'slug', 'opinion', 'category' );
-		$sponsored   = get_term_by( 'slug', 'sponsored-content', 'category' );
 
-		// also exclude categories that are grouped as opinion or sponsored content
-		$term_args   = array(
+		// add in the plugin-based exclusions from the shortcode.
+		$exclusions = do_shortcode( '[return_excluded_terms ]' );
+		if ( ! empty( $exclusions ) ) {
+			$exclude_ids = array_merge( $exclude_ids, str_getcsv( $exclusions, ',', "'" ) );
+		}
+
+		// settings for include/exclude of the current post category for recommendations.
+		// if both are false, it uses the default Jetpack recommending system.
+		// if both are true, it would run the same category only and ignore the not same category flag.
+		$same_category_only = false;
+		$not_same_category  = false;
+
+		// load the current post's permalink category ID.
+		$permalink_category = minnpost_get_permalink_category_id( get_the_ID() );
+		if ( in_array( (int) $permalink_category, $exclude_ids, true ) ) {
+			// if the current category should be excluded, don't recommend stories only from this category.
+			$same_category_only = false;
+		}
+
+		// get the sponsored post group category; we always want to exclude it.
+		$sponsored = get_term_by( 'slug', 'sponsored-content', 'category' );
+
+		// start the WP_Term_Query arguments.
+		$term_args = array(
 			'taxonomy'   => 'category',
 			'fields'     => 'ids',
 			'meta_query' => array(
-				'relation' => 'OR',
-				array(
-					'key'   => '_mp_category_group',
-					'value' => $opinion->term_id,
-				),
 				array(
 					'key'   => '_mp_category_group',
 					'value' => $sponsored->term_id,
 				),
 			),
 		);
-		$term_query  = new WP_Term_Query( $term_args );
-		$exclude_ids = array_merge( $exclude_ids, $term_query->terms );
 
-		$exclusions = do_shortcode( '[return_excluded_terms]' );
-		if ( ! empty( $exclusions ) ) {
-			$exclude_ids = array_merge( $exclude_ids, str_getcsv( $exclusions, ',', "'" ) );
+		// this array will be merged in later.
+		$if_term_args = array();
+
+		// our default Jetpack behavior.
+		if ( false === $same_category_only && false === $not_same_category ) {
+			// get the opinion post group category; we currently exclude it by default
+			$opinion      = get_term_by( 'slug', 'opinion', 'category' );
+			$if_term_args = array(
+				'meta_query' => array(
+					'relation' => 'OR',
+					array(
+						'key'   => '_mp_category_group',
+						'value' => $opinion->term_id,
+					),
+					array(
+						'key'   => '_mp_category_group',
+						'value' => $sponsored->term_id,
+					),
+				),
+			);
+		} elseif ( true === $same_category_only ) {
+			// we only want to include the permalink category of the current post, so exclude all others.
+			$if_term_args = array(
+				'exclude' => $permalink_category,
+			);
+		} elseif ( true === $not_same_category ) {
+			// we want to exclude posts with the permalink category of the current post, in addition to other excludes.
+			$exclude_ids[] = $permalink_category;
 		}
 
+		// merge the WP_Term_Query args from the if statement.
+		$term_args = array_merge( $term_args, $if_term_args );
+
+		// generate a WP_Term_Query from the arguments.
+		$term_query = new WP_Term_Query( $term_args );
+		// merge the exclude IDs array with the WP_Term_Query results.
+		$exclude_ids = array_merge( $exclude_ids, $term_query->terms );
+		// make sure exclude ID array is unique.
+		$exclude_ids = array_unique( $exclude_ids );
+		sort( $exclude_ids );
+		// send the list of categories to exclude to the Jetpack filter.
 		$filters[] = array(
 			'not' => array(
 				'terms' => array(
@@ -244,6 +294,52 @@ if ( ! function_exists( 'minnpost_largo_jetpack_exclude_category' ) ) :
 			),
 		);
 		return $filters;
+	}
+endif;
+
+/**
+ * Exclude Daily Coronavirus Updates from Jetpack-generated related posts
+ *
+ * @param array $exclude_post_ids
+ * @param int $post_id
+ * @return array $coronavirus_update_ids
+ *
+ */
+if ( ! function_exists( 'minnpost_related_exclude_coronavirus_updates' ) ) :
+	add_filter( 'jetpack_relatedposts_filter_exclude_post_ids', 'minnpost_related_exclude_coronavirus_updates' );
+	function minnpost_related_exclude_coronavirus_updates( $exclude_post_ids ) {
+
+		$coronavirus_update_ids = array();
+
+		$cache_coronavirus_update_ids = true;
+		if ( true === $cache_coronavirus_update_ids ) {
+			$cache_key              = md5( 'minnpost_cache_coronavirus_update_ids' );
+			$cache_group            = 'minnpost';
+			$coronavirus_update_ids = wp_cache_get( $cache_key, $cache_group );
+			if ( false === $coronavirus_update_ids ) {
+				$coronavirus_update_ids = array();
+			}
+		}
+
+		if ( empty( $coronavirus_update_ids ) ) {
+			// load all posts that start with "The daily coronavirus update: "
+			$coronavirus_update_query = new WP_Query(
+				array(
+					'title_starts_with' => 'The daily coronavirus update: ',
+					'fields'            => 'ids',
+					'posts_per_page'    => -1,
+					'post_status'       => 'publish',
+				)
+			);
+			// if there are no posts, it's an empty array.
+			$coronavirus_update_ids = $coronavirus_update_query->posts;
+
+			// cache the array of IDs for one hour.
+			if ( true === $cache_coronavirus_update_ids ) {
+				wp_cache_set( $cache_key, $coronavirus_update_ids, $cache_group, HOUR_IN_SECONDS * 30 );
+			}
+		}
+		return $coronavirus_update_ids;
 	}
 endif;
 
