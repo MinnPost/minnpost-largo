@@ -696,7 +696,7 @@ if ( ! function_exists( 'minnpost_get_related' ) ) :
 
 		// allow for using zoninator posts as related posts.
 		// if used, the array of IDs can be cached for each post for 30 minutes.
-		$zoninator_related_enabled = false;
+		$zoninator_related_enabled = true;
 		if ( 'zoninator' === $type && true === $zoninator_related_enabled ) {
 			$cache_zoninator_related = true;
 			if ( true === $cache_zoninator_related ) {
