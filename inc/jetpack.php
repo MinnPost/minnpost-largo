@@ -336,7 +336,7 @@ if ( ! function_exists( 'minnpost_related_exclude_coronavirus_updates' ) ) :
 
 			// cache the array of IDs for one hour.
 			if ( true === $cache_coronavirus_update_ids ) {
-				wp_cache_set( $cache_key, $coronavirus_update_ids, $cache_group, HOUR_IN_SECONDS * 30 );
+				wp_cache_set( $cache_key, $coronavirus_update_ids, $cache_group, HOUR_IN_SECONDS * 1 );
 			}
 		}
 		return $coronavirus_update_ids;
