@@ -14,7 +14,7 @@ $session_count_operator = isset( $message['meta'][ $prefix . 'operator_session' 
 
 <?php if ( 0 < count( $screen_sizes ) ) : ?>
 	<tr>
-		<td class="o-site-message-container wp-message-inserter-message <?php echo $wp_classes; ?> wp-message-inserter-message-<?php echo $slug; ?> wp-message-inserter-message-region-<?php echo $region; ?> wp-message-inserter-message-id-<?php echo $id; ?> wp-message-inserter-message-<?php echo $type; ?> wp-message-inserter-message-<?php echo $message_counter; ?>">
+		<td class="one-column message" style="Margin: 0 0 15px 0; padding: 0;">
 		<!--[if (gte mso 9)|(IE)]>
 			<table cellpadding="0" cellspacing="0" width="100%">
 				<tr>
@@ -52,7 +52,7 @@ $session_count_operator = isset( $message['meta'][ $prefix . 'operator_session' 
 
 			?>
 
-			<div class="m-wp-insert-message-item m-wp-insert-message-item-<?php echo $key; ?> m-wp-insert-message-item-<?php echo $type; ?><?php echo ( 'page' === $banner_max_width ) ? ' banner-width-page' : ''; ?>" style="<?php echo $banner_style; ?>">
+			<div class="m-wp-insert-message-item m-wp-insert-message-item-<?php echo $key; ?> m-wp-insert-message-item-<?php echo $type; ?><?php echo ( 'page' === $banner_max_width ) ? ' banner-width-page' : ''; ?>" style="padding: 15px 10px 5px 10px; Margin: 15px 0; border: 1px solid #cccccf; <?php echo $banner_style; ?>">
 
 				<?php if ( 'dualcol' === $screen_size[ $prefix . 'banner_layout' ] ) : ?>
 					<!-- Dual Col -->

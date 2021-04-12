@@ -41,8 +41,13 @@ usort(
 <?php if ( 'image' === $type || 'editor' === $type ) : ?>
 
 	<tr>
-		<td class="o-site-message-container wp-message-inserter-message <?php echo $wp_classes; ?> wp-message-inserter-message-<?php echo $slug; ?> wp-message-inserter-message-region-<?php echo $region; ?> wp-message-inserter-message-id-<?php echo $id; ?> wp-message-inserter-message-<?php echo $type; ?> wp-message-inserter-message-<?php echo $message_counter; ?>">
-			<div>
+		<td class="one-column message" style="Margin: 0; padding: 0;">
+		<!--[if (gte mso 9)|(IE)]>
+			<table cellpadding="0" cellspacing="0" width="100%">
+				<tr>
+					<td width="100%" valign="bottom">
+		<![endif]-->
+			<div class="message">
 				<?php if ( 'image' === $type ) : ?>
 					<div class="m-wp-insert-message-item m-wp-insert-message-images">
 						<?php if ( isset( $message['meta'][ $prefix . 'link_url' ] ) ) : ?>
@@ -81,7 +86,7 @@ usort(
 				<?php if ( 'editor' === $type ) : ?>
 					<?php if ( 0 < count( $screen_sizes ) ) : ?>
 						<?php foreach ( $screen_sizes as $key => $screen_size ) : ?>
-							<div class="m-wp-insert-message-item m-wp-insert-message-editor m-wp-insert-message-item-<?php echo $key; ?>">
+							<div class="m-wp-insert-message-item m-wp-insert-message-editor m-wp-insert-message-item-<?php echo $key; ?>" style="padding: 15px 10px 5px 10px; margin: 15px 0;">
 								<?php
 								$content = apply_filters( 'the_content', $screen_size[ $prefix . 'message_editor' ], 20 );
 								// email content filter
@@ -93,6 +98,11 @@ usort(
 					<?php endif; ?>
 				<?php endif; ?>
 			</div>
+		<!--[if (gte mso 9)|(IE)]>
+				</td>
+			</tr>
+		</table>
+		<![endif]-->
 		</td> <!-- end .one-column.message -->
 	</tr> <!-- end row -->
 <?php elseif ( 'banner' === $type ) : ?>
