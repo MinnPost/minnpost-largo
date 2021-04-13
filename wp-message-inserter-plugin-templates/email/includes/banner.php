@@ -77,10 +77,10 @@ $session_count_operator = isset( $message['meta'][ $prefix . 'operator_session' 
 				[outlook]
 					<table role="presentation" width="100%" class="o-rows o-site-message">
 						<tr>
-							<td class="o-row o-site-message-row">
+							<td class="o-row o-site-message-row o-site-message-row-text">
 				[/outlook]
 				<?php require( 'banner/text.php' ); ?>
-				<div class="o-row o-site-message-row">
+				<div class="o-row o-site-message-row o-site-message-row-button">
 					<?php if ( 'button' === $screen_size[ $prefix . 'cta_type_email' ] ) : ?>
 						<?php require( 'banner/cta-button.php' ); ?>
 					<?php endif; ?>
