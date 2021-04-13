@@ -79,7 +79,13 @@ $session_count_operator = isset( $message['meta'][ $prefix . 'operator_session' 
 						<tr>
 							<td class="o-row o-site-message-row o-site-message-row-text">
 				[/outlook]
-				<?php require( 'banner/text.php' ); ?>
+				<?php if ( isset( $screen_size[ $prefix . 'banner_heading' ] ) || isset( $screen_size[ $prefix . 'banner_shortcopy' ] ) ) : ?>
+					<div class="o-row o-site-message-row">
+						<div class="item-contents">
+							<?php require( 'banner/text.php' ); ?>
+						</div>
+					</div>
+				<?php endif; ?>
 				<div class="o-row o-site-message-row o-site-message-row-button">
 					<?php if ( 'button' === $screen_size[ $prefix . 'cta_type_email' ] ) : ?>
 						<?php require( 'banner/cta-button.php' ); ?>
