@@ -185,7 +185,7 @@
 					</div> <!-- .o-column -->
 					[outlook]
 								</td>
-								<td class="o-column m-newsletter-ad">
+								<td class="o-column m-newsletter-ad-region">
 					[/outlook]
 					<div class="o-column m-newsletter-ad-region">
 						<div class="item-contents">
@@ -271,7 +271,7 @@
 					</div> <!-- .o-column -->
 					[outlook]
 								</td>
-								<td class="o-column m-newsletter-ad">
+								<td class="o-column m-newsletter-ad-region">
 					[/outlook]
 					<div class="o-column m-newsletter-ad-region">
 						<div class="item-contents">
@@ -290,6 +290,8 @@
 						</table>
 					[/outlook]
 				</div> <!-- end o-columns.o-newsletter-section -->
+
+				<?php do_action( 'wp_message_inserter', 'email_middle', 'email' ); ?>
 
 				<div class="o-columns o-newsletter-section">
 					[outlook]
@@ -357,7 +359,7 @@
 					</div> <!-- .o-column -->
 					[outlook]
 								</td>
-								<td class="o-column m-newsletter-ad">
+								<td class="o-column m-newsletter-ad-region">
 					[/outlook]
 					<div class="o-column m-newsletter-ad-region">
 						<div class="item-contents">
@@ -444,7 +446,7 @@
 					</div> <!-- .o-column -->
 					[outlook]
 								</td>
-								<td class="o-column m-newsletter-ad">
+								<td class="o-column m-newsletter-ad-region">
 					[/outlook]
 					<div class="o-column m-newsletter-ad-region">
 						<div class="item-contents">
@@ -530,7 +532,7 @@
 					</div> <!-- .o-column -->
 					[outlook]
 								</td>
-								<td class="o-column m-newsletter-ad">
+								<td class="o-column m-newsletter-ad-region">
 					[/outlook]
 					<div class="o-column m-newsletter-ad-region">
 						<div class="item-contents">
