@@ -135,9 +135,9 @@
 
 				<?php $ads = minnpost_newsletter_get_ads( $args['newsletter_type'] ); ?>
 
-				<div class="o-columns o-newsletter-section">
+				<div class="o-columns o-newsletter-section o-newsletter-section-top">
 					[outlook]
-						<table role="presentation" width="100%" class="o-columns o-newsletter-section">
+						<table role="presentation" width="100%" class="o-columns o-newsletter-section o-newsletter-section-top">
 							<tr>
 								<td class="o-column o-newsletter-listing">
 					[/outlook]
