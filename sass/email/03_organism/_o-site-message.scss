@@ -1,7 +1,14 @@
-.o-rows.o-site-message {
+.o-rows.o-site-message,
+.o-columns.o-site-message {
     margin-bottom: $standard-heading-margin;
 
-    .o-row {
+    &.o-columns {
+        @include column( $selector: '.o-column.o-site-message-column-text', $max-width: 64%, $text-align: left, $padding: $standard-block-padding);
+        @include column( $selector: '.o-column.o-site-message-column-button', $max-width: 34%, $padding: $standard-block-padding);
+    }
+
+    .o-row,
+    .o-column {
     
         .item-contents {
             @include meta-preset( $size: 0 );

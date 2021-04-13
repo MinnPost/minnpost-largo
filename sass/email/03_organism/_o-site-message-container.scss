@@ -1,4 +1,5 @@
 // message container
+// we don't currently use this at all, maybe we can delete it
 .o-site-message-container {
 
 	@include meta-preset();
@@ -28,26 +29,9 @@
 	// regions, no matter what type of message they are
 	// this can override default grid styles when needed
 
-	// site header
-	&.wp-message-inserter-message-region-header {
+	// email header
+	&.wp-message-inserter-message-region-email_header {
 		margin: $standard-block-padding 0;
-	}
-
-	// above article body
-	// article bottom
-	// above homepage articles
-	// homepage middle
-	&.wp-message-inserter-message-region-above_article_body,
-	&.wp-message-inserter-message-region-above_homepage_articles,
-	&.wp-message-inserter-message-region-homepage_middle,
-	&.wp-message-inserter-message-region-article_bottom {
-		margin-bottom: $standard-block-margin;
-
-		.m-wp-insert-message-images,
-		.m-wp-insert-message-editor {
-			margin-left: 0;
-			margin-right: 0;
-		}
 	}
 
 	// banner wrapper
@@ -63,49 +47,8 @@
 		}
 	}
 
-	// Popup specifics
-	&.wp-message-inserter-message-region-popup {
-
-		// banner wrapper
-		.m-wp-insert-message-item-banner {
-
-			// column wrapper
-			.dual-wrap {
-
-				// columns
-				.col {
-					padding-top: $standard-block-padding * 2;
-					padding-bottom: $standard-block-padding * 2;
-				}
-
-				.col:first-of-type {
-					padding-left: 0;
-				}
-
-				.col:last-of-type {
-					padding-left: 0;
-				}
-			}
-		}
-
-
-		// default styles for the editor type
-		&.wp-message-inserter-message-editor {
-
-			.m-wp-insert-message-item {
-				max-width: $large-screen-width;
-			}
-		}
-	}
-
-	// site header, homepage above articles, and homepage middle
-	&.wp-message-inserter-message-region-header,
-	&.wp-message-inserter-message-region-above_homepage_articles,
-	&.wp-message-inserter-message-region-homepage_middle {
-
-		header {
-			margin-right: 1em;
-		}
+	// email header
+	&.wp-message-inserter-message-region-email_header {
 
 		h3,
 		.h3,

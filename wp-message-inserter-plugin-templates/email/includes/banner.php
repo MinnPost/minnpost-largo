@@ -40,22 +40,22 @@ $session_count_operator = isset( $message['meta'][ $prefix . 'operator_session' 
 
 		<?php if ( 'dualcol' === $screen_size[ $prefix . 'banner_layout' ] ) : ?>
 			<!-- Dual Col -->
-			<div class="o-columns o-site-message dual-wrap <?php echo ( isset( $screen_size[ $prefix . 'banner_flip_columns' ] ) && 'on' === $screen_size[ $prefix . 'banner_flip_columns' ] ) ? 'flip' : ''; ?>" style="<?php echo $banner_style; ?>">
+			<div class="o-columns o-site-message wp-message-inserter-message wp-message-inserter-message-<?php echo $slug; ?> wp-message-inserter-message-region-<?php echo $region; ?> wp-message-inserter-message-id-<?php echo $id; ?> wp-message-inserter-message-<?php echo $type; ?> wp-message-inserter-message-<?php echo $message_counter; ?> dual-wrap <?php echo ( isset( $screen_size[ $prefix . 'banner_flip_columns' ] ) && 'on' === $screen_size[ $prefix . 'banner_flip_columns' ] ) ? 'flip' : ''; ?>" style="<?php echo $banner_style; ?>">
 				[outlook]
 					<table role="presentation" width="100%" class="o-columns o-site-message">
 						<tr>
-							<td class="o-column o-site-message-column">
+							<td class="o-column o-site-message-column o-site-message-column-text">
 				[/outlook]
-				<div class="o-column o-site-message-column">				
-					<div class="col item-contents">
+				<div class="o-column o-site-message-column o-site-message-column-text">				
+					<div class="item-contents">
 						<?php require( 'banner/text.php' ); ?>
 					</div>
 				</div> <!-- .o-column -->
 				[outlook]
 							</td>
-							<td class="o-column o-site-message-column">
+							<td class="o-column o-site-message-column o-site-message-column-button">
 				[/outlook]
-				<div class="o-column o-site-message-column">
+				<div class="o-column o-site-message-column o-site-message-column-button">
 					<div class="item-contents">
 						<?php if ( 'button' === $screen_size[ $prefix . 'cta_type_email' ] ) : ?>
 							<?php require( 'banner/cta-button.php' ); ?>
@@ -87,10 +87,14 @@ $session_count_operator = isset( $message['meta'][ $prefix . 'operator_session' 
 					</div>
 				<?php endif; ?>
 				<div class="o-row o-site-message-row o-site-message-row-button">
-					<?php if ( 'button' === $screen_size[ $prefix . 'cta_type_email' ] ) : ?>
-						<?php require( 'banner/cta-button.php' ); ?>
-					<?php endif; ?>
-					<?php require( 'banner/disclaimer.php' ); ?>
+					<div class="item-contents">
+						<?php if ( is_array( $screen_size[ $prefix . 'banner_buttondetails' ] ) || isset( $screen_size[ $prefix . 'banner_disclaimer' ] ) ) : ?>
+							<?php if ( 'button' === $screen_size[ $prefix . 'cta_type_email' ] ) : ?>
+								<?php require( 'banner/cta-button.php' ); ?>
+							<?php endif; ?>
+							<?php require( 'banner/disclaimer.php' ); ?>
+						<?php endif; ?>
+					</div>
 				</div>
 				[outlook]
 							</td>

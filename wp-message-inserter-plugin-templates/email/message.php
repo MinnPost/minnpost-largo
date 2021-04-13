@@ -39,7 +39,7 @@ usort(
 ?>
 
 <?php if ( 'image' === $type || 'editor' === $type ) : ?>
-	<div class="o-columns o-site-message">
+	<div class="o-columns o-site-message wp-message-inserter-message wp-message-inserter-message-<?php echo $slug; ?> wp-message-inserter-message-region-<?php echo $region; ?> wp-message-inserter-message-id-<?php echo $id; ?> wp-message-inserter-message-<?php echo $type; ?> wp-message-inserter-message-<?php echo $message_counter; ?>">
 		[outlook]
 			<table role="presentation" width="100%" class="o-columns o-site-message">
 				<tr>
