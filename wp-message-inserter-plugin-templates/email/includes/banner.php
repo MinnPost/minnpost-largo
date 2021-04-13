@@ -101,14 +101,8 @@ $session_count_operator = isset( $message['meta'][ $prefix . 'operator_session' 
 						</tr>
 					</table>
 				[/outlook]
-			</div>
+			</div> <!-- end .o-rows.o-site-message -->
 		<?php endif; ?>
 
-		[outlook]
-					</td>
-				</tr>
-			</table>
-		[/outlook]
-	</div> <!-- end o-site-message -->
 	<?php endforeach; ?>
 <?php endif; ?>
