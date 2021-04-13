@@ -1,9 +1,18 @@
 .o-rows.o-site-message {
+    margin-bottom: $standard-heading-margin;
 
     .o-row {
     
         .item-contents {
             @include meta-preset( $size: 0 );
+        }
+
+        &.o-site-message-row-button {
+
+            .item-contents {
+                padding-top: 0;
+                text-align: center;
+            }
         }
     }
 }
