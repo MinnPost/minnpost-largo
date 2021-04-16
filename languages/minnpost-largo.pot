@@ -1507,25 +1507,25 @@ msgstr ""
 msgid "By&nbsp;"
 msgstr ""
 
-#: inc/template-functions.php:488
+#: inc/template-functions.php:549
 msgid "About the author"
 msgstr ""
 
 #. translators: 1) author archive url, 2) author name
-#: inc/template-functions.php:595
+#: inc/template-functions.php:656
 msgid "More articles by %2$s"
 msgstr ""
 
 #. translators: Daily archive title. %s: Date.
-#: inc/template-functions.php:1376
+#: inc/template-functions.php:1437
 msgid "Daily Archives: %s"
 msgstr ""
 
-#: inc/template-functions.php:1373
+#: inc/template-functions.php:1434
 msgid "Monthly Archives: %s"
 msgstr ""
 
-#: inc/template-functions.php:1370
+#: inc/template-functions.php:1431
 msgid "Yearly Archives: %s"
 msgstr ""
 
@@ -1579,40 +1579,40 @@ msgstr ""
 
 #. translators: used between list items, there is a space after the comma
 #. translators: used between list items, there is a space after the comma
-#: inc/template-tags.php:573, inc/template-tags.php:580
+#: inc/template-tags.php:483, inc/template-tags.php:490
 msgid ", "
 msgstr ""
 
 #. translators: placeholder is the list of categories
-#: inc/template-tags.php:576
+#: inc/template-tags.php:486
 msgid "Posted in %1$s"
 msgstr ""
 
 #. translators: placeholder is the list of tags
-#: inc/template-tags.php:583
+#: inc/template-tags.php:493
 msgid "Tagged %1$s"
 msgstr ""
 
 #. translators: %s: post title
-#: inc/template-tags.php:593
+#: inc/template-tags.php:503
 msgid "Leave a Comment<span class=\"screen-reader-text\"> on %s</span>"
 msgstr ""
 
 #. translators: %s: Name of current post
 #. translators: %s: Name of current post
-#: inc/template-tags.php:609, inc/template-tags.php:639
+#: inc/template-tags.php:519, inc/template-tags.php:549
 msgid "Edit %s"
 msgstr ""
 
-#: inc/template-tags.php:807
+#: inc/template-tags.php:717
 msgid "MinnPostPlus"
 msgstr ""
 
-#: inc/template-tags.php:1033
+#: inc/template-tags.php:943
 msgid "Your&nbsp;MinnPost&nbsp;Account"
 msgstr ""
 
-#: inc/template-tags.php:1164
+#: inc/template-tags.php:1074
 msgid "Read story"
 msgstr ""
 
