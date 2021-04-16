@@ -360,7 +360,8 @@
 	// after the form has been submitted
 	.m-form-frontpage.m-form-minnpost-form-processor-mailchimp-submitted {
 
-		.m-form-message {
+		.m-form-message,
+		.m-message-and-fields {
 
 			@include breakpoint-min( xs ) {
 				max-width: colspan(12, 16);
@@ -372,6 +373,14 @@
 
 			@include breakpoint-min( lg ) {
 				max-width: colspan(8, 16);
+			}
+		}
+
+		.m-message-and-fields {
+
+			.m-form-message {
+				max-width: none;
+				margin-bottom: 0;
 			}
 		}
 	}
