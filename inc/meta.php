@@ -86,7 +86,7 @@ if ( ! function_exists( 'minnpost_largo_get_description' ) ) :
 		} else {
 			$excerpt = '';
 		}
-		return wp_strip_all_tags( $excerpt, true );
+		return htmlspecialchars( wp_strip_all_tags( $excerpt, true ) );
 	}
 endif;
 
