@@ -195,7 +195,7 @@
 }
 
 // layout column
-@mixin column( $selector: '.o-column', $max-width: inherit, $width: 100%, $vertical-align: middle, $text-align: center, $padding: 0 ) {
+@mixin column( $selector: '.o-column', $max-width: inherit, $width: 100%, $vertical-align: middle, $text-align: center, $padding: 0, $desktop-padding-only: 'false' ) {
 	div#{$selector} {
         width: $width;
         max-width: $max-width-email * ($max-width / 100%);
@@ -210,6 +210,13 @@
 			padding: $padding;
 			text-align: $text-align;
 			@include body-preset( $size: 0 );
+			
+			@if $desktop-padding-only != 'false' {
+				
+				@media only screen and (max-width: $large-screen-width) {
+					padding: 0 !important;
+				}
+			}
 		}
     }
     
