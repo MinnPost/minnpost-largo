@@ -1613,13 +1613,15 @@ endif;
 * Format a string for email-friendly display
 *
 * @param string $content
+* @param bool $body
 * @param bool $message
+* @param array $colors
 * @return string $content
 *
 */
 if ( ! function_exists( 'format_email_content' ) ) :
-	add_filter( 'format_email_content', 'format_email_content', 10, 3 );
-	function format_email_content( $content, $body = true, $message = false ) {
+	add_filter( 'format_email_content', 'format_email_content', 10, 4 );
+	function format_email_content( $content, $body = true, $message = false, $colors = array() ) {
 
 		$is_legacy = apply_filters( 'minnpost_largo_newsletter_legacy', false, get_the_ID() );
 		if ( true === $is_legacy ) {
@@ -1627,6 +1629,11 @@ if ( ! function_exists( 'format_email_content' ) ) :
 		}
 
 		$content = str_replace( ' dir="ltr"', '', $content );
+
+		// links
+		if ( isset( $colors['links'] ) ) {
+			$content = str_replace( '<a href="', '<a style="color: ' . $colors['links'] . ' !important; text-decoration: underline;" href="', $content );
+		}
 
 		return $content;
 	}

@@ -1,5 +1,6 @@
 .o-rows.o-site-message,
 .o-columns.o-site-message {
+    border-radius: $border-radius;
     margin-bottom: $standard-heading-margin;
 
     &.wp-message-inserter-message-region-email_middle {
