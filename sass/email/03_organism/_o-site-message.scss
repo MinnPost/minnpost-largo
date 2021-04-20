@@ -1,0 +1,30 @@
+.o-rows.o-site-message,
+.o-columns.o-site-message {
+    border-radius: $border-radius;
+    margin-bottom: $standard-heading-margin;
+
+    &.wp-message-inserter-message-region-email_middle {
+        margin-bottom: $standard-block-margin;
+    }
+
+    &.o-columns {
+        @include column( $selector: '.o-column.o-site-message-column-text', $max-width: 64%, $text-align: left, $padding: $standard-block-padding);
+        @include column( $selector: '.o-column.o-site-message-column-button', $max-width: 34%, $padding: $standard-block-padding);
+    }
+
+    .o-row,
+    .o-column {
+    
+        .item-contents {
+            @include meta-preset( $size: 0 );
+        }
+
+        &.o-site-message-row-button {
+
+            .item-contents {
+                padding-top: 0;
+                text-align: center;
+            }
+        }
+    }
+}

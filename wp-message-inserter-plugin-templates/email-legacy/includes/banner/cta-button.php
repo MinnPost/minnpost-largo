@@ -44,7 +44,7 @@
 		}
 		$value .= '</a>';
 		// email content filter
-		$value = apply_filters( 'format_email_content', $value, false, true );
+		$value = apply_filters( 'format_email_content_legacy', $value, false, true );
 		?>
 		<center>
 			<table class="button read-story" style="border-collapse: collapse; border-spacing: 0; Margin: 0 0 15px 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0" cellspacing="0" cellpadding="0">

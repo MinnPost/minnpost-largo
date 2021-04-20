@@ -44,3 +44,48 @@ table.h3.a-entry-title  {
 		}
 	}
 }
+
+.o-site-message {
+	
+	h1,
+	.h1,
+	h2,
+	.h2,
+	h3,
+	.h3,
+	h4,
+	.h4 {
+		padding-bottom: $standard-heading-margin;
+	}
+
+	.h1 {
+
+		@include meta-preset( $size: 4, $bold: true );
+	}
+	
+	.h2 {
+	
+		@include meta-preset( $size: 3, $bold: true );
+	}
+	
+	.h3 {
+	
+		@include meta-preset( $size: 2, $bold: true );
+	}
+	
+	.h4 {
+	
+		@include meta-preset( $size: 1 );
+	}
+	
+	.h5 {
+	
+		@include meta-preset( $size: 0 );
+	}
+	
+	.h6 {
+	
+		@include meta-preset( $size: 0, $bold: false );
+	}
+	
+}

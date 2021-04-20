@@ -672,3 +672,25 @@ if ( ! function_exists( 'minnpost_message_args' ) ) :
 		return $args;
 	}
 endif;
+
+/**
+* Allows us to change the template folder location for a site message
+* We use this to support legacy newsletter message markup
+*
+* @param string $location
+* @return string $location
+*/
+if ( ! function_exists( 'minnpost_message_change_template_location' ) ) :
+	add_filter( 'wp_message_inserter_change_template_location', 'minnpost_message_change_template_location', 10, 1 );
+	function minnpost_message_change_template_location( $location ) {
+		if ( 'email' === $location ) {
+			$is_legacy = apply_filters( 'minnpost_largo_newsletter_legacy', false, get_the_ID() );
+			if ( false === $is_legacy ) {
+				return $location;
+			} else {
+				$location = 'email-legacy';
+			}
+		}
+		return $location;
+	}
+endif;

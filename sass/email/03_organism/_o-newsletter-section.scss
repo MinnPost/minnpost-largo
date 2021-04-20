@@ -1,5 +1,10 @@
 .o-columns.o-newsletter-section {
 
-    @include column( $selector: '.o-column.o-newsletter-listing', $max-width: 50%, $vertical-align: top, $text-align: left, $padding: 0 $standard-block-padding);
-    @include column( $selector: '.o-column.m-newsletter-ad', $max-width: 50%,  $vertical-align: top, $padding: 0 $standard-block-padding);
+    &.o-newsletter-section-top {
+        padding-top: $standard-block-padding;
+    }
+
+    @include column( $selector: '.o-column.o-newsletter-listing', $max-width: 54.5454545454545%, $vertical-align: top, $text-align: left, $padding: 0 $standard-heading-margin 0 0, $desktop-padding-only: 'true');
+    @include column( $selector: '.o-column.m-newsletter-ad-region', $max-width: 45.4545454545455%,  $vertical-align: top, $padding: 0);
+    //45.4545454545455% and 54.5454545454545%
 }

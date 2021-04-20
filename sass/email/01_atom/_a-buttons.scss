@@ -1,19 +1,15 @@
-/*.content .button.read-story td td a:hover {
-    color: #ffffff !important; text-decoration: none !important;
-}
-
-.content .button.read-story td td a:visited {
-    color: #ffffff !important; text-decoration: none !important;
-}
-
-.content .button.read-story td td a:active {
-    color: #ffffff !important; text-decoration: none !important;
-}*/
-
 table.a-button {
     @include table_button();
 }
 
 p.a-button {
     @include paragraph_button();
+}
+
+.o-site-message.stack-wrap p.a-button-site-message {
+    display: inline-block;
+
+    a {
+        padding: $standard-block-padding / 2;
+    }
 }
