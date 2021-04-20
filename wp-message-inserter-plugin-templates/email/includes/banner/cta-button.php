@@ -33,9 +33,9 @@
 
 	<?php if ( '' !== $button_style ) : ?>
 		<style>
-			p.a-button-site-message a:hover,
-			p.a-button-site-message a:focus,
-			p.a-button-site-message a:active {
+			.wp-message-inserter-message-id-<?php echo $id; ?> p.a-button-site-message a:hover,
+			.wp-message-inserter-message-id-<?php echo $id; ?> p.a-button-site-message a:focus,
+			.wp-message-inserter-message-id-<?php echo $id; ?> p.a-button-site-message a:active {
 				background-color: <?php echo $button_bgcolor; ?> !important;
 				color: <?php echo $button_textcolor; ?> !important;
 				text-decoration: underline !important;
