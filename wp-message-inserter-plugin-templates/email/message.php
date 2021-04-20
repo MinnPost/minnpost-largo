@@ -18,16 +18,6 @@ $wp_classes      = '';
 foreach ( $body_classes as $class ) {
 	$wp_classes .= 'wp-message-inserter-message-' . $class . ' ';
 }
-
-// setup for checking sessions
-$check_session          = isset( $message['meta'][ $prefix . 'check_session' ] ) ? $message['meta'][ $prefix . 'check_session' ][0] : '';
-$session_count_check    = isset( $message['meta'][ $prefix . 'number_of_sessions' ] ) ? $message['meta'][ $prefix . 'number_of_sessions' ][0] : '';
-$session_count_operator = isset( $message['meta'][ $prefix . 'operator_session' ] ) ? $message['meta'][ $prefix . 'operator_session' ][0] : '';
-
-// close timer setup
-$close_time_days  = 0;
-$close_time_hours = 0;
-
 // sort screen sizes
 usort(
 	$screen_sizes,
