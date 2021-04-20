@@ -15,7 +15,7 @@
 	if ( '' !== $button_bgcolor || '' !== $button_textcolor ) {
 		$button_style = ' style="';
 		if ( '' !== $button_bgcolor ) {
-			$button_style .= 'background: ' . $button_bgcolor . ';';
+			$button_style .= 'background: ' . $button_bgcolor . ' !important;';
 		}
 		if ( '' !== $button_textcolor ) {
 			$button_style .= 'color: ' . $button_textcolor . ' !important;';
