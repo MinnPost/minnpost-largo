@@ -1612,10 +1612,6 @@ msgstr ""
 msgid "Your&nbsp;MinnPost&nbsp;Account"
 msgstr ""
 
-#: inc/template-tags.php:1074
-msgid "Read story"
-msgstr ""
-
 #: inc/uploads.php:41
 msgid "Feature"
 msgstr ""
