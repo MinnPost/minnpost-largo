@@ -56,7 +56,7 @@
 					[/outlook]
 					<div class="o-column o-navigation">
 						<div class="item-contents">
-							<table id="navigation-primary" class="m-main-navigation">
+							<table role="presentation" id="navigation-primary" class="m-main-navigation">
 								<?php
 								wp_nav_menu(
 									array(
@@ -565,7 +565,7 @@
 					<div class="o-column o-footer">
 						<div class="item-contents">
 							<div align="center">
-								<table id="footer-network" class="m-secondary-navigation">
+								<table role="presentation" id="footer-network" class="m-secondary-navigation">
 									<?php
 									wp_nav_menu(
 										array(
