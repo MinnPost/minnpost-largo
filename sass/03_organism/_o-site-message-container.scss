@@ -179,6 +179,7 @@
 				}
 			}
 
+			.m-message-and-fields,
 			fieldset {
 				border: 0;
 				margin: 0;
@@ -198,6 +199,17 @@
 				input {
 					width: 100%;
 					max-width: 100%;
+				}
+			}
+
+			.m-message-and-fields {
+
+				fieldset {
+					max-width: none;
+				}
+	
+				.m-form-message {
+					margin-bottom: 0;
 				}
 			}
 		}
@@ -350,9 +362,6 @@
 				max-width: none;
 			}
 
-			.m-form-message {
-				margin-bottom: 0;
-			}
 		}
 
 	}
