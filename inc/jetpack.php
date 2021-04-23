@@ -220,7 +220,7 @@ if ( ! function_exists( 'minnpost_largo_jetpack_exclude_category' ) ) :
 		// settings for include/exclude of the current post category for recommendations.
 		// if both are false, it uses the default Jetpack recommending system.
 		// if both are true, it would run the same category only and ignore the not same category flag.
-		$same_category_only = false;
+		$same_category_only = true;
 		$not_same_category  = false;
 
 		// load the current post's permalink category ID.
