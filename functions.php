@@ -24,11 +24,6 @@ require get_theme_file_path() . '/inc/get-site-data.php';
 require get_theme_file_path() . '/inc/custom-settings.php';
 
 /**
- * Menu functionality
- */
-require get_theme_file_path() . '/inc/menus.php';
-
-/**
  * User account functionality
  */
 require get_theme_file_path() . '/inc/user-accounts.php';
@@ -57,6 +52,16 @@ require get_theme_file_path() . '/inc/custom-shortcodes.php';
  * Implement the Custom Header feature.
  */
 //require get_theme_file_path() . '/inc/custom-header.php';
+
+/**
+ * Custom template functions for this theme.
+ */
+require get_theme_file_path() . '/inc/template-functions.php';
+
+/**
+ * Menu functions and filters
+ */
+require get_theme_file_path() . '/inc/menu-functions.php';
 
 /**
  * Custom template tags for this theme.
