@@ -303,7 +303,6 @@ if ( ! function_exists( 'minnpost_largo_get_timezone' ) ) :
 	}
 endif;
 
-
 /**
 * Get who posted the article
 * This depends on the Co-Authors Plus plugin
@@ -1508,45 +1507,6 @@ if ( ! function_exists( 'minnpost_largo_add_lazy_load_attributes' ) ) :
 			$prevent_lazy_load = get_term_meta( $object_id, '_mp_prevent_lazyload', true );
 		} else {
 			$prevent_lazy_load = get_post_meta( $object_id, '_mp_prevent_lazyload', true );
-		}
-		if ( 'on' === $prevent_lazy_load ) {
-			$lazy_load = false;
-		}
-		if ( false === $lazy_load ) {
-			if ( isset( $attributes['class'] ) ) {
-				$attributes['class'] .= ' ';
-			} else {
-				$attributes['class'] = '';
-			}
-			// this is the class and attribute to disable lazy loading on an image
-			$attributes['class']  .= 'no-lazy';
-			$attributes['loading'] = 'eager';
-		} else {
-			$attributes['loading'] = 'lazy';
-			$attributes['class']   = 'jetpack-lazy-image';
-		}
-		return $attributes;
-	}
-endif;
-
-/**
-* Common filter for setting up lazy load attributes
-*
-* @param array $attributes
-* @param int $object_id
-* @param string $object_type
-* @param bool $lazy_load
-* @return array $attributes
-*
-*/
-if ( ! function_exists( 'minnpost_largo_add_lazy_load_attributes' ) ) :
-	add_filter( 'minnpost_largo_lazy_load_attributes', 'minnpost_largo_add_lazy_load_attributes', 10, 3 );
-	function minnpost_largo_add_lazy_load_attributes( $attributes, $object_id, $object_type = 'post', $lazy_load = true ) {
-		// handle prevention of lazy loading from the object loading the image
-		if ( 'post' === $object_type ) {
-			$prevent_lazy_load = get_post_meta( $object_id, '_mp_prevent_lazyload', true );
-		} elseif ( 'term' === $object_type ) {
-			$prevent_lazy_load = get_term_meta( $object_id, '_mp_prevent_lazyload', true );
 		}
 		if ( 'on' === $prevent_lazy_load ) {
 			$lazy_load = false;

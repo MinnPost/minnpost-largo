@@ -117,7 +117,6 @@ if ( ! function_exists( 'minnpost_largo_nav_update' ) ) :
 	}
 endif;
 
-
 /**
 * Nav Menu Walker
 *
@@ -650,6 +649,37 @@ if ( ! function_exists( 'minnpost_largo_event_menu_classes' ) ) :
 			}
 		}
 		return $classes;
+	}
+endif;
+
+/**
+* Outputs the user account management menu
+*
+*/
+if ( ! function_exists( 'minnpost_account_management_menu' ) ) :
+	function minnpost_account_management_menu() {
+		$user_id = get_query_var( 'users', '' );
+		if ( isset( $_GET['user_id'] ) ) {
+			$user_id = esc_attr( $_GET['user_id'] );
+		}
+		$menu = get_minnpost_account_management_menu( $user_id );
+		?>
+		<?php if ( ! empty( $menu ) ) : ?>
+			<div class="o-wrapper o-wrapper-sub-navigation o-wrapper-user-account-management-navigation">
+				<a class="a-subnav-label a-user-account-management-label" href="/user/"><?php echo __( 'Your&nbsp;MinnPost&nbsp;Account', 'minnpost-largo' ); ?></a>
+				<div class="m-sub-navigation m-user-account-management">
+					<nav id="navigation-user-account-management" class="m-subnav-navigation m-user-account-management-navigation">
+						<?php echo $menu; ?>
+					</nav><!-- #navigation-user-account-management -->
+					<button class="nav-scroller-btn nav-scroller-btn--left" aria-label="Scroll left">
+						<i class="fas fa-chevron-left"></i>
+					</button>
+					<button class="nav-scroller-btn nav-scroller-btn--right" aria-label="Scroll right"><i class="fas fa-chevron-right"></i>
+					</button>
+				</div>
+			</div>
+		<?php endif; ?>
+		<?php
 	}
 endif;
 
