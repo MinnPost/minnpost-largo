@@ -135,6 +135,48 @@
 
 				<?php $ads = minnpost_newsletter_get_ads( $args['newsletter_type'] ); ?>
 
+				<table role="presentation" width="100%" class="o-single-column">
+					<tr>
+						<td>
+							<?php
+							// top post section
+							$section            = 'top';
+							$top_query          = minnpost_newsletter_get_section_query( $section );
+							$args['image_size'] = 'feature-large';
+							$args['section']    = $section;
+							?>
+							<?php if ( $top_query->have_posts() ) : ?>
+								<?php $post_count = $top_query->post_count; ?>
+								<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
+									<table role="presentation" width="100%" class="h2 a-section-title">
+										<tr>
+											<td>
+												<h2><?php echo minnpost_newsletter_get_section_title( $section ); ?></h2>
+											</td>
+										</tr>
+									</table>
+								<?php endif; ?>
+
+								<?php
+								while ( $top_query->have_posts() ) :
+									$top_query->the_post();
+									set_query_var( 'current_post', $top_query->current_post );
+									$args['post_id'] = $id;
+									// with newsletters, the individual post can override the image size for the newsletter section the post is in.
+									$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
+									if ( '' !== $override_size && 'default' !== $override_size ) {
+										$args['image_size'] = $override_size;
+									}
+									get_template_part( 'template-parts/post-newsletter-fullwidth', $args['newsletter_type'], $args );
+								endwhile;
+								wp_reset_postdata();
+								?>
+
+							<?php endif; ?>
+						</td>
+					</tr>
+				</table>
+
 				<div class="o-columns o-newsletter-section o-newsletter-section-top">
 					[outlook]
 						<table role="presentation" width="100%" class="o-columns o-newsletter-section o-newsletter-section-top">
