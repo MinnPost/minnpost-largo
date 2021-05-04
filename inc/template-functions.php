@@ -484,6 +484,9 @@ if ( ! function_exists( 'minnpost_get_related' ) ) :
 		}
 		if ( 'content' === $type ) {
 			// recent same category and recent not same category should only apply to "content" type. otherwise it runs twice.
+			if ( false === $recent_same_category && false === $recent_not_same_category ) {
+				return $related;
+			}
 			if ( true === $recent_same_category || true === $recent_not_same_category ) {
 				$exclude_category_ids = array();
 				$exclude_post_ids     = array();
@@ -526,7 +529,17 @@ if ( ! function_exists( 'minnpost_get_related' ) ) :
 					)
 				);
 			}
-			if ( $query->have_posts() ) {
+			if ( false === $recent_same_category && false === $recent_not_same_category ) {
+				$query = new WP_Query(
+					array(
+						'fields'           => 'ids',
+						'posts_per_page'   => $count,
+						'category__not_in' => $exclude_category_ids,
+						'post__not_in'     => $exclude_post_ids,
+					)
+				);
+			}
+			if ( isset( $query ) && $query->have_posts() ) {
 				// this is an array of the related post IDs.
 				$related = $query->posts;
 			}
