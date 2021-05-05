@@ -1483,7 +1483,11 @@ msgstr ""
 msgid "A value here will cause the menu item to display as an icon."
 msgstr ""
 
-#: inc/menu-functions.php:931
+#: inc/menu-functions.php:669
+msgid "Your&nbsp;MinnPost&nbsp;Account"
+msgstr ""
+
+#: inc/menu-functions.php:961
 msgid "Unpublished"
 msgstr ""
 
@@ -1503,29 +1507,29 @@ msgstr ""
 msgid "This will match users who have ANY of the checked roles. If you want to require that the user has multiple roles, use another conditional with an AND operator."
 msgstr ""
 
-#: inc/template-functions.php:338
+#: inc/template-functions.php:337
 msgid "By&nbsp;"
 msgstr ""
 
-#: inc/template-functions.php:549
+#: inc/template-functions.php:689
 msgid "About the author"
 msgstr ""
 
 #. translators: 1) author archive url, 2) author name
-#: inc/template-functions.php:656
+#: inc/template-functions.php:796
 msgid "More articles by %2$s"
 msgstr ""
 
 #. translators: Daily archive title. %s: Date.
-#: inc/template-functions.php:1437
+#: inc/template-functions.php:1577
 msgid "Daily Archives: %s"
 msgstr ""
 
-#: inc/template-functions.php:1434
+#: inc/template-functions.php:1574
 msgid "Monthly Archives: %s"
 msgstr ""
 
-#: inc/template-functions.php:1431
+#: inc/template-functions.php:1571
 msgid "Yearly Archives: %s"
 msgstr ""
 
@@ -1606,10 +1610,6 @@ msgstr ""
 
 #: inc/template-tags.php:717
 msgid "MinnPostPlus"
-msgstr ""
-
-#: inc/template-tags.php:943
-msgid "Your&nbsp;MinnPost&nbsp;Account"
 msgstr ""
 
 #: inc/uploads.php:41
