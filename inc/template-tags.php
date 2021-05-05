@@ -187,7 +187,7 @@ endif;
 * @param int $post_id
 *
 */
-if ( ! function_exists( 'minnpost_related_on_archive' ) ) :
+if ( ! function_exists( 'minnpost_related_on_listing' ) ) :
 	function minnpost_related_on_listing( $placement, $post_id ) {
 		$related_posts = minnpost_get_related_on_listing( $placement, $post_id );
 		if ( ! empty( $related_posts ) ) :
