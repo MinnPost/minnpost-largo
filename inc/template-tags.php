@@ -265,7 +265,7 @@ endif;
 * @param int $post_id
 *
 */
-if ( ! function_exists( 'minnpost_related_on_archive' ) ) :
+if ( ! function_exists( 'minnpost_related_on_listing' ) ) :
 	function minnpost_related_on_listing( $placement, $post_id ) {
 		$related_posts = minnpost_get_related_on_listing( $placement, $post_id );
 		if ( ! empty( $related_posts ) ) :
@@ -428,7 +428,6 @@ endif;
 * @param bool $include_name
 * @param bool $include_title
 * @param bool $lazy_load
-* @param bool $end
 *
 */
 if ( ! function_exists( 'minnpost_speaker_figure' ) ) :
@@ -446,6 +445,7 @@ endif;
 * @param string $include_text
 * @param string $include_name
 * @param string $link_on
+* @param bool $lazy_load
 *
 */
 if ( ! function_exists( 'minnpost_term_figure' ) ) :
@@ -927,37 +927,6 @@ if ( ! function_exists( 'minnpost_newsletter_arrange' ) ) :
 endif;
 
 /**
-* Outputs the user account management menu
-*
-*/
-if ( ! function_exists( 'minnpost_account_management_menu' ) ) :
-	function minnpost_account_management_menu() {
-		$user_id = get_query_var( 'users', '' );
-		if ( isset( $_GET['user_id'] ) ) {
-			$user_id = esc_attr( $_GET['user_id'] );
-		}
-		$menu = get_minnpost_account_management_menu( $user_id );
-		?>
-		<?php if ( ! empty( $menu ) ) : ?>
-			<div class="o-wrapper o-wrapper-sub-navigation o-wrapper-user-account-management-navigation">
-				<a class="a-subnav-label a-user-account-management-label" href="/user/"><?php echo __( 'Your&nbsp;MinnPost&nbsp;Account', 'minnpost-largo' ); ?></a>
-				<div class="m-sub-navigation m-user-account-management">
-					<nav id="navigation-user-account-management" class="m-subnav-navigation m-user-account-management-navigation">
-						<?php echo $menu; ?>
-					</nav><!-- #navigation-user-account-management -->
-					<button class="nav-scroller-btn nav-scroller-btn--left" aria-label="Scroll left">
-						<i class="fas fa-chevron-left"></i>
-					</button>
-					<button class="nav-scroller-btn nav-scroller-btn--right" aria-label="Scroll right"><i class="fas fa-chevron-right"></i>
-					</button>
-				</div>
-			</div>
-		<?php endif; ?>
-		<?php
-	}
-endif;
-
-/**
 * Manually generate an image tag from its attributes
 * This is mostly used for images that are migrated pre-WordPress, but at least we can still add
 * attributes to them.
@@ -1054,20 +1023,6 @@ if ( ! function_exists( 'minnpost_largo_manual_image_tag' ) ) :
 		}
 		$image .= '>';
 		return $image;
-	}
-endif;
-
-/**
-* Display a string for email-friendly formatting
-*
-* @param string $content
-* @param bool $message
-*
-*/
-if ( ! function_exists( 'email_formatted_content' ) ) :
-	function email_formatted_content( $content, $message = false ) {
-		$content = apply_filters( 'format_email_content', $content );
-		echo $content;
 	}
 endif;
 

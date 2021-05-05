@@ -303,7 +303,6 @@ if ( ! function_exists( 'minnpost_largo_get_timezone' ) ) :
 	}
 endif;
 
-
 /**
 * Get who posted the article
 * This depends on the Co-Authors Plus plugin
@@ -388,7 +387,7 @@ endif;
 * @param int $post_id
 *
 */
-if ( ! function_exists( 'minnpost_get_related_on_archive' ) ) :
+if ( ! function_exists( 'minnpost_get_related_on_listing' ) ) :
 	function minnpost_get_related_on_listing( $placement, $post_id ) {
 		$related_posts              = array();
 		$related_content_on_listing = get_post_meta( $post_id, '_mp_related_content_on_listing', true );
@@ -421,9 +420,12 @@ if ( ! function_exists( 'minnpost_get_related' ) ) :
 		}
 		$related = array();
 
-		// allow for using zoninator posts as related posts.
-		// if used, the array of IDs can be cached for each post for 30 minutes.
-		$zoninator_related_enabled = false;
+		// settings for non-jetpack related posts.
+		// if all are false, it checks the next set for manually recommended posts, then goes to Jetpack.
+		// if multiples are true, it would run the first true one, and ignore the subsequent ones.
+		$zoninator_related_enabled = false; // allow for using zoninator posts as related posts.
+		$recent_same_category      = true; // most recent posts in the same category.
+		$recent_not_same_category  = false; // most recent posts not in the same category.
 		if ( 'zoninator' === $type && true === $zoninator_related_enabled ) {
 			$cache_zoninator_related = true;
 			if ( true === $cache_zoninator_related ) {
@@ -479,6 +481,68 @@ if ( ! function_exists( 'minnpost_get_related' ) ) :
 				}
 			}
 		}
+		if ( 'content' === $type ) {
+			// recent same category and recent not same category should only apply to "content" type. otherwise it runs twice.
+			if ( false === $recent_same_category && false === $recent_not_same_category ) {
+				return $related;
+			}
+			if ( true === $recent_same_category || true === $recent_not_same_category ) {
+				$exclude_category_ids = array();
+				$exclude_post_ids     = array();
+
+				// load the category ids that should be excluded.
+				if ( function_exists( 'minnpost_largo_get_excluded_related_terms' ) ) {
+					$exclude_category_ids = minnpost_largo_get_excluded_related_terms();
+				}
+				// load the current post's permalink category ID.
+				$permalink_category = minnpost_get_permalink_category_id( $post_id );
+				if ( in_array( (int) $permalink_category, $exclude_category_ids, true ) ) {
+					// if the current category should be excluded, don't recommend stories only from this category.
+					$recent_same_category = false;
+				}
+
+				// load the post ids that should be excluded.
+				if ( function_exists( 'minnpost_largo_get_excluded_related_posts' ) ) {
+					$exclude_post_ids = minnpost_largo_get_excluded_related_posts();
+				}
+			}
+			if ( true === $recent_same_category ) {
+				$query = new WP_Query(
+					array(
+						'cat'              => $permalink_category,
+						'fields'           => 'ids',
+						'posts_per_page'   => $count,
+						'category__not_in' => $exclude_category_ids,
+						'post__not_in'     => $exclude_post_ids,
+					)
+				);
+			}
+			if ( true === $recent_not_same_category ) {
+				$exclude_category_ids[] = $permalink_category;
+				$query                  = new WP_Query(
+					array(
+						'fields'           => 'ids',
+						'posts_per_page'   => $count,
+						'category__not_in' => $exclude_category_ids,
+						'post__not_in'     => $exclude_post_ids,
+					)
+				);
+			}
+			if ( false === $recent_same_category && false === $recent_not_same_category ) {
+				$query = new WP_Query(
+					array(
+						'fields'           => 'ids',
+						'posts_per_page'   => $count,
+						'category__not_in' => $exclude_category_ids,
+						'post__not_in'     => $exclude_post_ids,
+					)
+				);
+			}
+			if ( isset( $query ) && $query->have_posts() ) {
+				// this is an array of the related post IDs.
+				$related = $query->posts;
+			}
+		}
 		// manually selected related posts. these always override the other kinds.
 		if ( ! empty( get_post_meta( $post_id, '_mp_related_' . $type, true ) ) ) {
 			$ids = get_post_meta( $post_id, '_mp_related_' . $type, true );
@@ -513,6 +577,82 @@ if ( ! function_exists( 'minnpost_get_related_terms' ) ) :
 			$related_terms['tag'] = get_tag( $related_tag, ARRAY_A );
 		}
 		return $related_terms;
+	}
+endif;
+
+/**
+* Get the terms that should be excluded from related posts
+*
+* @return array $exclude_ids
+*
+*/
+if ( ! function_exists( 'minnpost_largo_get_excluded_related_terms' ) ) :
+	function minnpost_largo_get_excluded_related_terms() {
+		// glean, fonm, mp-picks.
+		$exclude_ids = array(
+			55575,
+			55630,
+			55628,
+		);
+
+		// add in the plugin-based exclusions from the shortcode.
+		$exclusions = do_shortcode( '[return_excluded_terms ]' );
+		if ( ! empty( $exclusions ) ) {
+			$exclude_ids = array_merge( $exclude_ids, str_getcsv( $exclusions, ',', "'" ) );
+		}
+
+		return $exclude_ids;
+	}
+endif;
+
+/**
+* Get the posts that should be excluded from related posts
+*
+* @return array $post_ids
+*
+*/
+if ( ! function_exists( 'minnpost_largo_get_excluded_related_posts' ) ) :
+	function minnpost_largo_get_excluded_related_posts() {
+
+		// start with the Daily Coronavirus Update post query.
+		$coronavirus_update_ids = array();
+
+		$cache_coronavirus_update_ids = true;
+		if ( true === $cache_coronavirus_update_ids ) {
+			$cache_key              = md5( 'minnpost_cache_coronavirus_update_ids' );
+			$cache_group            = 'minnpost';
+			$coronavirus_update_ids = wp_cache_get( $cache_key, $cache_group );
+			if ( false === $coronavirus_update_ids ) {
+				$coronavirus_update_ids = array();
+			}
+		}
+
+		if ( empty( $coronavirus_update_ids ) ) {
+			// load all posts that start with "The daily coronavirus update: "
+			$coronavirus_update_query = new WP_Query(
+				array(
+					'title_starts_with' => 'The daily coronavirus update: ',
+					'fields'            => 'ids',
+					'posts_per_page'    => -1,
+					'post_status'       => 'publish',
+				)
+			);
+			// if there are no posts, it's an empty array.
+			$coronavirus_update_ids = $coronavirus_update_query->posts;
+
+			// cache the array of IDs for one hour.
+			if ( true === $cache_coronavirus_update_ids ) {
+				wp_cache_set( $cache_key, $coronavirus_update_ids, $cache_group, HOUR_IN_SECONDS * 1 );
+			}
+		}
+
+		// we could merge arrays here later, if we have multiple arrays
+		$exclude_ids = $coronavirus_update_ids;
+
+		// add the current post id.
+		$exclude_ids[] = get_the_ID();
+
+		return $exclude_ids;
 	}
 endif;
 
@@ -1504,45 +1644,6 @@ if ( ! function_exists( 'minnpost_largo_add_lazy_load_attributes' ) ) :
 	add_filter( 'minnpost_largo_lazy_load_attributes', 'minnpost_largo_add_lazy_load_attributes', 10, 3 );
 	function minnpost_largo_add_lazy_load_attributes( $attributes, $object_id, $object_type = 'post', $lazy_load = true ) {
 		// handle prevention of lazy loading from the object loading the image
-		if ( 'term' === $object_type ) {
-			$prevent_lazy_load = get_term_meta( $object_id, '_mp_prevent_lazyload', true );
-		} else {
-			$prevent_lazy_load = get_post_meta( $object_id, '_mp_prevent_lazyload', true );
-		}
-		if ( 'on' === $prevent_lazy_load ) {
-			$lazy_load = false;
-		}
-		if ( false === $lazy_load ) {
-			if ( isset( $attributes['class'] ) ) {
-				$attributes['class'] .= ' ';
-			} else {
-				$attributes['class'] = '';
-			}
-			// this is the class and attribute to disable lazy loading on an image
-			$attributes['class']  .= 'no-lazy';
-			$attributes['loading'] = 'eager';
-		} else {
-			$attributes['loading'] = 'lazy';
-			$attributes['class']   = 'jetpack-lazy-image';
-		}
-		return $attributes;
-	}
-endif;
-
-/**
-* Common filter for setting up lazy load attributes
-*
-* @param array $attributes
-* @param int $object_id
-* @param string $object_type
-* @param bool $lazy_load
-* @return array $attributes
-*
-*/
-if ( ! function_exists( 'minnpost_largo_add_lazy_load_attributes' ) ) :
-	add_filter( 'minnpost_largo_lazy_load_attributes', 'minnpost_largo_add_lazy_load_attributes', 10, 3 );
-	function minnpost_largo_add_lazy_load_attributes( $attributes, $object_id, $object_type = 'post', $lazy_load = true ) {
-		// handle prevention of lazy loading from the object loading the image
 		if ( 'post' === $object_type ) {
 			$prevent_lazy_load = get_post_meta( $object_id, '_mp_prevent_lazyload', true );
 		} elseif ( 'term' === $object_type ) {
@@ -1648,7 +1749,8 @@ endif;
 *
 */
 if ( ! function_exists( 'format_email_content_legacy' ) ) :
-	function format_email_content_legacy( $content, $body, $message ) {
+	add_filter( 'format_email_content_legacy', 'format_email_content_legacy', 10, 3 );
+	function format_email_content_legacy( $content, $body = true, $message = false ) {
 		$serif_stack = 'font-family: Georgia, \'Times New Roman\', Times, serif; ';
 		$sans_stack  = 'font-family: Helvetica, Arial, Geneva, sans-serif; ';
 		$font_stack  = $serif_stack;
