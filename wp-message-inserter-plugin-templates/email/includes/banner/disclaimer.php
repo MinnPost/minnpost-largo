@@ -11,7 +11,7 @@
 	$value = $screen_size[ $prefix . 'banner_disclaimer' ];
 	$value = apply_filters( 'the_content', $value, 20 );
 	// email content filter
-	$value = apply_filters( 'format_email_content', $value, false, true );
+	$value = apply_filters( 'format_email_content_legacy', $value, false, true );
 	?>
 	<div class="disclaimer"><?php echo $value; ?></div>
 <?php endif; ?>

@@ -898,6 +898,56 @@ if ( ! function_exists( 'minnpost_largo_manual_image_tag' ) ) :
 endif;
 
 /**
+* Manually generate an image tag from its attributes
+* This is mostly used for images that are migrated pre-WordPress, but at least we can still add
+* attributes to them.
+*
+* @param int $image_id
+* @param string $image_url
+* @param array $attributes
+* @return string $image
+*
+*/
+if ( ! function_exists( 'minnpost_largo_manual_image_tag' ) ) :
+	function minnpost_largo_manual_image_tag( $image_id = '', $image_url = '', $attributes = array(), $object_type = 'post' ) {
+		$image = '';
+		if ( '' !== $image_id ) {
+			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
+		} elseif ( isset( $attributes['alt'] ) ) {
+			$alt = $attributes['alt'];
+		} else {
+			$alt = '';
+		}
+		$image = '<img src="' . $image_url . '" alt="' . $alt . '"';
+		if ( 'newsletter' === $object_type ) {
+			if ( isset( $attributes['title'] ) ) {
+				$image .= ' title="' . $attributes['title'] . '"';
+			}
+		}
+		if ( isset( $attributes['style'] ) ) {
+			$image .= ' style="' . $attributes['style'] . '"';
+		}
+		if ( isset( $attributes['class'] ) ) {
+			$image .= ' class="' . $attributes['class'] . '"';
+		}
+		if ( isset( $attributes['align'] ) ) {
+			$image .= ' align="' . $attributes['align'] . '"';
+		}
+		if ( isset( $attributes['width'] ) ) {
+			$image .= ' width="' . $attributes['width'] . '"';
+		}
+		if ( isset( $attributes['height'] ) ) {
+			$image .= ' height="' . $attributes['height'] . '"';
+		}
+		if ( isset( $attributes['loading'] ) ) {
+			$image .= ' loading="' . $attributes['loading'] . '"';
+		}
+		$image .= '>';
+		return $image;
+	}
+endif;
+
+/**
 * Display a string for email-friendly formatting
 *
 * @param string $content
@@ -908,47 +958,5 @@ if ( ! function_exists( 'email_formatted_content' ) ) :
 	function email_formatted_content( $content, $message = false ) {
 		$content = apply_filters( 'format_email_content', $content );
 		echo $content;
-	}
-endif;
-
-/**
-* Format a string for email-friendly display
-*
-* @param string $content
-* @param bool $message
-* @return string $content
-*
-*/
-if ( ! function_exists( 'format_email_content' ) ) :
-	add_filter( 'format_email_content', 'format_email_content', 10, 3 );
-	function format_email_content( $content, $body = true, $message = false ) {
-		$serif_stack = 'font-family: Georgia, \'Times New Roman\', Times, serif; ';
-		$sans_stack  = 'font-family: Helvetica, Arial, Geneva, sans-serif; ';
-		$font_stack  = $serif_stack;
-		if ( true === $message ) {
-			$font_stack = $sans_stack;
-		}
-		$content = str_replace( ' dir="ltr"', '', $content );
-
-		// links
-		$content = str_replace( '<a href="', '<a style="' . $font_stack . 'color: #801019; text-decoration: none;" href="', $content );
-		// paragraphs
-		if ( true === $body ) {
-			$content = str_replace( '<p class="intro">', '<p>', $content );
-			$content = preg_replace( '/<p>/', '<p class="intro" style="' . $font_stack . 'font-size: 17.6px; line-height: 24.9444px; Margin: 0 0 15px; padding: 15px 0 0;">', $content, 1 );
-		}
-		$content = str_replace( '<p>', '<p style="' . $font_stack . 'font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', $content );
-		// lists
-		$content = str_replace( '<li>', '<li style="' . $font_stack . 'font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', $content );
-		$content = str_replace( '<ul>', '<ul style="' . $font_stack . 'font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0 0 0 40px;">', $content );
-		// headings
-		if ( false === $message ) {
-			$content = preg_replace( '/(<h[2-6]\b[^><]*)>/i', '$1 style="color: #801019; Margin: 15px 0; display: block; font-size: 14px; line-height: 1; ' . $sans_stack . 'font-weight: bold; text-transform: uppercase; border-top-width: 2px; border-top-color: #cccccf; border-top-style: solid; padding-top: 15px;">', $content );
-		} else {
-			$content = preg_replace( '/(<h[2-6]\b[^><]*)>/i', '$1 style="Margin: 0 0 15px 0; display: block; font-size: 16px; line-height: 1; ' . $sans_stack . 'font-weight: bold;">', $content );
-		}
-		// blockquotes
-		$content = str_replace( '<blockquote><p style="' . $font_stack . 'font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', '<blockquote style="border-left-width: 2px; border-left-color: #cccccf; border-left-style: solid; Margin: 10px 10px 15px; padding: 0 10px; color: #6a6161;"><p style="' . $font_stack . 'font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;">', $content );
-		return $content;
 	}
 endif;

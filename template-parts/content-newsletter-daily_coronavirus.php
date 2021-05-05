@@ -216,7 +216,7 @@ a[x-apple-data-detectors] {
 			$body = apply_filters( 'the_content', get_the_content() );
 			if ( '' !== $body ) :
 				// email content filter
-				$body = apply_filters( 'format_email_content', $body );
+				$body = apply_filters( 'format_email_content_legacy', $body );
 				?>
 				<tr>
 					<td class="one-column content story" style="border-collapse: collapse; Margin: 0; padding: 0;">
