@@ -57,7 +57,7 @@
 		}
 		$value .= '</a>';
 		// email content filter
-		$value = apply_filters( 'format_email_content', $value, false, true );
+		$value = apply_filters( 'format_email_content_legacy', $value, false, true );
 		?>
 
 		<p class="a-button a-button-site-message">

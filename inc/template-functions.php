@@ -387,7 +387,7 @@ endif;
 * @param int $post_id
 *
 */
-if ( ! function_exists( 'minnpost_get_related_on_archive' ) ) :
+if ( ! function_exists( 'minnpost_get_related_on_listing' ) ) :
 	function minnpost_get_related_on_listing( $placement, $post_id ) {
 		$related_posts              = array();
 		$related_content_on_listing = get_post_meta( $post_id, '_mp_related_content_on_listing', true );
@@ -1644,10 +1644,10 @@ if ( ! function_exists( 'minnpost_largo_add_lazy_load_attributes' ) ) :
 	add_filter( 'minnpost_largo_lazy_load_attributes', 'minnpost_largo_add_lazy_load_attributes', 10, 3 );
 	function minnpost_largo_add_lazy_load_attributes( $attributes, $object_id, $object_type = 'post', $lazy_load = true ) {
 		// handle prevention of lazy loading from the object loading the image
-		if ( 'term' === $object_type ) {
-			$prevent_lazy_load = get_term_meta( $object_id, '_mp_prevent_lazyload', true );
-		} else {
+		if ( 'post' === $object_type ) {
 			$prevent_lazy_load = get_post_meta( $object_id, '_mp_prevent_lazyload', true );
+		} elseif ( 'term' === $object_type ) {
+			$prevent_lazy_load = get_term_meta( $object_id, '_mp_prevent_lazyload', true );
 		}
 		if ( 'on' === $prevent_lazy_load ) {
 			$lazy_load = false;
@@ -1749,7 +1749,8 @@ endif;
 *
 */
 if ( ! function_exists( 'format_email_content_legacy' ) ) :
-	function format_email_content_legacy( $content, $body, $message ) {
+	add_filter( 'format_email_content_legacy', 'format_email_content_legacy', 10, 3 );
+	function format_email_content_legacy( $content, $body = true, $message = false ) {
 		$serif_stack = 'font-family: Georgia, \'Times New Roman\', Times, serif; ';
 		$sans_stack  = 'font-family: Helvetica, Arial, Geneva, sans-serif; ';
 		$font_stack  = $serif_stack;
