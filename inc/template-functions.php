@@ -72,8 +72,18 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 
 		if ( '' !== $image_id && '' !== wp_get_attachment_image( $image_id, $size ) ) {
 			// this requires that the custom image sizes in custom-fields.php work correctly
-			$image     = wp_get_attachment_image( $image_id, $size, false, $attributes );
-			$image_url = wp_get_attachment_url( $image_id );
+			$image      = wp_get_attachment_image( $image_id, $size, false, $attributes );
+			$image_url  = wp_get_attachment_url( $image_id );
+			$image_url .= '?strip=all';
+
+			if ( isset( $attributes['content_width'] ) ) {
+				$image_url .= '&amp;w=' . $attributes['content_width'];
+			}
+
+			if ( is_singular( 'newsletter' ) ) {
+				$image = minnpost_largo_manual_image_tag( $image_id, $image_url, $attributes, 'newsletter' );
+			}
+
 		} else {
 			if ( is_singular( 'newsletter' ) ) {
 				$image = minnpost_largo_manual_image_tag( $image_id, $image_url, $attributes, 'newsletter' );

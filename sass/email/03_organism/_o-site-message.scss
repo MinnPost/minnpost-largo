@@ -1,15 +1,19 @@
 .o-rows.o-site-message,
 .o-columns.o-site-message {
     border-radius: $border-radius;
-    margin-bottom: $standard-heading-margin;
+    margin-bottom: $standard-block-margin;
 
     &.wp-message-inserter-message-region-email_middle {
         margin-bottom: $standard-block-margin;
     }
 
     &.o-columns {
-        @include column( $selector: '.o-column.o-site-message-column-text', $max-width: 64%, $text-align: left, $padding: $standard-block-padding);
-        @include column( $selector: '.o-column.o-site-message-column-button', $max-width: 34%, $padding: $standard-block-padding);
+        @include column( $selector: '.o-column.o-site-message-column-text', $max-width: 64%, $text-align: left, $padding: $standard-block-padding, $mobile-padding-only: 'false');
+        @include column( $selector: '.o-column.o-site-message-column-button', $max-width: 34%, $padding: $standard-block-padding, $mobile-padding-only: 'false');
+    }
+
+    &.o-rows {
+        @include column( $selector: '.o-site-message-row', $max-width: 100%, $text-align: left, $vertical-align: top, $padding: $standard-block-padding, $mobile-padding-only: 'false');
     }
 
     .o-row,

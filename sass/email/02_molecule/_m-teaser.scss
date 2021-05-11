@@ -1,8 +1,8 @@
 .m-teaser {
-    padding-bottom: $standard-block-padding;
+    padding-bottom: $standard-block-margin;
 
     * {
-        @include meta-preset( $bold: inherit, $italic: inherit );
+        @include meta-preset( $size: 1, $bold: inherit, $italic: inherit );
     }
 }
 

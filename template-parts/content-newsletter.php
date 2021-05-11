@@ -87,45 +87,44 @@
 					<tr>
 						<td class="o-row">
 							<div class="item-contents">
+								<?php
+								// teaser text
+								$do_not_show_automatic_teaser_items = get_post_meta( get_the_ID(), '_mp_newsletter_do_not_show_automatic_teaser_items', true );
+								$do_not_show_teaser_text            = get_post_meta( get_the_ID(), '_mp_newsletter_do_not_show_teaser_text', true );
+								if ( 'on' !== $do_not_show_automatic_teaser_items || 'on' !== $do_not_show_teaser_text ) :
+									?>
+									<div class="o-row m-teaser">
+									<?php
+								endif;
+								?>
+								<?php if ( 'on' !== $do_not_show_automatic_teaser_items ) : ?>
+									<?php minnpost_newsletter_today(); ?>
+								<?php endif; ?>
+								<?php if ( 'on' !== $do_not_show_teaser_text ) : ?>
+									<?php minnpost_newsletter_teaser(); ?>
+								<?php endif; ?>
+								<?php if ( 'on' !== $do_not_show_automatic_teaser_items ) : ?>
+									<?php minnpost_newsletter_type_welcome(); ?>
+								<?php endif; ?>
+								<?php
+								if ( 'on' !== $do_not_show_automatic_teaser_items || 'on' !== $do_not_show_teaser_text ) :
+									?>
+									</div>
+									<?php
+								endif;
+								?>
 
-							<?php
-							// teaser text
-							$do_not_show_automatic_teaser_items = get_post_meta( get_the_ID(), '_mp_newsletter_do_not_show_automatic_teaser_items', true );
-							$do_not_show_teaser_text            = get_post_meta( get_the_ID(), '_mp_newsletter_do_not_show_teaser_text', true );
-							if ( 'on' !== $do_not_show_automatic_teaser_items || 'on' !== $do_not_show_teaser_text ) :
-								?>
-								<div class="o-row m-teaser">
 								<?php
-							endif;
-							?>
-							<?php if ( 'on' !== $do_not_show_automatic_teaser_items ) : ?>
-								<?php minnpost_newsletter_today(); ?>
-							<?php endif; ?>
-							<?php if ( 'on' !== $do_not_show_teaser_text ) : ?>
-								<?php minnpost_newsletter_teaser(); ?>
-							<?php endif; ?>
-							<?php if ( 'on' !== $do_not_show_automatic_teaser_items ) : ?>
-								<?php minnpost_newsletter_type_welcome(); ?>
-							<?php endif; ?>
-							<?php
-							if ( 'on' !== $do_not_show_automatic_teaser_items || 'on' !== $do_not_show_teaser_text ) :
+								// body text
+								$body = apply_filters( 'the_content', get_the_content() );
+								if ( '' !== $body ) :
+									?>
+									<div class="o-row m-newsletter-body">
+										<?php echo $body; ?>
+									</div>
+									<?php
+								endif;
 								?>
-								</div>
-								<?php
-							endif;
-							?>
-
-							<?php
-							// body text
-							$body = apply_filters( 'the_content', get_the_content() );
-							if ( '' !== $body ) :
-								?>
-								<div class="o-row m-newsletter-body">
-									<?php echo $body; ?>
-								</div>
-								<?php
-							endif;
-							?>
 							</div>
 						</td>
 					</tr>
@@ -135,18 +134,22 @@
 
 				<?php $ads = minnpost_newsletter_get_ads( $args['newsletter_type'] ); ?>
 
-				<table role="presentation" width="100%" class="o-single-column">
-					<tr>
-						<td>
-							<?php
-							// top post section
-							$section            = 'top';
-							$top_query          = minnpost_newsletter_get_section_query( $section );
-							$args['image_size'] = 'feature-large';
-							$args['section']    = $section;
-							?>
-							<?php if ( $top_query->have_posts() ) : ?>
-								<?php $post_count = $top_query->post_count; ?>
+				<?php
+				// top post section
+				$section            = 'top';
+				$top_query          = minnpost_newsletter_get_section_query( $section );
+				$args['image_size'] = 'full';
+				$args['section']    = $section;
+				$total_post_count   = 0;
+				?>
+				<?php if ( $top_query->have_posts() ) : ?>
+					<?php
+					$post_count = $top_query->post_count;
+					$total_post_count++;
+					?>
+					<table role="presentation" width="100%" class="o-single-column">
+						<tr>
+							<td class="o-row">
 								<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
 									<table role="presentation" width="100%" class="h2 a-section-title">
 										<tr>
@@ -156,7 +159,6 @@
 										</tr>
 									</table>
 								<?php endif; ?>
-
 								<?php
 								while ( $top_query->have_posts() ) :
 									$top_query->the_post();
@@ -171,428 +173,358 @@
 								endwhile;
 								wp_reset_postdata();
 								?>
+							</td>
+						</tr>
+					</table>
+				<?php endif; ?>
 
-							<?php endif; ?>
-						</td>
-					</tr>
-				</table>
+				<?php if ( 1 === $total_post_count && isset( $ads[0] ) && ! empty( $ads[0] ) ) : ?>
+					<table role="presentation" width="100%" class="o-single-column m-newsletter-ad-region">
+						<tr>
+							<td class="o-row">
+								<div class="a-newsletter-ad">
+									<div class="item-contents">
+										<?php echo $ads[0]; ?>
+									</div>
+								</div>
+							</td>
+						</tr>
+					</table>
+				<?php endif; ?>
 
-				<div class="o-columns o-newsletter-section o-newsletter-section-top">
-					[outlook]
-						<table role="presentation" width="100%" class="o-columns o-newsletter-section o-newsletter-section-top">
+				<?php
+				// news post section
+				$section         = 'news';
+				$news_query      = minnpost_newsletter_get_section_query( $section );
+				$args['section'] = $section;
+				?>
+				<?php if ( $news_query->have_posts() ) : ?>
+
+					<?php
+					$post_count        = $news_query->post_count;
+					$this_section_post = 0;
+					?>
+
+					<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
+						<table role="presentation" width="100%" class="h2 a-section-title">
 							<tr>
-								<td class="o-column o-newsletter-listing">
-					[/outlook]
-					<div class="o-column o-newsletter-listing">
-						<div class="item-contents">
-							<?php
-							// top post section
-							$section            = 'top';
-							$top_query          = minnpost_newsletter_get_section_query( $section );
-							$args['image_size'] = 'feature-large';
-							$args['section']    = $section;
-							?>
-							<?php if ( $top_query->have_posts() ) : ?>
-								<?php $post_count = $top_query->post_count; ?>
-								<div class="o-row m-newsletter-stories m-newsletter-stories-<?php echo $section; ?> m-newsletter-stories-has-<?php echo (int) $post_count; ?>-post">
-									<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
-										<table role="presentation" width="100%" class="h2 a-section-title">
-											<tr>
-												<td>
-													<div class="a-section-title-bg">
-														<h2><?php echo minnpost_newsletter_get_section_title( $section ); ?></h2>
-													</div>
-												</td>
-											</tr>
-										</table>
-									<?php endif; ?>
-									<?php
-									while ( $top_query->have_posts() ) :
-										$top_query->the_post();
-										set_query_var( 'current_post', $top_query->current_post );
-										$args['post_id'] = $id;
-										// with newsletters, the individual post can override the image size for the newsletter section the post is in.
-										$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
-										if ( '' !== $override_size && 'default' !== $override_size ) {
-											$args['image_size'] = $override_size;
-										}
-										get_template_part( 'template-parts/post-newsletter', $args['newsletter_type'], $args );
-									endwhile;
-									wp_reset_postdata();
-									?>
-								</div> <!-- end row -->
-							<?php endif; ?>
-
-						</div>
-					</div> <!-- .o-column -->
-					[outlook]
-								</td>
-								<td class="o-column m-newsletter-ad-region">
-					[/outlook]
-					<div class="o-column m-newsletter-ad-region">
-						<div class="item-contents">
-							<div class="o-row m-newsletter-ad">
-								<?php
-								if ( isset( $ads[0] ) && ! empty( $ads[0] ) ) {
-									echo $ads[0];
-								}
-								?>
-							</div>
-						</div>
-					</div>
-					[outlook]
+								<td>
+									<h2><?php echo minnpost_newsletter_get_section_title( $section ); ?></h2>
 								</td>
 							</tr>
 						</table>
-					[/outlook]
-				</div> <!-- end o-columns.o-newsletter-section -->
+					<?php endif; ?>
 
-				<div class="o-columns o-newsletter-section">
-					[outlook]
-						<table role="presentation" width="100%" class="o-columns o-newsletter-section">
+					<?php
+					while ( $news_query->have_posts() ) :
+						$this_section_post++;
+						$total_post_count++;
+						$news_query->the_post();
+						set_query_var( 'current_post', $news_query->current_post );
+						$args['post_id'] = $id;
+						if ( 1 !== $this_section_post ) {
+							$args['image_size'] = 'none';
+						} else {
+							$args['image_size'] = 'full';
+						}
+						?>
+
+						<table role="presentation" width="100%" class="o-single-column">
 							<tr>
-								<td class="o-column o-newsletter-listing">
-					[/outlook]
-					<div class="o-column o-newsletter-listing">
-						<div class="item-contents">
-							<?php
-							// news post section
-							$section         = 'news';
-							$news_query      = minnpost_newsletter_get_section_query( $section );
-							$args['section'] = $section;
-							?>
-							<?php if ( $news_query->have_posts() ) : ?>
-								<?php
-								$post_count     = $news_query->post_count;
-								$this_news_post = 0;
-								?>
-								<div class="o-row m-newsletter-stories m-newsletter-stories-<?php echo $section; ?> m-newsletter-stories-has-<?php echo (int) $post_count; ?>-post">
-									<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
-										<table role="presentation" width="100%" class="h2 a-section-title">
-											<tr>
-												<td>
-													<div class="a-section-title-bg">
-														<h2><?php echo minnpost_newsletter_get_section_title( $section ); ?></h2>
-													</div>
-												</td>
-											</tr>
-										</table>
-									<?php endif; ?>
+								<td class="o-row">
 									<?php
-									while ( $news_query->have_posts() ) :
-										$this_news_post++;
-										$news_query->the_post();
-										set_query_var( 'current_post', $news_query->current_post );
-										$args['post_id'] = $id;
-
-										// the first post in this section is differently sized than subsequents, by default.
-										if ( 1 === $this_news_post ) {
-											$args['image_size'] = 'feature-large';
-										} else {
-											$args['image_size'] = 'feature-medium';
-										}
-
-										$args['extra_class'] = '';
-										if ( $post_count === $this_news_post ) {
-											$args['extra_class'] = ' m-post-newsletter-last';
-										}
-
-										// with newsletters, the individual post can override the image size for the newsletter section the post is in.
-										$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
-										if ( '' !== $override_size && 'default' !== $override_size ) {
-											$args['image_size'] = $override_size;
-										}
-										get_template_part( 'template-parts/post-newsletter', $args['newsletter_type'], $args );
-									endwhile;
-									wp_reset_postdata();
+									// with newsletters, the individual post can override the image size for the newsletter section the post is in.
+									$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
+									if ( '' !== $override_size && 'default' !== $override_size ) {
+										$args['image_size'] = $override_size;
+									}
+									get_template_part( 'template-parts/post-newsletter-fullwidth', $args['newsletter_type'], $args );
 									?>
-								</div> <!-- end row -->
-							<?php endif; ?>
-
-						</div>
-					</div> <!-- .o-column -->
-					[outlook]
-								</td>
-								<td class="o-column m-newsletter-ad-region">
-					[/outlook]
-					<div class="o-column m-newsletter-ad-region">
-						<div class="item-contents">
-							<div class="o-row m-newsletter-ad">
-								<?php
-								if ( isset( $ads[1] ) && ! empty( $ads[1] ) ) {
-									echo $ads[1];
-								}
-								?>
-							</div>
-						</div>
-					</div>
-					[outlook]
 								</td>
 							</tr>
 						</table>
-					[/outlook]
-				</div> <!-- end o-columns.o-newsletter-section -->
+
+						<?php if ( 1 === $total_post_count && isset( $ads[0] ) && ! empty( $ads[0] ) ) : ?>
+							<table role="presentation" width="100%" class="o-single-column m-newsletter-ad-region">
+								<tr>
+									<td class="o-row">
+										<div class="a-newsletter-ad">
+											<div class="item-contents">
+												<?php echo $ads[0]; ?>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</table>
+						<?php elseif ( 2 === $total_post_count && isset( $ads[1] ) && ! empty( $ads[1] ) ) : ?>
+							<table role="presentation" width="100%" class="o-single-column m-newsletter-ad-region">
+								<tr>
+									<td class="o-row">
+										<div class="a-newsletter-ad">
+											<div class="item-contents">
+												<?php echo $ads[1]; ?>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</table>
+						<?php endif; ?>
+						<?php
+					endwhile;
+					wp_reset_postdata();
+					?>
+				<?php endif; ?>
 
 				<?php do_action( 'wp_message_inserter', 'email_middle', 'email' ); ?>
 
-				<div class="o-columns o-newsletter-section">
-					[outlook]
-						<table role="presentation" width="100%" class="o-columns o-newsletter-section">
+				<?php
+				// opinion post section
+				$section         = 'opinion';
+				$opinion_query   = minnpost_newsletter_get_section_query( $section );
+				$args['section'] = $section;
+				?>
+				<?php if ( $opinion_query->have_posts() ) : ?>
+
+					<?php
+					$post_count        = $opinion_query->post_count;
+					$this_section_post = 0;
+					?>
+
+					<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
+						<table role="presentation" width="100%" class="h2 a-section-title">
 							<tr>
-								<td class="o-column o-newsletter-listing">
-					[/outlook]
-					<div class="o-column o-newsletter-listing">
-						<div class="item-contents">
-							<?php
-							// opinion post section
-							$section         = 'opinion';
-							$opinion_query   = minnpost_newsletter_get_section_query( $section );
-							$args['section'] = $section;
-							?>
-							<?php if ( $opinion_query->have_posts() ) : ?>
-								<?php
-								$post_count        = $opinion_query->post_count;
-								$this_opinion_post = 0;
-								?>
-								<div class="o-row m-newsletter-stories m-newsletter-stories-<?php echo $section; ?> m-newsletter-stories-has-<?php echo (int) $post_count; ?>-post">
-									<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
-										<table role="presentation" width="100%" class="h2 a-section-title">
-											<tr>
-												<td>
-													<div class="a-section-title-bg">
-														<h2><?php echo minnpost_newsletter_get_section_title( $section ); ?></h2>
-													</div>
-												</td>
-											</tr>
-										</table>
-									<?php endif; ?>
-									<?php
-									while ( $opinion_query->have_posts() ) :
-										$this_opinion_post++;
-										$opinion_query->the_post();
-										set_query_var( 'current_post', $opinion_query->current_post );
-										$args['post_id'] = $id;
-
-										// the first post in this section is differently sized than subsequents, by default.
-										if ( 1 === $this_opinion_post ) {
-											$args['image_size'] = 'feature-large';
-										} else {
-											$args['image_size'] = 'feature-medium';
-										}
-
-										$args['extra_class'] = '';
-										if ( $post_count === $this_opinion_post ) {
-											$args['extra_class'] = ' m-post-newsletter-last';
-										}
-
-										// with newsletters, the individual post can override the image size for the newsletter section the post is in.
-										$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
-										if ( '' !== $override_size && 'default' !== $override_size ) {
-											$args['image_size'] = $override_size;
-										}
-										get_template_part( 'template-parts/post-newsletter', $args['newsletter_type'], $args );
-									endwhile;
-									wp_reset_postdata();
-									?>
-								</div> <!-- end row -->
-							<?php endif; ?>
-
-						</div>
-					</div> <!-- .o-column -->
-					[outlook]
-								</td>
-								<td class="o-column m-newsletter-ad-region">
-					[/outlook]
-					<div class="o-column m-newsletter-ad-region">
-						<div class="item-contents">
-							<div class="o-row m-newsletter-ad">
-								<?php
-								if ( isset( $ads[2] ) && ! empty( $ads[2] ) ) {
-									echo $ads[2];
-								}
-								?>
-							</div>
-						</div>
-					</div>
-					[outlook]
+								<td>
+									<h2><?php echo minnpost_newsletter_get_section_title( $section ); ?></h2>
 								</td>
 							</tr>
 						</table>
-					[/outlook]
-				</div> <!-- end o-columns.o-newsletter-section -->
+					<?php endif; ?>
 
-				<div class="o-columns o-newsletter-section">
-					[outlook]
-						<table role="presentation" width="100%" class="o-columns o-newsletter-section">
+					<?php
+					while ( $opinion_query->have_posts() ) :
+						$this_section_post++;
+						$total_post_count++;
+						$opinion_query->the_post();
+						set_query_var( 'current_post', $opinion_query->current_post );
+						$args['post_id'] = $id;
+						if ( 1 !== $this_section_post ) {
+							$args['image_size'] = 'none';
+						} else {
+							$args['image_size'] = 'full';
+						}
+						?>
+
+						<table role="presentation" width="100%" class="o-single-column">
 							<tr>
-								<td class="o-column o-newsletter-listing">
-					[/outlook]
-					<div class="o-column o-newsletter-listing">
-						<div class="item-contents">
-							<?php
-							// arts post section
-							$section         = 'arts';
-							$arts_query      = minnpost_newsletter_get_section_query( $section );
-							$args['section'] = $section;
-							?>
-							<?php if ( $arts_query->have_posts() ) : ?>
-								<?php
-								$post_count     = $arts_query->post_count;
-								$this_arts_post = 0;
-								?>
-								<div class="o-row m-newsletter-stories m-newsletter-stories-<?php echo $section; ?> m-newsletter-stories-has-<?php echo (int) $post_count; ?>-post">
-									<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
-										<table role="presentation" width="100%" class="h2 a-section-title">
-											<tr>
-												<td>
-													<div class="a-section-title-bg">
-														<h2><?php echo minnpost_newsletter_get_section_title( $section ); ?></h2>
-													</div>
-												</td>
-											</tr>
-										</table>
-									<?php endif; ?>
+								<td class="o-row">
 									<?php
-									while ( $arts_query->have_posts() ) :
-										$this_arts_post++;
-										$arts_query->the_post();
-										set_query_var( 'current_post', $arts_query->current_post );
-										$args['post_id'] = $id;
-
-										// the first post in this section is differently sized than subsequents, by default.
-										if ( 1 === $this_arts_post ) {
-											$args['image_size'] = 'feature-large';
-										} else {
-											$args['image_size'] = 'feature-medium';
-										}
-
-										// with newsletters, the individual post can override the image size for the newsletter section the post is in.
-										$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
-										if ( '' !== $override_size && 'default' !== $override_size ) {
-											$args['image_size'] = $override_size;
-										}
-
-										$args['extra_class'] = '';
-										if ( $post_count === $this_arts_post ) {
-											$args['extra_class'] = ' m-post-newsletter-last';
-										}
-
-										get_template_part( 'template-parts/post-newsletter', $args['newsletter_type'], $args );
-									endwhile;
-									wp_reset_postdata();
+									// with newsletters, the individual post can override the image size for the newsletter section the post is in.
+									$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
+									if ( '' !== $override_size && 'default' !== $override_size ) {
+										$args['image_size'] = $override_size;
+									}
+									get_template_part( 'template-parts/post-newsletter-fullwidth', $args['newsletter_type'], $args );
 									?>
-								</div> <!-- end row -->
-							<?php endif; ?>
-
-						</div>
-					</div> <!-- .o-column -->
-					[outlook]
-								</td>
-								<td class="o-column m-newsletter-ad-region">
-					[/outlook]
-					<div class="o-column m-newsletter-ad-region">
-						<div class="item-contents">
-							<div class="o-row m-newsletter-ad">
-								<?php
-								if ( isset( $ads[3] ) && ! empty( $ads[3] ) ) {
-									echo $ads[3];
-								}
-								?>
-							</div>
-						</div>
-					</div>
-					[outlook]
 								</td>
 							</tr>
 						</table>
-					[/outlook]
-				</div> <!-- end o-columns.o-newsletter-section -->
 
-				<div class="o-columns o-newsletter-section">
-					[outlook]
-						<table role="presentation" width="100%" class="o-columns o-newsletter-section">
+						<?php if ( 1 === $total_post_count && isset( $ads[0] ) && ! empty( $ads[0] ) ) : ?>
+							<table role="presentation" width="100%" class="o-single-column m-newsletter-ad-region">
+								<tr>
+									<td class="o-row">
+										<div class="a-newsletter-ad">
+											<div class="item-contents">
+												<?php echo $ads[0]; ?>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</table>
+						<?php elseif ( 2 === $total_post_count && isset( $ads[1] ) && ! empty( $ads[1] ) ) : ?>
+							<table role="presentation" width="100%" class="o-single-column m-newsletter-ad-region">
+								<tr>
+									<td class="o-row">
+										<div class="a-newsletter-ad">
+											<div class="item-contents">
+												<?php echo $ads[1]; ?>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</table>
+						<?php endif; ?>
+						<?php
+					endwhile;
+					wp_reset_postdata();
+					?>
+				<?php endif; ?>
+
+				<?php
+				// arts post section
+				$section         = 'arts';
+				$arts_query      = minnpost_newsletter_get_section_query( $section );
+				$args['section'] = $section;
+				?>
+				<?php if ( $arts_query->have_posts() ) : ?>
+
+					<?php
+					$post_count        = $arts_query->post_count;
+					$this_section_post = 0;
+					?>
+
+					<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
+						<table role="presentation" width="100%" class="h2 a-section-title">
 							<tr>
-								<td class="o-column o-newsletter-listing">
-					[/outlook]
-					<div class="o-column o-newsletter-listing">
-						<div class="item-contents">
-							<?php
-							// editors post section
-							$section         = 'editors';
-							$editors_query   = minnpost_newsletter_get_section_query( $section );
-							$args['section'] = $section;
-							?>
-							<?php if ( $editors_query->have_posts() ) : ?>
-								<?php
-								$post_count        = $editors_query->post_count;
-								$this_editors_post = 0;
-								?>
-								<div class="o-row m-newsletter-stories m-newsletter-stories-<?php echo $section; ?> m-newsletter-stories-has-<?php echo (int) $post_count; ?>-post">
-									<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
-										<table role="presentation" width="100%" class="h2 a-section-title">
-											<tr>
-												<td>
-													<div class="a-section-title-bg">
-														<h2><?php echo minnpost_newsletter_get_section_title( $section ); ?></h2>
-													</div>
-												</td>
-											</tr>
-										</table>
-									<?php endif; ?>
-									<?php
-									while ( $editors_query->have_posts() ) :
-										$this_editors_post++;
-										$editors_query->the_post();
-										set_query_var( 'current_post', $editors_query->current_post );
-										$args['post_id'] = $id;
-
-										// the first post in this section is differently sized than subsequents, by default.
-										if ( 1 === $this_editors_post ) {
-											$args['image_size'] = 'feature-large';
-										} else {
-											$args['image_size'] = 'feature-medium';
-										}
-
-										$args['extra_class'] = '';
-										if ( $post_count === $this_editors_post ) {
-											$args['extra_class'] = ' m-post-newsletter-last';
-										}
-
-										// with newsletters, the individual post can override the image size for the newsletter section the post is in.
-										$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
-										if ( '' !== $override_size && 'default' !== $override_size ) {
-											$args['image_size'] = $override_size;
-										}
-										get_template_part( 'template-parts/post-newsletter', $args['newsletter_type'], $args );
-									endwhile;
-									wp_reset_postdata();
-									?>
-								</div> <!-- end row -->
-							<?php endif; ?>
-
-						</div>
-					</div> <!-- .o-column -->
-					[outlook]
-								</td>
-								<td class="o-column m-newsletter-ad-region">
-					[/outlook]
-					<div class="o-column m-newsletter-ad-region">
-						<div class="item-contents">
-							<div class="o-row m-newsletter-ad">
-								<?php
-								if ( isset( $ads[2] ) && ! empty( $ads[2] ) ) {
-									echo $ads[2];
-								}
-								?>
-							</div>
-						</div>
-					</div>
-					[outlook]
+								<td>
+									<h2><?php echo minnpost_newsletter_get_section_title( $section ); ?></h2>
 								</td>
 							</tr>
 						</table>
-					[/outlook]
-				</div> <!-- end o-columns.o-newsletter-section -->
+					<?php endif; ?>
+
+					<?php
+					while ( $arts_query->have_posts() ) :
+						$this_section_post++;
+						$total_post_count++;
+						$arts_query->the_post();
+						set_query_var( 'current_post', $arts_query->current_post );
+						$args['post_id'] = $id;
+						if ( 1 !== $this_section_post ) {
+							$args['image_size'] = 'none';
+						} else {
+							$args['image_size'] = 'full';
+						}
+						?>
+
+						<table role="presentation" width="100%" class="o-single-column">
+							<tr>
+								<td class="o-row">
+									<?php
+									// with newsletters, the individual post can override the image size for the newsletter section the post is in.
+									$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
+									if ( '' !== $override_size && 'default' !== $override_size ) {
+										$args['image_size'] = $override_size;
+									}
+									get_template_part( 'template-parts/post-newsletter-fullwidth', $args['newsletter_type'], $args );
+									?>
+								</td>
+							</tr>
+						</table>
+
+						<?php if ( 1 === $total_post_count && isset( $ads[0] ) && ! empty( $ads[0] ) ) : ?>
+							<table role="presentation" width="100%" class="o-single-column m-newsletter-ad-region">
+								<tr>
+									<td class="o-row">
+										<div class="a-newsletter-ad">
+											<div class="item-contents">
+												<?php echo $ads[0]; ?>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</table>
+						<?php elseif ( 2 === $total_post_count && isset( $ads[1] ) && ! empty( $ads[1] ) ) : ?>
+							<table role="presentation" width="100%" class="o-single-column m-newsletter-ad-region">
+								<tr>
+									<td class="o-row">
+										<div class="a-newsletter-ad">
+											<div class="item-contents">
+												<?php echo $ads[1]; ?>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</table>
+						<?php endif; ?>
+						<?php
+					endwhile;
+					wp_reset_postdata();
+					?>
+				<?php endif; ?>
+
+				<?php
+				// editors choice post section
+				$section         = 'editors';
+				$editors_query   = minnpost_newsletter_get_section_query( $section );
+				$args['section'] = $section;
+				?>
+				<?php if ( $editors_query->have_posts() ) : ?>
+
+					<?php
+					$post_count        = $editors_query->post_count;
+					$this_section_post = 0;
+					?>
+
+					<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
+						<table role="presentation" width="100%" class="h2 a-section-title">
+							<tr>
+								<td>
+									<h2><?php echo minnpost_newsletter_get_section_title( $section ); ?></h2>
+								</td>
+							</tr>
+						</table>
+					<?php endif; ?>
+
+					<?php
+					while ( $editors_query->have_posts() ) :
+						$this_section_post++;
+						$total_post_count++;
+						$editors_query->the_post();
+						set_query_var( 'current_post', $editors_query->current_post );
+						$args['post_id'] = $id;
+						if ( 1 !== $this_section_post ) {
+							$args['image_size'] = 'none';
+						} else {
+							$args['image_size'] = 'full';
+						}
+						?>
+
+						<table role="presentation" width="100%" class="o-single-column">
+							<tr>
+								<td class="o-row">
+									<?php
+									// with newsletters, the individual post can override the image size for the newsletter section the post is in.
+									$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
+									if ( '' !== $override_size && 'default' !== $override_size ) {
+										$args['image_size'] = $override_size;
+									}
+									get_template_part( 'template-parts/post-newsletter-fullwidth', $args['newsletter_type'], $args );
+									?>
+								</td>
+							</tr>
+						</table>
+
+						<?php if ( 1 === $total_post_count && isset( $ads[0] ) && ! empty( $ads[0] ) ) : ?>
+							<table role="presentation" width="100%" class="o-single-column m-newsletter-ad-region">
+								<tr>
+									<td class="o-row">
+										<div class="a-newsletter-ad">
+											<div class="item-contents">
+												<?php echo $ads[0]; ?>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</table>
+						<?php elseif ( 2 === $total_post_count && isset( $ads[1] ) && ! empty( $ads[1] ) ) : ?>
+							<table role="presentation" width="100%" class="o-single-column m-newsletter-ad-region">
+								<tr>
+									<td class="o-row">
+										<div class="a-newsletter-ad">
+											<div class="item-contents">
+												<?php echo $ads[1]; ?>
+											</div>
+										</div>
+									</td>
+								</tr>
+							</table>
+						<?php endif; ?>
+						<?php
+					endwhile;
+					wp_reset_postdata();
+					?>
+				<?php endif; ?>
 
 				<?php do_action( 'wp_message_inserter', 'email_before_bios', 'email' ); ?>
 

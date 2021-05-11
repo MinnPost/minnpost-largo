@@ -1,17 +1,12 @@
 table.h2.a-section-title td {
-    padding-bottom: $standard-block-margin;
 
 	.a-section-title-bg {
+		@include meta-preset( $size: 0, $bold: true );
 		background: brand-color(red);
 		color: neutral-color(white);
 		border-radius: $border-radius;
 		padding: $standard-block-padding;
 	}
-
-    h2 {
-        @include meta-preset( $size: 0, $bold: true );
-        margin: 0;
-    }
 }
 
 table.h3.a-entry-title  {
@@ -21,7 +16,7 @@ table.h3.a-entry-title  {
 	td {
 
 		color: neutral-color(black);
-		padding: $standard-block-padding 0;
+		padding: 0 0 $standard-block-padding 0;
 
 		a {
 

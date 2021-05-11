@@ -6,7 +6,7 @@
 					<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="m-post-image m-post-image-<?php echo $args['image_size']; ?>">
 						<tr>
 							<td>
-								<a href="<?php echo get_the_permalink(); ?>"><?php minnpost_post_image( 'full', array( 'content_width' => 600, 'content_height' => 400 ) ); ?></a>
+								<a href="<?php echo get_the_permalink(); ?>"><?php minnpost_post_image( $args['image_size'], array( 'content_width' => 600, 'content_height' => 400 ) ); ?></a>
 							</td>
 						</tr>
 					</table>
