@@ -1662,6 +1662,10 @@ if ( ! function_exists( 'minnpost_largo_add_lazy_load_attributes' ) ) :
 		if ( 'on' === $prevent_lazy_load ) {
 			$lazy_load = false;
 		}
+		if ( is_singular( 'newsletter' ) ) {
+			$lazy_load = false;
+			return $attributes;
+		}
 		if ( false === $lazy_load ) {
 			if ( isset( $attributes['class'] ) ) {
 				$attributes['class'] .= ' ';
