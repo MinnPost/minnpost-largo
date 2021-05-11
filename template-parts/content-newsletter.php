@@ -494,6 +494,10 @@
 									$args['image_size'] = 'full';
 								}
 							}
+							$args['extra_class'] = '';
+							if ( $post_count === $this_section_post ) {
+								$args['extra_class'] = ' m-post-newsletter-last';
+							}
 							?>
 
 							<table role="presentation" width="100%" class="o-single-column">

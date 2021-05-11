@@ -1,0 +1,15 @@
+.o-section-editors-stories {
+    border-radius: $border-radius;
+    background: neutral-color(light);
+    padding: $standard-block-padding;
+    margin-bottom: $standard-block-margin;
+
+    .m-post-newsletter-last {
+        padding-bottom: 0;
+        
+        .post-contents {
+            padding-bottom: $standard-block-padding;
+            border-bottom: none;
+        }
+    }
+}
