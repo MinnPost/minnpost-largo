@@ -448,12 +448,14 @@
 				$section         = 'editors';
 				$editors_query   = minnpost_newsletter_get_section_query( $section );
 				$args['section'] = $section;
+				$use_other_section_settings = get_post_meta( get_the_ID(), '_mp_newsletter_editors_use_other_section_settings', true );
 				?>
 				<?php if ( $editors_query->have_posts() ) : ?>
 
 					<?php
-					$post_count        = $editors_query->post_count;
-					$this_section_post = 0;
+					$post_count         = $editors_query->post_count;
+					$this_section_post  = 0;
+					$args['image_size'] = 'none';
 					?>
 
 					<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
@@ -473,10 +475,12 @@
 						$editors_query->the_post();
 						set_query_var( 'current_post', $editors_query->current_post );
 						$args['post_id'] = $id;
-						if ( 1 !== $this_section_post ) {
-							$args['image_size'] = 'none';
-						} else {
-							$args['image_size'] = 'full';
+						if ( 'on' === $use_other_section_settings ) {
+							if ( 1 !== $this_section_post ) {
+								$args['image_size'] = 'none';
+							} else {
+								$args['image_size'] = 'full';
+							}
 						}
 						?>
 
