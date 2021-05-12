@@ -212,7 +212,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
 				),
-				'default'    => __( 'Top Story', 'minnpost-largo' ),
+				'default'    => __( 'Top story', 'minnpost-largo' ),
 			)
 		);
 		$top_section->add_field(
@@ -271,7 +271,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
 				),
-				'default'    => __( 'News', 'minnpost-largo' ),
+				'default'    => __( 'More news', 'minnpost-largo' ),
 			)
 		);
 		$news_section->add_field(
@@ -330,7 +330,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
 				),
-				'default'    => __( 'Opinion', 'minnpost-largo' ),
+				'default'    => __( 'Commentary and opinion', 'minnpost-largo' ),
 			)
 		);
 		$opinion_section->add_field(
