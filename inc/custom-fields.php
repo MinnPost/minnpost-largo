@@ -365,65 +365,6 @@ if ( function_exists( 'create_newsletter' ) ) :
 			)
 		);
 
-		$arts_section = new_cmb2_box(
-			array(
-				'id'           => $prefix . 'arts_section',
-				'title'        => __( 'Arts & Culture Posts', 'minnpost-largo' ),
-				'object_types' => array( $object_type ), // Post type
-				'context'      => 'normal',
-				'priority'     => 'high',
-				'show_names'   => true, // Show field names on the left
-				'attributes' => array(
-					'data-conditional-id'    => $prefix . 'type',
-					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
-				),
-			)
-		);
-		$arts_section->add_field(
-			array(
-				'name'       => __( 'Section Title', 'minnpost-largo' ),
-				'id'         => $prefix . 'arts_section_title',
-				'type'       => 'text',
-				'desc'       => __( 'The default value will be used if you do not change it.', 'minnpost-largo' ),
-				'attributes' => array(
-					'data-conditional-id'    => $prefix . 'type',
-					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
-				),
-				'default'    => __( 'Arts & Culture', 'minnpost-largo' ),
-			)
-		);
-		$arts_section->add_field(
-			minnpost_post_search_field(
-				array(
-					'name'       => __( 'Stories', 'minnpost-largo' ),
-					'desc'       => __( 'Search for posts here.', 'minnpost-largo' ),
-					'id'         => $prefix . 'arts_posts',
-					'query_args' => array(
-						'orderby'     => 'modified',
-						'order'       => 'DESC',
-						'post_status' => 'any',
-					),
-					'attributes' => array(
-						'data-conditional-id'    => $prefix . 'type',
-						'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
-					),
-				),
-				'post_search_ajax'
-			)
-		);
-		$arts_section->add_field(
-			array(
-				'name'       => __( 'Stories Manual Override', 'minnpost-largo' ),
-				'id'         => $prefix . 'arts_posts_override',
-				'type'       => 'text',
-				'desc'       => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them instead of the search field value.', 'minnpost-largo' ),
-				'attributes' => array(
-					'data-conditional-id'    => $prefix . 'type',
-					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
-				),
-			)
-		);
-
 		$editors_section = new_cmb2_box(
 			array(
 				'id'           => $prefix . 'editors_section',
