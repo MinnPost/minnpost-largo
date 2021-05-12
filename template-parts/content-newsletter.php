@@ -27,9 +27,7 @@
 					[/outlook]
 					<div class="o-column a-logo">
 						<div class="item-contents">
-							<a href="<?php echo esc_url( get_permalink() ); ?>">
-								<img src="<?php minnpost_newsletter_logo( get_the_ID() ); ?>" alt="<?php bloginfo( 'name' ); ?>">
-							</a>
+							<img src="<?php minnpost_newsletter_logo( get_the_ID() ); ?>" alt="<?php bloginfo( 'name' ); ?>">
 						</div>
 					</div>
 					[outlook]
