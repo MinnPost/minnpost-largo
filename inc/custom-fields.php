@@ -3272,19 +3272,24 @@ if ( ! function_exists( 'limit_liveblog_box' ) ) :
 endif;
 
 /**
-* Array of supported newsletter types
+* Array of supported newsletter types. Or, a string of a single type name.
+* @param string $type
+* @return array $types
 *
 */
 if ( ! function_exists( 'minnpost_largo_email_types' ) ) :
-	function minnpost_largo_email_types() {
+	function minnpost_largo_email_types( $type = '' ) {
 		$types = array(
 			'daily'             => __( 'Daily', 'minnpost-largo' ),
-			'greater_mn'        => __( 'Greater MN', 'minnpost-largo' ),
+			'greater_mn'        => __( 'Greater Minnesota', 'minnpost-largo' ),
 			'sunday_review'     => __( 'Sunday Review', 'minnpost-largo' ),
 			'dc_memo'           => __( 'D.C. Memo', 'minnpost-largo' ),
 			'daily_coronavirus' => __( 'Daily Coronavirus Update', 'minnpost-largo' ),
 			'republication'     => __( 'Republication', 'minnpost-largo' ),
 		);
+		if ( '' !== $type ) {
+			return $types[ $type ];
+		}
 		return $types;
 	}
 endif;
