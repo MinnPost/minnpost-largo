@@ -389,7 +389,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
 				),
-				'default'    => __( 'Editor\'s Picks', 'minnpost-largo' ),
+				'default'    => __( 'MinnPost recommends', 'minnpost-largo' ),
 			)
 		);
 		$editors_section->add_field(
