@@ -161,11 +161,19 @@ if ( ! function_exists( 'minnpost_newsletter_type_welcome' ) ) :
 		if ( '' === $newsletter_type ) {
 			return;
 		}
-		$type_string = sprintf(
-			// translators: 1) is the newsletter type
-			'Welcome to MinnPost\'s %1$s email newsletter.',
-			ucwords( $newsletter_type ),
-		);
+		if ( 'sunday_review' === $newsletter_type ) {
+			$type_string = sprintf(
+				// translators: 1) is the newsletter type
+				'Welcome to MinnPost\'s %1$s.',
+				ucwords( str_replace( '_', ' ', $newsletter_type ) ),
+			);
+		} else {
+			$type_string = sprintf(
+				// translators: 1) is the newsletter type
+				'Welcome to MinnPost\'s %1$s newsletter.',
+				ucwords( str_replace( '_', ' ', $newsletter_type ) ),
+			);
+		}
 		$type_string = apply_filters( 'the_content', $type_string );
 		echo $type_string;
 	}
