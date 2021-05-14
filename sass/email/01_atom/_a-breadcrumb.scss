@@ -1,13 +1,12 @@
 .a-breadcrumbs {
-	display: flex;
-	align-items: flex-start;
-    margin: $standard-block-padding / 2 0;
+	display: block;
+    padding: $standard-block-padding / 2 0;
 }
 
 .a-breadcrumb {
 
 	@include meta-preset( $size: 0, $bold: true, $italic: false, $line-height: 1 );
-	margin-right: $standard-block-padding / 2;
+	display: inline-block;
 
 	a {
 
@@ -36,6 +35,10 @@
 				background-color: neutral-color(dark);
 			}
         }
+	}
+
+	&.a-category-name {
+		padding-left: $standard-block-padding / 2;
 	}
 
 }
