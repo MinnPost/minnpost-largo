@@ -72,19 +72,22 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 
 		if ( '' !== $image_id && '' !== wp_get_attachment_image( $image_id, $size ) ) {
 			// this requires that the custom image sizes in custom-fields.php work correctly
-			$image      = wp_get_attachment_image( $image_id, $size, false, $attributes );
-			$image_url  = wp_get_attachment_url( $image_id );
-			$image_url .= '?strip=all';
+			$image     = wp_get_attachment_image( $image_id, $size, false, $attributes );
+			$image_url = wp_get_attachment_url( $image_id );
 
-			if ( isset( $attributes['content_width'] ) ) {
-				$image_url .= '&amp;w=' . $attributes['content_width'];
+			if ( function_exists( 'get_minnpost_modified_image_url' ) ) {
+				$image_url = get_minnpost_modified_image_url( $image_url, $attributes );
 			}
 
 			if ( is_singular( 'newsletter' ) ) {
 				$image = minnpost_largo_manual_image_tag( $image_id, $image_url, $attributes, 'newsletter' );
 			}
-
 		} else {
+
+			if ( function_exists( 'get_minnpost_modified_image_url' ) ) {
+				$image_url = get_minnpost_modified_image_url( $image_url, $attributes );
+			}
+
 			if ( is_singular( 'newsletter' ) ) {
 				$image = minnpost_largo_manual_image_tag( $image_id, $image_url, $attributes, 'newsletter' );
 			} else {
@@ -103,6 +106,28 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 			'size'      => $size,
 		);
 		return $image_data;
+	}
+endif;
+
+/**
+* Get the image URL based on the attributes array's modifications to it
+*
+* @param string $image_url
+* @param array $attributes
+*
+* @return string $image_url
+*
+*/
+if ( ! function_exists( 'get_minnpost_modified_image_url' ) ) :
+	function get_minnpost_modified_image_url( $image_url, $attributes = array() ) {
+		if ( '' === $image_url ) {
+			return $image_url;
+		}
+		$image_url .= '?strip=all';
+		if ( isset( $attributes['content_width'] ) ) {
+			$image_url .= '&amp;w=' . $attributes['content_width'];
+		}
+		return $image_url;
 	}
 endif;
 

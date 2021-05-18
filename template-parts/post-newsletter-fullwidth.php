@@ -6,7 +6,25 @@
 					<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="m-post-image m-post-image-<?php echo $args['image_size']; ?>">
 						<tr>
 							<td>
-								<a href="<?php echo get_the_permalink(); ?>"><?php minnpost_post_image( $args['image_size'], array( 'content_width' => 600, 'content_height' => 400 ) ); ?></a>
+								<?php
+								$attributes = array(
+									'content_width'  => 600,
+									'content_height' => 400,
+								);
+								if ( ! empty( get_minnpost_post_image( $args['image_size'], $attributes ) ) ) :
+									?>
+									<a href="<?php echo get_the_permalink(); ?>"><?php minnpost_post_image( $args['image_size'], $attributes ); ?></a>
+								<?php elseif ( ! empty( minnpost_largo_get_social_images() ) ) : ?>
+									<?php
+									$meta_images = minnpost_largo_get_social_images( $id );
+									$image_id    = array_key_first( $meta_images );
+									$image_url   = wp_get_attachment_url( $image_id );
+									if ( function_exists( 'get_minnpost_modified_image_url' ) ) {
+										$image_url = get_minnpost_modified_image_url( $image_url, $attributes );
+									}
+									?>
+									<a href="<?php echo get_the_permalink(); ?>"><?php echo minnpost_largo_manual_image_tag( $image_id, $image_url, $attributes, 'newsletter' ); ?></a>
+								<?php endif; ?>
 							</td>
 						</tr>
 					</table>
