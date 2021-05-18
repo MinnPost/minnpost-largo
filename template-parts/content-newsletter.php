@@ -375,15 +375,21 @@
 				<?php
 				// editors choice post section
 				$section                    = 'editors';
-				$editors_query              = minnpost_newsletter_get_section_query( $section );
+				$newsletter_recommended_query = z_get_zone_query( 'newsletter-recommended-stories' );
+				if ( $newsletter_recommended_query->have_posts() ) {
+					$editors_query = $newsletter_recommended_query;
+				} else {
+					$editors_query = minnpost_newsletter_get_section_query( $section );
+				}
 				$args['section']            = $section;
 				$args['show_category']      = false;
 				$use_other_section_settings = get_post_meta( get_the_ID(), '_mp_newsletter_editors_use_other_section_settings', true );
+				$remove_editors_section     = get_post_meta( get_the_ID(), '_mp_newsletter_remove_editors_section', true );
 				?>
-				<?php if ( $editors_query->have_posts() ) : ?>
+				<?php if ( 'on' !== $remove_editors_section && $editors_query->have_posts() ) : ?>
 					<div class="o-single-column o-section-editors-stories">
 						<?php
-						$post_count         = $editors_query->post_count;
+						$post_count         = isset( $newsletter_recommended_query->post_count ) ? $newsletter_recommended_query->post_count : $editors_query->post_count;
 						$this_section_post  = 0;
 						$args['image_size'] = 'none';
 						?>

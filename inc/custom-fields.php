@@ -396,7 +396,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 			minnpost_post_search_field(
 				array(
 					'name'       => __( 'Stories', 'minnpost-largo' ),
-					'desc'       => __( 'Search for posts here.', 'minnpost-largo' ),
+					'desc'       => __( 'Search for posts here. If you do not add any, the newsletter will use the posts from the Newsletter Recommended Stories zone.', 'minnpost-largo' ),
 					'id'         => $prefix . 'editors_posts',
 					'query_args' => array(
 						'orderby'     => 'modified',
@@ -416,7 +416,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'name'       => __( 'Stories Manual Override', 'minnpost-largo' ),
 				'id'         => $prefix . 'editors_posts_override',
 				'type'       => 'text',
-				'desc'       => __( 'Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them instead of the search field value.', 'minnpost-largo' ),
+				'desc'       => __( 'Use this field if the search above is not working. Enter a comma separated list of post IDs, and the newsletter template will use them instead of the search field value.', 'minnpost-largo' ),
 				'attributes' => array(
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
@@ -429,6 +429,14 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'id'   => $prefix . 'editors_use_other_section_settings',
 				'type' => 'checkbox',
 				'desc' => __( 'If checked, this section will behave, by default, like the above sections instead. Individual stories can override this behavior.', 'minnpost-largo' ),
+			)
+		);
+		$editors_section->add_field(
+			array(
+				'name' => __( 'Remove This Section', 'minnpost-largo' ),
+				'id'   => $prefix . 'remove_editors_section',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, this section will be removed from this edition of this newsletter, regardless of what posts are in the zone or the fields above.', 'minnpost-largo' ),
 			)
 		);
 
