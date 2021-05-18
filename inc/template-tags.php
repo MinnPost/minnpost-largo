@@ -1031,56 +1031,7 @@ if ( ! function_exists( 'minnpost_largo_manual_image_tag' ) ) :
 		} else {
 			$alt = '';
 		}
-		$image = '<img src="' . $image_url . '" alt="' . $alt . '"';
-		if ( 'newsletter' === $object_type ) {
-			if ( isset( $attributes['title'] ) ) {
-				$image .= ' title="' . $attributes['title'] . '"';
-			}
-		}
-		if ( isset( $attributes['style'] ) ) {
-			$image .= ' style="' . $attributes['style'] . '"';
-		}
-		if ( isset( $attributes['class'] ) ) {
-			$image .= ' class="' . $attributes['class'] . '"';
-		}
-		if ( isset( $attributes['align'] ) ) {
-			$image .= ' align="' . $attributes['align'] . '"';
-		}
-		if ( isset( $attributes['width'] ) ) {
-			$image .= ' width="' . $attributes['width'] . '"';
-		}
-		if ( isset( $attributes['height'] ) ) {
-			$image .= ' height="' . $attributes['height'] . '"';
-		}
-		if ( isset( $attributes['loading'] ) ) {
-			$image .= ' loading="' . $attributes['loading'] . '"';
-		}
-		$image .= '>';
-		return $image;
-	}
-endif;
 
-/**
-* Manually generate an image tag from its attributes
-* This is mostly used for images that are migrated pre-WordPress, but at least we can still add
-* attributes to them.
-*
-* @param int $image_id
-* @param string $image_url
-* @param array $attributes
-* @return string $image
-*
-*/
-if ( ! function_exists( 'minnpost_largo_manual_image_tag' ) ) :
-	function minnpost_largo_manual_image_tag( $image_id = '', $image_url = '', $attributes = array(), $object_type = 'post' ) {
-		$image = '';
-		if ( '' !== $image_id ) {
-			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
-		} elseif ( isset( $attributes['alt'] ) ) {
-			$alt = $attributes['alt'];
-		} else {
-			$alt = '';
-		}
 		$image = '<img src="' . $image_url . '" alt="' . $alt . '"';
 		if ( 'newsletter' === $object_type ) {
 			if ( isset( $attributes['title'] ) ) {
