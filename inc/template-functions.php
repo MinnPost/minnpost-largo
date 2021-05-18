@@ -1887,12 +1887,16 @@ if ( ! function_exists( 'minnpost_newsletter_get_section_query' ) ) :
 		if ( '' === $newsletter_id ) {
 			$newsletter_id = get_the_ID();
 		}
-		$post_ids      = minnpost_largo_get_newsletter_stories( $newsletter_id, $section );
-		$query_args    = array(
+		$post_ids   = minnpost_largo_get_newsletter_stories( $newsletter_id, $section );
+		$query_args = array(
 			'post__in'    => $post_ids,
 			'orderby'     => 'post__in',
 			'post_status' => 'any',
 		);
+		// if there are no ids, the query arguments should be empty.
+		if ( '' === $post_ids ) {
+			$query_args = array();
+		}
 		$section_query = new WP_Query( $query_args );
 		// the total does not stop at posts_per_page
 		set_query_var( 'found_posts', $section_query->found_posts );
