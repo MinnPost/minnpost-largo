@@ -1,4 +1,6 @@
 .o-navigation {
+    background-color: neutral-color(white);
+    color: neutral-color(black);
 
     @include column( $selector: '.o-column.o-navigation', $max-width: 100%);
 }

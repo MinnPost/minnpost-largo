@@ -2,6 +2,8 @@
 .o-rows {
     text-align:center;
     font-size:0;
+    background-color: neutral-color(white);
+    color: neutral-color(black);
 
     @include column( $selector: '.o-row', $max-width: 100%, $text-align: left, $vertical-align: top, $padding: $standard-block-padding);
 }
