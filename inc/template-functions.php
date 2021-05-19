@@ -1968,14 +1968,14 @@ if ( ! function_exists( 'minnpost_newsletter_get_entry_excerpt' ) ) :
 		}
 		$excerpt      = get_the_excerpt( $post_id );
 		$use_seo_desc = get_post_meta( $post_id, '_mp_post_newsletter_use_seo_description', true );
-		if ( 'on' !== $use_seo_desc ) {
-			return $excerpt;
+		if ( 'on' === $use_seo_desc ) {
+			$seo_desc = get_post_meta( $post_id, '_mp_seo_description', true );
+			if ( '' !== $seo_desc ) {
+				$excerpt = $seo_desc;
+			}
 		}
-		$seo_desc = get_post_meta( $post_id, '_mp_seo_description', true );
-		if ( '' !== $seo_desc ) {
-			$excerpt = $seo_desc;
-		}
-		$excerpt = apply_filters( 'the_content', $excerpt );
+		$excerpt = str_ireplace( '&nbsp;', '', $excerpt );
+		$excerpt = apply_filters( 'the_excerpt', $excerpt );
 		return $excerpt;
 	}
 endif;
