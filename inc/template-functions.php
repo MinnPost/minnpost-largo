@@ -1763,7 +1763,7 @@ if ( ! function_exists( 'format_email_content' ) ) :
 	add_filter( 'format_email_content', 'format_email_content', 10, 4 );
 	function format_email_content( $content, $body = true, $message = false, $colors = array() ) {
 
-		$is_legacy = apply_filters( 'minnpost_largo_newsletter_legacy', false, get_the_ID() );
+		$is_legacy = apply_filters( 'minnpost_largo_newsletter_legacy', false, '', get_the_ID() );
 		if ( true === $is_legacy ) {
 			format_email_content_legacy( $content, $body, $message );
 		}
@@ -1850,13 +1850,21 @@ endif;
 * Determine whether this is a legacy newsletter.
 *
 * @param bool $is_legacy
+* @param string $newsletter_type
 * @param int $post_id
 * @return bool $is_legacy
 *
 */
 if ( ! function_exists( 'minnpost_largo_check_newsletter_legacy' ) ) :
-	add_filter( 'minnpost_largo_newsletter_legacy', 'minnpost_largo_check_newsletter_legacy', 10, 2 );
-	function minnpost_largo_check_newsletter_legacy( $is_legacy, $post_id ) {
+	add_filter( 'minnpost_largo_newsletter_legacy', 'minnpost_largo_check_newsletter_legacy', 10, 3 );
+	function minnpost_largo_check_newsletter_legacy( $is_legacy, $newsletter_type, $post_id ) {
+		if ( '' === $newsletter_type ) {
+			$newsletter_type = get_post_meta( get_the_ID(), '_mp_newsletter_type', true );
+		}
+		// for now, the DC Memo style emails are all legacy. TODO: change this when we can.
+		if ( in_array( $newsletter_type, array( 'dc_memo', 'daily_coronavirus', 'republication' ), true ) ) {
+			return true;
+		}
 		$top_story = minnpost_largo_get_newsletter_stories( $post_id, 'top' );
 		if ( ! empty( $top_story ) ) {
 			return false;

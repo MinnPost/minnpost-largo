@@ -9,7 +9,7 @@
 
 use Pelago\Emogrifier\CssInliner;
 $newsletter_type = get_post_meta( get_the_ID(), '_mp_newsletter_type', true );
-$is_legacy       = apply_filters( 'minnpost_largo_newsletter_legacy', false, get_the_ID() );
+$is_legacy       = apply_filters( 'minnpost_largo_newsletter_legacy', false, '', get_the_ID() );
 
 $args = array(
 	'newsletter_type' => $newsletter_type,
@@ -22,7 +22,7 @@ if ( false === $is_legacy ) {
 	$css = str_replace( 'margin', 'Margin', $css );
 	$css = str_replace( '*,:after,:before{box-sizing:inherit}', '', $css );
 }
-get_header( 'newsletter' );
+get_header( 'newsletter', $args );
 
 while ( have_posts() ) :
 	the_post();
@@ -33,7 +33,7 @@ while ( have_posts() ) :
 	}
 endwhile; // End of the loop.
 
-get_footer( 'newsletter' );
+get_footer( 'newsletter', $args );
 
 $html = ob_get_contents();
 ob_end_clean();

@@ -352,8 +352,6 @@ a[x-apple-data-detectors] {
 			}
 			?>
 
-			<?php do_action( 'wp_message_inserter', 'email_bottom', 'email' ); ?>
-
 			<tr>
 				<td class="one-column footer" style="border-collapse: collapse; Margin: 0; padding: 0">
 					<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
