@@ -38,7 +38,8 @@
 	}
 
 	&.a-category-name {
-		padding-left: $standard-block-padding / 2;
+		padding: 0;
+		margin: 0;
 	}
 
 }
@@ -46,27 +47,6 @@
 
 // when there's a category group on the breadcrumb
 .a-breadcrumbs {
-
-	.a-category-group {
-
-		a,
-        span {
-			display: inline-block;
-			padding: 0 $standard-block-padding;
-			border-radius: $border-radius;
-			color: neutral-color(white);
-			background-color: neutral-color(dark);
-		}
-
-        a {
-            
-            &:hover,
-			&:focus,
-			&:active {
-				background-color: neutral-color(dark);
-			}
-        }
-	}
 
 	&.a-breadcrumbs-news,
 	&.a-breadcrumbs-arts-culture {
