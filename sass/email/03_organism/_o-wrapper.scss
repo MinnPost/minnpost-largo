@@ -17,10 +17,10 @@ table.o-wrapper {
 @media only screen and (max-width: $mobile-screen-width) {
     /* Targets Gmail */
     u ~ div .o-wrapper {
-        min-width: 100vw;
+        min-width: 100vw !important;
     }
     /* Targets Gmail on Android */
     div > u ~ div .o-wrapper {
-        min-width: 100%;
+        min-width: 100% !important;
     }
 }
