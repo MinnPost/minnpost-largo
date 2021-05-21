@@ -13,3 +13,14 @@ table.o-wrapper {
         padding: $standard-block-padding 0;
     }
 }
+
+@media only screen and (max-width: $mobile-screen-width) {
+    /* Targets Gmail */
+    u ~ div .o-wrapper {
+        min-width: 100vw;
+    }
+    /* Targets Gmail on Android */
+    div > u ~ div .o-wrapper {
+        min-width: 100%;
+    }
+}
