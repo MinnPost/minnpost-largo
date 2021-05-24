@@ -157,7 +157,7 @@
 
 		if ( '' !== $body ) {
 			// email content filter
-			$body = apply_filters( 'format_email_content', $body );
+			$body = apply_filters( 'format_email_content_legacy', $body );
 			?>
 		<tr>
 			<td class="one-column content promo" style="border-collapse: collapse; border-bottom-width: 2px; border-bottom-color: #cccccf; border-bottom-style: solid; Margin: 0; padding: 0;">
@@ -209,7 +209,7 @@
 
 		if ( '' !== $upcoming ) {
 			// email content filter
-			$upcoming = apply_filters( 'format_email_content', $upcoming );
+			$upcoming = apply_filters( 'format_email_content_legacy', $upcoming );
 			?>
 		<tr>
 			<td class="one-column content promo" style="border-collapse: collapse; /*border-bottom-width: 2px; border-bottom-color: #cccccf; border-bottom-style: solid;*/ Margin: 0; padding: 0;">

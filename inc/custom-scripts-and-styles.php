@@ -9,10 +9,11 @@
 * Handle adding and removing of front end CSS in this theme
 * This also handles whether the CSS should be served as minified based on WP_DEBUG value
 * We can't use SCRIPT_DEBUG because our server fails to minify, so we have to keep that set to true, but these files are already minified.
+* todo: we should figure out if the above is still true on VIP
 *
 */
 if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
-	add_action( 'wp_print_styles', 'minnpost_largo_add_remove_styles', 10 );
+	add_action( 'wp_enqueue_scripts', 'minnpost_largo_add_remove_styles', 10 );
 	function minnpost_largo_add_remove_styles() {
 		// add
 		wp_enqueue_style( 'minnpost-fonts', 'https://use.typekit.net/cxj7fzg.css', array(), '1.0.0', 'all' );
@@ -26,13 +27,32 @@ if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
 		wp_dequeue_style( 'minnpost-donation-progress-widget' );
 		wp_dequeue_style( 'popular-widget' );
 		wp_dequeue_style( 'creativ_sponsor' );
-		wp_dequeue_script( 'pum-admin-theme-editor' );
 
 		$is_liveblog = get_post_meta( get_the_ID(), 'liveblog', true );
 		if ( 'enable' === $is_liveblog || 'archive' === $is_liveblog ) {
 			wp_enqueue_style( 'minnpost-liveblog', get_theme_file_uri() . '/assets/css/liveblog.css', array(), filemtime( get_theme_file_path() . '/assets/css/liveblog.css' ), 'all' );
 		}
+	}
+endif;
 
+/**
+* Handle adding and removing of front end CSS for the MinnPost Festival pages only
+*
+*/
+if ( ! function_exists( 'minnpost_largo_festival_styles' ) ) :
+	add_action( 'wp_enqueue_scripts', 'minnpost_largo_festival_styles', 10 );
+	function minnpost_largo_festival_styles() {
+		if ( is_post_type_archive( 'festival' ) || is_singular( 'festival' ) || is_singular( 'tribe_ext_speaker' ) ) {
+			wp_dequeue_style( 'minnpost-style' );
+			wp_enqueue_style( 'minnpost-festival', get_theme_file_uri() . '/assets/css/festival.css', array(), filemtime( get_theme_file_path() . '/assets/css/festival.css' ), 'all' );
+		}
+		if ( is_singular( 'tribe_events' ) ) {
+			$locate = locate_template( 'tribe-events/single-event-festival.php' );
+			if ( '' !== $locate ) {
+				wp_dequeue_style( 'minnpost-style' );
+				wp_enqueue_style( 'minnpost-festival', get_theme_file_uri() . '/assets/css/festival.css', array(), filemtime( get_theme_file_path() . '/assets/css/festival.css' ), 'all' );
+			}
+		}
 	}
 endif;
 
@@ -58,18 +78,7 @@ if ( ! function_exists( 'minnpost_largo_typekit_head' ) ) :
 	function minnpost_largo_typekit_head() {
 		?>
 		<link rel="preconnect" href="https://use.typekit.net">
-		<script>window.MSInputMethodContext && document.documentMode && document.write('<script src="https://cdn.jsdelivr.net/gh/nuxodin/ie11CustomProperties@4.1.0/ie11CustomProperties.min.js"><\x2fscript>');</script>
 		<?php
-	}
-endif;
-
-if ( ! function_exists( 'minnpost_largo_typekit_script' ) ) :
-	add_filter( 'script_loader_tag', 'minnpost_largo_typekit_script', 10, 2 );
-	function minnpost_largo_typekit_script( $tag, $handle ) {
-		if ( 'minnpost' === $handle ) {
-			$tag = '<link rel="stylesheet" href="https://use.typekit.net/cxj7fzg.css">' . $tag;
-		}
-		return $tag;
 	}
 endif;
 
@@ -82,6 +91,7 @@ endif;
 if ( ! function_exists( 'minnpost_largo_add_remove_scripts' ) ) :
 	add_action( 'wp_enqueue_scripts', 'minnpost_largo_add_remove_scripts' );
 	function minnpost_largo_add_remove_scripts() {
+		//wp_add_inline_script( 'jquery-core', '$=jQuery;' ); // this would be nice, but it causes conflict with older scripts
 		// add
 		//wp_enqueue_script( 'modernizr', get_theme_file_uri() . '/assets/js/modernizr-custom.min.js', array(), '1.0', false );
 		//wp_enqueue_script( 'minnpost', get_theme_file_uri() . '/assets/js/minnpost.min.js', array( 'jquery', 'modernizr' ), filemtime( get_theme_file_path() . '/assets/js/minnpost.min.js' ), true );
@@ -204,5 +214,109 @@ if ( ! function_exists( 'minnpost_largo_body_classes' ) ) :
 			}
 		}
 		return $classes;
+	}
+endif;
+
+/**
+* Add inline CSS from a remote URL we're loading via shortcode
+*
+*/
+if ( ! function_exists( 'minnpost_shortcode_styles' ) ) :
+	//add_action( 'wp_enqueue_scripts', 'minnpost_shortcode_styles', 10 );
+	function minnpost_shortcode_styles() {
+		global $post;
+		if ( ! is_main_query() || ! is_singular() ) {
+			return;
+		}
+		$result  = array();
+		$pattern = get_shortcode_regex();
+		if ( preg_match_all( '/' . $pattern . '/s', $post->post_content, $matches ) && in_array( 'minnpost_load_remote_url', $matches[2], true ) ) {
+			$keys   = array();
+			$result = array();
+			foreach ( $matches[0] as $key => $value ) {
+				// $matches[3] return the shortcode attribute as string
+				// replace space with '&' for parse_str() function
+				$get = str_replace( ' ', '&', $matches[3][ $key ] );
+				parse_str( $get, $output );
+
+				//get all shortcode attribute keys
+				$keys     = array_unique( array_merge( $keys, array_keys( $output ) ) );
+				$result[] = $output;
+			}
+			if ( ! empty( $keys ) && ! empty( $result ) ) {
+				// Loop the result array and add the missing shortcode attribute key
+				foreach ( $result as $key => $value ) {
+					// Loop the shortcode attribute key
+					foreach ( $keys as $attr_key ) {
+						$result[ $key ][ $attr_key ] = isset( $result[ $key ][ $attr_key ] ) ? $result[ $key ][ $attr_key ] : null;
+					}
+					//sort the array key
+					ksort( $result[ $key ] );
+					if ( ! isset( $result[ $key ]['url'] ) ) {
+						unset( $result[ $key ] );
+						continue;
+					}
+				}
+			}
+			$result = array_values( $result );
+			$url    = $result[0]['url'];
+			$cache  = filter_var( $result[0]['cache'], FILTER_VALIDATE_BOOLEAN );
+			$css    = minnpost_load_shortcode_string( $url, 'css', $cache );
+			if ( '' !== $css ) {
+				wp_add_inline_style( 'minnpost-style', $css );
+			}
+		}
+	}
+endif;
+
+/**
+* Add inline JavaScript from a remote URL we're loading via shortcode
+*
+*/
+if ( ! function_exists( 'minnpost_shortcode_scripts' ) ) :
+	//add_action( 'wp_enqueue_scripts', 'minnpost_shortcode_scripts', 10 );
+	function minnpost_shortcode_scripts() {
+		global $post;
+		if ( ! is_main_query() || ! is_singular() ) {
+			return;
+		}
+		$result  = array();
+		$pattern = get_shortcode_regex();
+		if ( preg_match_all( '/' . $pattern . '/s', $post->post_content, $matches ) && in_array( 'minnpost_load_remote_url', $matches[2], true ) ) {
+			$keys   = array();
+			$result = array();
+			foreach ( $matches[0] as $key => $value ) {
+				// $matches[3] return the shortcode attribute as string
+				// replace space with '&' for parse_str() function
+				$get = str_replace( ' ', '&', $matches[3][ $key ] );
+				parse_str( $get, $output );
+
+				//get all shortcode attribute keys
+				$keys     = array_unique( array_merge( $keys, array_keys( $output ) ) );
+				$result[] = $output;
+			}
+			if ( ! empty( $keys ) && ! empty( $result ) ) {
+				// Loop the result array and add the missing shortcode attribute key
+				foreach ( $result as $key => $value ) {
+					// Loop the shortcode attribute key
+					foreach ( $keys as $attr_key ) {
+						$result[ $key ][ $attr_key ] = isset( $result[ $key ][ $attr_key ] ) ? $result[ $key ][ $attr_key ] : null;
+					}
+					//sort the array key
+					ksort( $result[ $key ] );
+					if ( ! isset( $result[ $key ]['url'] ) ) {
+						unset( $result[ $key ] );
+						continue;
+					}
+				}
+			}
+			$result = array_values( $result );
+			$url    = $result[0]['url'];
+			$cache  = filter_var( $result[0]['cache'], FILTER_VALIDATE_BOOLEAN );
+			$js     = minnpost_load_shortcode_string( $url, 'js', $cache );
+			if ( '' !== $js ) {
+				wp_add_inline_script( 'minnpost', $js );
+			}
+		}
 	}
 endif;

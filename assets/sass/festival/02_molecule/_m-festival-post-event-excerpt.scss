@@ -1,0 +1,15 @@
+.m-festival-post-event-excerpt {
+    padding-bottom: $standard-heading-margin;
+    border-bottom: $border-default-style;
+    margin-bottom: $standard-block-margin;
+
+    &.m-festival-post-event-with-image {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+
+        .o-entry {
+            margin-bottom: $standard-heading-margin;
+        }
+    }
+}

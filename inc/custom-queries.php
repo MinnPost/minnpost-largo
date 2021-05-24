@@ -124,6 +124,17 @@ if ( ! function_exists( 'custom_archive_query_vars' ) ) :
 						),
 					),
 				);
+			} elseif ( is_post_type_archive( 'festival' ) ) {
+				$query->set( 'posts_per_page', 1 );
+				$query->set(
+					'meta_query',
+					array(
+						array(
+							'key'   => 'festival_load_as_directory_content',
+							'value' => 'on',
+						),
+					),
+				);
 			}
 		}
 		return $query;
@@ -227,5 +238,25 @@ if ( ! function_exists( 'minnpost_zoninator_search_args' ) ) :
 		$args['post_status'] = 'publish';
 		$args['post_type']   = 'post';
 		return $args;
+	}
+endif;
+
+/**
+ * Filter a post query where the title starts with an argument
+ *
+ * @param string $where
+ * @param object $query
+ * @return string $where
+ *
+ */
+if ( ! function_exists( 'minnpost_query_title_starts_with' ) ) :
+	add_filter( 'posts_where', 'minnpost_query_title_starts_with', 10, 2 );
+	function minnpost_query_title_starts_with( $where, $query ) {
+		global $wpdb;
+		$title_starts_with = esc_sql( $query->get( 'title_starts_with' ) );
+		if ( $title_starts_with ) {
+			$where .= " AND $wpdb->posts.post_title LIKE '$title_starts_with%'";
+		}
+		return $where;
 	}
 endif;

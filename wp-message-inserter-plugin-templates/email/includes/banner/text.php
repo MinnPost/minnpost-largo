@@ -16,5 +16,5 @@ if ( isset( $screen_size[ $prefix . 'banner_shortcopy' ] ) ) {
 // apply content filter
 $value = apply_filters( 'the_content', $value, 20 );
 // email content filter
-$value = apply_filters( 'format_email_content', $value, false, true );
+$value = apply_filters( 'format_email_content_legacy', $value, false, true );
 echo $value;

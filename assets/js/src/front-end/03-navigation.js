@@ -158,3 +158,11 @@ $( 'a', $( '.o-site-sidebar' ) ).click( function() {
 	}
 	mpAnalyticsTrackingEvent( 'event', 'Sidebar Link', 'Click', sidebarSectionTitle );
 } );
+
+$( 'a', $( '.todayonminnpost' ) ).click( function() {
+	mpAnalyticsTrackingEvent( 'event', 'Glean Link: Today on MinnPost', 'Click', location.pathname );
+} );
+
+$( 'a', $( '.m-related' ) ).click( function() {
+	mpAnalyticsTrackingEvent( 'event', 'Related Section Link', 'Click', location.pathname );
+} );

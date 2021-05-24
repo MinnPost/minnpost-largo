@@ -2,22 +2,27 @@
 	display: flex;
 	flex-wrap: wrap;
 	justify-content: space-around;
+}
 
-	li.a-sponsor {
-		margin-bottom: $standard-block-margin;
+.o-footer .o-footer-hat section ul.a-sponsor-list li.a-sponsor,
+li.a-sponsor {
+	margin-bottom: $standard-block-margin;
 
-		figure {
-			margin: 0;
-			display: flex;
+	> a {
+		display: block;
+	}
 
-			a {
-				display: block;
-			}
+	figure {
+		margin: 0;
+		display: flex;
 
-			img {
-				display: block;
-				align-self: flex-start;
-			}
+		> a {
+			display: block;
+		}
+
+		img {
+			display: block;
+			align-self: flex-start;
 		}
 	}
 }

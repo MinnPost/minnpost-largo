@@ -47,7 +47,7 @@
 			<?php minnpost_post_image( 'large' ); ?>
 			<?php do_action( 'wp_message_inserter', 'above_article_body' ); ?>
 			<?php do_action( 'tribe_events_single_event_before_the_content' ); ?>
-			<div class="tribe-events-single-event-description tribe-events-content">
+			<div class="m-event-content">
 				<?php the_content(); ?>
 			</div>
 			<?php do_action( 'wp_message_inserter', 'below_article_body' ); ?>

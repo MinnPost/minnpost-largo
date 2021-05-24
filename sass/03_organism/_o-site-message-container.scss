@@ -133,7 +133,11 @@
 		.h3,
 		h4,
 		.h4 {
-			margin: 0;
+			margin-bottom: $standard-block-padding;
+
+			@include breakpoint-min( lg ) {
+				margin: 0;
+			}
 		}
 
 		h3,
@@ -175,6 +179,7 @@
 				}
 			}
 
+			.m-message-and-fields,
 			fieldset {
 				border: 0;
 				margin: 0;
@@ -194,6 +199,17 @@
 				input {
 					width: 100%;
 					max-width: 100%;
+				}
+			}
+
+			.m-message-and-fields {
+
+				fieldset {
+					max-width: none;
+				}
+	
+				.m-form-message {
+					margin-bottom: 0;
 				}
 			}
 		}
@@ -324,7 +340,8 @@
 			}
 		}
 
-		fieldset {
+		fieldset,
+		.m-message-and-fields {
 
 			@include breakpoint-min( xs ) {
 				max-width: colspan(12, 16);
@@ -339,12 +356,21 @@
 			}
 		}
 
+		.m-message-and-fields {
+
+			fieldset {
+				max-width: none;
+			}
+
+		}
+
 	}
 
 	// after the form has been submitted
 	.m-form-frontpage.m-form-minnpost-form-processor-mailchimp-submitted {
 
-		.m-form-message {
+		.m-form-message,
+		.m-message-and-fields {
 
 			@include breakpoint-min( xs ) {
 				max-width: colspan(12, 16);
@@ -356,6 +382,14 @@
 
 			@include breakpoint-min( lg ) {
 				max-width: colspan(8, 16);
+			}
+		}
+
+		.m-message-and-fields {
+
+			.m-form-message {
+				max-width: none;
+				margin-bottom: 0;
 			}
 		}
 	}

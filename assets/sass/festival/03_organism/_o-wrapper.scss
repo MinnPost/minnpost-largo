@@ -1,0 +1,9 @@
+.o-header-festival .o-wrapper-site-navigation {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 0 0 100%;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: $standard-block-padding;
+}

@@ -21,6 +21,7 @@ if ( ! function_exists( 'minnpost_menus' ) ) :
 				'user_account_management' => __( 'User Account Management Menu', 'minnpost-largo' ), // menu where users manage their account info/preferences
 				'minnpost_network'        => __( 'Network Menu', 'minnpost-largo' ), // social networks
 				'footer_primary'          => __( 'Footer Primary', 'minnpost-largo' ), // main footer. about, advertise, member benefits, etc
+				'festival'                => __( 'Festival', 'minnpost-largo' ), // minnpost festival menu
 			)
 		);
 		unregister_nav_menu( 'menu-1' ); // we don't need whatever this is
@@ -114,7 +115,6 @@ if ( ! function_exists( 'minnpost_largo_nav_update' ) ) :
 		}
 	}
 endif;
-
 
 /**
 * Nav Menu Walker
@@ -266,6 +266,8 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 				$active_class = $custom_classes;
 			}
 		}
+
+		$active_class = apply_filters( 'minnpost_largo_nav_item_classes', $active_class, $item );
 
 		if ( '' !== $active_class ) {
 			$active_class = ' class="' . $active_class . '"';
@@ -468,6 +470,159 @@ if ( ! function_exists( 'minnpost_largo_menu_support' ) ) :
 			</nav><!-- #navigation-support -->
 		</div>
 		<?php
+	}
+endif;
+
+/**
+* Change menu classes for festival/event menus
+* @param string $classes
+* @param object $item
+* @return string $classes
+*
+*/
+if ( ! function_exists( 'minnpost_largo_event_menu_classes' ) ) :
+	add_filter( 'minnpost_largo_nav_item_classes', 'minnpost_largo_event_menu_classes', 10, 2 );
+	function minnpost_largo_event_menu_classes( $classes, $item ) {
+		if ( is_singular( 'tribe_ext_speaker' ) && 'Speakers' === $item->title ) {
+			$classes .= ' active';
+		}
+		if ( is_singular( 'tribe_events' ) || is_singular( 'sessions' ) ) {
+			if ( 'Sessions' === $item->title || 'Events' === $item->title ) {
+				$classes .= ' active';
+			}
+		}
+		return $classes;
+	}
+endif;
+
+/**
+* Outputs the user account management menu
+*
+*/
+if ( ! function_exists( 'minnpost_account_management_menu' ) ) :
+	function minnpost_account_management_menu() {
+		$user_id = get_query_var( 'users', '' );
+		if ( isset( $_GET['user_id'] ) ) {
+			$user_id = esc_attr( $_GET['user_id'] );
+		}
+		$menu = get_minnpost_account_management_menu( $user_id );
+		?>
+		<?php if ( ! empty( $menu ) ) : ?>
+			<div class="o-wrapper o-wrapper-sub-navigation o-wrapper-user-account-management-navigation">
+				<a class="a-subnav-label a-user-account-management-label" href="/user/"><?php echo __( 'Your&nbsp;MinnPost&nbsp;Account', 'minnpost-largo' ); ?></a>
+				<div class="m-sub-navigation m-user-account-management">
+					<nav id="navigation-user-account-management" class="m-subnav-navigation m-user-account-management-navigation">
+						<?php echo $menu; ?>
+					</nav><!-- #navigation-user-account-management -->
+					<button class="nav-scroller-btn nav-scroller-btn--left" aria-label="Scroll left">
+						<i class="fas fa-chevron-left"></i>
+					</button>
+					<button class="nav-scroller-btn nav-scroller-btn--right" aria-label="Scroll right"><i class="fas fa-chevron-right"></i>
+					</button>
+				</div>
+			</div>
+		<?php endif; ?>
+		<?php
+	}
+endif;
+
+/**
+* Returns the user account management menu for each user
+* This depends on the User Account Management plugin
+*
+* @param int $user_id
+* @return object $menu
+*
+*/
+if ( ! function_exists( 'get_minnpost_account_management_menu' ) ) :
+	function get_minnpost_account_management_menu( $user_id = '' ) {
+		$menu       = '';
+		$can_access = false;
+
+		if ( function_exists( 'user_account_management' ) ) {
+			$account_management = user_account_management();
+			$can_access         = $account_management->user_data->check_user_permissions( $user_id );
+		} else {
+			if ( get_current_user_id() === $user_id || current_user_can( 'edit_user', $user_id ) ) {
+				$can_access = true;
+			}
+		}
+		// if we are on the current user, or if this user can edit users
+		if ( true === $can_access ) {
+			$menu = wp_nav_menu(
+				array(
+					'theme_location' => 'user_account_management',
+					'menu_id'        => 'user-account-management',
+					'depth'          => 1,
+					'container'      => false,
+					'walker'         => new Minnpost_Walker_Nav_Menu( $user_id ),
+					'items_wrap'     => '<ul id="%1$s" class="m-menu m-menu-sub-navigation m-menu-%1$s">%3$s</ul>',
+					'echo'           => false,
+				)
+			);
+		}
+		return $menu;
+	}
+endif;
+
+/**
+* Outputs the user account access menu
+*
+*/
+if ( ! function_exists( 'minnpost_account_access_menu' ) ) :
+	function minnpost_account_access_menu() {
+		$user_id = get_current_user_id();
+		$menu    = get_minnpost_account_access_menu();
+		?>
+		<?php if ( ! empty( $menu ) ) : ?>
+			<nav id="navigation-user-account-access" class="m-secondary-navigation" role="navigation">
+				<?php echo $menu; ?>
+			</nav><!-- #navigation-user-account-access -->
+		<?php endif; ?>
+		<?php
+	}
+endif;
+
+/**
+* Returns the user account access menu for each user
+* This depends on the User Account Management plugin
+*
+* @param int $user_id
+* @return object $menu
+*
+*/
+if ( ! function_exists( 'get_minnpost_account_access_menu' ) ) :
+
+	function get_minnpost_account_access_menu( $user_id = '' ) {
+
+		if ( '' === $user_id ) {
+			$user_id = get_current_user_id();
+		}
+
+		$menu       = '';
+		$can_access = false;
+		if ( function_exists( 'user_account_management' ) ) {
+			$account_management = user_account_management();
+			$can_access         = $account_management->user_data->check_user_permissions( $user_id );
+		} else {
+			if ( get_current_user_id() === $user_id || current_user_can( 'edit_user', $user_id ) ) {
+				$can_access = true;
+			}
+		}
+		// if we are on the current user, or if this user can edit users
+		if ( true === $can_access ) {
+			$menu = wp_nav_menu(
+				array(
+					'theme_location' => 'user_account_access',
+					'menu_id'        => 'user-account-access',
+					'depth'          => 2,
+					'container'      => false,
+					'walker'         => new Minnpost_Walker_Nav_Menu( $user_id ),
+					'echo'           => false,
+				)
+			);
+		}
+		return $menu;
 	}
 endif;
 
