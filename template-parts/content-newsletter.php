@@ -27,7 +27,21 @@
 					[/outlook]
 					<div class="o-column a-logo">
 						<div class="item-contents">
-							<img src="<?php minnpost_newsletter_logo( get_the_ID() ); ?>" alt="<?php bloginfo( 'name' ); ?>">
+							<!-- Default logo with 3-pixel wide background-matching border -->
+							<img src="https://www.minnpost.com/wp-content/themes/minnpost-largo/assets/img/logo-bw.png" alt="<?php bloginfo( 'name' ); ?>" class="darkLogoDefault" />
+
+							<!-- Light theme (so dark logo): 
+							This is for Apple Mail, Outlook on macOS, Outlook.com -->
+							<div class="darkLogoWrapper" style="mso-hide: all; display: none">
+								<img src="https://www.minnpost.com/wp-content/themes/minnpost-largo/assets/img/logo-bw.png" alt="<?php bloginfo( 'name' ); ?>" class="darkLogo" style="display: none" />
+							</div>
+
+							<!-- Dark theme (so light logo): 
+							This is for Apple Mail, Outlook on macOS, Outlook.com -->
+							<div class="lightLogoWrapper" style="mso-hide: all; display: none">
+								<img src="<?php minnpost_newsletter_logo( get_the_ID() ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="lightLogo" style="display: none" />
+							</div>
+
 						</div>
 					</div>
 					[outlook]
