@@ -16,6 +16,11 @@ table.h3.a-entry-title  {
 	td {
 
 		color: neutral-color(black);
+
+		@media (prefers-color-scheme: dark ) {
+			color: neutral-color(white) !important;
+		}
+
 		padding: 0 0 $standard-block-padding 0;
 
 		a {
@@ -35,6 +40,10 @@ table.h3.a-entry-title  {
 			&.active {
 
 				@include link-underline();
+
+				@media (prefers-color-scheme: dark ) {
+					color: utility-color(blue, highlight) !important;
+				}
 			}
 		}
 	}

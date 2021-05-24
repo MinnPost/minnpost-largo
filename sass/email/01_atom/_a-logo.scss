@@ -1,0 +1,66 @@
+.a-logo {
+    .dark-img {
+        display: none;
+        overflow: hidden;
+        float: left;
+        width: 0px;
+        max-height: 0px;
+        max-width: 0px;
+        line-height: 0px;
+        visibility: hidden;
+    }
+
+    @media (prefers-color-scheme: dark ) {
+        /* Shows Dark Mode-Only Content, Like Images */
+        .dark-img {
+            display: block !important;
+            width: auto !important;
+            overflow: visible !important;
+            float: none !important;
+            max-height: inherit !important;
+            max-width: inherit !important;
+            line-height: auto !important;
+            margin-top: 0px !important;
+            visibility: inherit !important;
+        }
+        
+        /* Hides Light Mode-Only Content, Like Images */
+        .light-img {
+            display: none !important;
+        }
+
+        /* Custom Dark Mode Font Colors */
+        //h1, h2, p, span, a, b { color: #ffffff !important; }
+         
+        /* Custom Dark Mode Text Link Color */
+        //.link { color: #91ADD4 !important; }
+    }
+
+      /* Shows Dark Mode-Only Content, Like Images */
+    
+    [data-ogsc] .dark-img {
+        display: block !important;
+        width: auto !important;
+        overflow: visible !important;
+        float: none !important;
+        max-height: inherit !important;
+        max-width: inherit !important;
+        line-height: auto !important;
+        margin-top: 0px !important;
+        visibility:inherit !important;
+    }
+    
+    /* Hides Light Mode-Only Content, Like Images */
+    [data-ogsc] .light-img {
+        display: none !important;
+    }
+    
+    /* Custom Dark Mode Background Color */
+    //[data-ogsc] .darkmode { background-color: #272623 !important; }
+    
+    /* Custom Dark Mode Font Colors */
+    //[data-ogsc] h1, [data-ogsc] h2, [data-ogsc] p, [data-ogsc] span, [data-ogsc] a, [data-ogsc] b { color: #ffffff !important; }
+    
+    /* Custom Dark Mode Text Link Color */
+    //[data-ogsc] .link { color: #91ADD4 !important; }
+}

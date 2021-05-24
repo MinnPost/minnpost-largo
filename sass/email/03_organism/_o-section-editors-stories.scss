@@ -4,6 +4,10 @@
     padding: $standard-block-padding;
     margin-bottom: $standard-block-margin;
 
+    @media (prefers-color-scheme: dark ) {
+        background-color: neutral-color(dark) !important;
+    }
+
     .m-post-newsletter-last {
         padding-bottom: 0;
         
