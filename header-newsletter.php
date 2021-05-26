@@ -18,6 +18,12 @@
 		<?php if ( false === $args['is_legacy'] ) : ?>
 			<meta name="color-scheme" content="light dark">
 			<meta name="supported-color-schemes" content="light dark">
+			<style type="text/css">
+			:root {
+				color-scheme: light dark;
+				supported-color-schemes: light dark;
+			}
+			</style>
 		<?php endif; ?>
 		<link rel="shortcut icon" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/favicon.ico' ) ); ?>" type="image/x-icon" />
 		<meta property="og:title" content="<?php echo get_the_title(); ?> | <?php bloginfo( 'name' ); ?>">
