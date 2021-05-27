@@ -3,4 +3,9 @@
     -ms-text-size-adjust: 100%;
     background-color: neutral-color(white);
     color: neutral-color(black);
+
+    @media (prefers-color-scheme: dark ) {
+        color: neutral-color(white) !important;
+        background-color: neutral-color(black) !important;
+    }
 }

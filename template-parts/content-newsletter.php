@@ -27,7 +27,10 @@
 					[/outlook]
 					<div class="o-column a-logo">
 						<div class="item-contents">
-							<img src="<?php minnpost_newsletter_logo( get_the_ID() ); ?>" alt="<?php bloginfo( 'name' ); ?>">
+							<img src="<?php minnpost_newsletter_logo( get_the_ID(), false ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="light-img">
+							<!--[if !mso]><! --><div class="dark-img">
+								<img src="<?php minnpost_newsletter_logo( get_the_ID(), true ); ?>" alt="<?php bloginfo( 'name' ); ?>">
+							</div><!--<![endif]-->
 						</div>
 					</div>
 					[outlook]

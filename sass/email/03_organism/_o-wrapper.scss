@@ -4,6 +4,10 @@ div.o-wrapper {
     max-width: $max-width-email;
     background-color: neutral-color(white);
     color: neutral-color(black);
+    @media (prefers-color-scheme: dark ) {
+        color: neutral-color(white) !important;
+        background-color: neutral-color(black) !important;
+    }
 }
 
 table.o-wrapper {

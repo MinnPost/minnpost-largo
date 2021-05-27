@@ -3,6 +3,10 @@
 	.a-button.a-support-button {
 
 		@include paragraph_button(utility-color(green, medium), utility-color(green, dark));
+
+		@media (prefers-color-scheme: dark ) {
+			@include paragraph_button(utility-color(green, medium), utility-color(green, dark));
+		}
 		
 		@media only screen and (max-width: $large-screen-width) {
             max-width: 80% !important;

@@ -883,41 +883,46 @@ endif;
 * Outputs newsletter logo based on which type of newsletter it is
 *
 * @param int $newsletter_id
+* @param bool $transparent
 *
 */
 if ( ! function_exists( 'minnpost_newsletter_logo' ) ) :
-	function minnpost_newsletter_logo( $newsletter_id = '' ) {
+	function minnpost_newsletter_logo( $newsletter_id = '', $transparent = false ) {
 
 		$logo = '';
 
 		$newsletter_type = get_post_meta( $newsletter_id, '_mp_newsletter_type', true );
+		$filename_suffix = '';
+		if ( true === $transparent ) {
+			$filename_suffix = '-transparent';
+		}
 
 		if ( '' !== $newsletter_type ) {
 
 			switch ( $newsletter_type ) {
 				case 'book_club':
-					$filename = 'newsletter-logo-book-club.png';
+					$filename = 'newsletter-logo-book-club' . $filename_suffix . '.png';
 					break;
 				case 'daily':
-					$filename = 'newsletter-logo-daily.png';
+					$filename = 'newsletter-logo-daily' . $filename_suffix . '.png';
 					break;
 				case 'dc_memo':
-					$filename = 'dc-memo-header-520x50.png';
+					$filename = 'dc-memo-header-520x50' . $filename_suffix . '.png';
 					break;
 				case 'greater_mn':
-					$filename = 'newsletter-logo-mn-week.png';
+					$filename = 'newsletter-logo-mn-week' . $filename_suffix . '.png';
 					break;
 				case 'sunday_review':
-					$filename = 'newsletter-logo-sunday-review.png';
+					$filename = 'newsletter-logo-sunday-review' . $filename_suffix . '.png';
 					break;
 				case 'daily_coronavirus':
-					$filename = 'mp-dcu-600.png';
+					$filename = 'mp-dcu-600' . $filename_suffix . '.png';
 					break;
 				case 'republication':
-					$filename = 'republication-header-260x50.png';
+					$filename = 'republication-header-260x50' . $filename_suffix . '.png';
 					break;
 				default:
-					$filename = 'newsletter-logo-daily.png';
+					$filename = 'newsletter-logo-daily' . $filename_suffix . '.png';
 					break;
 			}
 

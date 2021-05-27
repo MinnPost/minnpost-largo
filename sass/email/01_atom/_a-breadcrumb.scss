@@ -25,6 +25,11 @@
 			border-radius: $border-radius;
 			color: neutral-color(white);
 			background-color: neutral-color(black);
+
+			@media (prefers-color-scheme: dark ) {
+				background-color: neutral-color(light) !important;
+				color: neutral-color(dark) !important;
+			}
 		}
 
         a {
@@ -33,6 +38,11 @@
 			&:focus,
 			&:active {
 				background-color: neutral-color(dark);
+
+				@media (prefers-color-scheme: dark ) {
+					background-color: neutral-color(light) !important;
+					color: neutral-color(dark) !important;
+				}
 			}
         }
 	}
