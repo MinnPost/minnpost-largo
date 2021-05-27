@@ -213,7 +213,7 @@
 
 			@if $mobile-padding-only == 'true' {
 				@media only screen and (max-width: $large-screen-width) {
-					padding: $padding;
+					padding: $padding !important;
 				}
 			} @else {
 				padding: $padding;
