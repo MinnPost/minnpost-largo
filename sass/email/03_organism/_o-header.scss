@@ -8,5 +8,5 @@
     }
 
     @include column( $selector: '.o-column.a-logo', $max-width: 74%, $mobile-padding-only: 'false');
-    @include column( $selector: '.o-column.m-support-cta', $max-width: 24%, $mobile-padding-only: 'false');
+    @include column( $selector: '.o-column.m-support-cta', $max-width: 24%, $mobile-padding-only: 'true', $padding: $standard-block-padding 0 0 0);
 }
