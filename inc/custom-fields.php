@@ -74,7 +74,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'type'         => 'textarea_small',
 				'char_counter' => true,
 				'char_max'     => 140,
-				'desc'         => __( 'This text is displayed between the date and the "Welcome to..." message at the top of the newsletter. It is also displayed below the subject line in some email clients. It is limited to 140 characters.<br><br>If you need the newsletter teaser text to be longer or have special formatting, see "Teaser options" below.', 'minnpost-largo' ),
+				'desc'         => __( 'This text is displayed between the date and the "Welcome to..." message at the top of the newsletter. It is also displayed after the subject line in some email clients. It is limited to 140 characters.<br><br>If you need the newsletter teaser text to be longer or have special formatting, see "Teaser options" below.', 'minnpost-largo' ),
 			)
 		);
 		$newsletter_setup->add_field(
