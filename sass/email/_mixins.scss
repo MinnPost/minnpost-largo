@@ -36,6 +36,11 @@
 		} @else {
 			font-size: map-get( $font-sizes, $size );
 		}
+
+		@media only screen and (max-width: $large-screen-width) {
+			font-size: map-get( $font-sizes, $size - 1 ) !important;
+		}
+
 		line-height: 1.3;
 	}
 }
