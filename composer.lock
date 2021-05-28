@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "886135541d9fe4e22c48ed6ce251ac98",
+    "content-hash": "00e060c912d5a0adbd1d1c99f865eb9e",
     "packages": [
         {
             "name": "brain/cortex",
@@ -59,10 +59,6 @@
                 "routing",
                 "wordpress"
             ],
-            "support": {
-                "issues": "https://github.com/Brain-WP/Cortex/issues",
-                "source": "https://github.com/Brain-WP/Cortex"
-            },
             "time": "2016-07-14T19:53:27+00:00"
         },
         {
@@ -71,12 +67,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/composer/installers.git",
-                "reference": "7f3c618fcbfc787cca2bb7a127e7eb3a146c7046"
+                "reference": "ae03311f45dfe194412081526be2e003960df74b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/composer/installers/zipball/7f3c618fcbfc787cca2bb7a127e7eb3a146c7046",
-                "reference": "7f3c618fcbfc787cca2bb7a127e7eb3a146c7046",
+                "url": "https://api.github.com/repos/composer/installers/zipball/ae03311f45dfe194412081526be2e003960df74b",
+                "reference": "ae03311f45dfe194412081526be2e003960df74b",
                 "shasum": ""
             },
             "require": {
@@ -94,7 +90,6 @@
                 "symfony/phpunit-bridge": "^4.2 || ^5",
                 "symfony/process": "^2.3"
             },
-            "default-branch": true,
             "type": "composer-plugin",
             "extra": {
                 "class": "Composer\\Installers\\Plugin",
@@ -137,6 +132,7 @@
                 "Porto",
                 "RadPHP",
                 "SMF",
+                "Starbug",
                 "Thelia",
                 "Whmcs",
                 "WolfCMS",
@@ -170,6 +166,7 @@
                 "majima",
                 "mako",
                 "mediawiki",
+                "miaoxing",
                 "modulework",
                 "modx",
                 "moodle",
@@ -177,6 +174,7 @@
                 "phpbb",
                 "piwik",
                 "ppi",
+                "processwire",
                 "puppet",
                 "pxcms",
                 "reindex",
@@ -186,16 +184,13 @@
                 "sydes",
                 "sylius",
                 "symfony",
+                "tastyigniter",
                 "typo3",
                 "wordpress",
                 "yawik",
                 "zend",
                 "zikula"
             ],
-            "support": {
-                "issues": "https://github.com/composer/installers/issues",
-                "source": "https://github.com/composer/installers/tree/main"
-            },
             "funding": [
                 {
                     "url": "https://packagist.com",
@@ -210,7 +205,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2020-12-08T15:13:21+00:00"
+            "time": "2021-04-28T06:42:17+00:00"
         },
         {
             "name": "nikic/fast-route",
@@ -253,24 +248,20 @@
                 "router",
                 "routing"
             ],
-            "support": {
-                "issues": "https://github.com/nikic/FastRoute/issues",
-                "source": "https://github.com/nikic/FastRoute/tree/master"
-            },
             "time": "2015-12-20T19:50:12+00:00"
         },
         {
             "name": "pelago/emogrifier",
-            "version": "v5.0.0",
+            "version": "v5.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/MyIntervals/emogrifier.git",
-                "reference": "b43b650880d189b0ada61d95d0729c7424b1752d"
+                "reference": "37595a9bb62c3c25969bdd9e8d7dd24c3ac62bc9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/MyIntervals/emogrifier/zipball/b43b650880d189b0ada61d95d0729c7424b1752d",
-                "reference": "b43b650880d189b0ada61d95d0729c7424b1752d",
+                "url": "https://api.github.com/repos/MyIntervals/emogrifier/zipball/37595a9bb62c3c25969bdd9e8d7dd24c3ac62bc9",
+                "reference": "37595a9bb62c3c25969bdd9e8d7dd24c3ac62bc9",
                 "shasum": ""
             },
             "require": {
@@ -281,13 +272,14 @@
             },
             "require-dev": {
                 "php-parallel-lint/php-parallel-lint": "^1.2.0",
+                "rawr/cross-data-providers": "^2.3.0",
                 "slevomat/coding-standard": "^6.4.1",
                 "squizlabs/php_codesniffer": "^3.5.8"
             },
             "type": "library",
             "extra": {
                 "branch-alias": {
-                    "dev-master": "5.0.x-dev"
+                    "dev-main": "6.0.x-dev"
                 }
             },
             "autoload": {
@@ -330,11 +322,7 @@
                 "email",
                 "pre-processing"
             ],
-            "support": {
-                "issues": "https://github.com/MyIntervals/emogrifier/issues",
-                "source": "https://github.com/MyIntervals/emogrifier"
-            },
-            "time": "2020-11-23T18:37:25+00:00"
+            "time": "2021-04-06T08:18:22+00:00"
         },
         {
             "name": "psr/http-message",
@@ -353,7 +341,6 @@
             "require": {
                 "php": ">=5.3.0"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "branch-alias": {
@@ -385,9 +372,6 @@
                 "request",
                 "response"
             ],
-            "support": {
-                "source": "https://github.com/php-fig/http-message/tree/master"
-            },
             "time": "2019-08-29T13:16:46+00:00"
         },
         {
@@ -407,7 +391,6 @@
             "require": {
                 "php": ">=7.2.5"
             },
-            "default-branch": true,
             "type": "library",
             "autoload": {
                 "psr-4": {
@@ -465,5 +448,5 @@
     "prefer-lowest": false,
     "platform": [],
     "platform-dev": [],
-    "plugin-api-version": "2.0.0"
+    "plugin-api-version": "1.1.0"
 }
