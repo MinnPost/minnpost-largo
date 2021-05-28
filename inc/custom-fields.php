@@ -74,48 +74,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'type'         => 'textarea_small',
 				'char_counter' => true,
 				'char_max'     => 140,
-				'desc'         => __( 'In some email clients, this snippet will appear in the inbox after the subject line. If there\'s no value, we won\'t use it. Email clients will limit how many characters they show, from as little as 40 to 140 characters, sometimes depending on the length of the subject line.<br><br>This text will also appear as a teaser in the email body, right below today\'s date, unless you override it below.', 'minnpost-largo' ),
-			)
-		);
-		$newsletter_setup->add_field(
-			array(
-				'name'       => __( 'Newsletter Teaser', 'minnpost-largo' ),
-				'id'         => $prefix . 'newsletter_teaser',
-				'type'       => 'wysiwyg',
-				'options'    => array(
-					'media_buttons' => false, // show insert/upload button(s)
-					'textarea_rows' => 5,
-					'teeny'         => true, // output the minimal editor config used in Press This
-				),
-				'desc'       => __( 'Use this field if you need formatting in your teaser, or more characters than you are using for the email preview text. If used, this text will appear as a teaser in the email body, right below today\'s date.', 'minnpost-largo' ),
-				'attributes' => array(
-					'data-conditional-id'    => $prefix . 'type',
-					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
-				),
-			)
-		);
-		$newsletter_setup->add_field(
-			array(
-				'name'       => __( 'Do Not Add Automatic Date and Newsletter Type Text', 'minnpost-largo' ),
-				'id'         => $prefix . 'do_not_show_automatic_teaser_items',
-				'type'       => 'checkbox',
-				'desc'       => __( 'If you check this box, the newsletter teaser area will not contain an automatic date, and will not state what type of newsletter this is.', 'minnpost-largo' ),
-				'attributes' => array(
-					'data-conditional-id'    => $prefix . 'type',
-					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
-				),
-			)
-		);
-		$newsletter_setup->add_field(
-			array(
-				'name'       => __( 'Do Not Show Any Teaser Text', 'minnpost-largo' ),
-				'id'         => $prefix . 'do_not_show_teaser_text',
-				'type'       => 'checkbox',
-				'desc'       => __( 'If you check this box, no teaser text will be shown in the body of the email. If there is a preview text value, it will only be shown before the email is opened.', 'minnpost-largo' ),
-				'attributes' => array(
-					'data-conditional-id'    => $prefix . 'type',
-					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
-				),
+				'desc'         => __( 'This text is displayed between the date and the "Welcome to..." message at the top of the newsletter. It is also displayed below the subject line in some email clients. It is limited to 140 characters.<br><br>If you need the newsletter teaser text to be longer or have special formatting, see "Teaser options" below.', 'minnpost-largo' ),
 			)
 		);
 		$newsletter_setup->add_field(
@@ -151,6 +110,60 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'attributes' => array(
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => 'daily_coronavirus',
+				),
+			)
+		);
+
+		/**
+		 * Teaser options
+		 */
+		$newsletter_teaser_options = new_cmb2_box(
+			array(
+				'id'           => $prefix . 'teaser_options',
+				'title'        => __( 'Teaser Options', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'after_title',
+				'closed'       => true,
+			)
+		);
+		$newsletter_teaser_options->add_field(
+			array(
+				'name'       => __( 'Extended Newsletter Teaser', 'minnpost-largo' ),
+				'id'         => $prefix . 'newsletter_teaser',
+				'type'       => 'wysiwyg',
+				'options'    => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'textarea_rows' => 5,
+					'teeny'         => true, // output the minimal editor config used in Press This
+				),
+				'desc'       => __( 'Use this field if you need a longer teaser or formatting in the teaser. Note: this will not be displayed in the "preview text" that is shown after the subject line in some email clients. You still need to fill out the "Preview and teaser text" field above to have preview text.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
+			)
+		);
+		$newsletter_teaser_options->add_field(
+			array(
+				'name'       => __( 'Do Not Add Automatic Date and Newsletter Type Text', 'minnpost-largo' ),
+				'id'         => $prefix . 'do_not_show_automatic_teaser_items',
+				'type'       => 'checkbox',
+				'desc'       => __( 'If you check this box, the newsletter teaser area will not contain an automatic date, and will not state what type of newsletter this is.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
+			)
+		);
+		$newsletter_teaser_options->add_field(
+			array(
+				'name'       => __( 'Do Not Show Any Teaser Text', 'minnpost-largo' ),
+				'id'         => $prefix . 'do_not_show_teaser_text',
+				'type'       => 'checkbox',
+				'desc'       => __( 'If you check this box, no teaser text will be shown in the body of the email. If there is a preview text value, it will only be shown before the email is opened.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
 				),
 			)
 		);
