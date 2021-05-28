@@ -24,6 +24,10 @@ class ComposerStaticInit4a18d788b77de8cfd63083b020564233
         array (
             'FastRoute\\' => 10,
         ),
+        'C' => 
+        array (
+            'Composer\\Installers\\' => 20,
+        ),
         'B' => 
         array (
             'Brain\\' => 6,
@@ -47,14 +51,14 @@ class ComposerStaticInit4a18d788b77de8cfd63083b020564233
         array (
             0 => __DIR__ . '/..' . '/nikic/fast-route/src',
         ),
+        'Composer\\Installers\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/composer/installers/src/Composer/Installers',
+        ),
         'Brain\\' => 
         array (
             0 => __DIR__ . '/..' . '/brain/cortex/src',
         ),
-    );
-
-    public static $classMap = array (
-        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
     );
 
     public static function getInitializer(ClassLoader $loader)
@@ -62,7 +66,6 @@ class ComposerStaticInit4a18d788b77de8cfd63083b020564233
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit4a18d788b77de8cfd63083b020564233::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit4a18d788b77de8cfd63083b020564233::$prefixDirsPsr4;
-            $loader->classMap = ComposerStaticInit4a18d788b77de8cfd63083b020564233::$classMap;
 
         }, null, ClassLoader::class);
     }
