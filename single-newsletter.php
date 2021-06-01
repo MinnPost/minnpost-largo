@@ -7,7 +7,12 @@
  * @package MinnPost Largo
  */
 
+//use Pelago\Emogrifier\CssInliner;
+
 use Pelago\Emogrifier\CssInliner;
+use Pelago\Emogrifier\HtmlProcessor\CssToAttributeConverter;
+use Pelago\Emogrifier\HtmlProcessor\HtmlPruner;
+
 $newsletter_type = get_post_meta( get_the_ID(), '_mp_newsletter_type', true );
 $is_legacy       = apply_filters( 'minnpost_largo_newsletter_legacy', false, '', get_the_ID() );
 
@@ -38,8 +43,17 @@ get_footer( 'newsletter', $args );
 $html = ob_get_contents();
 ob_end_clean();
 if ( false === $is_legacy ) {
-	$html = CssInliner::fromHtml( $html )->inlineCss( $css )->render();
+	//$html = CssInliner::fromHtml( $html )->inlineCss( $css )->render();
+
+	$css_inliner  = CssInliner::fromHtml( $html )->inlineCss( $css );
+	$dom_document = $css_inliner->getDomDocument();
+	HtmlPruner::fromDomDocument( $dom_document )->removeRedundantClassesAfterCssInlined( $css_inliner );
+	$html = CssToAttributeConverter::fromDomDocument( $dom_document )->render();
+
+
 	$html = str_replace( '[outlook]', '<!--[if mso]>', $html );
 	$html = str_replace( '[/outlook]', '<![endif]-->', $html );
+	$html = str_replace( '<style_donotremove>', '<style type="text/css">', $html );
+	$html = str_replace( '</style_donotremove>', '</style>', $html );
 }
 echo $html;
