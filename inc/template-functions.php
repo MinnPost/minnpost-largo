@@ -459,8 +459,8 @@ if ( ! function_exists( 'minnpost_get_related' ) ) :
 		// if all are false, it checks the next set for manually recommended posts, then goes to Jetpack.
 		// if multiples are true, it would run the first true one, and ignore the subsequent ones.
 		$zoninator_related_enabled = false; // allow for using zoninator posts as related posts.
-		$recent_same_category      = true; // most recent posts in the same category.
-		$recent_not_same_category  = false; // most recent posts not in the same category.
+		$recent_same_category      = false; // most recent posts in the same category.
+		$recent_not_same_category  = true; // most recent posts not in the same category.
 		if ( 'zoninator' === $type && true === $zoninator_related_enabled ) {
 			$cache_zoninator_related = true;
 			if ( true === $cache_zoninator_related ) {
