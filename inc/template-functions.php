@@ -2018,7 +2018,7 @@ if ( ! function_exists( 'minnpost_newsletter_get_ads' ) ) :
 		} else {
 			foreach ( $ad_divs as $key => $value ) {
 				$style = $value->getAttribute( 'style' );
-				$ads[] = '<p>' . minnpost_dom_innerhtml( $value ) . '</p>';
+				$ads[] = '<div>' . minnpost_dom_innerhtml( $value ) . '</div>';
 			}
 		}
 		set_query_var( 'newsletter_ads', $ads );

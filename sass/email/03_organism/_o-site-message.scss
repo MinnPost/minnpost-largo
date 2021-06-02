@@ -8,12 +8,12 @@
     }
 
     &.o-columns {
-        @include column( $selector: '.o-column.o-site-message-column-text', $max-width: 64%, $text-align: left, $padding: $standard-block-padding, $mobile-padding-only: 'false');
-        @include column( $selector: '.o-column.o-site-message-column-button', $max-width: 34%, $padding: $standard-block-padding, $mobile-padding-only: 'false');
+        @include column( $selector: '.o-column.o-site-message-column-text', $max-width: 64%, $text-align: left, $padding: $standard-block-padding, $desktop-padding-only: 'false', $mobile-padding-only: 'false');
+        @include column( $selector: '.o-column.o-site-message-column-button', $max-width: 34%, $padding: $standard-block-padding, $desktop-padding-only: 'false', $mobile-padding-only: 'false');
     }
 
     &.o-rows {
-        @include column( $selector: '.o-site-message-row', $max-width: 100%, $text-align: left, $vertical-align: top, $padding: $standard-block-padding, $mobile-padding-only: 'false');
+        @include column( $selector: '.o-site-message-row', $max-width: 100%, $text-align: left, $vertical-align: top, $padding: $standard-block-padding, $desktop-padding-only: 'false', $mobile-padding-only: 'false');
     }
 
     .o-row,

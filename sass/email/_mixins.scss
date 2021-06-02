@@ -218,16 +218,16 @@
 
 			@if $mobile-padding-only == 'true' {
 				@media only screen and (max-width: $large-screen-width) {
-					padding: $padding !important;
+					margin: $padding !important;
 				}
 			} @else {
-				padding: $padding;
+				margin: $padding;
 			}
 			
 			@if $desktop-padding-only != 'false' {
 				
 				@media only screen and (max-width: $large-screen-width) {
-					padding: 0 !important;
+					margin: 0 !important;
 				}
 			}
 		}
