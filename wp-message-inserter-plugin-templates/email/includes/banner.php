@@ -40,16 +40,18 @@
 							<td class="o-column o-site-message-column o-site-message-column-text">
 				[/outlook]
 				<div class="o-column o-site-message-column o-site-message-column-text">				
-					<div class="item-contents">
+					<div class="item-contents item-contents--margin">
 						<?php require( 'banner/text.php' ); ?>
 					</div>
 				</div> <!-- .o-column -->
 				[outlook]
 							</td>
+							<?php echo 'the type is ' . $screen_size[ $prefix . 'cta_type_email' ]; ?>
+							<?php if ( 'button' === $screen_size[ $prefix . 'cta_type_email' ] ) : ?>
 							<td class="o-column o-site-message-column o-site-message-column-button">
 				[/outlook]
 				<div class="o-column o-site-message-column o-site-message-column-button">
-					<div class="item-contents">
+					<div class="item-contents item-contents--margin">
 						<?php if ( 'button' === $screen_size[ $prefix . 'cta_type_email' ] ) : ?>
 							<?php require( 'banner/cta-button.php' ); ?>
 						<?php endif; ?>
@@ -58,6 +60,7 @@
 				</div>
 				[outlook]
 							</td>
+							<?php endif; ?>
 						</tr>
 					</table>
 				[/outlook]
@@ -74,13 +77,13 @@
 				[/outlook]
 				<?php if ( isset( $screen_size[ $prefix . 'banner_heading' ] ) || isset( $screen_size[ $prefix . 'banner_shortcopy' ] ) ) : ?>
 					<div class="o-row o-site-message-row">
-						<div class="item-contents">
+						<div class="item-contents item-contents--margin">
 							<?php require( 'banner/text.php' ); ?>
 						</div>
 					</div>
 				<?php endif; ?>
 				<div class="o-row o-site-message-row o-site-message-row-button">
-					<div class="item-contents">
+					<div class="item-contents item-contents--margin">
 						<?php if ( is_array( $screen_size[ $prefix . 'banner_buttondetails' ] ) || isset( $screen_size[ $prefix . 'banner_disclaimer' ] ) ) : ?>
 							<?php if ( 'button' === $screen_size[ $prefix . 'cta_type_email' ] ) : ?>
 								<?php require( 'banner/cta-button.php' ); ?>

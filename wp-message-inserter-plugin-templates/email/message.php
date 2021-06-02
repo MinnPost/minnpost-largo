@@ -36,7 +36,7 @@ usort(
 					<td class="o-column o-site-message">
 		[/outlook]
 		<div class="o-column o-site-message">
-			<div class="item-contents">
+			<div class="item-contents item-contents--margin">
 				<?php if ( 'image' === $type ) : ?>
 					<div class="m-wp-insert-message-item m-wp-insert-message-images">
 						<?php if ( isset( $message['meta'][ $prefix . 'link_url' ] ) ) : ?>

@@ -47,7 +47,7 @@ if ( false === $is_legacy ) {
 
 	$css_inliner  = CssInliner::fromHtml( $html )->inlineCss( $css );
 	$dom_document = $css_inliner->getDomDocument();
-	HtmlPruner::fromDomDocument( $dom_document )->removeRedundantClassesAfterCssInlined( $css_inliner );
+	HtmlPruner::fromDomDocument( $dom_document );
 	$html = CssToAttributeConverter::fromDomDocument( $dom_document )->render();
 
 
