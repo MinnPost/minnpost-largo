@@ -8,6 +8,9 @@
 // remove Add Form gravityforms button from post forms
 add_filter( 'gform_display_add_form_button', '__return_false' );
 
+// remove Gravityforms added JavaScript from the head that we don't need
+add_filter( 'gform_force_hooks_js_output', '__return_false' );
+
 /**
  * Enforce anti-spam honeypot on all Gravity forms.
  *
