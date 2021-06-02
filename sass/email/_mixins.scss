@@ -200,7 +200,7 @@
 }
 
 // layout column
-@mixin column( $selector: '.o-column', $max-width: inherit, $width: 100%, $vertical-align: middle, $text-align: center, $padding: 0, $desktop-padding-only: 'false', $mobile-padding-only: 'true' ) {
+@mixin column( $selector: '.o-column', $max-width: inherit, $width: 100%, $vertical-align: middle, $text-align: center, $spacing: 0, $desktop-spacing-only: 'false', $mobile-spacing-only: 'true' ) {
 	div#{$selector} {
         width: $width;
         max-width: $max-width-email * ($max-width / 100%);
@@ -216,15 +216,15 @@
 			text-align: $text-align;
 			@include body-preset( $size: 0 );
 
-			@if $mobile-padding-only == 'true' {
+			@if $mobile-spacing-only == 'true' {
 				@media only screen and (max-width: $large-screen-width) {
-					margin: $padding !important;
+					margin: $spacing !important;
 				}
 			} @else {
-				margin: $padding;
+				margin: $spacing;
 			}
 			
-			@if $desktop-padding-only != 'false' {
+			@if $desktop-spacing-only != 'false' {
 				
 				@media only screen and (max-width: $large-screen-width) {
 					margin: 0 !important;
@@ -237,12 +237,12 @@
         width: $max-width-email * ($max-width / 100%);
 		vertical-align: $vertical-align;
 
-		@if $mobile-padding-only == 'true' {
+		@if $mobile-spacing-only == 'true' {
 			@media only screen and (max-width: $large-screen-width) {
-				padding: $padding;
+				padding: $spacing;
 			}
 		} @else {
-			padding: $padding;
+			padding: $spacing;
 		}
 
 		@media only screen and (max-width: $large-screen-width) {
