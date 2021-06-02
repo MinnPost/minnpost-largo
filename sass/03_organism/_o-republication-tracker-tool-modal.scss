@@ -36,7 +36,7 @@
 		@include breakpoint-min( sm ) {
 			.m-republication-entry-content,
 			.m-republication-article-info {
-				width: colspan( 5.8, 12 );
+				max-width: colspan( 5.8, 12 );
 			}
 		}
 
@@ -50,7 +50,7 @@
 		@include breakpoint-min( xl ) {
 			.m-republication-entry-content,
 			.m-republication-article-info {
-				width: colspan( 5.8, 12 );
+				max-width: colspan( 5.8, 12 );
 			}
 		}
 
