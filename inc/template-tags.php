@@ -178,6 +178,7 @@ if ( ! function_exists( 'minnpost_share_buttons' ) ) :
 				<?php
 				// don't show republish button if instructed
 				$hide_republish_button = get_post_meta( $post_id, '_mp_remove_republish_button_from_display', true );
+				$hide_republish_button = apply_filters( 'minnpost_largo_republish_button_from_display', '', $post_id );
 				if ( 'on' !== $hide_republish_button ) :
 					// INN will have a template tag we can use to display the button in the next plugin release.
 					?>
