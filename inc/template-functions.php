@@ -589,11 +589,12 @@ endif;
 */
 if ( ! function_exists( 'minnpost_largo_get_excluded_related_terms' ) ) :
 	function minnpost_largo_get_excluded_related_terms() {
-		// glean, fonm, mp-picks.
+		// glean, fonm, mp-picks, letters.
 		$exclude_ids = array(
 			55575,
 			55630,
 			55628,
+			55623,
 		);
 
 		// add in the plugin-based exclusions from the shortcode.
