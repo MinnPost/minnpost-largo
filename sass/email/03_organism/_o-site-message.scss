@@ -19,15 +19,16 @@
     .o-row,
     .o-column {
     
-        .item-contents {
+        div.item-contents {
             @include meta-preset( $size: 0 );
         }
 
-        &.o-site-message-row-button {
+        &.o-site-message-row.o-site-message-row-button {
 
-            .item-contents {
+            div.item-contents {
                 padding-top: 0;
                 text-align: center;
+                margin-bottom: $standard-block-margin;
             }
         }
     }
