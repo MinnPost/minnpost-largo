@@ -181,6 +181,10 @@
 		mso-padding-alt: 0;
 		width: 100%;
 
+		span {
+			color: $color;
+		}
+
 		&:link,
 		&:visited {
 			background: $background;
