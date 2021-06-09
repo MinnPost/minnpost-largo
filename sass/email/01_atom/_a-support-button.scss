@@ -2,16 +2,17 @@
 
 	.a-button.a-support-button {
 
-		@include paragraph_button(utility-color(green, medium), utility-color(green, dark));
+		@include paragraph_button($background: utility-color(green, medium), $hover: utility-color(green, dark), $margin: 0 auto $standard-block-padding * 2 auto, $mobile-margin-only: 'true');
 
 		@media (prefers-color-scheme: dark ) {
-			@include paragraph_button(utility-color(green, medium), utility-color(green, dark));
+			@include paragraph_button($background: utility-color(green, medium), $hover: utility-color(green, dark), $margin: 0 auto $standard-block-padding * 2 auto, $mobile-margin-only: 'true');
 		}
 		
 		@media only screen and (max-width: $large-screen-width) {
             max-width: 80% !important;
             text-align: center !important;
-			margin: 0 auto !important;
+			margin-left: auto !important;
+			margin-right: auto !important;
         }
 	}
 }

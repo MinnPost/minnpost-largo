@@ -162,12 +162,20 @@
 }
 
 // button in a paragraph treatment
-@mixin paragraph_button( $background: brand-color(red, medium), $hover: brand-color(red, dark), $color: neutral-color(white)) {
+@mixin paragraph_button( $background: brand-color(red, medium), $hover: brand-color(red, dark), $color: neutral-color(white), $margin: 0, $mobile-margin-only: false) {
 	padding: 0;
-	Margin: 0;
+	margin: 0;
 	background: inherit;
 	color: inherit;
 	@include meta-preset( $size: 2, $bold: true, $italic: false, $line-height: 1 );
+
+	@if $mobile-margin-only == 'true' {
+		@media only screen and (max-width: $large-screen-width) {
+			margin: $margin !important;
+		}
+	} else {
+		margin: $margin;
+	}
 
 	a {
 		background: $background;
