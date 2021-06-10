@@ -320,7 +320,7 @@ if ( ! function_exists( 'minnpost_largo_jetpack_related_date_range' ) ) :
 	add_filter( 'jetpack_relatedposts_filter_date_range', 'minnpost_largo_jetpack_related_date_range' );
 	function minnpost_largo_jetpack_related_date_range( $date_range ) {
 		$date_range = array(
-			'from' => strtotime( '-1 week' ),
+			'from' => strtotime( '-1 year' ),
 			'to'   => time(),
 		);
 		return $date_range;
