@@ -42,7 +42,7 @@
                 width: auto;
                 font-weight: 700;
                 color: neutral-color(dark);
-                background: neutral-color(white);
+                background-color: neutral-color(white);
 
 				@media (prefers-color-scheme: dark ) {
 					color: neutral-color(white) !important;
@@ -58,7 +58,7 @@
             a:hover,
             a:focus,
             a:active {
-                background: neutral-color(border) !important;
+                background-color: neutral-color(border) !important;
                 color: neutral-color(black) !important;
 
 				@media (prefers-color-scheme: dark ) {
