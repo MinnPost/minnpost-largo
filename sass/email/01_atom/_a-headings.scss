@@ -2,7 +2,7 @@ table.h2.a-section-title td {
 
 	.a-section-title-bg {
 		@include meta-preset( $size: 0, $bold: true );
-		background: brand-color(red);
+		background-color: brand-color(red);
 		color: neutral-color(white);
 		border-radius: $border-radius;
 		padding: $standard-block-padding;

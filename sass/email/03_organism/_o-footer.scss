@@ -1,7 +1,7 @@
 .o-columns.o-footer {
 
     @include column( $selector: '.o-column.o-footer', $max-width: 100%, $vertical-align: top, $text-align: left, $spacing: $standard-block-padding);
-    background: neutral-color(black);
+    background-color: neutral-color(black);
     color: neutral-color(white);
     border-radius: $border-radius;
 
