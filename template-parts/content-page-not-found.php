@@ -42,7 +42,11 @@
 	<?php } ?>
 
 	<div class="m-entry-content<?php echo $custom_class; ?>">
-		<?php the_content(); ?>
+		<?php
+		$content = get_the_content();
+		$content = apply_filters( 'the_content', wpautop( $content ) );
+		echo $content;
+		?>
 	</div><!-- .m-entry-content -->
 
 </article><!-- #page-## -->
