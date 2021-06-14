@@ -16,7 +16,7 @@ img {
 }
 
 table {
-    font-size: inherit;
+    @include body-preset( $size: 0 );
     margin: 0;
     padding: 0;
 }
