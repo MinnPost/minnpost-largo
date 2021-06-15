@@ -1,11 +1,10 @@
 table.m-newsletter-ad-region {
     
-    //margin-bottom: $standard-block-margin;
-    border-bottom: $border-default-style;
+    padding-bottom: $standard-block-margin;
 
     .item-contents {
         text-align: center;
     }
     
-    @include column( $selector: '.a-newsletter-ad', $max-width: 100%, $text-align: center, $spacing: 0, $mobile-spacing-only: 'false');
+    @include column( $selector: '.a-newsletter-ad', $max-width: 100%, $text-align: center, $spacing: 0 0 $standard-block-margin 0, $mobile-spacing-only: 'false');
 }

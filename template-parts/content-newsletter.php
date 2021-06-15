@@ -196,9 +196,19 @@
 								<td class="o-row">
 									[/outlook]
 									<div class="a-newsletter-ad">
-										<div class="item-contents">
-											<?php echo $ads[0]; ?>
-										</div>
+										[outlook]
+										<table role="presentation" width="100%" class="a-newsletter-ad">
+											<tr>
+												<td class="o-row">
+													[/outlook]
+											<div class="item-contents">
+												<?php echo $ads[0]; ?>
+											</div>
+											[outlook]
+												</td>
+											</tr>
+										</table>
+										[/outlook]
 									</div>
 								[outlook]
 								</td>
