@@ -1,7 +1,7 @@
 .o-rows.o-site-message,
 .o-columns.o-site-message {
     border-radius: $border-radius;
-    margin-bottom: $standard-block-margin;
+    margin-bottom: $standard-block-padding;
 
     &.wp-message-inserter-message-region-email_middle {
         margin-bottom: $standard-block-margin;
