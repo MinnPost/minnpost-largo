@@ -3,7 +3,6 @@
 	line-height: normal;
     border-bottom: 2px solid neutral-color(dark);
     border-top: 2px solid neutral-color(dark);
-	margin-bottom: $standard-heading-margin;
 
     @include breakpoint-max( $large-screen-width ) {
         border-top: 0;
