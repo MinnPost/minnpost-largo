@@ -85,9 +85,11 @@
 				<?php do_action( 'wp_message_inserter', 'email_header', 'email' ); ?>
 
 				<div class="o-single-column o-newsletter-intro">
-					<table role="presentation" width="100%" class="o-single-column">
+					[outlook]
+					<table role="presentation" width="100%" class="o-single-column o-newsletter-intro">
 						<tr>
 							<td class="o-row">
+								[/outlook]
 								<div class="item-contents">
 									<?php
 									// teaser text
@@ -128,9 +130,11 @@
 									endif;
 									?>
 								</div>
+							[outlook]
 							</td>
 						</tr>
 					</table>
+					[/outlook]
 				</div>
 
 				<?php do_action( 'wp_message_inserter', 'above_email_articles', 'email' ); ?>
@@ -150,10 +154,11 @@
 					<?php
 					$post_count = $top_query->post_count;
 					$total_post_count++;
+					$this_section_post++;
 					?>
-					<div class="o-section-top-story">
+					<div class="o-single-column o-section-top-story">
 						[outlook]
-						<table role="presentation" width="100%" class="o-section-top-story">
+						<table role="presentation" width="100%" class="o-single-column o-section-top-story">
 							<tr>
 								<td class="o-row">
 								[/outlook]
@@ -175,6 +180,10 @@
 										$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
 										if ( '' !== $override_size && 'default' !== $override_size ) {
 											$args['image_size'] = $override_size;
+										}
+										$args['extra_class'] = '';
+										if ( $post_count === $this_section_post ) {
+											$args['extra_class'] = ' m-post-newsletter-last';
 										}
 										get_template_part( 'template-parts/post-newsletter-fullwidth', $args['newsletter_type'], $args );
 									endwhile;
@@ -261,6 +270,10 @@
 								$args['image_size'] = 'none';
 							} else {
 								$args['image_size'] = 'full';
+							}
+							$args['extra_class'] = '';
+							if ( $post_count === $this_section_post ) {
+								$args['extra_class'] = ' m-post-newsletter-last';
 							}
 							?>
 
@@ -360,6 +373,10 @@
 								$args['image_size'] = 'none';
 							} else {
 								$args['image_size'] = 'full';
+							}
+							$args['extra_class'] = '';
+							if ( $post_count === $this_section_post ) {
+								$args['extra_class'] = ' m-post-newsletter-last';
 							}
 							?>
 
