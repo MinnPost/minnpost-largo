@@ -5,6 +5,7 @@
         color: neutral-color(white) !important;
         background-color: neutral-color(black) !important;
     }
+    padding-bottom: $standard-heading-margin;
 
     @include column( $selector: '.o-column.o-navigation', $max-width: 100%);
 }

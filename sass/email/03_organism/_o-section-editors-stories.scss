@@ -2,7 +2,7 @@
     border-radius: $border-radius;
     background-color: neutral-color(light);
     padding: $standard-block-padding;
-    margin-bottom: $standard-block-margin;
+    //margin-bottom: $standard-block-margin;
 
     @media (prefers-color-scheme: dark ) {
         background-color: neutral-color(dark) !important;

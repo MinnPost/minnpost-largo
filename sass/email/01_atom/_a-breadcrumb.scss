@@ -1,12 +1,17 @@
 .a-breadcrumbs {
 	display: block;
-    padding: $standard-block-padding / 2 0;
+    margin: $standard-block-padding / 2 0;
 }
 
 .a-breadcrumb {
 
 	@include meta-preset( $size: 0, $bold: true, $italic: false, $line-height: 1 );
 	display: inline-block;
+
+	div {
+		display: inline-block;
+		width: auto;
+	}
 
 	a {
 

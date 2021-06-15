@@ -1,5 +1,4 @@
 .m-teaser {
-    margin-bottom: $standard-block-margin;
 
     * {
         @include meta-preset( $size: 1, $bold: inherit, $italic: inherit );

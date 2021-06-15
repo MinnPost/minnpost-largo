@@ -1,3 +1,4 @@
 .o-single-column {
+    padding-bottom: $standard-block-margin;
     @include column( $selector: '.o-row', $max-width: 100%, $vertical-align: top, $text-align: left, $spacing: 0 $standard-block-padding);
 }

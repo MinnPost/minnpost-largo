@@ -665,14 +665,14 @@ if ( ! function_exists( 'minnpost_category_breadcrumb_newsletter' ) ) :
 				if ( '' !== $category_group_id ) {
 					$category_group = get_category( $category_group_id );
 					if ( true === $use_category_group_name_as_class ) {
-						echo '<table class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '"><tr>';
+						echo 'div class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '">';
 					} else {
-						echo '<table class="a-breadcrumbs"><tr>';
+						echo '<div class="a-breadcrumbs">';
 					}
 					if ( true === $use_links ) {
-						echo '<td class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category_group->term_id ) ) . '">' . $category_group->name . '</a></td>';
+						echo '<div class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category_group->term_id ) ) . '">' . $category_group->name . '</a></div>';
 					} else {
-						echo '<td class="a-breadcrumb a-category-group"><span>' . $category_group->name . '</span></td>';
+						echo '<div class="a-breadcrumb a-category-group"><span>' . $category_group->name . '</span></div>';
 					}
 				} else {
 					if ( function_exists( 'minnpost_largo_category_groups' ) ) {
@@ -687,26 +687,26 @@ if ( ! function_exists( 'minnpost_category_breadcrumb_newsletter' ) ) :
 				$category_name = isset( $category->name ) ? $category->name : '';
 				if ( '' !== $category_name ) {
 					if ( true === $use_links ) {
-						echo '<td class="a-breadcrumb a-category-name"><a href="' . $category_link . '">' . $category_name . '</a></td>';
+						echo '<div class="a-breadcrumb a-category-name"><a href="' . $category_link . '">' . $category_name . '</a></div>';
 					} else {
-						echo '<td class="a-breadcrumb a-category-name"><span>' . $category_name . '</span></td>';
+						echo '<div class="a-breadcrumb a-category-name"><span>' . $category_name . '</span></div>';
 					}
 				}
 			} else {
 				if ( true === $use_category_group_name_as_class ) {
-					echo '<td class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '">';
+					echo '<div class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '">';
 				} else {
-					echo '<td class="a-breadcrumbs">';
+					echo '<div class="a-breadcrumbs">';
 				}
 				if ( true === $use_links ) {
-					echo '<td class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category->term_id ) ) . '">' . $category->name . '</a></td>';
+					echo '<div class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category->term_id ) ) . '">' . $category->name . '</a></div>';
 				} else {
-					echo '<td class="a-breadcrumb a-category-group"><span>' . $category->name . '</span></td>';
+					echo '<div class="a-breadcrumb a-category-group"><span>' . $category->name . '</span></div>';
 				}
 			}
 		}
 		if ( '' !== $category_group_id || true === $category_is_group ) {
-			echo '</tr></table>';
+			echo '</div>';
 		}
 	}
 endif;
