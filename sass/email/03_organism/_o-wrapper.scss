@@ -14,7 +14,7 @@ table.o-wrapper {
     width: $max-width-email;
 
     > td {
-        padding: $standard-block-padding 0 !important;
+        padding: $standard-block-padding 0;
     }
 }
 
