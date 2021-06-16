@@ -12,7 +12,7 @@
         padding-bottom: 0;
         
         .post-contents {
-            padding-bottom: $standard-block-padding;
+            padding-bottom: $standard-block-padding !important;
             border-bottom: none;
         }
     }

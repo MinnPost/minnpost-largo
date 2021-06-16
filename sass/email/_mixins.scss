@@ -54,7 +54,7 @@
 	td {
 		font-size: inherit;
 		font-weight: inherit;
-		padding: 0 0 $standard-heading-margin 0;
+		padding: 0 0 $standard-heading-margin 0 !important;
 		margin: 0;
 
 		h1,
@@ -137,7 +137,7 @@
 					color: $color;
 					display: block;
 					@include meta-preset( $size: 1, $bold: true, $italic: false, $line-height: 1 );
-					padding: $standard-block-padding / 2;
+					padding: $standard-block-padding / 2 !important;
 					text-decoration: none;
 
 					&:link,
@@ -184,7 +184,7 @@
 		border: 0;
 		cursor: pointer;
 		display: inline-block;
-		padding: $standard-block-padding / 2 0;
+		padding: $standard-block-padding / 2 0 !important;
 		text-decoration: none;
 		mso-padding-alt: 0;
 		width: 100%;
@@ -251,10 +251,10 @@
 
 		@if $mobile-spacing-only == 'true' {
 			@media only screen and (max-width: $large-screen-width) {
-				padding: $spacing;
+				padding: $spacing !important;
 			}
 		} @else {
-			padding: $spacing;
+			padding: $spacing !important;
 		}
 
 		@media only screen and (max-width: $large-screen-width) {

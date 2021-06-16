@@ -38,7 +38,7 @@
 				white-space: nowrap;
 				text-decoration: none;
 				line-height: normal;
-                padding: $standard-block-padding / 2 $standard-block-padding;
+                padding: $standard-block-padding / 2 $standard-block-padding !important;
                 width: auto;
                 font-weight: 700;
                 color: neutral-color(dark);
