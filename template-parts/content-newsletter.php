@@ -167,6 +167,7 @@
 					$args['section']       = $section;
 					$args['show_category'] = true;
 					$total_post_count      = 0;
+					$this_section_post     = 0;
 					?>
 					<?php if ( $top_query->have_posts() ) : ?>
 						<?php
