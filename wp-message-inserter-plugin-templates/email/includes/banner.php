@@ -35,9 +35,12 @@
 			<!-- Dual Col -->
 			<div class="o-columns o-site-message wp-message-inserter-message wp-message-inserter-message-<?php echo $slug; ?> wp-message-inserter-message-region-<?php echo $region; ?> wp-message-inserter-message-id-<?php echo $id; ?> wp-message-inserter-message-<?php echo $type; ?> wp-message-inserter-message-<?php echo $message_counter; ?> dual-wrap <?php echo ( isset( $screen_size[ $prefix . 'banner_flip_columns' ] ) && 'on' === $screen_size[ $prefix . 'banner_flip_columns' ] ) ? 'flip' : ''; ?>" style="<?php echo $banner_style; ?>">
 				[outlook]
-					<table role="presentation" width="100%" class="o-columns o-site-message wp-message-inserter-message wp-message-inserter-message-<?php echo $slug; ?> wp-message-inserter-message-region-<?php echo $region; ?> wp-message-inserter-message-id-<?php echo $id; ?> wp-message-inserter-message-<?php echo $type; ?> wp-message-inserter-message-<?php echo $message_counter; ?>" style="<?php echo $banner_style; ?>">
-						<tr>
-							<td class="o-column o-site-message-column o-site-message-column-text">
+				<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
+					<tr>
+						<td align="center" class="outlook-outer-padding">
+							<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
+								<tr>
+									<td class="outlook-inner-padding">
 				[/outlook]
 				<div class="o-column o-site-message-column o-site-message-column-text">				
 					<div class="item-contents">
@@ -47,7 +50,7 @@
 				[outlook]
 							</td>
 							<?php if ( 'button' === $screen_size[ $prefix . 'cta_type_email' ] ) : ?>
-								<td class="o-column o-site-message-column o-site-message-column-button">
+								<td class="outlook-inner-padding">
 				[/outlook]
 								<div class="o-column o-site-message-column o-site-message-column-button">
 									<div class="item-contents">
@@ -60,8 +63,11 @@
 				[outlook]
 								</td>
 							<?php endif; ?>
-						</tr>
-					</table>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
 				[/outlook]
 			</div> <!-- end o-columns.o-site-message -->
 		<?php endif; ?>
@@ -70,9 +76,12 @@
 			<!-- Stacked Banner -->
 			<div class="o-rows o-site-message wp-message-inserter-message wp-message-inserter-message-<?php echo $slug; ?> wp-message-inserter-message-region-<?php echo $region; ?> wp-message-inserter-message-id-<?php echo $id; ?> wp-message-inserter-message-<?php echo $type; ?> wp-message-inserter-message-<?php echo $message_counter; ?> stack-wrap <?php echo ( isset( $screen_size[ $prefix . 'banner_flip_columns' ] ) && 'on' === $screen_size[ $prefix . 'banner_flip_columns' ] ) ? 'flip' : ''; ?>" style="<?php echo $banner_style; ?>">
 				[outlook]
-					<table role="presentation" width="100%" class="o-rows o-site-message wp-message-inserter-message wp-message-inserter-message-<?php echo $slug; ?> wp-message-inserter-message-region-<?php echo $region; ?> wp-message-inserter-message-id-<?php echo $id; ?> wp-message-inserter-message-<?php echo $type; ?> wp-message-inserter-message-<?php echo $message_counter; ?>" style="<?php echo $banner_style; ?>">
-						<tr>
-							<td class="o-row o-site-message-row o-site-message-row-text">
+				<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
+					<tr>
+						<td align="center" class="outlook-outer-padding">
+							<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
+								<tr>
+									<td class="outlook-inner-padding">
 				[/outlook]
 				<?php if ( isset( $screen_size[ $prefix . 'banner_heading' ] ) || isset( $screen_size[ $prefix . 'banner_shortcopy' ] ) ) : ?>
 					<div class="o-row o-site-message-row">
@@ -94,9 +103,12 @@
 					</div>
 				<?php endif; ?>
 				[outlook]
-							</td>
-						</tr>
-					</table>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
 				[/outlook]
 			</div> <!-- end .o-rows.o-site-message -->
 		<?php endif; ?>
