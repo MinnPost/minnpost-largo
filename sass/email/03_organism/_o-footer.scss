@@ -5,6 +5,14 @@
     color: neutral-color(white);
     border-radius: $border-radius;
 
+    .outlook-outer-padding {
+        color: neutral-color(white);
+    }
+
+    .outlook-background-border {
+        background-color: neutral-color(black);
+    }
+
     #footer-network {
 		margin: $standard-block-padding 0;
         text-align: center;

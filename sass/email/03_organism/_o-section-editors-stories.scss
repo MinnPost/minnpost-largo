@@ -8,6 +8,14 @@
         background-color: neutral-color(dark) !important;
     }
 
+    .outlook-background-border {
+        background-color: neutral-color(light);
+
+        @media (prefers-color-scheme: dark ) {
+            background-color: neutral-color(dark) !important;
+        }
+    }
+
     .m-post-newsletter-last {
         padding-bottom: 0;
         
