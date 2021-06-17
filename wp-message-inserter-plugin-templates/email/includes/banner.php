@@ -78,8 +78,8 @@
 				[outlook]
 				<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
 					<tr>
-						<td align="center" class="outlook-outer-padding">
-							<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
+						<td align="center" class="outlook-outer-padding" style="<?php echo $banner_text; ?>">
+							<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border" style="<?php echo $banner_bg; ?>">
 								<tr>
 									<td class="outlook-inner-padding">
 				[/outlook]
