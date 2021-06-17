@@ -55,6 +55,11 @@ if ( false === $is_legacy ) {
 	// replace our fake Outlook tag with an actual conditional comment after the CSS has already been messed with.
 	$html = str_replace( '[outlook]', '<!--[if mso]>', $html );
 	$html = str_replace( '[/outlook]', '<![endif]-->', $html );
+
+	// replace our fake not-Outlook tag with an actual conditional comment after the CSS has already been messed with.
+	$html = str_replace( '[not-outlook]', '<!--[if !mso]><!-- -->', $html );
+	$html = str_replace( '[/not-outlook]', '<!--<![endif]-->', $html );
+
 	// keep <style> stuff after the CSS has already been messed with.
 	$html = str_replace( '<style_donotremove>', '<style type="text/css">', $html );
 	$html = str_replace( '</style_donotremove>', '</style>', $html );

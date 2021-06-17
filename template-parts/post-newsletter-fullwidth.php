@@ -36,13 +36,9 @@
 			</table>
 		<?php endif; ?>
 		<?php if ( true === $args['show_category'] ) : ?>
-			<table class="hide-outlook">
-				<tr>
-					<td>
-						<?php minnpost_category_breadcrumb_newsletter(); ?>
-					</td>
-				</tr>
-			</table>
+			[not-outlook]
+				<?php minnpost_category_breadcrumb_newsletter(); ?>
+			[/not-outlook]
 			[outlook]
 			<?php minnpost_category_breadcrumb_newsletter_outlook(); ?>
 			[/outlook]
