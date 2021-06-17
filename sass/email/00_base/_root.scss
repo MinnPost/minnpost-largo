@@ -25,10 +25,13 @@ img {
 
 table {
     @include body-preset( $size: 0 );
-    margin: 0;
     padding: 0;
     width: 100%;
     max-width: $max-width-email;
+    -ms-text-size: 100%;
+    mso-table-lspace: 0pt !important;
+    mso-table-rspace: 0pt !important;
+    margin: 0 auto !important;
 }
 
 div.spacer {
