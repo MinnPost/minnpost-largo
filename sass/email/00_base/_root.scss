@@ -9,6 +9,14 @@ body,
     @include body-preset( $size: 0 );
 }
 
+.o-full-table {
+    @include body-preset( $size: 0 );
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+}
+
 img {
     line-height: 100%;
     outline: none;
@@ -19,7 +27,7 @@ table {
     @include body-preset( $size: 0 );
     margin: 0;
     padding: 0;
-    width: $max-width-email-percent;
+    width: 100%;
     max-width: $max-width-email;
 }
 
