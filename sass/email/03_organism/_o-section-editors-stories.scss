@@ -8,11 +8,11 @@
         background-color: neutral-color(dark) !important;
     }
 
-    .outlook-outer-padding {
+    td.outlook-outer-padding {
         padding-bottom: $standard-block-margin;
     }
 
-    .outlook-background-border {
+    table.outlook-background-border {
         background-color: neutral-color(light) !important;
 
         @media (prefers-color-scheme: dark ) {
@@ -20,7 +20,7 @@
         }
     }
 
-    .outlook-inner-padding {
+    td.outlook-inner-padding {
         padding: $standard-block-padding;
     }
 

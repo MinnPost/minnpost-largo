@@ -506,7 +506,6 @@
 					?>
 					<?php if ( 'on' !== $remove_editors_section && $editors_query->have_posts() ) : ?>
 						<div class="o-single-column o-section-editors-stories">
-
 							[outlook]
 							<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
 								<tr>
@@ -516,7 +515,6 @@
 												<td class="outlook-inner-padding">
 							[/outlook]
 
-							
 							<?php
 							$post_count         = isset( $newsletter_recommended_query->post_count ) ? $newsletter_recommended_query->post_count : $editors_query->post_count;
 							$this_section_post  = 0;
