@@ -21,6 +21,11 @@ table {
     padding: 0;
 }
 
+table.outlook-table {
+    width: $max-width-email-percent;
+    max-width: $max-width-email;
+}
+
 div.spacer {
     line-height: $standard-heading-margin;
     height: $standard-heading-margin;
