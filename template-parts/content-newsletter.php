@@ -377,7 +377,7 @@
 					$args['show_category'] = true;
 					?>
 					<?php if ( $opinion_query->have_posts() ) : ?>
-						<div class="o-section-opinion-stories">
+						<div class="o-single-column o-section-opinion-stories">
 
 							[outlook]
 							<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
@@ -505,7 +505,7 @@
 					$remove_editors_section     = get_post_meta( get_the_ID(), '_mp_newsletter_remove_editors_section', true );
 					?>
 					<?php if ( 'on' !== $remove_editors_section && $editors_query->have_posts() ) : ?>
-						<div class="o-section-opinion-stories">
+						<div class="o-single-column o-section-editors-stories">
 
 							[outlook]
 							<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
@@ -554,20 +554,14 @@
 								}
 								?>
 
-								<table role="presentation" width="100%" class="o-single-column">
-									<tr>
-										<td class="o-row">
-											<?php
-											// with newsletters, the individual post can override the image size for the newsletter section the post is in.
-											$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
-											if ( '' !== $override_size && 'default' !== $override_size ) {
-												$args['image_size'] = $override_size;
-											}
-											get_template_part( 'template-parts/post-newsletter-fullwidth', $args['newsletter_type'], $args );
-											?>
-										</td>
-									</tr>
-								</table>
+								<?php
+								// with newsletters, the individual post can override the image size for the newsletter section the post is in.
+								$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
+								if ( '' !== $override_size && 'default' !== $override_size ) {
+									$args['image_size'] = $override_size;
+								}
+								get_template_part( 'template-parts/post-newsletter-fullwidth', $args['newsletter_type'], $args );
+								?>
 
 								<?php if ( 1 === $total_post_count && isset( $ads[0] ) && ! empty( $ads[0] ) ) : ?>
 									<div class="o-single-column m-newsletter-ad-region">
