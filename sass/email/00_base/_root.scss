@@ -26,8 +26,10 @@ img {
 table {
     @include body-preset( $size: 0 );
     padding: 0;
+    border: 0;
     width: 100%;
     max-width: $max-width-email;
+    border-collapse: collapse !important;
     -ms-text-size: 100%;
     mso-table-lspace: 0pt !important;
     mso-table-rspace: 0pt !important;
