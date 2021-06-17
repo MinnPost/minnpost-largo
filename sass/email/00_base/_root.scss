@@ -31,6 +31,10 @@ table {
     max-width: $max-width-email;
 }
 
+table.hide-outlook {
+    mso-hide: all !important;
+}
+
 div.spacer {
     line-height: $standard-heading-margin;
     height: $standard-heading-margin;
