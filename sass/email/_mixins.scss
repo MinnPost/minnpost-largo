@@ -239,23 +239,26 @@
 			}
 		}
     }
-    
-    td.outlook-inner-padding {
-        width: $max-width-email * ($max-width / 100%);
-		vertical-align: $vertical-align;
 
-		@if $mobile-spacing-only == 'true' {
-			@media only screen and (max-width: $large-screen-width) {
+	table.outlook-table {
+    
+		td.outlook-inner-padding {
+			width: $max-width-email * ($max-width / 100%);
+			vertical-align: $vertical-align;
+
+			@if $mobile-spacing-only == 'true' {
+				@media only screen and (max-width: $large-screen-width) {
+					padding: $spacing;
+				}
+			} @else {
 				padding: $spacing;
 			}
-		} @else {
-			padding: $spacing;
-		}
 
-		@media only screen and (max-width: $large-screen-width) {
-			width: 100% !important;
+			@media only screen and (max-width: $large-screen-width) {
+				width: 100% !important;
+			}
 		}
-    }
+	}
 }
 
 // link underline treatment

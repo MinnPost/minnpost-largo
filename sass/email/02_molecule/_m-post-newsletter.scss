@@ -20,8 +20,11 @@
     &.m-post-newsletter-last {
         padding-bottom: 0;
 
-        td.outlook-outer-padding {
-            padding: 0;
+        table.outlook-table {
+
+            td.outlook-outer-padding {
+                padding: 0;
+            }
         }
     }
 

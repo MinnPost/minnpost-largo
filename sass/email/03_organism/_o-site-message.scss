@@ -16,8 +16,11 @@
         @include column( $selector: '.o-site-message-row', $max-width: 100%, $text-align: left, $vertical-align: top, $spacing: $standard-block-padding, $desktop-spacing-only: 'false', $mobile-spacing-only: 'false');
     }
 
-    td.outlook-outer-padding {
-        padding-bottom: $standard-block-margin;
+    table.outlook-table {
+
+        td.outlook-outer-padding {
+            padding-bottom: $standard-block-margin;
+        }
     }
 
     .o-row,

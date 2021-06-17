@@ -1,4 +1,4 @@
-.o-section-editors-stories {
+.o-single-column.o-section-editors-stories {
     border-radius: $border-radius;
     background-color: neutral-color(light);
     padding: $standard-block-padding;
@@ -8,20 +8,23 @@
         background-color: neutral-color(dark) !important;
     }
 
-    td.outlook-outer-padding {
-        padding-bottom: $standard-block-margin;
-    }
+    table.outlook-table {
 
-    table.outlook-background-border {
-        background-color: neutral-color(light) !important;
-
-        @media (prefers-color-scheme: dark ) {
-            background-color: neutral-color(dark) !important;
+        td.outlook-outer-padding {
+            padding-bottom: $standard-block-margin;
         }
-    }
 
-    td.outlook-inner-padding {
-        padding: $standard-block-padding;
+        table.outlook-background-border {
+            background-color: neutral-color(light) !important;
+
+            @media (prefers-color-scheme: dark ) {
+                background-color: neutral-color(dark) !important;
+            }
+        }
+
+        td.outlook-inner-padding {
+            padding: $standard-block-padding;
+        }
     }
 
     .m-post-newsletter-last {

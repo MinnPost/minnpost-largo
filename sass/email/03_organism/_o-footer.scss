@@ -5,12 +5,15 @@
     color: neutral-color(white);
     border-radius: $border-radius;
 
-    td.outlook-outer-padding {
-        color: neutral-color(white);
-    }
+    table.outlook-table {
 
-    table.outlook-background-border {
-        background-color: neutral-color(black);
+        td.outlook-outer-padding {
+            color: neutral-color(white);
+        }
+
+        table.outlook-background-border {
+            background-color: neutral-color(black);
+        }
     }
 
     #footer-network {
