@@ -7,6 +7,10 @@
         background-color: neutral-color(black) !important;
     }
 
+    .outlook-inner-padding {
+        padding: 0;
+    }
+
     @include column( $selector: '.o-column.a-logo', $max-width: 74%, $mobile-spacing-only: 'false');
     @include column( $selector: '.o-column.m-support-cta', $max-width: 24%, $mobile-spacing-only: 'true', $spacing: $standard-block-padding 0 0 0);
 }
