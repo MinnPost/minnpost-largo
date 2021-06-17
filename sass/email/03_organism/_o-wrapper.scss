@@ -4,17 +4,18 @@ div.o-wrapper {
     max-width: $max-width-email;
     background-color: neutral-color(white);
     color: neutral-color(black);
+
     @media (prefers-color-scheme: dark ) {
         color: neutral-color(white) !important;
         background-color: neutral-color(black) !important;
     }
-}
 
-table.o-wrapper {
-    width: $max-width-email;
+    table.outlook-table {
+        width: max-width-email;  
 
-    > td {
-        padding: $standard-block-padding 0;
+        td.outlook-inner-padding {
+            padding: $standard-block-padding 0;
+        }
     }
 }
 

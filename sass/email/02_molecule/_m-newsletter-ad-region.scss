@@ -2,8 +2,22 @@
     
     padding-bottom: $standard-block-margin;
 
+    table.outlook-table {
+        
+        .outlook-background-border {
+            border-bottom: $border-default-style;
+        }
+
+        td.outlook-inner-padding,
+        td.outlook-outer-padding {
+            padding: $standard-block-padding 0;
+        }
+    }
+
     .item-contents {
         text-align: center;
+        padding-bottom: $standard-block-margin;
+        border-bottom: $border-default-style;
     }
     
     @include column( $selector: '.a-newsletter-ad', $max-width: 100%, $text-align: center, $spacing: 0 0 $standard-block-margin 0, $mobile-spacing-only: 'false');

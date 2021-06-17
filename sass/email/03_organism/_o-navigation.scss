@@ -7,4 +7,9 @@
     }
 
     @include column( $selector: '.o-column.o-navigation', $max-width: 100%);
+	padding-bottom: $standard-heading-margin;
+
+    td.outlook-inner-padding {
+        padding-bottom: $standard-heading-margin;
+    }
 }

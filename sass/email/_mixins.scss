@@ -245,7 +245,7 @@
 		}
     }
     
-    td#{$selector} {
+    td.outlook-inner-padding {
         width: $max-width-email * ($max-width / 100%);
 		vertical-align: $vertical-align;
 
