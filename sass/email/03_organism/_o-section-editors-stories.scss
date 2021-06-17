@@ -8,12 +8,20 @@
         background-color: neutral-color(dark) !important;
     }
 
+    .outlook-outer-padding {
+        padding-bottom: $standard-block-margin;
+    }
+
     .outlook-background-border {
         background-color: neutral-color(light) !important;
 
         @media (prefers-color-scheme: dark ) {
             background-color: neutral-color(dark) !important;
         }
+    }
+
+    .outlook-inner-padding {
+        padding: $standard-block-padding;
     }
 
     .m-post-newsletter-last {
