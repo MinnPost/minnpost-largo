@@ -1,10 +1,14 @@
 .o-rows.o-site-message,
 .o-columns.o-site-message {
     border-radius: $border-radius;
-    margin-bottom: $standard-block-padding;
+    margin-bottom: $standard-block-margin;
 
     &.wp-message-inserter-message-region-email_middle {
         margin-bottom: $standard-block-margin;
+    }
+
+    .outlook-outer-padding {
+        padding-bottom: $standard-block-margin;
     }
 
     &.o-columns {

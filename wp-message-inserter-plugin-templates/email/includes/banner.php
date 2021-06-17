@@ -38,7 +38,7 @@
 				<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
 					<tr>
 						<td align="center" class="outlook-outer-padding" style="<?php echo $banner_text; ?>">
-							<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border" style="<?php echo $banner_bg; ?>">
+							<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border" style="<?php echo $banner_bg . $banner_text; ?>">
 								<tr>
 									<td class="outlook-inner-padding">
 				[/outlook]
@@ -79,7 +79,7 @@
 				<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
 					<tr>
 						<td align="center" class="outlook-outer-padding" style="<?php echo $banner_text; ?>">
-							<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border" style="<?php echo $banner_bg; ?>">
+							<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border" style="<?php echo $banner_bg . $banner_text; ?>">
 								<tr>
 									<td class="outlook-inner-padding">
 				[/outlook]
