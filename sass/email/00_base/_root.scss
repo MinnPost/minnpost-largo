@@ -1,8 +1,8 @@
 body,
 .o-email {
-    margin:0;
-    padding:0;
-    word-spacing:normal;
+    margin: 0;
+    padding: 0;
+    word-spacing: normal;
     min-width: 100%;
     background-color: neutral-color(white);
     color: neutral-color(black);
@@ -19,9 +19,6 @@ table {
     @include body-preset( $size: 0 );
     margin: 0;
     padding: 0;
-}
-
-table.outlook-table {
     width: $max-width-email-percent;
     max-width: $max-width-email;
 }
