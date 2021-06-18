@@ -39,7 +39,6 @@
 				font-weight: inherit !important;
 				line-height: inherit !important;
 			}
-			.mcnPreviewText{display: none !important;}
 			</style_donotremove>
 		<?php endif; ?>
 		<link rel="shortcut icon" href="<?php echo esc_url( get_theme_file_uri( '/assets/img/app-icons/favicon.ico' ) ); ?>" type="image/x-icon" />
