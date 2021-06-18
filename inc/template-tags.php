@@ -1157,9 +1157,6 @@ if ( ! function_exists( 'email_preview_text' ) ) :
 		<span class="a-preview-text">
 			<?php echo $preview_text; ?>
 		</span>
-		<!--*|IF:MC_PREVIEW_TEXT|*-->
-			<!--[if !gte mso 9]><!----><span class="mcnPreviewText">*|MC_PREVIEW_TEXT|*</span><!--<![endif]--> 
-		<!--*|END:IF|*-->
 		<!-- Insert &zwnj;&nbsp; hack after hidden preview text -->
 		<div class="a-after-preview-text">
 		&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
