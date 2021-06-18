@@ -33,9 +33,9 @@
 						<div class="o-column a-logo">
 							<div class="item-contents">
 								<img src="<?php minnpost_newsletter_logo( get_the_ID(), false ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="light-img">
-								<!--[if !mso]><! --><div class="dark-img">
+								[not-outlook]<div class="dark-img">
 									<img src="<?php minnpost_newsletter_logo( get_the_ID(), true ); ?>" alt="<?php bloginfo( 'name' ); ?>">
-								</div><!--<![endif]-->
+								</div>[/not-outlook]
 							</div>
 						</div>
 						[outlook]
@@ -55,8 +55,7 @@
 							</tr>
 						</table>
 						[/outlook]
-					</div> <!-- end o-header -->
-
+					</div>
 					<div class="o-columns o-navigation">
 						[outlook]
 						<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
@@ -82,7 +81,7 @@
 									)
 								);
 								?>
-							</table><!-- #navigation-primary -->
+							</table>
 						</div>
 						[outlook]
 											</td>
@@ -92,10 +91,8 @@
 							</tr>
 						</table>
 						[/outlook]
-					</div> <!-- end o-navigation -->
-
+					</div>
 					<?php do_action( 'wp_message_inserter', 'email_header', 'email' ); ?>
-
 					<div class="o-single-column o-newsletter-intro">
 						[outlook]
 						<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
@@ -653,7 +650,7 @@
 											)
 										);
 										?>
-									</table><!-- #footer-network -->
+									</table>
 								</div>
 								<?php
 								$footer_message = get_option( 'site_footer_message', '' );
@@ -661,8 +658,8 @@
 									?>
 									<p class="a-footer-message"><?php echo $footer_message; ?></p>
 								<?php endif; ?>
-							</div> <!-- item-contents -->
-						</div> <!-- o-footer -->
+							</div>
+						</div>
 						[outlook]
 										</td>
 									</tr>
@@ -671,8 +668,7 @@
 						</tr>
 					</table>
 					[/outlook]
-				</div> <!-- o-footer -->
-
+				</div>
 				[outlook]
 									</td>
 								</tr>
@@ -681,8 +677,7 @@
 					</tr>
 				</table>
 				[/outlook]
-
-			</div> <!-- end o-wrapper -->
+			</div>
 		</td>
 	</tr>
 </table>
