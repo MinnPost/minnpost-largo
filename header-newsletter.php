@@ -60,5 +60,15 @@
 		<![endif]-->
 	</head>
 	<body>
-		<?php email_preview_text(); ?>
+		<?php
+		$preview_text = get_post_meta( get_the_ID(), '_mp_newsletter_preview_text', true );
+		if ( '' !== $preview_text ) {
+			?>
+		<!-- limit to 50 characters; only display if there is a value -->
+		<span style="display: none !important; font-size: 0; color: #fff;"> <!-- gmail only takes display none if it has !important; outlook still doesn't care -->
+			<?php echo $preview_text; ?>
+		</span>
+		<?php
+		}
+		?>
 		<div class="o-email" role="article" aria-roledescription="email" lang="en">
