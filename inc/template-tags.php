@@ -1154,9 +1154,9 @@ if ( ! function_exists( 'email_preview_text' ) ) :
 		$preview_text = get_post_meta( $post_id, '_mp_newsletter_preview_text', true );
 		if ( '' !== $preview_text ) :
 			?>
-		<span class="a-preview-text">
+		<div class="a-preview-text">
 			<?php echo $preview_text; ?>
-		</span>
+		</div>
 		<!-- Insert &zwnj;&nbsp; hack after hidden preview text -->
 		<div class="a-after-preview-text">
 		&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
