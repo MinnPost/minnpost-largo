@@ -15,7 +15,6 @@ use Pelago\Emogrifier\HtmlProcessor\HtmlPruner;
 
 $newsletter_type = get_post_meta( get_the_ID(), '_mp_newsletter_type', true );
 $is_legacy       = apply_filters( 'minnpost_largo_newsletter_legacy', false, '', get_the_ID() );
-$is_legacy       = true;
 
 $args = array(
 	'newsletter_type' => $newsletter_type,
@@ -44,16 +43,18 @@ get_footer( 'newsletter', $args );
 $html = ob_get_contents();
 ob_end_clean();
 //if ( false === $is_legacy ) {
-	/*// get the HTML and inline the CSS.
-	$css_inliner = CssInliner::fromHtml( $html )->inlineCss();
+	// get the HTML and inline the CSS.
+	$css_inliner = CssInliner::fromHtml( $html )->inlineCss( $css );
+	// skip preview element
+	$css_inliner->addExcludedSelector( '.a-preview-text' );
 	// make a DOMDocument out of it.
 	$dom_document = $css_inliner->getDomDocument();
 	// remove stuff from the HTML.
-	//HtmlPruner::fromDomDocument( $dom_document )->removeRedundantClassesAfterCssInlined( $css_inliner );
+	HtmlPruner::fromDomDocument( $dom_document )->removeRedundantClassesAfterCssInlined( $css_inliner );
 	// convert some CSS to HTML attributes for older email clients.
-	$html = CssToAttributeConverter::fromDomDocument( $dom_document )->render();*/
+	$html = CssToAttributeConverter::fromDomDocument( $dom_document )->render();
 
-	$html = CssInliner::fromHtml( $html )->inlineCss()->render();
+	//$html = CssInliner::fromHtml( $html )->inlineCss()->render();
 
 	// replace our fake Outlook tag with an actual conditional comment after the CSS has already been messed with.
 	$html = str_replace( '[outlook]', '<!--[if mso]>', $html );
