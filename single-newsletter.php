@@ -52,8 +52,6 @@ if ( false === $is_legacy ) {
 	// convert some CSS to HTML attributes for older email clients.
 	$html = CssToAttributeConverter::fromDomDocument( $dom_document )->render();
 
-	//$html = CssInliner::fromHtml( $html )->inlineCss()->render();
-
 	// replace our fake Outlook tag with an actual conditional comment after the CSS has already been messed with.
 	$html = str_replace( '[outlook]', '<!--[if mso]>', $html );
 	$html = str_replace( '[/outlook]', '<![endif]-->', $html );
