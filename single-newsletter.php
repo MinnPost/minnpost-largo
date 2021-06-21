@@ -15,6 +15,7 @@ use Pelago\Emogrifier\HtmlProcessor\HtmlPruner;
 
 $newsletter_type = get_post_meta( get_the_ID(), '_mp_newsletter_type', true );
 $is_legacy       = apply_filters( 'minnpost_largo_newsletter_legacy', false, '', get_the_ID() );
+$is_legacy       = true;
 
 $args = array(
 	'newsletter_type' => $newsletter_type,
@@ -53,17 +54,16 @@ if ( false === $is_legacy ) {
 	$html = CssToAttributeConverter::fromDomDocument( $dom_document )->render();*/
 
 	$html = CssInliner::fromHtml( $html )->inlineCss()->render();
-
-	// replace our fake Outlook tag with an actual conditional comment after the CSS has already been messed with.
-	$html = str_replace( '[outlook]', '<!--[if mso]>', $html );
-	$html = str_replace( '[/outlook]', '<![endif]-->', $html );
-
-	// replace our fake not-Outlook tag with an actual conditional comment after the CSS has already been messed with.
-	$html = str_replace( '[not-outlook]', '<!--[if !mso]><!-- -->', $html );
-	$html = str_replace( '[/not-outlook]', '<!--<![endif]-->', $html );
-
-	// keep <style> stuff after the CSS has already been messed with.
-	$html = str_replace( '<style_donotremove>', '<style type="text/css">', $html );
-	$html = str_replace( '</style_donotremove>', '</style>', $html );
 }
+// replace our fake Outlook tag with an actual conditional comment after the CSS has already been messed with.
+$html = str_replace( '[outlook]', '<!--[if mso]>', $html );
+$html = str_replace( '[/outlook]', '<![endif]-->', $html );
+
+// replace our fake not-Outlook tag with an actual conditional comment after the CSS has already been messed with.
+$html = str_replace( '[not-outlook]', '<!--[if !mso]><!-- -->', $html );
+$html = str_replace( '[/not-outlook]', '<!--<![endif]-->', $html );
+
+// keep <style> stuff after the CSS has already been messed with.
+$html = str_replace( '<style_donotremove>', '<style type="text/css">', $html );
+$html = str_replace( '</style_donotremove>', '</style>', $html );
 echo $html;
