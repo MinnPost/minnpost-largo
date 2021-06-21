@@ -44,7 +44,7 @@ $html = ob_get_contents();
 ob_end_clean();
 if ( false === $is_legacy ) {
 	// get the HTML and inline the CSS.
-	$css_inliner = CssInliner::fromHtml( $html )->inlineCss( $css );
+	$css_inliner = CssInliner::fromHtml( $html )->inlineCss();
 	// make a DOMDocument out of it.
 	$dom_document = $css_inliner->getDomDocument();
 	// remove stuff from the HTML.
