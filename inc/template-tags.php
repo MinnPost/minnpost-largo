@@ -1154,13 +1154,14 @@ if ( ! function_exists( 'email_preview_text' ) ) :
 		$preview_text = get_post_meta( $post_id, '_mp_newsletter_preview_text', true );
 		if ( '' !== $preview_text ) :
 			?>
-		<div class="a-preview-text">
-			<?php echo $preview_text; ?>
-		</div>
-		<!-- Insert &zwnj;&nbsp; hack after hidden preview text -->
-		<div class="a-after-preview-text">
-		&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
-		</div>
+			<!-- limit to 50 characters; only display if there is a value -->
+			<span class="a-preview-text" style="display: none !important; font-size: 0; color: #fff;"> <!-- gmail only takes display none if it has !important; outlook still doesn't care -->
+				<?php echo $preview_text; ?>
+			</span>
+			<!-- Insert &zwnj;&nbsp; hack after hidden preview text -->
+			<div class="a-after-preview-text">
+			&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+			</div>
 			<?php
 		endif;
 	}

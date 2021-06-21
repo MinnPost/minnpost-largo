@@ -45,30 +45,15 @@
 		<meta property="og:title" content="<?php echo get_the_title(); ?> | <?php bloginfo( 'name' ); ?>">
 		<title><?php echo get_the_title(); ?> | <?php bloginfo( 'name' ); ?></title>
 		<!--[if mso]>
-		<style type="text/css">
-			table {border-collapse:collapse;border-spacing:0;margin:0;}
-			div, td {padding:0;}
-			div {margin:0 !important;}
-		</style>
 		<noscript>
-		<xml>
-			<o:OfficeDocumentSettings>
-				<o:PixelsPerInch>96</o:PixelsPerInch>
-			</o:OfficeDocumentSettings>
-		</xml>
+			<xml>
+				<o:OfficeDocumentSettings>
+					<o:PixelsPerInch>96</o:PixelsPerInch>
+				</o:OfficeDocumentSettings>
+			</xml>
 		</noscript>
 		<![endif]-->
 	</head>
-	<body>
-		<?php
-		$preview_text = get_post_meta( get_the_ID(), '_mp_newsletter_preview_text', true );
-		if ( '' !== $preview_text ) {
-			?>
-		<!-- limit to 50 characters; only display if there is a value -->
-		<span style="display: none !important; font-size: 0; color: #fff;"> <!-- gmail only takes display none if it has !important; outlook still doesn't care -->
-			<?php echo $preview_text; ?>
-		</span>
-		<?php
-		}
-		?>
+	<body class="body">
+		<?php email_preview_text(); ?>
 		<div class="o-email" role="article" aria-roledescription="email" lang="en">
