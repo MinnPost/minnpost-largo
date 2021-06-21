@@ -43,14 +43,16 @@ get_footer( 'newsletter', $args );
 $html = ob_get_contents();
 ob_end_clean();
 if ( false === $is_legacy ) {
-	// get the HTML and inline the CSS.
+	/*// get the HTML and inline the CSS.
 	$css_inliner = CssInliner::fromHtml( $html )->inlineCss();
 	// make a DOMDocument out of it.
 	$dom_document = $css_inliner->getDomDocument();
 	// remove stuff from the HTML.
-	HtmlPruner::fromDomDocument( $dom_document )->removeRedundantClassesAfterCssInlined( $css_inliner );
+	//HtmlPruner::fromDomDocument( $dom_document )->removeRedundantClassesAfterCssInlined( $css_inliner );
 	// convert some CSS to HTML attributes for older email clients.
-	$html = CssToAttributeConverter::fromDomDocument( $dom_document )->render();
+	$html = CssToAttributeConverter::fromDomDocument( $dom_document )->render();*/
+
+	$html = CssInliner::fromHtml( $html )->inlineCss()->render();
 
 	// replace our fake Outlook tag with an actual conditional comment after the CSS has already been messed with.
 	$html = str_replace( '[outlook]', '<!--[if mso]>', $html );
