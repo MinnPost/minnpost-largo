@@ -43,7 +43,7 @@ get_footer( 'newsletter', $args );
 
 $html = ob_get_contents();
 ob_end_clean();
-if ( false === $is_legacy ) {
+//if ( false === $is_legacy ) {
 	/*// get the HTML and inline the CSS.
 	$css_inliner = CssInliner::fromHtml( $html )->inlineCss();
 	// make a DOMDocument out of it.
@@ -54,16 +54,17 @@ if ( false === $is_legacy ) {
 	$html = CssToAttributeConverter::fromDomDocument( $dom_document )->render();*/
 
 	$html = CssInliner::fromHtml( $html )->inlineCss()->render();
-}
-// replace our fake Outlook tag with an actual conditional comment after the CSS has already been messed with.
-$html = str_replace( '[outlook]', '<!--[if mso]>', $html );
-$html = str_replace( '[/outlook]', '<![endif]-->', $html );
 
-// replace our fake not-Outlook tag with an actual conditional comment after the CSS has already been messed with.
-$html = str_replace( '[not-outlook]', '<!--[if !mso]><!-- -->', $html );
-$html = str_replace( '[/not-outlook]', '<!--<![endif]-->', $html );
+	// replace our fake Outlook tag with an actual conditional comment after the CSS has already been messed with.
+	$html = str_replace( '[outlook]', '<!--[if mso]>', $html );
+	$html = str_replace( '[/outlook]', '<![endif]-->', $html );
 
-// keep <style> stuff after the CSS has already been messed with.
-$html = str_replace( '<style_donotremove>', '<style type="text/css">', $html );
-$html = str_replace( '</style_donotremove>', '</style>', $html );
+	// replace our fake not-Outlook tag with an actual conditional comment after the CSS has already been messed with.
+	$html = str_replace( '[not-outlook]', '<!--[if !mso]><!-- -->', $html );
+	$html = str_replace( '[/not-outlook]', '<!--<![endif]-->', $html );
+
+	// keep <style> stuff after the CSS has already been messed with.
+	$html = str_replace( '<style_donotremove>', '<style type="text/css">', $html );
+	$html = str_replace( '</style_donotremove>', '</style>', $html );
+//}
 echo $html;
