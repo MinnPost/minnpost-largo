@@ -42,11 +42,9 @@ get_footer( 'newsletter', $args );
 
 $html = ob_get_contents();
 ob_end_clean();
-//if ( false === $is_legacy ) {
+if ( false === $is_legacy ) {
 	// get the HTML and inline the CSS.
 	$css_inliner = CssInliner::fromHtml( $html )->inlineCss( $css );
-	// skip preview element
-	$css_inliner->addExcludedSelector( '.a-preview-text' );
 	// make a DOMDocument out of it.
 	$dom_document = $css_inliner->getDomDocument();
 	// remove stuff from the HTML.
@@ -64,8 +62,12 @@ ob_end_clean();
 	$html = str_replace( '[not-outlook]', '<!--[if !mso]><!-- -->', $html );
 	$html = str_replace( '[/not-outlook]', '<!--<![endif]-->', $html );
 
+	// replace our fake preview text with a real one after the CSS has already been messed with.
+	$html = str_replace( '[preview_text]', '<span style="display: none !important; font-size: 0; color: #fff;">', $html );
+	$html = str_replace( '[/preview_text]', '</span>', $html );
+
 	// keep <style> stuff after the CSS has already been messed with.
 	$html = str_replace( '<style_donotremove>', '<style type="text/css">', $html );
 	$html = str_replace( '</style_donotremove>', '</style>', $html );
-//}
+}
 echo $html;

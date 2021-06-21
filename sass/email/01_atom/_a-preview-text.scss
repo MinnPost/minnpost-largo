@@ -1,7 +1,9 @@
 .a-preview-text {
-    display: none;
+    display: none !important;
     max-height: 0px;
     overflow: hidden;
+    font-size: 0;
+    color: #fff;
 }
 
 .a-after-preview-text {
