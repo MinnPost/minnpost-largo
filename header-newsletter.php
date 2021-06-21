@@ -45,6 +45,11 @@
 		<meta property="og:title" content="<?php echo get_the_title(); ?> | <?php bloginfo( 'name' ); ?>">
 		<title><?php echo get_the_title(); ?> | <?php bloginfo( 'name' ); ?></title>
 		<!--[if mso]>
+		<style type="text/css">
+			table {border-collapse:collapse;border-spacing:0;margin:0;}
+			div, td {padding:0;}
+			div {margin:0 !important;}
+		</style>
 		<noscript>
 			<xml>
 				<o:OfficeDocumentSettings>
