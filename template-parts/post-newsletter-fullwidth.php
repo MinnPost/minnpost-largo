@@ -34,15 +34,7 @@
 					</td>
 				</tr>
 			</table>
-		<?php endif; ?>
-		<?php if ( true === $args['show_category'] ) : ?>
-			[not-outlook]
-				<?php minnpost_category_breadcrumb_newsletter(); ?>
-			[/not-outlook]
-			[outlook]
-			<?php minnpost_category_breadcrumb_newsletter_outlook(); ?>
-			[/outlook]
-		<?php endif; ?>
+		<?php endif; ?>	
 		<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="h3 a-entry-title">
 			<tr>
 				<td>

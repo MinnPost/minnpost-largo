@@ -8,7 +8,7 @@
  */
 
 ?>
-<center>
+
 <table width="100%" align="center" cellpadding="0" cellspacing="0" role="presentation" class="o-full-table">
 	<tr>
 		<td align="center">
@@ -33,9 +33,7 @@
 						<div class="o-column a-logo">
 							<div class="item-contents">
 								<img src="<?php minnpost_newsletter_logo( get_the_ID(), false ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="light-img">
-								[not-outlook]<div class="dark-img">
-									<img src="<?php minnpost_newsletter_logo( get_the_ID(), true ); ?>" alt="<?php bloginfo( 'name' ); ?>">
-								</div>[/not-outlook]
+								
 							</div>
 						</div>
 						[outlook]
@@ -681,4 +679,3 @@
 		</td>
 	</tr>
 </table>
-</center>
