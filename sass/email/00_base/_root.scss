@@ -22,6 +22,8 @@ img {
     line-height: 100%;
     outline: none;
     text-decoration: none;
+	height: auto; /* Make sure images are scaled correctly. */
+	max-width: 100%; /* Adhere to container width. */
 }
 
 table {
