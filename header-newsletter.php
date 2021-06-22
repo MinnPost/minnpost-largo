@@ -28,10 +28,7 @@
 		<!--[if mso]>
 		<style type="text/css">
 		table{border-collapse:collapse;border-spacing:0;margin:0;}div,td{padding:0;}div{margin:0!important;}
-		</style>
-		<noscript>
-			<xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml>
-		</noscript>
+		</style> <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
 		<![endif]-->
 	</head>
 	<body class="body">

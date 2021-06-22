@@ -31,16 +31,11 @@
 	}
 
     a,
-    a:visited,
     a[x-apple-data-detectors] {
         color: utility-color(blue, highlight);
     }
 
-    a:hover,
-    a:focus,
-    a:active,
-    a.active,
-    .active > a {
+    a:hover {
         color: utility-color(blue, background) !important;
     }
 

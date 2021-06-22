@@ -1,11 +1,5 @@
 html {
 	font-family: sans-serif;
-	-webkit-text-size-adjust: 100%;
-	-ms-text-size-adjust: 100%;
-}
-
-body {
-	margin: 0;
 }
 
 article,
@@ -24,8 +18,6 @@ summary {
 }
 
 audio,
-canvas,
-progress,
 video {
 	display: inline-block;
 	vertical-align: baseline;
@@ -45,7 +37,6 @@ a {
 	background-color: transparent;
 }
 
-a:active,
 a:hover {
 	outline: 0;
 }
@@ -63,11 +54,6 @@ dfn {
 	font-style: italic;
 }
 
-h1 {
-	font-size: 2em;
-	margin: 0.67em 0;
-}
-
 mark {
 	background: #ff0;
 	color: #000;
@@ -77,45 +63,17 @@ small {
 	font-size: $interface-copy-size;
 }
 
-sub,
-sup {
-	font-size: $interface-copy-size-smaller;
-	line-height: 0;
-	position: relative;
-	vertical-align: baseline;
-}
-
-sup {
-	top: -0.5em;
-}
-
-sub {
-	bottom: -0.25em;
-}
-
 img {
 	border: 0;
 }
 
 figure {
-	margin: 1em 40px;
+	margin: 20px 40px;
 }
 
 hr {
 	box-sizing: content-box;
 	height: 0;
-}
-
-pre {
-	overflow: auto;
-}
-
-code,
-kbd,
-pre,
-samp {
-	font-family: monospace;
-	font-size: 1em;
 }
 
 table {

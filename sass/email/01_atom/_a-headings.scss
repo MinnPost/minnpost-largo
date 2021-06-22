@@ -20,20 +20,7 @@ table.h3.a-entry-title  {
 				color: neutral-color(white) !important;
 			}
 
-			&:link,
-			&:visited {
-				color: neutral-color(black);
-				text-decoration: none;
-
-				@media (prefers-color-scheme: dark ) {
-					color: neutral-color(white) !important;
-				}
-			}
-
-			&:active,
-			&:focus,
-			&:hover,
-			&.active {
+			&:hover {
 
 				@include link-underline();
 

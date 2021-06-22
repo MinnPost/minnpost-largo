@@ -1,3 +1,5 @@
+// from sitewide styles
+
 // quotes
 blockquote,
 q {
@@ -67,10 +69,7 @@ dd {
 	overflow: hidden;
 }
 
-
-
-
-
+// email specific styles
 
 // paragraphs
 p {
@@ -84,7 +83,6 @@ p {
 }
 
 a,
-a:visited,
 a[x-apple-data-detectors] {
     font-size: inherit;
     font-family: inherit;
@@ -94,9 +92,7 @@ a[x-apple-data-detectors] {
     text-decoration: underline;
 }
 
-a:hover,
-a:focus,
-a:active {
+a:hover {
     color: utility-color(blue, background) !important;
     text-decoration: none !important;
 }

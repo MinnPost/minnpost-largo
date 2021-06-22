@@ -23,8 +23,6 @@
             @include meta-preset( $bold: true, $italic: false );
 
             @include breakpoint-max( $large-screen-width ) {
-                //display: block;
-                //width: 100%;
                 @include meta-preset( $size: -1, $bold: true, $italic: false, $important: true );
             }
 
@@ -34,8 +32,7 @@
                 }
             }
 
-            a,
-            a:visited {
+            a {
                 display: block;
 				white-space: nowrap;
 				text-decoration: none;
@@ -58,9 +55,7 @@
 				}
             }
 
-            a:hover,
-            a:focus,
-            a:active {
+            a:hover {
                 background-color: neutral-color(border) !important;
                 color: neutral-color(black) !important;
 
@@ -97,15 +92,9 @@
 			a {
 				color: utility-color(blue, highlight);
 
-				&:hover,
-				&:focus,
-				&:active {
+				&:hover {
 					color: utility-color(blue, background);
 				}
-			}
-
-			&.active > a {
-				color: utility-color(blue, background);
 			}
 
 			&:not(:last-child) {
