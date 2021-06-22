@@ -1812,6 +1812,38 @@ if ( ! function_exists( 'format_email_content_legacy' ) ) :
 endif;
 
 /**
+* Process shortcodes in email content that need to run after Emogrifier processing is done.
+*
+* @param string $html
+* @return string $html
+*
+*/
+if ( ! function_exists( 'minnpost_email_shortcodes_after_emogrifier' ) ) :
+	add_filter( 'do_shortcodes_after_emogrifier', 'minnpost_email_shortcodes_after_emogrifier', 10, 1 );
+	function minnpost_email_shortcodes_after_emogrifier( $html ) {
+		// replace our fake Outlook tag with an actual conditional comment after the CSS has already been messed with.
+		$html = str_replace( '[outlook]', '<!--[if mso]>', $html );
+		$html = str_replace( '[/outlook]', '<![endif]-->', $html );
+
+		// replace our fake not-Outlook tag with an actual conditional comment after the CSS has already been messed with.
+		$html = str_replace( '[not-outlook]', '<!--[if !mso]><!-- -->', $html );
+		$html = str_replace( '[/not-outlook]', '<!--<![endif]-->', $html );
+
+		// replace our fake preview text with a real one after the CSS has already been messed with.
+		$html = str_replace( '[preview_text]', '<span style="display: none !important; font-size: 0; color: #fff;">', $html );
+		$html = str_replace( '[/preview_text]', '</span>', $html );
+
+		// replace the shortcode for the empty space after the preview text, after the CSS has been messed with.
+		$html = str_replace( '[after-preview-space-hack]', '<div style="display: none;max-height: 0px;overflow: hidden;">&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;</div>', $html );
+
+		// keep <style> stuff after the CSS has already been messed with.
+		$html = str_replace( '<style_donotremove>', '<style type="text/css">', $html );
+		$html = str_replace( '</style_donotremove>', '</style>', $html );
+		return $html;
+	}
+endif;
+
+/**
 * Get story ids for a newsletter section
 *
 * @param int $post_id

@@ -1,3 +1,77 @@
+// quotes
+blockquote,
+q {
+	quotes: "" "";
+
+	&::before,
+	&::after {
+		content: "";
+	}
+}
+
+blockquote {
+
+	@include body-preset( $size: 1 );
+	border-left: 6px solid neutral-color(black);
+	background: neutral-color(light);
+	margin-left: 0;
+	padding: 1em;
+	margin: 0 0 $standard-block-margin 0;
+}
+
+// lists
+ul,
+ol {
+	margin: 0 0 $standard-block-margin 1em;
+	padding: 0;
+
+	li {
+		margin: 0 0 $standard-heading-margin 0;
+		padding: 0 0 0 $standard-block-padding / 2;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+}
+
+ul {
+	list-style: disc;
+}
+
+ol {
+	list-style: decimal;
+}
+
+li > ul,
+li > ol {
+	margin-bottom: 0;
+	margin-left: 2em;
+}
+
+dt {
+	font-weight: 700;
+}
+
+dd {
+	margin: 0 $standard-block-margin $standard-block-margin;
+}
+
+.screen-reader-text {
+	clip: rect(1px, 1px, 1px, 1px);
+	clip-path: polygon(0 0, 0 0, 0 0, 0 0);
+	position: absolute !important;
+	white-space: nowrap;
+	height: 1px;
+	width: 1px;
+	overflow: hidden;
+}
+
+
+
+
+
+
 // paragraphs
 p {
 	margin: 0 0 $standard-block-padding 0;

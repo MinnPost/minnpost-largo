@@ -11,8 +11,17 @@ $neutral-colors: (
 	white: #ffffff
 );
 
+// font families
+$font__code: monaco, consolas, Andale Mono, DejaVu Sans Mono, monospace;
+$font__pre: Courier 10 Pitch, courier, monospace;
+$font__sans: Helvetica, Arial, sans-serif;
+$font__serif: Georgia, Cambria, 'Times New Roman', times, serif;
+$webfont__serif: ff-meta-serif-web-pro, Georgia, Cambria, Times New Roman, times, serif;
+$webfont__sans: ff-meta-web-pro, Helvetica, Arial, sans-serif;
+
 $max-width-email: 600px;
 $max-width-email-percent: 96%;
+$max-width-email-outlook: $max-width-email;
 $large-screen-width: 700px;
 $mobile-screen-width: 480px;
 $hide-stuff-width: 450px;

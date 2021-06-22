@@ -59,6 +59,26 @@
 
 }
 
+table.a-breadcrumbs {
+	display: table;
+	margin: 0;
+
+	td {
+		padding: $standard-block-padding / 2 0;
+	}
+
+	span {
+		padding: 0;
+		display: inline;
+		margin: 0;
+		color: neutral-color(dark);
+
+		@media (prefers-color-scheme: dark ) {
+			color: neutral-color(border) !important;
+		}
+	}
+}
+
 
 // when there's a category group on the breadcrumb
 .a-breadcrumbs {

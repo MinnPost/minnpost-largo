@@ -646,6 +646,8 @@ endif;
 *
 * @param int $post_id
 * @param bool $show_group
+* @param bool $use_category_group_name_as_class
+* @param bool $use_links
 *
 */
 if ( ! function_exists( 'minnpost_category_breadcrumb_newsletter' ) ) :
@@ -665,7 +667,7 @@ if ( ! function_exists( 'minnpost_category_breadcrumb_newsletter' ) ) :
 				if ( '' !== $category_group_id ) {
 					$category_group = get_category( $category_group_id );
 					if ( true === $use_category_group_name_as_class ) {
-						echo 'div class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '">';
+						echo '<div class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '">';
 					} else {
 						echo '<div class="a-breadcrumbs">';
 					}
@@ -707,6 +709,78 @@ if ( ! function_exists( 'minnpost_category_breadcrumb_newsletter' ) ) :
 		}
 		if ( '' !== $category_group_id || true === $category_is_group ) {
 			echo '</div>';
+		}
+	}
+endif;
+
+/**
+* Outputs HTML for the category breadcrumb specifically for an email newsletter, specifically for Outlook.
+*
+* @param int $post_id
+* @param bool $show_group
+* @param bool $use_category_group_name_as_class
+* @param bool $use_links
+*
+*/
+if ( ! function_exists( 'minnpost_category_breadcrumb_newsletter_outlook' ) ) :
+	function minnpost_category_breadcrumb_newsletter_outlook( $post_id = '', $show_group = true, $use_category_group_name_as_class = true, $use_links = false ) {
+
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
+		$category_id       = minnpost_get_permalink_category_id( $post_id );
+		$category_group_id = '';
+		$category_is_group = false;
+		if ( '' !== $category_id ) {
+			$category      = get_category( $category_id );
+			$category_link = get_category_link( $category );
+			if ( true === $show_group ) {
+				$category_group_id = minnpost_get_category_group_id( $post_id, $category_id );
+				if ( '' !== $category_group_id ) {
+					$category_group = get_category( $category_group_id );
+					if ( true === $use_category_group_name_as_class ) {
+						echo '<table class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '"><tr><td>';
+					} else {
+						echo '<table class="a-breadcrumbs"><tr><td>';
+					}
+					if ( true === $use_links ) {
+						echo '<span class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category_group->term_id ) ) . '">' . $category_group->name . '</a></span><span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>';
+					} else {
+						echo '<span class="a-breadcrumb a-category-group">' . $category_group->name . '</span><span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>';
+					}
+				} else {
+					if ( function_exists( 'minnpost_largo_category_groups' ) ) {
+						$groups = minnpost_largo_category_groups();
+						if ( in_array( $category->slug, $groups, true ) ) {
+							$category_is_group = true;
+						}
+					}
+				}
+			}
+			if ( false === $category_is_group ) {
+				$category_name = isset( $category->name ) ? $category->name : '';
+				if ( '' !== $category_name ) {
+					if ( true === $use_links ) {
+						echo '<span class="a-breadcrumb a-category-name"><a href="' . $category_link . '">' . $category_name . '</a></span>';
+					} else {
+						echo '<span class="a-breadcrumb a-category-name">' . $category_name . '</span>';
+					}
+				}
+			} else {
+				if ( true === $use_category_group_name_as_class ) {
+					echo '<span class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '">';
+				} else {
+					echo '<span class="a-breadcrumbs">';
+				}
+				if ( true === $use_links ) {
+					echo '<span class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category->term_id ) ) . '">' . $category->name . '</a></span>';
+				} else {
+					echo '<span class="a-breadcrumb a-category-group">' . $category->name . '</span>';
+				}
+			}
+		}
+		if ( '' !== $category_group_id || true === $category_is_group ) {
+			echo '</td></tr></table>';
 		}
 	}
 endif;
@@ -1069,24 +1143,42 @@ endif;
 /**
 * Display preview text in an email template
 *
+* @param bool $use_shortcode
 * @param int $post_id
 *
 */
 if ( ! function_exists( 'email_preview_text' ) ) :
-	function email_preview_text( $post_id = 0 ) {
+	function email_preview_text( $use_shortcode = true, $post_id = 0 ) {
 		if ( 0 === $post_id ) {
 			$post_id = get_the_ID();
 		}
 		$preview_text = get_post_meta( $post_id, '_mp_newsletter_preview_text', true );
 		if ( '' !== $preview_text ) :
+			if ( false === $use_shortcode ) :
 			?>
-		<span style="display: none !important; max-height: 0px; font-size: 0; overflow: hidden;"> <!-- gmail only takes display none if it has !important; outlook still doesn't care -->
-			<?php echo $preview_text; ?>
-		</span>
-		<!-- Insert &zwnj;&nbsp; hack after hidden preview text -->
-		<div style="display: none; max-height: 0px; overflow: hidden;">
-		&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
-		</div>
+			<!-- limit to 50 characters; only display if there is a value -->
+			<span class="a-preview-text"> <!-- gmail only takes display none if it has !important; outlook still doesn't care -->
+				<?php echo $preview_text; ?>
+			</span>
+			<?php else: ?>
+				[preview_text]<?php echo $preview_text; ?>[/preview_text]
+			<?php endif; ?>
+			<?php
+		else:
+			?>
+			<!--*|IF:MC_PREVIEW_TEXT|*-->
+			<!--[if !gte mso 9]><!----><span class="a-preview-text" style="display:none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;">*|MC_PREVIEW_TEXT|*</span><!--<![endif]--> 
+			<!--*|END:IF|*-->
+			<?php
+		endif;
+		if ( false === $use_shortcode ) :
+		?>
+			<!-- Insert &zwnj;&nbsp; hack after hidden preview text -->
+			<div class="a-after-preview-text">
+			&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
+			</div>
+		<?php else: ?>
+			[after-preview-space-hack]
 			<?php
 		endif;
 	}

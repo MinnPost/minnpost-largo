@@ -5,7 +5,14 @@
         color: neutral-color(white) !important;
         background-color: neutral-color(black) !important;
     }
-    padding-bottom: $standard-heading-margin;
 
     @include column( $selector: '.o-column.o-navigation', $max-width: 100%);
+	padding-bottom: $standard-heading-margin;
+    
+    table.outlook-table {
+
+        td.outlook-inner-padding {
+            padding-bottom: $standard-heading-margin;
+        }
+    }
 }

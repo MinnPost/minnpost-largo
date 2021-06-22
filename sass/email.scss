@@ -9,17 +9,12 @@ inlined into email templates based on the selectors. This way we can still use t
 
 @import "functions"; // put functions first because they get used in color variable calculations
 @import "variables";
-@import "column-setter"; // because we do call some of the website variables here
+//@import "column-setter"; // because we do call some of the website variables here
 @import "mixins";
 
 /*--------------------------------------------------------------
 # Pattern Lab patterns
 --------------------------------------------------------------*/
-
-@import "00_base/*";
-@import "01_atom/*";
-//@import "02_molecule/*";
-//@import "03_organism/*";
 
 // email specific
 @import "email/variables";

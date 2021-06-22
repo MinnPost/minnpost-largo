@@ -3,6 +3,7 @@
 	line-height: normal;
     border-bottom: 2px solid neutral-color(dark);
     border-top: 2px solid neutral-color(dark);
+	@include meta-preset( $size: 0 );
 
     @include breakpoint-max( $large-screen-width ) {
         border-top: 0;
@@ -17,6 +18,8 @@
 		td {
 			margin: 0;
             padding: 0;
+			text-align: center;
+			width: auto;
             @include meta-preset( $bold: true, $italic: false );
 
             @include breakpoint-max( $large-screen-width ) {
@@ -38,6 +41,7 @@
 				text-decoration: none;
 				line-height: normal;
                 padding: $standard-block-padding / 2 $standard-block-padding;
+				text-align: center;
                 width: auto;
                 font-weight: 700;
                 color: neutral-color(dark);

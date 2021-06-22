@@ -90,13 +90,12 @@
 
 
 // button in a table treatment
-@mixin table_button( $background: brand-color(red, medium), $hover: brand-color(red, dark), $color: neutral-color(white), $button-height: 122px) {
+@mixin table_button( $background: brand-color(red, medium), $hover: brand-color(red, dark), $color: neutral-color(white), $button-height: auto) {
 	border-collapse: collapse;
 	border-spacing: 0;
 	padding: 0;
 	Margin: 0;
-	color: $color;
-	@include meta-preset( $size: 1, $bold: true, $italic: false, $line-height: 1 );
+	width: auto;
 	mso-table-lspace: 0pt;
 	mso-table-rspace: 0pt;
 
@@ -110,25 +109,23 @@
 
 	td {
 		border-collapse: collapse;
-		Margin: 0;
+		margin: 0;
 		padding: 0;
+		@include meta-preset( $size: 2, $bold: true, $italic: false, $line-height: 1 );
 
 		table {
 			border-collapse: collapse;
 			border-spacing: 0;
-			color: $color;
-			@include meta-preset( $size: 1, $bold: true, $italic: false, $line-height: 1 );
-			Margin: 0;
+			margin: 0;
 			mso-table-lspace: 0pt;
 			mso-table-rspace: 0pt;
 			padding: 0;
 
 			td {
 				background-color: $background;
-				border-collapse: collapse;
+				color: $color;
 				border-radius: $border-radius;
-				Margin: 0;
-				padding: 0;
+				padding: $standard-block-padding / 2;
 
 				a {
 					cursor: pointer;
@@ -136,8 +133,6 @@
 					border: 0;
 					color: $color;
 					display: block;
-					@include meta-preset( $size: 1, $bold: true, $italic: false, $line-height: 1 );
-					padding: $standard-block-padding / 2;
 					text-decoration: none;
 
 					&:link,
@@ -151,9 +146,9 @@
 					&:focus,
 					&:active,
 					&.active {
-						background-color: $hover !important;
-						color: $color !important;
-						text-decoration: none !important;
+						background-color: $hover;
+						color: $color;
+						text-decoration: none;
 					}
 				}
 			}
@@ -244,23 +239,26 @@
 			}
 		}
     }
-    
-    td#{$selector} {
-        width: $max-width-email * ($max-width / 100%);
-		vertical-align: $vertical-align;
 
-		@if $mobile-spacing-only == 'true' {
-			@media only screen and (max-width: $large-screen-width) {
+	table.outlook-table {
+    
+		td.outlook-inner-padding {
+			width: $max-width-email * ($max-width / 100%);
+			vertical-align: $vertical-align;
+
+			@if $mobile-spacing-only == 'true' {
+				@media only screen and (max-width: $large-screen-width) {
+					padding: $spacing;
+				}
+			} @else {
 				padding: $spacing;
 			}
-		} @else {
-			padding: $spacing;
-		}
 
-		@media only screen and (max-width: $large-screen-width) {
-			width: 100% !important;
+			@media only screen and (max-width: $large-screen-width) {
+				width: 100% !important;
+			}
 		}
-    }
+	}
 }
 
 // link underline treatment

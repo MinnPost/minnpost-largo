@@ -56,12 +56,28 @@
 			$value .= '<!--[if mso]><i>&nbsp;</i><![endif]--><span>' . $text . '</span><!--[if mso]><i>&nbsp;</i><![endif]-->';
 		}
 		$value .= '</a>';
-		// email content filter
-		$value = apply_filters( 'format_email_content_legacy', $value, false, true );
 		?>
 
-		<p class="a-button a-button-site-message">
-			<?php echo $value; ?>
-		</p>
+		<center>
+			<table role="presentation" cellspacing="0" cellpadding="0" class="a-button a-button-site-message">
+				<tbody>
+					<tr>
+						<td>
+							<table role="presentation" cellspacing="0" cellpadding="0">
+								<tbody>
+									<tr>
+										<td align="center" <?php echo $button_style; ?>>
+											<?php echo $value; ?>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</center>
+
 	<?php endif; ?>
+
 <?php endif; ?>
