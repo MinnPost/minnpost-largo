@@ -67,39 +67,3 @@
 		}
 	}
 }
-
-.o-footer .m-secondary-navigation {
-
-	#minnpost-network {
-		margin: 0;
-
-		a {
-			display: block;
-			font-size: $share-icon-size;
-			color: neutral-color(white);
-
-			&:hover {
-				opacity: 0.65;
-			}
-		}
-	}
-
-	ul {
-
-		li {
-			font-weight: bold;
-
-			a {
-				color: utility-color(blue, highlight);
-
-				&:hover {
-					color: utility-color(blue, background);
-				}
-			}
-
-			&:not(:last-child) {
-				margin-right: $standard-block-margin;
-			}
-		}
-	}
-}
