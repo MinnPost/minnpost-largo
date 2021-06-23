@@ -43,6 +43,6 @@
 
         @include meta-preset( $size: -1, $bold: false, $italic: false, $line-height: 1 );
         text-align: center;
-        margin-bottom: $standard-block-margin;
+        margin: 0 0 $standard-block-margin 0;
     }
 }
