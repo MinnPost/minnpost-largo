@@ -22,10 +22,10 @@ $neutral-colors: (
 // font families
 $font__code: monaco, consolas, Andale Mono, DejaVu Sans Mono, monospace;
 $font__pre: Courier 10 Pitch, courier, monospace;
-$font__sans: Helvetica, Arial, sans-serif;
-$font__serif: Georgia, Cambria, 'Times New Roman', times, serif;
-$webfont__serif: ff-meta-serif-web-pro, Georgia, Cambria, Times New Roman, times, serif;
-$webfont__sans: ff-meta-web-pro, Helvetica, Arial, sans-serif;
+$font__sans: Helvetica, sans-serif;
+$font__serif: Georgia, 'Times New Roman', serif;
+$webfont__serif: 'ff-meta-serif-web-pro', Georgia, 'Times New Roman', serif;
+$webfont__sans: 'ff-meta-web-pro', Helvetica, sans-serif;
 
 // font sizes
 $html-root-size: 20px;

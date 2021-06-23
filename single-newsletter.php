@@ -58,7 +58,7 @@ if ( false === $is_legacy ) {
 	// remove newlines.
 	$html = preg_replace( "/\n/", '', $html );
 	// remove spaces between HTML tags.
-	$html = preg_replace( "/>\s*</", '><', $html );
+	$html = preg_replace( '/>\s*</', '><', $html );
 	// wrap the HTML at 500 characters for email clients.
 	$html = wordwrap( $html, 500 );
 
