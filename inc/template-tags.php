@@ -1155,29 +1155,27 @@ if ( ! function_exists( 'email_preview_text' ) ) :
 		$preview_text = get_post_meta( $post_id, '_mp_newsletter_preview_text', true );
 		if ( '' !== $preview_text ) :
 			if ( false === $use_shortcode ) :
-			?>
-			<!-- limit to 50 characters; only display if there is a value -->
-			<span class="a-preview-text"> <!-- gmail only takes display none if it has !important; outlook still doesn't care -->
-				<?php echo $preview_text; ?>
-			</span>
-			<?php else: ?>
+				?>
+				<span class="a-preview-text"><?php echo $preview_text; ?></span>
+			<?php else : ?>
 				[preview_text]<?php echo $preview_text; ?>[/preview_text]
 			<?php endif; ?>
 			<?php
-		else:
+		else :
 			?>
 			<!--*|IF:MC_PREVIEW_TEXT|*-->
-			<!--[if !gte mso 9]><!----><span class="a-preview-text" style="display:none; font-size:0px; line-height:0px; max-height:0px; max-width:0px; opacity:0; overflow:hidden; visibility:hidden; mso-hide:all;">*|MC_PREVIEW_TEXT|*</span><!--<![endif]--> 
+			<?php if ( false === $use_shortcode ) : ?>
+				<span class="a-preview-text">*|MC_PREVIEW_TEXT|*</span>
+			<?php else : ?>
+				[preview_text]*|MC_PREVIEW_TEXT|*[/preview_text]
+			<?php endif; ?>
 			<!--*|END:IF|*-->
 			<?php
 		endif;
 		if ( false === $use_shortcode ) :
-		?>
-			<!-- Insert &zwnj;&nbsp; hack after hidden preview text -->
-			<div class="a-after-preview-text">
-			&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;
-			</div>
-		<?php else: ?>
+			?>
+			<div class="a-after-preview-text">&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;</div>
+		<?php else : ?>
 			[after-preview-space-hack]
 			<?php
 		endif;
