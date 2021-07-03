@@ -1,4 +1,10 @@
 .a-logo {
+
+    /* this doesn't work because mailchimp strips out display none elements when they are imported
+    .dark-img-wrapper {
+        mso-hide: all;
+        display: none;
+    }
     .dark-img {
         display: none;
         overflow: hidden;
@@ -8,36 +14,27 @@
         max-width: 0px;
         line-height: 0px;
         visibility: hidden;
-    }
+    }*/
 
-    @media (prefers-color-scheme: dark ) {
-        /* Shows Dark Mode-Only Content, Like Images */
-        .dark-img {
+    /*@media (prefers-color-scheme: dark ) {
+
+        div, div img {
             display: block !important;
-            width: auto !important;
-            overflow: visible !important;
-            float: none !important;
-            max-height: inherit !important;
-            max-width: inherit !important;
-            line-height: inherit !important;
-            visibility: inherit !important;
         }
-        
-        /* Hides Light Mode-Only Content, Like Images */
+
         .light-img {
             display: none !important;
         }
 
-        /* Custom Dark Mode Font Colors */
-        //h1, h2, p, span, a, b { color: #ffffff !important; }
-         
-        /* Custom Dark Mode Text Link Color */
-        //.link { color: #91ADD4 !important; }
-    }
+        .dark-img-wrapper,
+        .dark-img {
+            display: block !important;
+        }
+    }*/
 
       /* Shows Dark Mode-Only Content, Like Images */
     
-    [data-ogsc] .dark-img {
+    /*[data-ogsc] .dark-img {
         display: block !important;
         width: auto !important;
         overflow: visible !important;
@@ -48,10 +45,21 @@
         visibility:inherit !important;
     }
     
-    /* Hides Light Mode-Only Content, Like Images */
     [data-ogsc] .light-img {
         display: none !important;
-    }
+    }*/
+
+    /*[data-ogsc] {
+        .light-img {
+            display: none !important;
+        }
+
+        .dark-img-wrapper,
+        .dark-img {
+            display: block !important;
+        }
+
+    }*/
     
     /* Custom Dark Mode Background Color */
     //[data-ogsc] .darkmode { background-color: #272623 !important; }
