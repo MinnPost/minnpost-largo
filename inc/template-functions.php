@@ -1891,8 +1891,6 @@ if ( ! function_exists( 'minnpost_email_shortcodes_after_emogrifier' ) ) :
 		// replace the shortcode for the empty space after the preview text, after the CSS has been messed with.
 		$html = str_replace( '[after-preview-space-hack]', '<div style="display: none;max-height: 0px;overflow: hidden;">&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;</div>', $html );
 
-		$html = str_replace( '[dark-mode-logo]', '<div class="dark-img-wrapper -emogrifier-keep" style="mso-hide:all;display:none;"><img src="' . minnpost_get_newsletter_logo_url( get_the_ID(), true ) . '" alt="' . get_bloginfo( 'name' ) . '" class="dark-img -emogrifier-keep" style="mso-hide:all;display:none;"></div>', $html );
-
 		// keep <style> stuff after the CSS has already been messed with.
 		$html = str_replace( '<style_donotremove>', '<style type="text/css">', $html );
 		$html = str_replace( '</style_donotremove>', '</style>', $html );

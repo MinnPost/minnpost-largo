@@ -33,9 +33,14 @@
 						<div class="o-column a-logo">
 							<div class="item-contents">
 								<img src="<?php minnpost_newsletter_logo( get_the_ID(), false ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="light-img">
+								<?php
+								/* this doesn't currently work because the mailchimp importer removes display none elements.
 								[not-outlook]
-									[dark-mode-logo]
-								[/not-outlook]
+									<div class="dark-img-wrapper -emogrifier-keep">
+										<img src="<?php minnpost_newsletter_logo( get_the_ID(), true ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="dark-img -emogrifier-keep">
+									</div>
+								[/not-outlook]*/
+								?>
 							</div>
 						</div>
 						[outlook]

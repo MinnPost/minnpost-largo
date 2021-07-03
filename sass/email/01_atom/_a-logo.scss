@@ -1,4 +1,6 @@
 .a-logo {
+
+    /* this doesn't work because mailchimp strips out display none elements when they are imported
     .dark-img-wrapper {
         mso-hide: all;
         display: none;
@@ -12,15 +14,14 @@
         max-width: 0px;
         line-height: 0px;
         visibility: hidden;
-    }
+    }*/
 
-    @media (prefers-color-scheme: dark ) {
+    /*@media (prefers-color-scheme: dark ) {
 
         div, div img {
             display: block !important;
         }
 
-        /* Hides Light Mode-Only Content, Like Images */
         .light-img {
             display: none !important;
         }
@@ -29,25 +30,7 @@
         .dark-img {
             display: block !important;
         }
-
-        /* Shows Dark Mode-Only Content, Like Images */
-        /*.dark-img {
-            display: block !important;
-            width: auto !important;
-            overflow: visible !important;
-            float: none !important;
-            max-height: inherit !important;
-            max-width: inherit !important;
-            line-height: inherit !important;
-            visibility: inherit !important;
-        }*/
-
-        /* Custom Dark Mode Font Colors */
-        //h1, h2, p, span, a, b { color: #ffffff !important; }
-         
-        /* Custom Dark Mode Text Link Color */
-        //.link { color: #91ADD4 !important; }
-    }
+    }*/
 
       /* Shows Dark Mode-Only Content, Like Images */
     
@@ -66,7 +49,7 @@
         display: none !important;
     }*/
 
-    [data-ogsc] {
+    /*[data-ogsc] {
         .light-img {
             display: none !important;
         }
@@ -76,7 +59,7 @@
             display: block !important;
         }
 
-    }
+    }*/
     
     /* Custom Dark Mode Background Color */
     //[data-ogsc] .darkmode { background-color: #272623 !important; }
