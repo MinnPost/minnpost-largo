@@ -48,8 +48,7 @@ if ( false === $is_legacy ) {
 	// make a DOMDocument out of it.
 	$dom_document = $css_inliner->getDomDocument();
 	// remove stuff from the HTML.
-	//HtmlPruner::fromDomDocument( $dom_document )->removeRedundantClassesAfterCssInlined( $css_inliner );
-	HtmlPruner::fromDomDocument( $dom_document );
+	HtmlPruner::fromDomDocument( $dom_document )->removeRedundantClassesAfterCssInlined( $css_inliner );
 	// convert some CSS to HTML attributes for older email clients.
 	$html = CssToAttributeConverter::fromDomDocument( $dom_document )->render();
 
@@ -57,11 +56,11 @@ if ( false === $is_legacy ) {
 	$html = apply_filters( 'do_shortcodes_after_emogrifier', $html );
 
 	// remove newlines.
-	//$html = preg_replace( "/\n/", '', $html );
+	$html = preg_replace( "/\n/", '', $html );
 	// remove spaces between HTML tags.
-	//$html = preg_replace( '/>\s*</', '><', $html );
+	$html = preg_replace( '/>\s*</', '><', $html );
 	// wrap the HTML at 500 characters for email clients.
-	//$html = wordwrap( $html, 500 );
+	$html = wordwrap( $html, 500 );
 
 }
 echo $html;
