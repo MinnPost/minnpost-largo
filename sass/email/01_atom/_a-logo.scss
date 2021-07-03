@@ -1,18 +1,33 @@
 .a-logo {
+    .dark-img-wrapper {
+        mso-hide: all;
+        display: none;
+    }
     .dark-img {
         display: none;
-        overflow: hidden;
+        /*overflow: hidden;
         float: left;
         width: 0px;
         max-height: 0px;
         max-width: 0px;
         line-height: 0px;
-        visibility: hidden;
+        visibility: hidden;*/
     }
 
     @media (prefers-color-scheme: dark ) {
-        /* Shows Dark Mode-Only Content, Like Images */
+
+        /* Hides Light Mode-Only Content, Like Images */
+        .light-img {
+            display: none !important;
+        }
+
+        .dark-img-wrapper,
         .dark-img {
+            display: block !important;
+        }
+
+        /* Shows Dark Mode-Only Content, Like Images */
+        /*.dark-img {
             display: block !important;
             width: auto !important;
             overflow: visible !important;
@@ -21,12 +36,7 @@
             max-width: inherit !important;
             line-height: inherit !important;
             visibility: inherit !important;
-        }
-        
-        /* Hides Light Mode-Only Content, Like Images */
-        .light-img {
-            display: none !important;
-        }
+        }*/
 
         /* Custom Dark Mode Font Colors */
         //h1, h2, p, span, a, b { color: #ffffff !important; }
@@ -37,7 +47,7 @@
 
       /* Shows Dark Mode-Only Content, Like Images */
     
-    [data-ogsc] .dark-img {
+    /*[data-ogsc] .dark-img {
         display: block !important;
         width: auto !important;
         overflow: visible !important;
@@ -48,9 +58,20 @@
         visibility:inherit !important;
     }
     
-    /* Hides Light Mode-Only Content, Like Images */
     [data-ogsc] .light-img {
         display: none !important;
+    }*/
+
+    [data-ogsc] {
+        .light-img {
+            display: none !important;
+        }
+
+        .dark-img-wrapper,
+        .dark-img {
+            display: block !important;
+        }
+
     }
     
     /* Custom Dark Mode Background Color */
