@@ -1826,15 +1826,16 @@ if ( ! function_exists( 'minnpost_email_shortcodes_after_emogrifier' ) ) :
 		$html = str_replace( '[/outlook]', '<![endif]-->', $html );
 
 		// replace our fake not-Outlook tag with an actual conditional comment after the CSS has already been messed with.
-		//$html = str_replace( '[not-outlook]', '<!--[if !mso]><! -->', $html );
-		//$html = str_replace( '[/not-outlook]', '<!--<![endif]-->', $html );
+		$html = str_replace( '[not-outlook]', '<!--[if !mso]><! -->', $html );
+		$html = str_replace( '[/not-outlook]', '<!--<![endif]-->', $html );
 
 		// replace our fake preview text with a real one after the CSS has already been messed with.
 		$html = str_replace( '[preview_text]', '<span style="display: none !important; font-size: 0; color: #fff;">', $html );
 		$html = str_replace( '[/preview_text]', '</span>', $html );
 
 		// replace the shortcode for the empty space after the preview text, after the CSS has been messed with.
-		$html = str_replace( '[after-preview-space-hack]', '<div style="display: none;max-height: 0px;overflow: hidden;">&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;</div>', $html );
+		//$html = str_replace( '[after-preview-space-hack]', '<div style="display: none;max-height: 0px;overflow: hidden;">&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;</div>', $html );
+		$html = str_replace( '[after-preview-space-hack]', '', $html );
 
 		// keep <style> stuff after the CSS has already been messed with.
 		$html = str_replace( '<style_donotremove>', '<style type="text/css">', $html );
