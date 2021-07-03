@@ -1740,6 +1740,61 @@ if ( ! function_exists( 'minnpost_get_newsletter_type' ) ) :
 endif;
 
 /**
+* Get newsletter logo URL
+*
+* @param int $newsletter_id
+* @param bool $transparent
+* @return string $logo_url
+*
+*/
+if ( ! function_exists( 'minnpost_get_newsletter_logo_url' ) ) :
+	function minnpost_get_newsletter_logo_url( $newsletter_id = '', $transparent = false ) {
+		$logo_url = '';
+
+		$newsletter_type = get_post_meta( $newsletter_id, '_mp_newsletter_type', true );
+		$filename_suffix = '';
+		if ( true === $transparent ) {
+			$filename_suffix = '-transparent';
+		}
+
+		if ( '' !== $newsletter_type ) {
+
+			switch ( $newsletter_type ) {
+				case 'book_club':
+					$filename = 'newsletter-logo-book-club' . $filename_suffix . '.png';
+					break;
+				case 'daily':
+					$filename = 'newsletter-logo-daily' . $filename_suffix . '.png';
+					break;
+				case 'dc_memo':
+					$filename = 'dc-memo-header-520x50' . $filename_suffix . '.png';
+					break;
+				case 'greater_mn':
+					$filename = 'newsletter-logo-mn-week' . $filename_suffix . '.png';
+					break;
+				case 'sunday_review':
+					$filename = 'newsletter-logo-sunday-review' . $filename_suffix . '.png';
+					break;
+				case 'daily_coronavirus':
+					$filename = 'mp-dcu-600' . $filename_suffix . '.png';
+					break;
+				case 'republication':
+					$filename = 'republication-header-260x50' . $filename_suffix . '.png';
+					break;
+				default:
+					$filename = 'newsletter-logo-daily' . $filename_suffix . '.png';
+					break;
+			}
+
+			$logo_url = get_theme_file_uri() . '/assets/img/newsletter-headers/' . $filename;
+
+		}
+
+		return $logo_url;
+	}
+endif;
+
+/**
 * Format a string for email-friendly display
 *
 * @param string $content
@@ -1835,6 +1890,8 @@ if ( ! function_exists( 'minnpost_email_shortcodes_after_emogrifier' ) ) :
 
 		// replace the shortcode for the empty space after the preview text, after the CSS has been messed with.
 		$html = str_replace( '[after-preview-space-hack]', '<div style="display: none;max-height: 0px;overflow: hidden;">&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;</div>', $html );
+
+		$html = str_replace( '[dark-mode-logo]', '<div class="dark-img-wrapper -emogrifier-keep" style="mso-hide:all;display:none;"><img src="' . minnpost_get_newsletter_logo_url( get_the_ID(), true ) . '" alt="' . get_bloginfo( 'name' ) . '" class="dark-img -emogrifier-keep" style="mso-hide:all;display:none;"></div>', $html );
 
 		// keep <style> stuff after the CSS has already been messed with.
 		$html = str_replace( '<style_donotremove>', '<style type="text/css">', $html );
