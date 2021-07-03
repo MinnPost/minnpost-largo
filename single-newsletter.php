@@ -48,7 +48,7 @@ if ( false === $is_legacy ) {
 	// make a DOMDocument out of it.
 	$dom_document = $css_inliner->getDomDocument();
 	// remove stuff from the HTML.
-	HtmlPruner::fromDomDocument( $dom_document )->removeRedundantClassesAfterCssInlined( $css_inliner );
+	HtmlPruner::fromDomDocument( $dom_document )->removeElementsWithDisplayNone()->removeRedundantClassesAfterCssInlined( $css_inliner );
 	// convert some CSS to HTML attributes for older email clients.
 	$html = CssToAttributeConverter::fromDomDocument( $dom_document )->render();
 
