@@ -1826,8 +1826,8 @@ if ( ! function_exists( 'minnpost_email_shortcodes_after_emogrifier' ) ) :
 		$html = str_replace( '[/outlook]', '<![endif]-->', $html );
 
 		// replace our fake not-Outlook tag with an actual conditional comment after the CSS has already been messed with.
-		$html = str_replace( '[not-outlook]', '<!--[if !mso]><! -->', $html );
-		$html = str_replace( '[/not-outlook]', '<!--<![endif]-->', $html );
+		//$html = str_replace( '[not-outlook]', '<!--[if !mso]><! -->', $html );
+		//$html = str_replace( '[/not-outlook]', '<!--<![endif]-->', $html );
 
 		// replace our fake preview text with a real one after the CSS has already been messed with.
 		$html = str_replace( '[preview_text]', '<span style="display: none !important; font-size: 0; color: #fff;">', $html );
