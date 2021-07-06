@@ -48,12 +48,19 @@ if ( false === $is_legacy ) {
 	// make a DOMDocument out of it.
 	$dom_document = $css_inliner->getDomDocument();
 	// remove stuff from the HTML.
-	HtmlPruner::fromDomDocument( $dom_document )->removeRedundantClassesAfterCssInlined( $css_inliner );
+	HtmlPruner::fromDomDocument( $dom_document )->removeElementsWithDisplayNone()->removeRedundantClassesAfterCssInlined( $css_inliner );
 	// convert some CSS to HTML attributes for older email clients.
 	$html = CssToAttributeConverter::fromDomDocument( $dom_document )->render();
 
 	// apply filter that turns the shortcodes into HTML after the CSS has been messed with.
 	$html = apply_filters( 'do_shortcodes_after_emogrifier', $html );
+
+	// remove newlines.
+	$html = preg_replace( "/\n/", '', $html );
+	// remove spaces between HTML tags. this causes issues for Outlook on windows, apparently.
+	//$html = preg_replace( '/>\s*</', '><', $html );
+	// wrap the HTML at 500 characters for email clients.
+	$html = wordwrap( $html, 500 );
 
 }
 echo $html;

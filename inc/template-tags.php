@@ -962,49 +962,8 @@ endif;
 */
 if ( ! function_exists( 'minnpost_newsletter_logo' ) ) :
 	function minnpost_newsletter_logo( $newsletter_id = '', $transparent = false ) {
-
-		$logo = '';
-
-		$newsletter_type = get_post_meta( $newsletter_id, '_mp_newsletter_type', true );
-		$filename_suffix = '';
-		if ( true === $transparent ) {
-			$filename_suffix = '-transparent';
-		}
-
-		if ( '' !== $newsletter_type ) {
-
-			switch ( $newsletter_type ) {
-				case 'book_club':
-					$filename = 'newsletter-logo-book-club' . $filename_suffix . '.png';
-					break;
-				case 'daily':
-					$filename = 'newsletter-logo-daily' . $filename_suffix . '.png';
-					break;
-				case 'dc_memo':
-					$filename = 'dc-memo-header-520x50' . $filename_suffix . '.png';
-					break;
-				case 'greater_mn':
-					$filename = 'newsletter-logo-mn-week' . $filename_suffix . '.png';
-					break;
-				case 'sunday_review':
-					$filename = 'newsletter-logo-sunday-review' . $filename_suffix . '.png';
-					break;
-				case 'daily_coronavirus':
-					$filename = 'mp-dcu-600' . $filename_suffix . '.png';
-					break;
-				case 'republication':
-					$filename = 'republication-header-260x50' . $filename_suffix . '.png';
-					break;
-				default:
-					$filename = 'newsletter-logo-daily' . $filename_suffix . '.png';
-					break;
-			}
-
-			$logo = get_theme_file_uri() . '/assets/img/newsletter-headers/' . $filename;
-
-		}
-
-		echo $logo;
+		$logo_url = minnpost_get_newsletter_logo_url( $newsletter_id, $transparent );
+		echo $logo_url;
 	}
 endif;
 

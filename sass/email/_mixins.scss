@@ -131,21 +131,12 @@
 					cursor: pointer;
 					border-radius: $border-radius;
 					border: 0;
+					background-color: $background;
 					color: $color;
-					display: block;
 					text-decoration: none;
+					display: block;
 
-					&:link,
-					&:visited {
-						background-color: $background;
-						color: $color;
-						text-decoration: none;
-					}
-
-					&:hover,
-					&:focus,
-					&:active,
-					&.active {
+					&:hover {
 						background-color: $hover;
 						color: $color;
 						text-decoration: none;
@@ -188,17 +179,7 @@
 			color: $color;
 		}
 
-		&:link,
-		&:visited {
-			background-color: $background;
-			color: $color;
-			text-decoration: none;
-		}
-
-		&:hover,
-		&:focus,
-		&:active,
-		&.active {
+		&:hover {
 			background-color: $hover !important;
 			color: $color !important;
 			text-decoration: none !important;

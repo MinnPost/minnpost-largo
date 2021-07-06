@@ -1,5 +1,5 @@
 .m-post-newsletter {
-    padding-bottom: $standard-block-margin;
+    padding: 0 0 $standard-block-margin 0;
     text-align: left;
 
     @include column( $selector: '.o-column.m-entry-content', $max-width: 57.5757575757576%, $vertical-align: top, $text-align: left);
@@ -14,11 +14,11 @@
 
     .post-contents {
         border-bottom: $border-default-style;
-        padding-bottom: $standard-block-margin;
+        padding: 0 0 $standard-block-margin 0;
     }
 
     &.m-post-newsletter-last {
-        padding-bottom: 0;
+        padding: 0;
 
         table.outlook-table {
 
@@ -27,13 +27,4 @@
             }
         }
     }
-
-    /* if we want no border on the bottom story in a section, uncomment this
-    &.m-post-newsletter-last {
-
-        .post-contents {
-            border-bottom: none;
-            padding-bottom: 0;
-        }
-    }*/
 }

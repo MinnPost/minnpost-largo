@@ -1,10 +1,10 @@
 .o-rows.o-site-message,
 .o-columns.o-site-message {
     border-radius: $border-radius;
-    margin-bottom: $standard-block-margin;
+    margin: 0 0 $standard-block-margin 0;
 
     &.wp-message-inserter-message-region-email_middle {
-        margin-bottom: $standard-block-margin;
+        margin: 0 0 $standard-block-margin 0;
     }
 
     &.o-columns {
@@ -19,7 +19,7 @@
     table.outlook-table {
 
         td.outlook-outer-padding {
-            padding-bottom: $standard-block-margin;
+            padding: 0 0 $standard-block-margin 0;
         }
     }
 
@@ -33,9 +33,9 @@
         &.o-site-message-row.o-site-message-row-button {
 
             div.item-contents {
-                padding-top: 0;
+                padding: 0;
                 text-align: center;
-                margin-bottom: $standard-block-margin;
+                margin: $standard-block-padding 0 $standard-block-margin 0;
             }
         }
     }

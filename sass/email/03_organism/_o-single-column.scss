@@ -4,11 +4,11 @@
 }
 
 div.o-single-column {
-    padding-bottom: $standard-block-margin;
+    padding: 0 0 $standard-block-margin 0;
 }
 
 table.o-single-column {
     > tr > td {
-        padding-bottom: $standard-block-margin;
+        padding: 0 0 $standard-block-margin 0;
     }
 }

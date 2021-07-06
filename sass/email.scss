@@ -7,14 +7,10 @@ inlined into email templates based on the selectors. This way we can still use t
 >>> TABLE OF CONTENTS:
 --------------------------------------------------------------*/
 
+// sitewide
 @import "functions"; // put functions first because they get used in color variable calculations
 @import "variables";
-//@import "column-setter"; // because we do call some of the website variables here
 @import "mixins";
-
-/*--------------------------------------------------------------
-# Pattern Lab patterns
---------------------------------------------------------------*/
 
 // email specific
 @import "email/variables";

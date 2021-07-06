@@ -14,11 +14,7 @@
 	}
 
 	a {
-
-		&:link,
-		&:visited {
-			text-decoration: none;
-		}
+		text-decoration: none;
 	}
 
 	&.a-category-group {
@@ -39,9 +35,7 @@
 
         a {
 
-            &:hover,
-			&:focus,
-			&:active {
+            &:hover {
 				background-color: neutral-color(dark);
 
 				@media (prefers-color-scheme: dark ) {
@@ -53,7 +47,7 @@
 	}
 
 	&.a-category-name {
-		padding: 0;
+		padding: 0 0 0 $standard-block-padding / 2;
 		margin: 0;
 	}
 
@@ -95,9 +89,7 @@ table.a-breadcrumbs {
 
             a {
 
-                &:hover,
-				&:focus,
-				&:active {
+                &:hover {
 					background-color: brand-color(red, dark);
 				}
             }
@@ -112,9 +104,7 @@ table.a-breadcrumbs {
 
             a {
 
-                &:hover,
-				&:focus,
-				&:active {
+                &:hover {
 
 					@include link-underline(brand-color(red, dark), brand-color(red, medium));
 				}
@@ -137,9 +127,7 @@ table.a-breadcrumbs {
 
             a {
 
-                &:hover,
-				&:focus,
-				&:active {
+                &:hover {
 					background-color: utility-color(purple, medium);
 				}
             }
@@ -154,9 +142,7 @@ table.a-breadcrumbs {
 
             a {
 
-                &:hover,
-				&:focus,
-				&:active {
+                &:hover {
 
 					@include link-underline(utility-color(purple, medium), utility-color(purple, dark));
 				}
@@ -179,9 +165,7 @@ table.a-breadcrumbs {
 
             a {
 
-                &:hover,
-				&:focus,
-				&:active {
+                &:hover {
 					background-color: utility-color(orange, dark);
 				}
             }
@@ -196,9 +180,7 @@ table.a-breadcrumbs {
 
             a {
 
-                &:hover,
-				&:focus,
-				&:active {
+                &:hover {
 
 					@include link-underline(utility-color(orange, dark), utility-color(orange, medium));
 				}
