@@ -2,6 +2,7 @@
 /**
  * Custom template tags for this theme
  *
+ * Some of these tags depend on functions included in template-functions.php
  * Eventually, some of the functionality here could be replaced by core features.
  *
  * @package MinnPost Largo
@@ -73,7 +74,7 @@ endif;
 */
 if ( ! function_exists( 'minnpost_posted_on' ) ) :
 	/**
-	 * Prints HTML with meta information for the current post-date/time and author.
+	 * Prints HTML with meta information for the current post-date/time.
 	 */
 	function minnpost_posted_on( $id = '', $time_ago = true ) {
 		if ( '' === $id ) {
@@ -89,7 +90,98 @@ if ( ! function_exists( 'minnpost_posted_on' ) ) :
 			$date['published']['human'],
 		);
 		echo $time_string;
+	}
+endif;
 
+/**
+* Output the dateline for a newsletter
+*
+* @param int $id
+*
+*/
+if ( ! function_exists( 'minnpost_newsletter_today' ) ) :
+	/**
+	 * Prints HTML with meta information for the current post-date/time.
+	 */
+	function minnpost_newsletter_today( $id = '' ) {
+		if ( '' === $id ) {
+			$id = get_the_ID();
+		}
+		$date = minnpost_get_posted_on( $id );
+		if ( '' === $date ) {
+			return;
+		}
+		$time_string = sprintf(
+			'Today is <time class="a-entry-date published updated" datetime="%1$s">%2$s</time>.',
+			$date['published']['machine'],
+			$date['published']['human'],
+		);
+		$time_string = apply_filters( 'the_content', $time_string );
+		echo $time_string;
+	}
+endif;
+
+/**
+* Output the teaser for a newsletter
+*
+* @param int $id
+*
+*/
+if ( ! function_exists( 'minnpost_newsletter_teaser' ) ) :
+	/**
+	 * Prints HTML with newsletter teaser
+	 */
+	function minnpost_newsletter_teaser( $id = '' ) {
+		if ( '' === $id ) {
+			$id = get_the_ID();
+		}
+		$teaser = minnpost_get_newsletter_teaser( $id );
+		if ( '' === $teaser ) {
+			return;
+		}
+		echo $teaser;
+	}
+endif;
+
+/**
+* Output the newsletter type welcome sentence for a newsletter
+*
+* @param int $id
+*
+*/
+if ( ! function_exists( 'minnpost_newsletter_type_welcome' ) ) :
+	/**
+	 * Prints HTML with newsletter type
+	 */
+	function minnpost_newsletter_type_welcome( $id = '' ) {
+		if ( '' === $id ) {
+			$id = get_the_ID();
+		}
+		$newsletter_type = minnpost_get_newsletter_type( $id );
+		if ( '' === $newsletter_type ) {
+			return;
+		}
+		$hide_suffix = false;
+		if ( 'sunday_review' === $newsletter_type ) {
+			$hide_suffix = true;
+		}
+		if ( '' !== $newsletter_type && function_exists( 'minnpost_largo_email_types' ) ) {
+			$newsletter_type = minnpost_largo_email_types( $newsletter_type );
+		}
+		if ( false === $hide_suffix ) {
+			$newsletter_type = sprintf(
+				// translators: 1) is the newsletter type
+				'%1$s newsletter',
+				$newsletter_type,
+			);
+		}
+		$type_string = sprintf(
+			// translators: 1) is the newsletter type
+			'Welcome to MinnPost\'s %1$s.',
+			$newsletter_type,
+		);
+		$type_string = apply_filters( 'the_content', $type_string );
+		echo $type_string;
 	}
 endif;
 
@@ -367,6 +459,7 @@ endif;
 * @param string $include_text
 * @param string $include_name
 * @param string $link_on
+* @param bool $lazy_load
 *
 */
 if ( ! function_exists( 'minnpost_term_figure' ) ) :
@@ -549,6 +642,150 @@ if ( ! function_exists( 'minnpost_category_breadcrumb' ) ) :
 endif;
 
 /**
+* Outputs HTML for the category breadcrumb specifically for an email newsletter.
+*
+* @param int $post_id
+* @param bool $show_group
+* @param bool $use_category_group_name_as_class
+* @param bool $use_links
+*
+*/
+if ( ! function_exists( 'minnpost_category_breadcrumb_newsletter' ) ) :
+	function minnpost_category_breadcrumb_newsletter( $post_id = '', $show_group = true, $use_category_group_name_as_class = false, $use_links = false ) {
+
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
+		$category_id       = minnpost_get_permalink_category_id( $post_id );
+		$category_group_id = '';
+		$category_is_group = false;
+		if ( '' !== $category_id ) {
+			$category      = get_category( $category_id );
+			$category_link = get_category_link( $category );
+			if ( true === $show_group ) {
+				$category_group_id = minnpost_get_category_group_id( $post_id, $category_id );
+				if ( '' !== $category_group_id ) {
+					$category_group = get_category( $category_group_id );
+					if ( true === $use_category_group_name_as_class ) {
+						echo '<div class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '">';
+					} else {
+						echo '<div class="a-breadcrumbs">';
+					}
+					if ( true === $use_links ) {
+						echo '<div class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category_group->term_id ) ) . '">' . $category_group->name . '</a></div>';
+					} else {
+						echo '<div class="a-breadcrumb a-category-group"><span>' . $category_group->name . '</span></div>';
+					}
+				} else {
+					if ( function_exists( 'minnpost_largo_category_groups' ) ) {
+						$groups = minnpost_largo_category_groups();
+						if ( in_array( $category->slug, $groups, true ) ) {
+							$category_is_group = true;
+						}
+					}
+				}
+			}
+			if ( false === $category_is_group ) {
+				$category_name = isset( $category->name ) ? $category->name : '';
+				if ( '' !== $category_name ) {
+					if ( true === $use_links ) {
+						echo '<div class="a-breadcrumb a-category-name"><a href="' . $category_link . '">' . $category_name . '</a></div>';
+					} else {
+						echo '<div class="a-breadcrumb a-category-name"><span>' . $category_name . '</span></div>';
+					}
+				}
+			} else {
+				if ( true === $use_category_group_name_as_class ) {
+					echo '<div class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '">';
+				} else {
+					echo '<div class="a-breadcrumbs">';
+				}
+				if ( true === $use_links ) {
+					echo '<div class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category->term_id ) ) . '">' . $category->name . '</a></div>';
+				} else {
+					echo '<div class="a-breadcrumb a-category-group"><span>' . $category->name . '</span></div>';
+				}
+			}
+		}
+		if ( '' !== $category_group_id || true === $category_is_group ) {
+			echo '</div>';
+		}
+	}
+endif;
+
+/**
+* Outputs HTML for the category breadcrumb specifically for an email newsletter, specifically for Outlook.
+*
+* @param int $post_id
+* @param bool $show_group
+* @param bool $use_category_group_name_as_class
+* @param bool $use_links
+*
+*/
+if ( ! function_exists( 'minnpost_category_breadcrumb_newsletter_outlook' ) ) :
+	function minnpost_category_breadcrumb_newsletter_outlook( $post_id = '', $show_group = true, $use_category_group_name_as_class = true, $use_links = false ) {
+
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
+		$category_id       = minnpost_get_permalink_category_id( $post_id );
+		$category_group_id = '';
+		$category_is_group = false;
+		if ( '' !== $category_id ) {
+			$category      = get_category( $category_id );
+			$category_link = get_category_link( $category );
+			if ( true === $show_group ) {
+				$category_group_id = minnpost_get_category_group_id( $post_id, $category_id );
+				if ( '' !== $category_group_id ) {
+					$category_group = get_category( $category_group_id );
+					if ( true === $use_category_group_name_as_class ) {
+						echo '<table class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '"><tr><td>';
+					} else {
+						echo '<table class="a-breadcrumbs"><tr><td>';
+					}
+					if ( true === $use_links ) {
+						echo '<span class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category_group->term_id ) ) . '">' . $category_group->name . '</a></span><span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>';
+					} else {
+						echo '<span class="a-breadcrumb a-category-group">' . $category_group->name . '</span><span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>';
+					}
+				} else {
+					if ( function_exists( 'minnpost_largo_category_groups' ) ) {
+						$groups = minnpost_largo_category_groups();
+						if ( in_array( $category->slug, $groups, true ) ) {
+							$category_is_group = true;
+						}
+					}
+				}
+			}
+			if ( false === $category_is_group ) {
+				$category_name = isset( $category->name ) ? $category->name : '';
+				if ( '' !== $category_name ) {
+					if ( true === $use_links ) {
+						echo '<span class="a-breadcrumb a-category-name"><a href="' . $category_link . '">' . $category_name . '</a></span>';
+					} else {
+						echo '<span class="a-breadcrumb a-category-name">' . $category_name . '</span>';
+					}
+				}
+			} else {
+				if ( true === $use_category_group_name_as_class ) {
+					echo '<span class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '">';
+				} else {
+					echo '<span class="a-breadcrumbs">';
+				}
+				if ( true === $use_links ) {
+					echo '<span class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category->term_id ) ) . '">' . $category->name . '</a></span>';
+				} else {
+					echo '<span class="a-breadcrumb a-category-group">' . $category->name . '</span>';
+				}
+			}
+		}
+		if ( '' !== $category_group_id || true === $category_is_group ) {
+			echo '</td></tr></table>';
+		}
+	}
+endif;
+
+/**
 * Outputs HTML for pre title text
 *
 * @param int $post_id
@@ -720,49 +957,13 @@ endif;
 * Outputs newsletter logo based on which type of newsletter it is
 *
 * @param int $newsletter_id
+* @param bool $transparent
 *
 */
 if ( ! function_exists( 'minnpost_newsletter_logo' ) ) :
-	function minnpost_newsletter_logo( $newsletter_id = '' ) {
-
-		$logo = '';
-
-		$newsletter_type = get_post_meta( $newsletter_id, '_mp_newsletter_type', true );
-
-		if ( '' !== $newsletter_type ) {
-
-			switch ( $newsletter_type ) {
-				case 'book_club':
-					$filename = 'newsletter-logo-book-club.png';
-					break;
-				case 'daily':
-					$filename = 'newsletter-logo-daily.png';
-					break;
-				case 'dc_memo':
-					$filename = 'dc-memo-header-520x50.png';
-					break;
-				case 'greater_mn':
-					$filename = 'newsletter-logo-mn-week.png';
-					break;
-				case 'sunday_review':
-					$filename = 'newsletter-logo-sunday-review.png';
-					break;
-				case 'daily_coronavirus':
-					$filename = 'mp-dcu-600.png';
-					break;
-				case 'republication':
-					$filename = 'republication-header-260x50.png';
-					break;
-				default:
-					$filename = 'newsletter-logo-daily.png';
-					break;
-			}
-
-			$logo = get_theme_file_uri() . '/assets/img/' . $filename;
-
-		}
-
-		echo $logo;
+	function minnpost_newsletter_logo( $newsletter_id = '', $transparent = false ) {
+		$logo_url = minnpost_get_newsletter_logo_url( $newsletter_id, $transparent );
+		echo $logo_url;
 	}
 endif;
 
@@ -868,6 +1069,7 @@ if ( ! function_exists( 'minnpost_largo_manual_image_tag' ) ) :
 		} else {
 			$alt = '';
 		}
+
 		$image = '<img src="' . $image_url . '" alt="' . $alt . '"';
 		if ( 'newsletter' === $object_type ) {
 			if ( isset( $attributes['title'] ) ) {
@@ -898,65 +1100,43 @@ if ( ! function_exists( 'minnpost_largo_manual_image_tag' ) ) :
 endif;
 
 /**
-* Manually generate an image tag from its attributes
-* This is mostly used for images that are migrated pre-WordPress, but at least we can still add
-* attributes to them.
+* Display preview text in an email template
 *
-* @param int $image_id
-* @param string $image_url
-* @param array $attributes
-* @return string $image
+* @param bool $use_shortcode
+* @param int $post_id
 *
 */
-if ( ! function_exists( 'minnpost_largo_manual_image_tag' ) ) :
-	function minnpost_largo_manual_image_tag( $image_id = '', $image_url = '', $attributes = array(), $object_type = 'post' ) {
-		$image = '';
-		if ( '' !== $image_id ) {
-			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
-		} elseif ( isset( $attributes['alt'] ) ) {
-			$alt = $attributes['alt'];
-		} else {
-			$alt = '';
+if ( ! function_exists( 'email_preview_text' ) ) :
+	function email_preview_text( $use_shortcode = true, $post_id = 0 ) {
+		if ( 0 === $post_id ) {
+			$post_id = get_the_ID();
 		}
-		$image = '<img src="' . $image_url . '" alt="' . $alt . '"';
-		if ( 'newsletter' === $object_type ) {
-			if ( isset( $attributes['title'] ) ) {
-				$image .= ' title="' . $attributes['title'] . '"';
-			}
-		}
-		if ( isset( $attributes['style'] ) ) {
-			$image .= ' style="' . $attributes['style'] . '"';
-		}
-		if ( isset( $attributes['class'] ) ) {
-			$image .= ' class="' . $attributes['class'] . '"';
-		}
-		if ( isset( $attributes['align'] ) ) {
-			$image .= ' align="' . $attributes['align'] . '"';
-		}
-		if ( isset( $attributes['width'] ) ) {
-			$image .= ' width="' . $attributes['width'] . '"';
-		}
-		if ( isset( $attributes['height'] ) ) {
-			$image .= ' height="' . $attributes['height'] . '"';
-		}
-		if ( isset( $attributes['loading'] ) ) {
-			$image .= ' loading="' . $attributes['loading'] . '"';
-		}
-		$image .= '>';
-		return $image;
-	}
-endif;
-
-/**
-* Display a string for email-friendly formatting
-*
-* @param string $content
-* @param bool $message
-*
-*/
-if ( ! function_exists( 'email_formatted_content' ) ) :
-	function email_formatted_content( $content, $message = false ) {
-		$content = apply_filters( 'format_email_content', $content );
-		echo $content;
+		$preview_text = get_post_meta( $post_id, '_mp_newsletter_preview_text', true );
+		if ( '' !== $preview_text ) :
+			if ( false === $use_shortcode ) :
+				?>
+				<span class="a-preview-text"><?php echo $preview_text; ?></span>
+			<?php else : ?>
+				[preview_text]<?php echo $preview_text; ?>[/preview_text]
+			<?php endif; ?>
+			<?php
+		else :
+			?>
+			<!--*|IF:MC_PREVIEW_TEXT|*-->
+			<?php if ( false === $use_shortcode ) : ?>
+				<span class="a-preview-text">*|MC_PREVIEW_TEXT|*</span>
+			<?php else : ?>
+				[preview_text]*|MC_PREVIEW_TEXT|*[/preview_text]
+			<?php endif; ?>
+			<!--*|END:IF|*-->
+			<?php
+		endif;
+		if ( false === $use_shortcode ) :
+			?>
+			<div class="a-after-preview-text">&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;</div>
+		<?php else : ?>
+			[after-preview-space-hack]
+			<?php
+		endif;
 	}
 endif;

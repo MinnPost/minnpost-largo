@@ -1,0 +1,14 @@
+.o-single-column {
+
+    @include column( $selector: '.o-row', $max-width: 100%, $vertical-align: top, $text-align: left, $spacing: 0 $standard-block-padding);
+}
+
+div.o-single-column {
+    padding: 0 0 $standard-block-margin 0;
+}
+
+table.o-single-column {
+    > tr > td {
+        padding: 0 0 $standard-block-margin 0;
+    }
+}

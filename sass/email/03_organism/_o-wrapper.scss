@@ -1,0 +1,32 @@
+div.o-wrapper {
+    margin: $standard-block-padding / 2 auto;
+    width: $max-width-email-percent;
+    max-width: $max-width-email;
+    background-color: neutral-color(white);
+    color: neutral-color(black);
+
+    @media (prefers-color-scheme: dark ) {
+        color: neutral-color(white) !important;
+        background-color: neutral-color(black) !important;
+    }
+
+    table.outlook-table {
+        width: $max-width-email-outlook;
+        max-width: $max-width-email;    
+
+        td.outlook-inner-padding {
+            padding: $standard-block-padding 0;
+        }
+    }
+}
+
+@media only screen and (max-width: $mobile-screen-width) {
+    /* Targets Gmail */
+    u ~ div .o-wrapper {
+        min-width: 100vw !important;
+    }
+    /* Targets Gmail on Android */
+    div > u ~ div .o-wrapper {
+        min-width: 100% !important;
+    }
+}

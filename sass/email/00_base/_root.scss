@@ -1,0 +1,58 @@
+html,
+body,
+.o-email {
+    margin: 0;
+    padding: 0;
+    word-spacing: normal;
+    min-width: 100%;
+    background-color: neutral-color(white);
+    color: neutral-color(black);
+    @include body-preset( $size: 0 );
+}
+
+.o-full-table {
+    @include body-preset( $size: 0 );
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    max-width: 100%;
+}
+
+img {
+    line-height: 100%;
+    outline: none;
+    text-decoration: none;
+	height: auto; /* Make sure images are scaled correctly. */
+	max-width: 100%; /* Adhere to container width. */
+}
+
+table {
+    @include body-preset( $size: 0 );
+    padding: 0;
+    border: 0;
+    width: 100%;
+    max-width: $max-width-email;
+    border-collapse: collapse !important;
+    -ms-text-size: 100%;
+    mso-table-lspace: 0pt !important;
+    mso-table-rspace: 0pt !important;
+    margin: 0 auto !important;
+}
+
+.mcnPreviewText {
+    display:none;
+    font-size:0px;
+    line-height:0px;
+    max-height:0px;
+    max-width:0px;
+    opacity:0;
+    overflow:hidden;
+    visibility:hidden;
+    mso-hide:all;
+}
+
+div.spacer {
+    line-height: $standard-heading-margin;
+    height: $standard-heading-margin;
+    mso-line-height-rule: exactly;
+}
