@@ -154,11 +154,11 @@ a[x-apple-data-detectors] {
 					<div class="column logo" style="width: 100%;">
 						<table cellpadding="0" cellspacing="0" width="100%" style="border-spacing: 0; Margin: 0; padding: 0; font-family: Helvetica, Arial, Geneva, sans-serif; color: #1A1818; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse;">
 							<tr>
-								<td class="inner" style="border-collapse: collapse; Margin: 0; padding: 0; max-height: 125px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-size: 0; line-height: 0px;" valign="bottom">
+								<td class="inner" style="border-collapse: collapse; Margin: 0; padding: 0; max-height: 130px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-size: 0; line-height: 0px;" valign="bottom">
 									<table cellpadding="0" cellspacing="0" class="contents" style="border-spacing: 0; Margin: 0; padding: 0; font-family: Helvetica, Arial, Geneva, sans-serif; color: #1A1818; mso-table-lspace: 0pt; mso-table-rspace: 0pt; border-collapse: collapse; width: 100%;">
 										<tr>
 											<td align="center" style="border-collapse: collapse; Margin: 0; padding: 0; max-height: 68px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-size: 0; line-height: 0px;" valign="bottom">
-												<img src="<?php minnpost_newsletter_logo( get_the_ID() ); ?>" alt="<?php bloginfo( 'name' ); ?>" width="600" height="125" style="border: 0 none; display: block; height: auto; line-height: 100%; Margin: 0; max-height: 125px; max-width: 600px; outline: none; padding: 0; text-decoration: none; vertical-align: bottom; width: 100%" />
+												<img src="<?php minnpost_newsletter_logo( get_the_ID() ); ?>" alt="<?php bloginfo( 'name' ); ?>" width="500" height="130" style="border: 0 none; display: block; height: auto; line-height: 100%; Margin: 0; max-height: 130px; max-width: 500px; outline: none; padding: 0; text-decoration: none; vertical-align: bottom; width: 100%" />
 											</td>
 										</tr>
 									</table>

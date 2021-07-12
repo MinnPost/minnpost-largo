@@ -1776,7 +1776,7 @@ if ( ! function_exists( 'minnpost_get_newsletter_logo_url' ) ) :
 					$filename = 'newsletter-logo-sunday-review' . $filename_suffix . '.png';
 					break;
 				case 'daily_coronavirus':
-					$filename = 'mp-dcu-600' . $filename_suffix . '.png';
+					$filename = 'newsletter-coronavirus-500' . $filename_suffix . '.png';
 					break;
 				case 'republication':
 					$filename = 'republication-header-260x50' . $filename_suffix . '.png';
