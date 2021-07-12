@@ -1000,10 +1000,11 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'name'             => __( 'Image Size', 'minnpost-largo' ),
 				'id'               => '_mp_post_newsletter_image_size',
 				'type'             => 'select',
-				'show_option_none' => true,
+				'show_option_none' => false,
 				'desc'             => __( 'If selected, the image size will be used for this post regardless of where it is in the newsletter post order. By default, the Editor\'s Picks section has no image. In other sections, the default behavior is to use the Large image for the first post, then to use Medium for subsequent posts.', 'minnpost-largo' ),
 				'default'          => 'default',
 				'options'          => array(
+					'none'           => __( 'None', 'minnpost-largo' ),
 					'default'        => __( 'Default for the section', 'minnpost-largo' ),
 					'feature-medium' => __( 'Medium', 'minnpost-largo' ),
 					'feature-large'  => __( 'Large', 'minnpost-largo' ),
