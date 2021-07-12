@@ -441,7 +441,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'name' => __( 'Use Other Section Settings', 'minnpost-largo' ),
 				'id'   => $prefix . 'editors_use_other_section_settings',
 				'type' => 'checkbox',
-				'desc' => __( 'If checked, this section will behave, by default, like the above sections instead. Individual stories can override this behavior.', 'minnpost-largo' ),
+				'desc' => __( 'If checked, this section will behave like the above sections instead. Individual stories can override this behavior.', 'minnpost-largo' ),
 			)
 		);
 		$editors_section->add_field(
