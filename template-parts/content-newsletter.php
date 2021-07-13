@@ -8,342 +8,681 @@
  */
 
 ?>
-<style type="text/css">
-	body {
-		Margin: 0; padding: 0; min-width: 100%; background-color: #ffffff;
-	}
-	img {
-		border: 0 none; height: auto; line-height: 100%; outline: none; text-decoration: none;
-	}
-	a:hover {
-		color: #1A1818 !important; text-decoration: underline !important;
-	}
-	a:active {
-		color: #1A1818 !important; text-decoration: underline !important;
-	}
-	a:visited {
-		color: #1A1818 !important;
-	}
-	h3 a:active {
-		color: #1A1818;
-	}
-	h5 a:active {
-		color: #1A1818;
-	}
-	h3 a:visited {
-		color: #1A1818;
-	}
-	h5 a:visited {
-		color: #1A1818;
-	}
-	.content .button.read-story td td a:hover {
-		color: #ffffff !important; text-decoration: none !important;
-	}
-	.content .button.read-story td td a:visited {
-		color: #ffffff !important; text-decoration: none !important;
-	}
-	.content .button.read-story td td a:active {
-		color: #ffffff !important; text-decoration: none !important;
-	}
-	.footer a:hover {
-		color: #801018 !important; text-decoration: underline; !important;
-	}
-	.footer a:visited {
-		color: #801018 !important; text-decoration: none; !important;
-	}
-	.footer a:active {
-		color: #801018 !important; text-decoration: underline; !important;
-	}
-	@media only screen and (max-width: 600px) {
-		.two-column.header .logo td {
-			border-bottom: 10px solid #000 !important; Margin-bottom: 5px !important;
-		}
-		.two-column.header .date {
-			text-align: left !important;
-		}
-		.two-column.header .date td {
-			text-align: left !important;
-		}
-		.one-column .column, .two-column .column, .two-column .column.ad, .two-column .column.more, .two-column .column.date, .two-column .column.logo {
-			max-width: 90% !important; Margin-right: auto !important; Margin-left: auto !important;
-		}
-		.content.story .ad {
-			border-bottom: 2px solid #cccccf !important; padding-bottom: 18px !important; Margin-bottom: 18px !important;
-		}
-		div.story.story-last .story-inner {
-			border-bottom: 2px solid #cccccf !important; padding-bottom: 18px !important; Margin-bottom: 18px !important;
-		}
-	}
-</style>
 
-<center class="wrapper" style="-ms-text-size-adjust: 100%; -webkit-text-size-adjust: 100%; table-layout: fixed; width: 100%">
-	<div class="webkit">
-		<!--[if (gte mso 9)|(IE)]>
-			<table cellpadding="0" cellspacing="0" width="600" align="center">
-				<tr>
-					<td>
-		<![endif]-->
-		<table cellpadding="0" cellspacing="0" class="outer" align="center" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0 auto; max-width: 600px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; width: 100%; background-color: #ffffff;">
-			<tr>
-				<td class="two-column header" style="border-bottom-color: #000; border-bottom-style: solid; border-bottom-width: 10px; border-collapse: collapse; font-size: 0; Margin: 0; padding: 0; text-align: center" align="center">
-					<!--[if (gte mso 9)|(IE)]>
-						<table cellpadding="0" cellspacing="0" width="100%">
-							<tr>
-								<td width="50%" valign="bottom">
-					<![endif]-->
-					<div class="column logo" style="display: inline-block; Margin-right: 0; max-width: 390px; vertical-align: bottom; width: 100%">
-						<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
-							<tr>
-								<td class="inner" style="border-collapse: collapse; font-size: 0; line-height: 0px; Margin: 0; max-height: 90px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; vertical-align: bottom" valign="bottom">
-									<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
-									<tr>
-										<td style="border-collapse: collapse; font-size: 0; line-height: 0px; Margin: 0; max-height: 90px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; vertical-align: bottom" valign="bottom">
-											<a href="<?php echo esc_url( get_permalink() ); ?>" style="color: #1A1818; text-decoration: none">
-												<img src="<?php minnpost_newsletter_logo( get_the_ID() ); ?>" alt="<?php bloginfo( 'name' ); ?>" width="390" height="90" align="left" style="border: 0 none; display: block; height: auto; line-height: 100%; Margin: 0; max-height: 90px; max-width: 390px; outline: none; padding: 0; text-decoration: none; vertical-align: bottom; width: 100%" />
-											</a>
-										</td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-					</table>
-				</div>
-				<!--[if (gte mso 9)|(IE)]>
-					</td><td width="50%" valign="bottom">
-				<![endif]-->
-				<div class="column date" style="display: inline-block; Margin-right: 0; max-width: 210px; vertical-align: bottom; width: 100%">
-					<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
-						<tr>
-							<td class="inner" style="border-collapse: collapse; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; font-weight: bold; line-height: 100%; Margin: 0; max-height: 90px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 10px 0 5px; text-align: right; vertical-align: bottom; width: 100%" align="right" valign="bottom">
-								<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
-									<tr>
-										<td class="text" style="border-collapse: collapse; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; font-weight: bold; line-height: 100%; Margin: 0; max-height: 90px; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 10px 0 5px; text-align: right; vertical-align: bottom; width: 100%" align="right" valign="bottom">
-											<?php minnpost_posted_on(); ?>
-										</td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-					</table>
-				</div>
-				<!--[if (gte mso 9)|(IE)]>
-							</td>
-						</tr>
-					</table>
-				<![endif]-->
-			</td> <!-- end .two-column.header -->
-		</tr> <!-- end row -->
-
-		<?php do_action( 'wp_message_inserter', 'email_header', 'email' ); ?>
-
-		<?php
-		$body = apply_filters( 'the_content', get_the_content() );
-
-		if ( '' !== $body ) {
-			?>
-		<tr>
-			<td class="one-column content promo" style="border-collapse: collapse; margin: 0; padding: 0">
-			<!--[if (gte mso 9)|(IE)]>
-				<table cellpadding="0" cellspacing="0" width="100%">
+<table width="100%" align="center" cellpadding="0" cellspacing="0" role="presentation" class="o-full-table">
+	<tr>
+		<td align="center">
+			<div class="o-wrapper">
+				[outlook]
+				<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
 					<tr>
-						<td width="100%" valign="bottom">
-			<![endif]-->
-				<div class="column promo" style="margin-bottom: 0; margin-top: 18px">
-					<?php echo $body; ?>
-				</div>
-				<!--[if (gte mso 9)|(IE)]>
-						</td>
-					</tr>
-				</table>
-				<![endif]-->
-			</td> <!-- end .one-column.promo -->
-		</tr> <!-- end row -->
-			<?php
-		}
-		$top_offset  = 2;
-		$top_stories = get_post_meta( get_the_ID(), '_mp_newsletter_top_posts', true );
-
-		$top_stories_override = get_post_meta( get_the_ID(), '_mp_newsletter_top_posts_override', true );
-		if ( '' !== $top_stories_override ) {
-			$top_stories_override = explode( ',', $top_stories_override );
-			$top_stories          = array_map( 'trim', $top_stories_override );
-		}
-
-		$top_query_args = array(
-			'post__in'       => $top_stories,
-			'posts_per_page' => $top_offset,
-			'orderby'        => 'post__in',
-			'post_status'    => 'any',
-		);
-		$top_query      = new WP_Query( $top_query_args );
-
-		$second_query_args = array(
-			'post__in'    => $top_stories,
-			'paged'       => 1,
-			'offset'      => $top_offset,
-			'orderby'     => 'post__in',
-			'post_status' => 'any',
-		);
-		$second_query      = new WP_Query( $second_query_args );
-		// the total does not stop at posts_per_page
-		set_query_var( 'found_posts', $top_query->found_posts );
-
-		$newsletter_type = get_post_meta( get_the_ID(), '_mp_newsletter_type', true );
-
-		$more_stories = get_post_meta( get_the_ID(), '_mp_newsletter_more_posts', true );
-
-		$more_stories_override = get_post_meta( get_the_ID(), '_mp_newsletter_more_posts_override', true );
-		if ( '' !== $more_stories_override ) {
-			$more_stories_override = explode( ',', $more_stories_override );
-			$more_stories          = array_map( 'trim', $more_stories_override );
-		}
-
-		if ( '' !== $more_stories ) {
-			$more_query_args = array(
-				'post__in'       => $more_stories,
-				'posts_per_page' => -1,
-				'orderby'        => 'post__in',
-				'post_status'    => 'any',
-			);
-			$more_query      = new WP_Query( $more_query_args );
-		}
-
-		ob_start();
-		dynamic_sidebar( 'sidebar-1' );
-		$sidebar = ob_get_contents();
-		ob_end_clean();
-
-		$ad_dom = new DomDocument;
-		libxml_use_internal_errors( true );
-		$ad_dom->loadHTML( $sidebar, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
-		libxml_use_internal_errors( false );
-		$ad_xpath = new DOMXpath( $ad_dom );
-		$ad_divs  = $ad_xpath->query( "//section[contains(concat(' ', @class, ' '), ' m-widget ')]/div/p" );
-
-		$ads = array();
-		if ( 'dc_memo' !== $newsletter_type ) {
-			foreach ( $ad_divs as $key => $value ) {
-				$style = $value->getAttribute( 'style' );
-				$ads[] = '<p style="Margin: 0 0 10px; padding: 0">' . minnpost_dom_innerhtml( $value ) . '</p>';
-			}
-		} else {
-			foreach ( $ad_divs as $key => $value ) {
-				$style = $value->getAttribute( 'style' );
-				$ads[] = '<p style="Margin: 0 0 10px; padding: 0">' . minnpost_dom_innerhtml( $value ) . '</p>';
-			}
-		}
-
-		set_query_var( 'newsletter_ads', $ads );
-
-		if ( $top_query->have_posts() ) {
-			set_query_var( 'show_top_departments', get_post_meta( get_the_ID(), '_mp_newsletter_show_department_for_top_stories', true ) );
-
-			while ( $top_query->have_posts() ) {
-				$top_query->the_post();
-				set_query_var( 'current_post', $top_query->current_post );
-				set_query_var( 'is_top_story', true );
-				get_template_part( 'template-parts/post-newsletter', $newsletter_type );
-			}
-			wp_reset_postdata();
-		}
-
-		?>
-
-		<tr>
-			<td class="two-column content supp" style="border-collapse: collapse; font-size: 0; Margin: 0 0 18px; padding: 0; text-align: center" align="center">
-			<!--[if (gte mso 9)|(IE)]>
-				<table cellpadding="0" cellspacing="0" width="100%">
-					<tr>
-						<td width="280" valign="top">
-			<![endif]-->
-				<div class="column stories" style="display: inline-block; Margin-right: 20px; max-width: 280px; vertical-align: top; width: 100%">
-					<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
-						<tr>
-							<td class="inner" style="border-collapse: collapse; Margin: 0; padding: 0">
-								<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
-									<tr>
-										<td class="text" style="border-collapse: collapse; Margin: 0; padding: 10px 0 0">
-											<?php
-											if ( $second_query->have_posts() ) {
-												while ( $second_query->have_posts() ) {
-													$second_query->the_post();
-													set_query_var( 'current_post', $second_query->current_post + $top_offset );
-													set_query_var( 'is_top_story', false );
-													get_template_part( 'template-parts/post-newsletter', $newsletter_type );
-												}
-												wp_reset_postdata();
-											}
-											?>
-										</td>
-									</tr>
-								</table>
-							</td>
-						</tr>
-					</table>
-				</div> <!-- end .stories -->
-				<!--[if (gte mso 9)|(IE)]>
-				</td><td width="20">&nbsp;</td><td width="50%" valign="top">
-				<![endif]-->
-				<div class="column more" style="display: inline-block; Margin-right: 0; max-width: 300px; vertical-align: top; width: 100%">
-					<?php if ( isset( $more_query ) && $more_query->have_posts() ) : ?>
-						<table cellpadding="0" cellspacing="0" class="more" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
+						<td align="center" class="outlook-outer-padding">
+							<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
+								<tr>
+									<td class="outlook-inner-padding">
+				[/outlook]
+					<div class="o-columns o-header">
+						[outlook]
+						<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
 							<tr>
-								<td class="inner" style="background: #f0f0f5; border: 1px solid #cccccf; border-collapse: collapse; Margin: 0; max-width: 100%; padding: 15px; width: 100%" bgcolor="#f0f0f5">
-									<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
+								<td align="center" class="outlook-outer-padding">
+									<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
 										<tr>
-											<td class="text" style="background: #ffffff; border-collapse: collapse; Margin: 0; padding: 15px 15px 5px" bgcolor="#ffffff">
-												<div class="inner">
-													<h2 style="color: #801019; display: block; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; font-weight: bold; line-height: 1; Margin: 0 0 10px; text-align: left; text-transform: uppercase;" align="left">More Stories</h2>
-													<?php while ( $more_query->have_posts() ) : ?>
-														<?php
-														$more_query->the_post();
-														set_query_var( 'current_post', $second_query->current_post + $top_offset );
-														set_query_var( 'is_top_story', false );
-														?>
-														<h4 style="color: #555556; display: block; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 10px; font-weight: normal; line-height: 100%; Margin: 0 0 5px; text-align: left; text-transform: uppercase" align="left"><?php echo minnpost_get_category_name(); ?></h4>
-														<h3 style="color: #1a1818; display: block; font-family: Georgia, 'Times New Roman]', Times, serif; font-size: 13px; font-weight: normal; line-height: 100%; Margin: 0 0 15px; padding: 0; text-align: left" align="left"><a href="<?php echo esc_url( get_permalink() ); ?>" style="color: #1A1818; text-decoration: none"><?php echo get_the_title(); ?></a></h3>
-														<?php
-													endwhile;
-													wp_reset_postdata();
-													?>
-												</div> <!-- end .inner -->
+											<td class="outlook-inner-padding">
+						[/outlook]
+						<div class="o-column a-logo">
+							<div class="item-contents">
+								<img src="<?php minnpost_newsletter_logo( get_the_ID(), false ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="light-img">
+								<?php
+								/* this doesn't currently work because the mailchimp importer removes display none elements.
+								[not-outlook]
+									<div class="dark-img-wrapper -emogrifier-keep">
+										<img src="<?php minnpost_newsletter_logo( get_the_ID(), true ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="dark-img -emogrifier-keep">
+									</div>
+								[/not-outlook]*/
+								?>
+							</div>
+						</div>
+						[outlook]
+									</td>
+									<td class="o-column m-support-cta">
+						[/outlook]
+						<div class="o-column m-support-cta">
+							<div class="item-contents">
+								<?php do_action( 'minnpost_membership_email_header' ); ?>
+							</div>
+						</div>
+						[outlook]
 											</td>
 										</tr>
 									</table>
 								</td>
 							</tr>
 						</table>
-					<?php endif; ?>
-				</div>
-				<!--[if (gte mso 9)|(IE)]>
-					</td>
-				</tr>
-			</table>
-				<![endif]-->
-			</td> <!-- end .two-column.content.supp -->
-		</tr> <!-- end row -->
-
-		<?php do_action( 'wp_message_inserter', 'email_before_bios', 'email' ); ?>
-
-		<?php do_action( 'wp_message_inserter', 'email_bottom', 'email' ); ?>
-
-		<tr>
-			<td class="one-column footer" style="border-collapse: collapse; Margin: 0; padding: 0">
-				<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
-					<tr>
-						<td class="inner contents" style="border-collapse: collapse; Margin: 0; padding: 0; width: 100%">
-							<?php dynamic_sidebar( 'sidebar-3' ); ?>
-							<?php
-							$footer_message = get_option( 'site_footer_message', '' );
-							if ( '' !== $footer_message ) :
+						[/outlook]
+					</div>
+					<div class="o-columns o-navigation">
+						[outlook]
+						<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
+							<tr>
+								<td align="center" class="outlook-outer-padding">
+									<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
+										<tr>
+											<td class="outlook-inner-padding">
+						[/outlook]
+						<div class="o-column o-navigation">
+							<table role="presentation" id="navigation-primary" class="m-main-navigation">
+								<?php
+								wp_nav_menu(
+									array(
+										'theme_location' => 'primary_links',
+										'menu_id'      => 'primary-links',
+										'depth'        => 1,
+										'container'    => false,
+										'walker'       => new Minnpost_Email_Walker_Nav_Menu,
+										'priority'     => '20',
+										'items_wrap'   => '<tr id="%1$s" class="m-menu m-menu-%1$s">%3$s</tr>',
+										'item_classes' => 'values',
+									)
+								);
 								?>
-								<p class="address" style="font-size: 12px; Margin: 10px 0 15px; padding: 0; text-align: center;" align="center"><?php echo $footer_message; ?></p>
+							</table>
+						</div>
+						[outlook]
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+						[/outlook]
+					</div>
+					<?php do_action( 'wp_message_inserter', 'email_header', 'email' ); ?>
+					<div class="o-single-column o-newsletter-intro">
+						[outlook]
+						<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
+							<tr>
+								<td align="center" class="outlook-outer-padding">
+									<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
+										<tr>
+											<td class="outlook-inner-padding">
+						[/outlook]
+						<div class="item-contents">
+							<?php
+							// teaser text
+							$do_not_show_automatic_teaser_items = get_post_meta( get_the_ID(), '_mp_newsletter_do_not_show_automatic_teaser_items', true );
+							$do_not_show_teaser_text            = get_post_meta( get_the_ID(), '_mp_newsletter_do_not_show_teaser_text', true );
+							if ( 'on' !== $do_not_show_automatic_teaser_items || 'on' !== $do_not_show_teaser_text ) :
+								?>
+								<div class="o-row m-teaser">
+								<?php
+							endif;
+							?>
+							<?php if ( 'on' !== $do_not_show_automatic_teaser_items ) : ?>
+								<?php minnpost_newsletter_today(); ?>
 							<?php endif; ?>
+							<?php if ( 'on' !== $do_not_show_teaser_text ) : ?>
+								<?php minnpost_newsletter_teaser(); ?>
+							<?php endif; ?>
+							<?php if ( 'on' !== $do_not_show_automatic_teaser_items ) : ?>
+								<?php minnpost_newsletter_type_welcome(); ?>
+							<?php endif; ?>
+							<?php
+							if ( 'on' !== $do_not_show_automatic_teaser_items || 'on' !== $do_not_show_teaser_text ) :
+								?>
+								</div>
+								<?php
+							endif;
+							?>
+
+							<?php
+							// body text
+							$body = apply_filters( 'the_content', get_the_content() );
+							if ( '' !== $body ) :
+								?>
+								<div class="o-row m-newsletter-body">
+									<?php echo $body; ?>
+								</div>
+								<?php
+							endif;
+							?>
+						</div>
+						[outlook]
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+						[/outlook]
+					</div>
+
+					<?php do_action( 'wp_message_inserter', 'above_email_articles', 'email' ); ?>
+
+					<?php $ads = minnpost_newsletter_get_ads( $args['newsletter_type'] ); ?>
+
+					<?php
+					// top post section
+					$section               = 'top';
+					$top_query             = minnpost_newsletter_get_section_query( $section );
+					$args['image_size']    = 'full';
+					$args['section']       = $section;
+					$args['show_category'] = true;
+					$total_post_count      = 0;
+					$this_section_post     = 0;
+					?>
+					<?php if ( $top_query->have_posts() ) : ?>
+						<?php
+						$post_count = $top_query->post_count;
+						$total_post_count++;
+						$this_section_post++;
+						?>
+						<div class="o-single-column o-section-top-story">
+							[outlook]
+							<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
+								<tr>
+									<td align="center" class="outlook-outer-padding">
+										<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
+											<tr>
+												<td class="outlook-inner-padding">
+							[/outlook]
+							<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
+								<table role="presentation" width="100%" class="h2 a-section-title">
+									<tr>
+										<td>
+											<h2><?php echo minnpost_newsletter_get_section_title( $section ); ?></h2>
+										</td>
+									</tr>
+								</table>
+							<?php endif; ?>
+							<?php
+							while ( $top_query->have_posts() ) :
+								$top_query->the_post();
+								set_query_var( 'current_post', $top_query->current_post );
+								$args['post_id'] = $id;
+								// with newsletters, the individual post can override the image size for the newsletter section the post is in.
+								$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
+								if ( '' !== $override_size && 'default' !== $override_size ) {
+									$args['image_size'] = $override_size;
+								}
+								$args['extra_class'] = '';
+								if ( $post_count === $this_section_post ) {
+									$args['extra_class'] = ' m-post-newsletter-last';
+								}
+								get_template_part( 'template-parts/post-newsletter-fullwidth', $args['newsletter_type'], $args );
+							endwhile;
+							wp_reset_postdata();
+							?>
+							[outlook]
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+							[/outlook]
+						</div>
+					<?php endif; ?>
+
+					<?php if ( 1 === $total_post_count && isset( $ads[0] ) && ! empty( $ads[0] ) ) : ?>
+						<div class="o-single-column m-newsletter-ad-region">
+							[outlook]
+							<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
+								<tr>
+									<td align="center" class="outlook-outer-padding">
+										<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
+											<tr>
+												<td class="outlook-inner-padding">
+							[/outlook]
+							<div class="item-contents">
+								<?php echo $ads[0]; ?>
+							</div>
+							[outlook]
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+							[/outlook]
+						</div>
+					<?php endif; ?>
+
+					<?php
+					// news post section
+					$section               = 'news';
+					$news_query            = minnpost_newsletter_get_section_query( $section );
+					$args['section']       = $section;
+					$args['show_category'] = true;
+					?>
+					<?php if ( $news_query->have_posts() ) : ?>
+						<div class="o-single-column o-section-news-stories">
+						[outlook]
+						<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
+							<tr>
+								<td align="center" class="outlook-outer-padding">
+									<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
+										<tr>
+											<td class="outlook-inner-padding">
+						[/outlook]
+
+						<?php
+						$post_count        = $news_query->post_count;
+						$this_section_post = 0;
+						?>
+
+						<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
+							<table role="presentation" width="100%" class="h2 a-section-title">
+								<tr>
+									<td>
+										<h2><?php echo minnpost_newsletter_get_section_title( $section ); ?></h2>
+									</td>
+								</tr>
+							</table>
+						<?php endif; ?>
+
+						<?php
+						while ( $news_query->have_posts() ) :
+							$this_section_post++;
+							$total_post_count++;
+							$news_query->the_post();
+							set_query_var( 'current_post', $news_query->current_post );
+							$args['post_id'] = $id;
+							if ( 1 !== $this_section_post ) {
+								$args['image_size'] = 'none';
+							} else {
+								$args['image_size'] = 'full';
+							}
+							$args['extra_class'] = '';
+							if ( $post_count === $this_section_post ) {
+								$args['extra_class'] = ' m-post-newsletter-last';
+							}
+							?>
+
+							<?php
+							// with newsletters, the individual post can override the image size for the newsletter section the post is in.
+							$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
+							if ( '' !== $override_size && 'default' !== $override_size ) {
+								$args['image_size'] = $override_size;
+							}
+							get_template_part( 'template-parts/post-newsletter-fullwidth', $args['newsletter_type'], $args );
+							?>
+
+							<?php if ( 1 === $total_post_count && isset( $ads[0] ) && ! empty( $ads[0] ) ) : ?>
+								<div class="o-single-column m-newsletter-ad-region">
+									[outlook]
+									<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
+										<tr>
+											<td align="center" class="outlook-outer-padding">
+												<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
+													<tr>
+														<td class="outlook-inner-padding">
+												[/outlook]
+													<div class="item-contents">
+														<?php echo $ads[0]; ?>
+													</div>
+												[outlook]
+														</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+									[/outlook]
+								</div>
+							<?php elseif ( 2 === $total_post_count && isset( $ads[1] ) && ! empty( $ads[1] ) ) : ?>
+								<div class="o-single-column m-newsletter-ad-region">
+									[outlook]
+									<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
+										<tr>
+											<td align="center" class="outlook-outer-padding">
+												<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
+													<tr>
+														<td class="outlook-inner-padding">
+												[/outlook]
+													<div class="item-contents">
+														<?php echo $ads[1]; ?>
+													</div>
+												[outlook]
+														</td>
+													</tr>
+												</table>
+											</td>
+										</tr>
+									</table>
+									[/outlook]
+								</div>
+							<?php endif; ?>
+							<?php
+						endwhile;
+						wp_reset_postdata();
+						?>
+
+						[outlook]
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+						[/outlook]
+						</div>
+					<?php endif; ?>
+
+					<?php do_action( 'wp_message_inserter', 'email_middle', 'email' ); ?>
+
+					<?php
+					// opinion post section
+					$section               = 'opinion';
+					$opinion_query         = minnpost_newsletter_get_section_query( $section );
+					$args['section']       = $section;
+					$args['show_category'] = true;
+					?>
+					<?php if ( $opinion_query->have_posts() ) : ?>
+						<div class="o-single-column o-section-opinion-stories">
+
+							[outlook]
+							<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
+								<tr>
+									<td align="center" class="outlook-outer-padding">
+										<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
+											<tr>
+												<td class="outlook-inner-padding">
+							[/outlook]
+
+							<?php
+							$post_count        = $opinion_query->post_count;
+							$this_section_post = 0;
+							?>
+
+							<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
+								<table role="presentation" width="100%" class="h2 a-section-title">
+									<tr>
+										<td>
+											<h2><?php echo minnpost_newsletter_get_section_title( $section ); ?></h2>
+										</td>
+									</tr>
+								</table>
+							<?php endif; ?>
+
+							<?php
+							while ( $opinion_query->have_posts() ) :
+								$this_section_post++;
+								$total_post_count++;
+								$opinion_query->the_post();
+								set_query_var( 'current_post', $opinion_query->current_post );
+								$args['post_id'] = $id;
+								if ( 1 !== $this_section_post ) {
+									$args['image_size'] = 'none';
+								} else {
+									$args['image_size'] = 'full';
+								}
+								$args['extra_class'] = '';
+								if ( $post_count === $this_section_post ) {
+									$args['extra_class'] = ' m-post-newsletter-last';
+								}
+								?>
+
+								<?php
+								// with newsletters, the individual post can override the image size for the newsletter section the post is in.
+								$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
+								if ( '' !== $override_size && 'default' !== $override_size ) {
+									$args['image_size'] = $override_size;
+								}
+								get_template_part( 'template-parts/post-newsletter-fullwidth', $args['newsletter_type'], $args );
+								?>
+
+								<?php if ( 1 === $total_post_count && isset( $ads[0] ) && ! empty( $ads[0] ) ) : ?>
+									<div class="o-single-column m-newsletter-ad-region">
+										[outlook]
+										<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
+											<tr>
+												<td align="center" class="outlook-outer-padding">
+													<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
+														<tr>
+															<td class="outlook-inner-padding">
+													[/outlook]
+														<div class="item-contents">
+															<?php echo $ads[0]; ?>
+														</div>
+													[outlook]
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+										[/outlook]
+									</div>
+								<?php elseif ( 2 === $total_post_count && isset( $ads[1] ) && ! empty( $ads[1] ) ) : ?>
+									<div class="o-single-column m-newsletter-ad-region">
+										[outlook]
+										<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
+											<tr>
+												<td align="center" class="outlook-outer-padding">
+													<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
+														<tr>
+															<td class="outlook-inner-padding">
+													[/outlook]
+														<div class="item-contents">
+															<?php echo $ads[1]; ?>
+														</div>
+													[outlook]
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+										[/outlook]
+									</div>
+								<?php endif; ?>
+								<?php
+							endwhile;
+							wp_reset_postdata();
+							?>
+							[outlook]
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+							[/outlook]
+						</div>
+					<?php endif; ?>
+
+					<?php
+					// editors choice post section
+					$section                    = 'editors';
+					$newsletter_recommended_query = z_get_zone_query( 'newsletter-recommended-stories' );
+					if ( $newsletter_recommended_query->have_posts() ) {
+						$editors_query = $newsletter_recommended_query;
+					} else {
+						$editors_query = minnpost_newsletter_get_section_query( $section );
+					}
+					$args['section']            = $section;
+					$args['show_category']      = false;
+					$use_other_section_settings = get_post_meta( get_the_ID(), '_mp_newsletter_editors_use_other_section_settings', true );
+					$remove_editors_section     = get_post_meta( get_the_ID(), '_mp_newsletter_remove_editors_section', true );
+					?>
+					<?php if ( 'on' !== $remove_editors_section && $editors_query->have_posts() ) : ?>
+						<div class="o-single-column o-section-editors-stories">
+							[outlook]
+							<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
+								<tr>
+									<td align="center" class="outlook-outer-padding">
+										<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
+											<tr>
+												<td class="outlook-inner-padding">
+							[/outlook]
+
+							<?php
+							$post_count         = isset( $newsletter_recommended_query->post_count ) ? $newsletter_recommended_query->post_count : $editors_query->post_count;
+							$this_section_post  = 0;
+							$args['image_size'] = 'none';
+							?>
+
+							<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
+								<table role="presentation" width="100%" class="h2 a-section-title">
+									<tr>
+										<td>
+											<h2><?php echo minnpost_newsletter_get_section_title( $section ); ?></h2>
+										</td>
+									</tr>
+								</table>
+							<?php endif; ?>
+
+							<?php
+							while ( $editors_query->have_posts() ) :
+								$this_section_post++;
+								$total_post_count++;
+								$editors_query->the_post();
+								set_query_var( 'current_post', $editors_query->current_post );
+								$args['post_id'] = $id;
+								if ( 'on' === $use_other_section_settings ) {
+									$args['show_category'] = true;
+									if ( 1 !== $this_section_post ) {
+										$args['image_size'] = 'none';
+									} else {
+										$args['image_size'] = 'full';
+									}
+								}
+								$args['extra_class'] = '';
+								if ( $post_count === $this_section_post ) {
+									$args['extra_class'] = ' m-post-newsletter-last';
+								}
+								?>
+
+								<?php
+								// with newsletters, the individual post can override the image size for the newsletter section the post is in.
+								$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
+								if ( '' !== $override_size && 'default' !== $override_size ) {
+									$args['image_size'] = $override_size;
+								}
+								get_template_part( 'template-parts/post-newsletter-fullwidth', $args['newsletter_type'], $args );
+								?>
+
+								<?php if ( 1 === $total_post_count && isset( $ads[0] ) && ! empty( $ads[0] ) ) : ?>
+									<div class="o-single-column m-newsletter-ad-region">
+										[outlook]
+										<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
+											<tr>
+												<td align="center" class="outlook-outer-padding">
+													<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
+														<tr>
+															<td class="outlook-inner-padding">
+													[/outlook]
+														<div class="item-contents">
+															<?php echo $ads[0]; ?>
+														</div>
+													[outlook]
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+										[/outlook]
+									</div>
+								<?php elseif ( 2 === $total_post_count && isset( $ads[1] ) && ! empty( $ads[1] ) ) : ?>
+									<div class="o-single-column m-newsletter-ad-region">
+										[outlook]
+										<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
+											<tr>
+												<td align="center" class="outlook-outer-padding">
+													<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
+														<tr>
+															<td class="outlook-inner-padding">
+													[/outlook]
+														<div class="item-contents">
+															<?php echo $ads[1]; ?>
+														</div>
+													[outlook]
+															</td>
+														</tr>
+													</table>
+												</td>
+											</tr>
+										</table>
+										[/outlook]
+									</div>
+								<?php endif; ?>
+								<?php
+							endwhile;
+							wp_reset_postdata();
+							?>
+
+							[outlook]
+												</td>
+											</tr>
+										</table>
+									</td>
+								</tr>
+							</table>
+							[/outlook]
+						</div>
+					<?php endif; ?>
+
+					<?php do_action( 'wp_message_inserter', 'email_before_bios', 'email' ); ?>
+
+					<?php do_action( 'wp_message_inserter', 'email_bottom', 'email' ); ?>
+
+					<div class="o-columns o-footer">
+						[outlook]
+						<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
+							<tr>
+								<td align="center" class="outlook-outer-padding">
+									<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
+										<tr>
+											<td class="outlook-inner-padding">
+						[/outlook]
+						<div class="o-column o-footer">
+							<div class="item-contents">
+								<div align="center">
+									<table role="presentation" id="footer-network" class="m-secondary-navigation">
+										<?php
+										wp_nav_menu(
+											array(
+												'theme_location' => 'minnpost_network_email',
+												'menu_id'        => 'minnpost-network-emails',
+												'depth'          => 1,
+												'container'      => false,
+												'walker'         => new Minnpost_Email_Walker_Nav_Menu,
+												'priority'       => '20',
+												'items_wrap'     => '<tr id="%1$s" class="m-menu m-menu-%1$s">%3$s</tr>',
+												'item_classes'   => 'values',
+											)
+										);
+										?>
+									</table>
+								</div>
+								<?php
+								$footer_message = get_option( 'site_footer_message', '' );
+								if ( '' !== $footer_message ) :
+									?>
+									<p class="a-footer-message"><?php echo $footer_message; ?></p>
+								<?php endif; ?>
+							</div>
+						</div>
+						[outlook]
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</table>
+					[/outlook]
+				</div>
+				[outlook]
+									</td>
+								</tr>
+							</table>
 						</td>
 					</tr>
 				</table>
-			</td> <!-- end .one-column.footer -->
-		</tr> <!-- end row -->
-
-	</div>
-</center>
+				[/outlook]
+			</div>
+		</td>
+	</tr>
+</table>

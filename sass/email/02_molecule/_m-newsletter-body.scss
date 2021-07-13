@@ -1,0 +1,3 @@
+.m-newsletter-body * {
+    @include meta-preset( $bold: inherit, $italic: inherit );
+}

@@ -1,0 +1,194 @@
+.a-breadcrumbs {
+	display: block;
+    margin: $standard-block-padding / 2 0;
+}
+
+.a-breadcrumb {
+
+	@include meta-preset( $size: 0, $bold: true, $italic: false, $line-height: 1 );
+	display: inline-block;
+
+	div {
+		display: inline-block;
+		width: auto;
+	}
+
+	a {
+		text-decoration: none;
+	}
+
+	&.a-category-group {
+
+		a,
+        span {
+			display: inline-block;
+			padding: 0 $standard-block-padding;
+			border-radius: $border-radius;
+			color: neutral-color(white);
+			background-color: neutral-color(black);
+
+			@media (prefers-color-scheme: dark ) {
+				background-color: neutral-color(light) !important;
+				color: neutral-color(dark) !important;
+			}
+		}
+
+        a {
+
+            &:hover {
+				background-color: neutral-color(dark);
+
+				@media (prefers-color-scheme: dark ) {
+					background-color: neutral-color(light) !important;
+					color: neutral-color(dark) !important;
+				}
+			}
+        }
+	}
+
+	&.a-category-name {
+		padding: 0 0 0 $standard-block-padding / 2;
+		margin: 0;
+	}
+
+}
+
+table.a-breadcrumbs {
+	display: table;
+	margin: 0;
+
+	td {
+		padding: $standard-block-padding / 2 0;
+	}
+
+	span {
+		padding: 0;
+		display: inline;
+		margin: 0;
+		color: neutral-color(dark);
+
+		@media (prefers-color-scheme: dark ) {
+			color: neutral-color(border) !important;
+		}
+	}
+}
+
+
+// when there's a category group on the breadcrumb
+.a-breadcrumbs {
+
+	&.a-breadcrumbs-news,
+	&.a-breadcrumbs-arts-culture {
+
+		.a-category-group {
+
+			a,
+            span {
+				background-color: brand-color(red, medium);
+			}
+
+            a {
+
+                &:hover {
+					background-color: brand-color(red, dark);
+				}
+            }
+		}
+
+		.a-category-name {
+
+			a,
+            span {
+				color: brand-color(red, medium);
+			}
+
+            a {
+
+                &:hover {
+
+					@include link-underline(brand-color(red, dark), brand-color(red, medium));
+				}
+            }
+
+            span {
+                color: neutral-color(dark);
+            }
+		}
+	}
+
+	&.a-breadcrumbs-opinion {
+
+		.a-category-group {
+
+			a,
+            span {
+				background-color: utility-color(purple, dark);
+			}
+
+            a {
+
+                &:hover {
+					background-color: utility-color(purple, medium);
+				}
+            }
+		}
+
+		.a-category-name {
+
+			a,
+            span {
+				color: utility-color(purple, dark);
+			}
+
+            a {
+
+                &:hover {
+
+					@include link-underline(utility-color(purple, medium), utility-color(purple, dark));
+				}
+            }
+
+            span {
+                color: neutral-color(dark);
+            }
+		}
+	}
+
+	&.a-breadcrumbs-sponsored-content {
+
+		.a-category-group {
+
+			a,
+            span {
+				background-color: utility-color(orange, medium);
+			}
+
+            a {
+
+                &:hover {
+					background-color: utility-color(orange, dark);
+				}
+            }
+		}
+
+		.a-category-name {
+
+			a,
+            span {
+				color: utility-color(orange, medium);
+			}
+
+            a {
+
+                &:hover {
+
+					@include link-underline(utility-color(orange, dark), utility-color(orange, medium));
+				}
+            }
+
+            span {
+                color: neutral-color(dark);
+            }
+		}
+	}
+}

@@ -74,7 +74,20 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 			// this requires that the custom image sizes in custom-fields.php work correctly
 			$image     = wp_get_attachment_image( $image_id, $size, false, $attributes );
 			$image_url = wp_get_attachment_url( $image_id );
+
+			if ( function_exists( 'get_minnpost_modified_image_url' ) ) {
+				$image_url = get_minnpost_modified_image_url( $image_url, $attributes );
+			}
+
+			if ( is_singular( 'newsletter' ) ) {
+				$image = minnpost_largo_manual_image_tag( $image_id, $image_url, $attributes, 'newsletter' );
+			}
 		} else {
+
+			if ( function_exists( 'get_minnpost_modified_image_url' ) ) {
+				$image_url = get_minnpost_modified_image_url( $image_url, $attributes );
+			}
+
 			if ( is_singular( 'newsletter' ) ) {
 				$image = minnpost_largo_manual_image_tag( $image_id, $image_url, $attributes, 'newsletter' );
 			} else {
@@ -93,6 +106,28 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 			'size'      => $size,
 		);
 		return $image_data;
+	}
+endif;
+
+/**
+* Get the image URL based on the attributes array's modifications to it
+*
+* @param string $image_url
+* @param array $attributes
+*
+* @return string $image_url
+*
+*/
+if ( ! function_exists( 'get_minnpost_modified_image_url' ) ) :
+	function get_minnpost_modified_image_url( $image_url, $attributes = array() ) {
+		if ( '' === $image_url ) {
+			return $image_url;
+		}
+		$image_url .= '?strip=all';
+		if ( isset( $attributes['content_width'] ) ) {
+			$image_url .= '&amp;w=' . $attributes['content_width'];
+		}
+		return $image_url;
 	}
 endif;
 
@@ -425,9 +460,8 @@ if ( ! function_exists( 'minnpost_get_related' ) ) :
 		// if multiples are true, it would run the first true one, and ignore the subsequent ones.
 		$zoninator_related_enabled = false; // allow for using zoninator posts as related posts.
 		$recent_same_category      = false; // most recent posts in the same category.
-		$recent_not_same_category  = true; // most recent posts not in the same category.
+		$recent_not_same_category  = false; // most recent posts not in the same category.
 		if ( 'zoninator' === $type && true === $zoninator_related_enabled ) {
-			// if used, the array of IDs can be cached for each post for 30 minutes.
 			$cache_zoninator_related = true;
 			if ( true === $cache_zoninator_related ) {
 				$cache_key   = md5( 'minnpost_zoninator_related_posts_' . $post_id );
@@ -483,10 +517,7 @@ if ( ! function_exists( 'minnpost_get_related' ) ) :
 			}
 		}
 		if ( 'content' === $type ) {
-			// recent same category and recent not same category should only apply to "content" type. otherwise it runs twice.
-			if ( false === $recent_same_category && false === $recent_not_same_category ) {
-				return $related;
-			}
+			// if we're loading recent posts from the same, OR not the same, category.
 			if ( true === $recent_same_category || true === $recent_not_same_category ) {
 				$exclude_category_ids = array();
 				$exclude_post_ids     = array();
@@ -507,6 +538,7 @@ if ( ! function_exists( 'minnpost_get_related' ) ) :
 					$exclude_post_ids = minnpost_largo_get_excluded_related_posts();
 				}
 			}
+			// for recent posts from the same category.
 			if ( true === $recent_same_category ) {
 				$query = new WP_Query(
 					array(
@@ -518,19 +550,10 @@ if ( ! function_exists( 'minnpost_get_related' ) ) :
 					)
 				);
 			}
+			// for recent posts from not the same category.
 			if ( true === $recent_not_same_category ) {
 				$exclude_category_ids[] = $permalink_category;
 				$query                  = new WP_Query(
-					array(
-						'fields'           => 'ids',
-						'posts_per_page'   => $count,
-						'category__not_in' => $exclude_category_ids,
-						'post__not_in'     => $exclude_post_ids,
-					)
-				);
-			}
-			if ( false === $recent_same_category && false === $recent_not_same_category ) {
-				$query = new WP_Query(
 					array(
 						'fields'           => 'ids',
 						'posts_per_page'   => $count,
@@ -863,7 +886,7 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 				$output .= '</h3>';
 			}
 			// email content filter
-			$text    = apply_filters( 'format_email_content_legacy', $text, false );
+			$text    = apply_filters( 'format_email_content', $text, false );
 			$output .= $text;
 			$output .= '</td>
 						</tr>
@@ -1654,6 +1677,10 @@ if ( ! function_exists( 'minnpost_largo_add_lazy_load_attributes' ) ) :
 		if ( 'on' === $prevent_lazy_load ) {
 			$lazy_load = false;
 		}
+		if ( is_singular( 'newsletter' ) ) {
+			$lazy_load = false;
+			return $attributes;
+		}
 		if ( false === $lazy_load ) {
 			if ( isset( $attributes['class'] ) ) {
 				$attributes['class'] .= ' ';
@@ -1713,6 +1740,61 @@ if ( ! function_exists( 'minnpost_get_newsletter_type' ) ) :
 endif;
 
 /**
+* Get newsletter logo URL
+*
+* @param int $newsletter_id
+* @param bool $transparent
+* @return string $logo_url
+*
+*/
+if ( ! function_exists( 'minnpost_get_newsletter_logo_url' ) ) :
+	function minnpost_get_newsletter_logo_url( $newsletter_id = '', $transparent = false ) {
+		$logo_url = '';
+
+		$newsletter_type = get_post_meta( $newsletter_id, '_mp_newsletter_type', true );
+		$filename_suffix = '';
+		if ( true === $transparent ) {
+			$filename_suffix = '-transparent';
+		}
+
+		if ( '' !== $newsletter_type ) {
+
+			switch ( $newsletter_type ) {
+				case 'book_club':
+					$filename = 'newsletter-logo-book-club' . $filename_suffix . '.png';
+					break;
+				case 'daily':
+					$filename = 'newsletter-logo-daily' . $filename_suffix . '.png';
+					break;
+				case 'dc_memo':
+					$filename = 'dc-memo-header-520x50' . $filename_suffix . '.png';
+					break;
+				case 'greater_mn':
+					$filename = 'newsletter-logo-mn-week' . $filename_suffix . '.png';
+					break;
+				case 'sunday_review':
+					$filename = 'newsletter-logo-sunday-review' . $filename_suffix . '.png';
+					break;
+				case 'daily_coronavirus':
+					$filename = 'newsletter-coronavirus-500' . $filename_suffix . '.png';
+					break;
+				case 'republication':
+					$filename = 'republication-header-260x50' . $filename_suffix . '.png';
+					break;
+				default:
+					$filename = 'newsletter-logo-daily' . $filename_suffix . '.png';
+					break;
+			}
+
+			$logo_url = get_theme_file_uri() . '/assets/img/newsletter-headers/' . $filename;
+
+		}
+
+		return $logo_url;
+	}
+endif;
+
+/**
 * Format a string for email-friendly display
 *
 * @param string $content
@@ -1726,7 +1808,7 @@ if ( ! function_exists( 'format_email_content' ) ) :
 	add_filter( 'format_email_content', 'format_email_content', 10, 4 );
 	function format_email_content( $content, $body = true, $message = false, $colors = array() ) {
 
-		$is_legacy = apply_filters( 'minnpost_largo_newsletter_legacy', false, get_the_ID() );
+		$is_legacy = apply_filters( 'minnpost_largo_newsletter_legacy', false, '', get_the_ID() );
 		if ( true === $is_legacy ) {
 			format_email_content_legacy( $content, $body, $message );
 		}
@@ -1785,6 +1867,38 @@ if ( ! function_exists( 'format_email_content_legacy' ) ) :
 endif;
 
 /**
+* Process shortcodes in email content that need to run after Emogrifier processing is done.
+*
+* @param string $html
+* @return string $html
+*
+*/
+if ( ! function_exists( 'minnpost_email_shortcodes_after_emogrifier' ) ) :
+	add_filter( 'do_shortcodes_after_emogrifier', 'minnpost_email_shortcodes_after_emogrifier', 10, 1 );
+	function minnpost_email_shortcodes_after_emogrifier( $html ) {
+		// replace our fake Outlook tag with an actual conditional comment after the CSS has already been messed with.
+		$html = str_replace( '[outlook]', '<!--[if mso]>', $html );
+		$html = str_replace( '[/outlook]', '<![endif]-->', $html );
+
+		// replace our fake not-Outlook tag with an actual conditional comment after the CSS has already been messed with.
+		$html = str_replace( '[not-outlook]', '<!--[if !mso]><!-- -->', $html );
+		$html = str_replace( '[/not-outlook]', '<!--<![endif]-->', $html );
+
+		// replace our fake preview text with a real one after the CSS has already been messed with.
+		$html = str_replace( '[preview_text]', '<span style="display: none !important; font-size: 0; color: #fff;">', $html );
+		$html = str_replace( '[/preview_text]', '</span>', $html );
+
+		// replace the shortcode for the empty space after the preview text, after the CSS has been messed with.
+		$html = str_replace( '[after-preview-space-hack]', '<div style="display: none;max-height: 0px;overflow: hidden;">&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;</div>', $html );
+
+		// keep <style> stuff after the CSS has already been messed with.
+		$html = str_replace( '<style_donotremove>', '<style type="text/css">', $html );
+		$html = str_replace( '</style_donotremove>', '</style>', $html );
+		return $html;
+	}
+endif;
+
+/**
 * Get story ids for a newsletter section
 *
 * @param int $post_id
@@ -1813,13 +1927,21 @@ endif;
 * Determine whether this is a legacy newsletter.
 *
 * @param bool $is_legacy
+* @param string $newsletter_type
 * @param int $post_id
 * @return bool $is_legacy
 *
 */
 if ( ! function_exists( 'minnpost_largo_check_newsletter_legacy' ) ) :
-	add_filter( 'minnpost_largo_newsletter_legacy', 'minnpost_largo_check_newsletter_legacy', 10, 2 );
-	function minnpost_largo_check_newsletter_legacy( $is_legacy, $post_id ) {
+	add_filter( 'minnpost_largo_newsletter_legacy', 'minnpost_largo_check_newsletter_legacy', 10, 3 );
+	function minnpost_largo_check_newsletter_legacy( $is_legacy, $newsletter_type, $post_id ) {
+		if ( '' === $newsletter_type ) {
+			$newsletter_type = get_post_meta( get_the_ID(), '_mp_newsletter_type', true );
+		}
+		// for now, the DC Memo style emails are all legacy. TODO: change this when we can.
+		if ( in_array( $newsletter_type, array( 'dc_memo', 'daily_coronavirus', 'republication' ), true ) ) {
+			return true;
+		}
 		$top_story = minnpost_largo_get_newsletter_stories( $post_id, 'top' );
 		if ( ! empty( $top_story ) ) {
 			return false;
@@ -1875,12 +1997,16 @@ if ( ! function_exists( 'minnpost_newsletter_get_section_query' ) ) :
 		if ( '' === $newsletter_id ) {
 			$newsletter_id = get_the_ID();
 		}
-		$post_ids      = minnpost_largo_get_newsletter_stories( $newsletter_id, $section );
-		$query_args    = array(
+		$post_ids   = minnpost_largo_get_newsletter_stories( $newsletter_id, $section );
+		$query_args = array(
 			'post__in'    => $post_ids,
 			'orderby'     => 'post__in',
 			'post_status' => 'any',
 		);
+		// if there are no ids, the query arguments should be empty.
+		if ( '' === $post_ids ) {
+			$query_args = array();
+		}
 		$section_query = new WP_Query( $query_args );
 		// the total does not stop at posts_per_page
 		set_query_var( 'found_posts', $section_query->found_posts );
@@ -1927,14 +2053,14 @@ if ( ! function_exists( 'minnpost_newsletter_get_entry_excerpt' ) ) :
 		}
 		$excerpt      = get_the_excerpt( $post_id );
 		$use_seo_desc = get_post_meta( $post_id, '_mp_post_newsletter_use_seo_description', true );
-		if ( 'on' !== $use_seo_desc ) {
-			return $excerpt;
+		if ( 'on' === $use_seo_desc ) {
+			$seo_desc = get_post_meta( $post_id, '_mp_seo_description', true );
+			if ( '' !== $seo_desc ) {
+				$excerpt = $seo_desc;
+			}
 		}
-		$seo_desc = get_post_meta( $post_id, '_mp_seo_description', true );
-		if ( '' !== $seo_desc ) {
-			$excerpt = $seo_desc;
-		}
-		$excerpt = apply_filters( 'the_content', $excerpt );
+		$excerpt = str_ireplace( '&nbsp;', '', $excerpt );
+		$excerpt = apply_filters( 'the_excerpt', $excerpt );
 		return $excerpt;
 	}
 endif;
@@ -1969,7 +2095,7 @@ if ( ! function_exists( 'minnpost_newsletter_get_ads' ) ) :
 		} else {
 			foreach ( $ad_divs as $key => $value ) {
 				$style = $value->getAttribute( 'style' );
-				$ads[] = '<p>' . minnpost_dom_innerhtml( $value ) . '</p>';
+				$ads[] = '<div>' . minnpost_dom_innerhtml( $value ) . '</div>';
 			}
 		}
 		set_query_var( 'newsletter_ads', $ads );

@@ -29,9 +29,9 @@
 // font families
 
 // body text
-@mixin body-preset( $size: inherit, $bold: inherit, $italic: inherit, $line-height: inherit ) {
+@mixin body-preset( $size: inherit, $bold: inherit, $italic: inherit, $line-height: inherit, $important: inherit ) {
 
-	@include text-preset( $size, $line-height );
+	@include text-preset( $size, $line-height, $important );
 	font-family: $webfont__serif;
 	font-size-adjust: 0.46;
 
@@ -51,9 +51,9 @@
 // used like this: body-preset( $size: 3 );
 
 // heading text
-@mixin heading-preset( $size: inherit, $bold: inherit, $italic: inherit, $line-height: inherit ) {
+@mixin heading-preset( $size: inherit, $bold: inherit, $italic: inherit, $line-height: inherit, $important: inherit ) {
 
-	@include text-preset( $size, $line-height );
+	@include text-preset( $size, $line-height, $important );
 	font-family: $webfont__serif;
 	font-size-adjust: 0.46;
 
@@ -73,32 +73,52 @@
 // used like this: @include heading-preset( $size: 3, $bold: false );
 
 // meta text
-@mixin meta-preset( $size: inherit, $bold: false, $italic: false, $line-height: inherit ) {
+@mixin meta-preset( $size: inherit, $bold: false, $italic: false, $line-height: inherit, $important: inherit ) {
 
-	@include text-preset( $size, $line-height );
+	@include text-preset( $size, $line-height, $important );
 	font-family: $webfont__sans;
 	font-size-adjust: 0.495;
 
 	@if $bold == true {
-		font-weight: 700;
+		@if $important != "inherit" {
+			font-weight: 700 !important;
+		} @else {
+			font-weight: 700;
+		}
 	} @else if $bold == false {
-		font-weight: 400;
+		@if $important != "inherit" {
+			font-weight: 400 !important;
+		} @else {
+			font-weight: 400;
+		}
 	}
 
 	@if $italic == true {
-		font-style: italic;
+		@if $important != "inherit" {
+			font-style: italic !important;
+		} @else {
+			font-style: italic;
+		}
 	} @else if $italic == false {
-		font-style: normal;
+		@if $important != "inherit" {
+			font-style: normal !important;
+		} @else {
+			font-style: normal;
+		}
 	}
 }
 
 // text sizes
-@mixin text-preset( $size: inherit, $line-height: inherit ) {
+@mixin text-preset( $size: inherit, $line-height: inherit, $important: inherit ) {
 	//font-size: map-get( $text-sizes, $size ) + px;
 	//font-size: map-get( $text-sizes, $size )/10 + rem;
 
 	@if $size != "inherit" {
-		font-size: var(--scale#{ $size });
+		@if $important != "inherit" {
+			font-size: var(--scale#{ $size }) !important;
+		} @else {
+			font-size: var(--scale#{ $size });
+		}
 		//line-height: var(--lh#{ $size });
 		line-height: 1.3;
 	}

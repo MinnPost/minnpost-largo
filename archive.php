@@ -127,7 +127,13 @@ get_header(); ?>
 			</section>
 			<?php
 		else :
-			get_template_part( 'template-parts/content', 'none' );
+			// populate query arguments for a 404 that can be smarter than the default.
+			$args                = array();
+			$args['object_type'] = isset( $archive_type ) ? $archive_type : '';
+			if ( is_category() ) {
+				$args['object_name'] = get_query_var( 'category_name' );
+			}
+			get_template_part( 'template-parts/content', 'none', $args );
 		endif;
 		?>
 

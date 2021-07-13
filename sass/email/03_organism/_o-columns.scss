@@ -1,0 +1,8 @@
+.o-columns {
+    text-align: center;
+    font-size: 0;
+    background-color: neutral-color(white);
+    color: neutral-color(black);
+
+    @include column( $selector: '.o-column', $max-width: 50%, $desktop-spacing-only: 'false', $mobile-spacing-only: 'false');
+}
