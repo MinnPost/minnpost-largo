@@ -1939,9 +1939,11 @@ if ( ! function_exists( 'minnpost_largo_check_newsletter_legacy' ) ) :
 			$newsletter_type = get_post_meta( get_the_ID(), '_mp_newsletter_type', true );
 		}
 		// for now, the DC Memo style emails are all legacy. TODO: change this when we can.
-		if ( in_array( $newsletter_type, array( 'dc_memo', 'daily_coronavirus', 'republication' ), true ) ) {
+		if ( in_array( $newsletter_type, array( 'dc_memo', 'daily_coronavirus' ), true ) ) {
 			return true;
 		}
+		
+		// digest newsletters.
 		$top_story = minnpost_largo_get_newsletter_stories( $post_id, 'top' );
 		if ( ! empty( $top_story ) ) {
 			return false;
@@ -1962,6 +1964,13 @@ if ( ! function_exists( 'minnpost_largo_check_newsletter_legacy' ) ) :
 		if ( ! empty( $editors_stories ) ) {
 			return false;
 		}
+
+		// republication newsletters.
+		$republishable_stories = minnpost_largo_get_newsletter_stories( $post_id, 'republishable' );
+		if ( ! empty( $republishable_stories ) ) {
+			return false;
+		}
+
 		return true;
 	}
 endif;
