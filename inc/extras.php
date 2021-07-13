@@ -292,6 +292,24 @@ if ( ! function_exists( 'minnpost_largo_remove_republish_button_from_category' )
 endif;
 
 /**
+* Add the republication modal at the bottom of the site
+*/
+if ( ! function_exists( 'minnpost_largo_republication_modal' ) ) :
+	add_action( 'wp_footer', 'minnpost_largo_republication_modal' );
+	function minnpost_largo_republication_modal() {
+		if ( ! class_exists( 'Republication_Tracker_Tool' ) ) {
+			return;
+		}
+		$republication_content_file = get_theme_file_path() . '/inc/shareable-content.php';
+		?>
+		<div class="o-republication-tracker-tool-modal" id="republication-tracker-tool-modal" style="display:none;" data-postid="<?php echo get_the_ID(); ?>" data-pluginsdir="<?php echo esc_attr( plugins_url() ); ?>">
+			<?php include_once( $republication_content_file ); ?>
+		</div>
+		<?php
+	}
+endif;
+
+/**
  * Filter the Slack notification
  * @param array $notification
  * @param string $message

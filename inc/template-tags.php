@@ -266,6 +266,23 @@ if ( ! function_exists( 'minnpost_share_buttons' ) ) :
 					<i class="fas fa-link"></i>
 				</a>
 			</li>
+			<?php if ( class_exists( 'Republication_Tracker_Tool' ) ) : ?>
+				<?php
+				// when to show the republish button.
+				$show_republish_button = get_post_meta( $post_id, '_mp_show_republish_button_on_display', true );
+				$show_republish_button = apply_filters( 'minnpost_largo_show_republish_button_on_display', '', $post_id );
+				// when to hide the republish button.
+				$hide_republish_button = get_post_meta( $post_id, '_mp_remove_republish_button_from_display', true );
+				$hide_republish_button = apply_filters( 'minnpost_largo_remove_republish_button_from_display', '', $post_id );
+				if ( 'on' !== $hide_republish_button && 'on' === $show_republish_button ) :
+					?>
+					<li class="a-share a-share-republish">
+						<a href="#" class="republication-tracker-tool-button" aria-label="<?php echo __( 'Republish this article.', 'minnpost-largo' ); ?>" data-share-action="<?php echo __( 'Republish', 'minnpost-largo' ); ?>">
+							<i class="fab fa-creative-commons"></i>
+						</a>
+					</li>
+				<?php endif; ?>
+			<?php endif; ?>
 		</ul>
 		<?php
 	}

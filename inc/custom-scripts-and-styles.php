@@ -95,6 +95,9 @@ if ( ! function_exists( 'minnpost_largo_add_remove_scripts' ) ) :
 		// add
 		//wp_enqueue_script( 'modernizr', get_theme_file_uri() . '/assets/js/modernizr-custom.min.js', array(), '1.0', false );
 		//wp_enqueue_script( 'minnpost', get_theme_file_uri() . '/assets/js/minnpost.min.js', array( 'jquery', 'modernizr' ), filemtime( get_theme_file_path() . '/assets/js/minnpost.min.js' ), true );
+		if ( class_exists( 'Republication_Tracker_Tool' ) ) {
+			wp_enqueue_script( 'republication-tracker-tool-js', plugins_url() . '/republication-tracker-tool/' . 'assets/widget.js', array( 'jquery' ), '1.0', true );
+		}
 		wp_enqueue_script( 'minnpost', get_theme_file_uri() . '/assets/js/minnpost.min.js', array( 'jquery' ), filemtime( get_theme_file_path() . '/assets/js/minnpost.min.js' ), true );
 		// localize
 		$params = array(

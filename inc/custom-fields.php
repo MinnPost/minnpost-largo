@@ -957,6 +957,14 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'desc' => __( 'If checked, this post will have horizontal share buttons above the post content, rather than vertical ones next to it, on large screens. This is similar to its mobile behavior.', 'minnpost-largo' ),
 			)
 		);
+		$display_settings->add_field(
+			array(
+				'name' => __( 'Remove republish button from display?', 'minnpost-largo' ),
+				'id'   => '_mp_remove_republish_button_from_display',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, the republication button will not display on this post, regardless of the other share button settings.', 'minnpost-largo' ),
+			)
+		);
 
 		/**
 		 * Newsletter Display settings

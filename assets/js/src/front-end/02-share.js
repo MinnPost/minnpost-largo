@@ -51,10 +51,16 @@ $( '.m-entry-share-top a' ).click( function() {
 	trackShare( text, position );
 } );
 
-// cause the current page to print
+// when the print button is clicked
 $( '.m-entry-share .a-share-print a' ).click( function( e ) {
 	e.preventDefault();
 	window.print();
+} );
+
+// when the republish button is clicked
+// the plugin controls the rest, but we need to make sure the default event doesn't fire
+$( '.m-entry-share .a-share-republish a' ).click( function( e ) {
+	e.preventDefault();
 } );
 
 // when the copy link button is clicked
