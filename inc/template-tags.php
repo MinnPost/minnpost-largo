@@ -268,11 +268,13 @@ if ( ! function_exists( 'minnpost_share_buttons' ) ) :
 			</li>
 			<?php if ( class_exists( 'Republication_Tracker_Tool' ) ) : ?>
 				<?php
-				// don't show republish button if instructed
+				// when to show the republish button.
+				$show_republish_button = get_post_meta( $post_id, '_mp_show_republish_button_on_display', true );
+				$show_republish_button = apply_filters( 'minnpost_largo_show_republish_button_on_display', '', $post_id );
+				// when to hide the republish button.
 				$hide_republish_button = get_post_meta( $post_id, '_mp_remove_republish_button_from_display', true );
-				$hide_republish_button = apply_filters( 'minnpost_largo_republish_button_from_display', '', $post_id );
-				if ( 'on' !== $hide_republish_button ) :
-					// INN will have a template tag we can use to display the button in the next plugin release.
+				$hide_republish_button = apply_filters( 'minnpost_largo_remove_republish_button_from_display', '', $post_id );
+				if ( 'on' !== $hide_republish_button && 'on' === $show_republish_button ) :
 					?>
 					<li class="a-share a-share-republish">
 						<a href="#" class="republication-tracker-tool-button" aria-label="<?php echo __( 'Republish this article.', 'minnpost-largo' ); ?>" data-share-action="<?php echo __( 'Republish', 'minnpost-largo' ); ?>">

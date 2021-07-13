@@ -2122,3 +2122,27 @@ if ( ! function_exists( 'minnpost_largo_hide_republish_button' ) ) :
 		return $hide_republish_button;
 	}
 endif;
+
+/**
+* Show the republish button
+*
+* @param string $show_republish_button
+* @param int $post_id
+* @return string $show_republish_button
+*
+*/
+if ( ! function_exists( 'minnpost_largo_show_republish_button' ) ) :
+	add_filter( 'minnpost_largo_show_republish_button_on_display', 'minnpost_largo_show_republish_button', 10, 2 );
+	function minnpost_largo_show_republish_button( $show_republish_button = 'on', $post_id = 0 ) {
+		if ( 0 === $post_id ) {
+			$post_id = get_the_ID();
+		}
+		// to show the button, return "on" as the value.
+		if ( has_category( 'greater-minnesota', $post_id ) ) {
+			$show_republish_button = 'on';
+		} else {
+			$show_republish_button = '';
+		}
+		return $show_republish_button;
+	}
+endif;
