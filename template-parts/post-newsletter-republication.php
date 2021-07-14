@@ -53,6 +53,32 @@
 		<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="m-entry-excerpt">
 			<tr>
 				<td>
+					[outlook]
+						<table role="presentation" width="92" cellpadding="0" cellspacing="0" class="outlook-table" align="left">
+							<tr>
+								<td valign="top">
+					[not-outlook]
+					<?php
+					if ( 'on' === $args['show_thumbnail_image'] ) {
+						minnpost_post_image(
+							'newsletter-thumbnail',
+							array(
+								'title'  => get_the_title(),
+								'class'  => 'a-excerpt-thumb',
+								'align'  => 'left',
+								'width'  => 80,
+								'height' => 60,
+							),
+							'',
+							false
+						);
+					}
+					?>
+					[outlook]
+						</td>
+							</tr>
+								</table>
+					[not-outlook]
 					<?php echo minnpost_newsletter_get_entry_excerpt(); ?>
 				</td>
 			</tr>
@@ -64,15 +90,15 @@
 				</td>
 			</tr>
 		</table>
-		<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="m-entry-republish">
-			<tr>
-				<td>
-				<?php if ( class_exists( 'Republication_Tracker_Tool' ) ) : ?>
-					<h3><a href="<?php echo esc_url( get_permalink() . '#show-republish' ); ?>"><?php echo esc_html__( 'Republish story', 'minnpost-largo' ); ?></a></h3>
-				<?php endif; ?>
-				</td>
-			</tr>
-		</table>
+		<?php if ( class_exists( 'Republication_Tracker_Tool' ) ) : ?>
+			<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="h3 a-entry-republish">
+				<tr>
+					<td>
+						<h3><a href="<?php echo get_the_permalink() . '#show-republish'; ?>"><?php echo esc_html__( 'Republish story', 'minnpost-largo' ); ?></a></h3>
+					</td>
+				</tr>
+			</table>
+		<?php endif; ?>
 	</div>
 	[outlook]
 						</td>
