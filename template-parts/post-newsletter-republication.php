@@ -1,3 +1,12 @@
+<?php
+/**
+ * Template part for displaying posts inside the republication newsletter template
+ *
+ * @link https://codex.wordpress.org/Template_Hierarchy
+ *
+ * @package MinnPost Largo
+ */
+?>
 <div class="m-post m-post-newsletter m-post-newsletter-<?php echo $args['newsletter_type']; ?><?php echo isset( $args['extra_class'] ) ? $args['extra_class'] : ''; ?>">
 	[outlook]
 	<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
