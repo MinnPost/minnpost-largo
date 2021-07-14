@@ -95,30 +95,6 @@ if ( function_exists( 'create_newsletter' ) ) :
 		);
 		$newsletter_setup->add_field(
 			array(
-				'name'       => __( 'Show Main Category for Republishable Stories?', 'minnpost-largo' ),
-				'id'         => $prefix . 'show_department_for_republish_stories',
-				'type'       => 'checkbox',
-				'desc'       => '',
-				'attributes' => array(
-					'data-conditional-id'    => $prefix . 'type',
-					'data-conditional-value' => 'republication',
-				),
-			)
-		);
-		$newsletter_setup->add_field(
-			array(
-				'name'       => __( 'Show Thumbnail Image for Republishable Stories?', 'minnpost-largo' ),
-				'id'         => $prefix . 'show_image_for_republish_stories',
-				'type'       => 'checkbox',
-				'desc'       => '',
-				'attributes' => array(
-					'data-conditional-id'    => $prefix . 'type',
-					'data-conditional-value' => 'republication',
-				),
-			)
-		);
-		$newsletter_setup->add_field(
-			array(
 				'name'       => __( 'Remove author(s) from display?', 'minnpost-largo' ),
 				'id'         => '_mp_remove_author_from_display',
 				'type'       => 'checkbox',
@@ -127,6 +103,19 @@ if ( function_exists( 'create_newsletter' ) ) :
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => 'daily_coronavirus',
 				),
+			)
+		);
+
+		/**
+		 * Teaser options
+		 */
+		$newsletter_teaser_options = new_cmb2_box(
+			array(
+				'id'           => $prefix . 'teaser_options',
+				'title'        => __( 'Teaser Options', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'after_title',
+				'closed'       => true,
 			)
 		);
 
@@ -477,6 +466,71 @@ if ( function_exists( 'create_newsletter' ) ) :
 			)
 		);
 
+		$republication_section = new_cmb2_box(
+			array(
+				'id'           => $prefix . 'republication_section',
+				'title'        => __( 'Republication Newsletter Content', 'minnpost-largo' ),
+				'object_types' => array( $object_type ), // Post type
+				'context'      => 'after_title',
+				'priority'     => 'high',
+				'show_names'   => true, // Show field names on the left
+				'closed'       => true,
+				'attributes'   => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'republication' ) ),
+				),
+			)
+		);
+		$republication_section->add_field(
+			array(
+				'name'       => __( 'Show Thumbnail Image for Republishable Stories?', 'minnpost-largo' ),
+				'id'         => $prefix . 'show_image_for_republish_stories',
+				'type'       => 'checkbox',
+				'desc'       => '',
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => 'republication',
+				),
+			)
+		);
+		$republication_section->add_field(
+			minnpost_post_search_field(
+				array(
+					'name'       => __( 'Republishable Stories', 'minnpost-largo' ),
+					'desc'       => __( 'Search for a post here.', 'minnpost-largo' ),
+					'id'         => $prefix . 'republishable_posts',
+					'query_args' => array(
+						'orderby'     => 'modified',
+						'order'       => 'DESC',
+						'post_status' => 'any',
+					),
+					'attributes' => array(
+						'data-conditional-id'    => $prefix . 'type',
+						'data-conditional-value' => 'republication',
+					),
+				),
+				'post_search_ajax'
+			)
+		);
+		$republication_section->add_field(
+			array(
+				'name'        => __( 'Preview of Upcoming Stories', 'minnpost-largo' ),
+				'id'          => $prefix . 'upcoming',
+				'type'        => 'wysiwyg',
+				'options'     => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'textarea_rows' => 5,
+					'teeny'         => true, // output the minimal editor config used in Press This
+				),
+				'desc'        => __( 'Use this to describe upcoming stories for this edition.', 'minnpost-largo' ),
+				'attributes'  => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => 'republication',
+				),
+				'after_field' => '<input name="asdf" type="hidden" data-conditional-id="' . $prefix . 'type' . '" data-conditional-value="republication">', // hack to fix the condtional display
+			)
+		);
+
 		// legacy
 		$legacy_newsletter_posts = new_cmb2_box(
 			array(
@@ -550,43 +604,6 @@ if ( function_exists( 'create_newsletter' ) ) :
 				),
 			)
 		);
-		$legacy_newsletter_posts->add_field(
-			minnpost_post_search_field(
-				array(
-					'name'       => __( 'Republishable Stories', 'minnpost-largo' ),
-					'desc'       => __( 'Search for a post here.', 'minnpost-largo' ),
-					'id'         => $prefix . 'republishable_posts',
-					'query_args' => array(
-						'orderby'     => 'modified',
-						'order'       => 'DESC',
-						'post_status' => 'any',
-					),
-					'attributes' => array(
-						'data-conditional-id'    => $prefix . 'type',
-						'data-conditional-value' => 'republication',
-					),
-				),
-				'post_search_ajax'
-			)
-		);
-		$legacy_newsletter_posts->add_field(
-			array(
-				'name'        => __( 'Preview of Upcoming Stories', 'minnpost-largo' ),
-				'id'          => $prefix . 'upcoming',
-				'type'        => 'wysiwyg',
-				'options'     => array(
-					'media_buttons' => false, // show insert/upload button(s)
-					'textarea_rows' => 5,
-					'teeny'         => true, // output the minimal editor config used in Press This
-				),
-				'desc'        => __( 'Use this to describe upcoming stories for this edition.', 'minnpost-largo' ),
-				'attributes'  => array(
-					'data-conditional-id'    => $prefix . 'type',
-					'data-conditional-value' => 'republication',
-				),
-				'after_field' => '<input name="asdf" type="hidden" data-conditional-id="' . $prefix . 'type' . '" data-conditional-value="republication">', // hack to fix the condtional display
-			)
-		);
 	}
 endif;
 
@@ -596,11 +613,12 @@ function minnpost_largo_after_newsletter_section_output( $cmb_id, $object_id, $o
 	$prefix      = '_mp_newsletter_';
 	// Only output above the _yourprefix_demo_metabox metabox.
 	$newsletter_sections = array(
-		$prefix . 'top_section'     => esc_html__( 'The default behavior for this section is: 1) Image size is large. 2) There is a teaser on the story. Use the Newsletter Settings section of the story to change this behavior.', 'minnpost-largo' ),
-		$prefix . 'news_section'    => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
-		$prefix . 'opinion_section' => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
-		$prefix . 'arts_section'    => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
-		$prefix . 'editors_section' => esc_html__( 'The default behavior for this section is: stories will display with no image or teaser. The "Use Other Section Settings" checkbox will cause this section to behave, by default, like the above sections instead. Then you can use the Newsletter Settings section of each story to change how that story behaves.', 'minnpost-largo' ),
+		$prefix . 'top_section'       => esc_html__( 'The default behavior for this section is: 1) Image size is large. 2) There is a teaser on the story. Use the Newsletter Settings section of the story to change this behavior.', 'minnpost-largo' ),
+		$prefix . 'news_section'      => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
+		$prefix . 'opinion_section'   => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
+		$prefix . 'arts_section'      => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
+		$prefix . 'editors_section'   => esc_html__( 'The default behavior for this section is: stories will display with no image or teaser. The "Use Other Section Settings" checkbox will cause this section to behave, by default, like the above sections instead. Then you can use the Newsletter Settings section of each story to change how that story behaves.', 'minnpost-largo' ),
+		//$prefix . 'republish_section' => esc_html__( 'The default behavior for this section is: stories will display with a small thumbnail image. The "Use Other Section Settings" checkbox will cause this section to behave, by default, like the above sections instead. Then you can use the Newsletter Settings section of each story to change how that story behaves.', 'minnpost-largo' ),
 	);
 	if ( ! in_array( $cmb_id, array_keys( $newsletter_sections ), true ) ) {
 		return;
