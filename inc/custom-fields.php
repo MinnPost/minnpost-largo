@@ -46,7 +46,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 		$prefix      = '_mp_newsletter_';
 
 		/**
-		 * Fields above body
+		 * Newsletter setup
 		 */
 		$newsletter_setup = new_cmb2_box(
 			array(
@@ -206,7 +206,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'id'           => $prefix . 'top_section',
 				'title'        => __( 'Top Post', 'minnpost-largo' ),
 				'object_types' => array( $object_type ), // Post type
-				'context'      => 'normal',
+				'context'      => 'after_title',
 				'priority'     => 'high',
 				'show_names'   => true, // Show field names on the left
 				'attributes'   => array(
@@ -265,7 +265,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'id'           => $prefix . 'news_section',
 				'title'        => __( 'News Posts', 'minnpost-largo' ),
 				'object_types' => array( $object_type ), // Post type
-				'context'      => 'normal',
+				'context'      => 'after_title',
 				'priority'     => 'high',
 				'show_names'   => true, // Show field names on the left
 				'attributes' => array(
@@ -324,7 +324,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'id'           => $prefix . 'opinion_section',
 				'title'        => __( 'Opinion Posts', 'minnpost-largo' ),
 				'object_types' => array( $object_type ), // Post type
-				'context'      => 'normal',
+				'context'      => 'after_title',
 				'priority'     => 'high',
 				'show_names'   => true, // Show field names on the left
 				'attributes' => array(
@@ -383,7 +383,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'id'           => $prefix . 'editors_section',
 				'title'        => __( 'Editor\'s Picks Posts', 'minnpost-largo' ),
 				'object_types' => array( $object_type ), // Post type
-				'context'      => 'normal',
+				'context'      => 'after_title',
 				'priority'     => 'high',
 				'show_names'   => true, // Show field names on the left
 				'attributes' => array(
@@ -438,18 +438,26 @@ if ( function_exists( 'create_newsletter' ) ) :
 		);
 		$editors_section->add_field(
 			array(
-				'name' => __( 'Use Other Section Settings', 'minnpost-largo' ),
-				'id'   => $prefix . 'editors_use_other_section_settings',
-				'type' => 'checkbox',
-				'desc' => __( 'If checked, this section will behave like the above sections instead. Individual stories can override this behavior.', 'minnpost-largo' ),
+				'name'       => __( 'Use Other Section Settings', 'minnpost-largo' ),
+				'id'         => $prefix . 'editors_use_other_section_settings',
+				'type'       => 'checkbox',
+				'desc'       => __( 'If checked, this section will behave like the above sections instead. Individual stories can override this behavior.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
 			)
 		);
 		$editors_section->add_field(
 			array(
-				'name' => __( 'Remove This Section', 'minnpost-largo' ),
-				'id'   => $prefix . 'remove_editors_section',
-				'type' => 'checkbox',
-				'desc' => __( 'If checked, this section will be removed from this edition of this newsletter, regardless of what posts are in the zone or the fields above.', 'minnpost-largo' ),
+				'name'       => __( 'Remove This Section', 'minnpost-largo' ),
+				'id'         => $prefix . 'remove_editors_section',
+				'type'       => 'checkbox',
+				'desc'       => __( 'If checked, this section will be removed from this edition of this newsletter, regardless of what posts are in the zone or the fields above.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+				),
 			)
 		);
 
