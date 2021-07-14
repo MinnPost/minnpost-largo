@@ -148,7 +148,7 @@
 
 		<?php
 		// default value for the republication newsletter summary
-		$content = 'Here\'s a look at MinnPost\'s plans for Monday. Check www.minnpost.com for changes. All MinnPost content is available for you to republish at no charge.';
+		$content = minnpost_get_republication_newsletter_teaser();
 		// allow it to be overridden by the post content field
 		if ( '' !== get_the_content() ) {
 			$content = get_the_content();
