@@ -1710,8 +1710,15 @@ if ( ! function_exists( 'minnpost_get_newsletter_teaser' ) ) :
 		if ( '' === $post_id ) {
 			$post_id = get_the_ID();
 		}
-		$teaser      = get_post_meta( $post_id, '_mp_newsletter_preview_text', true );
-		$teaser_text = get_post_meta( $post_id, '_mp_newsletter_newsletter_teaser', true );
+		$teaser          = get_post_meta( $post_id, '_mp_newsletter_preview_text', true );
+		$teaser_text     = get_post_meta( $post_id, '_mp_newsletter_newsletter_teaser', true );
+		$newsletter_type = minnpost_get_newsletter_type( $post_id );
+		if ( 'republication' === $newsletter_type ) {
+			$republication_newsletter_override_teaser = get_post_meta( get_the_ID(), '_mp_newsletter_republication_newsletter_override_teaser', true );
+			if ( 'on' !== $republication_newsletter_override_teaser ) {
+				$teaser = minnpost_get_republication_newsletter_teaser( $post_id );
+			}
+		}
 		if ( '' !== $teaser_text ) {
 			$teaser = $teaser_text;
 		}
@@ -1719,6 +1726,23 @@ if ( ! function_exists( 'minnpost_get_newsletter_teaser' ) ) :
 			$teaser = apply_filters( 'the_content', $teaser );
 		}
 		return $teaser;
+	}
+endif;
+
+/**
+* Default teaser text for a republication newsletter
+*
+* @param int $post_id
+* @return string $teaser
+*
+*/
+if ( ! function_exists( 'minnpost_get_republication_newsletter_teaser' ) ) :
+	function minnpost_get_republication_newsletter_teaser( $post_id = '' ) {
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
+		$default_teaser = esc_html__( "Here's a look at MinnPost's plans for Monday. Check www.minnpost.com for changes. All MinnPost content is available for you to republish at no charge.", 'minnpost-largo' );
+		return $default_teaser;
 	}
 endif;
 
@@ -1779,7 +1803,12 @@ if ( ! function_exists( 'minnpost_get_newsletter_logo_url' ) ) :
 					$filename = 'newsletter-coronavirus-500' . $filename_suffix . '.png';
 					break;
 				case 'republication':
-					$filename = 'republication-header-260x50' . $filename_suffix . '.png';
+					$is_legacy = apply_filters( 'minnpost_largo_newsletter_legacy', false, '', get_the_ID() );
+					if ( true === $is_legacy ) {
+						$filename = 'republication-header-260x50' . $filename_suffix . '.png';
+					} else {
+						$filename = 'newsletter-logo-mponly' . $filename_suffix . '.png';
+					}
 					break;
 				default:
 					$filename = 'newsletter-logo-daily' . $filename_suffix . '.png';

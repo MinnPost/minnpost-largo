@@ -69,6 +69,22 @@ if ( function_exists( 'create_newsletter' ) ) :
 		);
 		$newsletter_setup->add_field(
 			array(
+				'name'       => __( 'Display date, welcome message, and preview text or teaser instead of default republication teaser?', 'minnpost-largo' ),
+				'id'         => $prefix . 'republication_newsletter_override_teaser',
+				'type'       => 'checkbox',
+				'desc'       => sprintf(
+					// translators: 1) the default republication teaser.
+					'<p>' . esc_html__( 'The default republication teaser and preview text is: ', 'minnpost-largo' ) . '</p>' . '<p>%1$s</p>' . '<p>' . esc_html__( 'If you check this box, this edition of the republication newsletter will instead use the preview text and teaser settings that the other newsletter types use.', 'minnpost-largo' ) . '</p>',
+					( function_exists( 'minnpost_get_republication_newsletter_teaser' ) ? minnpost_get_republication_newsletter_teaser() : '' )
+				),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => 'republication',
+				),
+			)
+		);
+		$newsletter_setup->add_field(
+			array(
 				'name'         => __( 'Preview Text', 'minnpost-largo' ),
 				'id'           => $prefix . 'preview_text',
 				'type'         => 'textarea_small',

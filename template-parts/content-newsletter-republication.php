@@ -30,7 +30,7 @@
 										<tr>
 											<td class="outlook-inner-padding">
 						[/outlook]
-						<div class="o-column a-logo">
+						<div class="o-column a-logo a-logo-fullwidth">
 							<div class="item-contents">
 								<img src="<?php minnpost_newsletter_logo( get_the_ID(), false ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="light-img">
 								<?php
@@ -45,15 +45,6 @@
 						</div>
 						[outlook]
 									</td>
-									<td class="o-column m-support-cta">
-						[/outlook]
-						<div class="o-column m-support-cta">
-							<div class="item-contents">
-								<?php do_action( 'minnpost_membership_email_header' ); ?>
-							</div>
-						</div>
-						[outlook]
-											</td>
 										</tr>
 									</table>
 								</td>
@@ -75,22 +66,27 @@
 						<div class="item-contents">
 							<?php
 							// teaser text
-							$do_not_show_automatic_teaser_items = get_post_meta( get_the_ID(), '_mp_newsletter_do_not_show_automatic_teaser_items', true );
-							$do_not_show_teaser_text            = get_post_meta( get_the_ID(), '_mp_newsletter_do_not_show_teaser_text', true );
+							$republication_newsletter_override_teaser = get_post_meta( get_the_ID(), '_mp_newsletter_republication_newsletter_override_teaser', true );
+							$do_not_show_automatic_teaser_items       = get_post_meta( get_the_ID(), '_mp_newsletter_do_not_show_automatic_teaser_items', true );
+							$do_not_show_teaser_text                  = get_post_meta( get_the_ID(), '_mp_newsletter_do_not_show_teaser_text', true );
 							if ( 'on' !== $do_not_show_automatic_teaser_items || 'on' !== $do_not_show_teaser_text ) :
 								?>
 								<div class="o-row m-teaser">
 								<?php
 							endif;
 							?>
-							<?php if ( 'on' !== $do_not_show_automatic_teaser_items ) : ?>
-								<?php minnpost_newsletter_today(); ?>
-							<?php endif; ?>
-							<?php if ( 'on' !== $do_not_show_teaser_text ) : ?>
+							<?php if ( 'on' !== $republication_newsletter_override_teaser ) : ?>
 								<?php minnpost_newsletter_teaser(); ?>
-							<?php endif; ?>
-							<?php if ( 'on' !== $do_not_show_automatic_teaser_items ) : ?>
-								<?php minnpost_newsletter_type_welcome(); ?>
+							<?php else : ?>
+								<?php if ( 'on' !== $do_not_show_automatic_teaser_items ) : ?>
+									<?php minnpost_newsletter_today(); ?>
+								<?php endif; ?>
+								<?php if ( 'on' !== $do_not_show_teaser_text ) : ?>
+									<?php minnpost_newsletter_teaser(); ?>
+								<?php endif; ?>
+								<?php if ( 'on' !== $do_not_show_automatic_teaser_items ) : ?>
+									<?php minnpost_newsletter_type_welcome(); ?>
+								<?php endif; ?>
 							<?php endif; ?>
 							<?php
 							if ( 'on' !== $do_not_show_automatic_teaser_items || 'on' !== $do_not_show_teaser_text ) :
@@ -123,94 +119,6 @@
 					</div>
 
 					<?php do_action( 'wp_message_inserter', 'above_email_articles', 'email' ); ?>
-
-
-					<?php
-					// top post section
-					$section               = 'top';
-					$top_query             = minnpost_newsletter_get_section_query( $section );
-					$args['image_size']    = 'full';
-					$args['section']       = $section;
-					$args['show_category'] = true;
-					$total_post_count      = 0;
-					$this_section_post     = 0;
-					?>
-					<?php if ( $top_query->have_posts() ) : ?>
-						<?php
-						$post_count = $top_query->post_count;
-						$total_post_count++;
-						$this_section_post++;
-						?>
-						<div class="o-single-column o-section-top-story">
-							[outlook]
-							<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
-								<tr>
-									<td align="center" class="outlook-outer-padding">
-										<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
-											<tr>
-												<td class="outlook-inner-padding">
-							[/outlook]
-							<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
-								<table role="presentation" width="100%" class="h2 a-section-title">
-									<tr>
-										<td>
-											<h2><?php echo minnpost_newsletter_get_section_title( $section ); ?></h2>
-										</td>
-									</tr>
-								</table>
-							<?php endif; ?>
-							<?php
-							while ( $top_query->have_posts() ) :
-								$top_query->the_post();
-								set_query_var( 'current_post', $top_query->current_post );
-								$args['post_id'] = $id;
-								// with newsletters, the individual post can override the image size for the newsletter section the post is in.
-								$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
-								if ( '' !== $override_size && 'default' !== $override_size ) {
-									$args['image_size'] = $override_size;
-								}
-								$args['extra_class'] = '';
-								if ( $post_count === $this_section_post ) {
-									$args['extra_class'] = ' m-post-newsletter-last';
-								}
-								get_template_part( 'template-parts/post-newsletter-fullwidth', $args['newsletter_type'], $args );
-							endwhile;
-							wp_reset_postdata();
-							?>
-							[outlook]
-												</td>
-											</tr>
-										</table>
-									</td>
-								</tr>
-							</table>
-							[/outlook]
-						</div>
-					<?php endif; ?>
-
-					<?php if ( 1 === $total_post_count && isset( $ads[0] ) && ! empty( $ads[0] ) ) : ?>
-						<div class="o-single-column m-newsletter-ad-region">
-							[outlook]
-							<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
-								<tr>
-									<td align="center" class="outlook-outer-padding">
-										<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
-											<tr>
-												<td class="outlook-inner-padding">
-							[/outlook]
-							<div class="item-contents">
-								<?php echo $ads[0]; ?>
-							</div>
-							[outlook]
-												</td>
-											</tr>
-										</table>
-									</td>
-								</tr>
-							</table>
-							[/outlook]
-						</div>
-					<?php endif; ?>
 
 					<?php
 					// republishable post section
@@ -270,7 +178,7 @@
 								if ( '' !== $override_size && 'default' !== $override_size ) {
 									$args['image_size'] = $override_size;
 								}
-								get_template_part( 'template-parts/post-newsletter-fullwidth', $args['newsletter_type'], $args );
+								get_template_part( 'template-parts/post-newsletter', $args['newsletter_type'], $args );
 							endwhile;
 							wp_reset_postdata();
 							?>
