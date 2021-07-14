@@ -157,7 +157,6 @@
 							<?php
 							while ( $republishable_query->have_posts() ) :
 								$this_section_post++;
-								$total_post_count++;
 								$republishable_query->the_post();
 								set_query_var( 'current_post', $republishable_query->current_post );
 								$args['post_id'] = $id;
