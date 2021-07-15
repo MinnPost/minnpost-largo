@@ -80,6 +80,92 @@ if ( ! function_exists( 'minnpost_newsletter_default_order' ) ) :
 endif;
 
 /**
+* Add and reorder columns on the post table for messages
+*
+* @param array $columns
+* @return array $columns
+*/
+if ( ! function_exists( 'minnpost_filter_newsletter_columns' ) ) :
+	add_filter( 'manage_newsletter_posts_columns', 'minnpost_filter_newsletter_columns' );
+	function minnpost_filter_newsletter_columns( $columns ) {
+		$columns['type'] = __( 'Newsletter Type', 'minnpost-largo' );
+		$column_order    = array( 'cb', 'title', 'type', 'coauthors', 'date' );
+		foreach ( $column_order as $column_name ) {
+			$new_columns[ $column_name ] = $columns[ $column_name ];
+		}
+		return $new_columns;
+	}
+endif;
+
+/**
+* Populate columns on the post table for messages
+*
+* @param string $column
+* @param int $post_id
+*/
+if ( ! function_exists( 'minnpost_newsletter_column' ) ) :
+	add_action( 'manage_newsletter_posts_custom_column', 'minnpost_newsletter_column', 10, 2 );
+	function minnpost_newsletter_column( $column, $post_id ) {
+		// message type
+		if ( 'type' === $column ) {
+			$type = ( '' !== get_post_meta( $post_id, '_mp_newsletter_type', true ) ) ? get_post_meta( $post_id, '_mp_newsletter_type', true ) : '';
+			if ( '' !== $type && function_exists( 'minnpost_largo_email_types' ) ) {
+				$type = minnpost_largo_email_types( $type );
+			}
+			echo $type;
+		}
+	}
+endif;
+
+/**
+* Add and reorder columns on the post table for messages
+*
+* @param array $columns
+* @return array $columns
+*/
+if ( ! function_exists( 'minnpost_newsletter_sortable_columns' ) ) :
+	add_filter( 'manage_edit-newsletter_sortable_columns', 'minnpost_newsletter_sortable_columns' );
+	function minnpost_newsletter_sortable_columns( $columns ) {
+		$columns['type'] = 'type';
+		return $columns;
+	}
+endif;
+
+/**
+* Order column data on the post table for messages
+*
+* @param object $query
+*/
+if ( ! function_exists( 'minnpost_newsletter_posts_orderby' ) ) :
+	add_action( 'pre_get_posts', 'minnpost_newsletter_posts_orderby' );
+	function minnpost_newsletter_posts_orderby( $query ) {
+		if ( ! is_admin() || ! $query->is_main_query() ) {
+			return;
+		}
+
+		// sort by type
+		if ( 'type' === $query->get( 'orderby' ) ) {
+			$query->set(
+				'meta_query',
+				array(
+					'relation' => 'OR',
+					array(
+						'key'     => '_mp_newsletter_type',
+						'compare' => 'EXISTS',
+					),
+					array(
+						'key'     => '_mp_newsletter_type',
+						'compare' => 'NOT EXISTS',
+						'value'   => 'bug #23268', // arbitrary value
+					),
+				)
+			);
+			$query->set( 'orderby', 'meta_value' );
+		}
+	}
+endif;
+
+/**
 * Add Co-Authors-Plus support to Newsletters
 *
 * @param array $post_types
