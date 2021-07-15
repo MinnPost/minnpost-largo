@@ -139,7 +139,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'desc'       => __( 'Use this field if you need a longer teaser or formatting in the teaser. Note: this will not be displayed in the "preview text" that is shown after the subject line in some email clients. You still need to fill out the "Preview and teaser text" field above to have preview text.', 'minnpost-largo' ),
 				'attributes' => array(
 					'data-conditional-id'    => $prefix . 'type',
-					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review', 'artscape' ) ),
 				),
 			)
 		);
@@ -583,7 +583,6 @@ function minnpost_largo_after_newsletter_section_output( $cmb_id, $object_id, $o
 		$prefix . 'top_section'     => esc_html__( 'The default behavior for this section is: 1) Image size is large. 2) There is a teaser on the story. Use the Newsletter Settings section of the story to change this behavior.', 'minnpost-largo' ),
 		$prefix . 'news_section'    => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
 		$prefix . 'opinion_section' => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
-		$prefix . 'arts_section'    => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
 		$prefix . 'editors_section' => esc_html__( 'The default behavior for this section is: stories will display with no image or teaser. The "Use Other Section Settings" checkbox will cause this section to behave, by default, like the above sections instead. Then you can use the Newsletter Settings section of each story to change how that story behaves.', 'minnpost-largo' ),
 	);
 	if ( ! in_array( $cmb_id, array_keys( $newsletter_sections ), true ) ) {
@@ -3323,6 +3322,7 @@ if ( ! function_exists( 'minnpost_largo_email_types' ) ) :
 			'sunday_review'     => __( 'Sunday Review', 'minnpost-largo' ),
 			'dc_memo'           => __( 'D.C. Memo', 'minnpost-largo' ),
 			'daily_coronavirus' => __( 'Daily Coronavirus Update', 'minnpost-largo' ),
+			'artscape'          => __( 'Artscape', 'minnpost-largo' ),
 			'republication'     => __( 'Republication', 'minnpost-largo' ),
 		);
 		if ( '' !== $type ) {
