@@ -483,13 +483,17 @@ if ( function_exists( 'create_newsletter' ) ) :
 		);
 		$republication_section->add_field(
 			array(
-				'name'       => __( 'Show Thumbnail Image for Republishable Stories?', 'minnpost-largo' ),
-				'id'         => $prefix . 'show_image_for_republish_stories',
-				'type'       => 'checkbox',
-				'desc'       => '',
-				'attributes' => array(
-					'data-conditional-id'    => $prefix . 'type',
-					'data-conditional-value' => 'republication',
+				'name'             => __( 'Image Size', 'minnpost-largo' ),
+				'id'               => $prefix . 'image_for_republish_stories',
+				'type'             => 'select',
+				'show_option_none' => false,
+				'desc'             => __( 'The value for this field will be used for image placement on republication newsletters.', 'minnpost-largo' ),
+				'default'          => 'thumb',
+				'options'          => array(
+					'none'       => __( 'No images', 'minnpost-largo' ),
+					'thumb'      => __( 'Thumbnail on all stories', 'minnpost-largo' ),
+					'full'       => __( 'Large on all stories', 'minnpost-largo' ),
+					'full-first' => __( 'Large on the first story, none on subsequent stories', 'minnpost-largo' ),
 				),
 			)
 		);
@@ -613,12 +617,11 @@ function minnpost_largo_after_newsletter_section_output( $cmb_id, $object_id, $o
 	$prefix      = '_mp_newsletter_';
 	// Only output above the _yourprefix_demo_metabox metabox.
 	$newsletter_sections = array(
-		$prefix . 'top_section'       => esc_html__( 'The default behavior for this section is: 1) Image size is large. 2) There is a teaser on the story. Use the Newsletter Settings section of the story to change this behavior.', 'minnpost-largo' ),
-		$prefix . 'news_section'      => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
-		$prefix . 'opinion_section'   => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
-		$prefix . 'arts_section'      => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
-		$prefix . 'editors_section'   => esc_html__( 'The default behavior for this section is: stories will display with no image or teaser. The "Use Other Section Settings" checkbox will cause this section to behave, by default, like the above sections instead. Then you can use the Newsletter Settings section of each story to change how that story behaves.', 'minnpost-largo' ),
-		//$prefix . 'republish_section' => esc_html__( 'The default behavior for this section is: stories will display with a small thumbnail image. The "Use Other Section Settings" checkbox will cause this section to behave, by default, like the above sections instead. Then you can use the Newsletter Settings section of each story to change how that story behaves.', 'minnpost-largo' ),
+		$prefix . 'top_section'     => esc_html__( 'The default behavior for this section is: 1) Image size is large. 2) There is a teaser on the story. Use the Newsletter Settings section of the story to change this behavior.', 'minnpost-largo' ),
+		$prefix . 'news_section'    => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
+		$prefix . 'opinion_section' => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
+		$prefix . 'arts_section'    => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
+		$prefix . 'editors_section' => esc_html__( 'The default behavior for this section is: stories will display with no image or teaser. The "Use Other Section Settings" checkbox will cause this section to behave, by default, like the above sections instead. Then you can use the Newsletter Settings section of each story to change how that story behaves.', 'minnpost-largo' ),
 	);
 	if ( ! in_array( $cmb_id, array_keys( $newsletter_sections ), true ) ) {
 		return;

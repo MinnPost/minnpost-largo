@@ -161,12 +161,19 @@
 								$this_section_post++;
 								$republishable_query->the_post();
 								set_query_var( 'current_post', $republishable_query->current_post );
-								$args['show_thumbnail_image'] = get_post_meta( $newsletter_id, '_mp_newsletter_show_image_for_republish_stories', true );
-								$args['post_id']              = $id;
-								if ( 1 !== $this_section_post || 'on' === $args['show_thumbnail_image'] ) {
-									$args['image_size'] = 'none';
+								$args['image_for_republish_stories'] = get_post_meta( $newsletter_id, '_mp_newsletter_image_for_republish_stories', true );
+								$args['post_id']                     = $id;
+								// if there's no image, or if it's the first story and we want to treat it differently.
+								if ( '' !== $args['image_for_republish_stories'] ) {
+									if ( 'none' === $args['image_for_republish_stories'] || ( 1 !== $this_section_post && 'full-first' === $args['image_for_republish_stories'] ) ) {
+										$args['image_size'] = 'none';
+									} elseif ( 'thumb' === $args['image_for_republish_stories'] ) {
+										$args['image_size'] = 'thumb';
+									} else {
+										$args['image_size'] = 'full';
+									}
 								} else {
-									$args['image_size'] = 'full';
+									$args['image_size'] = 'thumb';
 								}
 								$args['extra_class'] = '';
 								if ( $post_count === $this_section_post ) {

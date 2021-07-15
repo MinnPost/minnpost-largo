@@ -17,7 +17,7 @@
 						<td class="outlook-inner-padding">
 	[/outlook]
 	<div class="post-contents">
-		<?php if ( 'none' !== $args['image_size'] ) : ?>
+		<?php if ( 'full' === $args['image_size'] ) : ?>
 			<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="m-post-image m-post-image-<?php echo $args['image_size']; ?>">
 				<tr>
 					<td>
@@ -68,7 +68,7 @@
 								<td valign="top">
 					[not-outlook]
 					<?php
-					if ( 'on' === $args['show_thumbnail_image'] ) {
+					if ( 'thumb' === $args['image_size'] ) {
 						minnpost_post_image(
 							'newsletter-thumbnail',
 							array(
