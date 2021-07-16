@@ -270,7 +270,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'show_names'   => true, // Show field names on the left
 				'attributes' => array(
 					'data-conditional-id'    => $prefix . 'type',
-					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review', 'artscape' ) ),
 				),
 			)
 		);
@@ -300,7 +300,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 					),
 					'attributes' => array(
 						'data-conditional-id'    => $prefix . 'type',
-						'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+						'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review', 'artscape' ) ),
 					),
 				),
 				'post_search_ajax'
