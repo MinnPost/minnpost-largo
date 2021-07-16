@@ -1024,6 +1024,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 					'default'        => __( 'Default for the section', 'minnpost-largo' ),
 					'feature-medium' => __( 'Medium', 'minnpost-largo' ),
 					'feature-large'  => __( 'Large', 'minnpost-largo' ),
+					'full'           => __( 'Full size', 'minnpost-largo' ),
 				),
 			)
 		);
