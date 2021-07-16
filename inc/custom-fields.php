@@ -580,9 +580,9 @@ function minnpost_largo_after_newsletter_section_output( $cmb_id, $object_id, $o
 	$prefix      = '_mp_newsletter_';
 	// Only output above the _yourprefix_demo_metabox metabox.
 	$newsletter_sections = array(
-		$prefix . 'top_section'     => esc_html__( 'The default behavior for this section is: 1) Image size is large. 2) There is a teaser on the story. Use the Newsletter Settings section of the story to change this behavior.', 'minnpost-largo' ),
-		$prefix . 'news_section'    => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
-		$prefix . 'opinion_section' => esc_html__( 'The default behavior for this section is: 1) Image size is big on the first story in a section. 2) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
+		$prefix . 'top_section'     => esc_html__( 'The default behavior for this section is: 1) Image is full size. 2) There is a teaser on the story. Use the Newsletter Settings section of the story to change this behavior.', 'minnpost-largo' ),
+		$prefix . 'news_section'    => esc_html__( 'The default behavior for this section is: 1) Image is full size on the first story in a section. 2) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
+		$prefix . 'opinion_section' => esc_html__( 'The default behavior for this section is: 1) Image is full size on the first story in a section. 2) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
 		$prefix . 'editors_section' => esc_html__( 'The default behavior for this section is: stories will display with no image or teaser. The "Use Other Section Settings" checkbox will cause this section to behave, by default, like the above sections instead. Then you can use the Newsletter Settings section of each story to change how that story behaves.', 'minnpost-largo' ),
 	);
 	if ( ! in_array( $cmb_id, array_keys( $newsletter_sections ), true ) ) {
@@ -1016,13 +1016,12 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'id'               => '_mp_post_newsletter_image_size',
 				'type'             => 'select',
 				'show_option_none' => false,
-				'desc'             => __( 'If selected, the image size will be used for this post regardless of where it is in the newsletter post order. By default, the Editor\'s Picks section has no image. In other sections, the default behavior is to use the Large image for the first post, then to use Medium for subsequent posts.', 'minnpost-largo' ),
+				'desc'             => __( 'If selected, the image size will be used for this post regardless of where it is in the newsletter post order. By default, the Editor\'s Picks section has no image. In other sections, the default behavior is to use the Full size image for the first post, then to use no image for subsequent posts.', 'minnpost-largo' ),
 				'default'          => 'default',
 				'options'          => array(
-					'none'           => __( 'None', 'minnpost-largo' ),
-					'default'        => __( 'Default for the section', 'minnpost-largo' ),
-					'feature-medium' => __( 'Medium', 'minnpost-largo' ),
-					'feature-large'  => __( 'Large', 'minnpost-largo' ),
+					'none'    => __( 'None', 'minnpost-largo' ),
+					'default' => __( 'Default for the section', 'minnpost-largo' ),
+					'full'    => __( 'Full size', 'minnpost-largo' ),
 				),
 			)
 		);
