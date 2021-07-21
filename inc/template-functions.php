@@ -656,7 +656,7 @@ if ( ! function_exists( 'minnpost_largo_get_excluded_related_posts' ) ) :
 			// load all posts that start with "The daily coronavirus update: "
 			$coronavirus_update_query = new WP_Query(
 				array(
-					'title_starts_with' => 'The daily coronavirus update: ',
+					'title_starts_with' => array( 'The daily coronavirus update: ', 'Coronavirus in Minnesota: ' ),
 					'fields'            => 'ids',
 					'posts_per_page'    => -1,
 					'post_status'       => 'publish',
