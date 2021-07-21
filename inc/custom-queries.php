@@ -255,7 +255,18 @@ if ( ! function_exists( 'minnpost_query_title_starts_with' ) ) :
 		global $wpdb;
 		$title_starts_with = esc_sql( $query->get( 'title_starts_with' ) );
 		if ( $title_starts_with ) {
-			$where .= " AND $wpdb->posts.post_title LIKE '$title_starts_with%'";
+			if ( is_array( $title_starts_with ) ) {
+				$where .= 'AND (';
+				foreach ( $title_starts_with as $title ) {
+					$where .= "$wpdb->posts.post_title LIKE '$title%'";
+					if ( end( $title_starts_with ) !== $title ) {
+						$where .= ' OR ';
+					}
+				}
+				$where .= ')';
+			} else {
+				$where .= " AND $wpdb->posts.post_title LIKE '$title_starts_with%'";
+			}
 		}
 		return $where;
 	}
