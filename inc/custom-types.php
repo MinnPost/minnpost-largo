@@ -127,11 +127,10 @@ if ( ! function_exists( 'minnpost_coauthors_in_rss' ) ) :
 endif;
 
 /**
-* Register custom post type 'event_website_page'
+* Register custom post type 'festival'
 *
 */
-if ( ! function_exists( 'create_event_website_page' ) ) :
-
+if ( ! function_exists( 'create_festival_page' ) ) :
 	add_action( 'init', 'create_festival_page' );
 	function create_festival_page() {
 		$festival_taxonomy = 'tribe_events_cat';
@@ -165,15 +164,15 @@ if ( ! function_exists( 'create_event_website_page' ) ) :
 			'filter_items_list'     => __( 'Filter festival page list', 'minnpost-largo' ),
 		);
 		$capabilities      = array(
-			'edit_post'          => 'edit_event_website_page',
-			'read_post'          => 'read_event_website_page',
-			'delete_post'        => 'delete_event_website_page',
-			'delete_posts'       => 'delete_event_website_pages',
-			'edit_posts'         => 'edit_event_website_pages',
-			'edit_others_posts'  => 'edit_others_event_website_pages',
-			'publish_posts'      => 'publish_event_website_pages',
-			'read_private_posts' => 'read_private_event_website_pages',
-			'create_posts'       => 'create_event_website_pages',
+			'edit_post'          => 'edit_festival_page',
+			'read_post'          => 'read_festival_page',
+			'delete_post'        => 'delete_festival_page',
+			'delete_posts'       => 'delete_festival_pages',
+			'edit_posts'         => 'edit_festival_pages',
+			'edit_others_posts'  => 'edit_others_festival_pages',
+			'publish_posts'      => 'publish_festival_pages',
+			'read_private_posts' => 'read_private_festival_pages',
+			'create_posts'       => 'create_festival_pages',
 		);
 		$args              = array(
 			'label'               => __( 'Festival Page', 'minnpost-largo' ),
@@ -185,13 +184,9 @@ if ( ! function_exists( 'create_event_website_page' ) ) :
 				'editor',
 				//'author',
 			),
-			'taxonomies'          => array(
+			/*'taxonomies'          => array(
 				$festival_taxonomy,
-			),
-			'rewrite'             => array(
-				'slug'       => '%' . $festival_taxonomy . '%',
-				'with_front' => false,
-			),
+			),*/
 			'hierarchical'        => false,
 			'public'              => true,
 			'show_ui'             => true,
@@ -209,159 +204,6 @@ if ( ! function_exists( 'create_event_website_page' ) ) :
 		);
 		register_post_type( 'festival', $args );
 	}
-
-	add_action( 'init', 'create_event_website_page' );
-	function create_event_website_page() {
-		$event_website_page_taxonomy = 'tribe_events_cat';
-		$event_website_page_labels   = array(
-			'name'                  => __( 'Event Website Pages', 'minnpost-largo' ),
-			'singular_name'         => __( 'Event Website Page', 'minnpost-largo' ),
-			'menu_name'             => __( 'Event Website Pages', 'minnpost-largo' ),
-			'name_admin_bar'        => __( 'Event Website Page', 'minnpost-largo' ),
-			'add_new'               => __( 'Add New', 'minnpost-largo' ),
-			'add_new_item'          => __( 'Add New Event Website Page', 'minnpost-largo' ),
-			'new_item'              => __( 'New Event Website Page', 'minnpost-largo' ),
-			'edit_item'             => __( 'Edit Event Website Page', 'minnpost-largo' ),
-			'update_item'           => __( 'Update Event Website Page', 'minnpost-largo' ),
-			'view_item'             => __( 'View Event Website Page', 'minnpost-largo' ),
-			'view_items'            => __( 'View Event Website Pages', 'minnpost-largo' ),
-			'all_items'             => __( 'Event Website Pages', 'minnpost-largo' ),
-			'archives'              => __( 'Event Website Page Archives', 'minnpost-largo' ),
-			'search_items'          => __( 'Search Event Website Pages', 'minnpost-largo' ),
-			'parent_item_colon'     => __( 'Parent Event Website Pages:', 'minnpost-largo' ),
-			'not_found'             => __( 'No event website pages found.', 'minnpost-largo' ),
-			'not_found_in_trash'    => __( 'No event website pages found in Trash.', 'minnpost-largo' ),
-			'attributes'            => __( 'Event Website Page Attributes', 'minnpost-largo' ),
-			'featured_image'        => __( 'Featured Image', 'minnpost-largo' ),
-			'set_featured_image'    => __( 'Set featured image', 'minnpost-largo' ),
-			'remove_featured_image' => __( 'Remove featured image', 'minnpost-largo' ),
-			'use_featured_image'    => __( 'Use as featured image', 'minnpost-largo' ),
-			'insert_into_item'      => __( 'Insert into message', 'minnpost-largo' ),
-			'uploaded_to_this_item' => __( 'Uploaded to this event website page', 'minnpost-largo' ),
-			'items_list'            => __( 'Event website pages list', 'minnpost-largo' ),
-			'items_list_navigation' => __( 'Event website pages list navigation', 'minnpost-largo' ),
-			'filter_items_list'     => __( 'Filter event website page list', 'minnpost-largo' ),
-		);
-		$event_website_capabilities  = array(
-			'edit_post'          => 'edit_event_website_page',
-			'read_post'          => 'read_event_website_page',
-			'delete_post'        => 'delete_event_website_page',
-			'delete_posts'       => 'delete_event_website_pages',
-			'edit_posts'         => 'edit_event_website_pages',
-			'edit_others_posts'  => 'edit_others_event_website_pages',
-			'publish_posts'      => 'publish_event_website_pages',
-			'read_private_posts' => 'read_private_event_website_pages',
-			'create_posts'       => 'create_event_website_pages',
-		);
-		$event_website_page_args     = array(
-			'label'               => __( 'Event Website Page', 'minnpost-largo' ),
-			'description'         => __( 'Event website page template', 'minnpost-largo' ),
-			'labels'              => $event_website_page_labels,
-			'supports'            => array(
-				'title',
-				'revisions',
-				'editor',
-				//'author',
-			),
-			'taxonomies'          => array(
-				$event_website_page_taxonomy,
-			),
-			'rewrite'             => array(
-				'slug'       => '%' . $event_website_page_taxonomy . '%',
-				'with_front' => false,
-			),
-			'hierarchical'        => false,
-			'public'              => true,
-			'show_ui'             => true,
-			'show_in_menu'        => 'edit.php?post_type=tribe_events',
-			'show_in_admin_bar'   => true,
-			'show_in_nav_menus'   => true,
-			'show_in_rest'        => true, // this will be required in gutenberg
-			'can_export'          => true,
-			'has_archive'         => true,
-			'exclude_from_search' => false,
-			'publicly_queryable'  => true,
-			'capability_type'     => 'page',
-			'menu_icon'           => 'dashicons-calendar-alt',
-			'capabilities'        => $event_website_capabilities,
-		);
-		register_post_type( 'event_website_page', $event_website_page_args );
-	}
-
-	add_filter( 'post_type_link', 'event_website_permalink_structure', 10, 4 );
-	function event_website_permalink_structure( $post_link, $post, $leavename, $sample ) {
-		if ( 'event_website_page' === get_post_type( $post ) ) {
-			if ( false !== strpos( $post_link, '%tribe_events_cat%' ) ) {
-				$tribe_events_cat_type_term = get_the_terms( $post->ID, 'tribe_events_cat' );
-				if ( ! empty( $tribe_events_cat_type_term ) ) {
-					$post_link = str_replace(
-						'%tribe_events_cat%',
-						array_pop( $tribe_events_cat_type_term )->slug,
-						$post_link
-					);
-				} else {
-					$post_link = str_replace( '%tribe_events_cat%', 'event-website', $post_link );
-				}
-			}
-		} elseif ( 'festival' === get_post_type( $post ) ) {
-			if ( false !== strpos( $post_link, '%tribe_events_cat%' ) ) {
-				$tribe_events_cat_type_term = get_the_terms( $post->ID, 'tribe_events_cat' );
-				if ( ! empty( $tribe_events_cat_type_term ) ) {
-					$post_link = str_replace(
-						'%tribe_events_cat%',
-						array_pop( $tribe_events_cat_type_term )->slug,
-						$post_link
-					);
-				} else {
-					$post_link = str_replace( '%tribe_events_cat%', 'festival', $post_link );
-				}
-			}
-		}
-		return $post_link;
-	}
-
-	// Add the custom columns to the book post type:
-	add_filter( 'manage_festival_posts_columns', 'set_event_website_page_columns' );
-	add_filter( 'manage_event_website_page_posts_columns', 'set_event_website_page_columns' );
-	function set_event_website_page_columns( $columns ) {
-		unset( $columns['tribe_events_cat_permalink'] );
-		$columns['event_category'] = esc_html__( 'Event Category', 'minnpost-largo' );
-		return $columns;
-	}
-
-	// Add the data to the custom columns for the book post type:
-	add_action( 'manage_event_website_page_posts_custom_column', 'custom_event_website_page_column', 10, 2 );
-	add_action( 'manage_festival_posts_custom_column', 'custom_event_website_page_column', 10, 2 );
-	function custom_event_website_page_column( $column, $post_id ) {
-		switch ( $column ) {
-			case 'event_category':
-				$taxonomy = 'tribe_events_cat';
-				$term_id  = '';
-				if ( '' === $post_id ) {
-					$post_id = get_the_ID();
-				}
-				$event_category_permalink = get_post_meta( $post_id, '_category_permalink', true );
-				if ( null !== $event_category_permalink && '' !== $event_category_permalink ) {
-					if ( isset( $event_category_permalink['category'] ) && '' !== $event_category_permalink['category'] ) {
-						$term_id = $event_category_permalink['category'];
-					} else {
-						$terms   = get_the_terms( $post_id, $taxonomy );
-						$term_id = isset( $terms[0] ) ? $terms[0]->term_id : '';
-					}
-				} else {
-					$terms = get_the_terms( $post_id, $taxonomy );
-					if ( isset( $terms[0] ) && is_object( $terms[0] ) && ! is_wp_error( $terms[0] ) ) {
-						$term_id = $terms[0]->term_id;
-					}
-				}
-				if ( '' !== $term_id ) {
-					$term = get_term( $term_id, $taxonomy );
-					echo $term->name;
-				}
-				break;
-		}
-	}
-
 endif;
 
 /**
