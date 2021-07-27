@@ -755,7 +755,7 @@ if ( ! function_exists( 'minnpost_category_breadcrumb_newsletter_outlook' ) ) :
 				$category_group_id = minnpost_get_category_group_id( $post_id, $category_id );
 				if ( '' !== $category_group_id ) {
 					$category_group = get_category( $category_group_id );
-					if ( true === $use_category_group_name_as_class ) {
+					if ( true === $use_category_group_name_as_class && isset( $category_group->slug ) ) {
 						echo '<table class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '"><tr><td>';
 					} else {
 						echo '<table class="a-breadcrumbs"><tr><td>';
@@ -784,19 +784,21 @@ if ( ! function_exists( 'minnpost_category_breadcrumb_newsletter_outlook' ) ) :
 					}
 				}
 			} else {
-				if ( true === $use_category_group_name_as_class ) {
-					echo '<span class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '">';
-				} else {
-					echo '<span class="a-breadcrumbs">';
-				}
-				if ( true === $use_links ) {
-					echo '<span class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category->term_id ) ) . '">' . $category->name . '</a></span>';
-				} else {
-					echo '<span class="a-breadcrumb a-category-group">' . $category->name . '</span>';
+				if ( isset( $category_group ) ) {
+					if ( true === $use_category_group_name_as_class ) {
+						echo '<span class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '">';
+					} else {
+						echo '<span class="a-breadcrumbs">';
+					}
+					if ( true === $use_links ) {
+						echo '<span class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category->term_id ) ) . '">' . $category->name . '</a></span>';
+					} else {
+						echo '<span class="a-breadcrumb a-category-group">' . $category->name . '</span>';
+					}
 				}
 			}
 		}
-		if ( '' !== $category_group_id || true === $category_is_group ) {
+		if ( ( '' !== $category_group_id || true === $category_is_group ) && isset( $category_group->slug ) ) {
 			echo '</td></tr></table>';
 		}
 	}

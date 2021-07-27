@@ -1669,6 +1669,7 @@ if ( ! function_exists( 'minnpost_largo_add_lazy_load_attributes' ) ) :
 	add_filter( 'minnpost_largo_lazy_load_attributes', 'minnpost_largo_add_lazy_load_attributes', 10, 3 );
 	function minnpost_largo_add_lazy_load_attributes( $attributes, $object_id, $object_type = 'post', $lazy_load = true ) {
 		// handle prevention of lazy loading from the object loading the image
+		$prevent_lazy_load = '';
 		if ( 'post' === $object_type ) {
 			$prevent_lazy_load = get_post_meta( $object_id, '_mp_prevent_lazyload', true );
 		} elseif ( 'term' === $object_type ) {
