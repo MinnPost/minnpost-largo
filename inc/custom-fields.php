@@ -2687,311 +2687,279 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 endif;
 
 /**
-* Add custom fields to festival pages
+* Add custom fields to event website pages
 *
 */
 if ( ! function_exists( 'cmb2_festival_fields' ) ) :
 	add_action( 'cmb2_init', 'cmb2_festival_fields' );
 	function cmb2_festival_fields() {
 
-		$object_type = 'festival';
-		$prefix      = '_mp_festival_';
-
-		/**
-		 * /festival directory settings
-		 */
-		$directory_page_settings = new_cmb2_box(
-			array(
-				'id'           => $object_type . '_directory_page_settings',
-				'title'        => __( 'Directory Page Settings', 'minnpost-largo' ),
-				'object_types' => array( $object_type ),
-				'context'      => 'normal',
-				'priority'     => 'high',
-				'closed'       => true,
-			)
-		);
-		$directory_attributes    = array();
-		$directory_desc          = sprintf(
-			// translators: 1) the directory url
-			esc_html__( 'If checked, this page will load as the content of %1$s.' ),
-			'<a href="' . site_url( '/festival/' ) . '">' . site_url( '/festival/' ) . '</a>',
-		);
-		// check to see if there is a post checked for /festival already
-		$directory_args  = array(
-			'posts_per_page' => 1,
-			'post_type'      => $object_type,
-			'meta_key'       => $object_type . '_load_as_directory_content',
-			'meta_value'     => 'on',
-		);
-		$directory_query = new WP_Query( $directory_args );
-		if ( $directory_query->have_posts() ) {
-			global $post;
-			$post_id           = isset( $post->ID ) ? $post->ID : '';
-			$directory_post_id = isset( $directory_query->posts[0]->ID ) ? (int) $directory_query->posts[0]->ID : '';
-			if ( empty( $post ) && array_key_exists( 'post', $_GET ) ) {
-				$post_id = esc_attr( $_GET['post'] );
-			}
-			$post_id = (int) $post_id;
-			if ( $directory_post_id !== $post_id ) {
-				$directory_attributes = array(
-					'readonly' => 'readonly',
-					'disabled' => 'disabled',
-				);
-				$directory_desc       = sprintf(
-					// translators: 1) the directory url
-					esc_html__( 'The post %1$s is already loaded for the content of %2$s. You will need to uncheck this box on that post first.' ),
-					'<a href="' . admin_url( '/post.php?post=' . $directory_post_id . '&action=edit' ) . '">editable here</a>',
-					'<a href="' . site_url( '/festival/' ) . '">' . site_url( '/festival/' ) . '</a>',
-				);
-			}
-		}
-		$directory_page_settings->add_field(
-			array(
-				'name'       => __( 'Load this page as the directory index', 'minnpost-largo' ),
-				'id'         => $object_type . '_load_as_directory_content',
-				'type'       => 'checkbox',
-				'desc'       => $directory_desc,
-				'attributes' => $directory_attributes,
-			)
+		$event_website_page_settings = array(
+			'festival' => array(
+				'name'   => esc_html__( 'Festival', ),
+				'prefix' => '_mp_festival_',
+			),
+			'tonight' => array(
+				'name'   => esc_html__( 'Tonight', ),
+				'prefix' => '_mp_tonight_',
+			),
 		);
 
-		/**
-		 * Excerpt settings
-		 */
-		$excerpt = new_cmb2_box(
-			array(
-				'id'           => $object_type . '_excerpt',
-				'title'        => __( 'Excerpt', 'minnpost-largo' ),
-				'object_types' => array( $object_type ), // Post type
-				'context'      => 'after_editor',
-				'priority'     => 'high',
-				'show_names'   => false,
-			)
-		);
-		$excerpt->add_field(
-			array(
-				'id'        => 'excerpt',
-				'name'      => __( 'Excerpt', 'minnpost-largo' ),
-				'desc'      => '',
-				'type'      => 'wysiwyg',
-				'escape_cb' => false,
-				'options'   => array(
-					'media_buttons' => false, // show insert/upload button(s)
-					'textarea_rows' => 5,
-					'teeny'         => true, // output the minimal editor config used in Press This
-				),
-			)
-		);
+		foreach ( $event_website_page_settings as $object_type => $settings ) {
+			
+			$prefix = $settings['prefix'];
 
-		/**
-		 * Event post settings
-		 */
-		$event_posts = new_cmb2_box(
-			array(
-				'id'           => $object_type . '_event_posts',
-				'title'        => __( 'Page Content Settings', 'minnpost-largo' ),
-				'object_types' => array( $object_type ), // Post type
-				'context'      => 'normal',
-				'priority'     => 'high',
-				'show_names'   => true,
-			)
-		);
-
-		$event_posts->add_field(
-			minnpost_post_search_field(
+			/**
+			 * /event directory settings
+			 */
+			$directory_page_settings = new_cmb2_box(
 				array(
-					'name'       => __( 'Content posts to load', 'minnpost-largo' ),
-					'desc'       => __( 'Search for an event or speaker post by title here.', 'minnpost-largo' ),
-					'id'         => $prefix . 'content_posts',
-					'query_args' => array(
-						'orderby'     => 'modified',
-						'order'       => 'DESC',
-						'post_status' => 'any',
-						'post_type'   => array( 'tribe_events', 'tribe_ext_speaker' ),
+					'id'           => $object_type . '_directory_page_settings',
+					'title'        => __( 'Directory Page Settings', 'minnpost-largo' ),
+					'object_types' => array( $object_type ),
+					'context'      => 'normal',
+					'priority'     => 'high',
+					'closed'       => true,
+				)
+			);
+			$directory_attributes    = array();
+			$directory_desc          = sprintf(
+				// translators: 1) the directory url
+				esc_html__( 'If checked, this page will load as the content of %1$s.' ),
+				'<a href="' . site_url( '/' . $object_type . '/' ) . '">' . site_url( '/' . $object_type . '/' ) . '</a>',
+			);
+			// check to see if there is a post checked for /object-type already
+			$directory_args  = array(
+				'posts_per_page' => 1,
+				'post_type'      => $object_type,
+				'meta_key'       => $object_type . '_load_as_directory_content',
+				'meta_value'     => 'on',
+			);
+			$directory_query = new WP_Query( $directory_args );
+			if ( $directory_query->have_posts() ) {
+				global $post;
+				$post_id           = isset( $post->ID ) ? $post->ID : '';
+				$directory_post_id = isset( $directory_query->posts[0]->ID ) ? (int) $directory_query->posts[0]->ID : '';
+				if ( empty( $post ) && array_key_exists( 'post', $_GET ) ) {
+					$post_id = esc_attr( $_GET['post'] );
+				}
+				$post_id = (int) $post_id;
+				if ( $directory_post_id !== $post_id ) {
+					$directory_attributes = array(
+						'readonly' => 'readonly',
+						'disabled' => 'disabled',
+					);
+					$directory_desc       = sprintf(
+						// translators: 1) the directory url
+						esc_html__( 'The post %1$s is already loaded for the content of %2$s. You will need to uncheck this box on that post first.' ),
+						'<a href="' . admin_url( '/post.php?post=' . $directory_post_id . '&action=edit' ) . '">editable here</a>',
+						'<a href="' . site_url( '/' . $object_type . '/' ) . '">' . site_url( '/' . $object_type . '/' ) . '</a>',
+					);
+				}
+			}
+			$directory_page_settings->add_field(
+				array(
+					'name'       => __( 'Load this page as the directory index', 'minnpost-largo' ),
+					'id'         => $object_type . '_load_as_directory_content',
+					'type'       => 'checkbox',
+					'desc'       => $directory_desc,
+					'attributes' => $directory_attributes,
+				)
+			);
+
+			/**
+			 * Excerpt settings
+			 */
+			$excerpt = new_cmb2_box(
+				array(
+					'id'           => $object_type . '_excerpt',
+					'title'        => __( 'Excerpt', 'minnpost-largo' ),
+					'object_types' => array( $object_type ), // Post type
+					'context'      => 'after_editor',
+					'priority'     => 'high',
+					'show_names'   => false,
+				)
+			);
+			$excerpt->add_field(
+				array(
+					'id'        => 'excerpt',
+					'name'      => __( 'Excerpt', 'minnpost-largo' ),
+					'desc'      => '',
+					'type'      => 'wysiwyg',
+					'escape_cb' => false,
+					'options'   => array(
+						'media_buttons' => false, // show insert/upload button(s)
+						'textarea_rows' => 5,
+						'teeny'         => true, // output the minimal editor config used in Press This
 					),
-				),
-				'post_search_ajax'
-			)
-		);
-		$event_posts->add_field(
-			array(
-				'name' => __( 'Link to individual posts?', 'minnpost-largo' ),
-				'id'   => $prefix . 'content_posts_use_permalinks',
-				'type' => 'checkbox',
-				'desc' => __( 'If checked, each entry will link to the individual URL for that post.', 'minnpost-largo' ),
-			)
-		);
+				)
+			);
 
-		/**
-		 * SEO and social meta settings
-		 */
-		$seo_settings = new_cmb2_box(
-			array(
-				'id'           => $object_type . '_seo_settings',
-				'title'        => 'SEO &amp; Social Settings',
-				'object_types' => array( $object_type ),
-				'context'      => 'normal',
-				'priority'     => 'high',
-				'closed'       => true,
-			)
-		);
-		$seo_settings->add_field(
-			array(
-				'name'         => 'Title',
-				'id'           => '_mp_seo_title',
-				'type'         => 'text',
-				'char_counter' => true,
-				'char_max'     => 78,
-				'desc'         => sprintf(
-					// translators: 1) the sitename
-					esc_html__( 'If you do not fill this out, the festival page title will be used. If you do fill it out and do not include %1$s in the value, it will be placed at the end in this way: Your Title | %1$s' ),
-					get_bloginfo( 'name' )
-				),
-				'attributes'   => array(
-					'maxlength' => 78, // retrieved from https://seopressor.com/blog/google-title-meta-descriptions-length/ on 9/27/2018
-				),
-			)
-		);
-		$seo_settings->add_field(
-			array(
-				'name'         => 'Description',
-				'id'           => '_mp_seo_description',
-				'type'         => 'textarea_small',
-				'char_counter' => true,
-				'char_max'     => 200,
-				'attributes'   => array(
-					'maxlength' => 200, // 155 is the number, but it's ok to go higher as long as the spider sees the most important stuff at the beginning. retrieved from https://moz.com/blog/how-to-write-meta-descriptions-in-a-changing-world on 5/8/2020
-				),
-				'desc'         => esc_html__( 'When using this field, make sure the most important text is in the first 155 characters to ensure that Google can see it. If you do not fill it out, the festival page excerpt will be used.' ),
-			)
-		);
-		$seo_settings->add_field(
-			array(
-				'name'         => esc_html__( 'Meta images', 'minnpost-largo' ),
-				'desc'         => esc_html__( 'Using this field will remove images that are uploaded to this festival page from the page\'s metadata, and replace them with the images in this field.', 'minnpost-largo' ),
-				'id'           => '_mp_social_images',
-				'type'         => 'file_list',
-				'preview_size' => array( 130, 85 ),
-				// query_args are passed to wp.media's library query.
-				'query_args'   => array(
-					'type' => 'image',
-				),
-			)
-		);
+			/**
+			 * Event post settings
+			 */
+			$event_posts = new_cmb2_box(
+				array(
+					'id'           => $object_type . '_event_posts',
+					'title'        => __( 'Page Content Settings', 'minnpost-largo' ),
+					'object_types' => array( $object_type ), // Post type
+					'context'      => 'normal',
+					'priority'     => 'high',
+					'show_names'   => true,
+				)
+			);
 
-		/**
-		 * Image settings
-		 */
-		$image_settings = new_cmb2_box(
-			array(
-				'id'           => $object_type . '_image_settings',
-				'title'        => __( 'Image Settings', 'minnpost-largo' ),
-				'object_types' => array( $object_type ),
-				'context'      => 'normal',
-				'priority'     => 'high',
-			)
-		);
-		$image_settings->add_field(
-			array(
-				'name'       => __( 'Thumbnail Image', 'minnpost-largo' ),
-				'desc'       => __( 'Upload an image or enter an URL.', 'minnpost-largo' ),
-				'id'         => '_mp_post_thumbnail_image',
-				'type'       => 'file',
-				'options'    => array(
-					//'url' => false, // Hide the text input for the url
-				),
-				'text'       => array(
-					//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
-				),
-				// query_args are passed to wp.media's library query.
-				'query_args' => array(
-					'type' => 'image',
-				),
-			)
-		);
-		$image_settings->add_field(
-			array(
-				'name'             => __( 'Homepage Image Size', 'minnpost-largo' ),
-				'id'               => '_mp_post_homepage_image_size',
-				'type'             => 'select',
-				'show_option_none' => true,
-				'desc'             => __( 'Select an option', 'minnpost-largo' ),
-				'default'          => 'feature-large',
-				'options'          => array(
-					'feature-medium' => __( 'Medium', 'minnpost-largo' ),
-					'none'           => __( 'Do not display image', 'minnpost-largo' ),
-					'feature-large'  => __( 'Large', 'minnpost-largo' ),
-				),
-			)
-		);
-		$image_settings->add_field(
-			array(
-				'name'             => __( 'Homepage Image Position', 'minnpost-largo' ),
-				'id'               => '_mp_post_homepage_image_position',
-				'type'             => 'radio_inline',
-				'show_option_none' => false,
-				'desc'             => __( 'Pick whether the image should go before or after the text. If before, it will be flush left on large screens, unless it is too wide. If after, it will be flush right, unless it is too wide.', 'minnpost-largo' ),
-				'default'          => 'after',
-				'options'          => array(
-					'before' => __( 'Before', 'minnpost-largo' ),
-					'after'  => __( 'After', 'minnpost-largo' ),
-				),
-			)
-		);
+			$event_posts->add_field(
+				minnpost_post_search_field(
+					array(
+						'name'       => __( 'Content posts to load', 'minnpost-largo' ),
+						'desc'       => __( 'Search for an event or speaker post by title here.', 'minnpost-largo' ),
+						'id'         => $prefix . 'content_posts',
+						'query_args' => array(
+							'orderby'     => 'modified',
+							'order'       => 'DESC',
+							'post_status' => 'any',
+							'post_type'   => array( 'tribe_events', 'tribe_ext_speaker' ),
+						),
+					),
+					'post_search_ajax'
+				)
+			);
+			$event_posts->add_field(
+				array(
+					'name' => __( 'Link to individual posts?', 'minnpost-largo' ),
+					'id'   => $prefix . 'content_posts_use_permalinks',
+					'type' => 'checkbox',
+					'desc' => __( 'If checked, each entry will link to the individual URL for that post.', 'minnpost-largo' ),
+				)
+			);
 
-		/**
-		 * Display settings
-		 */
-		/*$display_settings = new_cmb2_box(
-			array(
-				'id'           => $object_type . '_display_settings',
-				'title'        => __( 'Display Settings', 'minnpost-largo' ),
-				'object_types' => array( $object_type ),
-				'context'      => 'normal',
-				'priority'     => 'high',
-				'closed'       => true,
-			)
-		);
-		$display_settings->add_field(
-			array(
-				'name' => __( 'Prevent lazy loading of images?', 'minnpost-largo' ),
-				'id'   => '_mp_prevent_lazyload',
-				'type' => 'checkbox',
-				'desc' => __( 'If checked, this festival page will not attempt to lazy load images.', 'minnpost-largo' ),
-			)
-		);
-		$display_settings->add_field(
-			array(
-				'name' => __( 'Load HTML editor by default?', 'minnpost-largo' ),
-				'id'   => '_mp_post_use_html_editor',
-				'type' => 'checkbox',
-				'desc' => __( 'If checked, this festival page will open with the HTML editor visible.', 'minnpost-largo' ),
-			)
-		);
-		$display_settings->add_field(
-			array(
-				'name' => __( 'Remove title from display?', 'minnpost-largo' ),
-				'id'   => '_mp_remove_title_from_display',
-				'type' => 'checkbox',
-				'desc' => __( 'If checked, the festival page title will not display.', 'minnpost-largo' ),
-			)
-		);
-		$display_settings->add_field(
-			array(
-				'name' => __( 'Remove share buttons from display?', 'minnpost-largo' ),
-				'id'   => '_mp_remove_share_buttons_from_display',
-				'type' => 'checkbox',
-				'desc' => __( 'If checked, share buttons will not display on this festival page.', 'minnpost-largo' ),
-			)
-		);
-		$display_settings->add_field(
-			array(
-				'name' => __( 'Keep share buttons horizontal on large screens', 'minnpost-largo' ),
-				'id'   => '_mp_share_buttons_always_horizontal',
-				'type' => 'checkbox',
-				'desc' => __( 'If checked, this event will have horizontal share buttons above the event content, rather than vertical ones next to it, on large screens. This is similar to its mobile behavior.', 'minnpost-largo' ),
-			)
-		);*/
+			/**
+			 * SEO and social meta settings
+			 */
+			$seo_settings = new_cmb2_box(
+				array(
+					'id'           => $object_type . '_seo_settings',
+					'title'        => 'SEO &amp; Social Settings',
+					'object_types' => array( $object_type ),
+					'context'      => 'normal',
+					'priority'     => 'high',
+					'closed'       => true,
+				)
+			);
+			$seo_settings->add_field(
+				array(
+					'name'         => 'Title',
+					'id'           => '_mp_seo_title',
+					'type'         => 'text',
+					'char_counter' => true,
+					'char_max'     => 78,
+					'desc'         => sprintf(
+						// translators: 1) the object type, 2) the sitename
+						esc_html__( 'If you do not fill this out, the %1$s page title will be used. If you do fill it out and do not include %2$s in the value, it will be placed at the end in this way: Your Title | %2$s' ),
+						$object_type,
+						get_bloginfo( 'name' )
+					),
+					'attributes'   => array(
+						'maxlength' => 78, // retrieved from https://seopressor.com/blog/google-title-meta-descriptions-length/ on 9/27/2018
+					),
+				)
+			);
+			$seo_settings->add_field(
+				array(
+					'name'         => 'Description',
+					'id'           => '_mp_seo_description',
+					'type'         => 'textarea_small',
+					'char_counter' => true,
+					'char_max'     => 200,
+					'attributes'   => array(
+						'maxlength' => 200, // 155 is the number, but it's ok to go higher as long as the spider sees the most important stuff at the beginning. retrieved from https://moz.com/blog/how-to-write-meta-descriptions-in-a-changing-world on 5/8/2020
+					),
+					'desc'         => sprintf(
+						// translators: 1) the object type
+						esc_html__( 'When using this field, make sure the most important text is in the first 155 characters to ensure that Google can see it. If you do not fill it out, the %1$s page excerpt will be used.', 'minnpost-largo' ),
+						$object_type
+					),
+				)
+			);
+			$seo_settings->add_field(
+				array(
+					'name'         => esc_html__( 'Meta images', 'minnpost-largo' ),
+					'desc'         => sprintf(
+						// translators: 1) the object type
+						esc_html__( 'Using this field will remove images that are uploaded to this %1$s page from the page\'s metadata, and replace them with the images in this field.', 'minnpost-largo' ),
+						$object_type
+					),
+					'id'           => '_mp_social_images',
+					'type'         => 'file_list',
+					'preview_size' => array( 130, 85 ),
+					// query_args are passed to wp.media's library query.
+					'query_args'   => array(
+						'type' => 'image',
+					),
+				)
+			);
+
+			/**
+			 * Image settings
+			 */
+			$image_settings = new_cmb2_box(
+				array(
+					'id'           => $object_type . '_image_settings',
+					'title'        => __( 'Image Settings', 'minnpost-largo' ),
+					'object_types' => array( $object_type ),
+					'context'      => 'normal',
+					'priority'     => 'high',
+				)
+			);
+			$image_settings->add_field(
+				array(
+					'name'       => __( 'Thumbnail Image', 'minnpost-largo' ),
+					'desc'       => __( 'Upload an image or enter an URL.', 'minnpost-largo' ),
+					'id'         => '_mp_post_thumbnail_image',
+					'type'       => 'file',
+					'options'    => array(
+						//'url' => false, // Hide the text input for the url
+					),
+					'text'       => array(
+						//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
+					),
+					// query_args are passed to wp.media's library query.
+					'query_args' => array(
+						'type' => 'image',
+					),
+				)
+			);
+			$image_settings->add_field(
+				array(
+					'name'             => __( 'Homepage Image Size', 'minnpost-largo' ),
+					'id'               => '_mp_post_homepage_image_size',
+					'type'             => 'select',
+					'show_option_none' => true,
+					'desc'             => __( 'Select an option', 'minnpost-largo' ),
+					'default'          => 'feature-large',
+					'options'          => array(
+						'feature-medium' => __( 'Medium', 'minnpost-largo' ),
+						'none'           => __( 'Do not display image', 'minnpost-largo' ),
+						'feature-large'  => __( 'Large', 'minnpost-largo' ),
+					),
+				)
+			);
+			$image_settings->add_field(
+				array(
+					'name'             => __( 'Homepage Image Position', 'minnpost-largo' ),
+					'id'               => '_mp_post_homepage_image_position',
+					'type'             => 'radio_inline',
+					'show_option_none' => false,
+					'desc'             => __( 'Pick whether the image should go before or after the text. If before, it will be flush left on large screens, unless it is too wide. If after, it will be flush right, unless it is too wide.', 'minnpost-largo' ),
+					'default'          => 'after',
+					'options'          => array(
+						'before' => __( 'Before', 'minnpost-largo' ),
+						'after'  => __( 'After', 'minnpost-largo' ),
+					),
+				)
+			);
+		}
 	}
 endif;
 
