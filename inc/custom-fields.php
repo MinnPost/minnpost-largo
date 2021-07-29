@@ -2690,27 +2690,27 @@ endif;
 * Add custom fields to event website pages
 *
 */
-if ( ! function_exists( 'cmb2_festival_fields' ) ) :
-	add_action( 'cmb2_init', 'cmb2_festival_fields' );
-	function cmb2_festival_fields() {
+if ( ! function_exists( 'cmb2_event_website_page_fields' ) ) :
+	add_action( 'cmb2_init', 'cmb2_event_website_page_fields' );
+	function cmb2_event_website_page_fields() {
 
 		$event_website_page_settings = array(
 			'festival' => array(
 				'name'   => esc_html__( 'Festival', ),
 				'prefix' => '_mp_festival_',
 			),
-			'tonight' => array(
+			'tonight'  => array(
 				'name'   => esc_html__( 'Tonight', ),
 				'prefix' => '_mp_tonight_',
 			),
 		);
 
 		foreach ( $event_website_page_settings as $object_type => $settings ) {
-			
+
 			$prefix = $settings['prefix'];
 
 			/**
-			 * /event directory settings
+			 * event directory settings
 			 */
 			$directory_page_settings = new_cmb2_box(
 				array(
