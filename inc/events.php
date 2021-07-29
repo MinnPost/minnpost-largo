@@ -264,16 +264,16 @@ if ( ! function_exists( 'minnpost_largo_get_festival_date_range' ) ) :
 endif;
 
 /**
-* Get the info for the festival logo
+* Get the info for the event website page logo
 * @param string $object_type
-* @return array $festival_logo_info
+* @return array $event_logo_info
 *
 */
-if ( ! function_exists( 'minnpost_largo_get_festival_logo_info' ) ) :
-	function minnpost_largo_get_festival_logo_info( $object_type = 'festival' ) {
+if ( ! function_exists( 'minnpost_largo_get_event_website_logo_info' ) ) :
+	function minnpost_largo_get_event_website_logo_info( $object_type = 'festival' ) {
 		$post_id            = 0;
 		$is_current_url     = false;
-		$festival_logo_info = array();
+		$event_logo_info = array();
 		// check to see if there is a post checked for /festival already
 		$directory_args  = array(
 			'posts_per_page' => 1,
@@ -293,17 +293,17 @@ if ( ! function_exists( 'minnpost_largo_get_festival_logo_info' ) ) :
 		}
 
 		if ( 0 === $post_id ) {
-			$title = __( 'MinnPost Festival', 'minnpost-largo' );
+			$title = __( 'MinnPost Event Website', 'minnpost-largo' );
 		}
 
 		$url = get_post_type_archive_link( $object_type );
 
-		$festival_logo_info = array(
+		$event_logo_info = array(
 			'url'            => $url,
 			'title'          => $title,
 			'is_current_url' => $is_current_url,
 		);
-		return $festival_logo_info;
+		return $event_logo_info;
 	}
 endif;
 
