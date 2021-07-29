@@ -1,6 +1,6 @@
 <?php
 /**
- * The header for our festival theme
+ * The header for our MinnPost Festival theme
  *
  * This is the festival template that displays all of the <head> section and everything up until <div id="content">
  *
