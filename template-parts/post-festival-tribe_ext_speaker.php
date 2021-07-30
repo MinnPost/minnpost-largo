@@ -41,6 +41,6 @@ $speaker_instance = Tribe__Extension__Speaker_Linked_Post_Type::instance();
 				?>
 			</section>
 		<?php endif; ?>
-		<?php minnpost_festival_pass_link(); ?>
+		<?php minnpost_event_website_disclaimer_text( 'festival' ); ?>
 	</div>
 </article>

@@ -271,8 +271,8 @@ endif;
 */
 if ( ! function_exists( 'minnpost_largo_get_event_website_logo_info' ) ) :
 	function minnpost_largo_get_event_website_logo_info( $object_type = 'festival' ) {
-		$post_id            = 0;
-		$is_current_url     = false;
+		$post_id         = 0;
+		$is_current_url  = false;
 		$event_logo_info = array();
 		// check to see if there is a post checked for /festival already
 		$directory_args  = array(
@@ -338,9 +338,9 @@ endif;
 * @return array $events
 *
 */
-if ( ! function_exists( 'minnpost_festival_get_speaker_events' ) ) :
-	add_filter( 'tribe_ext_tribe_ext_speaker_get_events', 'minnpost_festival_get_speaker_events', 10, 2 );
-	function minnpost_festival_get_speaker_events( $events, $args ) {
+if ( ! function_exists( 'minnpost_event_website_get_speaker_events' ) ) :
+	add_filter( 'tribe_ext_tribe_ext_speaker_get_events', 'minnpost_event_website_get_speaker_events', 10, 2 );
+	function minnpost_event_website_get_speaker_events( $events, $args ) {
 		$args['post_status'] = 'any';
 		$args['post_type']   = array( 'tribe_events' );
 		$events_query        = new WP_Query( $args );
@@ -349,30 +349,31 @@ if ( ! function_exists( 'minnpost_festival_get_speaker_events' ) ) :
 endif;
 
 /**
-* Display a link to buy a festival pass
+* Display a link to buy an event pass
+* @param string $object_type
 *
 */
-if ( ! function_exists( 'minnpost_festival_pass_link' ) ) :
-	function minnpost_festival_pass_link() {
-		echo minnpost_festival_get_festival_pass_link();
+if ( ! function_exists( 'minnpost_event_website_pass_link' ) ) :
+	function minnpost_event_website_pass_link( $object_type = 'festival' ) {
+		echo minnpost_get_event_website_pass_link( $object_type );
 	}
 endif;
 
 
 /**
-* Get a link to buy a festival pass
-* @return string $buy_festival_pass
+* Get a link to buy an event pass
+* @return string $buy_event_pass
 *
 */
-if ( ! function_exists( 'minnpost_festival_get_festival_pass_link' ) ) :
-	function minnpost_festival_get_festival_pass_link() {
-		$buy_festival_pass = sprintf(
-			// translators: 1) url to buy a festival, 2) link text
+if ( ! function_exists( 'minnpost_get_event_website_pass_link' ) ) :
+	function minnpost_get_event_website_pass_link( $object_type = 'festival' ) {
+		$buy_event_pass = sprintf(
+			// translators: 1) url to buy a pass, 2) link text
 			__( '<a href="%1$s" class="a-button">%2$s</a>', 'minnpost-largo' ),
 			esc_url_raw( 'https://www.eventbrite.com/e/minnpost-festival-2021-tickets-140928014485' ), // this will be an eventbrite link
 			esc_html__( 'Reserve your Festival pass' )
 		);
-		return $buy_festival_pass;
+		return $buy_event_pass;
 	}
 endif;
 
@@ -390,6 +391,8 @@ if ( ! function_exists( 'minnpost_event_category_breadcrumb' ) ) :
 				$category_name = $event_category->name;
 				if ( 'festival' === $event_category->slug ) {
 					$category_link = site_url( '/festival/' );
+				} elseif ( 'tonight' === $event_category->slug ) {
+					$category_link = site_url( '/tonight/' );
 				} else {
 					$category_link = get_term_link( $event_category->term_id, 'tribe_events_cat' );
 				}
@@ -403,9 +406,9 @@ endif;
 * Display the disclaimer
 *
 */
-if ( ! function_exists( 'minnpost_festival_disclaimer_text' ) ) :
-	function minnpost_festival_disclaimer_text() {
-		echo minnpost_festival_get_disclaimer_text();
+if ( ! function_exists( 'minnpost_event_website_disclaimer_text' ) ) :
+	function minnpost_event_website_disclaimer_text() {
+		echo minnpost_event_website_get_disclaimer_text();
 	}
 endif;
 
@@ -415,10 +418,10 @@ endif;
 * @return string $disclaimer_text
 *
 */
-if ( ! function_exists( 'minnpost_festival_get_disclaimer_text' ) ) :
-	function minnpost_festival_get_disclaimer_text() {
+if ( ! function_exists( 'minnpost_event_website_get_disclaimer_text' ) ) :
+	function minnpost_event_website_get_disclaimer_text( $object_type = 'festival' ) {
 		$disclaimer_text = esc_html__( 'MinnPost is a 501(c)(3) nonprofit that receives support from donors, members, foundations, advertisers and sponsors. Donors and sponsors that underwrite MinnPost events play no role in determining the content, featured guests or line of questioning.', 'minnpost-largo' );
-		$disclaimer_text = '<aside class="a-festival-minnpost-notice"><p>' . $disclaimer_text . '</p></aside>';
+		$disclaimer_text = '<aside class="a-' . $object_type . '-minnpost-notice"><p>' . $disclaimer_text . '</p></aside>';
 		return $disclaimer_text;
 	}
 endif;
