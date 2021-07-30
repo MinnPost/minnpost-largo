@@ -4,8 +4,8 @@
 			<?php echo $args['title']; ?>
 		</div>
 		<?php
-		if ( function_exists( 'minnpost_largo_get_festival_date_range' ) ) :
-			$date = minnpost_largo_get_festival_date_range( 'sessions' );
+		if ( function_exists( 'minnpost_largo_get_event_website_date_range' ) ) :
+			$date = minnpost_largo_get_event_website_date_range( 'festival', 'sessions' );
 			?>
 			<div class="a-festival-dates">
 				<?php echo $date; ?>

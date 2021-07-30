@@ -1,0 +1,42 @@
+.m-tonight-branding {
+    width: 100%;
+    max-width: colspan(4, 6);
+	height: auto;
+	position: relative;
+    margin: 0;
+    letter-spacing: -1px;
+    @include meta-preset( $size: 0, $bold: true, $italic: false, $line-height: 1 );
+
+    &.m-tonight-branding-landing-page {
+        letter-spacing: -3px;
+    }
+    
+    a {
+        display: block;
+        color: neutral-color(black);
+        background: transparent;
+        text-decoration: none;
+
+        &:hover,
+        &:focus,
+        &:active {
+            background: transparent;
+            color: neutral-color(black);
+        }
+    }
+}
+
+header .m-tonight-branding {
+
+	@include breakpoint-min( md ) {
+		max-width: colspan(3, 8);
+	}
+
+	@include breakpoint-min( lg ) {
+		max-width: colspan(4, 12);
+	}
+
+	@include breakpoint-min( xl ) {
+		max-width: colspan(5, 16);
+	}
+}

@@ -1,6 +1,6 @@
 <?php
 /**
- * The template for displaying the festival archive
+ * The template for displaying the MinnPost Festival archive
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *

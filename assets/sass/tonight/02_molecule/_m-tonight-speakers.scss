@@ -1,0 +1,15 @@
+.m-tonight-speakers {
+    margin-bottom: $standard-block-padding;
+
+    .a-tonight-speakers {
+        margin-bottom: $standard-block-padding;
+
+        &.a-tonight-moderators {
+            margin-bottom: 0;
+        }
+    }
+}
+
+.m-tonight-post-event-full .m-tonight-speakers {
+    margin-bottom: $standard-block-margin;
+}
