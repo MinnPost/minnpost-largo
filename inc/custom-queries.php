@@ -135,6 +135,17 @@ if ( ! function_exists( 'custom_archive_query_vars' ) ) :
 						),
 					),
 				);
+			} elseif ( is_post_type_archive( 'tonight' ) ) {
+				$query->set( 'posts_per_page', 1 );
+				$query->set(
+					'meta_query',
+					array(
+						array(
+							'key'   => 'tonight_load_as_directory_content',
+							'value' => 'on',
+						),
+					),
+				);
 			}
 		}
 		return $query;

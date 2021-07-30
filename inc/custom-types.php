@@ -133,8 +133,7 @@ endif;
 if ( ! function_exists( 'create_festival_page' ) ) :
 	add_action( 'init', 'create_festival_page' );
 	function create_festival_page() {
-		$festival_taxonomy = 'tribe_events_cat';
-		$labels            = array(
+		$labels       = array(
 			'name'                  => __( 'Festival Pages', 'minnpost-largo' ),
 			'singular_name'         => __( 'Festival Page', 'minnpost-largo' ),
 			'menu_name'             => __( 'Festival Pages', 'minnpost-largo' ),
@@ -163,18 +162,18 @@ if ( ! function_exists( 'create_festival_page' ) ) :
 			'items_list_navigation' => __( 'Festival pages list navigation', 'minnpost-largo' ),
 			'filter_items_list'     => __( 'Filter festival page list', 'minnpost-largo' ),
 		);
-		$capabilities      = array(
-			'edit_post'          => 'edit_festival_page',
-			'read_post'          => 'read_festival_page',
-			'delete_post'        => 'delete_festival_page',
-			'delete_posts'       => 'delete_festival_pages',
-			'edit_posts'         => 'edit_festival_pages',
-			'edit_others_posts'  => 'edit_others_festival_pages',
-			'publish_posts'      => 'publish_festival_pages',
-			'read_private_posts' => 'read_private_festival_pages',
-			'create_posts'       => 'create_festival_pages',
+		$capabilities = array(
+			'edit_post'          => 'edit_event_website_page',
+			'read_post'          => 'read_event_website_page',
+			'delete_post'        => 'delete_event_website_page',
+			'delete_posts'       => 'delete_event_website_pages',
+			'edit_posts'         => 'edit_event_website_pages',
+			'edit_others_posts'  => 'edit_others_event_website_pages',
+			'publish_posts'      => 'publish_event_website_pages',
+			'read_private_posts' => 'read_private_event_website_pages',
+			'create_posts'       => 'create_event_website_pages',
 		);
-		$args              = array(
+		$args         = array(
 			'label'               => __( 'Festival Page', 'minnpost-largo' ),
 			'description'         => __( 'Festival page template', 'minnpost-largo' ),
 			'labels'              => $labels,
@@ -184,9 +183,6 @@ if ( ! function_exists( 'create_festival_page' ) ) :
 				'editor',
 				//'author',
 			),
-			/*'taxonomies'          => array(
-				$festival_taxonomy,
-			),*/
 			'hierarchical'        => false,
 			'public'              => true,
 			'show_ui'             => true,
@@ -203,6 +199,82 @@ if ( ! function_exists( 'create_festival_page' ) ) :
 			'capabilities'        => $capabilities,
 		);
 		register_post_type( 'festival', $args );
+	}
+endif;
+
+/**
+* Register custom post type 'tonight'
+*
+*/
+if ( ! function_exists( 'create_tonight_page' ) ) :
+	add_action( 'init', 'create_tonight_page' );
+	function create_tonight_page() {
+		$labels       = array(
+			'name'                  => __( 'MinnPost Tonight Pages', 'minnpost-largo' ),
+			'singular_name'         => __( 'MinnPost Tonight Page', 'minnpost-largo' ),
+			'menu_name'             => __( 'MinnPost Tonight Pages', 'minnpost-largo' ),
+			'name_admin_bar'        => __( 'MinnPost Tonight Page', 'minnpost-largo' ),
+			'add_new'               => __( 'Add New', 'minnpost-largo' ),
+			'add_new_item'          => __( 'Add New MinnPost Tonight Page', 'minnpost-largo' ),
+			'new_item'              => __( 'New MinnPost Tonight Page', 'minnpost-largo' ),
+			'edit_item'             => __( 'Edit MinnPost Tonight Page', 'minnpost-largo' ),
+			'update_item'           => __( 'Update MinnPost Tonight Page', 'minnpost-largo' ),
+			'view_item'             => __( 'View MinnPost Tonight Page', 'minnpost-largo' ),
+			'view_items'            => __( 'View MinnPost Tonight Pages', 'minnpost-largo' ),
+			'all_items'             => __( 'MinnPost Tonight Pages', 'minnpost-largo' ),
+			'archives'              => __( 'MinnPost Tonight Page Archives', 'minnpost-largo' ),
+			'search_items'          => __( 'Search MinnPost Tonight Pages', 'minnpost-largo' ),
+			'parent_item_colon'     => __( 'Parent MinnPost Tonight Pages:', 'minnpost-largo' ),
+			'not_found'             => __( 'No MinnPost Tonight pages found.', 'minnpost-largo' ),
+			'not_found_in_trash'    => __( 'No MinnPost Tonight pages found in Trash.', 'minnpost-largo' ),
+			'attributes'            => __( 'MinnPost Tonight Page Attributes', 'minnpost-largo' ),
+			'featured_image'        => __( 'Featured Image', 'minnpost-largo' ),
+			'set_featured_image'    => __( 'Set featured image', 'minnpost-largo' ),
+			'remove_featured_image' => __( 'Remove featured image', 'minnpost-largo' ),
+			'use_featured_image'    => __( 'Use as featured image', 'minnpost-largo' ),
+			'insert_into_item'      => __( 'Insert into message', 'minnpost-largo' ),
+			'uploaded_to_this_item' => __( 'Uploaded to this MinnPost Tonight page', 'minnpost-largo' ),
+			'items_list'            => __( 'MinnPost Tonight pages list', 'minnpost-largo' ),
+			'items_list_navigation' => __( 'MinnPost Tonight pages list navigation', 'minnpost-largo' ),
+			'filter_items_list'     => __( 'Filter festival page list', 'minnpost-largo' ),
+		);
+		$capabilities = array(
+			'edit_post'          => 'edit_event_website_page',
+			'read_post'          => 'read_event_website_page',
+			'delete_post'        => 'delete_event_website_page',
+			'delete_posts'       => 'delete_event_website_pages',
+			'edit_posts'         => 'edit_event_website_pages',
+			'edit_others_posts'  => 'edit_others_event_website_pages',
+			'publish_posts'      => 'publish_event_website_pages',
+			'read_private_posts' => 'read_private_event_website_pages',
+			'create_posts'       => 'create_event_website_pages',
+		);
+		$args         = array(
+			'label'               => __( 'MinnPost Tonight Page', 'minnpost-largo' ),
+			'description'         => __( 'MinnPost Tonight page template', 'minnpost-largo' ),
+			'labels'              => $labels,
+			'supports'            => array(
+				'title',
+				'revisions',
+				'editor',
+				//'author',
+			),
+			'hierarchical'        => false,
+			'public'              => true,
+			'show_ui'             => true,
+			'show_in_menu'        => 'edit.php?post_type=tribe_events',
+			'show_in_admin_bar'   => true,
+			'show_in_nav_menus'   => true,
+			'show_in_rest'        => true, // this will be required in gutenberg
+			'can_export'          => true,
+			'has_archive'         => true,
+			'exclude_from_search' => false,
+			'publicly_queryable'  => true,
+			'capability_type'     => 'page',
+			'menu_icon'           => 'dashicons-calendar-alt',
+			'capabilities'        => $capabilities,
+		);
+		register_post_type( 'tonight', $args );
 	}
 endif;
 
