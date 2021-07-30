@@ -1,0 +1,30 @@
+a.m-speaker-link {
+    text-decoration: none;
+
+    .a-speaker-title {
+        text-decoration: underline;
+    }
+
+    .a-speaker-job-title,
+    .a-speaker-bio-text {
+        color: neutral-color(black);
+    }
+
+    &:hover,
+    &:focus,
+    &:active {
+
+        .a-speaker-title {
+            text-decoration: none;
+        }
+
+        img {
+            opacity: 0.9;
+        }
+
+        .a-speaker-job-title,
+        .a-speaker-bio-text {
+            color: neutral-color(dark);
+        }
+    }
+} 

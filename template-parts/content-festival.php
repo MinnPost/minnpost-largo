@@ -56,9 +56,9 @@ if ( '' !== $content || ! empty( $content_posts ) ) :
 				wp_reset_postdata();
 				?>
 			</section>
-			<?php minnpost_festival_pass_link(); ?>
+			<?php minnpost_event_website_pass_link( 'festival' ); ?>
 			<?php if ( 'tribe_events' === $post_type ) : ?>
-				<?php minnpost_festival_disclaimer_text(); ?>
+				<?php minnpost_event_website_disclaimer_text( 'festival' ); ?>
 			<?php endif; ?>
 			<?php
 		endif;
