@@ -200,16 +200,19 @@ if ( ! function_exists( 'minnpost_largo_single_event_links' ) ) :
 endif;
 
 /**
-* Set the festival date range based on the specified page slug that contains the events.
+* Set the event website date range based on the specified page slug that contains the events.
 * @param string $event_slug
 * @return string $output
 *
 */
-if ( ! function_exists( 'minnpost_largo_get_festival_date_range' ) ) :
-	function minnpost_largo_get_festival_date_range( $event_slug = '' ) {
-		$output      = '';
-		$post        = get_page_by_path( $event_slug, OBJECT, 'festival' );
-		$event_posts = get_post_meta( $post->ID, '_mp_festival_content_posts', true );
+if ( ! function_exists( 'minnpost_largo_get_event_website_date_range' ) ) :
+	function minnpost_largo_get_event_website_date_range( $object_type = 'festival', $event_slug = '' ) {
+		$output = '';
+		$post   = get_page_by_path( $event_slug, OBJECT, $object_type );
+		if ( ! is_object( $post ) ) {
+			return $output;
+		}
+		$event_posts = get_post_meta( $post->ID, '_mp_' . $object_type . '_content_posts', true );
 		if ( ! empty( $event_posts ) ) {
 
 			foreach ( $event_posts as $key => $event_post_id ) {
@@ -274,7 +277,7 @@ if ( ! function_exists( 'minnpost_largo_get_event_website_logo_info' ) ) :
 		$post_id         = 0;
 		$is_current_url  = false;
 		$event_logo_info = array();
-		// check to see if there is a post checked for /festival already
+		// check to see if there is a post checked for the event directory page already
 		$directory_args  = array(
 			'posts_per_page' => 1,
 			'post_type'      => $object_type,
@@ -389,10 +392,8 @@ if ( ! function_exists( 'minnpost_event_category_breadcrumb' ) ) :
 		if ( ! empty( $event_categories ) ) {
 			foreach ( $event_categories as $event_category ) {
 				$category_name = $event_category->name;
-				if ( 'festival' === $event_category->slug ) {
-					$category_link = site_url( '/festival/' );
-				} elseif ( 'tonight' === $event_category->slug ) {
-					$category_link = site_url( '/tonight/' );
+				if ( 'festival' === $event_category->slug || 'tonight' === $event_category->slug ) {
+					$category_link = site_url( '/' . $event_category->slug . '/' );
 				} else {
 					$category_link = get_term_link( $event_category->term_id, 'tribe_events_cat' );
 				}
