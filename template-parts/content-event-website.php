@@ -1,27 +1,28 @@
 <?php
 /**
- * Template part for displaying a festival listing page
+ * Template part for displaying an event website's listing page
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
  * @package MinnPost Largo
  */
 
+$object_type   = $args['object_type'];
 $content       = get_the_content();
 $content       = apply_filters( 'the_content', $content );
-$content_posts = get_post_meta( get_the_ID(), '_mp_festival_content_posts', true );
+$content_posts = get_post_meta( get_the_ID(), '_mp_' . $object_type . '_content_posts', true );
 if ( '' !== $content || ! empty( $content_posts ) ) :
 
 	if ( '' !== $content ) :
 		?>
-		<article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post m-festival m-festival-archive' ); ?>>
+		<article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post m-' . $object_type . ' m-' . $object_type . '-archive' ); ?>>
 			<?php echo $content; ?>
 		</article><!-- #post-## -->
 		<?php
 	endif;
 
 	if ( ! empty( $content_posts ) ) :
-		$use_permalink = get_post_meta( get_the_ID(), '_mp_festival_content_posts_use_permalinks', true );
+		$use_permalink = get_post_meta( get_the_ID(), '_mp_' . $object_type . '_content_posts_use_permalinks', true );
 		if ( 'on' === $use_permalink ) {
 			$use_permalink = true;
 		} else {
@@ -43,22 +44,22 @@ if ( '' !== $content || ! empty( $content_posts ) ) :
 			$post_type_class = '';
 			$post_type       = get_post_type( $content_query->posts[0]->ID );
 			if ( '' !== $post_type ) {
-				$post_type_class = ' m-archive-festival-' . $post_type;
+				$post_type_class = 'm-archive-' . $object_type . ' m-archive-' . $object_type . '-' . $post_type;
 			}
 			?>
-			<section class="m-archive m-archive-festival<?php echo $post_type_class; ?>">
+			<section class="m-archive<?php echo $post_type_class; ?>">
 				<?php
 				while ( $content_query->have_posts() ) {
 					$content_query->the_post();
 					set_query_var( 'current_post', $content_query->current_post );
-					get_template_part( 'template-parts/post-festival', get_post_type() . '-excerpt', $content_display_args );
+					get_template_part( 'template-parts/post-' . $object_type, get_post_type() . '-excerpt', $content_display_args );
 				}
 				wp_reset_postdata();
 				?>
 			</section>
-			<?php minnpost_event_website_pass_link( 'festival' ); ?>
+			<?php minnpost_event_website_pass_link( $object_type ); ?>
 			<?php if ( 'tribe_events' === $post_type ) : ?>
-				<?php minnpost_event_website_disclaimer_text( 'festival' ); ?>
+				<?php minnpost_event_website_disclaimer_text( $object_type ); ?>
 			<?php endif; ?>
 			<?php
 		endif;

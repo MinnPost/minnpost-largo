@@ -13,7 +13,10 @@ get_header( 'festival' ); ?>
 			<?php
 			while ( have_posts() ) :
 				the_post();
-				get_template_part( 'template-parts/content', 'festival' );
+				$args = array(
+					'object_type' => 'festival',
+				);
+				get_template_part( 'template-parts/content-event-website', null, $args );
 			endwhile; // End of the loop.
 			?>
 		</main><!-- #main -->
