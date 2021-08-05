@@ -16,7 +16,7 @@ get_header( 'festival' ); ?>
 			$args = array(
 				'object_type' => 'festival',
 			);
-			get_template_part( 'template-parts/content', 'festival', $args );
+			get_template_part( 'template-parts/content-event-website', 'festival', $args );
 		endwhile; // End of the loop.
 		?>
 	</main><!-- #main -->
