@@ -1,0 +1,14 @@
+.m-event-datetime {
+
+	svg {
+		width: 1em !important;
+	}
+
+	> span,
+	> a > span {
+
+		span {
+			color: tonight-palette-color(black, highlight);
+		}
+	}
+}

@@ -1,19 +1,28 @@
 .o-header-tonight {
     margin-bottom: $standard-block-margin;
-    background: tonight-color(top);
-    background: url('/wp-content/themes/minnpost-largo/assets/img/events/festival/mncapitol-small.png') no-repeat 24% 100%, linear-gradient(to bottom, tonight-color(top), tonight-color(bottom));
-    min-height: $header-height-mobile;
-
-    @include breakpoint-min( md ) {
+    //background: tonight-color(top);
+    //background: url('/wp-content/themes/minnpost-largo/assets/img/events/tonight/minnpost-tonight.png') no-repeat 24% 100%, linear-gradient(to bottom, tonight-color(top), tonight-color(bottom));
+    
+    .o-wrapper {
+        background-image: url('/wp-content/themes/minnpost-largo/assets/img/events/tonight/minnpost-tonight-skyline.png');
+        background-repeat: no-repeat;
+        background-position: $header-left-margin-desktop bottom;
         min-height: $header-height-desktop;
+        
+        @include breakpoint-min( md ) {
+            //min-height: $header-height-desktop;
+        }
     }
+
+    
 }
 
-body.post-type-archive-tonight .o-header-tonight {
+/*body.post-type-archive-tonight .o-header-tonight {
 
     @include breakpoint-min( md ) {
-        background: url('/wp-content/themes/minnpost-largo/assets/img/events/festival/mncapitol-large.png') no-repeat 2% 100%, linear-gradient(to bottom, tonight-color(top), tonight-color(bottom));
+        //background: url('/wp-content/themes/minnpost-largo/assets/img/events/tonight/minnpost-tonight.png') no-repeat 2% 100%, linear-gradient(to bottom, tonight-color(top), tonight-color(bottom));
+        background: url('/wp-content/themes/minnpost-largo/assets/img/events/tonight/minnpost-tonight-full-header.png') no-repeat 2% 100%, transparent;
         min-height: $header-height-homepage-desktop;
-        background-size: contain;
+        
     }
-}
+}*/
