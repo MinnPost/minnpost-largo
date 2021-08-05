@@ -17,7 +17,7 @@ if ( '' !== $content || ! empty( $content_posts ) ) :
 		?>
 		<article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post m-' . $object_type . ' m-' . $object_type . '-archive' ); ?>>
 			<?php echo $content; ?>
-		</article><!-- #post-## -->
+		</article>
 		<?php
 	endif;
 

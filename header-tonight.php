@@ -46,12 +46,11 @@
 			<div class="m-event-details m-tonight-dates">
 				<?php do_action( 'tribe_events_single_event_before_the_meta' ); ?>
 				<div class="m-event-date-and-calendar">
-					<?php echo minnpost_largo_get_event_website_date_range( 'tonight', get_post_field( 'post_name', get_the_ID() ) ); ?>
+					<?php get_template_part( 'tribe/events/modules/meta/date', '', array( 'show_timezone' => true, 'separator' => '&ndash;' ) ); ?>
+					<?php do_action( 'tribe_events_single_event_after_the_content' ); ?>
 				</div>
 			</div>
 			<?php endif; ?>
-
-			
 		</div>
 		<?php if ( false === $event_logo_info['is_current_url'] && ! is_singular( array( 'tribe_events', 'tribe_ext_speaker' ) ) ) : ?>
 			<div class="o-wrapper o-wrapper-tonight-page-title">

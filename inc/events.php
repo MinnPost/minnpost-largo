@@ -272,6 +272,31 @@ if ( ! function_exists( 'minnpost_largo_get_event_website_date_range' ) ) :
 endif;
 
 /**
+* Set the event ID if it's not the current post ID.
+* @return int $post_id
+*
+*/
+if ( ! function_exists( 'minnpost_largo_set_event_id' ) ) :
+	add_filter( 'minnpost_largo_set_event_id', 'minnpost_largo_set_event_id' );
+	function minnpost_largo_set_event_id( $post_id ) {
+		$object_type = get_post_type( $post_id );
+		$event_posts = get_post_meta( $post_id, '_mp_' . $object_type . '_content_posts', true );
+		if ( ! empty( $event_posts ) ) {
+			foreach ( $event_posts as $key => $event_post_id ) {
+				if ( 'publish' !== get_post_status( $event_post_id ) ) {
+					unset( $event_posts[ $key ] );
+				}
+			}
+			$first_event_id = $event_posts[0];
+			//$last_event_key = array_key_last( $event_posts );
+			//$last_event_id  = $event_posts[ $last_event_key ];
+			$post_id = $first_event_id;
+		}
+		return $post_id;
+	}
+endif;
+
+/**
 * Get the info for the event website page logo
 * @param string $object_type
 * @return array $event_logo_info
