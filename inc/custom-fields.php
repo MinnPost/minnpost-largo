@@ -2833,6 +2833,14 @@ if ( ! function_exists( 'cmb2_event_website_page_fields' ) ) :
 					'desc' => __( 'If checked, each entry will link to the individual URL for that post.', 'minnpost-largo' ),
 				)
 			);
+			$event_posts->add_field(
+				array(
+					'name' => __( 'Load as page content instead of links?', 'minnpost-largo' ),
+					'id'   => $prefix . 'content_posts_load_content_instead_of_links',
+					'type' => 'checkbox',
+					'desc' => __( 'If checked, the content for each entry will be displayed on this page. This is useful if you want to have a landing page for a single event without a session list.', 'minnpost-largo' ),
+				)
+			);
 
 			/**
 			 * SEO and social meta settings

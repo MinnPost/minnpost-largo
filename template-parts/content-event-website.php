@@ -28,6 +28,12 @@ if ( '' !== $content || ! empty( $content_posts ) ) :
 		} else {
 			$use_permalink = false;
 		}
+		$load_content_instead_of_links = get_post_meta( get_the_ID(), '_mp_' . $object_type . '_content_posts_load_content_instead_of_links', true );
+		if ( 'on' === $load_content_instead_of_links ) {
+			$load_content_instead_of_links = true;
+		} else {
+			$load_content_instead_of_links = false;
+		}
 		$content_query_args   = array(
 			'post__in'       => $content_posts,
 			'posts_per_page' => -1,
@@ -47,19 +53,30 @@ if ( '' !== $content || ! empty( $content_posts ) ) :
 				$post_type_class = 'm-archive-' . $object_type . ' m-archive-' . $object_type . '-' . $post_type;
 			}
 			?>
-			<section class="m-archive<?php echo $post_type_class; ?>">
+			<?php if ( true === $load_content_instead_of_links ) : ?>
 				<?php
 				while ( $content_query->have_posts() ) {
 					$content_query->the_post();
 					set_query_var( 'current_post', $content_query->current_post );
-					get_template_part( 'template-parts/post-' . $object_type, get_post_type() . '-excerpt', $content_display_args );
+					get_template_part( 'template-parts/post-' . $object_type, get_post_type() . '-landing-page', $content_display_args );
 				}
 				wp_reset_postdata();
 				?>
-			</section>
-			<?php minnpost_event_website_pass_link( $object_type ); ?>
-			<?php if ( 'tribe_events' === $post_type ) : ?>
-				<?php minnpost_event_website_disclaimer_text( $object_type ); ?>
+			<?php else : ?>
+				<section class="m-archive<?php echo $post_type_class; ?>">
+					<?php
+					while ( $content_query->have_posts() ) {
+						$content_query->the_post();
+						set_query_var( 'current_post', $content_query->current_post );
+						get_template_part( 'template-parts/post-' . $object_type, get_post_type() . '-excerpt', $content_display_args );
+					}
+					wp_reset_postdata();
+					?>
+				</section>
+				<?php minnpost_event_website_pass_link( $object_type ); ?>
+				<?php if ( 'tribe_events' === $post_type ) : ?>
+					<?php minnpost_event_website_disclaimer_text( $object_type ); ?>
+				<?php endif; ?>
 			<?php endif; ?>
 			<?php
 		endif;
