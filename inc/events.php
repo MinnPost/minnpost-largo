@@ -201,6 +201,7 @@ endif;
 
 /**
 * Set the event website date range based on the specified page slug that contains the events.
+* @param string $object_type
 * @param string $event_slug
 * @return string $output
 *
@@ -229,8 +230,8 @@ if ( ! function_exists( 'minnpost_largo_get_event_website_date_range' ) ) :
 			$end_timestamp   = tribe_get_end_date( $last_event_id, false, 'U' );
 			$start_date      = tribe_get_start_date( $first_event_id, false, 'c' );
 			$end_date        = tribe_get_end_date( $last_event_id, false, 'c' );
-			$start_day       = tribe_get_start_date( $first_event_id, false, 'm d' );
-			$end_day         = tribe_get_end_date( $last_event_id, false, 'm d' );
+			$start_day       = minnpost_largo_get_ap_date( tribe_get_start_date( $first_event_id, false, 'm/d/Y' ) );
+			$end_day         = minnpost_largo_get_ap_date( tribe_get_end_date( $last_event_id, false, 'm/d/Y' ) );
 
 			if ( $start_day === $end_day ) {
 				// same day - 1st April 2012
