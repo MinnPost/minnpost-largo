@@ -6,4 +6,11 @@
     justify-content: space-between;
     align-items: flex-start;
     margin-bottom: $standard-block-padding;
+
+    .m-event-datetime {
+
+        a {
+            align-items: flex-start;
+        }
+    }
 }

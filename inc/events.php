@@ -229,10 +229,14 @@ if ( ! function_exists( 'minnpost_largo_get_event_website_date_range' ) ) :
 			$end_timestamp   = tribe_get_end_date( $last_event_id, false, 'U' );
 			$start_date      = tribe_get_start_date( $first_event_id, false, 'c' );
 			$end_date        = tribe_get_end_date( $last_event_id, false, 'c' );
+			$start_day       = tribe_get_start_date( $first_event_id, false, 'm d' );
+			$end_day         = tribe_get_end_date( $last_event_id, false, 'm d' );
 
-			if ( $start_timestamp === $end_timestamp ) {
+			if ( $start_day === $end_day ) {
 				// same day - 1st April 2012
-				$output = minnpost_largo_get_ap_date( $start_date );
+				//$output = minnpost_largo_get_ap_date( $start_date );
+				$date_time = new DateTime( $start_date );
+				$output    = $date_time->format( 'F j, Y' );
 			} elseif ( gmdate( 'Y-m', $start_timestamp ) === gmdate( 'Y-m', $end_timestamp ) ) {
 				// same year and month - 3rd - 21st March 2012
 				$output = sprintf(

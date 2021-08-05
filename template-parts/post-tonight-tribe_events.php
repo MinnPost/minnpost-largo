@@ -1,18 +1,18 @@
 <?php
 /**
- * Template part for displaying MinnPost Festival event posts
+ * Template part for displaying MinnPost Tonight event posts
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
  * @package MinnPost Largo
  */
 
-$post_class = 'm-post m-festival-post m-festival-post-event m-festival-post-event-full';
+$post_class = 'm-post m-tonight-post m-tonight-post-event m-tonight-post-event-full';
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( $post_class ); ?>>
 	<header class="m-event-header m-entry-header tribe-events-calendar-list__event-header">
-		<?php the_title( '<h1 class="a-entry-title a-event-title a-festival-title tribe-events-single-event-title">', '</h1>' ); ?>
+		<?php the_title( '<h1 class="a-entry-title a-event-title a-tonight-title tribe-events-single-event-title">', '</h1>' ); ?>
 		<?php
 		$hide_notices = get_post_meta( $id, '_mp_remove_notice_from_display', true );
 		if ( 'on' !== $hide_notices ) :
@@ -43,12 +43,12 @@ $post_class = 'm-post m-festival-post m-festival-post-event m-festival-post-even
 			}
 			?>
 			<?php do_action( 'tribe_events_single_event_before_the_content' ); ?>
-			<div class="m-event-content m-festival-event-content">
+			<div class="m-event-content m-tonight-event-content">
 				<?php the_content(); ?>
 			</div>
 			<?php get_template_part( 'tribe/events/modules/meta/speaker' ); ?>
-			<?php minnpost_event_website_pass_link( 'festival' ); ?>
-			<?php minnpost_event_website_disclaimer_text( 'festival' ); ?>
+			<?php minnpost_event_website_pass_link( 'tonight' ); ?>
+			<?php minnpost_event_website_disclaimer_text( 'tonight' ); ?>
 		</div><!-- .m-entry-content -->
 	</div>
 </article> <!-- #post-x -->
