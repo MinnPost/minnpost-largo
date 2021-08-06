@@ -10,6 +10,7 @@
 	border-radius: $border-radius;
 	padding: $standard-block-padding $standard-block-margin * 2 $standard-block-padding * 2 $standard-block-padding $standard-block-padding;
 	width: 100%;
+	z-index: $z-index__xxxs;
 
 	@include meta-preset( $size: -2 );
 	margin: -$standard-block-padding 0 0 0;

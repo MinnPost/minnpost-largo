@@ -3,34 +3,5 @@
     font-size: var(--scale4);
     position: absolute;
     top: 35%;
-    right: 5%;
-    color: tonight-palette-color(blue, highlight);
+    right: $standard-block-padding;
 }
-
-
-/* tonight.css | https://minnpost-wordpress.test/wp-content/themes/minnpost-largo/assets/css/tonight.css?ver=1628102159 */
-
-.m-event-datetime > a {
-    /* display: inline-flex; */
-    /* justify-content: space-between; */
-    /* width: auto; */
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .m-event-datetime > a > span, .m-event-datetime > span {
-    /* display: block; */
-    /* margin: 0 1.5em .5em 0; */
-    margin-bottom: 0.5em;
-  }
-  
-  @media screen and (min-width: 60em) {
-    .o-wrapper.o-wrapper-site-navigation a, .o-wrapper.o-wrapper-site-navigation button, .o-wrapper.o-wrapper-sub-navigation a, .o-wrapper.o-wrapper-sub-navigation button {
-      /* min-height: 32px; */
-    }
-  }
-  
-  .o-wrapper.o-wrapper-site-navigation a, .o-wrapper.o-wrapper-site-navigation button, .o-wrapper.o-wrapper-sub-navigation a, .o-wrapper.o-wrapper-sub-navigation button {
-    /* align-items: center; */
-  }
-  

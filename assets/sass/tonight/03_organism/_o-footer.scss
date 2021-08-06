@@ -1,4 +1,22 @@
-.o-footer-tonight {
+.o-footer.o-footer-tonight {
     background: transparent;
     color: inherit;
+
+    .o-footer-links {
+
+        a:link,
+        a:visited {
+            
+            @include link-underline(tonight-palette-color(yellow, highlight), tonight-palette-color(yellow, background));
+        }
+
+        a:hover,
+        a:focus,
+        a:active,
+        a.active,
+        .active > a {
+            
+            @include link-underline(tonight-palette-color(yellow, background), tonight-palette-color(yellow, background));
+        }
+    }
 }
