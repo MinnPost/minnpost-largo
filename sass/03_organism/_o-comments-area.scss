@@ -124,7 +124,7 @@
 
 		> #llc_comments,
 		> .o-comments-area {
-			z-index: 10;
+			z-index: $z-index__xxxs;
 
 			@include breakpoint-min( lg ) {
 				width: 100%;

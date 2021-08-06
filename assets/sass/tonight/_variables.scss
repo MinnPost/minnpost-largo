@@ -1,4 +1,4 @@
-// color palette: https://minnpost-color-matrix.herokuapp.com/?n=black&n=medium&n=highlight&n=background&n=dark&n=medium&n=highlight&n=background&v=010203&v=5A5A5B&v=B2B3B3&v=E5E5E5&v=465159&v=8095A4&v=C5E4FA&v=EBF6FD
+// color palette: https://minnpost-color-matrix.herokuapp.com/?n=black&n=medium&n=highlight&n=background&n=dark&n=medium&n=highlight&n=background&n=dark&n=medium&n=highlight&n=background&v=010203&v=5A5A5B&v=B2B3B3&v=E5E5E5&v=465159&v=8095A4&v=C5E4FA&v=EBF6FD&v=5A5A03&v=A6A702&v=FFFF02&v=FFFFA7
 
 // palette
 $tonight-colors: (
@@ -13,6 +13,12 @@ $tonight-colors: (
         medium: #8095A4,
         highlight: #C5E4FA,
         background: #EBF6FD
+    ),
+    yellow: (
+        dark: #5A5A03,
+        medium: #A6A702,
+        highlight: #FFFF02, // links
+        background: #FFFFA7
     )
 );
 

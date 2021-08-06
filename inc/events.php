@@ -112,12 +112,17 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_largo_full_event_date' ) ) :
-	function minnpost_largo_full_event_date( $event_id = '' ) {
+	function minnpost_largo_full_event_date( $event_id = '', $args = array() ) {
 		if ( '' === $event_id ) {
 			$event_id = get_the_ID();
 		}
-		$start_date = minnpost_largo_get_ap_date( tribe_get_start_date( $event_id, false, 'm/d/Y' ) );
-		$end_date   = minnpost_largo_get_ap_date( tribe_get_end_date( $event_id, false, 'm/d/Y' ) );
+		if ( ! isset( $args['show_full_month_name'] ) || ( isset( $args['show_full_month_name'] ) && true !== $args['show_full_month_name'] ) ) {
+			$start_date = minnpost_largo_get_ap_date( tribe_get_start_date( $event_id, false, 'm/d/Y' ) );
+			$end_date   = minnpost_largo_get_ap_date( tribe_get_end_date( $event_id, false, 'm/d/Y' ) );
+		} else {
+			$start_date = tribe_get_start_date( $event_id, false, 'F j, Y' );
+			$end_date   = tribe_get_end_date( $event_id, false, 'F j, Y' );
+		}
 		if ( $end_date !== $start_date ) {
 			$time = sprintf(
 				// translators: 1) start date, 2) end date
@@ -201,6 +206,7 @@ endif;
 
 /**
 * Set the event website date range based on the specified page slug that contains the events.
+* @param string $object_type
 * @param string $event_slug
 * @return string $output
 *
@@ -229,8 +235,8 @@ if ( ! function_exists( 'minnpost_largo_get_event_website_date_range' ) ) :
 			$end_timestamp   = tribe_get_end_date( $last_event_id, false, 'U' );
 			$start_date      = tribe_get_start_date( $first_event_id, false, 'c' );
 			$end_date        = tribe_get_end_date( $last_event_id, false, 'c' );
-			$start_day       = tribe_get_start_date( $first_event_id, false, 'm d' );
-			$end_day         = tribe_get_end_date( $last_event_id, false, 'm d' );
+			$start_day       = minnpost_largo_get_ap_date( tribe_get_start_date( $first_event_id, false, 'm/d/Y' ) );
+			$end_day         = minnpost_largo_get_ap_date( tribe_get_end_date( $last_event_id, false, 'm/d/Y' ) );
 
 			if ( $start_day === $end_day ) {
 				// same day - 1st April 2012
@@ -267,6 +273,31 @@ if ( ! function_exists( 'minnpost_largo_get_event_website_date_range' ) ) :
 			}
 		}
 		return $output;
+	}
+endif;
+
+/**
+* Set the event ID if it's not the current post ID.
+* @return int $post_id
+*
+*/
+if ( ! function_exists( 'minnpost_largo_set_event_id' ) ) :
+	add_filter( 'minnpost_largo_set_event_id', 'minnpost_largo_set_event_id' );
+	function minnpost_largo_set_event_id( $post_id ) {
+		$object_type = get_post_type( $post_id );
+		$event_posts = get_post_meta( $post_id, '_mp_' . $object_type . '_content_posts', true );
+		if ( ! empty( $event_posts ) ) {
+			foreach ( $event_posts as $key => $event_post_id ) {
+				if ( 'publish' !== get_post_status( $event_post_id ) ) {
+					unset( $event_posts[ $key ] );
+				}
+			}
+			$first_event_id = $event_posts[0];
+			//$last_event_key = array_key_last( $event_posts );
+			//$last_event_id  = $event_posts[ $last_event_key ];
+			$post_id = $first_event_id;
+		}
+		return $post_id;
 	}
 endif;
 
