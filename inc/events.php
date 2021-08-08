@@ -455,6 +455,101 @@ if ( ! function_exists( 'minnpost_event_category_breadcrumb' ) ) :
 endif;
 
 /**
+* Returns the category name for a post's main event category
+*
+* @param int $post_id
+* @return string $category_name
+*
+*/
+if ( ! function_exists( 'minnpost_get_event_category_name' ) ) :
+	function minnpost_get_event_category_name( $post_id = '' ) {
+		$category_name = '';
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
+
+		$hide_category = get_post_meta( $post_id, '_mp_remove_category_from_display', true );
+		if ( 'on' === $hide_category ) {
+			return $category_name;
+		}
+
+		$category_id = minnpost_get_permalink_event_category_id( $post_id );
+		if ( '' !== $category_id ) {
+			$category = get_term( $category_id, 'tribe_events_cat' );
+		}
+
+		if ( isset( $category->name ) ) {
+			$category_name = $category->name;
+		}
+
+		return $category_name;
+	}
+endif;
+
+/**
+* Returns the category slug for a post's main event category
+*
+* @param int $post_id
+* @return string $category_slug
+*
+*/
+if ( ! function_exists( 'minnpost_get_event_category_slug' ) ) :
+	function minnpost_get_event_category_slug( $post_id = '' ) {
+		$category_slug = '';
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
+
+		$hide_category = get_post_meta( $post_id, '_mp_remove_category_from_display', true );
+		if ( 'on' === $hide_category ) {
+			return $category_slug;
+		}
+
+		$category_id = minnpost_get_permalink_event_category_id( $post_id );
+		if ( '' !== $category_id ) {
+			$category = get_term( $category_id, 'tribe_events_cat' );
+		}
+
+		if ( isset( $category->slug ) ) {
+			$category_slug = $category->slug;
+		}
+
+		return $category_slug;
+	}
+endif;
+
+/**
+* Returns the category ID for a post's permalink event category
+*
+* @param int $post_id
+* @return int $category_id
+*
+*/
+if ( ! function_exists( 'minnpost_get_permalink_event_category_id' ) ) :
+	function minnpost_get_permalink_event_category_id( $post_id = '' ) {
+		$category_id = '';
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
+		$category_permalink = get_post_meta( $post_id, '_category_permalink', true );
+		if ( null !== $category_permalink && '' !== $category_permalink ) {
+			if ( isset( $category_permalink['tribe_events_cat'] ) && '' !== $category_permalink['tribe_events_cat'] ) {
+				$category_id = $category_permalink['tribe_events_cat'];
+			} else {
+				$categories  = get_the_terms( $post_id, 'tribe_events_cat' );
+				$category_id = isset( $categories[0] ) ? $categories[0]->term_id : '';
+			}
+		} else {
+			$categories = get_the_terms( $post_id, 'tribe_events_cat' );
+			if ( isset( $categories[0] ) && is_object( $categories[0] ) && ! is_wp_error( $categories[0] ) ) {
+				$category_id = $categories[0]->term_id;
+			}
+		}
+		return $category_id;
+	}
+endif;
+
+/**
 * Display the disclaimer
 *
 */
