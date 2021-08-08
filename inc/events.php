@@ -90,6 +90,22 @@ if ( ! function_exists( 'minnpost_largo_remove_tribe_styles' ) ) :
 endif;
 
 /**
+* Filter to stop enqueing event stuff on the front end.
+*
+* @param bool $should_enqueue_frontend
+* @return bool $should_enqueue_frontend
+*
+*/
+if ( ! function_exists( 'minnpost_largo_do_not_enqueue_event_frontend' ) ) :
+	add_filter( 'tribe_events_assets_should_enqueue_frontend', 'minnpost_largo_do_not_enqueue_event_frontend', 30 );
+	add_filter( 'tribe_events_views_v2_assets_should_enqueue_frontend', 'minnpost_largo_do_not_enqueue_event_frontend' );
+	function minnpost_largo_do_not_enqueue_event_frontend( $should_enqueue_frontend ) {
+		$should_enqueue_frontend = false;
+		return $should_enqueue_frontend;
+	}
+endif;
+
+/**
 * Modify the columns on the edit events admin page
 *
 * @param array $columns
