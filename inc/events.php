@@ -294,13 +294,25 @@ endif;
 
 /**
 * Set the event ID if it's not the current post ID.
+* @param int $post_id
+* @param array $args
 * @return int $post_id
 *
 */
 if ( ! function_exists( 'minnpost_largo_set_event_id' ) ) :
-	add_filter( 'minnpost_largo_set_event_id', 'minnpost_largo_set_event_id' );
-	function minnpost_largo_set_event_id( $post_id ) {
-		$object_type = get_post_type( $post_id );
+	add_filter( 'minnpost_largo_set_event_id', 'minnpost_largo_set_event_id', 10, 2 );
+	function minnpost_largo_set_event_id( $post_id, $args = array() ) {
+		if ( isset( $args['object_type'] ) && isset( $args['event_slug'] ) ) {
+			$object_type = $args['object_type'];
+			$event_slug  = $args['event_slug'];
+			$post        = get_page_by_path( $event_slug, OBJECT, $object_type );
+			if ( is_object( $post ) ) {
+				$post_id = $post->ID;
+			}
+		} else {
+			$object_type = get_post_type( $post_id );
+		}
+
 		$event_posts = get_post_meta( $post_id, '_mp_' . $object_type . '_content_posts', true );
 		if ( ! empty( $event_posts ) ) {
 			foreach ( $event_posts as $key => $event_post_id ) {
@@ -560,17 +572,19 @@ endif;
 
 /**
 * Display the disclaimer
+* @param string $object_type
 *
 */
 if ( ! function_exists( 'minnpost_event_website_disclaimer_text' ) ) :
-	function minnpost_event_website_disclaimer_text() {
-		echo minnpost_event_website_get_disclaimer_text();
+	function minnpost_event_website_disclaimer_text( $object_type = 'festival' ) {
+		echo minnpost_event_website_get_disclaimer_text( $object_type );
 	}
 endif;
 
 
 /**
 * Get the styled disclaimer text
+* @param string $object_type
 * @return string $disclaimer_text
 *
 */

@@ -4,7 +4,7 @@
  *
  */
 use Tribe__Date_Utils as Dates;
-$event_id        = apply_filters( 'minnpost_largo_set_event_id', get_the_ID() );
+$event_id        = apply_filters( 'minnpost_largo_set_event_id', get_the_ID(), $args );
 $event_date_attr = tribe_get_start_date( $event_id, false, Dates::DBDATEFORMAT );
 ?>
 <time class="m-event-datetime tribe-events-calendar-list__event-datetime" datetime="<?php echo esc_attr( $event_date_attr ); ?>">
