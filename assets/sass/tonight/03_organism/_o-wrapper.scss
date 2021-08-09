@@ -5,7 +5,7 @@
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
-    margin-bottom: $standard-block-padding;
+    margin-bottom: $standard-block-margin;
 
     .m-event-datetime {
 
@@ -13,4 +13,8 @@
             align-items: flex-start;
         }
     }
+}
+
+.o-wrapper-content-tonight {
+    margin-top: 0;
 }
