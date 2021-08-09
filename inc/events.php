@@ -421,12 +421,21 @@ endif;
 */
 if ( ! function_exists( 'minnpost_get_event_website_pass_link' ) ) :
 	function minnpost_get_event_website_pass_link( $object_type = 'festival' ) {
-		$buy_event_pass = sprintf(
-			// translators: 1) url to buy a pass, 2) link text
-			__( '<a href="%1$s" class="a-button">%2$s</a>', 'minnpost-largo' ),
-			esc_url_raw( 'https://www.eventbrite.com/e/minnpost-festival-2021-tickets-140928014485' ), // this will be an eventbrite link
-			esc_html__( 'Reserve your Festival pass' )
-		);
+		if ( 'festival' === $object_type ) {
+			$buy_event_pass = sprintf(
+				// translators: 1) url to buy a pass, 2) link text
+				__( '<a href="%1$s" class="a-button">%2$s</a>', 'minnpost-largo' ),
+				esc_url_raw( 'https://www.eventbrite.com/e/minnpost-festival-2021-tickets-140928014485' ), // this will be an eventbrite link
+				esc_html__( 'Reserve your Festival pass' )
+			);
+		} elseif ( 'tonight' === $object_type ) {
+			$buy_event_pass = sprintf(
+				// translators: 1) url to buy a pass, 2) link text
+				__( '<a href="%1$s" class="a-button">%2$s</a>', 'minnpost-largo' ),
+				esc_url_raw( '#' ), // this will be an eventbrite link
+				esc_html__( 'Reserve your tickets' )
+			);
+		}
 		return $buy_event_pass;
 	}
 endif;
