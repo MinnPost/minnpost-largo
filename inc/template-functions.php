@@ -1046,10 +1046,6 @@ if ( ! function_exists( 'minnpost_get_speaker_figure' ) ) :
 			$text = get_the_content( $speaker_id );
 		}
 
-		if ( post_password_required() || is_attachment() || ( '' === $image_id && '' === $image_url && '' === $text ) ) {
-			return;
-		}
-
 		if ( 'the_title' === $name_field ) { // name
 			$name = get_the_title( $speaker_id );
 		} elseif ( '' !== get_post_meta( $speaker_id, $name_field, true ) ) { // a different field exists
@@ -1057,6 +1053,10 @@ if ( ! function_exists( 'minnpost_get_speaker_figure' ) ) :
 		}
 		if ( '' !== get_post_meta( $speaker_id, $title_field, true ) ) { // the field exists
 			$title = get_post_meta( $speaker_id, $title_field, true );
+		}
+
+		if ( post_password_required() || is_attachment() || ( '' === $image_id && '' === $image_url && '' === $text && '' === $name ) ) {
+			return;
 		}
 
 		//$text = wpautop( $text ); // for some reason the paragraphs don't work without this
@@ -1082,6 +1082,10 @@ if ( ! function_exists( 'minnpost_get_speaker_figure' ) ) :
 					$output .= '<figcaption class="a-speaker-bio">';
 				} else {
 					$output .= '<div class="a-speaker-bio">';
+					if ( true === $include_link ) {
+						$speaker_url = get_permalink( $speaker_id );
+						$output     .= '<a href="' . $speaker_url . '" class="m-speaker-link">';
+					}
 				}
 				if ( ( true === $include_name && '' !== $name ) || ( true === $include_title && '' !== $title ) ) {
 					$output .= '<header class="m-speaker-headings">';
@@ -1125,6 +1129,9 @@ if ( ! function_exists( 'minnpost_get_speaker_figure' ) ) :
 				if ( '' !== $image ) {
 					$output .= '</figcaption>';
 				} else {
+					if ( true === $include_link ) {
+						$output .= '</a>';
+					}
 					$output .= '</div>';
 				}
 			}
