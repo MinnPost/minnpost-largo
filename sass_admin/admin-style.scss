@@ -84,3 +84,11 @@
 		width: calc(100% - 240px);
 	}
 }
+
+/*
+ * hide the font awesome button
+ * see https://github.com/FortAwesome/wordpress-fontawesome/issues/139
+ */
+ .button.font-awesome-icon-chooser-media-button {
+	display: none;
+}

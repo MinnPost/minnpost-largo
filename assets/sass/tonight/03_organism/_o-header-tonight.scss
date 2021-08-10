@@ -1,9 +1,7 @@
 .o-header-tonight {
-    margin-bottom: $standard-block-margin;
-    //background: tonight-color(top);
-    //background: url('/wp-content/themes/minnpost-largo/assets/img/events/tonight/minnpost-tonight.png') no-repeat 24% 100%, linear-gradient(to bottom, tonight-color(top), tonight-color(bottom));
+    margin-bottom: 0;
     
-    .o-wrapper {
+    .o-wrapper.o-wrapper-site-navigation {
         background-image: url('/wp-content/themes/minnpost-largo/assets/img/events/tonight/minnpost-tonight-skyline.png');
         background-repeat: no-repeat;
         background-position: $header-left-margin-desktop bottom;
