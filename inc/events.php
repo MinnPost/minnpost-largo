@@ -100,7 +100,9 @@ if ( ! function_exists( 'minnpost_largo_do_not_enqueue_event_frontend' ) ) :
 	add_filter( 'tribe_events_assets_should_enqueue_frontend', 'minnpost_largo_do_not_enqueue_event_frontend', 30 );
 	add_filter( 'tribe_events_views_v2_assets_should_enqueue_frontend', 'minnpost_largo_do_not_enqueue_event_frontend' );
 	function minnpost_largo_do_not_enqueue_event_frontend( $should_enqueue_frontend ) {
-		$should_enqueue_frontend = false;
+		if ( ! is_admin() ) {
+			$should_enqueue_frontend = false;
+		}
 		return $should_enqueue_frontend;
 	}
 endif;
