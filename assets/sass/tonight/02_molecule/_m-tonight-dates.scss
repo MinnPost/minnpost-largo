@@ -1,7 +1,12 @@
 .m-tonight-dates {
     //font-size: 48px;
     font-size: var(--scale4);
-    position: absolute;
-    top: 35%;
-    right: $standard-block-padding;
+    width: 100%;
+
+    @include breakpoint-min( lg ) {
+        position: absolute;
+        top: 35%;
+        right: $standard-block-padding;
+        width: auto;
+    }
 }

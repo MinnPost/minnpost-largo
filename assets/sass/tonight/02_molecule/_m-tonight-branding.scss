@@ -4,8 +4,12 @@
 	height: auto;
 	position: relative;
     margin: 0;
-    max-width: $header-width;
+    max-width: $header-width-mobile;
     max-height: $header-height-desktop;
+
+    @include breakpoint-min( xs ) {
+		max-width: $header-width-desktop;
+	}
     
     a {
         display: block;
