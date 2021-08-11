@@ -597,3 +597,16 @@ if ( ! function_exists( 'minnpost_event_website_get_disclaimer_text' ) ) :
 		return $disclaimer_text;
 	}
 endif;
+
+/**
+* The speaker picker is broken in current versions of The Event Calendar, so we can add our own.
+* @param bool $show_speaker_meta_box
+* @return bool $show_speaker_meta_box
+*
+*/
+if ( ! function_exists( 'minnpost_hide_default_speaker_meta_box' ) ) :
+	add_filter( 'tribe_ext_events_add_tribe_ext_speaker_meta_box', 'minnpost_hide_default_speaker_meta_box' );
+	function minnpost_hide_default_speaker_meta_box( $show_speaker_meta_box ) {
+		return false;
+	}
+endif;

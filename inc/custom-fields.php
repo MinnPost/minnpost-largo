@@ -2385,6 +2385,38 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 		);
 
 		/**
+		 * Event speaker settings
+		 */
+		$event_speaker_posts = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_event_posts',
+				'title'        => __( 'Speakers', 'minnpost-largo' ),
+				'object_types' => array( $object_type ), // Post type
+				'context'      => 'after_editor',
+				'priority'     => 'high',
+				'show_names'   => false,
+			)
+		);
+
+		$event_speaker_posts->add_field(
+			minnpost_post_search_field(
+				array(
+					'name'       => __( 'Speakers', 'minnpost-largo' ),
+					'desc'       => __( 'Search for a speaker post by name here.', 'minnpost-largo' ),
+					'id'         => '_tribe_linked_post_tribe_ext_speaker',
+					'multiple'   => true,
+					'query_args' => array(
+						'orderby'     => 'modified',
+						'order'       => 'DESC',
+						'post_status' => 'any',
+						'post_type'   => array( 'tribe_ext_speaker' ),
+					),
+				),
+				'post_search_ajax'
+			)
+		);
+
+		/**
 		 * SEO and social meta settings
 		 */
 		$seo_settings = new_cmb2_box(
