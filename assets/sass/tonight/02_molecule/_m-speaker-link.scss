@@ -7,7 +7,7 @@ a.m-speaker-link {
 
     .a-speaker-job-title,
     .a-speaker-bio-text {
-        color: neutral-color(black);
+        color: tonight-palette-color(blue, background);
     }
 
     &:hover,
@@ -24,7 +24,7 @@ a.m-speaker-link {
 
         .a-speaker-job-title,
         .a-speaker-bio-text {
-            color: neutral-color(dark);
+            color: tonight-palette-color(blue, highlight);
         }
     }
 } 

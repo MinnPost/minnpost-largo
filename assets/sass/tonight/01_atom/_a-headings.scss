@@ -10,7 +10,7 @@
 
 		&:link,
 		&:visited {
-			@include link-underline();
+			@include link-underline(tonight-palette-color(yellow, highlight), tonight-palette-color(yellow, background));
 		}
 
 		&:active,
@@ -18,7 +18,7 @@
 		&:hover,
 		&.active {
 
-			@include link-underline(utility-color(blue, medium), utility-color(blue, background));
+			@include link-underline(tonight-palette-color(yellow, background), tonight-palette-color(yellow, background));
 		}
 	}
 }

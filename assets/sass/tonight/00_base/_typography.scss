@@ -1,6 +1,11 @@
 a {
 
     @include link-underline(tonight-palette-color(yellow, highlight), tonight-palette-color(yellow, background));
+
+    &:visited {
+
+		@include link-underline(tonight-palette-color(yellow, highlight), tonight-palette-color(yellow, background));
+	}
 }
 
 a:hover,

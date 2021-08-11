@@ -100,7 +100,9 @@ if ( ! function_exists( 'minnpost_largo_do_not_enqueue_event_frontend' ) ) :
 	add_filter( 'tribe_events_assets_should_enqueue_frontend', 'minnpost_largo_do_not_enqueue_event_frontend', 30 );
 	add_filter( 'tribe_events_views_v2_assets_should_enqueue_frontend', 'minnpost_largo_do_not_enqueue_event_frontend' );
 	function minnpost_largo_do_not_enqueue_event_frontend( $should_enqueue_frontend ) {
-		$should_enqueue_frontend = false;
+		if ( ! is_admin() ) {
+			$should_enqueue_frontend = false;
+		}
 		return $should_enqueue_frontend;
 	}
 endif;
@@ -593,5 +595,18 @@ if ( ! function_exists( 'minnpost_event_website_get_disclaimer_text' ) ) :
 		$disclaimer_text = esc_html__( 'MinnPost is a 501(c)(3) nonprofit that receives support from donors, members, foundations, advertisers and sponsors. Donors and sponsors that underwrite MinnPost events play no role in determining the content, featured guests or line of questioning.', 'minnpost-largo' );
 		$disclaimer_text = '<aside class="a-' . $object_type . '-minnpost-notice"><p>' . $disclaimer_text . '</p></aside>';
 		return $disclaimer_text;
+	}
+endif;
+
+/**
+* The speaker picker is broken in current versions of The Event Calendar, so we can add our own.
+* @param bool $show_speaker_meta_box
+* @return bool $show_speaker_meta_box
+*
+*/
+if ( ! function_exists( 'minnpost_hide_default_speaker_meta_box' ) ) :
+	add_filter( 'tribe_ext_events_add_tribe_ext_speaker_meta_box', 'minnpost_hide_default_speaker_meta_box' );
+	function minnpost_hide_default_speaker_meta_box( $show_speaker_meta_box ) {
+		return false;
 	}
 endif;
