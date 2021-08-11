@@ -2404,7 +2404,7 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 					'name'       => __( 'Speakers', 'minnpost-largo' ),
 					'desc'       => __( 'Search for a speaker post by name here.', 'minnpost-largo' ),
 					'id'         => '_tribe_linked_post_tribe_ext_speaker',
-					//'multiple'   => true,
+					//'multiple'   => true, - this does not seem to work on VIP go.
 					'query_args' => array(
 						'orderby'     => 'modified',
 						'order'       => 'DESC',

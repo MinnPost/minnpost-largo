@@ -610,3 +610,28 @@ if ( ! function_exists( 'minnpost_hide_default_speaker_meta_box' ) ) :
 		return false;
 	}
 endif;
+
+/**
+* Load the linked event posts by type if we're using our own field to save them.
+* @param array $result
+* @param int $post_id
+* @param string $post_type
+* @return array $result
+*
+*/
+if ( ! function_exists( 'minnpost_get_linked_event_posts' ) ) :
+	add_filter( 'tribe_events_get_linked_posts_by_post_type', 'minnpost_get_linked_event_posts', 10, 3 );
+	function minnpost_get_linked_event_posts( $result, $post_id, $post_type ) {
+		$speakers = get_post_meta( $post_id, '_tribe_linked_post_tribe_ext_speaker', true );
+		if ( is_array( $speakers ) ) {
+			$result = array();
+			foreach ( $speakers as $speaker_id ) {
+				if ( ! is_object( $speaker_id ) ) {
+					$speaker  = get_post( $speaker_id );
+					$result[] = $speaker;
+				}
+			}
+		}
+		return $result;
+	}
+endif;
