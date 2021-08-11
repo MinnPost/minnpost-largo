@@ -24,23 +24,48 @@ foreach ( $all_speakers as $speaker ) {
 $multiple_speakers   = count( $speakers ) > 1;
 $multiple_moderators = count( $moderators ) > 1;
 
+$permalink_category_slug = minnpost_get_event_category_slug( get_the_ID() );
+
 $speakers_label = __( 'Speaker:', 'minnpost-largo' );
 if ( true === $multiple_speakers ) {
 	$speakers_label = __( 'Speakers:', 'minnpost-largo' );
 }
-
 $moderators_label = __( 'Moderator:', 'minnpost-largo' );
 if ( true === $multiple_moderators ) {
 	$moderators_label = __( 'Moderators:', 'minnpost-largo' );
 }
+
+if ( 'festival' === $permalink_category_slug ) {
+	$speakers_label = __( 'Speaker:', 'minnpost-largo' );
+	if ( true === $multiple_speakers ) {
+		$speakers_label = __( 'Speakers:', 'minnpost-largo' );
+	}
+	$moderators_label = __( 'Moderator:', 'minnpost-largo' );
+	if ( true === $multiple_moderators ) {
+		$moderators_label = __( 'Moderators:', 'minnpost-largo' );
+	}
+} elseif ( 'tonight' === $permalink_category_slug ) {
+	$speakers_label = __( 'Guest:', 'minnpost-largo' );
+	if ( true === $multiple_speakers ) {
+		$speakers_label = __( 'Guests:', 'minnpost-largo' );
+	}
+	$moderators_label = __( 'Host:', 'minnpost-largo' );
+	if ( true === $multiple_moderators ) {
+		$moderators_label = __( 'Hosts:', 'minnpost-largo' );
+	}
+}
 ?>
 
 <?php if ( ! empty( $speakers ) || ! empty( $moderators ) ) : ?>
-	<div class="m-festival-speakers">
+	<div class="m-speakers<?php if ( '' !== $permalink_category_slug ) : ?> m-<?php echo $permalink_category_slug; ?>-speakers<?php endif; ?>">
 		<?php do_action( 'tribe_events_single_meta_speaker_section_start' ); ?>
 		<?php
 		$speaker_names = '';
 		$prefix        = '';
+		$class_suffix  = '';
+		if ( '' !== $permalink_category_slug ) {
+			$class_suffix = ' a-' . $permalink_category_slug . '-speakers';
+		}
 		if ( ! empty( $speakers ) ) {
 			foreach ( $speakers as $speaker ) {
 				if ( ! $speaker ) {
@@ -52,15 +77,20 @@ if ( true === $multiple_moderators ) {
 				<?php
 			}
 			echo sprintf(
-				'<p class="a-festival-speakers"><strong>%1$s</strong> %2$s</p>',
+				'<p class="a-speakers%1$s"><strong>%2$s</strong> %3$s</p>',
+				esc_html( $class_suffix ),
 				esc_html( $speakers_label ),
 				$speaker_names,
 			);
 		}
 		?>
 		<?php
-		$moderator_names = '';
-		$prefix          = '';
+		$moderator_names         = '';
+		$prefix                  = '';
+		$moderator_class_suffix  = '';
+		if ( '' !== $permalink_category_slug ) {
+			$class_suffix = ' a-' . $permalink_category_slug . '-moderators';
+		}
 		if ( ! empty( $moderators ) ) {
 			foreach ( $moderators as $moderator ) {
 				if ( ! $moderator ) {
@@ -72,7 +102,9 @@ if ( true === $multiple_moderators ) {
 				<?php
 			}
 			echo sprintf(
-				'<p class="a-festival-speakers a-festival-moderators"><strong>%1$s</strong> %2$s</p>',
+				'<p class="a-speakers a-moderators%1$s%2$s"><strong>%3$s</strong> %4$s</p>',
+				esc_html( $class_suffix ),
+				esc_html( $moderator_class_suffix ),
 				esc_html( $moderators_label ),
 				$moderator_names,
 			);
