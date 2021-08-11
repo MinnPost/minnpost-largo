@@ -11,7 +11,6 @@ $post_class = 'm-post m-tonight-post m-tonight-post-event m-tonight-post-event-f
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( $post_class ); ?>>
-
 	<div class="o-entry">
 		<div class="m-entry-content">
 			<?php
@@ -23,7 +22,11 @@ $post_class = 'm-post m-tonight-post m-tonight-post-event m-tonight-post-event-f
 			<div class="m-event-content m-tonight-event-content">
 				<?php the_content(); ?>
 			</div>
-			<?php get_template_part( 'tribe/events/modules/meta/speaker' ); ?>
+		</div>
+	</div>
+	<?php get_template_part( 'tribe/events/modules/meta/speaker-image' ); ?>
+	<div class="o-entry">
+		<div class="m-entry-content">
 			<?php minnpost_event_website_pass_link( 'tonight' ); ?>
 			<?php minnpost_event_website_disclaimer_text( 'tonight' ); ?>
 		</div><!-- .m-entry-content -->
