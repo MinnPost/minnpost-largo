@@ -56,8 +56,8 @@ if ( 'festival' === $permalink_category_slug ) {
 }
 ?>
 
-<?php if ( ! empty( $speakers ) || ! empty( $moderators ) ) : ?>
-	<div class="m-speakers<?php if ( '' !== $permalink_category_slug ) : ?> m-<?php echo $permalink_category_slug; ?>-speakers<?php endif; ?>">
+<?php if ( ! empty( $all_speakers ) ) : ?>
+	<section class="m-archive m-archive-<?php echo $permalink_category_slug; ?> m-archive-<?php echo $permalink_category_slug; ?>-tribe_ext_speaker">
 		<?php do_action( 'tribe_events_single_meta_speaker_section_start' ); ?>
 		<?php
 		$speaker_names = '';
@@ -66,50 +66,20 @@ if ( 'festival' === $permalink_category_slug ) {
 		if ( '' !== $permalink_category_slug ) {
 			$class_suffix = ' a-' . $permalink_category_slug . '-speakers';
 		}
-		if ( ! empty( $speakers ) ) {
-			foreach ( $speakers as $speaker ) {
-				if ( ! $speaker ) {
+		if ( ! empty( $all_speakers ) ) {
+			global $post;
+			foreach ( $all_speakers as $post ) {
+				if ( ! $post ) {
 					continue;
 				}
-				$speaker_names .= $prefix . '&nbsp;' . '<a href="' . get_permalink( $speaker->ID ) . '">' . $speaker->post_title . '</a>';
-				$prefix         = ', ';
+				setup_postdata( $post );
 				?>
+				<?php get_template_part( 'template-parts/post-' . $permalink_category_slug, 'tribe_ext_speaker-excerpt' ); ?>
 				<?php
 			}
-			echo sprintf(
-				'<p class="a-speakers%1$s"><strong>%2$s</strong> %3$s</p>',
-				esc_html( $class_suffix ),
-				esc_html( $speakers_label ),
-				$speaker_names,
-			);
-		}
-		?>
-		<?php
-		$moderator_names         = '';
-		$prefix                  = '';
-		$moderator_class_suffix  = '';
-		if ( '' !== $permalink_category_slug ) {
-			$class_suffix = ' a-' . $permalink_category_slug . '-moderators';
-		}
-		if ( ! empty( $moderators ) ) {
-			foreach ( $moderators as $moderator ) {
-				if ( ! $moderator ) {
-					continue;
-				}
-				$moderator_names .= $prefix . '&nbsp;' . '<a href="' . get_permalink( $moderator->ID ) . '">' . $moderator->post_title . '</a>';
-				$prefix           = ', ';
-				?>
-				<?php
-			}
-			echo sprintf(
-				'<p class="a-speakers a-moderators%1$s%2$s"><strong>%3$s</strong> %4$s</p>',
-				esc_html( $class_suffix ),
-				esc_html( $moderator_class_suffix ),
-				esc_html( $moderators_label ),
-				$moderator_names,
-			);
+			wp_reset_postdata();
 		}
 		?>
 		<?php do_action( 'tribe_events_single_meta_speaker_section_end' ); ?>
-	</div>
+	</section>
 <?php endif; ?>

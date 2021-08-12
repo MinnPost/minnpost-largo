@@ -1,15 +1,15 @@
 <?php
 /**
- * Template part for displaying MinnPost Festival event posts
+ * Template part for displaying MinnPost Tonight event posts
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
  * @package MinnPost Largo
  */
 
-$post_class = 'm-post m-festival-post m-festival-post-event m-festival-post-event-excerpt';
+$post_class = 'm-post m-tonight-post m-tonight-post-event m-tonight-post-event-excerpt';
 if ( '' !== get_minnpost_post_image( 'feature-large' ) ) {
-	$post_class .= ' m-festival-post-event-with-image';
+	$post_class .= ' m-tonight-post-event-with-image';
 }
 ?>
 
@@ -19,9 +19,9 @@ if ( '' !== get_minnpost_post_image( 'feature-large' ) ) {
 	<?php endif; ?>
 	<header class="m-entry-header">
 		<?php if ( true === $args['use_permalink'] ) : ?>
-			<?php the_title( '<h3 class="a-entry-title a-entry-title-excerpt a-festival-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
+			<?php the_title( '<h3 class="a-entry-title a-entry-title-excerpt a-tonight-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
 		<?php else : ?>
-			<?php the_title( '<h3 class="a-entry-title a-entry-title-excerpt a-festival-title">', '</h3>' ); ?>
+			<?php the_title( '<h3 class="a-entry-title a-entry-title-excerpt a-tonight-title">', '</h3>' ); ?>
 		<?php endif; ?>
 		<?php
 		$hide_notices = get_post_meta( $id, '_mp_remove_notice_from_display', true );
@@ -48,7 +48,7 @@ if ( '' !== get_minnpost_post_image( 'feature-large' ) ) {
 			</div>
 			<?php endif; ?>
 			<?php do_action( 'tribe_events_single_event_before_the_content' ); ?>
-			<div class="m-event-content m-festival-event-content">
+			<div class="m-event-content m-tonight-event-content">
 				<?php the_content(); ?>
 			</div>
 			<?php get_template_part( 'tribe/events/modules/meta/speaker' ); ?>

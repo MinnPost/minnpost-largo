@@ -1,13 +1,13 @@
 <?php
 /**
- * Template part for displaying MinnPost Festival speaker posts
+ * Template part for displaying MinnPost Tonight speaker posts
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
  * @package MinnPost Largo
  */
 
-$post_class = 'm-post m-festival-post m-festival-post-speaker m-festival-post-speaker-excerpt';
+$post_class = 'm-post m-tonight-post m-tonight-post-speaker m-tonight-post-speaker-excerpt';
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( $post_class ); ?>>

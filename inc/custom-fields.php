@@ -2384,6 +2384,38 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 		);
 
 		/**
+		 * Event speaker settings
+		 */
+		$event_speaker_posts = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_event_posts',
+				'title'        => __( 'Speakers', 'minnpost-largo' ),
+				'object_types' => array( $object_type ), // Post type
+				'context'      => 'after_editor',
+				'priority'     => 'high',
+				'show_names'   => false,
+			)
+		);
+
+		$event_speaker_posts->add_field(
+			minnpost_post_search_field(
+				array(
+					'name'       => __( 'Speakers', 'minnpost-largo' ),
+					'desc'       => __( 'Search for a speaker post by name here.', 'minnpost-largo' ),
+					'id'         => '_tribe_linked_post_tribe_ext_speaker',
+					//'multiple'   => true, - this does not seem to work on VIP go.
+					'query_args' => array(
+						'orderby'     => 'modified',
+						'order'       => 'DESC',
+						'post_status' => 'any',
+						'post_type'   => array( 'tribe_ext_speaker' ),
+					),
+				),
+				'post_search_ajax'
+			)
+		);
+
+		/**
 		 * SEO and social meta settings
 		 */
 		$seo_settings = new_cmb2_box(
@@ -2830,6 +2862,14 @@ if ( ! function_exists( 'cmb2_event_website_page_fields' ) ) :
 					'id'   => $prefix . 'content_posts_use_permalinks',
 					'type' => 'checkbox',
 					'desc' => __( 'If checked, each entry will link to the individual URL for that post.', 'minnpost-largo' ),
+				)
+			);
+			$event_posts->add_field(
+				array(
+					'name' => __( 'Load as page content instead of links?', 'minnpost-largo' ),
+					'id'   => $prefix . 'content_posts_load_content_instead_of_links',
+					'type' => 'checkbox',
+					'desc' => __( 'If checked, the content for each entry will be displayed on this page. This is useful if you want to have a landing page for a single event without a session list.', 'minnpost-largo' ),
 				)
 			);
 

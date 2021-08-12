@@ -3,3 +3,8 @@
 
 	@return map-get( $tonight-colors, $tone );
 }
+
+@function tonight-palette-color( $tonight-color, $tone: "medium" ) {
+
+	@return map-get( map-get( $tonight-colors, $tonight-color), $tone );
+}

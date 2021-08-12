@@ -25,11 +25,11 @@
         width: 100%;
 
         &:nth-child(odd) {
-            background: neutral-color(highlight);
+            background: tonight-palette-color(black, medium);
         }
 
         &:nth-child(even) {
-            background: neutral-color(white);
+            background: tonight-palette-color(black, dark);
         }
 
         @include breakpoint-min( sm ) {
