@@ -21,7 +21,7 @@
 								<tr>
 									<td class="outlook-inner-padding">
 				[/outlook]
-					<div class="o-columns o-header">
+					<div class="o-columns o-header o-header-no-menu">
 						[outlook]
 						<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
 							<tr>
