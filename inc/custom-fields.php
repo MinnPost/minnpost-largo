@@ -209,6 +209,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'context'      => 'after_title',
 				'priority'     => 'high',
 				'show_names'   => true, // Show field names on the left
+				'classes'      => 'cmb2-newsletter-section cmb2-newsletter-section-daily cmb2-newsletter-section-greater_mn cmb2-newsletter-section-sunday_review',
 				'attributes'   => array(
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
@@ -268,9 +269,10 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'context'      => 'after_title',
 				'priority'     => 'high',
 				'show_names'   => true, // Show field names on the left
+				'classes'      => 'cmb2-newsletter-section cmb2-newsletter-section-daily cmb2-newsletter-section-greater_mn cmb2-newsletter-section-sunday_review',
 				'attributes' => array(
 					'data-conditional-id'    => $prefix . 'type',
-					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review', 'artscape' ) ),
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
 				),
 			)
 		);
@@ -300,7 +302,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 					),
 					'attributes' => array(
 						'data-conditional-id'    => $prefix . 'type',
-						'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review', 'artscape' ) ),
+						'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
 					),
 				),
 				'post_search_ajax'
@@ -327,6 +329,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'context'      => 'after_title',
 				'priority'     => 'high',
 				'show_names'   => true, // Show field names on the left
+				'classes'      => 'cmb2-newsletter-section cmb2-newsletter-section-daily cmb2-newsletter-section-greater_mn cmb2-newsletter-section-sunday_review',
 				'attributes' => array(
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
@@ -386,6 +389,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'context'      => 'after_title',
 				'priority'     => 'high',
 				'show_names'   => true, // Show field names on the left
+				'classes'      => 'cmb2-newsletter-section cmb2-newsletter-section-daily cmb2-newsletter-section-greater_mn cmb2-newsletter-section-sunday_review',
 				'attributes' => array(
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
