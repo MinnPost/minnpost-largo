@@ -63,9 +63,9 @@
 			<tr>
 				<td>
 					[outlook]
-						<table role="presentation" width="92" cellpadding="0" cellspacing="0" class="outlook-table" align="left">
+						<table role="presentation" width="92" cellpadding="0" cellspacing="0" class="outlook-table" style="width: 92px; max-width: 92px; Float: left;" align="left">
 							<tr>
-								<td valign="top">
+								<td valign="top" align="left">
 					[/outlook]
 					<?php
 					if ( 'thumb' === $args['image_size'] ) {
