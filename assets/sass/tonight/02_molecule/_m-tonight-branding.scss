@@ -1,42 +1,32 @@
 .m-tonight-branding {
     width: 100%;
-    max-width: colspan(4, 6);
+    //max-width: colspan(4, 6);
 	height: auto;
 	position: relative;
     margin: 0;
-    letter-spacing: -1px;
-    @include meta-preset( $size: 0, $bold: true, $italic: false, $line-height: 1 );
+    max-width: $header-width-mobile;
+    max-height: $header-height-desktop;
 
-    &.m-tonight-branding-landing-page {
-        letter-spacing: -3px;
-    }
+    @include breakpoint-min( xs ) {
+		max-width: $header-width-desktop;
+	}
     
     a {
         display: block;
-        color: neutral-color(black);
-        background: transparent;
-        text-decoration: none;
 
-        &:hover,
-        &:focus,
-        &:active {
-            background: transparent;
-            color: neutral-color(black);
+        img {
+            display: block;
         }
     }
 }
 
-header .m-tonight-branding {
+/*header .m-tonight-branding {
 
 	@include breakpoint-min( md ) {
-		max-width: colspan(3, 8);
+		//max-width: colspan(3, 8);
 	}
 
 	@include breakpoint-min( lg ) {
-		max-width: colspan(4, 12);
+		//max-width: colspan(4, 12);
 	}
-
-	@include breakpoint-min( xl ) {
-		max-width: colspan(5, 16);
-	}
-}
+}*/

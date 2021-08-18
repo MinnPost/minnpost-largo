@@ -1,11 +1,35 @@
-// gradient
+// color palette: https://minnpost-color-matrix.herokuapp.com/?n=black&n=medium&n=highlight&n=background&n=dark&n=medium&n=highlight&n=background&n=dark&n=medium&n=highlight&n=background&v=010203&v=5A5A5B&v=B2B3B3&v=E5E5E5&v=465159&v=8095A4&v=C5E4FA&v=EBF6FD&v=5A5A03&v=A6A702&v=FFFF02&v=FFFFA7
+
+// palette
 $tonight-colors: (
-    top: #0C7BB0,
-    bottom: #2FB5F6
+	black: (
+		dark: #010203, // bg
+		medium: #5A5A5B, // dark
+		highlight: #B2B3B3,
+        background: #E5E5E5
+	),
+    blue: (
+        dark: #465159,
+        medium: #8095A4,
+        highlight: #C5E4FA,
+        background: #EBF6FD // text color
+    ),
+    yellow: (
+        dark: #5A5A03,
+        medium: #A6A702,
+        highlight: #FFFF02, // links
+        background: #FFFFA7
+    )
 );
+
 
 // sizes
 $header-height-mobile: 350px;
 $header-height-desktop: 225px;
-$header-height-homepage-desktop: 600px;
+$header-left-margin-desktop: 205px;
+$header-width-mobile: 287px;
+$header-width-desktop: 357px;
+//$header-height-homepage-desktop: 600px;
 $speaker-headshot-width: 300px;
+
+$border-default-style: 1px solid tonight-palette-color(black, background);

@@ -1046,10 +1046,6 @@ if ( ! function_exists( 'minnpost_get_speaker_figure' ) ) :
 			$text = get_the_content( $speaker_id );
 		}
 
-		if ( post_password_required() || is_attachment() || ( '' === $image_id && '' === $image_url && '' === $text ) ) {
-			return;
-		}
-
 		if ( 'the_title' === $name_field ) { // name
 			$name = get_the_title( $speaker_id );
 		} elseif ( '' !== get_post_meta( $speaker_id, $name_field, true ) ) { // a different field exists
@@ -1057,6 +1053,10 @@ if ( ! function_exists( 'minnpost_get_speaker_figure' ) ) :
 		}
 		if ( '' !== get_post_meta( $speaker_id, $title_field, true ) ) { // the field exists
 			$title = get_post_meta( $speaker_id, $title_field, true );
+		}
+
+		if ( post_password_required() || is_attachment() || ( '' === $image_id && '' === $image_url && '' === $text && '' === $name ) ) {
+			return;
 		}
 
 		//$text = wpautop( $text ); // for some reason the paragraphs don't work without this
@@ -1082,6 +1082,10 @@ if ( ! function_exists( 'minnpost_get_speaker_figure' ) ) :
 					$output .= '<figcaption class="a-speaker-bio">';
 				} else {
 					$output .= '<div class="a-speaker-bio">';
+					if ( true === $include_link ) {
+						$speaker_url = get_permalink( $speaker_id );
+						$output     .= '<a href="' . $speaker_url . '" class="m-speaker-link">';
+					}
 				}
 				if ( ( true === $include_name && '' !== $name ) || ( true === $include_title && '' !== $title ) ) {
 					$output .= '<header class="m-speaker-headings">';
@@ -1125,6 +1129,9 @@ if ( ! function_exists( 'minnpost_get_speaker_figure' ) ) :
 				if ( '' !== $image ) {
 					$output .= '</figcaption>';
 				} else {
+					if ( true === $include_link ) {
+						$output .= '</a>';
+					}
 					$output .= '</div>';
 				}
 			}
@@ -1811,6 +1818,9 @@ if ( ! function_exists( 'minnpost_get_newsletter_logo_url' ) ) :
 						$filename = 'newsletter-logo-mponly' . $filename_suffix . '.png';
 					}
 					break;
+				case 'artscape':
+					$filename = 'newsletter-logo-artscape' . $filename_suffix . '.png';
+					break;
 				default:
 					$filename = 'newsletter-logo-daily' . $filename_suffix . '.png';
 					break;
@@ -1972,7 +1982,7 @@ if ( ! function_exists( 'minnpost_largo_check_newsletter_legacy' ) ) :
 		if ( in_array( $newsletter_type, array( 'dc_memo', 'daily_coronavirus' ), true ) ) {
 			return true;
 		}
-		
+
 		// digest newsletters.
 		$top_story = minnpost_largo_get_newsletter_stories( $post_id, 'top' );
 		if ( ! empty( $top_story ) ) {
@@ -1986,10 +1996,6 @@ if ( ! function_exists( 'minnpost_largo_check_newsletter_legacy' ) ) :
 		if ( ! empty( $opinion_stories ) ) {
 			return false;
 		}
-		$arts_stories = minnpost_largo_get_newsletter_stories( $post_id, 'arts' );
-		if ( ! empty( $arts_stories ) ) {
-			return false;
-		}
 		$editors_stories = minnpost_largo_get_newsletter_stories( $post_id, 'editors' );
 		if ( ! empty( $editors_stories ) ) {
 			return false;
@@ -2001,6 +2007,11 @@ if ( ! function_exists( 'minnpost_largo_check_newsletter_legacy' ) ) :
 			return false;
 		}
 
+		// artscape newsletter.
+		$artscape_stories = minnpost_largo_get_newsletter_stories( $post_id, 'artscape' );
+		if ( ! empty( $artscape_stories ) ) {
+			return false;
+		}
 		return true;
 	}
 endif;
@@ -2118,6 +2129,11 @@ if ( ! function_exists( 'minnpost_newsletter_get_ads' ) ) :
 		$sidebar = ob_get_contents();
 		ob_end_clean();
 
+		$ads = array();
+		if ( '' === $sidebar ) {
+			return $ads;
+		}
+
 		$ad_dom = new DomDocument;
 		libxml_use_internal_errors( true );
 		$ad_dom->loadHTML( $sidebar, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
@@ -2125,7 +2141,6 @@ if ( ! function_exists( 'minnpost_newsletter_get_ads' ) ) :
 		$ad_xpath = new DOMXpath( $ad_dom );
 		$ad_divs  = $ad_xpath->query( "//section[contains(concat(' ', @class, ' '), ' m-widget ')]/div/p" );
 
-		$ads = array();
 		if ( 'dc_memo' !== $newsletter_type ) {
 			foreach ( $ad_divs as $key => $value ) {
 				$style = $value->getAttribute( 'style' );

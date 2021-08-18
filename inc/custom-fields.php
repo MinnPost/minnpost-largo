@@ -144,7 +144,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'desc'       => __( 'Use this field if you need a longer teaser or formatting in the teaser. Note: this will not be displayed in the "preview text" that is shown after the subject line in some email clients. You still need to fill out the "Preview and teaser text" field above to have preview text.', 'minnpost-largo' ),
 				'attributes' => array(
 					'data-conditional-id'    => $prefix . 'type',
-					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
+					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review', 'artscape' ) ),
 				),
 			)
 		);
@@ -214,6 +214,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'context'      => 'after_title',
 				'priority'     => 'high',
 				'show_names'   => true, // Show field names on the left
+				'classes'      => 'cmb2-newsletter-section cmb2-newsletter-section-daily cmb2-newsletter-section-greater_mn cmb2-newsletter-section-sunday_review',
 				'attributes'   => array(
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
@@ -273,7 +274,8 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'context'      => 'after_title',
 				'priority'     => 'high',
 				'show_names'   => true, // Show field names on the left
-				'attributes' => array(
+				'classes'      => 'cmb2-newsletter-section cmb2-newsletter-section-daily cmb2-newsletter-section-greater_mn cmb2-newsletter-section-sunday_review',
+				'attributes'   => array(
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
 				),
@@ -332,6 +334,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'context'      => 'after_title',
 				'priority'     => 'high',
 				'show_names'   => true, // Show field names on the left
+				'classes'      => 'cmb2-newsletter-section cmb2-newsletter-section-daily cmb2-newsletter-section-greater_mn cmb2-newsletter-section-sunday_review',
 				'attributes' => array(
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
@@ -391,7 +394,8 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'context'      => 'after_title',
 				'priority'     => 'high',
 				'show_names'   => true, // Show field names on the left
-				'attributes' => array(
+				'classes'      => 'cmb2-newsletter-section cmb2-newsletter-section-daily cmb2-newsletter-section-greater_mn cmb2-newsletter-section-sunday_review',
+				'attributes'   => array(
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
 				),
@@ -463,6 +467,56 @@ if ( function_exists( 'create_newsletter' ) ) :
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
 				),
+			)
+		);
+		$artscape_section = new_cmb2_box(
+			array(
+				'id'           => $prefix . 'artscape_section',
+				'title'        => __( 'Artscape Newsletter Content', 'minnpost-largo' ),
+				'object_types' => array( $object_type ), // Post type
+				'context'      => 'after_title',
+				'priority'     => 'high',
+				'show_names'   => true, // Show field names on the left
+				'classes'      => 'cmb2-newsletter-section cmb2-newsletter-section-artscape',
+				'attributes'   => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'artscape' ) ),
+				),
+			)
+		);
+		$artscape_section->add_field(
+			array(
+				'name'             => __( 'Image Size', 'minnpost-largo' ),
+				'id'               => $prefix . 'image_for_artscape_stories',
+				'type'             => 'select',
+				'show_option_none' => false,
+				'desc'             => __( 'The value for this field will be used for image placement on artscape newsletters.', 'minnpost-largo' ),
+				'default'          => 'thumb',
+				'options'          => array(
+					'none'       => __( 'No images', 'minnpost-largo' ),
+					'thumb'      => __( 'Thumbnail on all stories', 'minnpost-largo' ),
+					'full'       => __( 'Large on all stories', 'minnpost-largo' ),
+					'full-first' => __( 'Large on the first story, none on subsequent stories', 'minnpost-largo' ),
+				),
+			)
+		);
+		$artscape_section->add_field(
+			minnpost_post_search_field(
+				array(
+					'name'       => __( 'Artscape Stories', 'minnpost-largo' ),
+					'desc'       => __( 'Search for a post here.', 'minnpost-largo' ),
+					'id'         => $prefix . 'artscape_posts',
+					'query_args' => array(
+						'orderby'     => 'modified',
+						'order'       => 'DESC',
+						'post_status' => 'any',
+					),
+					'attributes' => array(
+						'data-conditional-id'    => $prefix . 'type',
+						'data-conditional-value' => 'artscape',
+					),
+				),
+				'post_search_ajax'
 			)
 		);
 
@@ -617,11 +671,11 @@ function minnpost_largo_after_newsletter_section_output( $cmb_id, $object_id, $o
 	$prefix      = '_mp_newsletter_';
 	// Only output above the _yourprefix_demo_metabox metabox.
 	$newsletter_sections = array(
-		$prefix . 'top_section'     => esc_html__( 'The default behavior for this section is: 1) Image is full size. 2) There is a teaser on the story. Use the Newsletter Settings section of the story to change this behavior.', 'minnpost-largo' ),
-		$prefix . 'news_section'    => esc_html__( 'The default behavior for this section is: 1) Image is full size on the first story in a section. 2) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
-		$prefix . 'opinion_section' => esc_html__( 'The default behavior for this section is: 1) Image is full size on the first story in a section. 2) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
-		$prefix . 'arts_section'    => esc_html__( 'The default behavior for this section is: 1) Image is full size on the first story in a section. 2) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
-		$prefix . 'editors_section' => esc_html__( 'The default behavior for this section is: stories will display with no image or teaser. The "Use Other Section Settings" checkbox will cause this section to behave, by default, like the above sections instead. Then you can use the Newsletter Settings section of each story to change how that story behaves.', 'minnpost-largo' ),
+		$prefix . 'top_section'      => esc_html__( 'The default behavior for this section is: 1) Image is full size. 2) There is a teaser on the story. Use the Newsletter Settings section of the story to change this behavior.', 'minnpost-largo' ),
+		$prefix . 'news_section'     => esc_html__( 'The default behavior for this section is: 1) Image is full size on the first story in a section. 2) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
+		$prefix . 'opinion_section'  => esc_html__( 'The default behavior for this section is: 1) Image is full size on the first story in a section. 2) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves.', 'minnpost-largo' ),
+		$prefix . 'editors_section'  => esc_html__( 'The default behavior for this section is: stories will display with no image or teaser. The "Use Other Section Settings" checkbox will cause this section to behave, by default, like the above sections instead. Then you can use the Newsletter Settings section of each story to change how that story behaves.', 'minnpost-largo' ),
+		$prefix . 'artscape_section' => esc_html__( 'The default behavior for this section is: stories will display with a small thumbnail image and a teaser. You can use the Newsletter Settings section of each story to change how that story behaves.', 'minnpost-largo' ),
 	);
 	if ( ! in_array( $cmb_id, array_keys( $newsletter_sections ), true ) ) {
 		return;
@@ -2422,6 +2476,38 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 		);
 
 		/**
+		 * Event speaker settings
+		 */
+		$event_speaker_posts = new_cmb2_box(
+			array(
+				'id'           => $object_type . '_event_posts',
+				'title'        => __( 'Speakers', 'minnpost-largo' ),
+				'object_types' => array( $object_type ), // Post type
+				'context'      => 'after_editor',
+				'priority'     => 'high',
+				'show_names'   => false,
+			)
+		);
+
+		$event_speaker_posts->add_field(
+			minnpost_post_search_field(
+				array(
+					'name'       => __( 'Speakers', 'minnpost-largo' ),
+					'desc'       => __( 'Search for a speaker post by name here.', 'minnpost-largo' ),
+					'id'         => '_tribe_linked_post_tribe_ext_speaker',
+					//'multiple'   => true, - this does not seem to work on VIP go.
+					'query_args' => array(
+						'orderby'     => 'modified',
+						'order'       => 'DESC',
+						'post_status' => 'any',
+						'post_type'   => array( 'tribe_ext_speaker' ),
+					),
+				),
+				'post_search_ajax'
+			)
+		);
+
+		/**
 		 * SEO and social meta settings
 		 */
 		$seo_settings = new_cmb2_box(
@@ -2868,6 +2954,14 @@ if ( ! function_exists( 'cmb2_event_website_page_fields' ) ) :
 					'id'   => $prefix . 'content_posts_use_permalinks',
 					'type' => 'checkbox',
 					'desc' => __( 'If checked, each entry will link to the individual URL for that post.', 'minnpost-largo' ),
+				)
+			);
+			$event_posts->add_field(
+				array(
+					'name' => __( 'Load as page content instead of links?', 'minnpost-largo' ),
+					'id'   => $prefix . 'content_posts_load_content_instead_of_links',
+					'type' => 'checkbox',
+					'desc' => __( 'If checked, the content for each entry will be displayed on this page. This is useful if you want to have a landing page for a single event without a session list.', 'minnpost-largo' ),
 				)
 			);
 
@@ -3327,6 +3421,7 @@ if ( ! function_exists( 'minnpost_largo_email_types' ) ) :
 			'sunday_review'     => __( 'Sunday Review', 'minnpost-largo' ),
 			'dc_memo'           => __( 'D.C. Memo', 'minnpost-largo' ),
 			'daily_coronavirus' => __( 'Daily Coronavirus Update', 'minnpost-largo' ),
+			'artscape'          => __( 'Artscape', 'minnpost-largo' ),
 			'republication'     => __( 'Republication', 'minnpost-largo' ),
 		);
 		if ( '' !== $type ) {

@@ -18,3 +18,7 @@
     @include column( $selector: '.o-column.a-logo-fullwidth', $max-width: 100%, $mobile-spacing-only: 'false');
     @include column( $selector: '.o-column.m-support-cta', $max-width: 24%, $mobile-spacing-only: 'true', $spacing: $standard-block-padding 0 0 0);
 }
+
+.o-columns.o-header.o-header-no-menu {
+    padding: 0 0 $standard-heading-margin 0;
+}
