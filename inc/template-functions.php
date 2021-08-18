@@ -1789,6 +1789,9 @@ if ( ! function_exists( 'minnpost_get_newsletter_logo_url' ) ) :
 				case 'republication':
 					$filename = 'republication-header-260x50' . $filename_suffix . '.png';
 					break;
+				case 'artscape':
+					$filename = 'newsletter-logo-artscape' . $filename_suffix . '.png';
+					break;
 				default:
 					$filename = 'newsletter-logo-daily' . $filename_suffix . '.png';
 					break;
@@ -1962,12 +1965,12 @@ if ( ! function_exists( 'minnpost_largo_check_newsletter_legacy' ) ) :
 		if ( ! empty( $opinion_stories ) ) {
 			return false;
 		}
-		$arts_stories = minnpost_largo_get_newsletter_stories( $post_id, 'arts' );
-		if ( ! empty( $arts_stories ) ) {
-			return false;
-		}
 		$editors_stories = minnpost_largo_get_newsletter_stories( $post_id, 'editors' );
 		if ( ! empty( $editors_stories ) ) {
+			return false;
+		}
+		$artscape_stories = minnpost_largo_get_newsletter_stories( $post_id, 'artscape' );
+		if ( ! empty( $artscape_stories ) ) {
 			return false;
 		}
 		return true;
@@ -2087,6 +2090,11 @@ if ( ! function_exists( 'minnpost_newsletter_get_ads' ) ) :
 		$sidebar = ob_get_contents();
 		ob_end_clean();
 
+		$ads = array();
+		if ( '' === $sidebar ) {
+			return $ads;
+		}
+
 		$ad_dom = new DomDocument;
 		libxml_use_internal_errors( true );
 		$ad_dom->loadHTML( $sidebar, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
@@ -2094,7 +2102,6 @@ if ( ! function_exists( 'minnpost_newsletter_get_ads' ) ) :
 		$ad_xpath = new DOMXpath( $ad_dom );
 		$ad_divs  = $ad_xpath->query( "//section[contains(concat(' ', @class, ' '), ' m-widget ')]/div/p" );
 
-		$ads = array();
 		if ( 'dc_memo' !== $newsletter_type ) {
 			foreach ( $ad_divs as $key => $value ) {
 				$style = $value->getAttribute( 'style' );
