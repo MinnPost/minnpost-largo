@@ -66,7 +66,7 @@
 						<table role="presentation" width="92" cellpadding="0" cellspacing="0" class="outlook-table" align="left">
 							<tr>
 								<td valign="top">
-					[not-outlook]
+					[/outlook]
 					<?php
 					if ( 'thumb' === $args['image_size'] ) {
 						minnpost_post_image(
@@ -87,7 +87,7 @@
 						</td>
 							</tr>
 								</table>
-					[not-outlook]
+					[/outlook]
 					<?php echo minnpost_newsletter_get_entry_excerpt(); ?>
 				</td>
 			</tr>
