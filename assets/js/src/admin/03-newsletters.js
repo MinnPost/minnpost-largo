@@ -12,7 +12,7 @@ function showHideNewsletterSection( value ) {
     }
 }
 
-function showHideTinyMCE( value ) {
+function showHideBodyField( value ) {
     var editor = '.postarea';
     if ( 'dc_memo' === value || 'daily_coronavirus' === value ) {
         $( editor ).show();
@@ -21,14 +21,22 @@ function showHideTinyMCE( value ) {
     }
 }
 
+function showTeaserSection( value ) {
+    if ( 'artscape' === value ) {
+        $( '#_mp_newsletter_teaser_options' ).removeClass( 'closed' );
+    }
+}
+
 function setupNewsletterSections() {
 	var newsletterTypeSelector = '#_mp_newsletter_type';
 	if ( 0 < $( newsletterTypeSelector ).length ) {
 		showHideNewsletterSection( $( newsletterTypeSelector ).val() );
-        showHideTinyMCE( $( newsletterTypeSelector ).val() );
+        showHideBodyField( $( newsletterTypeSelector ).val() );
+        showTeaserSection( $( newsletterTypeSelector ).val() );
 		$( document ).on( 'change', newsletterTypeSelector, function( event ) {
 			showHideNewsletterSection( $( this ).val() );
-            showHideTinyMCE( $( this ).val() );
+            showTeaserSection( $( this ).val() );
+            showHideBodyField( $( this ).val() );
 		} );
 	}
 }
