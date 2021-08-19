@@ -245,6 +245,36 @@
 
 					<?php do_action( 'wp_message_inserter', 'email_before_bios', 'email' ); ?>
 
+					<?php
+					$hide_author = get_post_meta( $id, '_mp_remove_author_from_display', true );
+					$coauthors   = get_coauthors( get_the_ID() );
+					$author_info = '';
+					if ( 'on' !== $hide_author && empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) ) ) {
+						foreach ( $coauthors as $key => $coauthor ) {
+							$author_id    = $coauthor->ID;
+							$author_info .= minnpost_get_author_figure( $author_id, 'author-teaser', 'excerpt', true, 'cap-display_name', true, '', false, false );
+						}
+					}
+					if ( '' !== $author_info ) {
+						?>
+						<div class="m-author-info m-author-info-excerpt<?php if ( is_singular() ) { ?> m-author-info-singular<?php } ?><?php if ( is_single() ) { ?> m-author-info-single<?php } ?>">
+								<?php
+								$author_keys = array_keys( $coauthors );
+								$last_key    = end( $author_keys );
+								$end         = false;
+								foreach ( $coauthors as $key => $coauthor ) :
+									$author_id = $coauthor->ID;
+									if ( $key === $last_key ) {
+										$end = true;
+									}
+									minnpost_author_figure( $author_id, 'author-teaser', 'excerpt', true, 'cap-display_name', true, '', false, false, $end );
+								endforeach;
+								?>
+						</div>	
+						<?php
+					}
+					?>
+
 					<?php do_action( 'wp_message_inserter', 'email_bottom', 'email' ); ?>
 
 					<div class="o-columns o-footer">

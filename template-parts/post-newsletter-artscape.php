@@ -92,13 +92,6 @@
 				</td>
 			</tr>
 		</table>
-		<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="m-entry-byline">
-			<tr>
-				<td>
-					<?php minnpost_posted_by( get_the_ID(), true, false ); ?>
-				</td>
-			</tr>
-		</table>
 	</div>
 	[outlook]
 						</td>

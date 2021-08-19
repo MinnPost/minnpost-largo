@@ -1,0 +1,16 @@
+.m-author-info {
+    padding: 0 0 $standard-block-margin 0;
+    text-align: left;
+
+    @include column( $selector: '.o-column.a-newsletter-figure', $max-width: 24%, $vertical-align: top, $text-align: left, $spacing: 0 0 $standard-block-padding 0, $desktop-spacing-only: 'false', $mobile-spacing-only: 'true');
+    @include column( $selector: '.o-column.m-author-bio', $max-width: 76%, $vertical-align: top, $text-align: left, $spacing: 0 0 0 $standard-block-margin, $desktop-spacing-only: 'true', $mobile-spacing-only: 'false');
+
+    table.outlook-table {
+
+        td.outlook-inner-padding {
+            padding: $standard-block-padding 0;
+        }
+    }
+
+
+}
