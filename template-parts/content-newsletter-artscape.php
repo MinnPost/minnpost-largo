@@ -72,33 +72,9 @@
 											<td class="outlook-inner-padding">
 						[/outlook]
 						<div class="item-contents">
-							<?php
-							// teaser text
-							$do_not_show_automatic_teaser_items = get_post_meta( get_the_ID(), '_mp_newsletter_do_not_show_automatic_teaser_items', true );
-							$do_not_show_automatic_teaser_items = 'on';
-							$do_not_show_teaser_text            = get_post_meta( get_the_ID(), '_mp_newsletter_do_not_show_teaser_text', true );
-							if ( 'on' !== $do_not_show_automatic_teaser_items || 'on' !== $do_not_show_teaser_text ) :
-								?>
-								<div class="o-row m-teaser">
-								<?php
-							endif;
-							?>
-							<?php if ( 'on' !== $do_not_show_automatic_teaser_items ) : ?>
-								<?php minnpost_newsletter_today(); ?>
-							<?php endif; ?>
 							<?php if ( 'on' !== $do_not_show_teaser_text ) : ?>
 								<?php minnpost_newsletter_teaser(); ?>
 							<?php endif; ?>
-							<?php if ( 'on' !== $do_not_show_automatic_teaser_items ) : ?>
-								<?php minnpost_newsletter_type_welcome(); ?>
-							<?php endif; ?>
-							<?php
-							if ( 'on' !== $do_not_show_automatic_teaser_items || 'on' !== $do_not_show_teaser_text ) :
-								?>
-								</div>
-								<?php
-							endif;
-							?>
 							<?php
 							// body text
 							$body = apply_filters( 'the_content', get_the_content() );
