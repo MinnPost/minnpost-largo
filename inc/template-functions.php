@@ -857,11 +857,11 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 					$output .= '</div></div>';
 					$output .= '[outlook]</td>';
 				}
-				if ( '' === $image ) {
-					$output .= '[outlook]';
-				}
 				if ( true === $include_name && '' !== $name ) {
-					$output .= '<td class="outlook-inner-padding">[/outlook]';
+					$output .= '<td class="outlook-inner-padding">';
+				}
+				if ( '' !== $image || ( true === $include_name && '' !== $name ) || '' !== $text ) {
+					$output .= '[/outlook]';
 				}
 				if ( ( true === $include_name && '' !== $name ) || '' !== $text ) {
 					$output .= '<div class="o-column m-author-bio"><div class="item-contents">';
@@ -883,12 +883,14 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 					$output .= '<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="m-author-excerpt"><tr><td>' . $text . '</td></tr></table>';
 				}
 				if ( ( true === $include_name && '' !== $name ) || '' !== $text ) {
-					$output .= '</div>';
+					$output .= '</div></div>';
 					$output .= '[outlook]</td>';
 				}
 				if ( '' !== $image || ( true === $include_name && '' !== $name ) || '' !== $text ) {
-					$output .= '[outlook]
-									</tr>
+					if ( '' === $image ) {
+						$output .= '[outlook]';
+					}
+					$output .= '</tr>
 								</table>
 							</td>
 						</tr>
