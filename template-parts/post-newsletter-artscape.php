@@ -63,20 +63,20 @@
 			<tr>
 				<td>
 					[outlook]
-						<table role="presentation" width="92" cellpadding="0" cellspacing="0" class="outlook-table" style="width: 92px; max-width: 92px; Float: left;" align="left">
+						<table role="presentation" width="202" cellpadding="0" cellspacing="0" class="outlook-table" style="width: 202px; max-width: 202px; Float: left;" align="left">
 							<tr>
 								<td valign="top" align="left">
 					[/outlook]
 					<?php
 					if ( 'thumb' === $args['image_size'] ) {
 						minnpost_post_image(
-							'newsletter-thumbnail',
+							'feature',
 							array(
 								'title'  => get_the_title(),
 								'class'  => 'a-excerpt-thumb',
 								'align'  => 'left',
-								'width'  => 80,
-								'height' => 60,
+								'width'  => 190,
+								'height' => 9999,
 							),
 							'',
 							false
