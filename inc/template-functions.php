@@ -837,65 +837,128 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 			}
 			return $output;
 		} elseif ( is_singular( 'newsletter' ) ) {
+			$is_legacy = apply_filters( 'minnpost_largo_newsletter_legacy', false, '', get_the_ID() );
 			$output    = '';
 			$lazy_load = false;
-			$margin    = '';
-			if ( false === $end ) {
-				$margin = 'border-bottom: 2px solid #cccccf; padding-bottom: 15px; Margin-bottom: 20px; ';
-			}
-			$output .= '
-			<div class="author" style="display: block; ' . $margin . 'width: 100%;">
-					<!--[if (gte mso 9)|(IE)]>
-						<table cellpadding="0" cellspacing="0" width="100%">
+			if ( false === $is_legacy ) {
+				if ( '' !== $image || ( true === $include_name && '' !== $name ) || '' !== $text ) {
+					$output .= '[outlook]
+						<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
 							<tr>
-								<td width="25%" valign="top">
-					<![endif]-->
-				<div class="column photo" style="display: inline-block; Margin-right: 0; max-width: 95px; vertical-align: top; width: 100%">
-					<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0;">
-							<tr>
-								<td class="inner" style="border-collapse: collapse; font-size: 0; line-height: 0px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; vertical-align: top" valign="top">
-									<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
-									<tr>
-										<td style="border-collapse: collapse; font-size: 0; line-height: 0px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; vertical-align: top" valign="top">' . $image . '</td>
-									</tr>
+								<td align="center" class="outlook-outer-padding" style="<?php echo $banner_text; ?>">
+									<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border" style="<?php echo $banner_bg . $banner_text; ?>">
+										<tr>';
+				}
+				if ( '' !== $image ) {
+					$output .= '<td class="outlook-inner-padding">
+					[/outlook]';
+					$output .= '<div class="o-column a-newsletter-figure a-newsletter-figure-author a-newsletter-figure-author-' . $photo_size . '"><div class="item-contents">';
+					$output .= $image;
+					$output .= '</div></div>';
+					$output .= '[outlook]</td>';
+				}
+				if ( true === $include_name && '' !== $name ) {
+					$output .= '<td class="outlook-inner-padding">';
+				}
+				if ( '' !== $image || ( true === $include_name && '' !== $name ) || '' !== $text ) {
+					$output .= '[/outlook]';
+				}
+				if ( ( true === $include_name && '' !== $name ) || '' !== $text ) {
+					$output .= '<div class="o-column m-author-bio"><div class="item-contents">';
+				}
+				if ( true === $include_name && '' !== $name ) {
+					$output .= '<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="h3 a-author-title"><tr><td><h3>';
+					if ( 0 < $count ) {
+						$author_url = get_author_posts_url( $author_id, sanitize_title( $name ) );
+						$output    .= '<a href="' . $author_url . '">';
+					}
+					$output .= $name;
+					if ( 0 < $count ) {
+						$output .= '</a>';
+					}
+					$output .= '</td></tr></table>';
+				}
+				if ( '' !== $text ) {
+					$text    = apply_filters( 'format_email_content', $text, false );
+					$output .= '<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="m-author-excerpt"><tr><td>' . $text . '</td></tr></table>';
+				}
+				if ( ( true === $include_name && '' !== $name ) || '' !== $text ) {
+					$output .= '</div></div>';
+					$output .= '[outlook]</td>';
+				}
+				if ( '' !== $image || ( true === $include_name && '' !== $name ) || '' !== $text ) {
+					if ( '' === $image ) {
+						$output .= '[outlook]';
+					}
+					$output .= '</tr>
 								</table>
 							</td>
 						</tr>
 					</table>
-				</div>';
-			$output .= '<!--[if (gte mso 9)|(IE)]>
-				</td><td width="75%" valign="top">
-			<![endif]-->';
-			$output .= '<div class="column bio" style="display: inline-block; Margin-right: 0; max-width: 75%; vertical-align: top; width: 100%">
-					<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
-						<tr>
-							<td class="inner" style="border-collapse: collapse; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; font-weight: normal; line-height: 100%; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: right; vertical-align: top; width: 100%" align="right" valign="top">
-								<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
-									<tr>
-										<td class="text" style="border-collapse: collapse; font-family: Georgia, &quot;Times New Roman&quot;, Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; vertical-align: top; width: 100%" align="right" valign="top">';
-			if ( true === $include_name && '' !== $name ) {
-				$output .= '<h3 style="Margin: 0 0 5px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold;">';
-				if ( 0 < $count ) {
-					$author_url = get_author_posts_url( $author_id, sanitize_title( $name ) );
-					$output    .= '<a style="color: #801019; text-decoration: none;" href="' . $author_url . '">';
+					[/outlook]';
 				}
-				$output .= $name;
-				if ( 0 < $count ) {
-					$output .= '</a>';
+				if ( ( true === $include_name && '' !== $name ) || '' !== $text ) {
+					$output .= '</div>';
 				}
-				$output .= '</h3>';
+			} else {
+				$margin = '';
+				if ( false === $end ) {
+					$margin = 'border-bottom: 2px solid #cccccf; padding-bottom: 15px; Margin-bottom: 20px; ';
+				}
+				$output .= '
+				<div class="author" style="display: block; ' . $margin . 'width: 100%;">
+						<!--[if (gte mso 9)|(IE)]>
+							<table cellpadding="0" cellspacing="0" width="100%">
+								<tr>
+									<td width="25%" valign="top">
+						<![endif]-->
+					<div class="column photo" style="display: inline-block; Margin-right: 0; max-width: 95px; vertical-align: top; width: 100%">
+						<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0;">
+								<tr>
+									<td class="inner" style="border-collapse: collapse; font-size: 0; line-height: 0px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; vertical-align: top" valign="top">
+										<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
+										<tr>
+											<td style="border-collapse: collapse; font-size: 0; line-height: 0px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; vertical-align: top" valign="top">' . $image . '</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</div>';
+				$output .= '<!--[if (gte mso 9)|(IE)]>
+					</td><td width="75%" valign="top">
+				<![endif]-->';
+				$output .= '<div class="column bio" style="display: inline-block; Margin-right: 0; max-width: 75%; vertical-align: top; width: 100%">
+						<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
+							<tr>
+								<td class="inner" style="border-collapse: collapse; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; font-weight: normal; line-height: 100%; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: right; vertical-align: top; width: 100%" align="right" valign="top">
+									<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
+										<tr>
+											<td class="text" style="border-collapse: collapse; font-family: Georgia, &quot;Times New Roman&quot;, Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; vertical-align: top; width: 100%" align="right" valign="top">';
+				if ( true === $include_name && '' !== $name ) {
+					$output .= '<h3 style="Margin: 0 0 5px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold;">';
+					if ( 0 < $count ) {
+						$author_url = get_author_posts_url( $author_id, sanitize_title( $name ) );
+						$output    .= '<a style="color: #801019; text-decoration: none;" href="' . $author_url . '">';
+					}
+					$output .= $name;
+					if ( 0 < $count ) {
+						$output .= '</a>';
+					}
+					$output .= '</h3>';
+				}
+				// email content filter
+				$text    = apply_filters( 'format_email_content', $text, false );
+				$output .= $text;
+				$output .= '</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>';
 			}
-			// email content filter
-			$text    = apply_filters( 'format_email_content', $text, false );
-			$output .= $text;
-			$output .= '</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-		</table>
-	</div>
-</div>';
 			return $output;
 		}
 	}

@@ -63,20 +63,20 @@
 			<tr>
 				<td>
 					[outlook]
-						<table role="presentation" width="92" cellpadding="0" cellspacing="0" class="outlook-table" style="width: 92px; max-width: 92px; Float: left;" align="left">
+						<table role="presentation" width="202" cellpadding="0" cellspacing="0" class="outlook-table" style="width: 202px; max-width: 202px; Float: left;" align="left">
 							<tr>
 								<td valign="top" align="left">
 					[/outlook]
 					<?php
 					if ( 'thumb' === $args['image_size'] ) {
 						minnpost_post_image(
-							'newsletter-thumbnail',
+							'feature',
 							array(
 								'title'  => get_the_title(),
 								'class'  => 'a-excerpt-thumb',
 								'align'  => 'left',
-								'width'  => 80,
-								'height' => 60,
+								'width'  => 190,
+								'height' => 9999,
 							),
 							'',
 							false
@@ -89,13 +89,6 @@
 								</table>
 					[/outlook]
 					<?php echo minnpost_newsletter_get_entry_excerpt(); ?>
-				</td>
-			</tr>
-		</table>
-		<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="m-entry-byline">
-			<tr>
-				<td>
-					<?php minnpost_posted_by( get_the_ID(), true, false ); ?>
 				</td>
 			</tr>
 		</table>
