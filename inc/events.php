@@ -322,10 +322,12 @@ if ( ! function_exists( 'minnpost_largo_set_event_id' ) ) :
 					unset( $event_posts[ $key ] );
 				}
 			}
-			$first_event_id = $event_posts[0];
-			//$last_event_key = array_key_last( $event_posts );
-			//$last_event_id  = $event_posts[ $last_event_key ];
-			$post_id = $first_event_id;
+			if ( ! empty( $event_posts[0] ) ) {
+				$first_event_id = $event_posts[0];
+				//$last_event_key = array_key_last( $event_posts );
+				//$last_event_id  = $event_posts[ $last_event_key ];
+				$post_id = $first_event_id;
+			}
 		}
 		return $post_id;
 	}
