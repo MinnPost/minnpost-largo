@@ -496,6 +496,19 @@ if ( function_exists( 'create_newsletter' ) ) :
 			)
 		);
 		$artscape_section->add_field(
+			array(
+				'name'       => __( 'Section Title', 'minnpost-largo' ),
+				'id'         => $prefix . 'artscape_section_title',
+				'type'       => 'text',
+				'desc'       => __( 'The default value will be used if you do not change it.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'artscape' ) ),
+				),
+				'default'    => __( 'This week in Artscape', 'minnpost-largo' ),
+			)
+		);
+		$artscape_section->add_field(
 			minnpost_post_search_field(
 				array(
 					'name'       => __( 'Artscape Stories', 'minnpost-largo' ),
