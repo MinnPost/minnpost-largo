@@ -180,7 +180,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 			'post_status'    => 'any',
 		);
 		$most_recent_newsletter = wp_get_recent_posts( $recent_newsletter_args, OBJECT );
-		if ( is_object( $most_recent_newsletter[0] ) ) {
+		if ( isset( $most_recent_newsletter[0] ) && is_object( $most_recent_newsletter[0] ) ) {
 			$most_recent_newsletter_modified = $most_recent_newsletter[0]->post_modified;
 		} else {
 			$most_recent_newsletter_modified = strtotime( time() );
