@@ -6,7 +6,7 @@ span.a-subnav-label {
 	font-weight: 700;
 	display: inline-flex;
 	padding: $standard-block-padding;
-	margin-right: $standard-block-padding / 2;
+	margin-right: $standard-block-padding * 0.5;
 	border-right: 2px solid neutral-color(border);
 	white-space: nowrap;
 
@@ -14,6 +14,6 @@ span.a-subnav-label {
 	line-height: normal;
 
 	@include breakpoint-min( md ) {
-		padding: $standard-block-padding / 2 $standard-block-padding;
+		padding: $standard-block-padding * 0.5 $standard-block-padding;
 	}
 }

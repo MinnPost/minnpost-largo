@@ -24,7 +24,7 @@
 	}
 	
 	h2, h3, h4 {
-		margin-bottom: $standard-block-padding / 2;
+		margin-bottom: $standard-block-padding * 0.5;
 	}
 
 	:last-child {

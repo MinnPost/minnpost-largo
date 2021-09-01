@@ -255,7 +255,7 @@
 					if ( 'on' !== $hide_author && empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) ) ) {
 						foreach ( $coauthors as $key => $coauthor ) {
 							$author_id    = $coauthor->ID;
-							$author_info .= minnpost_get_author_figure( $author_id, 'author-teaser', 'excerpt', true, 'cap-display_name', true, '', false, false );
+							$author_info .= minnpost_get_author_figure( $author_id, 'photo', 'excerpt', true, 'cap-display_name', true, '', false, false );
 						}
 					}
 					if ( '' !== $author_info ) {
@@ -270,7 +270,7 @@
 								if ( $key === $last_key ) {
 									$end = true;
 								}
-								minnpost_author_figure( $author_id, 'author-teaser', 'excerpt', true, 'cap-display_name', true, '', false, false, $end );
+								minnpost_author_figure( $author_id, 'photo', 'excerpt', true, 'cap-display_name', true, '', false, false, $end );
 							endforeach;
 							?>
 						</div>

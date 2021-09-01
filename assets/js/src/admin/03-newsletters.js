@@ -1,14 +1,14 @@
 function showHideNewsletterSection( value ) {
     var newsletterSectionSelector = '.cmb2-newsletter-section';
     if ( 0 < $( newsletterSectionSelector ).length ) {
-        $( newsletterSectionSelector ).each(function( index ) {
+        $( newsletterSectionSelector ).each( function( index ) {
             var parent = $( this ).closest( '.context-box' );
             if ( $( this ).hasClass( 'cmb2-newsletter-section-' + value ) ) {
                 parent.show();
             } else {
                 parent.hide();
             }
-        });
+        } );
     }
 }
 

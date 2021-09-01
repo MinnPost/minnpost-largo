@@ -185,7 +185,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 			'post_status'    => 'any',
 		);
 		$most_recent_newsletter = wp_get_recent_posts( $recent_newsletter_args, OBJECT );
-		if ( is_object( $most_recent_newsletter[0] ) ) {
+		if ( isset( $most_recent_newsletter[0] ) && is_object( $most_recent_newsletter[0] ) ) {
 			$most_recent_newsletter_modified = $most_recent_newsletter[0]->post_modified;
 		} else {
 			$most_recent_newsletter_modified = strtotime( time() );
@@ -498,6 +498,19 @@ if ( function_exists( 'create_newsletter' ) ) :
 					'full'       => __( 'Large on all stories', 'minnpost-largo' ),
 					'full-first' => __( 'Large on the first story, none on subsequent stories', 'minnpost-largo' ),
 				),
+			)
+		);
+		$artscape_section->add_field(
+			array(
+				'name'       => __( 'Section Title', 'minnpost-largo' ),
+				'id'         => $prefix . 'artscape_section_title',
+				'type'       => 'text',
+				'desc'       => __( 'The default value will be used if you do not change it.', 'minnpost-largo' ),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'artscape' ) ),
+				),
+				'default'    => __( 'This week in Artscape', 'minnpost-largo' ),
 			)
 		);
 		$artscape_section->add_field(

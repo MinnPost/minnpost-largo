@@ -2,7 +2,7 @@
 	display: flex;
 	flex-wrap: wrap;
 	align-content: flex-start;
-	margin-bottom: $standard-block-padding / 2;
+	margin-bottom: $standard-block-padding * 0.5;
 
 	.m-entry-meta {
 		flex-basis: 100%;

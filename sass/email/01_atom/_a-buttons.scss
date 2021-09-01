@@ -10,6 +10,6 @@ p.a-button {
     display: inline-block;
 
     a {
-        padding: $standard-block-padding / 2;
+        padding: $standard-block-padding * 0.5;
     }
 }

@@ -34,7 +34,7 @@
 	input:not([type=checkbox]):not([type=radio]),
 	select,
 	textarea {
-		padding: $standard-block-padding / 2;
+		padding: $standard-block-padding * 0.5;
 		border: $border-default-style;
 		margin-bottom: $standard-block-padding;
 		width: 100%;

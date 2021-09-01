@@ -190,7 +190,7 @@ msgstr ""
 msgid "Newsletter Type"
 msgstr ""
 
-#: inc/custom-fields.php:65, inc/custom-fields.php:906, inc/custom-fields.php:2603, inc/custom-fields.php:3070
+#: inc/custom-fields.php:65, inc/custom-fields.php:919, inc/custom-fields.php:2616, inc/custom-fields.php:3083
 msgid "Select an option"
 msgstr ""
 
@@ -215,7 +215,7 @@ msgstr ""
 msgid "This text is displayed between the date and the \"Welcome to...\" message at the top of the newsletter. It is also displayed after the subject line in some email clients. You can also add the text for those clients only by using the Preview Text field when you add the Subject Line to your campaign in Mailchimp. It is limited to 140 characters.<br><br>If you need the newsletter teaser text to be longer or have special formatting, see \"Teaser options\" below."
 msgstr ""
 
-#: inc/custom-fields.php:98, inc/custom-fields.php:1013
+#: inc/custom-fields.php:98, inc/custom-fields.php:1026
 msgid "Remove author(s) from display?"
 msgstr ""
 
@@ -255,11 +255,11 @@ msgstr ""
 msgid "Top Post"
 msgstr ""
 
-#: inc/custom-fields.php:226, inc/custom-fields.php:286, inc/custom-fields.php:346, inc/custom-fields.php:406
+#: inc/custom-fields.php:226, inc/custom-fields.php:286, inc/custom-fields.php:346, inc/custom-fields.php:406, inc/custom-fields.php:505
 msgid "Section Title"
 msgstr ""
 
-#: inc/custom-fields.php:229, inc/custom-fields.php:289, inc/custom-fields.php:349, inc/custom-fields.php:409
+#: inc/custom-fields.php:229, inc/custom-fields.php:289, inc/custom-fields.php:349, inc/custom-fields.php:409, inc/custom-fields.php:508
 msgid "The default value will be used if you do not change it."
 msgstr ""
 
@@ -271,7 +271,7 @@ msgstr ""
 msgid "Story"
 msgstr ""
 
-#: inc/custom-fields.php:241, inc/custom-fields.php:507, inc/custom-fields.php:558, inc/custom-fields.php:608, inc/custom-fields.php:639
+#: inc/custom-fields.php:241, inc/custom-fields.php:520, inc/custom-fields.php:571, inc/custom-fields.php:621, inc/custom-fields.php:652
 msgid "Search for a post here."
 msgstr ""
 
@@ -347,7 +347,7 @@ msgstr ""
 msgid "Artscape Newsletter Content"
 msgstr ""
 
-#: inc/custom-fields.php:489, inc/custom-fields.php:540, inc/custom-fields.php:1107
+#: inc/custom-fields.php:489, inc/custom-fields.php:553, inc/custom-fields.php:1120
 msgid "Image Size"
 msgstr ""
 
@@ -355,886 +355,890 @@ msgstr ""
 msgid "The value for this field will be used for image placement on artscape newsletters."
 msgstr ""
 
-#: inc/custom-fields.php:496, inc/custom-fields.php:547
+#: inc/custom-fields.php:496, inc/custom-fields.php:560
 msgid "No images"
 msgstr ""
 
-#: inc/custom-fields.php:497, inc/custom-fields.php:548
+#: inc/custom-fields.php:497, inc/custom-fields.php:561
 msgid "Thumbnail on all stories"
 msgstr ""
 
-#: inc/custom-fields.php:498, inc/custom-fields.php:549
+#: inc/custom-fields.php:498, inc/custom-fields.php:562
 msgid "Large on all stories"
 msgstr ""
 
-#: inc/custom-fields.php:499, inc/custom-fields.php:550
+#: inc/custom-fields.php:499, inc/custom-fields.php:563
 msgid "Large on the first story, none on subsequent stories"
 msgstr ""
 
-#: inc/custom-fields.php:506
+#: inc/custom-fields.php:513
+msgid "This week in Artscape"
+msgstr ""
+
+#: inc/custom-fields.php:519
 msgid "Artscape Stories"
 msgstr ""
 
-#: inc/custom-fields.php:526
+#: inc/custom-fields.php:539
 msgid "Republication Newsletter Content"
 msgstr ""
 
-#: inc/custom-fields.php:544
+#: inc/custom-fields.php:557
 msgid "The value for this field will be used for image placement on republication newsletters."
 msgstr ""
 
-#: inc/custom-fields.php:557
+#: inc/custom-fields.php:570
 msgid "Republishable Stories"
 msgstr ""
 
-#: inc/custom-fields.php:575
+#: inc/custom-fields.php:588
 msgid "Preview of Upcoming Stories"
 msgstr ""
 
-#: inc/custom-fields.php:583
+#: inc/custom-fields.php:596
 msgid "Use this to describe upcoming stories for this edition."
 msgstr ""
 
-#: inc/custom-fields.php:596
+#: inc/custom-fields.php:609
 msgid "Legacy Newsletter Content"
 msgstr ""
 
-#: inc/custom-fields.php:607
+#: inc/custom-fields.php:620
 msgid "Top Stories"
 msgstr ""
 
-#: inc/custom-fields.php:625
+#: inc/custom-fields.php:638
 msgid "Top Stories Manual Override"
 msgstr ""
 
-#: inc/custom-fields.php:628, inc/custom-fields.php:658
+#: inc/custom-fields.php:641, inc/custom-fields.php:671
 msgid "Use this field if the search is not working. Enter a comma separated list of post IDs, and the newsletter template will use them in the order they are entered instead of the search field value."
 msgstr ""
 
-#: inc/custom-fields.php:638
+#: inc/custom-fields.php:651
 msgid "More Stories"
 msgstr ""
 
-#: inc/custom-fields.php:655
+#: inc/custom-fields.php:668
 msgid "More Stories Manual Override"
 msgstr ""
 
-#: inc/custom-fields.php:674
+#: inc/custom-fields.php:687
 msgid "The default behavior for this section is: 1) Image is full size. 2) There is a teaser on the story. Use the Newsletter Settings section of the story to change this behavior."
 msgstr ""
 
-#: inc/custom-fields.php:675, inc/custom-fields.php:676
+#: inc/custom-fields.php:688, inc/custom-fields.php:689
 msgid "The default behavior for this section is: 1) Image is full size on the first story in a section. 2) There is a teaser on each story. Use the Newsletter Settings section of each story to change how the story behaves."
 msgstr ""
 
-#: inc/custom-fields.php:677
+#: inc/custom-fields.php:690
 msgid "The default behavior for this section is: stories will display with no image or teaser. The \"Use Other Section Settings\" checkbox will cause this section to behave, by default, like the above sections instead. Then you can use the Newsletter Settings section of each story to change how that story behaves."
 msgstr ""
 
-#: inc/custom-fields.php:678
+#: inc/custom-fields.php:691
 msgid "The default behavior for this section is: stories will display with a small thumbnail image and a teaser. You can use the Newsletter Settings section of each story to change how that story behaves."
 msgstr ""
 
-#: inc/custom-fields.php:752, inc/custom-fields.php:762, inc/custom-fields.php:1366, inc/custom-fields.php:1376, inc/custom-fields.php:1571, inc/custom-fields.php:1674, inc/custom-fields.php:2033, inc/custom-fields.php:2456, inc/custom-fields.php:2466, inc/custom-fields.php:2899, inc/custom-fields.php:2909, inc/custom-fields.php:3114, inc/custom-fields.php:3124
+#: inc/custom-fields.php:765, inc/custom-fields.php:775, inc/custom-fields.php:1379, inc/custom-fields.php:1389, inc/custom-fields.php:1584, inc/custom-fields.php:1687, inc/custom-fields.php:2046, inc/custom-fields.php:2469, inc/custom-fields.php:2479, inc/custom-fields.php:2912, inc/custom-fields.php:2922, inc/custom-fields.php:3127, inc/custom-fields.php:3137
 msgid "Excerpt"
 msgstr ""
 
-#: inc/custom-fields.php:780
+#: inc/custom-fields.php:793
 msgid "Byline & Subtitle Settings"
 msgstr ""
 
-#: inc/custom-fields.php:789
+#: inc/custom-fields.php:802
 msgid "After Multiple Authors"
 msgstr ""
 
-#: inc/custom-fields.php:792
+#: inc/custom-fields.php:805
 msgid "Proceeded by a |, this value will display right after the authors if there are more than one. For example, to show \"Tom Nehil and Greta Kaul | MinnPost Staff,\" put \"MinnPost Staff\" into this field."
 msgstr ""
 
-#: inc/custom-fields.php:797
+#: inc/custom-fields.php:810
 msgid "Byline"
 msgstr ""
 
-#: inc/custom-fields.php:800
+#: inc/custom-fields.php:813
 msgid "This value will override any authors associated with this post."
 msgstr ""
 
-#: inc/custom-fields.php:805
+#: inc/custom-fields.php:818
 msgid "Deck"
 msgstr ""
 
-#: inc/custom-fields.php:856, inc/custom-fields.php:2555, inc/custom-fields.php:3018, inc/custom-fields.php:3210
+#: inc/custom-fields.php:869, inc/custom-fields.php:2568, inc/custom-fields.php:3031, inc/custom-fields.php:3223
 msgid "Meta images"
 msgstr ""
 
-#: inc/custom-fields.php:857
+#: inc/custom-fields.php:870
 msgid "Using this field will remove images that are uploaded to this story from the story's metadata, and replace them with the images in this field."
 msgstr ""
 
-#: inc/custom-fields.php:874, inc/custom-fields.php:2365, inc/custom-fields.php:2573, inc/custom-fields.php:3040
+#: inc/custom-fields.php:887, inc/custom-fields.php:2378, inc/custom-fields.php:2586, inc/custom-fields.php:3053
 msgid "Image Settings"
 msgstr ""
 
-#: inc/custom-fields.php:883, inc/custom-fields.php:2374, inc/custom-fields.php:2581, inc/custom-fields.php:3048
+#: inc/custom-fields.php:896, inc/custom-fields.php:2387, inc/custom-fields.php:2594, inc/custom-fields.php:3061
 msgid "Thumbnail Image"
 msgstr ""
 
-#: inc/custom-fields.php:884, inc/custom-fields.php:933, inc/custom-fields.php:2375, inc/custom-fields.php:2394, inc/custom-fields.php:2582, inc/custom-fields.php:2629, inc/custom-fields.php:3049
+#: inc/custom-fields.php:897, inc/custom-fields.php:946, inc/custom-fields.php:2388, inc/custom-fields.php:2407, inc/custom-fields.php:2595, inc/custom-fields.php:2642, inc/custom-fields.php:3062
 msgid "Upload an image or enter an URL."
 msgstr ""
 
-#: inc/custom-fields.php:902, inc/custom-fields.php:2599, inc/custom-fields.php:3066
+#: inc/custom-fields.php:915, inc/custom-fields.php:2612, inc/custom-fields.php:3079
 msgid "Homepage Image Size"
 msgstr ""
 
-#: inc/custom-fields.php:909, inc/custom-fields.php:2606, inc/custom-fields.php:3073
+#: inc/custom-fields.php:922, inc/custom-fields.php:2619, inc/custom-fields.php:3086
 msgid "Medium"
 msgstr ""
 
-#: inc/custom-fields.php:910, inc/custom-fields.php:2607, inc/custom-fields.php:3074
+#: inc/custom-fields.php:923, inc/custom-fields.php:2620, inc/custom-fields.php:3087
 msgid "Do not display image"
 msgstr ""
 
-#: inc/custom-fields.php:911, inc/custom-fields.php:2608, inc/custom-fields.php:3075
+#: inc/custom-fields.php:924, inc/custom-fields.php:2621, inc/custom-fields.php:3088
 msgid "Large"
 msgstr ""
 
-#: inc/custom-fields.php:912, inc/custom-fields.php:1116
+#: inc/custom-fields.php:925, inc/custom-fields.php:1129
 msgid "Full size"
 msgstr ""
 
-#: inc/custom-fields.php:918, inc/custom-fields.php:2614, inc/custom-fields.php:3081
+#: inc/custom-fields.php:931, inc/custom-fields.php:2627, inc/custom-fields.php:3094
 msgid "Homepage Image Position"
 msgstr ""
 
-#: inc/custom-fields.php:922, inc/custom-fields.php:2618, inc/custom-fields.php:3085
+#: inc/custom-fields.php:935, inc/custom-fields.php:2631, inc/custom-fields.php:3098
 msgid "Pick whether the image should go before or after the text. If before, it will be flush left on large screens, unless it is too wide. If after, it will be flush right, unless it is too wide."
 msgstr ""
 
-#: inc/custom-fields.php:925, inc/custom-fields.php:2621, inc/custom-fields.php:3088
+#: inc/custom-fields.php:938, inc/custom-fields.php:2634, inc/custom-fields.php:3101
 msgid "Before"
 msgstr ""
 
-#: inc/custom-fields.php:926, inc/custom-fields.php:2622, inc/custom-fields.php:3089
+#: inc/custom-fields.php:939, inc/custom-fields.php:2635, inc/custom-fields.php:3102
 msgid "After"
 msgstr ""
 
-#: inc/custom-fields.php:932, inc/custom-fields.php:2628
+#: inc/custom-fields.php:945, inc/custom-fields.php:2641
 msgid "Main Image"
 msgstr ""
 
-#: inc/custom-fields.php:956, inc/custom-fields.php:2652
+#: inc/custom-fields.php:969, inc/custom-fields.php:2665
 msgid "Display Settings"
 msgstr ""
 
-#: inc/custom-fields.php:965, inc/custom-fields.php:1498, inc/custom-fields.php:2661
+#: inc/custom-fields.php:978, inc/custom-fields.php:1511, inc/custom-fields.php:2674
 msgid "Prevent lazy loading of images?"
 msgstr ""
 
-#: inc/custom-fields.php:968
+#: inc/custom-fields.php:981
 msgid "If checked, this post will not attempt to lazy load images."
 msgstr ""
 
-#: inc/custom-fields.php:973, inc/custom-fields.php:2669
+#: inc/custom-fields.php:986, inc/custom-fields.php:2682
 msgid "Load HTML editor by default?"
 msgstr ""
 
-#: inc/custom-fields.php:976
+#: inc/custom-fields.php:989
 msgid "If checked, this post will open with the HTML editor visible."
 msgstr ""
 
-#: inc/custom-fields.php:981
+#: inc/custom-fields.php:994
 msgid "Remove category from display?"
 msgstr ""
 
-#: inc/custom-fields.php:984
+#: inc/custom-fields.php:997
 msgid "If checked, this post will not display its categories."
 msgstr ""
 
-#: inc/custom-fields.php:989
+#: inc/custom-fields.php:1002
 msgid "Replace category text"
 msgstr ""
 
-#: inc/custom-fields.php:992
+#: inc/custom-fields.php:1005
 msgid "This text will show in place of the category name(s)."
 msgstr ""
 
-#: inc/custom-fields.php:997, inc/custom-fields.php:1455, inc/custom-fields.php:2693
+#: inc/custom-fields.php:1010, inc/custom-fields.php:1468, inc/custom-fields.php:2706
 msgid "Remove title from display?"
 msgstr ""
 
-#: inc/custom-fields.php:1000
+#: inc/custom-fields.php:1013
 msgid "If checked, the post title will not display."
 msgstr ""
 
-#: inc/custom-fields.php:1005
+#: inc/custom-fields.php:1018
 msgid "Remove excerpt from display?"
 msgstr ""
 
-#: inc/custom-fields.php:1008
+#: inc/custom-fields.php:1021
 msgid "If checked, the post excerpt will not display."
 msgstr ""
 
-#: inc/custom-fields.php:1016
+#: inc/custom-fields.php:1029
 msgid "If checked, the post author(s) will not display."
 msgstr ""
 
-#: inc/custom-fields.php:1021
+#: inc/custom-fields.php:1034
 msgid "Remove deck from display?"
 msgstr ""
 
-#: inc/custom-fields.php:1024
+#: inc/custom-fields.php:1037
 msgid "If checked, any deck content will be ignored."
 msgstr ""
 
-#: inc/custom-fields.php:1029
+#: inc/custom-fields.php:1042
 msgid "Remove date from display?"
 msgstr ""
 
-#: inc/custom-fields.php:1032
+#: inc/custom-fields.php:1045
 msgid "If checked, the post date will not display."
 msgstr ""
 
-#: inc/custom-fields.php:1037
+#: inc/custom-fields.php:1050
 msgid "Remove newsletter signup from display?"
 msgstr ""
 
-#: inc/custom-fields.php:1040
+#: inc/custom-fields.php:1053
 msgid "If checked, this post will not have a newsletter signup box."
 msgstr ""
 
-#: inc/custom-fields.php:1045, inc/custom-fields.php:2749
+#: inc/custom-fields.php:1058, inc/custom-fields.php:2762
 msgid "Remove share buttons from display?"
 msgstr ""
 
-#: inc/custom-fields.php:1048
+#: inc/custom-fields.php:1061
 msgid "If checked, share buttons will not display on this post."
 msgstr ""
 
-#: inc/custom-fields.php:1053, inc/custom-fields.php:2757
+#: inc/custom-fields.php:1066, inc/custom-fields.php:2770
 msgid "Keep share buttons horizontal on large screens"
 msgstr ""
 
-#: inc/custom-fields.php:1056
+#: inc/custom-fields.php:1069
 msgid "If checked, this post will have horizontal share buttons above the post content, rather than vertical ones next to it, on large screens. This is similar to its mobile behavior."
 msgstr ""
 
-#: inc/custom-fields.php:1061
+#: inc/custom-fields.php:1074
 msgid "Remove republish button from display?"
 msgstr ""
 
-#: inc/custom-fields.php:1064
+#: inc/custom-fields.php:1077
 msgid "If checked, the republication button will not display on this post, regardless of the other share button settings."
 msgstr ""
 
-#: inc/custom-fields.php:1074
+#: inc/custom-fields.php:1087
 msgid "Newsletter Display Settings"
 msgstr ""
 
-#: inc/custom-fields.php:1083
+#: inc/custom-fields.php:1096
 msgid "Prevent excerpt display?"
 msgstr ""
 
-#: inc/custom-fields.php:1086
+#: inc/custom-fields.php:1099
 msgid "If checked, this post will not display with an excerpt when it is included in a newsletter. By default, the excerpt will show except in the Editor's Picks section."
 msgstr ""
 
-#: inc/custom-fields.php:1091
+#: inc/custom-fields.php:1104
 msgid "Use SEO title?"
 msgstr ""
 
-#: inc/custom-fields.php:1094
+#: inc/custom-fields.php:1107
 msgid "If checked, this post will use the SEO Title value when it is included in a newsletter, if there is one. Follow the guidelines for that value in the SEO & Social Settings section. If there is no value for the SEO title, the post will use its standard title even if this box is checked."
 msgstr ""
 
-#: inc/custom-fields.php:1099
+#: inc/custom-fields.php:1112
 msgid "Use SEO description?"
 msgstr ""
 
-#: inc/custom-fields.php:1102
+#: inc/custom-fields.php:1115
 msgid "If checked, this post will use the SEO Description value when it is included in a newsletter, if there is one. Follow the guidelines for that value in the SEO & Social Settings section. If there is no value for the SEO description, the post will use its standard excerpt even if this box is checked."
 msgstr ""
 
-#: inc/custom-fields.php:1111
+#: inc/custom-fields.php:1124
 msgid "If selected, the image size will be used for this post regardless of where it is in the newsletter post order. By default, the Editor's Picks section has no image. In other sections, the default behavior is to use the Full size image for the first post, then to use no image for subsequent posts."
 msgstr ""
 
-#: inc/custom-fields.php:1114
+#: inc/custom-fields.php:1127
 msgid "None"
 msgstr ""
 
-#: inc/custom-fields.php:1115
+#: inc/custom-fields.php:1128
 msgid "Default for the section"
 msgstr ""
 
-#: inc/custom-fields.php:1127, inc/custom-fields.php:3233
+#: inc/custom-fields.php:1140, inc/custom-fields.php:3246
 msgid "Ad & Sponsorship Settings"
 msgstr ""
 
-#: inc/custom-fields.php:1136, inc/custom-fields.php:3242
+#: inc/custom-fields.php:1149, inc/custom-fields.php:3255
 msgid "Prevent automatic embed ads?"
 msgstr ""
 
-#: inc/custom-fields.php:1139, inc/custom-fields.php:3245
+#: inc/custom-fields.php:1152, inc/custom-fields.php:3258
 msgid "If checked, this post will not contain automatic embed ads."
 msgstr ""
 
-#: inc/custom-fields.php:1144, inc/custom-fields.php:3250
+#: inc/custom-fields.php:1157, inc/custom-fields.php:3263
 msgid "Prevent all embed ads?"
 msgstr ""
 
-#: inc/custom-fields.php:1147, inc/custom-fields.php:3253
+#: inc/custom-fields.php:1160, inc/custom-fields.php:3266
 msgid "If checked, this post will not contain any embed ads."
 msgstr ""
 
-#: inc/custom-fields.php:1152, inc/custom-fields.php:2066, inc/custom-fields.php:3258
+#: inc/custom-fields.php:1165, inc/custom-fields.php:2079, inc/custom-fields.php:3271
 msgid "Prevent lazy loading of embed ads?"
 msgstr ""
 
-#: inc/custom-fields.php:1155, inc/custom-fields.php:2069, inc/custom-fields.php:3261
+#: inc/custom-fields.php:1168, inc/custom-fields.php:2082, inc/custom-fields.php:3274
 msgid "If checked, this post will not attempt to lazy load embed ads."
 msgstr ""
 
-#: inc/custom-fields.php:1160, inc/custom-fields.php:1583, inc/custom-fields.php:1686, inc/custom-fields.php:3266
+#: inc/custom-fields.php:1173, inc/custom-fields.php:1596, inc/custom-fields.php:1699, inc/custom-fields.php:3279
 msgid "Sponsorship"
 msgstr ""
 
-#: inc/custom-fields.php:1163
+#: inc/custom-fields.php:1176
 msgid "This field overrides a sponsorship message from the category or tag that contains a post."
 msgstr ""
 
-#: inc/custom-fields.php:1173, inc/custom-fields.php:3279
+#: inc/custom-fields.php:1186, inc/custom-fields.php:3292
 msgid "Prevent sponsorship display"
 msgstr ""
 
-#: inc/custom-fields.php:1176
+#: inc/custom-fields.php:1189
 msgid "If checked, this post will not display any sponsorship message, regardless of its tags or categories."
 msgstr ""
 
-#: inc/custom-fields.php:1186, inc/custom-fields.php:1465, inc/custom-fields.php:2776
+#: inc/custom-fields.php:1199, inc/custom-fields.php:1478, inc/custom-fields.php:2789
 msgid "Sidebar Settings"
 msgstr ""
 
-#: inc/custom-fields.php:1195
+#: inc/custom-fields.php:1208
 msgid "Remove whole right sidebar from this post?"
 msgstr ""
 
-#: inc/custom-fields.php:1203
+#: inc/custom-fields.php:1216
 msgid "Remove whole right sidebar from this post? (V2)"
 msgstr ""
 
-#: inc/custom-fields.php:1211, inc/custom-fields.php:1490, inc/custom-fields.php:2801
+#: inc/custom-fields.php:1224, inc/custom-fields.php:1503, inc/custom-fields.php:2814
 msgid "Sidebar Content Box"
 msgstr ""
 
-#: inc/custom-fields.php:1212, inc/custom-fields.php:1491, inc/custom-fields.php:2802
+#: inc/custom-fields.php:1225, inc/custom-fields.php:1504, inc/custom-fields.php:2815
 msgid "Content for a single right sidebar box"
 msgstr ""
 
-#: inc/custom-fields.php:1224
+#: inc/custom-fields.php:1237
 msgid "Related Content Settings"
 msgstr ""
 
-#: inc/custom-fields.php:1233
+#: inc/custom-fields.php:1246
 msgid "Prevent related content?"
 msgstr ""
 
-#: inc/custom-fields.php:1236
+#: inc/custom-fields.php:1249
 msgid "If checked, this post will not contain any related content. This prevents manual and automated recommendations, as well as \"more ___ articles\" links, from showing within the related content area."
 msgstr ""
 
-#: inc/custom-fields.php:1241
+#: inc/custom-fields.php:1254
 msgid "Related Content Label"
 msgstr ""
 
 #. translators: 1) the default label for related items
-#: inc/custom-fields.php:1246
+#: inc/custom-fields.php:1259
 msgid "This text will show as a heading above the Related Content items. If you leave it blank, it will say %1$s."
 msgstr ""
 
-#: inc/custom-fields.php:1247, inc/template-tags.php:355
+#: inc/custom-fields.php:1260, inc/template-tags.php:355
 msgid "Read these stories next"
 msgstr ""
 
-#: inc/custom-fields.php:1254
+#: inc/custom-fields.php:1267
 msgid "Related Content"
 msgstr ""
 
-#: inc/custom-fields.php:1255, inc/custom-fields.php:1275
+#: inc/custom-fields.php:1268, inc/custom-fields.php:1288
 msgid "Search for a post here. If any posts are selected, they will override automated recommendations."
 msgstr ""
 
-#: inc/custom-fields.php:1265
+#: inc/custom-fields.php:1278
 msgid "Show related posts on homepage?"
 msgstr ""
 
-#: inc/custom-fields.php:1268
+#: inc/custom-fields.php:1281
 msgid "If checked, and if this post is the lead story on the homepage, this post will list the above related content posts as related coverage. Each story will display its SEO Title value if there is one. Otherwise it will display its normal title."
 msgstr ""
 
-#: inc/custom-fields.php:1274
+#: inc/custom-fields.php:1287
 msgid "Related Multimedia"
 msgstr ""
 
-#: inc/custom-fields.php:1285
+#: inc/custom-fields.php:1298
 msgid "Link to a related category"
 msgstr ""
 
-#: inc/custom-fields.php:1286
+#: inc/custom-fields.php:1299
 msgid "Search for a category here. If present, it will override the default category based on the permalink."
 msgstr ""
 
-#: inc/custom-fields.php:1297
+#: inc/custom-fields.php:1310
 msgid "Link to a related tag"
 msgstr ""
 
-#: inc/custom-fields.php:1298
+#: inc/custom-fields.php:1311
 msgid "Search for a tag here."
 msgstr ""
 
-#: inc/custom-fields.php:1315
+#: inc/custom-fields.php:1328
 msgid "Member Content Settings"
 msgstr ""
 
-#: inc/custom-fields.php:1324
+#: inc/custom-fields.php:1337
 msgid "Lowest access level"
 msgstr ""
 
-#: inc/custom-fields.php:1327
+#: inc/custom-fields.php:1340
 msgid "If this content is restricted, select the lowest level that can access it."
 msgstr ""
 
-#: inc/custom-fields.php:1335
+#: inc/custom-fields.php:1348
 msgid "MinnPost+ icon style"
 msgstr ""
 
-#: inc/custom-fields.php:1338
+#: inc/custom-fields.php:1351
 msgid "Which MP+ icon to overlay on the thumbnails"
 msgstr ""
 
-#: inc/custom-fields.php:1342
+#: inc/custom-fields.php:1355
 msgid "Black on White"
 msgstr ""
 
-#: inc/custom-fields.php:1343
+#: inc/custom-fields.php:1356
 msgid "White on Black"
 msgstr ""
 
-#: inc/custom-fields.php:1344
+#: inc/custom-fields.php:1357
 msgid "White on Red"
 msgstr ""
 
-#: inc/custom-fields.php:1345
+#: inc/custom-fields.php:1358
 msgid "White on Transparent"
 msgstr ""
 
-#: inc/custom-fields.php:1377
+#: inc/custom-fields.php:1390
 msgid "By default, this is only used as the description for search results. But we can also configure its use in other ways. For example, the Commenting Policy excerpt is used at the top of our comments list."
 msgstr ""
 
-#: inc/custom-fields.php:1438
+#: inc/custom-fields.php:1451
 msgid "Page Settings"
 msgstr ""
 
-#: inc/custom-fields.php:1447
+#: inc/custom-fields.php:1460
 msgid "Pre-title text"
 msgstr ""
 
-#: inc/custom-fields.php:1450
+#: inc/custom-fields.php:1463
 msgid "This text will show above the title"
 msgstr ""
 
-#: inc/custom-fields.php:1474
+#: inc/custom-fields.php:1487
 msgid "Remove whole right sidebar from this page?"
 msgstr ""
 
-#: inc/custom-fields.php:1482
+#: inc/custom-fields.php:1495
 msgid "Remove whole right sidebar from this page? (V2)"
 msgstr ""
 
-#: inc/custom-fields.php:1501
+#: inc/custom-fields.php:1514
 msgid "If checked, this page will not attempt to lazy load images."
 msgstr ""
 
-#: inc/custom-fields.php:1524
+#: inc/custom-fields.php:1537
 msgid "Category Settings"
 msgstr ""
 
-#: inc/custom-fields.php:1546, inc/custom-fields.php:1868
+#: inc/custom-fields.php:1559, inc/custom-fields.php:1881
 msgid "Category Group"
 msgstr ""
 
-#: inc/custom-fields.php:1549
+#: inc/custom-fields.php:1562
 msgid "Puts this category into this group. If Opinion or Sponsored Content is the group, this category will be excluded from automated story recommendations."
 msgstr ""
 
-#: inc/custom-fields.php:1559
+#: inc/custom-fields.php:1572
 msgid "Grouped Categories"
 msgstr ""
 
-#: inc/custom-fields.php:1562
+#: inc/custom-fields.php:1575
 msgid "If this category is used to group other categories, they will be checked here, as well as indicated on that category's settings page."
 msgstr ""
 
-#: inc/custom-fields.php:1596
+#: inc/custom-fields.php:1609
 msgid "Category Thumbnail"
 msgstr ""
 
-#: inc/custom-fields.php:1606
+#: inc/custom-fields.php:1619
 msgid "Category Main Image"
 msgstr ""
 
-#: inc/custom-fields.php:1618, inc/custom-fields.php:1721
+#: inc/custom-fields.php:1631, inc/custom-fields.php:1734
 msgid "Body"
 msgstr ""
 
-#: inc/custom-fields.php:1629, inc/custom-fields.php:1732
+#: inc/custom-fields.php:1642, inc/custom-fields.php:1745
 msgid "Prevent lazy loading of image?"
 msgstr ""
 
-#: inc/custom-fields.php:1632
+#: inc/custom-fields.php:1645
 msgid "If checked, the image for this category will not be lazy loaded."
 msgstr ""
 
-#: inc/custom-fields.php:1637
+#: inc/custom-fields.php:1650
 msgid "Featured Columns"
 msgstr ""
 
-#: inc/custom-fields.php:1665
+#: inc/custom-fields.php:1678
 msgid "Tag Settings"
 msgstr ""
 
-#: inc/custom-fields.php:1699
+#: inc/custom-fields.php:1712
 msgid "Tag Thumbnail"
 msgstr ""
 
-#: inc/custom-fields.php:1709
+#: inc/custom-fields.php:1722
 msgid "Tag Main Image"
 msgstr ""
 
-#: inc/custom-fields.php:1735
+#: inc/custom-fields.php:1748
 msgid "If checked, the image for this tag will not be lazy loaded."
 msgstr ""
 
-#: inc/custom-fields.php:2016
+#: inc/custom-fields.php:2029
 msgid "Page Info"
 msgstr ""
 
-#: inc/custom-fields.php:2025, inc/custom-fields.php:3159
+#: inc/custom-fields.php:2038, inc/custom-fields.php:3172
 msgid "Photo"
 msgstr ""
 
-#: inc/custom-fields.php:2046
+#: inc/custom-fields.php:2059
 msgid "Bio"
 msgstr ""
 
-#: inc/custom-fields.php:2058
+#: inc/custom-fields.php:2071
 msgid "Staff Member?"
 msgstr ""
 
-#: inc/custom-fields.php:2090
+#: inc/custom-fields.php:2103
 msgid "Address Info"
 msgstr ""
 
-#: inc/custom-fields.php:2098
+#: inc/custom-fields.php:2111
 msgid "All Email Addresses"
 msgstr ""
 
-#: inc/custom-fields.php:2101
+#: inc/custom-fields.php:2114
 msgid "Separate each email address with a comma."
 msgstr ""
 
-#: inc/custom-fields.php:2106
+#: inc/custom-fields.php:2119
 msgid "Street Address"
 msgstr ""
 
-#: inc/custom-fields.php:2114
+#: inc/custom-fields.php:2127
 msgid "City"
 msgstr ""
 
-#: inc/custom-fields.php:2122
+#: inc/custom-fields.php:2135
 msgid "State"
 msgstr ""
 
-#: inc/custom-fields.php:2130
+#: inc/custom-fields.php:2143
 msgid "Zip Code"
 msgstr ""
 
-#: inc/custom-fields.php:2138
+#: inc/custom-fields.php:2151
 msgid "Country"
 msgstr ""
 
-#: inc/custom-fields.php:2149
+#: inc/custom-fields.php:2162
 msgid "Reading Preferences"
 msgstr ""
 
-#: inc/custom-fields.php:2157
+#: inc/custom-fields.php:2170
 msgid "Reading preferences:"
 msgstr ""
 
-#: inc/custom-fields.php:2162, inc/custom-shortcodes.php:411
+#: inc/custom-fields.php:2175, inc/custom-shortcodes.php:411
 msgid "Arts & Culture"
 msgstr ""
 
-#: inc/custom-fields.php:2163, inc/custom-shortcodes.php:412
+#: inc/custom-fields.php:2176, inc/custom-shortcodes.php:412
 msgid "Economy"
 msgstr ""
 
-#: inc/custom-fields.php:2164, inc/custom-shortcodes.php:413
+#: inc/custom-fields.php:2177, inc/custom-shortcodes.php:413
 msgid "Education"
 msgstr ""
 
-#: inc/custom-fields.php:2165, inc/custom-shortcodes.php:414
+#: inc/custom-fields.php:2178, inc/custom-shortcodes.php:414
 msgid "Environment"
 msgstr ""
 
-#: inc/custom-fields.php:2166, inc/custom-shortcodes.php:415
+#: inc/custom-fields.php:2179, inc/custom-shortcodes.php:415
 msgid "Greater Minnesota news"
 msgstr ""
 
-#: inc/custom-fields.php:2167, inc/custom-shortcodes.php:416
+#: inc/custom-fields.php:2180, inc/custom-shortcodes.php:416
 msgid "Health"
 msgstr ""
 
-#: inc/custom-fields.php:2168, inc/custom-shortcodes.php:417
+#: inc/custom-fields.php:2181, inc/custom-shortcodes.php:417
 msgid "MinnPost announcements"
 msgstr ""
 
-#: inc/custom-fields.php:2169, inc/custom-shortcodes.php:418
+#: inc/custom-fields.php:2182, inc/custom-shortcodes.php:418
 msgid "Opinion/Commentary"
 msgstr ""
 
-#: inc/custom-fields.php:2170, inc/custom-shortcodes.php:419
+#: inc/custom-fields.php:2183, inc/custom-shortcodes.php:419
 msgid "Politics & Policy"
 msgstr ""
 
-#: inc/custom-fields.php:2171, inc/custom-shortcodes.php:420
+#: inc/custom-fields.php:2184, inc/custom-shortcodes.php:420
 msgid "Sports"
 msgstr ""
 
-#: inc/custom-fields.php:2180
+#: inc/custom-fields.php:2193
 msgid "Site Preferences"
 msgstr ""
 
-#: inc/custom-fields.php:2188
+#: inc/custom-fields.php:2201
 msgid "Always load comments"
 msgstr ""
 
-#: inc/custom-fields.php:2199
+#: inc/custom-fields.php:2212
 msgid "Donation Info"
 msgstr ""
 
-#: inc/custom-fields.php:2207
+#: inc/custom-fields.php:2220
 msgid "Stripe Customer ID"
 msgstr ""
 
-#: inc/custom-fields.php:2215
+#: inc/custom-fields.php:2228
 msgid "Membership Qualification Amount"
 msgstr ""
 
-#: inc/custom-fields.php:2223
+#: inc/custom-fields.php:2236
 msgid "Annual Recurring Amount"
 msgstr ""
 
-#: inc/custom-fields.php:2231
+#: inc/custom-fields.php:2244
 msgid "Coming Year Contributions"
 msgstr ""
 
-#: inc/custom-fields.php:2239
+#: inc/custom-fields.php:2252
 msgid "Prior Year Contributions"
 msgstr ""
 
-#: inc/custom-fields.php:2247
+#: inc/custom-fields.php:2260
 msgid "Sustaining Member"
 msgstr ""
 
-#: inc/custom-fields.php:2255
+#: inc/custom-fields.php:2268
 msgid "Next Partner Claim Date"
 msgstr ""
 
-#: inc/custom-fields.php:2263
+#: inc/custom-fields.php:2276
 msgid "Last Partner Claim Date"
 msgstr ""
 
-#: inc/custom-fields.php:2271
+#: inc/custom-fields.php:2284
 msgid "Exclude from current campaign"
 msgstr ""
 
-#: inc/custom-fields.php:2327
+#: inc/custom-fields.php:2340
 msgid "Sponsor Information"
 msgstr ""
 
-#: inc/custom-fields.php:2336
+#: inc/custom-fields.php:2349
 msgid "Company URL"
 msgstr ""
 
-#: inc/custom-fields.php:2344
+#: inc/custom-fields.php:2357
 msgid "Display Text"
 msgstr ""
 
-#: inc/custom-fields.php:2352
+#: inc/custom-fields.php:2365
 msgid "Twitter Username"
 msgstr ""
 
-#: inc/custom-fields.php:2355
+#: inc/custom-fields.php:2368
 msgid "Enter the Twitter username only. No need to include the @ symbol."
 msgstr ""
 
-#: inc/custom-fields.php:2393
+#: inc/custom-fields.php:2406
 msgid "Large Image"
 msgstr ""
 
-#: inc/custom-fields.php:2484, inc/custom-fields.php:2495
+#: inc/custom-fields.php:2497, inc/custom-fields.php:2508
 msgid "Speakers"
 msgstr ""
 
-#: inc/custom-fields.php:2496
+#: inc/custom-fields.php:2509
 msgid "Search for a speaker post by name here."
 msgstr ""
 
-#: inc/custom-fields.php:2556
+#: inc/custom-fields.php:2569
 msgid "Using this field will remove images that are uploaded to this event from the event's metadata, and replace them with the images in this field."
 msgstr ""
 
-#: inc/custom-fields.php:2664
+#: inc/custom-fields.php:2677
 msgid "If checked, this event will not attempt to lazy load images."
 msgstr ""
 
-#: inc/custom-fields.php:2672
+#: inc/custom-fields.php:2685
 msgid "If checked, this event will open with the HTML editor visible."
 msgstr ""
 
-#: inc/custom-fields.php:2696
+#: inc/custom-fields.php:2709
 msgid "If checked, the event title will not display."
 msgstr ""
 
-#: inc/custom-fields.php:2701
+#: inc/custom-fields.php:2714
 msgid "Remove notice(s) from display?"
 msgstr ""
 
-#: inc/custom-fields.php:2704
+#: inc/custom-fields.php:2717
 msgid "If checked, this event will not display any notices it would otherwise contain from the events plugin."
 msgstr ""
 
-#: inc/custom-fields.php:2709
+#: inc/custom-fields.php:2722
 msgid "Remove all event details from display?"
 msgstr ""
 
-#: inc/custom-fields.php:2712
+#: inc/custom-fields.php:2725
 msgid "If checked, this event will not display any of its details in their normal locations, including date, venue, and cost information."
 msgstr ""
 
-#: inc/custom-fields.php:2752
+#: inc/custom-fields.php:2765
 msgid "If checked, share buttons will not display on this event."
 msgstr ""
 
-#: inc/custom-fields.php:2760
+#: inc/custom-fields.php:2773
 msgid "If checked, this event will have horizontal share buttons above the event content, rather than vertical ones next to it, on large screens. This is similar to its mobile behavior."
 msgstr ""
 
-#: inc/custom-fields.php:2785
+#: inc/custom-fields.php:2798
 msgid "Remove whole right sidebar from this event?"
 msgstr ""
 
-#: inc/custom-fields.php:2793
+#: inc/custom-fields.php:2806
 msgid "Remove whole right sidebar from this event? (V2)"
 msgstr ""
 
-#: inc/custom-fields.php:2841
+#: inc/custom-fields.php:2854
 msgid "Directory Page Settings"
 msgstr ""
 
-#: inc/custom-fields.php:2885
+#: inc/custom-fields.php:2898
 msgid "Load this page as the directory index"
 msgstr ""
 
-#: inc/custom-fields.php:2927
+#: inc/custom-fields.php:2940
 msgid "Page Content Settings"
 msgstr ""
 
-#: inc/custom-fields.php:2938
+#: inc/custom-fields.php:2951
 msgid "Content posts to load"
 msgstr ""
 
-#: inc/custom-fields.php:2939
+#: inc/custom-fields.php:2952
 msgid "Search for an event or speaker post by title here."
 msgstr ""
 
-#: inc/custom-fields.php:2953
+#: inc/custom-fields.php:2966
 msgid "Link to individual posts?"
 msgstr ""
 
-#: inc/custom-fields.php:2956
+#: inc/custom-fields.php:2969
 msgid "If checked, each entry will link to the individual URL for that post."
 msgstr ""
 
-#: inc/custom-fields.php:2961
+#: inc/custom-fields.php:2974
 msgid "Load as page content instead of links?"
 msgstr ""
 
-#: inc/custom-fields.php:2964
+#: inc/custom-fields.php:2977
 msgid "If checked, the content for each entry will be displayed on this page. This is useful if you want to have a landing page for a single event without a session list."
 msgstr ""
 
 #. translators: 1) the object type
-#: inc/custom-fields.php:3011
+#: inc/custom-fields.php:3024
 msgid "When using this field, make sure the most important text is in the first 155 characters to ensure that Google can see it. If you do not fill it out, the %1$s page excerpt will be used."
 msgstr ""
 
 #. translators: 1) the object type
-#: inc/custom-fields.php:3021
+#: inc/custom-fields.php:3034
 msgid "Using this field will remove images that are uploaded to this %1$s page from the page's metadata, and replace them with the images in this field."
 msgstr ""
 
-#: inc/custom-fields.php:3142
+#: inc/custom-fields.php:3155
 msgid "Additional Speaker Information"
 msgstr ""
 
-#: inc/custom-fields.php:3150
+#: inc/custom-fields.php:3163
 msgid "Moderator?"
 msgstr ""
 
-#: inc/custom-fields.php:3153
+#: inc/custom-fields.php:3166
 msgid "Check the box if this speaker is a moderator."
 msgstr ""
 
-#: inc/custom-fields.php:3211
+#: inc/custom-fields.php:3224
 msgid "Using this field will remove images that are uploaded to this speaker from the speaker's metadata, and replace them with the images in this field."
 msgstr ""
 
-#: inc/custom-fields.php:3269
+#: inc/custom-fields.php:3282
 msgid "This field overrides a sponsorship message from the category or tag that contains an event."
 msgstr ""
 
-#: inc/custom-fields.php:3282
+#: inc/custom-fields.php:3295
 msgid "If checked, this event will not display any sponsorship message, regardless of its tags or categories."
 msgstr ""
 
-#: inc/custom-fields.php:3419
+#: inc/custom-fields.php:3432
 msgid "Daily"
 msgstr ""
 
-#: inc/custom-fields.php:3420
+#: inc/custom-fields.php:3433
 msgid "Greater Minnesota"
 msgstr ""
 
-#: inc/custom-fields.php:3421
+#: inc/custom-fields.php:3434
 msgid "Sunday Review"
 msgstr ""
 
-#: inc/custom-fields.php:3422
+#: inc/custom-fields.php:3435
 msgid "D.C. Memo"
 msgstr ""
 
-#: inc/custom-fields.php:3423
+#: inc/custom-fields.php:3436
 msgid "Daily Coronavirus Update"
 msgstr ""
 
-#: inc/custom-fields.php:3424
+#: inc/custom-fields.php:3437
 msgid "Artscape"
 msgstr ""
 
-#: inc/custom-fields.php:3425
+#: inc/custom-fields.php:3438
 msgid "Republication"
 msgstr ""
 
@@ -1581,16 +1585,16 @@ msgstr ""
 msgid "%1$s %2$s &ndash; %3$s, %4$s"
 msgstr ""
 
-#: inc/events.php:364
+#: inc/events.php:366
 msgid "MinnPost Event Website"
 msgstr ""
 
 #. translators: 1) url to buy a pass, 2) link text
-#: inc/events.php:448, inc/events.php:441
+#: inc/events.php:450, inc/events.php:443
 msgid "<a href=\"%1$s\" class=\"a-button\">%2$s</a>"
 msgstr ""
 
-#: inc/events.php:595
+#: inc/events.php:597
 msgid "MinnPost is a 501(c)(3) nonprofit that receives support from donors, members, foundations, advertisers and sponsors. Donors and sponsors that underwrite MinnPost events play no role in determining the content, featured guests or line of questioning."
 msgstr ""
 
@@ -1700,19 +1704,19 @@ msgid "More articles by %2$s"
 msgstr ""
 
 #. translators: Daily archive title. %s: Date.
-#: inc/template-functions.php:1609
+#: inc/template-functions.php:1672
 msgid "Daily Archives: %s"
 msgstr ""
 
-#: inc/template-functions.php:1606
+#: inc/template-functions.php:1669
 msgid "Monthly Archives: %s"
 msgstr ""
 
-#: inc/template-functions.php:1603
+#: inc/template-functions.php:1666
 msgid "Yearly Archives: %s"
 msgstr ""
 
-#: inc/template-functions.php:1752
+#: inc/template-functions.php:1815
 msgid "Here's a look at MinnPost's plans for Monday. Check www.minnpost.com for changes. All MinnPost content is available for you to republish at no charge."
 msgstr ""
 
@@ -1855,11 +1859,6 @@ msgstr ""
 #. translators: 1) speaker name
 #: template-parts/post-tribe_ext_speaker-festival.php:26
 msgid "MinnPost Festival sessions with %1$s"
-msgstr ""
-
-#. translators: 1) speaker name
-#: template-parts/post-tribe_ext_speaker-tonight.php:26
-msgid "MinnPost Tonight sessions with %1$s"
 msgstr ""
 
 #. translators: 1) speaker name

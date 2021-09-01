@@ -322,10 +322,12 @@ if ( ! function_exists( 'minnpost_largo_set_event_id' ) ) :
 					unset( $event_posts[ $key ] );
 				}
 			}
-			$first_event_id = $event_posts[0];
-			//$last_event_key = array_key_last( $event_posts );
-			//$last_event_id  = $event_posts[ $last_event_key ];
-			$post_id = $first_event_id;
+			if ( ! empty( $event_posts[0] ) ) {
+				$first_event_id = $event_posts[0];
+				//$last_event_key = array_key_last( $event_posts );
+				//$last_event_id  = $event_posts[ $last_event_key ];
+				$post_id = $first_event_id;
+			}
 		}
 		return $post_id;
 	}
@@ -446,7 +448,7 @@ if ( ! function_exists( 'minnpost_get_event_website_pass_link' ) ) :
 			$buy_event_pass = sprintf(
 				// translators: 1) url to buy a pass, 2) link text
 				__( '<a href="%1$s" class="a-button">%2$s</a>', 'minnpost-largo' ),
-				esc_url_raw( '#' ), // this will be an eventbrite link
+				esc_url_raw( 'https://www.eventbrite.com/e/minnpost-tonight-tickets-169166105375' ), // this will be an eventbrite link
 				esc_html__( 'Reserve your tickets' )
 			);
 		}

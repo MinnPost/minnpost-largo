@@ -210,25 +210,30 @@ document.addEventListener( 'DOMContentLoaded', function( event ) {
 } );
 
 var forms = document.querySelectorAll( '.m-form' );
-forms.forEach( function ( form ) {
+forms.forEach( function( form ) {
 	ValidForm( form, {
 		validationErrorParentClass: 'm-has-validation-error',
 		validationErrorClass: 'a-validation-error',
 		invalidClass: 'a-error',
 		errorPlacement: 'after'
-	} )
+	} );
 } );
 
 var form = $( '.m-form' );
+
 // listen for `invalid` events on all form inputs
-form.find( ':input' ).on( 'invalid', function () {
+form.find( ':input' ).on( 'invalid', function() {
     var input = $( this );
+
     // the first invalid element in the form
 	var first = form.find( '.a-error' ).first();
+
 	// the form item that contains it
 	var first_holder = first.parent();
+
     // only handle if this is the first invalid input
-    if (input[0] === first[0]) {
+    if ( input[0] === first[0] ) {
+
         // height of the nav bar plus some padding if there's a fixed nav
         //var navbarHeight = navbar.height() + 50
 
