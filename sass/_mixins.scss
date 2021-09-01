@@ -144,7 +144,7 @@
 // button treatment
 @mixin button( $background: brand-color(red, medium), $hover: brand-color(red, dark), $color: neutral-color(white)) {
 	display: inline-block;
-	padding: $standard-block-padding / 2;
+	padding: $standard-block-padding * 0.5;
 	border: 0;
 	margin-right: $standard-block-padding;
 	cursor: pointer;

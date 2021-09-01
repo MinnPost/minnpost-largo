@@ -37,7 +37,7 @@
 				white-space: nowrap;
 				text-decoration: none;
 				line-height: normal;
-                padding: $standard-block-padding / 2 $standard-block-padding;
+                padding: $standard-block-padding * 0.5 $standard-block-padding;
 				text-align: center;
                 width: auto;
                 font-weight: 700;
@@ -51,7 +51,7 @@
 				text-align: center;
 				
 				@include breakpoint-max( $hide-stuff-width ) {
-					padding: $standard-block-padding / 2 !important;
+					padding: $standard-block-padding * 0.5 !important;
 				}
             }
 

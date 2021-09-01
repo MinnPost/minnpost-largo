@@ -64,7 +64,7 @@
 
 		@include meta-preset( $size: 0, $bold: false, $italic: false, $line-height: 1 );
 		word-wrap: break-word;
-		padding: $standard-block-padding / 2 0;
+		padding: $standard-block-padding * 0.5 0;
 		display: flex;
 		flex-wrap: wrap;
 		flex-direction: column;

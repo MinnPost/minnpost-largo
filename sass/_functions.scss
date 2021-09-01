@@ -1,4 +1,6 @@
 // Color functions
+@use "sass:math";
+
 @function brand-color( $brand-color, $tone: "medium" ) {
 
 	@return map-get( map-get( $brand-colors, $brand-color), $tone );
@@ -20,7 +22,7 @@
  */
 @function ratio($width, $height) {
 
-	@return percentage( $height / $width);
+	@return percentage( math.div($height, $width));
 }
 
 // used this way

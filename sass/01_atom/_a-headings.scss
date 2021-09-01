@@ -53,7 +53,7 @@
 
 h2.a-membership-choose {
 	color: brand-color(red, medium);
-	margin-bottom: $standard-block-margin / 2;
+	margin-bottom: $standard-block-margin * 0.5;
 }
 
 h2.a-membership-reasons {
@@ -77,7 +77,7 @@ h4.a-donation-heading {
 	@include meta-preset( $bold: true );
 	padding: $standard-block-padding 0;
 	color: neutral-color(dark);
-	margin-bottom: $standard-block-padding / 2;
+	margin-bottom: $standard-block-padding * 0.5;
 }
 
 .a-donation-history-heading {

@@ -9,6 +9,8 @@
 // Column Setter uses the "invalid", "wrong-type", "missing", and
 // "optional" functions to build error messages.
 
+@use "sass:math";
+
 @function invalid($call, $arg2:null, $arg3:null, $arg4:null) {
 
 	@if $arg2 and $arg3 and $arg4 {
@@ -168,19 +170,19 @@ $colspan-lesson: "A 'colspan' function call must include the unitless numeric co
 		@if $target == "m"
 			and (type-of($container) == "number" and unitless($container) == true) {
 
-			@return percentage($mar / (width($container) + ($mar * 2)));
+			@return percentage(math.div($mar, width($container) + ($mar * 2)));
 		}
 
 		@if $target == "p"
 			and (type-of($container) == "number" and unitless($container) == true) {
 
-			@return percentage($pad / width($container));
+			@return percentage(math.div($pad, width($container)));
 		}
 
 		@if $target == "g"
 			and (type-of($container) == "number" and unitless($container) == true) {
 
-			@return percentage($gut / width($container));
+			@return percentage(math.div($gut, width($container)));
 		}
 
 		@if (type-of($target) != "number" or unitless($target) == false)
@@ -230,7 +232,7 @@ $colspan-lesson: "A 'colspan' function call must include the unitless numeric co
 		@return false;
 	} @else {
 
-		@return percentage(width($target) / width($container));
+		@return percentage(math.div(width($target), width($container)));
 	}
 }
 
@@ -461,12 +463,12 @@ $grid-lesson: "A 'grid' mixin call must include a valid class name, e.g. 'grid(c
 
 				@if map-has-key(map-get($breakpoints, $bp-final), margin) {
 
-					@media screen and (min-width: ((((bp-attribute($bp-final, margin) / width(bp-attribute($bp-final, cols))) * $max-width) * 2) + $max-width)) {
+					@media screen and (min-width: (((math.div(bp-attribute($bp-final, margin), width(bp-attribute($bp-final, cols))) * $max-width) * 2) + $max-width)) {
 						margin: 0 auto;
 					}
 				} @else {
 
-					@media screen and (min-width: (((($mar / width(bp-attribute($bp-final, cols))) * $max-width) * 2) + $max-width)) {
+					@media screen and (min-width: (((math.div($mar, width(bp-attribute($bp-final, cols))) * $max-width) * 2) + $max-width)) {
 						margin: 0 auto;
 					}
 				}

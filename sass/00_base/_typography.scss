@@ -149,7 +149,7 @@ input,
 textarea,
 select,
 option {
-	padding: $standard-block-padding / 2;
+	padding: $standard-block-padding * 0.5;
 
 	@include meta-preset( $size: 0, $line-height: normal );
 }
@@ -162,7 +162,7 @@ ol {
 
 	li {
 		margin: 0 0 $standard-heading-margin 0;
-		padding: 0 0 0 $standard-block-padding / 2;
+		padding: 0 0 0 $standard-block-padding * 0.5;
 
 		&:last-child {
 			margin-bottom: 0;
