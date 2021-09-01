@@ -1,6 +1,6 @@
 .a-breadcrumbs {
 	display: block;
-    margin: $standard-block-padding / 2 0;
+    margin: $standard-block-padding * 0.5 0;
 }
 
 .a-breadcrumb {
@@ -47,7 +47,7 @@
 	}
 
 	&.a-category-name {
-		padding: 0 0 0 $standard-block-padding / 2;
+		padding: 0 0 0 $standard-block-padding * 0.5;
 		margin: 0;
 	}
 
@@ -58,7 +58,7 @@ table.a-breadcrumbs {
 	margin: 0;
 
 	td {
-		padding: $standard-block-padding / 2 0;
+		padding: $standard-block-padding * 0.5 0;
 	}
 
 	span {

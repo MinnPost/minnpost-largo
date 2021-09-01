@@ -44,7 +44,7 @@ nav {
 	cursor: pointer;
 	color: neutral-color(dark);
 	background: neutral-color(white);
-	padding: $standard-block-padding / 2;
+	padding: $standard-block-padding * 0.5;
 	font-size: var(--scale1);
 	border: $border-default-style;
 	border-radius: $border-radius;
@@ -94,7 +94,7 @@ nav {
 				display: inline-flex;
 				text-decoration: none;
 				line-height: normal;
-				padding: $standard-block-padding / 2 $standard-block-padding;
+				padding: $standard-block-padding * 0.5 $standard-block-padding;
 				align-items: center;
 
 				svg {
@@ -120,7 +120,7 @@ nav {
 			cursor: pointer;
 			margin: 0;
 			border: 0;
-			padding: $standard-block-padding / 2;
+			padding: $standard-block-padding * 0.5;
 			font: inherit;
 			color: neutral-color(dark);
 			background: transparent;
@@ -130,7 +130,7 @@ nav {
 
 			span {
 				display: inline-flex;
-				padding-left: $standard-block-padding / 2;
+				padding-left: $standard-block-padding * 0.5;
 			}
 
 			&:hover,
@@ -354,7 +354,7 @@ nav {
 			padding: $standard-block-padding;
 
 			@include breakpoint-min( md ) {
-				padding: $standard-block-padding / 2 $standard-block-padding;
+				padding: $standard-block-padding * 0.5 $standard-block-padding;
 			}
 
 			&:hover,
@@ -428,7 +428,7 @@ nav {
 				a {
 
 					@include breakpoint-min( md ) {
-						padding: $standard-block-padding / 2 $standard-block-padding;
+						padding: $standard-block-padding * 0.5 $standard-block-padding;
 					}
 				}
 
@@ -627,7 +627,7 @@ nav {
 			padding: $standard-block-padding;
 
 			@include breakpoint-min( md ) {
-				padding: $standard-block-padding / 2 $standard-block-padding;
+				padding: $standard-block-padding * 0.5 $standard-block-padding;
 			}
 
 			&:hover,

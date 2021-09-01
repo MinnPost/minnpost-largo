@@ -28,7 +28,7 @@ ol {
 
 	li {
 		margin: 0 0 $standard-heading-margin 0;
-		padding: 0 0 0 $standard-block-padding / 2;
+		padding: 0 0 0 $standard-block-padding * 0.5;
 
 		&:last-child {
 			margin: 0 0 $standard-heading-margin 0;

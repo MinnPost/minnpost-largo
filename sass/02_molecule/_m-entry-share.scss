@@ -20,7 +20,7 @@
 	}
 
 	li {
-		margin-bottom: $standard-block-margin / 2;
+		margin-bottom: $standard-block-margin * 0.5;
 
 		&:last-of-type {
 			margin-bottom: 0;

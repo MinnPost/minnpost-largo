@@ -5,7 +5,7 @@
 	border: $border-default-style;
 	border-left: 0;
 	border-right: 0;
-	padding: $standard-block-padding / 2 $standard-block-padding;
+	padding: $standard-block-padding * 0.5 $standard-block-padding;
 
 	label.always-show-comments,
 	span.always-show-comments {

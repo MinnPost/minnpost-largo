@@ -1,6 +1,6 @@
 .a-comment-replyline {
 	display: flex;
-	margin-top: $standard-block-padding / 2;
+	margin-top: $standard-block-padding * 0.5;
 	color: neutral-color(medium);
 
 	@include meta-preset( $size: 0 );
@@ -10,6 +10,6 @@
 		width: $inline-icon-size;
 		height: $inline-icon-size;
 		font-size: $inline-icon-size;
-		margin-left: $standard-block-padding / 2;
+		margin-left: $standard-block-padding * 0.5;
 	}
 }

@@ -4,6 +4,8 @@
 //
 // @media screen and (max-width: 50em) { ... }
 
+@use "sass:math";
+
 @mixin breakpoint-max($bp:null) {
 	$all-is-well: true;
 
@@ -125,7 +127,7 @@
 				background-color: $background;
 				color: $color;
 				border-radius: $border-radius;
-				padding: $standard-block-padding / 2;
+				padding: $standard-block-padding * 0.5;
 
 				a {
 					cursor: pointer;
@@ -170,7 +172,7 @@
 		border: 0;
 		cursor: pointer;
 		display: inline-block;
-		padding: $standard-block-padding / 2 0;
+		padding: $standard-block-padding * 0.5 0;
 		text-decoration: none;
 		mso-padding-alt: 0;
 		width: 100%;
@@ -191,7 +193,7 @@
 @mixin column( $selector: '.o-column', $max-width: inherit, $width: 100%, $vertical-align: middle, $text-align: center, $spacing: 0, $desktop-spacing-only: 'false', $mobile-spacing-only: 'true' ) {
 	div#{$selector} {
         width: $width;
-        max-width: $max-width-email * ($max-width / 100%);
+        max-width: $max-width-email * math.div($max-width, 100%);
         display: inline-block;
 		vertical-align: $vertical-align;
 
@@ -224,7 +226,7 @@
 	table.outlook-table {
     
 		td.outlook-inner-padding {
-			width: $max-width-email * ($max-width / 100%);
+			width: $max-width-email * math.div($max-width, 100%);
 			vertical-align: $vertical-align;
 
 			@if $mobile-spacing-only == 'true' {
