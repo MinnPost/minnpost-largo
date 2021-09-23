@@ -76,7 +76,7 @@
 								'class'  => 'a-excerpt-thumb',
 								'align'  => 'left',
 								'width'  => 190,
-								'height' => 9999,
+								'height' => 126, // leaving the height at 9999 instead of a fixed height will mess us up.
 							),
 							'',
 							false
