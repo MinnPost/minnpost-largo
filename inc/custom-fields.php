@@ -138,8 +138,8 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'type'       => 'wysiwyg',
 				'options'    => array(
 					'media_buttons' => false, // show insert/upload button(s)
-					'textarea_rows' => 5,
-					'teeny'         => true, // output the minimal editor config used in Press This
+					'textarea_rows' => 15,
+					'teeny'         => false, // keep the formatting toolbar and such
 				),
 				'desc'       => __( 'Use this field if you need a longer teaser or formatting in the teaser. Note: this will not be displayed in the "preview text" that is shown after the subject line in some email clients. You still need to fill out the "Preview and teaser text" field above to have preview text.', 'minnpost-largo' ),
 				'attributes' => array(
