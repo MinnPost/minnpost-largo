@@ -202,42 +202,6 @@
 						</div>
 					<?php endif; ?>
 
-					<?php
-					// upcoming stories section
-					$upcoming = get_post_meta( get_the_ID(), '_mp_newsletter_upcoming', true );
-					$upcoming = apply_filters( 'the_content', $upcoming );
-					if ( '' !== $upcoming ) :
-						?>
-					<div class="o-single-column o-newsletter-upcoming">
-						[outlook]
-						<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
-							<tr>
-								<td align="center" class="outlook-outer-padding">
-									<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
-										<tr>
-											<td class="outlook-inner-padding">
-						[/outlook]
-						<div class="item-contents">
-							<div class="o-row m-upcoming">
-								<?php
-								$upcoming = apply_filters( 'format_email_content', $upcoming );
-								echo $upcoming;
-								?>
-							</div>
-						</div>
-						[outlook]
-											</td>
-										</tr>
-									</table>
-								</td>
-							</tr>
-						</table>
-						[/outlook]
-					</div>
-						<?php
-					endif;
-					?>
-
 					<?php do_action( 'wp_message_inserter', 'email_before_bios', 'email' ); ?>
 
 					<?php do_action( 'wp_message_inserter', 'email_bottom', 'email' ); ?>

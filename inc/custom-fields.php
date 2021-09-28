@@ -583,7 +583,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'post_search_ajax'
 			)
 		);
-		$republication_section->add_field(
+		/*$republication_section->add_field(
 			array(
 				'name'        => __( 'Preview of Upcoming Stories', 'minnpost-largo' ),
 				'id'          => $prefix . 'upcoming',
@@ -600,7 +600,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				),
 				'after_field' => '<input name="asdf" type="hidden" data-conditional-id="' . $prefix . 'type' . '" data-conditional-value="republication">', // hack to fix the condtional display
 			)
-		);
+		);*/
 
 		// legacy
 		$legacy_newsletter_posts = new_cmb2_box(
