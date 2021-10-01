@@ -89,6 +89,18 @@ if ( ! function_exists( 'minnpost_largo_remove_tribe_styles' ) ) :
 	}
 endif;
 
+
+add_filter( 'js_do_concat', 'my_vip_js_concat_filter', 10, 2 );
+// do not include my-script-handle in concatenated bundles
+function my_vip_js_concat_filter( $do_concat, $handle ) {
+	if ( is_admin() ) {
+		if ( 'tribe-events-dynamic' === $handle ) {
+			return false;
+		}
+	}
+	return $do_concat;
+}
+
 /**
 * Filter to stop enqueing event stuff on the front end.
 *
