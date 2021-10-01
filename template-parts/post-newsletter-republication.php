@@ -6,108 +6,115 @@
  *
  * @package MinnPost Largo
  */
-
-if ( ( $current_post + 1 ) === (int) $found_posts ) {
-	$label = ' story-last';
-} elseif ( ( $current_post + 1 ) == 1 ) {
-	$label = ' story-first';
-} else {
-	$label = '';
-}
-
-if ( ' story-first' === $label ) {
-	$end_styles = ' Margin-top: 18px;';
-} elseif ( ' story-last' === $label ) {
-	$end_styles = ' padding-bottom: 18px;Margin-bottom: 0;';
-} else {
-	$end_styles = '';
-}
-
-if ( $is_republishable_story ) : ?>
-<tr>
-	<td class="one-column content story" style="border-collapse: collapse; font-size: 0; Margin: 0; padding: 0; text-align: center" align="center">
-		<!--[if (gte mso 9)|(IE)]>
-			<table cellpadding="0" cellspacing="0" width="100%">
+?>
+<div class="m-post m-post-newsletter m-post-newsletter-<?php echo $args['newsletter_type']; ?><?php echo isset( $args['extra_class'] ) ? $args['extra_class'] : ''; ?>">
+	[outlook]
+	<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
+		<tr>
+			<td align="center" class="outlook-outer-padding">
+				<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
+					<tr>
+						<td class="outlook-inner-padding">
+	[/outlook]
+	<div class="post-contents">
+		<?php if ( 'full' === $args['image_size'] ) : ?>
+			<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="m-post-image m-post-image-<?php echo $args['image_size']; ?>">
 				<tr>
-					<td width="280" valign="middle">
-		<![endif]-->
-<?php endif; ?>
-		<div class="story story-<?php echo $current_post + 1; ?><?php echo $label; ?>" style="display: inline-block; vertical-align: middle; width: 100%;">
-			<div class="story-inner" style="border-bottom-color: #cccccf; border-bottom-style: solid; border-bottom-width: 2px; Margin-bottom: 18px; padding-bottom: 18px;<?php echo $end_styles; ?>">
-				<?php if ( 'on' === $show_republishable_departments ) : ?>
-					<h4 style="color: #555556; display: block; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 10px; font-weight: normal; line-height: 100%; Margin: 0 0 5px; text-align: left; text-transform: uppercase" align="left"><?php echo minnpost_get_category_name(); ?></h4>
-				<?php endif; ?>
-				<h3 style="color: #1a1818; display: block; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 22px; font-weight: bold; line-height: 1.05; Margin: 0 0 10px; padding: 0; text-align: left" align="left">
-					<a href="<?php echo esc_url( get_permalink() ); ?>" style="color: #1A1818; text-decoration: none"><?php echo get_the_title(); ?></a>
-				</h3>
-				<table class="bodyTable" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left" cellspacing="0" cellpadding="0">
-					<tbody>
-						<tr>
-							<td style="border-collapse: collapse; Margin: 0; padding: 0" valign="top">
-								<?php
-								if ( 'on' === $show_image ) {
-									minnpost_post_image(
-										'newsletter-thumbnail',
-										array(
-											'title'  => get_the_title(),
-											'style'  => 'border: 0 none; display: block; Float: left; height: auto; line-height: 100%; Margin: 0 10px 5px 0; outline: none; text-decoration: none;',
-											'class'  => 'thumb',
-											'align'  => 'left',
-											'width'  => 80,
-											'height' => 60,
-										),
-										'',
-										false
-									);
-								}
-								?>
-								<h5 style="color: #1A1818; display: block; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 10px; font-weight: bold; line-height: 100%; Margin: 0 0 5px; text-align: left; text-transform: uppercase" align="left"><?php echo preg_replace( '/(<a\b[^><]*)>/i', '$1 style="color: #1A1818; text-decoration: none;">', preg_replace( '/\s*title\s*=\s*(["\']).*?\1/', '', minnpost_get_posted_by() ) ); ?>
-								</h5>
-								<div>
-									<p style="font-family: Georgia, 'Times New Roman', Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 10px; padding: 0">
-									<?php echo strip_tags( get_the_excerpt() ); ?>
-									</p>
-									<p style="font-family: Helvetica, Arial, sans-serif; font-size: 16px; line-height: 20.787px; Margin: 0; padding: 0;" class="read-or-republish">
-										<?php if ( class_exists( 'Republication_Tracker_Tool' ) ) : ?>
-											<a href="<?php echo esc_url( get_permalink() ); ?>" style="color:#801018;text-decoration: none;font-weight: bold;">Republish story</a>&nbsp;|&nbsp;
-										<?php endif; ?><a href="<?php echo esc_url( get_permalink() ); ?>" style="color:#801018;text-decoration: none;font-weight: normal;<?php if ( ! class_exists( 'Republication_Tracker_Tool' ) ) : ?>font-weight: bold;<?php endif; ?>">Read story</a>
-									</p>
-								</div>
-							</td>
-						</tr>
-					</tbody>
-				</table>
-			</div>
-		</div>
-<?php if ( $is_republishable_story ) : ?>
-		<!-- end .story -->
-		<!--[if (gte mso 9)|(IE)]>
-			</td><td width="20">&nbsp;</td><td width="50%" valign="middle">
-		<![endif]-->
-		<div class="column ad" style="display: inline-block; Margin-right: 0; max-width: 300px; vertical-align: middle; width: 100%">
-			<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
-				<tr>
-					<td class="inner" style="border-collapse: collapse; Margin: 0; padding: 0">
-						<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
-							<tr>
-								<td style="border-collapse: collapse; Margin: 0; padding: 0">
-									<?php
-									if ( isset( $newsletter_ads[ "$current_post" ] ) && ! empty( $newsletter_ads[ "$current_post" ] ) ) {
-										echo $newsletter_ads[ "$current_post" ];
-									}
-									?>
-								</td>
-							</tr>
-						</table>
+					<td>
+						<?php
+						$attributes = array(
+							'content_width'  => 600,
+							'content_height' => 400,
+						);
+						if ( ! empty( get_minnpost_post_image( $args['image_size'], $attributes ) ) ) :
+							?>
+							<a href="<?php echo get_the_permalink(); ?>"><?php minnpost_post_image( $args['image_size'], $attributes ); ?></a>
+						<?php elseif ( ! empty( minnpost_largo_get_social_images() ) ) : ?>
+							<?php
+							$meta_images = minnpost_largo_get_social_images( $id );
+							$image_id    = array_key_first( $meta_images );
+							$image_url   = wp_get_attachment_url( $image_id );
+							if ( function_exists( 'get_minnpost_modified_image_url' ) ) {
+								$image_url = get_minnpost_modified_image_url( $image_url, $attributes );
+							}
+							?>
+							<a href="<?php echo get_the_permalink(); ?>"><?php echo minnpost_largo_manual_image_tag( $image_id, $image_url, $attributes, 'newsletter' ); ?></a>
+						<?php endif; ?>
 					</td>
 				</tr>
 			</table>
-		</div>
-		<!--[if (gte mso 9)|(IE)]>
+		<?php endif; ?>
+		<?php if ( true === $args['show_category'] ) : ?>
+			[not-outlook]
+				<?php minnpost_category_breadcrumb_newsletter(); ?>
+			[/not-outlook]
+			[outlook]
+			<?php minnpost_category_breadcrumb_newsletter_outlook(); ?>
+			[/outlook]
+		<?php endif; ?>
+		<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="h3 a-entry-title">
+			<tr>
+				<td>
+					<h3><a href="<?php echo get_the_permalink(); ?>"><?php echo minnpost_newsletter_get_entry_title(); ?></a></h3>
 				</td>
 			</tr>
 		</table>
-		<![endif]-->
-	</td> <!-- end .two-column.content.story -->
-</tr> <!-- end row -->
-<?php endif; ?>
+		<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="m-entry-excerpt">
+			<tr>
+				<td>
+					[outlook]
+						<table role="presentation" width="92" cellpadding="0" cellspacing="0" class="outlook-table" style="width: 92px; max-width: 92px; Float: left;" align="left">
+							<tr>
+								<td valign="top" align="left">
+					[/outlook]
+					<?php
+					if ( 'thumb' === $args['image_size'] ) {
+						minnpost_post_image(
+							'newsletter-thumbnail',
+							array(
+								'title'  => get_the_title(),
+								'class'  => 'a-excerpt-thumb',
+								'align'  => 'left',
+								'width'  => 80,
+								'height' => 60,
+							),
+							'',
+							false
+						);
+					}
+					?>
+					[outlook]
+						</td>
+							</tr>
+								</table>
+					[/outlook]
+					<?php echo minnpost_newsletter_get_entry_excerpt(); ?>
+				</td>
+			</tr>
+		</table>
+		<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="m-entry-byline">
+			<tr>
+				<td>
+					<?php minnpost_posted_by( get_the_ID(), true, false ); ?>
+				</td>
+			</tr>
+		</table>
+		<?php if ( class_exists( 'Republication_Tracker_Tool' ) ) : ?>
+			<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="h3 a-entry-republish">
+				<tr>
+					<td>
+						<h3><a href="<?php echo get_the_permalink() . '#show-republish'; ?>"><?php echo esc_html__( 'Republish story', 'minnpost-largo' ); ?></a></h3>
+					</td>
+				</tr>
+			</table>
+		<?php endif; ?>
+	</div>
+	[outlook]
+						</td>
+					</tr>
+				</table>
+			</td>
+		</tr>
+	</table>
+	[/outlook]
+</div>

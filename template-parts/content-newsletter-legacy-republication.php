@@ -148,7 +148,7 @@
 
 		<?php
 		// default value for the republication newsletter summary
-		$content = 'Here\'s a look at MinnPost\'s plans for Monday. Check www.minnpost.com for changes. All MinnPost content is available for you to republish at no charge.';
+		$content = minnpost_get_republication_newsletter_teaser();
 		// allow it to be overridden by the post content field
 		if ( '' !== get_the_content() ) {
 			$content = get_the_content();
@@ -200,7 +200,7 @@
 				$republishable_query->the_post();
 				set_query_var( 'current_post', $republishable_query->current_post );
 				set_query_var( 'is_republishable_story', true );
-				get_template_part( 'template-parts/post-newsletter', $newsletter_type );
+				get_template_part( 'template-parts/post-newsletter-legacy', $newsletter_type );
 			}
 			wp_reset_postdata();
 		}

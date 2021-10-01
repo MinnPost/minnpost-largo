@@ -69,36 +69,28 @@ if ( function_exists( 'create_newsletter' ) ) :
 		);
 		$newsletter_setup->add_field(
 			array(
+				'name'       => __( 'Display date, welcome message, and preview text or teaser instead of default republication teaser?', 'minnpost-largo' ),
+				'id'         => $prefix . 'republication_newsletter_override_teaser',
+				'type'       => 'checkbox',
+				'desc'       => sprintf(
+					// translators: 1) the default republication teaser.
+					'<p>' . esc_html__( 'The default republication teaser and preview text is: ', 'minnpost-largo' ) . '</p>' . '<p>%1$s</p>' . '<p>' . esc_html__( 'If you check this box, this edition of the republication newsletter will instead use the preview text and teaser settings that the other newsletter types use.', 'minnpost-largo' ) . '</p>',
+					( function_exists( 'minnpost_get_republication_newsletter_teaser' ) ? minnpost_get_republication_newsletter_teaser() : '' )
+				),
+				'attributes' => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => 'republication',
+				),
+			)
+		);
+		$newsletter_setup->add_field(
+			array(
 				'name'         => __( 'Preview Text', 'minnpost-largo' ),
 				'id'           => $prefix . 'preview_text',
 				'type'         => 'textarea_small',
 				'char_counter' => true,
 				'char_max'     => 140,
 				'desc'         => __( 'This text is displayed between the date and the "Welcome to..." message at the top of the newsletter. It is also displayed after the subject line in some email clients. You can also add the text for those clients only by using the Preview Text field when you add the Subject Line to your campaign in Mailchimp. It is limited to 140 characters.<br><br>If you need the newsletter teaser text to be longer or have special formatting, see "Teaser options" below.', 'minnpost-largo' ),
-			)
-		);
-		$newsletter_setup->add_field(
-			array(
-				'name'       => __( 'Show Main Category for Republishable Stories?', 'minnpost-largo' ),
-				'id'         => $prefix . 'show_department_for_republish_stories',
-				'type'       => 'checkbox',
-				'desc'       => '',
-				'attributes' => array(
-					'data-conditional-id'    => $prefix . 'type',
-					'data-conditional-value' => 'republication',
-				),
-			)
-		);
-		$newsletter_setup->add_field(
-			array(
-				'name'       => __( 'Show Thumbnail Image for Republishable Stories?', 'minnpost-largo' ),
-				'id'         => $prefix . 'show_image_for_republish_stories',
-				'type'       => 'checkbox',
-				'desc'       => '',
-				'attributes' => array(
-					'data-conditional-id'    => $prefix . 'type',
-					'data-conditional-value' => 'republication',
-				),
 			)
 		);
 		$newsletter_setup->add_field(
@@ -111,6 +103,19 @@ if ( function_exists( 'create_newsletter' ) ) :
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => 'daily_coronavirus',
 				),
+			)
+		);
+
+		/**
+		 * Teaser options
+		 */
+		$newsletter_teaser_options = new_cmb2_box(
+			array(
+				'id'           => $prefix . 'teaser_options',
+				'title'        => __( 'Teaser Options', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				'context'      => 'after_title',
+				'closed'       => true,
 			)
 		);
 
@@ -528,6 +533,75 @@ if ( function_exists( 'create_newsletter' ) ) :
 			)
 		);
 
+		$republication_section = new_cmb2_box(
+			array(
+				'id'           => $prefix . 'republication_section',
+				'title'        => __( 'Republication Newsletter Content', 'minnpost-largo' ),
+				'object_types' => array( $object_type ), // Post type
+				'context'      => 'after_title',
+				'priority'     => 'high',
+				'show_names'   => true, // Show field names on the left
+				'closed'       => true,
+				'attributes'   => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => wp_json_encode( array( 'republication' ) ),
+				),
+			)
+		);
+		$republication_section->add_field(
+			array(
+				'name'             => __( 'Image Size', 'minnpost-largo' ),
+				'id'               => $prefix . 'image_for_republish_stories',
+				'type'             => 'select',
+				'show_option_none' => false,
+				'desc'             => __( 'The value for this field will be used for image placement on republication newsletters.', 'minnpost-largo' ),
+				'default'          => 'thumb',
+				'options'          => array(
+					'none'       => __( 'No images', 'minnpost-largo' ),
+					'thumb'      => __( 'Thumbnail on all stories', 'minnpost-largo' ),
+					'full'       => __( 'Large on all stories', 'minnpost-largo' ),
+					'full-first' => __( 'Large on the first story, none on subsequent stories', 'minnpost-largo' ),
+				),
+			)
+		);
+		$republication_section->add_field(
+			minnpost_post_search_field(
+				array(
+					'name'       => __( 'Republishable Stories', 'minnpost-largo' ),
+					'desc'       => __( 'Search for a post here.', 'minnpost-largo' ),
+					'id'         => $prefix . 'republishable_posts',
+					'query_args' => array(
+						'orderby'     => 'modified',
+						'order'       => 'DESC',
+						'post_status' => 'any',
+					),
+					'attributes' => array(
+						'data-conditional-id'    => $prefix . 'type',
+						'data-conditional-value' => 'republication',
+					),
+				),
+				'post_search_ajax'
+			)
+		);
+		/*$republication_section->add_field(
+			array(
+				'name'        => __( 'Preview of Upcoming Stories', 'minnpost-largo' ),
+				'id'          => $prefix . 'upcoming',
+				'type'        => 'wysiwyg',
+				'options'     => array(
+					'media_buttons' => false, // show insert/upload button(s)
+					'textarea_rows' => 5,
+					'teeny'         => true, // output the minimal editor config used in Press This
+				),
+				'desc'        => __( 'Use this to describe upcoming stories for this edition.', 'minnpost-largo' ),
+				'attributes'  => array(
+					'data-conditional-id'    => $prefix . 'type',
+					'data-conditional-value' => 'republication',
+				),
+				'after_field' => '<input name="asdf" type="hidden" data-conditional-id="' . $prefix . 'type' . '" data-conditional-value="republication">', // hack to fix the condtional display
+			)
+		);*/
+
 		// legacy
 		$legacy_newsletter_posts = new_cmb2_box(
 			array(
@@ -599,43 +673,6 @@ if ( function_exists( 'create_newsletter' ) ) :
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
 				),
-			)
-		);
-		$legacy_newsletter_posts->add_field(
-			minnpost_post_search_field(
-				array(
-					'name'       => __( 'Republishable Stories', 'minnpost-largo' ),
-					'desc'       => __( 'Search for a post here.', 'minnpost-largo' ),
-					'id'         => $prefix . 'republishable_posts',
-					'query_args' => array(
-						'orderby'     => 'modified',
-						'order'       => 'DESC',
-						'post_status' => 'any',
-					),
-					'attributes' => array(
-						'data-conditional-id'    => $prefix . 'type',
-						'data-conditional-value' => 'republication',
-					),
-				),
-				'post_search_ajax'
-			)
-		);
-		$legacy_newsletter_posts->add_field(
-			array(
-				'name'        => __( 'Preview of Upcoming Stories', 'minnpost-largo' ),
-				'id'          => $prefix . 'upcoming',
-				'type'        => 'wysiwyg',
-				'options'     => array(
-					'media_buttons' => false, // show insert/upload button(s)
-					'textarea_rows' => 5,
-					'teeny'         => true, // output the minimal editor config used in Press This
-				),
-				'desc'        => __( 'Use this to describe upcoming stories for this edition.', 'minnpost-largo' ),
-				'attributes'  => array(
-					'data-conditional-id'    => $prefix . 'type',
-					'data-conditional-value' => 'republication',
-				),
-				'after_field' => '<input name="asdf" type="hidden" data-conditional-id="' . $prefix . 'type' . '" data-conditional-value="republication">', // hack to fix the condtional display
 			)
 		);
 	}
