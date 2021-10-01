@@ -90,6 +90,28 @@ if ( ! function_exists( 'minnpost_largo_remove_tribe_styles' ) ) :
 endif;
 
 /**
+* Filter to stop concatenating a JavaScript on VIP Go environments.
+*
+* @param bool $do_concat
+* @param string $handle
+* @return bool $do_concat
+* @see https://wordpress.org/support/topic/add-another-organizer-button-does-not-work-in-hosted-environment/
+*
+*/
+if ( ! function_exists( 'minnpost_largo_vip_js_concat_filter' ) ) :
+	add_filter( 'js_do_concat', 'minnpost_largo_vip_js_concat_filter', 10, 2 );
+	function minnpost_largo_vip_js_concat_filter( $do_concat, $handle ) {
+		if ( is_admin() ) {
+			// do not include tribe-events-dynamic in concatenated bundles.
+			if ( 'tribe-events-dynamic' === $handle ) {
+				return false;
+			}
+		}
+		return $do_concat;
+	}
+endif;
+
+/**
 * Filter to stop enqueing event stuff on the front end.
 *
 * @param bool $should_enqueue_frontend
