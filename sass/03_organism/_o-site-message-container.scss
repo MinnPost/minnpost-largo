@@ -55,6 +55,11 @@
 		}
 	}
 
+	// below article body only
+	&.wp-message-inserter-message-region-below_article_body {
+		@include body-preset( $size: 0 );
+	}
+
 	// banner wrapper
 	.m-wp-insert-message-item-banner {
 
