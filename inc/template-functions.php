@@ -1812,7 +1812,11 @@ if ( ! function_exists( 'minnpost_get_republication_newsletter_teaser' ) ) :
 		if ( '' === $post_id ) {
 			$post_id = get_the_ID();
 		}
-		$default_teaser = esc_html__( "Here's a look at MinnPost's plans for Monday. Check www.minnpost.com for changes. All MinnPost content is available for you to republish at no charge.", 'minnpost-largo' );
+		$default_teaser = sprintf(
+			// translators: 1) link to the republication guidelines
+			esc_html__( 'MinnPost is pleased to make the following stories available free to news media in Minnesota. The byline, tagline and photo and graphics credits must accompany all uses of the story. For more information, see MinnPost\'s %1$s.', 'minnpost-largo' ),
+			'<a href="' . site_url( '/republication-policy/' ) . '">full republishing guidelines</a>'
+		);
 		return $default_teaser;
 	}
 endif;
