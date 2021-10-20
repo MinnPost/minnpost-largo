@@ -25,10 +25,7 @@ $session_count_operator = isset( $message['meta'][ $prefix . 'operator_session' 
 
 			<?php
 			// Banner BG Setup
-			$bgcolor     = isset( $screen_size[ $prefix . 'banner_bgcolor' ] ) ? 'linear-gradient(
-				' . $screen_size[ $prefix . 'banner_bgcolor' ] . ',
-				' . $screen_size[ $prefix . 'banner_bgcolor' ] . '
-			)' : '';
+			$bgcolor     = isset( $screen_size[ $prefix . 'banner_bgcolor' ] ) ? $screen_size[ $prefix . 'banner_bgcolor' ] : '';
 			$banner_bg   = isset( $screen_size[ $prefix . 'banner_bgimage' ] ) ? 'background: ' . $bgcolor . ', url(' . $screen_size[ $prefix . 'banner_bgimage' ] . ') center center no-repeat; background-size: cover;' : 'background: ' . $bgcolor . ';';
 			$banner_text = isset( $screen_size[ $prefix . 'banner_textcolor' ] ) ? 'color: ' . $screen_size[ $prefix . 'banner_textcolor' ] . ';' : '';
 
