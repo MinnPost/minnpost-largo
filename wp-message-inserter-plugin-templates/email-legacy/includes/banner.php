@@ -49,11 +49,6 @@ $session_count_operator = isset( $message['meta'][ $prefix . 'operator_session' 
 
 			?>
 
-			<!--[if (gte mso 9)|(IE)]>
-				<table cellpadding="0" cellspacing="0" width="100%">
-					<tr>
-						<td width="100%" valign="bottom" style="<?php echo $banner_style; ?>">
-			<![endif]-->
 			<div class="m-wp-insert-message-item m-wp-insert-message-item-<?php echo $key; ?> m-wp-insert-message-item-<?php echo $type; ?><?php echo ( 'page' === $banner_max_width ) ? ' banner-width-page' : ''; ?>" style="padding: 15px 10px 5px 10px; Margin: 15px 0; border: 1px solid #cccccf; <?php echo $banner_style; ?>">
 
 				<?php if ( 'dualcol' === $screen_size[ $prefix . 'banner_layout' ] ) : ?>
@@ -82,11 +77,6 @@ $session_count_operator = isset( $message['meta'][ $prefix . 'operator_session' 
 					</div>
 				<?php endif; ?>
 			</div>
-			<!--[if (gte mso 9)|(IE)]>
-				</td>
-			</tr>
-		</table>
-		<![endif]-->
 		<?php endforeach; ?>
 		</div>
 		<!--[if (gte mso 9)|(IE)]>
