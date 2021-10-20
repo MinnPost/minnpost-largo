@@ -54,7 +54,7 @@
 							<table style="border-collapse: collapse; border-spacing: 0; color: #<?php echo $button_textcolor; ?>; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0" cellspacing="0" cellpadding="0">
 								<tbody>
 									<tr>
-										<td style="-moz-border-radius: 4px; -webkit-border-radius: 4px; background: <?php echo $button_bgcolor; ?> border-collapse: collapse; border-radius:4px; Margin: 0; padding: 0" bgcolor="<?php echo $button_bgcolor; ?>" align="center">
+										<td style="-moz-border-radius: 4px; -webkit-border-radius: 4px; background: <?php echo $button_bgcolor; ?> border-collapse: collapse; border-radius:4px; Margin: 0; padding: 0; color: <?php echo $button_textcolor; ?>" bgcolor="<?php echo $button_bgcolor; ?>" align="center">
 											<?php echo $value; ?>
 										</td>
 									</tr>
