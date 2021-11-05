@@ -90,7 +90,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'type'         => 'textarea_small',
 				'char_counter' => true,
 				'char_max'     => 140,
-				'desc'         => __( 'This text is displayed between the date and the "Welcome to..." message at the top of the newsletter. It is also displayed after the subject line in some email clients. You can also add the text for those clients only by using the Preview Text field when you add the Subject Line to your campaign in Mailchimp. It is limited to 140 characters.<br><br>If you need the newsletter teaser text to be longer or have special formatting, see "Teaser options" below.', 'minnpost-largo' ),
+				'desc'         => __( 'This text is displayed between the date and the "Welcome to..." message at the top of the newsletter. It is also displayed after the subject line in some email clients. You can also add the text for those clients only by using the Preview Text field when you add the Subject Line to your campaign in Mailchimp. It is limited to 140 characters.<br><br>If you need the newsletter teaser text to be longer or have special formatting, see "Introduction" below.', 'minnpost-largo' ),
 			)
 		);
 		$newsletter_setup->add_field(
@@ -107,33 +107,20 @@ if ( function_exists( 'create_newsletter' ) ) :
 		);
 
 		/**
-		 * Teaser options
+		 * Introduction
 		 */
-		$newsletter_teaser_options = new_cmb2_box(
+		$newsletter_introduction_options = new_cmb2_box(
 			array(
-				'id'           => $prefix . 'teaser_options',
-				'title'        => __( 'Teaser Options', 'minnpost-largo' ),
+				'id'           => $prefix . 'introduction',
+				'title'        => __( 'Introduction', 'minnpost-largo' ),
 				'object_types' => array( $object_type ),
 				'context'      => 'after_title',
-				'closed'       => true,
+				'closed'       => false,
 			)
 		);
-
-		/**
-		 * Teaser options
-		 */
-		$newsletter_teaser_options = new_cmb2_box(
+		$newsletter_introduction_options->add_field(
 			array(
-				'id'           => $prefix . 'teaser_options',
-				'title'        => __( 'Teaser Options', 'minnpost-largo' ),
-				'object_types' => array( $object_type ),
-				'context'      => 'after_title',
-				'closed'       => true,
-			)
-		);
-		$newsletter_teaser_options->add_field(
-			array(
-				'name'       => __( 'Extended Newsletter Teaser', 'minnpost-largo' ),
+				'name'       => __( 'Intro Text', 'minnpost-largo' ),
 				'id'         => $prefix . 'newsletter_teaser',
 				'type'       => 'wysiwyg',
 				'options'    => array(
@@ -141,14 +128,14 @@ if ( function_exists( 'create_newsletter' ) ) :
 					'textarea_rows' => 15,
 					'teeny'         => false, // keep the formatting toolbar and such
 				),
-				'desc'       => __( 'Use this field if you need a longer teaser or formatting in the teaser. Note: this will not be displayed in the "preview text" that is shown after the subject line in some email clients. You still need to fill out the "Preview and teaser text" field above to have preview text.', 'minnpost-largo' ),
+				'desc'       => __( 'Use this field if you need a longer introduction or formatting in the introduction. Note: this will not be displayed in the "preview text" that is shown after the subject line in some email clients. You still need to fill out the "Preview Text" field above to have preview text.', 'minnpost-largo' ),
 				'attributes' => array(
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review', 'artscape' ) ),
 				),
 			)
 		);
-		$newsletter_teaser_options->add_field(
+		$newsletter_introduction_options->add_field(
 			array(
 				'name'       => __( 'Do Not Add Automatic Date and Newsletter Type Text', 'minnpost-largo' ),
 				'id'         => $prefix . 'do_not_show_automatic_teaser_items',
@@ -160,12 +147,12 @@ if ( function_exists( 'create_newsletter' ) ) :
 				),
 			)
 		);
-		$newsletter_teaser_options->add_field(
+		$newsletter_introduction_options->add_field(
 			array(
 				'name'       => __( 'Do Not Show Any Teaser Text', 'minnpost-largo' ),
 				'id'         => $prefix . 'do_not_show_teaser_text',
 				'type'       => 'checkbox',
-				'desc'       => __( 'If you check this box, no teaser text will be shown in the body of the email. If there is a preview text value, it will only be shown before the email is opened.', 'minnpost-largo' ),
+				'desc'       => __( 'If you check this box, no intro text will be shown in the body of the email. If there is a preview text value, it will only be shown before the email is opened.', 'minnpost-largo' ),
 				'attributes' => array(
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
