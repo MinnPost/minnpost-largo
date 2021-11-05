@@ -140,7 +140,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'name'       => __( 'Do Not Add Automatic Date and Newsletter Type Text', 'minnpost-largo' ),
 				'id'         => $prefix . 'do_not_show_automatic_teaser_items',
 				'type'       => 'checkbox',
-				'desc'       => __( 'If you check this box, the newsletter teaser area will not contain an automatic date, and will not state what type of newsletter this is.', 'minnpost-largo' ),
+				'desc'       => __( 'If you check this box, the newsletter introduction will not contain an automatic date, and will not state what type of newsletter this is.', 'minnpost-largo' ),
 				'attributes' => array(
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
