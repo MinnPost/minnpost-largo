@@ -216,46 +216,47 @@ if ( ! function_exists( 'minnpost_exclude_from_search' ) ) :
 	add_action( 'registered_post_type', 'minnpost_exclude_from_search', 10, 2 );
 	function minnpost_exclude_from_search( $post_type, $args ) {
 
+		// public types
+		//$public_types = get_post_types( array( 'public' => true ), 'names' );
+		//error_log( 'public types is ' . print_r( $public_types, true ) );
+
 		/* default value with non-public types enabled is:
 		$post_types = array(
-			'post'                => 'post',
-			'page'                => 'page',
-			'attachment'          => 'attachment',
-			'revision'            => 'revision',
-			'nav_menu_item'       => 'nav_menu_item',
-			'custom_css'          => 'custom_css',
-			'customize_changeset' => 'customize_changeset',
-			'oembed_cache'        => 'oembed_cache',
-			'user_request'        => 'user_request',
-			'partner'             => 'partner',
-			'partner_offer'       => 'partner_offer',
-			'message'             => 'message',
-			'popup'               => 'popup',
-			'popup_theme'         => 'popup_theme',
-			'scheduled-action'    => 'scheduled-action',
-			'acm-code'            => 'acm-code',
-			'guest-author'        => 'guest-author',
-			'cr3ativsponsor'      => 'cr3ativsponsor',
-			'wp_log'              => 'wp_log',
-			'tribe_venue'         => 'tribe_venue',
-			'tribe_organizer'     => 'tribe_organizer',
-			'tribe_events'        => 'tribe_events',
-			'tribe-ea-record'     => 'tribe-ea-record',
-			'deleted_event'       => 'deleted_event',
-			'jp_pay_order'        => 'jp_pay_order',
-			'jp_pay_product'      => 'jp_pay_product',
-			'newsletter'          => 'newsletter',
+			[post] => post
+			[page] => page
+			[attachment] => attachment
+			[thank_you_gift] => thank_you_gift
+			[partner] => partner
+			[partner_offer] => partner_offer
+			[message] => message
+			[guest-author] => guest-author
+			[cr3ativsponsor] => cr3ativsponsor
+			[wp_log] => wp_log
+			[vip-legacy-redirect] => vip-legacy-redirect
+			[tribe_events] => tribe_events
+			[tribe_ext_speaker] => tribe_ext_speaker
+			[newsletter] => newsletter
+			[festival] => festival
+			[tonight] => tonight
+			[saswp_reviews] => saswp_reviews
+			[saswp-collections] => saswp-collections
 		);
 		*/
 
 		$types_to_exclude = array(
 			'attachment',
+			'thank_you_gift',
 			'partner',
 			'partner_offer',
 			'popup',
+			'message',
 			'guest-author',
 			'cr3ativsponsor',
-			'message',
+			'wp_log',
+			'vip-legacy-redirect',
+			'newsletter',
+			'saswp_reviews',
+			'saswp-collections',
 			'nav_menu_item',
 		);
 
