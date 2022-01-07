@@ -146,6 +146,11 @@ require get_theme_file_path() . '/inc/robots.php';
 require get_theme_file_path() . '/inc/events.php';
 
 /**
+ * Elasticsearch related methods
+ */
+require get_theme_file_path() . '/inc/elasticsearch.php';
+
+/**
  * Jetpack related methods
  */
 require get_theme_file_path() . '/inc/jetpack.php';
