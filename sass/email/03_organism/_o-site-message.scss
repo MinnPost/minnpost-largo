@@ -1,0 +1,42 @@
+.o-rows.o-site-message,
+.o-columns.o-site-message {
+    border-radius: $border-radius;
+    margin: 0 0 $standard-block-margin 0;
+
+    &.wp-message-inserter-message-region-email_middle {
+        margin: 0 0 $standard-block-margin 0;
+    }
+
+    &.o-columns {
+        @include column( $selector: '.o-column.o-site-message-column-text', $max-width: 64%, $text-align: left, $spacing: $standard-block-padding, $desktop-spacing-only: 'false', $mobile-spacing-only: 'false');
+        @include column( $selector: '.o-column.o-site-message-column-button', $max-width: 34%, $spacing: $standard-block-padding, $desktop-spacing-only: 'false', $mobile-spacing-only: 'false');
+    }
+
+    &.o-rows {
+        @include column( $selector: '.o-site-message-row', $max-width: 100%, $text-align: left, $vertical-align: top, $spacing: $standard-block-padding, $desktop-spacing-only: 'false', $mobile-spacing-only: 'false');
+    }
+
+    table.outlook-table {
+
+        td.outlook-outer-padding {
+            padding: 0 0 $standard-block-margin 0;
+        }
+    }
+
+    .o-row,
+    .o-column {
+    
+        div.item-contents {
+            @include meta-preset( $size: 0 );
+        }
+
+        &.o-site-message-row.o-site-message-row-button {
+
+            div.item-contents {
+                padding: 0;
+                text-align: center;
+                margin: $standard-block-padding 0 $standard-block-margin 0;
+            }
+        }
+    }
+}

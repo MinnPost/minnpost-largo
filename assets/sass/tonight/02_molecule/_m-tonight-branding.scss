@@ -1,0 +1,32 @@
+.m-tonight-branding {
+    width: 100%;
+    //max-width: colspan(4, 6);
+	height: auto;
+	position: relative;
+    margin: 0;
+    max-width: $header-width-mobile;
+    max-height: $header-height-desktop;
+
+    @include breakpoint-min( xs ) {
+		max-width: $header-width-desktop;
+	}
+    
+    a {
+        display: block;
+
+        img {
+            display: block;
+        }
+    }
+}
+
+/*header .m-tonight-branding {
+
+	@include breakpoint-min( md ) {
+		//max-width: colspan(3, 8);
+	}
+
+	@include breakpoint-min( lg ) {
+		//max-width: colspan(4, 12);
+	}
+}*/

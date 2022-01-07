@@ -1,0 +1,30 @@
+.m-post-newsletter {
+    padding: 0 0 $standard-block-margin 0;
+    text-align: left;
+
+    @include column( $selector: '.o-column.m-entry-content', $max-width: 57.5757575757576%, $vertical-align: top, $text-align: left);
+    @include column( $selector: '.o-column.m-post-image', $max-width: 42.4242424242424%, $vertical-align: top);
+
+    table.outlook-table {
+
+        td.outlook-inner-padding {
+            padding: $standard-block-padding 0;
+        }
+    }
+
+    .post-contents {
+        border-bottom: $border-default-style;
+        padding: 0 0 $standard-block-margin 0;
+    }
+
+    &.m-post-newsletter-last {
+        padding: 0;
+
+        table.outlook-table {
+
+            td.outlook-outer-padding {
+                padding: 0;
+            }
+        }
+    }
+}

@@ -4,7 +4,7 @@
 
 		@include body-preset( $size: -2 );
 		display: table-cell;
-		padding: $standard-block-margin / 4 0;
+		padding: $standard-block-margin * 0.25 0;
 	}
 
 	&.a-media-credit {

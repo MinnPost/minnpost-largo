@@ -74,7 +74,20 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 			// this requires that the custom image sizes in custom-fields.php work correctly
 			$image     = wp_get_attachment_image( $image_id, $size, false, $attributes );
 			$image_url = wp_get_attachment_url( $image_id );
+
+			if ( function_exists( 'get_minnpost_modified_image_url' ) ) {
+				$image_url = get_minnpost_modified_image_url( $image_url, $attributes );
+			}
+
+			if ( is_singular( 'newsletter' ) ) {
+				$image = minnpost_largo_manual_image_tag( $image_id, $image_url, $attributes, 'newsletter' );
+			}
 		} else {
+
+			if ( function_exists( 'get_minnpost_modified_image_url' ) ) {
+				$image_url = get_minnpost_modified_image_url( $image_url, $attributes );
+			}
+
 			if ( is_singular( 'newsletter' ) ) {
 				$image = minnpost_largo_manual_image_tag( $image_id, $image_url, $attributes, 'newsletter' );
 			} else {
@@ -93,6 +106,28 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 			'size'      => $size,
 		);
 		return $image_data;
+	}
+endif;
+
+/**
+* Get the image URL based on the attributes array's modifications to it
+*
+* @param string $image_url
+* @param array $attributes
+*
+* @return string $image_url
+*
+*/
+if ( ! function_exists( 'get_minnpost_modified_image_url' ) ) :
+	function get_minnpost_modified_image_url( $image_url, $attributes = array() ) {
+		if ( '' === $image_url ) {
+			return $image_url;
+		}
+		$image_url .= '?strip=all';
+		if ( isset( $attributes['content_width'] ) ) {
+			$image_url .= '&amp;w=' . $attributes['content_width'];
+		}
+		return $image_url;
 	}
 endif;
 
@@ -427,7 +462,6 @@ if ( ! function_exists( 'minnpost_get_related' ) ) :
 		$recent_same_category      = false; // most recent posts in the same category.
 		$recent_not_same_category  = false; // most recent posts not in the same category.
 		if ( 'zoninator' === $type && true === $zoninator_related_enabled ) {
-			// if used, the array of IDs can be cached for each post for 30 minutes.
 			$cache_zoninator_related = true;
 			if ( true === $cache_zoninator_related ) {
 				$cache_key   = md5( 'minnpost_zoninator_related_posts_' . $post_id );
@@ -622,7 +656,7 @@ if ( ! function_exists( 'minnpost_largo_get_excluded_related_posts' ) ) :
 			// load all posts that start with "The daily coronavirus update: "
 			$coronavirus_update_query = new WP_Query(
 				array(
-					'title_starts_with' => 'The daily coronavirus update: ',
+					'title_starts_with' => array( 'The daily coronavirus update: ', 'Coronavirus in Minnesota: ' ),
 					'fields'            => 'ids',
 					'posts_per_page'    => -1,
 					'post_status'       => 'publish',
@@ -803,65 +837,128 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 			}
 			return $output;
 		} elseif ( is_singular( 'newsletter' ) ) {
+			$is_legacy = apply_filters( 'minnpost_largo_newsletter_legacy', false, '', get_the_ID() );
 			$output    = '';
 			$lazy_load = false;
-			$margin    = '';
-			if ( false === $end ) {
-				$margin = 'border-bottom: 2px solid #cccccf; padding-bottom: 15px; Margin-bottom: 20px; ';
-			}
-			$output .= '
-			<div class="author" style="display: block; ' . $margin . 'width: 100%;">
-					<!--[if (gte mso 9)|(IE)]>
-						<table cellpadding="0" cellspacing="0" width="100%">
+			if ( false === $is_legacy ) {
+				if ( '' !== $image || ( true === $include_name && '' !== $name ) || '' !== $text ) {
+					$output .= '[outlook]
+						<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
 							<tr>
-								<td width="25%" valign="top">
-					<![endif]-->
-				<div class="column photo" style="display: inline-block; Margin-right: 0; max-width: 95px; vertical-align: top; width: 100%">
-					<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0;">
-							<tr>
-								<td class="inner" style="border-collapse: collapse; font-size: 0; line-height: 0px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; vertical-align: top" valign="top">
-									<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
-									<tr>
-										<td style="border-collapse: collapse; font-size: 0; line-height: 0px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; vertical-align: top" valign="top">' . $image . '</td>
-									</tr>
+								<td align="center" class="outlook-outer-padding" style="<?php echo $banner_text; ?>">
+									<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border" style="<?php echo $banner_bg . $banner_text; ?>">
+										<tr>';
+				}
+				if ( '' !== $image ) {
+					$output .= '<td class="outlook-inner-padding">
+					[/outlook]';
+					$output .= '<div class="o-column a-newsletter-figure a-newsletter-figure-author a-newsletter-figure-author-' . $photo_size . '"><div class="item-contents">';
+					$output .= $image;
+					$output .= '</div></div>';
+					$output .= '[outlook]</td>';
+				}
+				if ( true === $include_name && '' !== $name ) {
+					$output .= '<td class="outlook-inner-padding">';
+				}
+				if ( '' !== $image || ( true === $include_name && '' !== $name ) || '' !== $text ) {
+					$output .= '[/outlook]';
+				}
+				if ( ( true === $include_name && '' !== $name ) || '' !== $text ) {
+					$output .= '<div class="o-column m-author-bio"><div class="item-contents">';
+				}
+				if ( true === $include_name && '' !== $name ) {
+					$output .= '<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="h3 a-author-title"><tr><td><h3>';
+					if ( 0 < $count ) {
+						$author_url = get_author_posts_url( $author_id, sanitize_title( $name ) );
+						$output    .= '<a href="' . $author_url . '">';
+					}
+					$output .= $name;
+					if ( 0 < $count ) {
+						$output .= '</a>';
+					}
+					$output .= '</td></tr></table>';
+				}
+				if ( '' !== $text ) {
+					$text    = apply_filters( 'format_email_content', $text, false );
+					$output .= '<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="m-author-excerpt"><tr><td>' . $text . '</td></tr></table>';
+				}
+				if ( ( true === $include_name && '' !== $name ) || '' !== $text ) {
+					$output .= '</div></div>';
+					$output .= '[outlook]</td>';
+				}
+				if ( '' !== $image || ( true === $include_name && '' !== $name ) || '' !== $text ) {
+					if ( '' === $image ) {
+						$output .= '[outlook]';
+					}
+					$output .= '</tr>
 								</table>
 							</td>
 						</tr>
 					</table>
-				</div>';
-			$output .= '<!--[if (gte mso 9)|(IE)]>
-				</td><td width="75%" valign="top">
-			<![endif]-->';
-			$output .= '<div class="column bio" style="display: inline-block; Margin-right: 0; max-width: 75%; vertical-align: top; width: 100%">
-					<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
-						<tr>
-							<td class="inner" style="border-collapse: collapse; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; font-weight: normal; line-height: 100%; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: right; vertical-align: top; width: 100%" align="right" valign="top">
-								<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
-									<tr>
-										<td class="text" style="border-collapse: collapse; font-family: Georgia, &quot;Times New Roman&quot;, Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; vertical-align: top; width: 100%" align="right" valign="top">';
-			if ( true === $include_name && '' !== $name ) {
-				$output .= '<h3 style="Margin: 0 0 5px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold;">';
-				if ( 0 < $count ) {
-					$author_url = get_author_posts_url( $author_id, sanitize_title( $name ) );
-					$output    .= '<a style="color: #801019; text-decoration: none;" href="' . $author_url . '">';
+					[/outlook]';
 				}
-				$output .= $name;
-				if ( 0 < $count ) {
-					$output .= '</a>';
+				if ( ( true === $include_name && '' !== $name ) || '' !== $text ) {
+					$output .= '</div>';
 				}
-				$output .= '</h3>';
+			} else {
+				$margin = '';
+				if ( false === $end ) {
+					$margin = 'border-bottom: 2px solid #cccccf; padding-bottom: 15px; Margin-bottom: 20px; ';
+				}
+				$output .= '
+				<div class="author" style="display: block; ' . $margin . 'width: 100%;">
+						<!--[if (gte mso 9)|(IE)]>
+							<table cellpadding="0" cellspacing="0" width="100%">
+								<tr>
+									<td width="25%" valign="top">
+						<![endif]-->
+					<div class="column photo" style="display: inline-block; Margin-right: 0; max-width: 95px; vertical-align: top; width: 100%">
+						<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0;">
+								<tr>
+									<td class="inner" style="border-collapse: collapse; font-size: 0; line-height: 0px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; vertical-align: top" valign="top">
+										<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
+										<tr>
+											<td style="border-collapse: collapse; font-size: 0; line-height: 0px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; vertical-align: top" valign="top">' . $image . '</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+					</div>';
+				$output .= '<!--[if (gte mso 9)|(IE)]>
+					</td><td width="75%" valign="top">
+				<![endif]-->';
+				$output .= '<div class="column bio" style="display: inline-block; Margin-right: 0; max-width: 75%; vertical-align: top; width: 100%">
+						<table cellpadding="0" cellspacing="0" width="100%" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0">
+							<tr>
+								<td class="inner" style="border-collapse: collapse; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; font-weight: normal; line-height: 100%; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: right; vertical-align: top; width: 100%" align="right" valign="top">
+									<table cellpadding="0" cellspacing="0" class="contents" style="border-collapse: collapse; border-spacing: 0; color: #1a1818; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 16px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; width: 100%">
+										<tr>
+											<td class="text" style="border-collapse: collapse; font-family: Georgia, &quot;Times New Roman&quot;, Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0; mso-table-lspace: 0pt; mso-table-rspace: 0pt; padding: 0; text-align: left; vertical-align: top; width: 100%" align="right" valign="top">';
+				if ( true === $include_name && '' !== $name ) {
+					$output .= '<h3 style="Margin: 0 0 5px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold;">';
+					if ( 0 < $count ) {
+						$author_url = get_author_posts_url( $author_id, sanitize_title( $name ) );
+						$output    .= '<a style="color: #801019; text-decoration: none;" href="' . $author_url . '">';
+					}
+					$output .= $name;
+					if ( 0 < $count ) {
+						$output .= '</a>';
+					}
+					$output .= '</h3>';
+				}
+				// email content filter
+				$text    = apply_filters( 'format_email_content', $text, false );
+				$output .= $text;
+				$output .= '</td>
+							</tr>
+						</table>
+					</td>
+				</tr>
+			</table>
+		</div>
+	</div>';
 			}
-			// email content filter
-			$text    = apply_filters( 'format_email_content_legacy', $text, false );
-			$output .= $text;
-			$output .= '</td>
-						</tr>
-					</table>
-				</td>
-			</tr>
-		</table>
-	</div>
-</div>';
 			return $output;
 		}
 	}
@@ -1012,10 +1109,6 @@ if ( ! function_exists( 'minnpost_get_speaker_figure' ) ) :
 			$text = get_the_content( $speaker_id );
 		}
 
-		if ( post_password_required() || is_attachment() || ( '' === $image_id && '' === $image_url && '' === $text ) ) {
-			return;
-		}
-
 		if ( 'the_title' === $name_field ) { // name
 			$name = get_the_title( $speaker_id );
 		} elseif ( '' !== get_post_meta( $speaker_id, $name_field, true ) ) { // a different field exists
@@ -1023,6 +1116,10 @@ if ( ! function_exists( 'minnpost_get_speaker_figure' ) ) :
 		}
 		if ( '' !== get_post_meta( $speaker_id, $title_field, true ) ) { // the field exists
 			$title = get_post_meta( $speaker_id, $title_field, true );
+		}
+
+		if ( post_password_required() || is_attachment() || ( '' === $image_id && '' === $image_url && '' === $text && '' === $name ) ) {
+			return;
 		}
 
 		//$text = wpautop( $text ); // for some reason the paragraphs don't work without this
@@ -1048,6 +1145,10 @@ if ( ! function_exists( 'minnpost_get_speaker_figure' ) ) :
 					$output .= '<figcaption class="a-speaker-bio">';
 				} else {
 					$output .= '<div class="a-speaker-bio">';
+					if ( true === $include_link ) {
+						$speaker_url = get_permalink( $speaker_id );
+						$output     .= '<a href="' . $speaker_url . '" class="m-speaker-link">';
+					}
 				}
 				if ( ( true === $include_name && '' !== $name ) || ( true === $include_title && '' !== $title ) ) {
 					$output .= '<header class="m-speaker-headings">';
@@ -1091,6 +1192,9 @@ if ( ! function_exists( 'minnpost_get_speaker_figure' ) ) :
 				if ( '' !== $image ) {
 					$output .= '</figcaption>';
 				} else {
+					if ( true === $include_link ) {
+						$output .= '</a>';
+					}
 					$output .= '</div>';
 				}
 			}
@@ -1635,6 +1739,7 @@ if ( ! function_exists( 'minnpost_largo_add_lazy_load_attributes' ) ) :
 	add_filter( 'minnpost_largo_lazy_load_attributes', 'minnpost_largo_add_lazy_load_attributes', 10, 3 );
 	function minnpost_largo_add_lazy_load_attributes( $attributes, $object_id, $object_type = 'post', $lazy_load = true ) {
 		// handle prevention of lazy loading from the object loading the image
+		$prevent_lazy_load = '';
 		if ( 'post' === $object_type ) {
 			$prevent_lazy_load = get_post_meta( $object_id, '_mp_prevent_lazyload', true );
 		} elseif ( 'term' === $object_type ) {
@@ -1642,6 +1747,10 @@ if ( ! function_exists( 'minnpost_largo_add_lazy_load_attributes' ) ) :
 		}
 		if ( 'on' === $prevent_lazy_load ) {
 			$lazy_load = false;
+		}
+		if ( is_singular( 'newsletter' ) ) {
+			$lazy_load = false;
+			return $attributes;
 		}
 		if ( false === $lazy_load ) {
 			if ( isset( $attributes['class'] ) ) {
@@ -1672,8 +1781,15 @@ if ( ! function_exists( 'minnpost_get_newsletter_teaser' ) ) :
 		if ( '' === $post_id ) {
 			$post_id = get_the_ID();
 		}
-		$teaser      = get_post_meta( $post_id, '_mp_newsletter_preview_text', true );
-		$teaser_text = get_post_meta( $post_id, '_mp_newsletter_newsletter_teaser', true );
+		$teaser          = get_post_meta( $post_id, '_mp_newsletter_preview_text', true );
+		$teaser_text     = get_post_meta( $post_id, '_mp_newsletter_newsletter_teaser', true );
+		$newsletter_type = minnpost_get_newsletter_type( $post_id );
+		if ( 'republication' === $newsletter_type ) {
+			$republication_newsletter_override_teaser = get_post_meta( get_the_ID(), '_mp_newsletter_republication_newsletter_override_teaser', true );
+			if ( 'on' !== $republication_newsletter_override_teaser ) {
+				$teaser = minnpost_get_republication_newsletter_teaser( $post_id );
+			}
+		}
 		if ( '' !== $teaser_text ) {
 			$teaser = $teaser_text;
 		}
@@ -1681,6 +1797,27 @@ if ( ! function_exists( 'minnpost_get_newsletter_teaser' ) ) :
 			$teaser = apply_filters( 'the_content', $teaser );
 		}
 		return $teaser;
+	}
+endif;
+
+/**
+* Default teaser text for a republication newsletter
+*
+* @param int $post_id
+* @return string $teaser
+*
+*/
+if ( ! function_exists( 'minnpost_get_republication_newsletter_teaser' ) ) :
+	function minnpost_get_republication_newsletter_teaser( $post_id = '' ) {
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
+		$default_teaser = sprintf(
+			// translators: 1) link to the republication guidelines
+			esc_html__( 'MinnPost is pleased to make the following stories available free to news media in Minnesota. The byline, tagline and photo and graphics credits must accompany all uses of the story. For more information, see MinnPost\'s %1$s.', 'minnpost-largo' ),
+			'<a href="' . site_url( '/republication-policy/' ) . '">full republishing guidelines</a>'
+		);
+		return $default_teaser;
 	}
 endif;
 
@@ -1702,6 +1839,69 @@ if ( ! function_exists( 'minnpost_get_newsletter_type' ) ) :
 endif;
 
 /**
+* Get newsletter logo URL
+*
+* @param int $newsletter_id
+* @param bool $transparent
+* @return string $logo_url
+*
+*/
+if ( ! function_exists( 'minnpost_get_newsletter_logo_url' ) ) :
+	function minnpost_get_newsletter_logo_url( $newsletter_id = '', $transparent = false ) {
+		$logo_url = '';
+
+		$newsletter_type = get_post_meta( $newsletter_id, '_mp_newsletter_type', true );
+		$filename_suffix = '';
+		if ( true === $transparent ) {
+			$filename_suffix = '-transparent';
+		}
+
+		if ( '' !== $newsletter_type ) {
+
+			switch ( $newsletter_type ) {
+				case 'book_club':
+					$filename = 'newsletter-logo-book-club' . $filename_suffix . '.png';
+					break;
+				case 'daily':
+					$filename = 'newsletter-logo-daily' . $filename_suffix . '.png';
+					break;
+				case 'dc_memo':
+					$filename = 'dc-memo-header-520x50' . $filename_suffix . '.png';
+					break;
+				case 'greater_mn':
+					$filename = 'newsletter-logo-mn-week' . $filename_suffix . '.png';
+					break;
+				case 'sunday_review':
+					$filename = 'newsletter-logo-sunday-review' . $filename_suffix . '.png';
+					break;
+				case 'daily_coronavirus':
+					$filename = 'newsletter-coronavirus-500' . $filename_suffix . '.png';
+					break;
+				case 'republication':
+					$is_legacy = apply_filters( 'minnpost_largo_newsletter_legacy', false, '', get_the_ID() );
+					if ( true === $is_legacy ) {
+						$filename = 'republication-header-260x50' . $filename_suffix . '.png';
+					} else {
+						$filename = 'newsletter-logo-mponly' . $filename_suffix . '.png';
+					}
+					break;
+				case 'artscape':
+					$filename = 'newsletter-logo-artscape' . $filename_suffix . '.png';
+					break;
+				default:
+					$filename = 'newsletter-logo-daily' . $filename_suffix . '.png';
+					break;
+			}
+
+			$logo_url = get_theme_file_uri() . '/assets/img/newsletter-headers/' . $filename;
+
+		}
+
+		return $logo_url;
+	}
+endif;
+
+/**
 * Format a string for email-friendly display
 *
 * @param string $content
@@ -1715,7 +1915,7 @@ if ( ! function_exists( 'format_email_content' ) ) :
 	add_filter( 'format_email_content', 'format_email_content', 10, 4 );
 	function format_email_content( $content, $body = true, $message = false, $colors = array() ) {
 
-		$is_legacy = apply_filters( 'minnpost_largo_newsletter_legacy', false, get_the_ID() );
+		$is_legacy = apply_filters( 'minnpost_largo_newsletter_legacy', false, '', get_the_ID() );
 		if ( true === $is_legacy ) {
 			format_email_content_legacy( $content, $body, $message );
 		}
@@ -1774,6 +1974,38 @@ if ( ! function_exists( 'format_email_content_legacy' ) ) :
 endif;
 
 /**
+* Process shortcodes in email content that need to run after Emogrifier processing is done.
+*
+* @param string $html
+* @return string $html
+*
+*/
+if ( ! function_exists( 'minnpost_email_shortcodes_after_emogrifier' ) ) :
+	add_filter( 'do_shortcodes_after_emogrifier', 'minnpost_email_shortcodes_after_emogrifier', 10, 1 );
+	function minnpost_email_shortcodes_after_emogrifier( $html ) {
+		// replace our fake Outlook tag with an actual conditional comment after the CSS has already been messed with.
+		$html = str_replace( '[outlook]', '<!--[if mso]>', $html );
+		$html = str_replace( '[/outlook]', '<![endif]-->', $html );
+
+		// replace our fake not-Outlook tag with an actual conditional comment after the CSS has already been messed with.
+		$html = str_replace( '[not-outlook]', '<!--[if !mso]><!-- -->', $html );
+		$html = str_replace( '[/not-outlook]', '<!--<![endif]-->', $html );
+
+		// replace our fake preview text with a real one after the CSS has already been messed with.
+		$html = str_replace( '[preview_text]', '<span style="display: none !important; font-size: 0; color: #fff;">', $html );
+		$html = str_replace( '[/preview_text]', '</span>', $html );
+
+		// replace the shortcode for the empty space after the preview text, after the CSS has been messed with.
+		$html = str_replace( '[after-preview-space-hack]', '<div style="display: none;max-height: 0px;overflow: hidden;">&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;</div>', $html );
+
+		// keep <style> stuff after the CSS has already been messed with.
+		$html = str_replace( '<style_donotremove>', '<style type="text/css">', $html );
+		$html = str_replace( '</style_donotremove>', '</style>', $html );
+		return $html;
+	}
+endif;
+
+/**
 * Get story ids for a newsletter section
 *
 * @param int $post_id
@@ -1802,13 +2034,23 @@ endif;
 * Determine whether this is a legacy newsletter.
 *
 * @param bool $is_legacy
+* @param string $newsletter_type
 * @param int $post_id
 * @return bool $is_legacy
 *
 */
 if ( ! function_exists( 'minnpost_largo_check_newsletter_legacy' ) ) :
-	add_filter( 'minnpost_largo_newsletter_legacy', 'minnpost_largo_check_newsletter_legacy', 10, 2 );
-	function minnpost_largo_check_newsletter_legacy( $is_legacy, $post_id ) {
+	add_filter( 'minnpost_largo_newsletter_legacy', 'minnpost_largo_check_newsletter_legacy', 10, 3 );
+	function minnpost_largo_check_newsletter_legacy( $is_legacy, $newsletter_type, $post_id ) {
+		if ( '' === $newsletter_type ) {
+			$newsletter_type = get_post_meta( get_the_ID(), '_mp_newsletter_type', true );
+		}
+		// for now, the DC Memo style emails are all legacy. TODO: change this when we can.
+		if ( in_array( $newsletter_type, array( 'dc_memo', 'daily_coronavirus' ), true ) ) {
+			return true;
+		}
+
+		// digest newsletters.
 		$top_story = minnpost_largo_get_newsletter_stories( $post_id, 'top' );
 		if ( ! empty( $top_story ) ) {
 			return false;
@@ -1821,12 +2063,20 @@ if ( ! function_exists( 'minnpost_largo_check_newsletter_legacy' ) ) :
 		if ( ! empty( $opinion_stories ) ) {
 			return false;
 		}
-		$arts_stories = minnpost_largo_get_newsletter_stories( $post_id, 'arts' );
-		if ( ! empty( $arts_stories ) ) {
-			return false;
-		}
 		$editors_stories = minnpost_largo_get_newsletter_stories( $post_id, 'editors' );
 		if ( ! empty( $editors_stories ) ) {
+			return false;
+		}
+
+		// republication newsletters.
+		$republishable_stories = minnpost_largo_get_newsletter_stories( $post_id, 'republishable' );
+		if ( ! empty( $republishable_stories ) ) {
+			return false;
+		}
+
+		// artscape newsletter.
+		$artscape_stories = minnpost_largo_get_newsletter_stories( $post_id, 'artscape' );
+		if ( ! empty( $artscape_stories ) ) {
 			return false;
 		}
 		return true;
@@ -1864,12 +2114,16 @@ if ( ! function_exists( 'minnpost_newsletter_get_section_query' ) ) :
 		if ( '' === $newsletter_id ) {
 			$newsletter_id = get_the_ID();
 		}
-		$post_ids      = minnpost_largo_get_newsletter_stories( $newsletter_id, $section );
-		$query_args    = array(
+		$post_ids   = minnpost_largo_get_newsletter_stories( $newsletter_id, $section );
+		$query_args = array(
 			'post__in'    => $post_ids,
 			'orderby'     => 'post__in',
 			'post_status' => 'any',
 		);
+		// if there are no ids, the query arguments should be empty.
+		if ( '' === $post_ids ) {
+			$query_args = array();
+		}
 		$section_query = new WP_Query( $query_args );
 		// the total does not stop at posts_per_page
 		set_query_var( 'found_posts', $section_query->found_posts );
@@ -1916,14 +2170,14 @@ if ( ! function_exists( 'minnpost_newsletter_get_entry_excerpt' ) ) :
 		}
 		$excerpt      = get_the_excerpt( $post_id );
 		$use_seo_desc = get_post_meta( $post_id, '_mp_post_newsletter_use_seo_description', true );
-		if ( 'on' !== $use_seo_desc ) {
-			return $excerpt;
+		if ( 'on' === $use_seo_desc ) {
+			$seo_desc = get_post_meta( $post_id, '_mp_seo_description', true );
+			if ( '' !== $seo_desc ) {
+				$excerpt = $seo_desc;
+			}
 		}
-		$seo_desc = get_post_meta( $post_id, '_mp_seo_description', true );
-		if ( '' !== $seo_desc ) {
-			$excerpt = $seo_desc;
-		}
-		$excerpt = apply_filters( 'the_content', $excerpt );
+		$excerpt = str_ireplace( '&nbsp;', '', $excerpt );
+		$excerpt = apply_filters( 'the_excerpt', $excerpt );
 		return $excerpt;
 	}
 endif;
@@ -1942,6 +2196,11 @@ if ( ! function_exists( 'minnpost_newsletter_get_ads' ) ) :
 		$sidebar = ob_get_contents();
 		ob_end_clean();
 
+		$ads = array();
+		if ( '' === $sidebar ) {
+			return $ads;
+		}
+
 		$ad_dom = new DomDocument;
 		libxml_use_internal_errors( true );
 		$ad_dom->loadHTML( $sidebar, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
@@ -1949,7 +2208,6 @@ if ( ! function_exists( 'minnpost_newsletter_get_ads' ) ) :
 		$ad_xpath = new DOMXpath( $ad_dom );
 		$ad_divs  = $ad_xpath->query( "//section[contains(concat(' ', @class, ' '), ' m-widget ')]/div/p" );
 
-		$ads = array();
 		if ( 'dc_memo' !== $newsletter_type ) {
 			foreach ( $ad_divs as $key => $value ) {
 				$style = $value->getAttribute( 'style' );
@@ -1958,10 +2216,54 @@ if ( ! function_exists( 'minnpost_newsletter_get_ads' ) ) :
 		} else {
 			foreach ( $ad_divs as $key => $value ) {
 				$style = $value->getAttribute( 'style' );
-				$ads[] = '<p>' . minnpost_dom_innerhtml( $value ) . '</p>';
+				$ads[] = '<div>' . minnpost_dom_innerhtml( $value ) . '</div>';
 			}
 		}
 		set_query_var( 'newsletter_ads', $ads );
 		return $ads;
+	}
+endif;
+
+/**
+* Don't show the republish button
+*
+* @param string $hide_republish_button
+* @param int $post_id
+* @return string $hide_republish_button
+*
+*/
+if ( ! function_exists( 'minnpost_largo_hide_republish_button' ) ) :
+	//add_filter( 'minnpost_largo_republish_button_from_display', 'minnpost_largo_hide_republish_button', 10, 2 );
+	function minnpost_largo_hide_republish_button( $hide_republish_button = '', $post_id = 0 ) {
+		if ( 0 === $post_id ) {
+			$post_id = get_the_ID();
+		}
+		// to hide the button, return "on" as the value.
+		//$hide_republish_button = 'on';
+		return $hide_republish_button;
+	}
+endif;
+
+/**
+* Show the republish button
+*
+* @param string $show_republish_button
+* @param int $post_id
+* @return string $show_republish_button
+*
+*/
+if ( ! function_exists( 'minnpost_largo_show_republish_button' ) ) :
+	add_filter( 'minnpost_largo_show_republish_button_on_display', 'minnpost_largo_show_republish_button', 10, 2 );
+	function minnpost_largo_show_republish_button( $show_republish_button = 'on', $post_id = 0 ) {
+		if ( 0 === $post_id ) {
+			$post_id = get_the_ID();
+		}
+		// to show the button, return "on" as the value.
+		if ( has_category( 'greater-minnesota', $post_id ) ) {
+			$show_republish_button = 'on';
+		} else {
+			$show_republish_button = '';
+		}
+		return $show_republish_button;
 	}
 endif;

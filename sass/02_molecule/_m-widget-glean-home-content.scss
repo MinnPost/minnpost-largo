@@ -21,7 +21,7 @@
 		.a-widget-title {
 			background: brand-color(red, medium);
 			border-radius: $border-radius;
-			margin-bottom: $standard-block-padding / 2;
+			margin-bottom: $standard-block-padding * 0.5;
 			color: neutral-color(white);
 
 			@include meta-preset( $bold: true );

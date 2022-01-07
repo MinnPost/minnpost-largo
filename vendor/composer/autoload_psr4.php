@@ -6,7 +6,10 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
+    'Symfony\\Component\\CssSelector\\' => array($vendorDir . '/symfony/css-selector'),
     'Psr\\Http\\Message\\' => array($vendorDir . '/psr/http-message/src'),
+    'Pelago\\Emogrifier\\' => array($vendorDir . '/pelago/emogrifier/src'),
     'FastRoute\\' => array($vendorDir . '/nikic/fast-route/src'),
+    'Composer\\Installers\\' => array($vendorDir . '/composer/installers/src/Composer/Installers'),
     'Brain\\' => array($vendorDir . '/brain/cortex/src'),
 );

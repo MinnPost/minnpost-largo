@@ -1,0 +1,53 @@
+// override front-end variables, and add email-specific ones
+
+/*------------------------------------*\
+	#Colors
+\*------------------------------------*/
+
+// neutral colors. this is here because we want #ffffff
+$neutral-colors: (
+	black: #1a1818, // logo
+	dark: #5e6e76,
+	medium: #869298,
+	border: #d6d6da,
+	highlight: #ebebfb,
+	light: #efeff0,
+	white: #ffffff
+);
+
+/*------------------------------------*\
+	#TYPOGRAPHY
+\*------------------------------------*/
+
+// font families
+$font__code: monaco, consolas, Andale Mono, DejaVu Sans Mono, monospace;
+$font__pre: Courier 10 Pitch, courier, monospace;
+$font__sans: Helvetica, sans-serif;
+$font__serif: Georgia, 'Times New Roman', serif;
+$webfont__serif: 'ff-meta-serif-web-pro', Georgia, 'Times New Roman', serif;
+$webfont__sans: 'ff-meta-web-pro', Helvetica, sans-serif;
+
+// font sizes
+$html-root-size: 20px;
+$interface-copy-size: 16px;
+$interface-copy-size-larger: 17px;
+$interface-copy-size-smaller: 15px;
+
+/*------------------------------------*\
+	#Layout
+\*------------------------------------*/
+
+$max-width-email: 600px;
+$max-width-email-percent: 96%;
+$max-width-email-outlook: $max-width-email;
+$large-screen-width: 700px;
+$mobile-screen-width: 480px;
+$hide-stuff-width: 450px;
+
+/*------------------------------------*\
+	#SPACING
+\*------------------------------------*/
+
+$standard-block-padding: 12px;
+$standard-heading-margin: 15px;
+$standard-block-margin: 30px;

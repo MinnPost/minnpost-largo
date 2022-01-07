@@ -37,12 +37,14 @@
 	}
 
 	// above article body
+	// below article body
 	// article bottom
 	// above homepage articles
 	// homepage middle
 	&.wp-message-inserter-message-region-above_article_body,
 	&.wp-message-inserter-message-region-above_homepage_articles,
 	&.wp-message-inserter-message-region-homepage_middle,
+	&.wp-message-inserter-message-region-below_article_body,
 	&.wp-message-inserter-message-region-article_bottom {
 		margin-bottom: $standard-block-margin;
 
@@ -51,6 +53,11 @@
 			margin-left: 0;
 			margin-right: 0;
 		}
+	}
+
+	// below article body only
+	&.wp-message-inserter-message-region-below_article_body {
+		@include body-preset( $size: 0 );
 	}
 
 	// banner wrapper

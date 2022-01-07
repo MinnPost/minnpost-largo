@@ -90,6 +90,46 @@ if ( ! function_exists( 'minnpost_largo_remove_tribe_styles' ) ) :
 endif;
 
 /**
+* Filter to stop concatenating a JavaScript on VIP Go environments.
+*
+* @param bool $do_concat
+* @param string $handle
+* @return bool $do_concat
+* @see https://wordpress.org/support/topic/add-another-organizer-button-does-not-work-in-hosted-environment/
+*
+*/
+if ( ! function_exists( 'minnpost_largo_vip_js_concat_filter' ) ) :
+	add_filter( 'js_do_concat', 'minnpost_largo_vip_js_concat_filter', 10, 2 );
+	function minnpost_largo_vip_js_concat_filter( $do_concat, $handle ) {
+		if ( is_admin() ) {
+			// do not include tribe-events-dynamic in concatenated bundles.
+			if ( 'tribe-events-dynamic' === $handle ) {
+				return false;
+			}
+		}
+		return $do_concat;
+	}
+endif;
+
+/**
+* Filter to stop enqueing event stuff on the front end.
+*
+* @param bool $should_enqueue_frontend
+* @return bool $should_enqueue_frontend
+*
+*/
+if ( ! function_exists( 'minnpost_largo_do_not_enqueue_event_frontend' ) ) :
+	add_filter( 'tribe_events_assets_should_enqueue_frontend', 'minnpost_largo_do_not_enqueue_event_frontend', 30 );
+	add_filter( 'tribe_events_views_v2_assets_should_enqueue_frontend', 'minnpost_largo_do_not_enqueue_event_frontend' );
+	function minnpost_largo_do_not_enqueue_event_frontend( $should_enqueue_frontend ) {
+		if ( ! is_admin() ) {
+			$should_enqueue_frontend = false;
+		}
+		return $should_enqueue_frontend;
+	}
+endif;
+
+/**
 * Modify the columns on the edit events admin page
 *
 * @param array $columns
@@ -112,12 +152,17 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_largo_full_event_date' ) ) :
-	function minnpost_largo_full_event_date( $event_id = '' ) {
+	function minnpost_largo_full_event_date( $event_id = '', $args = array() ) {
 		if ( '' === $event_id ) {
 			$event_id = get_the_ID();
 		}
-		$start_date = minnpost_largo_get_ap_date( tribe_get_start_date( $event_id, false, 'm/d/Y' ) );
-		$end_date   = minnpost_largo_get_ap_date( tribe_get_end_date( $event_id, false, 'm/d/Y' ) );
+		if ( ! isset( $args['show_full_month_name'] ) || ( isset( $args['show_full_month_name'] ) && true !== $args['show_full_month_name'] ) ) {
+			$start_date = minnpost_largo_get_ap_date( tribe_get_start_date( $event_id, false, 'm/d/Y' ) );
+			$end_date   = minnpost_largo_get_ap_date( tribe_get_end_date( $event_id, false, 'm/d/Y' ) );
+		} else {
+			$start_date = tribe_get_start_date( $event_id, false, 'F j, Y' );
+			$end_date   = tribe_get_end_date( $event_id, false, 'F j, Y' );
+		}
 		if ( $end_date !== $start_date ) {
 			$time = sprintf(
 				// translators: 1) start date, 2) end date
@@ -200,16 +245,20 @@ if ( ! function_exists( 'minnpost_largo_single_event_links' ) ) :
 endif;
 
 /**
-* Set the festival date range based on the specified page slug that contains the events.
+* Set the event website date range based on the specified page slug that contains the events.
+* @param string $object_type
 * @param string $event_slug
 * @return string $output
 *
 */
-if ( ! function_exists( 'minnpost_largo_get_festival_date_range' ) ) :
-	function minnpost_largo_get_festival_date_range( $event_slug = '' ) {
-		$output      = '';
-		$post        = get_page_by_path( $event_slug, OBJECT, 'festival' );
-		$event_posts = get_post_meta( $post->ID, '_mp_festival_content_posts', true );
+if ( ! function_exists( 'minnpost_largo_get_event_website_date_range' ) ) :
+	function minnpost_largo_get_event_website_date_range( $object_type = 'festival', $event_slug = '' ) {
+		$output = '';
+		$post   = get_page_by_path( $event_slug, OBJECT, $object_type );
+		if ( ! is_object( $post ) ) {
+			return $output;
+		}
+		$event_posts = get_post_meta( $post->ID, '_mp_' . $object_type . '_content_posts', true );
 		if ( ! empty( $event_posts ) ) {
 
 			foreach ( $event_posts as $key => $event_post_id ) {
@@ -226,10 +275,14 @@ if ( ! function_exists( 'minnpost_largo_get_festival_date_range' ) ) :
 			$end_timestamp   = tribe_get_end_date( $last_event_id, false, 'U' );
 			$start_date      = tribe_get_start_date( $first_event_id, false, 'c' );
 			$end_date        = tribe_get_end_date( $last_event_id, false, 'c' );
+			$start_day       = minnpost_largo_get_ap_date( tribe_get_start_date( $first_event_id, false, 'm/d/Y' ) );
+			$end_day         = minnpost_largo_get_ap_date( tribe_get_end_date( $last_event_id, false, 'm/d/Y' ) );
 
-			if ( $start_timestamp === $end_timestamp ) {
+			if ( $start_day === $end_day ) {
 				// same day - 1st April 2012
-				$output = minnpost_largo_get_ap_date( $start_date );
+				//$output = minnpost_largo_get_ap_date( $start_date );
+				$date_time = new DateTime( $start_date );
+				$output    = $date_time->format( 'F j, Y' );
 			} elseif ( gmdate( 'Y-m', $start_timestamp ) === gmdate( 'Y-m', $end_timestamp ) ) {
 				// same year and month - 3rd - 21st March 2012
 				$output = sprintf(
@@ -264,17 +317,56 @@ if ( ! function_exists( 'minnpost_largo_get_festival_date_range' ) ) :
 endif;
 
 /**
-* Get the info for the festival logo
-* @param string $object_type
-* @return array $festival_logo_info
+* Set the event ID if it's not the current post ID.
+* @param int $post_id
+* @param array $args
+* @return int $post_id
 *
 */
-if ( ! function_exists( 'minnpost_largo_get_festival_logo_info' ) ) :
-	function minnpost_largo_get_festival_logo_info( $object_type = 'festival' ) {
-		$post_id            = 0;
-		$is_current_url     = false;
-		$festival_logo_info = array();
-		// check to see if there is a post checked for /festival already
+if ( ! function_exists( 'minnpost_largo_set_event_id' ) ) :
+	add_filter( 'minnpost_largo_set_event_id', 'minnpost_largo_set_event_id', 10, 2 );
+	function minnpost_largo_set_event_id( $post_id, $args = array() ) {
+		if ( isset( $args['object_type'] ) && isset( $args['event_slug'] ) ) {
+			$object_type = $args['object_type'];
+			$event_slug  = $args['event_slug'];
+			$post        = get_page_by_path( $event_slug, OBJECT, $object_type );
+			if ( is_object( $post ) ) {
+				$post_id = $post->ID;
+			}
+		} else {
+			$object_type = get_post_type( $post_id );
+		}
+
+		$event_posts = get_post_meta( $post_id, '_mp_' . $object_type . '_content_posts', true );
+		if ( ! empty( $event_posts ) ) {
+			foreach ( $event_posts as $key => $event_post_id ) {
+				if ( 'publish' !== get_post_status( $event_post_id ) ) {
+					unset( $event_posts[ $key ] );
+				}
+			}
+			if ( ! empty( $event_posts[0] ) ) {
+				$first_event_id = $event_posts[0];
+				//$last_event_key = array_key_last( $event_posts );
+				//$last_event_id  = $event_posts[ $last_event_key ];
+				$post_id = $first_event_id;
+			}
+		}
+		return $post_id;
+	}
+endif;
+
+/**
+* Get the info for the event website page logo
+* @param string $object_type
+* @return array $event_logo_info
+*
+*/
+if ( ! function_exists( 'minnpost_largo_get_event_website_logo_info' ) ) :
+	function minnpost_largo_get_event_website_logo_info( $object_type = 'festival' ) {
+		$post_id         = 0;
+		$is_current_url  = false;
+		$event_logo_info = array();
+		// check to see if there is a post checked for the event directory page already
 		$directory_args  = array(
 			'posts_per_page' => 1,
 			'post_type'      => $object_type,
@@ -293,17 +385,17 @@ if ( ! function_exists( 'minnpost_largo_get_festival_logo_info' ) ) :
 		}
 
 		if ( 0 === $post_id ) {
-			$title = __( 'MinnPost Festival', 'minnpost-largo' );
+			$title = __( 'MinnPost Event Website', 'minnpost-largo' );
 		}
 
 		$url = get_post_type_archive_link( $object_type );
 
-		$festival_logo_info = array(
+		$event_logo_info = array(
 			'url'            => $url,
 			'title'          => $title,
 			'is_current_url' => $is_current_url,
 		);
-		return $festival_logo_info;
+		return $event_logo_info;
 	}
 endif;
 
@@ -338,9 +430,9 @@ endif;
 * @return array $events
 *
 */
-if ( ! function_exists( 'minnpost_festival_get_speaker_events' ) ) :
-	add_filter( 'tribe_ext_tribe_ext_speaker_get_events', 'minnpost_festival_get_speaker_events', 10, 2 );
-	function minnpost_festival_get_speaker_events( $events, $args ) {
+if ( ! function_exists( 'minnpost_event_website_get_speaker_events' ) ) :
+	add_filter( 'tribe_ext_tribe_ext_speaker_get_events', 'minnpost_event_website_get_speaker_events', 10, 2 );
+	function minnpost_event_website_get_speaker_events( $events, $args ) {
 		$args['post_status'] = 'any';
 		$args['post_type']   = array( 'tribe_events' );
 		$events_query        = new WP_Query( $args );
@@ -349,30 +441,40 @@ if ( ! function_exists( 'minnpost_festival_get_speaker_events' ) ) :
 endif;
 
 /**
-* Display a link to buy a festival pass
+* Display a link to buy an event pass
+* @param string $object_type
 *
 */
-if ( ! function_exists( 'minnpost_festival_pass_link' ) ) :
-	function minnpost_festival_pass_link() {
-		echo minnpost_festival_get_festival_pass_link();
+if ( ! function_exists( 'minnpost_event_website_pass_link' ) ) :
+	function minnpost_event_website_pass_link( $object_type = 'festival' ) {
+		echo minnpost_get_event_website_pass_link( $object_type );
 	}
 endif;
 
 
 /**
-* Get a link to buy a festival pass
-* @return string $buy_festival_pass
+* Get a link to buy an event pass
+* @return string $buy_event_pass
 *
 */
-if ( ! function_exists( 'minnpost_festival_get_festival_pass_link' ) ) :
-	function minnpost_festival_get_festival_pass_link() {
-		$buy_festival_pass = sprintf(
-			// translators: 1) url to buy a festival, 2) link text
-			__( '<a href="%1$s" class="a-button">%2$s</a>', 'minnpost-largo' ),
-			esc_url_raw( 'https://www.eventbrite.com/e/minnpost-festival-2021-tickets-140928014485' ), // this will be an eventbrite link
-			esc_html__( 'Reserve your Festival pass' )
-		);
-		return $buy_festival_pass;
+if ( ! function_exists( 'minnpost_get_event_website_pass_link' ) ) :
+	function minnpost_get_event_website_pass_link( $object_type = 'festival' ) {
+		if ( 'festival' === $object_type ) {
+			$buy_event_pass = sprintf(
+				// translators: 1) url to buy a pass, 2) link text
+				__( '<a href="%1$s" class="a-button">%2$s</a>', 'minnpost-largo' ),
+				esc_url_raw( 'https://www.eventbrite.com/e/minnpost-festival-2021-tickets-140928014485' ), // this will be an eventbrite link
+				esc_html__( 'Reserve your Festival pass' )
+			);
+		} elseif ( 'tonight' === $object_type ) {
+			$buy_event_pass = sprintf(
+				// translators: 1) url to buy a pass, 2) link text
+				__( '<a href="%1$s" class="a-button">%2$s</a>', 'minnpost-largo' ),
+				esc_url_raw( 'https://www.eventbrite.com/e/minnpost-tonight-tickets-169166105375' ), // this will be an eventbrite link
+				esc_html__( 'Reserve your tickets' )
+			);
+		}
+		return $buy_event_pass;
 	}
 endif;
 
@@ -388,8 +490,8 @@ if ( ! function_exists( 'minnpost_event_category_breadcrumb' ) ) :
 		if ( ! empty( $event_categories ) ) {
 			foreach ( $event_categories as $event_category ) {
 				$category_name = $event_category->name;
-				if ( 'festival' === $event_category->slug ) {
-					$category_link = site_url( '/festival/' );
+				if ( 'festival' === $event_category->slug || 'tonight' === $event_category->slug ) {
+					$category_link = site_url( '/' . $event_category->slug . '/' );
 				} else {
 					$category_link = get_term_link( $event_category->term_id, 'tribe_events_cat' );
 				}
@@ -400,25 +502,160 @@ if ( ! function_exists( 'minnpost_event_category_breadcrumb' ) ) :
 endif;
 
 /**
-* Display the disclaimer
+* Returns the category name for a post's main event category
+*
+* @param int $post_id
+* @return string $category_name
 *
 */
-if ( ! function_exists( 'minnpost_festival_disclaimer_text' ) ) :
-	function minnpost_festival_disclaimer_text() {
-		echo minnpost_festival_get_disclaimer_text();
+if ( ! function_exists( 'minnpost_get_event_category_name' ) ) :
+	function minnpost_get_event_category_name( $post_id = '' ) {
+		$category_name = '';
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
+
+		$hide_category = get_post_meta( $post_id, '_mp_remove_category_from_display', true );
+		if ( 'on' === $hide_category ) {
+			return $category_name;
+		}
+
+		$category_id = minnpost_get_permalink_event_category_id( $post_id );
+		if ( '' !== $category_id ) {
+			$category = get_term( $category_id, 'tribe_events_cat' );
+		}
+
+		if ( isset( $category->name ) ) {
+			$category_name = $category->name;
+		}
+
+		return $category_name;
+	}
+endif;
+
+/**
+* Returns the category slug for a post's main event category
+*
+* @param int $post_id
+* @return string $category_slug
+*
+*/
+if ( ! function_exists( 'minnpost_get_event_category_slug' ) ) :
+	function minnpost_get_event_category_slug( $post_id = '' ) {
+		$category_slug = '';
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
+
+		$hide_category = get_post_meta( $post_id, '_mp_remove_category_from_display', true );
+		if ( 'on' === $hide_category ) {
+			return $category_slug;
+		}
+
+		$category_id = minnpost_get_permalink_event_category_id( $post_id );
+		if ( '' !== $category_id ) {
+			$category = get_term( $category_id, 'tribe_events_cat' );
+		}
+
+		if ( isset( $category->slug ) ) {
+			$category_slug = $category->slug;
+		}
+
+		return $category_slug;
+	}
+endif;
+
+/**
+* Returns the category ID for a post's permalink event category
+*
+* @param int $post_id
+* @return int $category_id
+*
+*/
+if ( ! function_exists( 'minnpost_get_permalink_event_category_id' ) ) :
+	function minnpost_get_permalink_event_category_id( $post_id = '' ) {
+		$category_id = '';
+		if ( '' === $post_id ) {
+			$post_id = get_the_ID();
+		}
+		$category_permalink = get_post_meta( $post_id, '_category_permalink', true );
+		if ( null !== $category_permalink && '' !== $category_permalink ) {
+			if ( isset( $category_permalink['tribe_events_cat'] ) && '' !== $category_permalink['tribe_events_cat'] ) {
+				$category_id = $category_permalink['tribe_events_cat'];
+			} else {
+				$categories  = get_the_terms( $post_id, 'tribe_events_cat' );
+				$category_id = isset( $categories[0] ) ? $categories[0]->term_id : '';
+			}
+		} else {
+			$categories = get_the_terms( $post_id, 'tribe_events_cat' );
+			if ( isset( $categories[0] ) && is_object( $categories[0] ) && ! is_wp_error( $categories[0] ) ) {
+				$category_id = $categories[0]->term_id;
+			}
+		}
+		return $category_id;
+	}
+endif;
+
+/**
+* Display the disclaimer
+* @param string $object_type
+*
+*/
+if ( ! function_exists( 'minnpost_event_website_disclaimer_text' ) ) :
+	function minnpost_event_website_disclaimer_text( $object_type = 'festival' ) {
+		echo minnpost_event_website_get_disclaimer_text( $object_type );
 	}
 endif;
 
 
 /**
 * Get the styled disclaimer text
+* @param string $object_type
 * @return string $disclaimer_text
 *
 */
-if ( ! function_exists( 'minnpost_festival_get_disclaimer_text' ) ) :
-	function minnpost_festival_get_disclaimer_text() {
+if ( ! function_exists( 'minnpost_event_website_get_disclaimer_text' ) ) :
+	function minnpost_event_website_get_disclaimer_text( $object_type = 'festival' ) {
 		$disclaimer_text = esc_html__( 'MinnPost is a 501(c)(3) nonprofit that receives support from donors, members, foundations, advertisers and sponsors. Donors and sponsors that underwrite MinnPost events play no role in determining the content, featured guests or line of questioning.', 'minnpost-largo' );
-		$disclaimer_text = '<aside class="a-festival-minnpost-notice"><p>' . $disclaimer_text . '</p></aside>';
+		$disclaimer_text = '<aside class="a-' . $object_type . '-minnpost-notice"><p>' . $disclaimer_text . '</p></aside>';
 		return $disclaimer_text;
+	}
+endif;
+
+/**
+* The speaker picker is broken in current versions of The Event Calendar, so we can add our own.
+* @param bool $show_speaker_meta_box
+* @return bool $show_speaker_meta_box
+*
+*/
+if ( ! function_exists( 'minnpost_hide_default_speaker_meta_box' ) ) :
+	add_filter( 'tribe_ext_events_add_tribe_ext_speaker_meta_box', 'minnpost_hide_default_speaker_meta_box' );
+	function minnpost_hide_default_speaker_meta_box( $show_speaker_meta_box ) {
+		return false;
+	}
+endif;
+
+/**
+* Load the linked event posts by type if we're using our own field to save them.
+* @param array $result
+* @param int $post_id
+* @param string $post_type
+* @return array $result
+*
+*/
+if ( ! function_exists( 'minnpost_get_linked_event_posts' ) ) :
+	add_filter( 'tribe_events_get_linked_posts_by_post_type', 'minnpost_get_linked_event_posts', 10, 3 );
+	function minnpost_get_linked_event_posts( $result, $post_id, $post_type ) {
+		$speakers = get_post_meta( $post_id, '_tribe_linked_post_tribe_ext_speaker', true );
+		if ( is_array( $speakers ) ) {
+			$result = array();
+			foreach ( $speakers as $speaker_id ) {
+				if ( ! is_object( $speaker_id ) ) {
+					$speaker  = get_post( $speaker_id );
+					$result[] = $speaker;
+				}
+			}
+		}
+		return $result;
 	}
 endif;

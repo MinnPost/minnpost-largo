@@ -1,0 +1,18 @@
+.o-navigation {
+    background-color: neutral-color(white);
+    color: neutral-color(black);
+    @media (prefers-color-scheme: dark ) {
+        color: neutral-color(white) !important;
+        background-color: neutral-color(black) !important;
+    }
+
+    @include column( $selector: '.o-column.o-navigation', $max-width: 100%);
+	padding: 0 0 $standard-heading-margin 0;
+    
+    table.outlook-table {
+
+        td.outlook-inner-padding {
+            padding: 0 0 $standard-heading-margin 0;
+        }
+    }
+}

@@ -1,6 +1,6 @@
 <?php
 /**
- * Template part for displaying festival speaker posts
+ * Template part for displaying MinnPost Festival speaker posts
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *

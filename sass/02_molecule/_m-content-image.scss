@@ -21,7 +21,7 @@
 		@include breakpoint-min( xs ) {
 			float: left;
 			clear: right;
-			margin: $standard-block-margin / 2 $standard-block-margin $standard-block-margin 0;
+			margin: $standard-block-margin * 0.5 $standard-block-margin $standard-block-margin 0;
 		}
 	}
 
@@ -30,7 +30,7 @@
 		@include breakpoint-min( xs ) {
 			float: right;
 			clear: right;
-			margin: $standard-block-margin / 2 0 $standard-block-margin $standard-block-margin;
+			margin: $standard-block-margin * 0.5 0 $standard-block-margin $standard-block-margin;
 		}
 	}
 }

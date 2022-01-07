@@ -84,3 +84,16 @@
 		width: calc(100% - 240px);
 	}
 }
+
+/*
+ * hide the font awesome button
+ * see https://github.com/FortAwesome/wordpress-fontawesome/issues/139
+ */
+ .button.font-awesome-icon-chooser-media-button {
+	display: none;
+}
+
+// the add speaker stuff on event pages currently does not work; hide it.
+#event_tribe_ext_speaker {
+	display: none;
+}

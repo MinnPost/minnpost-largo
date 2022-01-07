@@ -1,0 +1,29 @@
+.m-sponsorship-overview {
+    border: $border-default-style;
+
+    td {
+        padding: $standard-block-padding 0;
+
+        :last-child {
+            margin-bottom: 0;
+        }
+    }
+
+    thead tr {
+        background-color: tonight-palette-color(blue, dark);
+    }
+
+    thead th {
+        text-align: left;
+        padding: $standard-block-padding 0;
+    }
+
+    tr th:first-child,
+    tr td:first-child {
+        padding-left: $standard-block-padding;
+    }
+
+    tbody tr:nth-child(odd) {
+        background-color: tonight-palette-color(blue, medium);
+    }
+}

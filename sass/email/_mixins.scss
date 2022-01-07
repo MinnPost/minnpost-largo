@@ -1,0 +1,254 @@
+// @include breakpoint-max(lg) { ... }
+//
+// ...compiles to something like this:
+//
+// @media screen and (max-width: 50em) { ... }
+
+@use "sass:math";
+
+@mixin breakpoint-max($bp:null) {
+	$all-is-well: true;
+
+	@if $bp {
+
+		/*@if not map-has-key($breakpoints, $bp) {
+			$all-is-well: false;
+
+			@warn invalid("breakpoint-max",$bp) + wrong-type("valid breakpoint name",$bp) + ". " + $bp-min-lesson;
+		}*/
+	} @else {
+		$all-is-well: false;
+
+		@warn invalid("breakpoint-max") + missing(1) + $bp-min-lesson;
+	}
+
+	@if $all-is-well == true {
+
+		@media screen and (max-width: $bp) {
+			@content;
+		}
+	}
+}
+
+// text sizes. this has to be before any mixins that include it
+@mixin text-preset( $size: inherit, $line-height: inherit, $important: inherit ) {
+	@if $size != inherit {
+		@if $important != inherit {
+			font-size: map-get( $font-sizes, $size ) !important;
+		} @else {
+			font-size: map-get( $font-sizes, $size );
+		}
+
+		@media only screen and (max-width: $large-screen-width) {
+			font-size: map-get( $font-sizes, $size - 1 ) !important;
+		}
+
+		line-height: 1.3;
+	}
+}
+
+// heading text
+@mixin heading-preset( $size: inherit, $bold: inherit, $italic: inherit, $line-height: inherit, $important: inherit ) {
+	margin: 0;
+	padding: 0;
+	font-size: inherit;
+
+	td {
+		font-size: inherit;
+		font-weight: inherit;
+		padding: 0 0 $standard-heading-margin 0;
+		margin: 0;
+
+		h1,
+		h2,
+		h3,
+		h4,
+		h5,
+		h6 {
+			margin: 0;
+			padding: 0;
+			font-family: $webfont__serif;
+			font-size-adjust: 0.46;
+			@include text-preset( $size, $line-height, $important );
+
+			@if $bold == true {
+				font-weight: 900;
+			} @else if $bold == false {
+				font-weight: 500;
+			}
+			font-weight: bold !important;
+
+			@if $italic == true {
+				font-style: italic;
+			} @else if $italic == false {
+				font-style: normal;
+			}
+
+			
+		}
+	}
+}
+// used like this: @include heading-preset( $size: 3, $bold: false );
+
+
+// button in a table treatment
+@mixin table_button( $background: brand-color(red, medium), $hover: brand-color(red, dark), $color: neutral-color(white), $button-height: auto) {
+	border-collapse: collapse;
+	border-spacing: 0;
+	padding: 0;
+	Margin: 0;
+	width: auto;
+	mso-table-lspace: 0pt;
+	mso-table-rspace: 0pt;
+
+	> tbody > tr > td {
+		height: $button-height;
+
+		@media only screen and (max-width: $large-screen-width) {
+			height: inherit !important;
+		}
+	}
+
+	td {
+		border-collapse: collapse;
+		margin: 0;
+		padding: 0;
+		@include meta-preset( $size: 2, $bold: true, $italic: false, $line-height: 1 );
+
+		table {
+			border-collapse: collapse;
+			border-spacing: 0;
+			margin: 0;
+			mso-table-lspace: 0pt;
+			mso-table-rspace: 0pt;
+			padding: 0;
+
+			td {
+				background-color: $background;
+				color: $color;
+				border-radius: $border-radius;
+				padding: $standard-block-padding * 0.5;
+
+				a {
+					cursor: pointer;
+					border-radius: $border-radius;
+					border: 0;
+					background-color: $background;
+					color: $color;
+					text-decoration: none;
+					display: block;
+
+					&:hover {
+						background-color: $hover;
+						color: $color;
+						text-decoration: none;
+					}
+				}
+			}
+		}
+	}
+}
+
+// button in a paragraph treatment
+@mixin paragraph_button( $background: brand-color(red, medium), $hover: brand-color(red, dark), $color: neutral-color(white), $margin: 0, $mobile-margin-only: false) {
+	padding: 0;
+	margin: 0;
+	background-color: inherit;
+	color: inherit;
+	@include meta-preset( $size: 2, $bold: true, $italic: false, $line-height: 1 );
+
+	@if $mobile-margin-only == 'true' {
+		@media only screen and (max-width: $large-screen-width) {
+			margin: $margin !important;
+		}
+	} else {
+		margin: $margin;
+	}
+
+	a {
+		background-color: $background;
+		color: $color;
+		border-radius: $border-radius;
+		border: 0;
+		cursor: pointer;
+		display: inline-block;
+		padding: $standard-block-padding * 0.5 0;
+		text-decoration: none;
+		mso-padding-alt: 0;
+		width: 100%;
+
+		span {
+			color: $color;
+		}
+
+		&:hover {
+			background-color: $hover !important;
+			color: $color !important;
+			text-decoration: none !important;
+		}
+	}
+}
+
+// layout column
+@mixin column( $selector: '.o-column', $max-width: inherit, $width: 100%, $vertical-align: middle, $text-align: center, $spacing: 0, $desktop-spacing-only: 'false', $mobile-spacing-only: 'true' ) {
+	div#{$selector} {
+        width: $width;
+        max-width: $max-width-email * math.div($max-width, 100%);
+        display: inline-block;
+		vertical-align: $vertical-align;
+
+		@media only screen and (max-width: $large-screen-width) {
+			max-width: 100% !important;
+		}
+
+		div.item-contents {
+			
+			text-align: $text-align;
+			@include body-preset( $size: 0 );
+
+			@if $mobile-spacing-only == 'true' {
+				@media only screen and (max-width: $large-screen-width) {
+					margin: $spacing !important;
+				}
+			} @else {
+				margin: $spacing;
+			}
+			
+			@if $desktop-spacing-only != 'false' {
+				
+				@media only screen and (max-width: $large-screen-width) {
+					margin: 0 !important;
+				}
+			}
+		}
+    }
+
+	table.outlook-table {
+    
+		td.outlook-inner-padding {
+			width: $max-width-email * math.div($max-width, 100%);
+			vertical-align: $vertical-align;
+
+			@if $mobile-spacing-only == 'true' {
+				@media only screen and (max-width: $large-screen-width) {
+					padding: $spacing;
+				}
+			} @else {
+				padding: $spacing;
+			}
+
+			@media only screen and (max-width: $large-screen-width) {
+				width: 100% !important;
+			}
+		}
+	}
+}
+
+// link underline treatment
+@mixin link-underline( $color: utility-color(blue, dark), $hover: utility-color(blue, highlight) ) {
+	color: $color !important;
+	text-decoration: underline !important;
+	text-decoration-color: $hover !important;
+	text-underline-offset: 0.25em !important;
+	text-decoration-thickness: 0.08em !important;
+}

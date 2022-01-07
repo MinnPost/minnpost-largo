@@ -1,0 +1,15 @@
+.m-newsletter-byline {
+
+    .item-contents {
+        border-top: $border-default-style;
+        padding: $standard-block-padding 0;
+        border-bottom: $border-default-style;   
+    }
+
+    .a-newsletter-byline {
+
+        td {
+            @include body-preset( $size: 0 );
+        }
+    }
+}

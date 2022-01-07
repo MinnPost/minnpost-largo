@@ -42,15 +42,36 @@ endif;
 if ( ! function_exists( 'minnpost_largo_festival_styles' ) ) :
 	add_action( 'wp_enqueue_scripts', 'minnpost_largo_festival_styles', 10 );
 	function minnpost_largo_festival_styles() {
-		if ( is_post_type_archive( 'festival' ) || is_singular( 'festival' ) || is_singular( 'tribe_ext_speaker' ) ) {
+		if ( is_post_type_archive( 'festival' ) || is_singular( 'festival' ) || ( is_singular( 'tribe_ext_speaker' ) && has_term( 'festival', 'tribe_events_cat' ) ) ) {
 			wp_dequeue_style( 'minnpost-style' );
 			wp_enqueue_style( 'minnpost-festival', get_theme_file_uri() . '/assets/css/festival.css', array(), filemtime( get_theme_file_path() . '/assets/css/festival.css' ), 'all' );
 		}
-		if ( is_singular( 'tribe_events' ) ) {
+		if ( is_singular( 'tribe_events' ) && has_term( 'festival', 'tribe_events_cat' ) ) {
 			$locate = locate_template( 'tribe-events/single-event-festival.php' );
 			if ( '' !== $locate ) {
 				wp_dequeue_style( 'minnpost-style' );
 				wp_enqueue_style( 'minnpost-festival', get_theme_file_uri() . '/assets/css/festival.css', array(), filemtime( get_theme_file_path() . '/assets/css/festival.css' ), 'all' );
+			}
+		}
+	}
+endif;
+
+/**
+* Handle adding and removing of front end CSS for the MinnPost Tonight pages only
+*
+*/
+if ( ! function_exists( 'minnpost_largo_tonight_styles' ) ) :
+	add_action( 'wp_enqueue_scripts', 'minnpost_largo_tonight_styles', 10 );
+	function minnpost_largo_tonight_styles() {
+		if ( is_post_type_archive( 'tonight' ) || is_singular( 'tonight' ) || ( is_singular( 'tribe_ext_speaker' ) && has_term( 'tonight', 'tribe_events_cat' ) ) ) {
+			wp_dequeue_style( 'minnpost-style' );
+			wp_enqueue_style( 'minnpost-tonight', get_theme_file_uri() . '/assets/css/tonight.css', array(), filemtime( get_theme_file_path() . '/assets/css/tonight.css' ), 'all' );
+		}
+		if ( is_singular( 'tribe_events' ) && has_term( 'tonight', 'tribe_events_cat' ) ) {
+			$locate = locate_template( 'tribe-events/single-event-tonight.php' );
+			if ( '' !== $locate ) {
+				wp_dequeue_style( 'minnpost-style' );
+				wp_enqueue_style( 'minnpost-tonight', get_theme_file_uri() . '/assets/css/tonight.css', array(), filemtime( get_theme_file_path() . '/assets/css/tonight.css' ), 'all' );
 			}
 		}
 	}
@@ -95,6 +116,9 @@ if ( ! function_exists( 'minnpost_largo_add_remove_scripts' ) ) :
 		// add
 		//wp_enqueue_script( 'modernizr', get_theme_file_uri() . '/assets/js/modernizr-custom.min.js', array(), '1.0', false );
 		//wp_enqueue_script( 'minnpost', get_theme_file_uri() . '/assets/js/minnpost.min.js', array( 'jquery', 'modernizr' ), filemtime( get_theme_file_path() . '/assets/js/minnpost.min.js' ), true );
+		if ( class_exists( 'Republication_Tracker_Tool' ) ) {
+			wp_enqueue_script( 'republication-tracker-tool-js', plugins_url() . '/republication-tracker-tool/' . 'assets/widget.js', array( 'jquery' ), '1.0', true );
+		}
 		wp_enqueue_script( 'minnpost', get_theme_file_uri() . '/assets/js/minnpost.min.js', array( 'jquery' ), filemtime( get_theme_file_path() . '/assets/js/minnpost.min.js' ), true );
 		// localize
 		$params = array(

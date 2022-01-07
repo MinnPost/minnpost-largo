@@ -1,6 +1,6 @@
 <?php
 /**
- * The template for displaying the festival archive
+ * The template for displaying the MinnPost Festival archive
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
@@ -13,7 +13,10 @@ get_header( 'festival' ); ?>
 		<?php
 		while ( have_posts() ) :
 			the_post();
-			get_template_part( 'template-parts/content', 'festival' );
+			$args = array(
+				'object_type' => 'festival',
+			);
+			get_template_part( 'template-parts/content-event-website', 'festival', $args );
 		endwhile; // End of the loop.
 		?>
 	</main><!-- #main -->

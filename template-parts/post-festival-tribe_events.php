@@ -1,6 +1,6 @@
 <?php
 /**
- * Template part for displaying festival event posts
+ * Template part for displaying MinnPost Festival event posts
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
@@ -47,8 +47,8 @@ $post_class = 'm-post m-festival-post m-festival-post-event m-festival-post-even
 				<?php the_content(); ?>
 			</div>
 			<?php get_template_part( 'tribe/events/modules/meta/speaker' ); ?>
-			<?php minnpost_festival_pass_link(); ?>
-			<?php minnpost_festival_disclaimer_text(); ?>
+			<?php minnpost_event_website_pass_link( 'festival' ); ?>
+			<?php minnpost_event_website_disclaimer_text( 'festival' ); ?>
 		</div><!-- .m-entry-content -->
 	</div>
 </article> <!-- #post-x -->

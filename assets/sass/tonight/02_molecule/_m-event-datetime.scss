@@ -1,0 +1,21 @@
+.m-event-datetime {
+
+	svg {
+		width: 1em !important;
+	}
+
+	> a {
+		display: flex;
+		flex-direction: column;
+		text-decoration: none;
+	}
+
+	> span,
+	> a > span {
+		margin: 0 0 $standard-block-padding 0;
+
+		span {
+			color: tonight-palette-color(yellow, highlight);
+		}
+	}
+}
