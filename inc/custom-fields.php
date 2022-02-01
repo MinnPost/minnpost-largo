@@ -2831,6 +2831,13 @@ if ( ! function_exists( 'cmb2_event_website_page_fields' ) ) :
 		foreach ( $event_website_page_settings as $object_type => $settings ) {
 
 			$prefix = $settings['prefix'];
+			$event_year = minnpost_largo_get_event_year( $object_type );
+
+			$year_suffix = '';
+			if ( '' !== get_the_date( 'Y' ) && get_the_date( 'Y' ) !== gmdate( 'Y' ) ) {
+				$year_suffix = $event_year . '/';
+			}
+			error_log( 'year suffix is ' . $year_suffix );
 
 			/**
 			 * event directory settings
@@ -2849,7 +2856,7 @@ if ( ! function_exists( 'cmb2_event_website_page_fields' ) ) :
 			$directory_desc          = sprintf(
 				// translators: 1) the directory url
 				esc_html__( 'If checked, this page will load as the content of %1$s.' ),
-				'<a href="' . site_url( '/' . $object_type . '/' ) . '">' . site_url( '/' . $object_type . '/' ) . '</a>',
+				'<a href="' . site_url( '/' . $object_type . '/' . $year_suffix ) . '">' . site_url( '/' . $object_type . '/' . $year_suffix ) . '</a>',
 			);
 			// check to see if there is a post checked for /object-type already
 			$directory_args  = array(
@@ -2857,6 +2864,7 @@ if ( ! function_exists( 'cmb2_event_website_page_fields' ) ) :
 				'post_type'      => $object_type,
 				'meta_key'       => $object_type . '_load_as_directory_content',
 				'meta_value'     => 'on',
+				'year'           => $event_year,
 			);
 			$directory_query = new WP_Query( $directory_args );
 			if ( $directory_query->have_posts() ) {
