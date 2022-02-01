@@ -11,6 +11,7 @@ $object_type   = $args['object_type'];
 $content       = get_the_content();
 $content       = apply_filters( 'the_content', $content );
 $content_posts = get_post_meta( get_the_ID(), '_mp_' . $object_type . '_content_posts', true );
+$event_year    = minnpost_largo_get_event_year( $object_type );
 if ( '' !== $content || ! empty( $content_posts ) ) :
 
 	if ( '' !== $content ) :
@@ -39,6 +40,7 @@ if ( '' !== $content || ! empty( $content_posts ) ) :
 			'posts_per_page' => -1,
 			'orderby'        => 'post__in',
 			'post_status'    => 'any',
+			'year'           => $event_year,
 			'post_type'      => array( 'tribe_events', 'tribe_ext_speaker' ),
 		);
 		$content_query        = new WP_Query( $content_query_args );

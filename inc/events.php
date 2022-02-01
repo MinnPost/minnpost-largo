@@ -245,6 +245,33 @@ if ( ! function_exists( 'minnpost_largo_single_event_links' ) ) :
 endif;
 
 /**
+* Get the year for the event website. It's based on the publish date of the directory page.
+* @param int $post_id
+* @param array $args
+* @return int $post_id
+*
+*/
+if ( ! function_exists( 'minnpost_largo_get_event_year' ) ) :
+	function minnpost_largo_get_event_year( $object_type = 'festival' ) {
+		$year            = gmdate( 'Y' );
+		$directory_args  = array(
+			'posts_per_page' => 1,
+			'post_type'      => $object_type,
+			'meta_key'       => $object_type . '_load_as_directory_content',
+			'meta_value'     => 'on',
+		);
+		$directory_query = new WP_Query( $directory_args );
+		if ( $directory_query->have_posts() ) {
+			while ( $directory_query->have_posts() ) {
+				$directory_query->the_post();
+				$year = get_the_date( 'Y' );
+			}
+		}
+		return $year;
+	}
+endif;
+
+/**
 * Set the event website date range based on the specified page slug that contains the events.
 * @param string $object_type
 * @param string $event_slug
@@ -258,12 +285,20 @@ if ( ! function_exists( 'minnpost_largo_get_event_website_date_range' ) ) :
 		if ( ! is_object( $post ) ) {
 			return $output;
 		}
+		$event_year  = minnpost_largo_get_event_year( $object_type );
 		$event_posts = get_post_meta( $post->ID, '_mp_' . $object_type . '_content_posts', true );
 		if ( ! empty( $event_posts ) ) {
 
 			foreach ( $event_posts as $key => $event_post_id ) {
 				if ( 'publish' !== get_post_status( $event_post_id ) ) {
 					unset( $event_posts[ $key ] );
+				}
+				$post_year = get_the_date( 'Y', $event_post_id );
+				if ( $post_year !== $event_year ) {
+					unset( $event_posts[ $key ] );
+				}
+				if ( empty( $event_posts ) ) {
+					return $output;
 				}
 			}
 
