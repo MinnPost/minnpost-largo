@@ -1,4 +1,4 @@
-# Copyright (C) 2021 minnpost-largo
+# Copyright (C) 2022 minnpost-largo
 # This file is distributed under the same license as the minnpost-largo package.
 msgid ""
 msgstr ""
@@ -240,7 +240,7 @@ msgid "Do Not Add Automatic Date and Newsletter Type Text"
 msgstr ""
 
 #: inc/custom-fields.php:143
-msgid "If you check this box, the newsletter teaser area will not contain an automatic date, and will not state what type of newsletter this is."
+msgid "If you check this box, the newsletter introduction will not contain an automatic date, and will not state what type of newsletter this is."
 msgstr ""
 
 #: inc/custom-fields.php:152

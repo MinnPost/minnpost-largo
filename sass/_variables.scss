@@ -88,6 +88,12 @@ $html-font-size: 100%;
 \*------------------------------------*/
 
 // ------------------------------------------------------------
+// COLUMN SETTINGS
+// ------------------------------------------------------------
+// https://github.com/propublica/column-setter
+// ------------------------------------------------------------
+
+// ------------------------------------------------------------
 // GRID PROPORTIONS
 // ------------------------------------------------------------
 // Customize your grid’s proportions by editing the values of
@@ -133,10 +139,10 @@ $breakpoints: (
     xxxl: (cols: 16, min-width: 90em, margin: $mar) // 1440px
 );
 
-$max-width: null; // For no max-width, use $max-width: null;
+$max-width: 80em; // this is 1280px
 
 $size__site-sidebar: 300px; // this needs to be pixel based because of ad dimensions
-$max-width-page: 80em; // this is 1280px
+$max-width-page: $max-width; // if the new max width works without issue, we can remove the redundant variable
 
 // ------------------------------------------------------------
 // Z-INDEXES
