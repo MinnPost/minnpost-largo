@@ -1347,6 +1347,60 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			)
 		);
 
+		$extra_code_user  = wp_get_current_user();
+		$extra_code_roles = array( 'editor', 'administrator' );
+		if ( array_intersect( $extra_code_roles, $extra_code_user->roles ) ) {
+			/**
+			 * Extra code settings
+			 */
+			$extra_code_settings = new_cmb2_box(
+				array(
+					'id'           => $object_type . '_extra_code_options',
+					'title'        => __( 'Extra Code Settings', 'minnpost-largo' ),
+					'object_types' => array( $object_type ),
+					'context'      => 'normal',
+					'priority'     => 'low',
+					'closed'       => true,
+				)
+			);
+			$extra_code_settings->add_field(
+				array(
+					'name'    => __( 'CSS File URL', 'minnpost-largo' ),
+					'id'      => '_css_file_url',
+					'type'    => 'text_url',
+					'desc'    => __( 'Add a CSS file URL that should be added to this post', 'minnpost-largo' ),
+					'default' => '',
+				)
+			);
+			$extra_code_settings->add_field(
+				array(
+					'name'    => __( 'CSS File Version', 'minnpost-largo' ),
+					'id'      => '_css_file_version',
+					'type'    => 'text',
+					'desc'    => __( 'Add a number to set the version of the CSS file. If you want to clear the cached file, increase its version number by 1.', 'minnpost-largo' ),
+					'default' => '',
+				)
+			);
+			$extra_code_settings->add_field(
+				array(
+					'name'    => __( 'JavaScript File URL', 'minnpost-largo' ),
+					'id'      => '_js_file_url',
+					'type'    => 'text_url',
+					'desc'    => __( 'Add a JavaScript file URL that should be added to this post', 'minnpost-largo' ),
+					'default' => '',
+				)
+			);
+			$extra_code_settings->add_field(
+				array(
+					'name'    => __( 'JavaScript File Version', 'minnpost-largo' ),
+					'id'      => '_js_file_version',
+					'type'    => 'text',
+					'desc'    => __( 'Add a number to set the version of the JavaScript file. If you want to clear the cached file, increase its version number by 1.', 'minnpost-largo' ),
+					'default' => '',
+				)
+			);
+		}
+
 	}
 endif;
 
@@ -2830,7 +2884,7 @@ if ( ! function_exists( 'cmb2_event_website_page_fields' ) ) :
 
 		foreach ( $event_website_page_settings as $object_type => $settings ) {
 
-			$prefix = $settings['prefix'];
+			$prefix     = $settings['prefix'];
 
 			/**
 			 * event directory settings
