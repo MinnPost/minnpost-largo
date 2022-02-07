@@ -664,9 +664,27 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_hide_default_speaker_meta_box' ) ) :
-	add_filter( 'tribe_ext_events_add_tribe_ext_speaker_meta_box', 'minnpost_hide_default_speaker_meta_box' );
+	//add_filter( 'tribe_ext_events_add_tribe_ext_speaker_meta_box', 'minnpost_hide_default_speaker_meta_box' );
 	function minnpost_hide_default_speaker_meta_box( $show_speaker_meta_box ) {
 		return false;
+	}
+endif;
+
+/**
+* Based on whether the speaker picker is broken, we might need some extra css.
+* @param bool $show_speaker_meta_box
+* @return bool $show_speaker_meta_box
+*
+*/
+if ( ! function_exists( 'minnpost_event_speaker_box_css' ) ) :
+	add_action( 'admin_enqueue_scripts', 'minnpost_event_speaker_box_css' );
+	function minnpost_event_speaker_box_css() {
+		$show_speaker_meta_box = apply_filters( 'tribe_ext_events_add_tribe_ext_speaker_meta_box', true );
+		if ( false === $show_speaker_meta_box ) {
+			// wp_enqueue_style( 'custom_wp_admin_css', get_theme_file_uri() . '/admin-style.css', array(), filemtime( get_theme_file_path() . '/admin-style.css' ) );
+			$css = '#event_tribe_ext_speaker {display: none;}';
+			wp_add_inline_style( 'custom_wp_admin_css', $css );
+		}
 	}
 endif;
 

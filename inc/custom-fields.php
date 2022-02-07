@@ -2477,8 +2477,10 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 
 		/**
 		 * Event speaker settings
+		 * We only use this when the default linked post type behavior does not work.
+		 * @see inc/events.php tribe_ext_events_add_tribe_ext_speaker_meta_box hook.
 		 */
-		$event_speaker_posts = new_cmb2_box(
+		/*$event_speaker_posts = new_cmb2_box(
 			array(
 				'id'           => $object_type . '_event_posts',
 				'title'        => __( 'Speakers', 'minnpost-largo' ),
@@ -2505,7 +2507,7 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 				),
 				'post_search_ajax'
 			)
-		);
+		);*/
 
 		/**
 		 * SEO and social meta settings
