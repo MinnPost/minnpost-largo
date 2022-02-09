@@ -632,7 +632,7 @@ if ( ! function_exists( 'minnpost_largo_menu_support' ) ) :
 endif;
 
 /**
-* Change menu classes for festival/tonight/event menus
+* Change menu classes for festival/tonight/event menus. This applies to archive and singular speakers and sessions.
 * @param string $classes
 * @param object $item
 * @return string $classes
@@ -641,12 +641,19 @@ endif;
 if ( ! function_exists( 'minnpost_largo_event_menu_classes' ) ) :
 	add_filter( 'minnpost_largo_nav_item_classes', 'minnpost_largo_event_menu_classes', 10, 2 );
 	function minnpost_largo_event_menu_classes( $classes, $item ) {
-		if ( is_singular( 'tribe_ext_speaker' ) && 'Speakers' === $item->title ) {
-			$classes .= ' active';
-		}
-		if ( is_singular( 'tribe_events' ) || is_singular( 'sessions' ) ) {
-			if ( 'Sessions' === $item->title || 'Events' === $item->title ) {
+		if ( is_singular( 'tribe_ext_speaker' ) || is_singular( 'sessions' ) || is_singular( 'tribe_events' ) ) {
+			if ( is_object( $item ) ) {
+				$title = $item->title;
+			} else {
+				$title = $item['title'];
+			}
+			if ( 'Speakers' === $title ) {
 				$classes .= ' active';
+			}
+			if ( is_singular( 'tribe_events' ) || is_singular( 'sessions' ) ) {
+				if ( 'Sessions' === $title || 'Events' === $title ) {
+					$classes .= ' active';
+				}
 			}
 		}
 		return $classes;
