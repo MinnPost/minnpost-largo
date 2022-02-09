@@ -2816,7 +2816,7 @@ endif;
 *
 */
 if ( ! function_exists( 'cmb2_event_website_page_fields' ) ) :
-	add_action( 'cmb2_init', 'cmb2_event_website_page_fields' );
+	add_action( 'cmb2_admin_init', 'cmb2_event_website_page_fields' );
 	function cmb2_event_website_page_fields() {
 
 		$event_website_page_settings = array(
@@ -3128,7 +3128,7 @@ endif;
 *
 */
 if ( ! function_exists( 'cmb2_speaker_fields' ) ) :
-	add_action( 'cmb2_init', 'cmb2_speaker_fields' );
+	add_action( 'cmb2_admin_init', 'cmb2_speaker_fields' );
 	function cmb2_speaker_fields() {
 
 		$object_type = 'tribe_ext_speaker';
