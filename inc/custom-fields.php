@@ -2831,11 +2831,11 @@ if ( ! function_exists( 'cmb2_event_website_page_fields' ) ) :
 		);
 
 		global $post;
-		if ( empty( $post ) && ( array_key_exists( 'post', $_GET ) ) || array_key_exists( 'post_id', $_POST ) ) {
+		if ( empty( $post ) && ( array_key_exists( 'post', $_GET ) ) || array_key_exists( 'post_ID', $_POST ) ) {
 			if ( isset( $_GET['post'] ) ) {
 				$post = get_post( $_GET['post'] );
 			} else {
-				$post = get_post( $_POST['post_id'] );
+				$post = get_post( $_POST['post_ID'] );
 			}
 			$post_type   = get_post_type( $post );
 			$event_types = array_keys( $event_website_page_settings );
@@ -2881,8 +2881,11 @@ if ( ! function_exists( 'cmb2_event_website_page_fields' ) ) :
 						global $post;
 						$post_id           = isset( $post->ID ) ? $post->ID : '';
 						$directory_post_id = isset( $directory_query->posts[0]->ID ) ? (int) $directory_query->posts[0]->ID : '';
-						if ( empty( $post ) && array_key_exists( 'post', $_GET ) ) {
+						if ( array_key_exists( 'post', $_GET ) ) {
 							$post_id = esc_attr( $_GET['post'] );
+						}
+						if ( array_key_exists( 'post_ID', $_POST ) ) {
+							$post_id = esc_attr( $_POST['post_ID'] );
 						}
 						$post_id = (int) $post_id;
 						if ( $directory_post_id !== $post_id ) {
