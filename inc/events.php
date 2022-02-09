@@ -252,13 +252,16 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_largo_get_event_year' ) ) :
-	function minnpost_largo_get_event_year( $object_type = 'festival' ) {
-		$year            = gmdate( 'Y' );
+	function minnpost_largo_get_event_year( $object_type = 'festival', $year = '' ) {
+		if ( '' === $year ) {
+			$year = gmdate( 'Y' );
+		}
 		$directory_args  = array(
 			'posts_per_page' => 1,
 			'post_type'      => $object_type,
 			'meta_key'       => $object_type . '_load_as_directory_content',
 			'meta_value'     => 'on',
+			'year'           => $year,
 		);
 		$directory_query = new WP_Query( $directory_args );
 		if ( $directory_query->have_posts() ) {
@@ -267,7 +270,64 @@ if ( ! function_exists( 'minnpost_largo_get_event_year' ) ) :
 				$year = get_the_date( 'Y' );
 			}
 		}
+		wp_reset_postdata();
 		return $year;
+	}
+endif;
+
+/**
+* Preserve old menu links for the event website. It's based on the publish date of the directory page.
+* @param int $post_id
+* @param array $args
+* @return array $menu
+*
+*/
+if ( ! function_exists( 'minnpost_largo_get_old_event_menu' ) ) :
+	function minnpost_largo_get_old_event_menu( $object_type = 'festival', $event_year = '' ) {
+		$menu = array();
+		if ( '2021' === $event_year ) {
+			$menu = array(
+				array(
+					'class' => 'festival-passes',
+					'url'   => 'https://www.eventbrite.com/e/minnpost-festival-2021-tickets-140928014485',
+					'title' => __( 'Festival Passes', 'minnpost-largo' ),
+				),
+				array(
+					'class' => 'sessions',
+					'url'   => site_url( '/festival/sessions-2021' ),
+					'title' => __( 'Sessions', 'minnpost-largo' ),
+				),
+				array(
+					'class' => 'speakers',
+					'url'   => site_url( '/festival/speakers-2021' ),
+					'title' => __( 'Speakers', 'minnpost-largo' ),
+				),
+				array(
+					'class' => 'sponsors',
+					'url'   => site_url( '/festival/sponsors-2021' ),
+					'title' => __( 'Sponsors', 'minnpost-largo' ),
+				),
+				array(
+					'class' => 'vip-packages',
+					'url'   => site_url( '/festival/vip-packages-2021' ),
+					'title' => __( 'VIP Packages', 'minnpost-largo' ),
+				),
+				array(
+					'class' => 'vip-supporters',
+					'url'   => site_url( '/festival/vip-supporters-2021' ),
+					'title' => __( 'VIP Supporters', 'minnpost-largo' ),
+				),
+			);
+			global $wp;
+			foreach ( $menu as $key => $item ) {
+				$menu[ $key ]['class'] .= minnpost_largo_event_menu_classes( $item['class'], $item );
+				$current_slug           = site_url( add_query_arg( array(), $wp->request ) );
+				if ( $current_slug === $item['url'] ) {
+					$menu[ $key ]['class'] .= ' active';
+				}
+			}
+		}
+		return $menu;
 	}
 endif;
 
@@ -281,11 +341,15 @@ endif;
 if ( ! function_exists( 'minnpost_largo_get_event_website_date_range' ) ) :
 	function minnpost_largo_get_event_website_date_range( $object_type = 'festival', $event_slug = '' ) {
 		$output = '';
-		$post   = get_page_by_path( $event_slug, OBJECT, $object_type );
+		// rewrite the event slug based on the year, if necessary.
+		$event_year = minnpost_largo_get_event_year( $object_type, get_the_date( 'Y' ) );
+		if ( $event_year && gmdate( 'Y' ) !== $event_year ) {
+			$event_slug .= '-' . $event_year;
+		}
+		$post = get_page_by_path( $event_slug, OBJECT, $object_type );
 		if ( ! is_object( $post ) ) {
 			return $output;
 		}
-		$event_year  = minnpost_largo_get_event_year( $object_type );
 		$event_posts = get_post_meta( $post->ID, '_mp_' . $object_type . '_content_posts', true );
 		if ( ! empty( $event_posts ) ) {
 
@@ -400,6 +464,7 @@ if ( ! function_exists( 'minnpost_largo_get_event_website_logo_info' ) ) :
 	function minnpost_largo_get_event_website_logo_info( $object_type = 'festival' ) {
 		$post_id         = 0;
 		$is_current_url  = false;
+		$event_year      = minnpost_largo_get_event_year( $object_type, get_the_date( 'Y' ) );
 		$event_logo_info = array();
 		// check to see if there is a post checked for the event directory page already
 		$directory_args  = array(
@@ -407,6 +472,7 @@ if ( ! function_exists( 'minnpost_largo_get_event_website_logo_info' ) ) :
 			'post_type'      => $object_type,
 			'meta_key'       => $object_type . '_load_as_directory_content',
 			'meta_value'     => 'on',
+			'year'           => $event_year,
 		);
 		$directory_query = new WP_Query( $directory_args );
 		if ( $directory_query->have_posts() ) {
@@ -424,6 +490,9 @@ if ( ! function_exists( 'minnpost_largo_get_event_website_logo_info' ) ) :
 		}
 
 		$url = get_post_type_archive_link( $object_type );
+		if ( $event_year && gmdate( 'Y' ) !== $event_year ) {
+			$url = get_the_permalink( $post_id );
+		}
 
 		$event_logo_info = array(
 			'url'            => $url,
