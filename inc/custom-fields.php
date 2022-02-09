@@ -2831,7 +2831,8 @@ if ( ! function_exists( 'cmb2_event_website_page_fields' ) ) :
 		);
 
 		global $post;
-		// what we need to know is if this post type is one of the event post types.
+		// what we need to know is if this current post type is one of the event post types.
+		$post_type = '';
 		if ( empty( $post ) && ( array_key_exists( 'post', $_GET ) ) || array_key_exists( 'post_ID', $_POST ) ) {
 			if ( isset( $_GET['post'] ) ) {
 				$post = get_post( esc_attr( $_GET['post'] ) );
@@ -2844,7 +2845,7 @@ if ( ! function_exists( 'cmb2_event_website_page_fields' ) ) :
 		}
 		$event_types = array_keys( $event_website_page_settings );
 
-		// if it is, we start adding these fields.
+		// if it is a matching event post type, we start adding these fields.
 		if ( in_array( $post_type, $event_types, true ) ) {
 			foreach ( $event_website_page_settings as $object_type => $settings ) {
 
