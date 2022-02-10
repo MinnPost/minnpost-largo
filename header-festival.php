@@ -17,26 +17,47 @@
 
 <?php wp_head(); ?>
 </head>
-
-<body <?php body_class(); ?>>
+<?php
+$event_logo_info = minnpost_largo_get_event_website_logo_info( 'festival' );
+$event_year      = minnpost_largo_get_event_year( 'festival', get_the_date( 'Y' ) );
+$classes[]       = 'festival-' . $event_year;
+if ( isset( $event_logo_info['is_current_url'] ) && true === $event_logo_info['is_current_url'] ) {
+	$classes[] = 'festival-landing-page';
+}
+?>
+<body <?php body_class( $classes ); ?>>
 
 	<header id="masthead" class="o-header o-header-festival">
-		<?php $event_logo_info = minnpost_largo_get_event_website_logo_info( 'festival' ); ?>
 		<div class="o-wrapper o-wrapper-site-navigation">
 			<?php get_template_part( 'template-parts/logo', 'festival', $event_logo_info ); ?>
 			<nav id="navigation-primary" class="m-main-navigation m-main-navigation-festival">
-				<?php
-				wp_nav_menu(
-					array(
-						'theme_location' => 'festival',
-						'menu_id'        => 'festival-menu',
-						'container'      => false,
-						'walker'         => new Minnpost_Walker_Nav_Menu,
-						'item_classes'   => 'values',
-						'items_wrap'     => '<ul id="%1$s" class="m-menu m-menu-%1$s">%3$s</ul>',
-					)
-				);
-				?>
+				<?php if ( gmdate( 'Y' ) === $event_year ) : ?>
+					<?php
+					wp_nav_menu(
+						array(
+							'theme_location' => 'festival',
+							'menu_id'        => 'festival-menu',
+							'container'      => false,
+							'walker'         => new Minnpost_Walker_Nav_Menu,
+							'item_classes'   => 'values',
+							'items_wrap'     => '<ul id="%1$s" class="m-menu m-menu-%1$s">%3$s</ul>',
+						)
+					);
+					?>
+				<?php else : ?>
+					<?php
+					$menu = minnpost_largo_get_old_event_menu( 'festival', $event_year );
+					if ( ! empty( $menu ) ) :
+						?>
+						<ul id="festival-menu" class="m-menu m-menu-festival-menu">
+							<?php foreach ( $menu as $item ) : ?>
+								<li class="<?php echo isset( $item['class'] ) ? $item['class'] : ''; ?>">
+									<a href="<?php echo isset( $item['url'] ) ? esc_url_raw( $item['url'] ) : ''; ?>"><?php echo isset( $item['title'] ) ? $item['title'] : ''; ?></a>
+								</li>
+							<?php endforeach; ?>
+						</ul>
+					<?php endif; ?>
+				<?php endif; ?>
 			</nav><!-- #navigation-primary -->
 		</div>
 		<?php if ( false === $event_logo_info['is_current_url'] && ! is_singular( array( 'tribe_events', 'tribe_ext_speaker' ) ) ) : ?>
