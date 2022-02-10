@@ -1347,6 +1347,50 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			)
 		);
 
+		$extra_code_user  = wp_get_current_user();
+		$extra_code_roles = array( 'editor', 'administrator' );
+		if ( array_intersect( $extra_code_roles, $extra_code_user->roles ) ) {
+			/**
+			 * Extra code settings
+			 */
+			$extra_code_settings = new_cmb2_box(
+				array(
+					'id'           => $object_type . '_extra_code_options',
+					'title'        => __( 'Extra Code Settings', 'minnpost-largo' ),
+					'object_types' => array( $object_type ),
+					'context'      => 'normal',
+					'priority'     => 'low',
+					'closed'       => true,
+				)
+			);
+			$extra_code_settings->add_field(
+				array(
+					'name'    => __( 'CSS File URLs', 'minnpost-largo' ),
+					'id'      => '_css_file_urls',
+					'type'    => 'textarea',
+					'desc'    => __( 'Add CSS file URLs that should be added to this post. Add each on its own line.', 'minnpost-largo' ),
+					'default' => '',
+				)
+			);
+			$extra_code_settings->add_field(
+				array(
+					'name'    => __( 'JavaScript File URLs', 'minnpost-largo' ),
+					'id'      => '_js_file_urls',
+					'type'    => 'textarea',
+					'desc'    => __( 'Add JavaScript file URLs that should be added to this post. Add each on its own line.', 'minnpost-largo' ),
+					'default' => '',
+				)
+			);
+			$extra_code_settings->add_field(
+				array(
+					'name'    => __( 'Extra Code Version', 'minnpost-largo' ),
+					'id'      => '_extra_code_version',
+					'type'    => 'text',
+					'desc'    => __( 'Add a number to set the version of the file URLs for this post. If you want to clear the cached files, increase this version number by 1.', 'minnpost-largo' ),
+					'default' => '',
+				)
+			);
+		}
 	}
 endif;
 

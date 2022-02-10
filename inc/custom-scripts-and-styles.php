@@ -28,9 +28,22 @@ if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
 		wp_dequeue_style( 'popular-widget' );
 		wp_dequeue_style( 'creativ_sponsor' );
 
-		$is_liveblog = get_post_meta( get_the_ID(), 'liveblog', true );
-		if ( 'enable' === $is_liveblog || 'archive' === $is_liveblog ) {
-			wp_enqueue_style( 'minnpost-liveblog', get_theme_file_uri() . '/assets/css/liveblog.css', array(), filemtime( get_theme_file_path() . '/assets/css/liveblog.css' ), 'all' );
+		if ( is_single() ) {
+			$is_liveblog = get_post_meta( get_the_ID(), 'liveblog', true );
+			if ( 'enable' === $is_liveblog || 'archive' === $is_liveblog ) {
+				wp_enqueue_style( 'minnpost-liveblog', get_theme_file_uri() . '/assets/css/liveblog.css', array(), filemtime( get_theme_file_path() . '/assets/css/liveblog.css' ), 'all' );
+			}
+			$css_urls = get_post_meta( get_the_ID(), '_css_file_urls', true );
+			if ( '' !== $css_urls ) {
+				$css_urls     = explode( "\r\n", $css_urls );
+				$code_version = get_post_meta( get_the_ID(), '_extra_code_version', true );
+				if ( '' === $code_version ) {
+					$code_version = false;
+				}
+				foreach ( $css_urls as $key => $css_url ) {
+					wp_enqueue_style( 'minnpost-css-' . $key . '-' . get_the_ID(), $css_url, array(), $code_version, 'all' );
+				}
+			}
 		}
 	}
 endif;
@@ -125,6 +138,21 @@ if ( ! function_exists( 'minnpost_largo_add_remove_scripts' ) ) :
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 		);
 		wp_localize_script( 'minnpost', 'params', $params );
+
+		if ( is_single() ) {
+			$js_urls = get_post_meta( get_the_ID(), '_js_file_urls', true );
+			if ( '' !== $js_urls ) {
+				$js_urls      = explode( "\r\n", $js_urls );
+				$code_version = get_post_meta( get_the_ID(), '_extra_code_version', true );
+				if ( '' === $code_version ) {
+					$code_version = false;
+				}
+				foreach ( $js_urls as $key => $js_url ) {
+					wp_enqueue_script( 'minnpost-js-' . $key . '-' . get_the_ID(), $js_url, array(), $code_version, false );
+				}
+			}
+		}
+
 		// remove
 		wp_dequeue_script( 'largo-navigation' );
 		wp_dequeue_script( 'popular-widget' );
