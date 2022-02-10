@@ -27,12 +27,12 @@ function setupPrimaryNav() {
 	}
 
 	const userNavTransitioner = transitionHiddenElement( {
-		element: document.querySelector( '.your-minnpost-account ul' ),
+		element: document.querySelector( '.your-account ul' ),
 		visibleClass: 'is-open',
 		displayValue: 'flex'
 	} );
 
-	var userNavToggle = document.querySelector( '.your-minnpost-account > a' );
+	var userNavToggle = document.querySelector( '.your-account > a' );
 	if ( null !== userNavToggle ) {
 		userNavToggle.addEventListener( 'click', function( e ) {
 			e.preventDefault();

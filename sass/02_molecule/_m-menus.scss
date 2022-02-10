@@ -306,7 +306,8 @@ nav {
 		}
 
 		ul {
-			right: 0;
+			//right: 0;
+			right: calc($standard-block-padding + $standard-block-padding + var(--scale0));
 			top: 100%;
 			transform: translateX(150%);
 			z-index: $z-index__xl;
