@@ -8,6 +8,7 @@
  */
 
 // cmb2_init is the hook that works on rest api; cmb2_admin_init does not; there doesn't seem to be any difference in how often the hooks run though
+// todo: give some more info about which cases, if any, for which this distinction is relevant.
 
 /**
 * Newsletter fields
@@ -39,7 +40,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 	* @param array $conditionals
 	* @return array $conditionals
 	*/
-	add_action( 'cmb2_init', 'cmb2_newsletter_fields' );
+	add_action( 'cmb2_admin_init', 'cmb2_newsletter_fields' );
 	function cmb2_newsletter_fields() {
 
 		$object_type = 'newsletter';
@@ -738,7 +739,7 @@ add_filter( 'cmb2_override_excerpt_meta_save', '__return_true' );
 */
 if ( ! function_exists( 'cmb2_post_fields' ) ) :
 
-	add_action( 'cmb2_init', 'cmb2_post_fields' );
+	add_action( 'cmb2_admin_init', 'cmb2_post_fields' );
 	function cmb2_post_fields() {
 
 		$object_type = 'post';
@@ -1355,7 +1356,7 @@ endif;
 *
 */
 if ( ! function_exists( 'cmb2_page_fields' ) ) :
-	add_action( 'cmb2_init', 'cmb2_page_fields' );
+	add_action( 'cmb2_admin_init', 'cmb2_page_fields' );
 	function cmb2_page_fields() {
 
 		$object_type = 'page';
@@ -1510,7 +1511,7 @@ endif;
 *
 */
 if ( ! function_exists( 'cmb2_category_fields' ) ) :
-	add_action( 'cmb2_init', 'cmb2_category_fields' );
+	add_action( 'cmb2_admin_init', 'cmb2_category_fields' );
 	function cmb2_category_fields() {
 
 		$object_type = 'term';
@@ -1651,7 +1652,7 @@ endif;
 *
 */
 if ( ! function_exists( 'cmb2_tag_fields' ) ) :
-	add_action( 'cmb2_init', 'cmb2_tag_fields' );
+	add_action( 'cmb2_admin_init', 'cmb2_tag_fields' );
 	function cmb2_tag_fields() {
 
 		$object_type = 'term';
@@ -2004,7 +2005,7 @@ endif;
 *
 */
 if ( ! function_exists( 'cmb2_author_fields' ) ) :
-	add_action( 'cmb2_init', 'cmb2_author_fields', 9 );
+	add_action( 'cmb2_admin_init', 'cmb2_author_fields', 9 );
 	function cmb2_author_fields() {
 		$object_type = 'guest-author';
 		/**
@@ -2078,7 +2079,7 @@ endif;
 *
 */
 if ( ! function_exists( 'cmb2_user_fields' ) ) :
-	add_action( 'cmb2_init', 'cmb2_user_fields' );
+	add_action( 'cmb2_admin_init', 'cmb2_user_fields' );
 	function cmb2_user_fields() {
 
 		$object_type = 'user';
@@ -2316,7 +2317,7 @@ endif;
 *
 */
 if ( ! function_exists( 'cmb2_sponsor_fields' ) ) :
-	add_action( 'cmb2_init', 'cmb2_sponsor_fields' );
+	add_action( 'cmb2_admin_init', 'cmb2_sponsor_fields' );
 	function cmb2_sponsor_fields() {
 
 		$object_type = 'cr3ativsponsor';
@@ -2442,7 +2443,7 @@ endif;
 *
 */
 if ( ! function_exists( 'cmb2_event_fields' ) ) :
-	add_action( 'cmb2_init', 'cmb2_event_fields' );
+	add_action( 'cmb2_admin_init', 'cmb2_event_fields' );
 	function cmb2_event_fields() {
 
 		$object_type = 'tribe_events';
