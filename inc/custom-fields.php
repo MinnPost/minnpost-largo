@@ -1390,18 +1390,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 					'default' => '',
 				)
 			);
-			
-			$extra_code_settings->add_field(
-				array(
-					'name'    => __( 'JavaScript File Version', 'minnpost-largo' ),
-					'id'      => '_js_file_version',
-					'type'    => 'text',
-					'desc'    => __( 'Add a number to set the version of the JavaScript file. If you want to clear the cached file, increase its version number by 1.', 'minnpost-largo' ),
-					'default' => '',
-				)
-			);
 		}
-
 	}
 endif;
 

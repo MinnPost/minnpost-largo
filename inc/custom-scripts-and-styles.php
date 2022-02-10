@@ -35,13 +35,13 @@ if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
 			}
 			$css_urls = get_post_meta( get_the_ID(), '_css_file_urls', true );
 			if ( '' !== $css_urls ) {
-				$css_urls    = explode( "\r\n", $css_urls );
-				$css_version = get_post_meta( get_the_ID(), '_extra_code_version', true );
-				if ( '' === $css_version ) {
-					$css_version = false;
+				$css_urls     = explode( "\r\n", $css_urls );
+				$code_version = get_post_meta( get_the_ID(), '_extra_code_version', true );
+				if ( '' === $code_version ) {
+					$code_version = false;
 				}
-				foreach ( $css_urls as $css_url ) {
-					wp_enqueue_style( 'minnpost-' . get_the_ID(), $css_url, array(), $css_version, 'all' );
+				foreach ( $css_urls as $key => $css_url ) {
+					wp_enqueue_style( 'minnpost-css-' . $key . '-' . get_the_ID(), $css_url, array(), $code_version, 'all' );
 				}
 			}
 		}
@@ -142,13 +142,13 @@ if ( ! function_exists( 'minnpost_largo_add_remove_scripts' ) ) :
 		if ( is_single() ) {
 			$js_urls = get_post_meta( get_the_ID(), '_js_file_urls', true );
 			if ( '' !== $js_urls ) {
-				$js_urls    = explode( "\r\n", $js_urls );
-				$js_version = get_post_meta( get_the_ID(), '_extra_code_version', true );
-				if ( '' === $js_version ) {
-					$js_version = false;
+				$js_urls      = explode( "\r\n", $js_urls );
+				$code_version = get_post_meta( get_the_ID(), '_extra_code_version', true );
+				if ( '' === $code_version ) {
+					$code_version = false;
 				}
-				foreach ( $js_urls as $js_url ) {
-					wp_enqueue_script( 'minnpost-' . get_the_ID(), $js_url, array(), $js_version, true );
+				foreach ( $js_urls as $key => $js_url ) {
+					wp_enqueue_script( 'minnpost-js-' . $key . '-' . get_the_ID(), $js_url, array(), $code_version, false );
 				}
 			}
 		}
