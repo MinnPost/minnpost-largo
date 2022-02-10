@@ -1365,31 +1365,32 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			);
 			$extra_code_settings->add_field(
 				array(
-					'name'    => __( 'CSS File URL', 'minnpost-largo' ),
-					'id'      => '_css_file_url',
-					'type'    => 'text_url',
-					'desc'    => __( 'Add a CSS file URL that should be added to this post', 'minnpost-largo' ),
+					'name'    => __( 'CSS File URLs', 'minnpost-largo' ),
+					'id'      => '_css_file_urls',
+					'type'    => 'textarea',
+					'desc'    => __( 'Add CSS file URLs that should be added to this post. Add each on its own line.', 'minnpost-largo' ),
 					'default' => '',
 				)
 			);
 			$extra_code_settings->add_field(
 				array(
-					'name'    => __( 'CSS File Version', 'minnpost-largo' ),
-					'id'      => '_css_file_version',
+					'name'    => __( 'JavaScript File URLs', 'minnpost-largo' ),
+					'id'      => '_js_file_urls',
+					'type'    => 'textarea',
+					'desc'    => __( 'Add JavaScript file URLs that should be added to this post. Add each on its own line.', 'minnpost-largo' ),
+					'default' => '',
+				)
+			);
+			$extra_code_settings->add_field(
+				array(
+					'name'    => __( 'Extra Code Version', 'minnpost-largo' ),
+					'id'      => '_extra_code_version',
 					'type'    => 'text',
-					'desc'    => __( 'Add a number to set the version of the CSS file. If you want to clear the cached file, increase its version number by 1.', 'minnpost-largo' ),
+					'desc'    => __( 'Add a number to set the version of the file URLs for this post. If you want to clear the cached files, increase this version number by 1.', 'minnpost-largo' ),
 					'default' => '',
 				)
 			);
-			$extra_code_settings->add_field(
-				array(
-					'name'    => __( 'JavaScript File URL', 'minnpost-largo' ),
-					'id'      => '_js_file_url',
-					'type'    => 'text_url',
-					'desc'    => __( 'Add a JavaScript file URL that should be added to this post', 'minnpost-largo' ),
-					'default' => '',
-				)
-			);
+			
 			$extra_code_settings->add_field(
 				array(
 					'name'    => __( 'JavaScript File Version', 'minnpost-largo' ),
