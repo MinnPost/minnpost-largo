@@ -46,7 +46,7 @@
 	<?php if ( '' !== $button_text ) : ?>
 		<?php
 		$value  = '';
-		$value .= '<a' . $button_style . $button_href . ( 'true' === $screen_size[ $prefix . 'banner_buttondetails' ]['blank'] ? 'target="_blank"' : '' ) . '>';
+		$value .= '<a' . $button_style . $button_href . ( ( isset( $screen_size[ $prefix . 'banner_buttondetails' ]['blank'] ) && 'true' === $screen_size[ $prefix . 'banner_buttondetails' ]['blank'] ) ? 'target="_blank"' : '' ) . '>';
 		$text   = '';
 		if ( '' !== $button_emoji ) {
 			$text .= $button_emoji . '&nbsp;';
