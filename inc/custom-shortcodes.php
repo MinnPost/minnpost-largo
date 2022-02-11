@@ -138,8 +138,8 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 					),
 				),
 			);
-			/*if ( 'production' === VIP_GO_ENV ) {
-				$args['es'] = true; // elasticsearch on production only
+			/*if ( 'production' === VIP_GO_ENV || true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) {
+				$args['es'] = true; // elasticsearch.
 			}*/
 		} else {
 			$args = array(
@@ -161,8 +161,8 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 					),
 				),
 			);
-			/*if ( 'production' === VIP_GO_ENV ) {
-				$args['es'] = true; // elasticsearch on production only
+			/*if ( 'production' === VIP_GO_ENV || true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) {
+				$args['es'] = true; // elasticsearch.
 			}*/
 		}
 		$args['year'] = $year;

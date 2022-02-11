@@ -190,8 +190,8 @@ if ( function_exists( 'create_newsletter' ) ) :
 				),
 			),
 		);
-		if ( 'production' === VIP_GO_ENV ) {
-			$newsletter_post_args['es'] = true; // elasticsearch on production only
+		if ( 'production' === VIP_GO_ENV || true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) {
+			$newsletter_post_args['es'] = true; // elasticsearch.
 		}
 		$top_section = new_cmb2_box(
 			array(
@@ -3388,8 +3388,8 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 				),
 				$args
 			);
-			if ( 'production' === VIP_GO_ENV ) {
-				$args['query_args']['es'] = true; // elasticsearch on production only
+			if ( 'production' === VIP_GO_ENV || true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) {
+				$args['query_args']['es'] = true; // elasticsearch.
 			}
 			return $args;
 		}
@@ -3411,8 +3411,8 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 				),
 				$args
 			);
-			if ( 'production' === VIP_GO_ENV ) {
-				$args['query_args']['es'] = true; // elasticsearch on production only
+			if ( 'production' === VIP_GO_ENV || true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) {
+				$args['query_args']['es'] = true; // elasticsearch.
 			}
 			return $args;
 		}
@@ -3432,8 +3432,8 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 			),
 			$args
 		);
-		if ( 'production' === VIP_GO_ENV ) {
-			$args['query_args']['es'] = true; // elasticsearch on production only
+		if ( 'production' === VIP_GO_ENV || true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) {
+			$args['query_args']['es'] = true; // elasticsearch.
 		}
 		return $args;
 
