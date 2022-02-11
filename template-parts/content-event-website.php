@@ -13,11 +13,21 @@ $content       = apply_filters( 'the_content', $content );
 $content_posts = get_post_meta( get_the_ID(), '_mp_' . $object_type . '_content_posts', true );
 if ( '' !== $content || ! empty( $content_posts ) ) :
 
+	if ( '' !== $content && ! empty( $content_posts ) ) :
+		?>
+		<section class="m-event-content-section">
+	<?php endif; ?>
+	<?php
 	if ( '' !== $content ) :
 		?>
 		<article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post m-' . $object_type . ' m-' . $object_type . '-archive' ); ?>>
 			<?php echo $content; ?>
 		</article>
+		<?php
+	endif;
+	if ( '' !== $content && ! empty( $content_posts ) ) :
+		?>
+		</section>
 		<?php
 	endif;
 
