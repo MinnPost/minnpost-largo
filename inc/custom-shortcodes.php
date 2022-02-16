@@ -105,7 +105,7 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 					'show_how_many'          => '-1',
 					'orderby'                => '',
 					'order'                  => '',
-					'year'                   => gmdate( 'Y' ),
+					'year'                   => '',
 				),
 				$atts
 			)
@@ -165,7 +165,9 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 				$args['es'] = true; // elasticsearch on production only
 			}*/
 		}
-		$args['year'] = $year;
+		if ( '' !== $year ) {
+			$args['year'] = $year;
+		}
 
 		$display_level_class = '';
 		if ( '1' === $display_level ) {
