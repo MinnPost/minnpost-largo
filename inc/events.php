@@ -202,7 +202,7 @@ if ( ! function_exists( 'minnpost_largo_full_event_time' ) ) :
 		if ( isset( $args['separator'] ) ) {
 			$separator = $args['separator'];
 		}
-		if ( ( $end_time !== $start_time ) && ( isset( $args['show_end_time'] ) && false !== $args['show_end_time'] ) ) {
+		if ( ( $end_time !== $start_time ) && ( ! isset( $args['show_end_time'] ) || ( isset( $args['show_end_time'] ) && false !== $args['show_end_time'] ) ) ) {
 			$time = sprintf(
 				// translators: 1) start time, 2) separator, 3) end time, 4) timezone
 				__( '%1$s %2$s %3$s%4$s', 'minnpost-largo' ),
