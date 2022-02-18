@@ -7,8 +7,8 @@
  * @package MinnPost Largo
  */
 
-// cmb2_init is the hook that works on rest api; cmb2_admin_init does not; there doesn't seem to be any difference in how often the hooks run though
-// todo: give some more info about which cases, if any, for which this distinction is relevant.
+// cmb2_init is the hook that works on rest api; cmb2_admin_init does not
+// the only time we should need to run cmb2_init is if we need access to CMB2-specific functionality on the frontend or REST API
 
 /**
 * Newsletter fields
