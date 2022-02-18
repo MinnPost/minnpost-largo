@@ -1,0 +1,14 @@
+.m-featured-event-details {
+    width: 100%;
+    background-color: festival-color(bottom);
+    color: neutral-color(white);
+    padding: $standard-block-padding;
+
+    .m-event-datetime > span {
+        margin: 0 $standard-block-padding 0 0;
+
+        span {
+            color: neutral-color(white);
+        }
+    }
+}

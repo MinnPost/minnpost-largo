@@ -1,0 +1,4 @@
+a.a-button {
+    @include button(festival-color(top), festival-color(bottom));
+    border: 1px solid festival-color(bottom);
+}

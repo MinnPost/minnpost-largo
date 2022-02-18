@@ -202,7 +202,7 @@ if ( ! function_exists( 'minnpost_largo_full_event_time' ) ) :
 		if ( isset( $args['separator'] ) ) {
 			$separator = $args['separator'];
 		}
-		if ( $end_time !== $start_time ) {
+		if ( ( $end_time !== $start_time ) && ( ! isset( $args['show_end_time'] ) || ( isset( $args['show_end_time'] ) && false !== $args['show_end_time'] ) ) ) {
 			$time = sprintf(
 				// translators: 1) start time, 2) separator, 3) end time, 4) timezone
 				__( '%1$s %2$s %3$s%4$s', 'minnpost-largo' ),
@@ -550,8 +550,8 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_event_website_pass_link' ) ) :
-	function minnpost_event_website_pass_link( $object_type = 'festival' ) {
-		echo minnpost_get_event_website_pass_link( $object_type );
+	function minnpost_event_website_pass_link( $object_type = 'festival', $args = array() ) {
+		echo minnpost_get_event_website_pass_link( $object_type, $args );
 	}
 endif;
 
@@ -562,13 +562,22 @@ endif;
 *
 */
 if ( ! function_exists( 'minnpost_get_event_website_pass_link' ) ) :
-	function minnpost_get_event_website_pass_link( $object_type = 'festival' ) {
+	function minnpost_get_event_website_pass_link( $object_type = 'festival', $args = array() ) {
+		$class = 'a-button';
+		if ( isset( $args['class'] ) ) {
+			$class .= ' ' . $args['class'];
+		}
 		if ( 'festival' === $object_type ) {
+			$label = esc_html__( 'Reserve your Festival pass' );
+			if ( isset( $args['label'] ) ) {
+				$label = $args['label'];
+			}
 			$buy_event_pass = sprintf(
-				// translators: 1) url to buy a pass, 2) link text
-				__( '<a href="%1$s" class="a-button">%2$s</a>', 'minnpost-largo' ),
+				// translators: 1) url to buy a pass, 2) link text, 3) class
+				__( '<a href="%1$s" class="%3$s">%2$s</a>', 'minnpost-largo' ),
 				esc_url_raw( 'https://www.eventbrite.com/e/minnpost-festival-2021-tickets-140928014485' ), // this will be an eventbrite link
-				esc_html__( 'Reserve your Festival pass' )
+				$label,
+				$class
 			);
 		} elseif ( 'tonight' === $object_type ) {
 			$buy_event_pass = sprintf(
