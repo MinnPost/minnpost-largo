@@ -659,13 +659,13 @@ if ( ! function_exists( 'minnpost_popup_url_matches' ) ) :
 endif;
 
 /**
- * Use Elasticsearch for message queries
+ * Use Elasticsearch to extend message queries
  * @param array $args
  * @return array $args
  */
-if ( ! function_exists( 'minnpost_message_args' ) ) :
-	add_filter( 'wp_message_inserter_post_args', 'minnpost_message_args' );
-	function minnpost_message_args( $args ) {
+if ( ! function_exists( 'minnpost_extend_message_args' ) ) :
+	add_filter( 'wp_message_inserter_post_args', 'minnpost_extend_message_args', 10, 1 );
+	function minnpost_extend_message_args( $args ) {
 		if ( 'production' === VIP_GO_ENV || true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) {
 			$args['es'] = true; // elasticsearch.
 		}
