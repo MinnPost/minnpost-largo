@@ -3002,7 +3002,14 @@ if ( ! function_exists( 'cmb2_event_website_page_fields' ) ) :
 						'show_names'   => true,
 					)
 				);
-
+				$event_posts->add_field(
+					array(
+						'name' => 'Section Heading',
+						'id'   => $prefix . 'content_posts_section_heading',
+						'type' => 'text',
+						'desc' => esc_html__( 'If you enter a value for this field, it will be displayed as a heading above the list of posts. If you leave it blank, there will not be a section-specific heading.', 'minnpost-largo' ),
+					)
+				);
 				$event_posts->add_field(
 					minnpost_post_search_field(
 						array(

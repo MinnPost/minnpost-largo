@@ -1,0 +1,12 @@
+.m-featured-event-content {
+    width: 100%;
+
+    &.m-featured-event-content-with-image {
+        max-width: colspan(8, 12);
+    }
+
+    &.m-featured-event-content-without-image {
+        padding: 0 $standard-block-padding;
+    }
+
+}
