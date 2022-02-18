@@ -12,4 +12,29 @@
             margin-bottom: $standard-heading-margin;
         }
     }
+
+    &.m-festival-post-event-featured {
+        background: neutral-color(white);
+        color: neutral-color(black);
+        //padding: $standard-block-padding;
+        padding: 0;
+        border: $standard-block-padding solid festival-color(top);
+        border-radius: $border-radius;
+        width: 100%;
+        justify-content: space-between;
+        align-content: flex-start;
+        position: relative;
+
+        .o-event-content-with-image {
+            width: 100%;
+        }
+
+        .o-entry {
+            display: block;
+        }
+
+        @include breakpoint-min( sm ) {
+            width: colspan(6, 12);
+        }
+    }
 }

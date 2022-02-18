@@ -7,10 +7,11 @@
  * @package MinnPost Largo
  */
 
-$object_type   = $args['object_type'];
-$content       = get_the_content();
-$content       = apply_filters( 'the_content', $content );
-$content_posts = get_post_meta( get_the_ID(), '_mp_' . $object_type . '_content_posts', true );
+$object_type           = $args['object_type'];
+$content               = get_the_content();
+$content               = apply_filters( 'the_content', $content );
+$content_posts_heading = get_post_meta( get_the_ID(), '_mp_' . $object_type . '_content_posts_section_heading', true );
+$content_posts         = get_post_meta( get_the_ID(), '_mp_' . $object_type . '_content_posts', true );
 if ( '' !== $content || ! empty( $content_posts ) ) :
 
 	if ( '' !== $content && ! empty( $content_posts ) ) :
@@ -54,7 +55,11 @@ if ( '' !== $content || ! empty( $content_posts ) ) :
 		$content_query        = new WP_Query( $content_query_args );
 		$content_display_args = array(
 			'use_permalink' => $use_permalink,
+			'featured'      => false,
 		);
+		if ( '' !== $content && ! empty( $content_posts ) ) {
+			$content_display_args['featured'] = true;
+		}
 
 		if ( $content_query->have_posts() ) :
 			$post_type_class = '';
@@ -73,21 +78,39 @@ if ( '' !== $content || ! empty( $content_posts ) ) :
 				wp_reset_postdata();
 				?>
 			<?php else : ?>
-				<section class="m-archive<?php echo $post_type_class; ?>">
-					<?php
-					while ( $content_query->have_posts() ) {
-						$content_query->the_post();
-						set_query_var( 'current_post', $content_query->current_post );
-						get_template_part( 'template-parts/post-' . $object_type, get_post_type() . '-excerpt', $content_display_args );
-					}
-					wp_reset_postdata();
-					?>
-				</section>
+				<?php if ( '' !== $content && ! empty( $content_posts ) ) : ?>
+					<div class="m-event-content-section o-full-width-wrapper">
+						<div class="m-<?php echo $object_type; ?>-post-container">
+				<?php endif; ?>
+						<section class="m-archive<?php echo $post_type_class; ?>">
+							<?php if ( '' !== $content_posts_heading ) : ?>
+								<h2 class="a-zone-title"><?php echo $content_posts_heading; ?></h2>
+							<?php endif; ?>
+							<?php
+							while ( $content_query->have_posts() ) {
+								$content_query->the_post();
+								set_query_var( 'current_post', $content_query->current_post );
+								if ( false === $content_display_args['featured'] ) {
+									get_template_part( 'template-parts/post-' . $object_type, get_post_type() . '-excerpt', $content_display_args );
+								} else {
+									get_template_part( 'template-parts/post-' . $object_type, get_post_type() . '-excerpt-featured', $content_display_args );
+								}
+							}
+							wp_reset_postdata();
+							?>
+						</section>
+				<?php if ( '' !== $content && ! empty( $content_posts ) ) : ?>
+						<a class="a-button"><?php echo __( 'See all sessions', 'minnpost-largo' ); ?></a>
+					</div>
+				</div>
+				<?php endif; ?>
+			<?php endif; ?>
+			<section class="m-event-content-section">
 				<?php minnpost_event_website_pass_link( $object_type ); ?>
 				<?php if ( 'tribe_events' === $post_type ) : ?>
 					<?php minnpost_event_website_disclaimer_text( $object_type ); ?>
 				<?php endif; ?>
-			<?php endif; ?>
+			</section>
 			<?php
 		endif;
 	endif;
