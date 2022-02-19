@@ -326,13 +326,14 @@ if ( ! function_exists( 'minnpost_account_info' ) ) :
 						$attributes['reading_topics'][ $cat_id ] = $topic;
 					}
 				}
-				$attributes['topics_query'] = new WP_Query(
-					array(
-						'posts_per_page' => 10,
-						'category__in'   => array_keys( $attributes['reading_topics'] ),
-					)
+				$topics_query_args = array(
+					'posts_per_page' => 10,
+					'category__in'   => array_keys( $attributes['reading_topics'] ),
 				);
-
+				if ( 'production' === VIP_GO_ENV || true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) {
+					$topics_query_args['es'] = true; // elasticsearch.
+				}
+				$attributes['topics_query'] = new WP_Query( $topics_query_args );
 			}
 		}
 
