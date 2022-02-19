@@ -667,7 +667,10 @@ if ( ! function_exists( 'minnpost_extend_message_args' ) ) :
 	add_filter( 'wp_message_inserter_post_args', 'minnpost_extend_message_args', 10, 1 );
 	function minnpost_extend_message_args( $args ) {
 		if ( 'production' === VIP_GO_ENV || true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) {
+			// stupid bug where elasticsearch seemingly can't handle orderby
+			if ( ! isset( $args['orderby'] ) ) {
 			$args['es'] = true; // elasticsearch.
+		}
 		}
 		return $args;
 	}
