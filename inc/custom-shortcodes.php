@@ -138,9 +138,6 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 					),
 				),
 			);
-			/*if ( 'production' === VIP_GO_ENV || true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) {
-				$args['es'] = true; // elasticsearch.
-			}*/
 		} else {
 			$args = array(
 				'post_type'      => 'cr3ativsponsor',
@@ -161,9 +158,9 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 					),
 				),
 			);
-			/*if ( 'production' === VIP_GO_ENV || true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) {
-				$args['es'] = true; // elasticsearch.
-			}*/
+		}
+		if ( 'production' === VIP_GO_ENV || true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) {
+			$args['es'] = true; // elasticsearch.
 		}
 		if ( '' !== $year ) {
 			$args['year'] = $year;
