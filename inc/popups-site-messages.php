@@ -659,6 +659,22 @@ if ( ! function_exists( 'minnpost_popup_url_matches' ) ) :
 endif;
 
 /**
+ * Whether to cache message queries
+ * @param bool $cache
+ * @return bool $cache
+ */
+if ( ! function_exists( 'minnpost_message_cache' ) ) :
+	add_filter( 'wp_message_inserter_cache', 'minnpost_message_cache', 10, 1 );
+	function minnpost_message_cache( $cache = true ) {
+		// we don't need to cache these queries IF elasticsearch is being used.
+		if ( 'production' === VIP_GO_ENV || true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) {
+			$cache = false;
+		}
+		return $cache;
+	}
+endif;
+
+/**
  * Use Elasticsearch to extend message queries
  * @param array $args
  * @return array $args
@@ -667,10 +683,15 @@ if ( ! function_exists( 'minnpost_extend_message_args' ) ) :
 	add_filter( 'wp_message_inserter_post_args', 'minnpost_extend_message_args', 10, 1 );
 	function minnpost_extend_message_args( $args ) {
 		if ( 'production' === VIP_GO_ENV || true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) {
-			// stupid bug where elasticsearch seemingly can't handle orderby
+			/* if the bug where elasticsearch seemingly can't handle orderby comes back, these are solutions:
 			if ( ! isset( $args['orderby'] ) ) {
+				$args['es'] = true; // elasticsearch.
+			} else {
+				$args['es'] = true;
+				//$args['ep_integrate'] = true; // elasticpress.
+			}*/
+			// but for now it seems fine.
 			$args['es'] = true; // elasticsearch.
-		}
 		}
 		return $args;
 	}
