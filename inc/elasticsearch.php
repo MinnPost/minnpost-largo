@@ -89,4 +89,21 @@ if ( ! function_exists( 'minnpost_indexable_taxonomy_names' ) ) :
 	}
 endif;
 
-// vip_es_get_related_posts is the method for returning related posts
+/**
+ * Load related posts from Elasticsearch
+ *
+ * @see https://docs.wpvip.com/how-tos/vip-search/vip-search-features/#related-posts
+ * @param int $count how many related stories to load
+ * @return array $related_posts the array of post objects
+ */
+if ( ! function_exists( 'minnpost_largo_get_elasticsearch_results' ) ) :
+	add_shortcode( 'elasticsearch-related-posts', 'minnpost_largo_get_elasticsearch_results' );
+	function minnpost_largo_get_elasticsearch_results( $count = 3 ) {
+		$related_posts = array();
+		// Fetches related post IDs if Elasticsearch Related Posts is active
+		if ( true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION && function_exists( 'vip_es_get_related_posts' ) ) {
+			$related_posts = vip_es_get_related_posts( get_the_ID(), $count );
+		}
+		return $related_posts;
+	}
+endif;

@@ -667,7 +667,7 @@ if ( ! function_exists( 'minnpost_message_cache' ) ) :
 	add_filter( 'wp_message_inserter_cache', 'minnpost_message_cache', 10, 1 );
 	function minnpost_message_cache( $cache = true ) {
 		// we don't need to cache these queries IF elasticsearch is being used.
-		if ( 'production' === VIP_GO_ENV || true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) {
+		if ( true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) {
 			$cache = false;
 		}
 		return $cache;

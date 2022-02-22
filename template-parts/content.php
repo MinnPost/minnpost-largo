@@ -142,6 +142,9 @@
 				if ( ! empty( minnpost_get_related( 'zoninator' ) ) ) {
 					// this function has a true/false flag in it to set whether it returns results.
 					minnpost_related( 'zoninator' );
+				} elseif ( ! empty( minnpost_largo_get_elasticsearch_results() ) ) {
+					// this function has true/false flags in it to determine the filters it uses for Elasticsearch.
+					minnpost_related( 'automated' );
 				} elseif ( ! empty( minnpost_largo_get_jetpack_results() ) ) {
 					// this function has true/false flags in it to determine the filters it uses for Jetpack.
 					minnpost_related( 'automated' );
