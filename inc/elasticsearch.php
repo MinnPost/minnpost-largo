@@ -65,7 +65,6 @@ if ( ! function_exists( 'minnpost_indexable_post_types' ) ) :
 	}
 endif;
 
-// Enable indexing of 'inherit' post statuses
 /**
  * Change which post statuses are indexable by Elasticsearch
  *
