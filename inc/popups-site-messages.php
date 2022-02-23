@@ -659,22 +659,6 @@ if ( ! function_exists( 'minnpost_popup_url_matches' ) ) :
 endif;
 
 /**
- * Whether to cache message queries
- * @param bool $cache
- * @return bool $cache
- */
-if ( ! function_exists( 'minnpost_message_cache' ) ) :
-	add_filter( 'wp_message_inserter_cache', 'minnpost_message_cache', 10, 1 );
-	function minnpost_message_cache( $cache = true ) {
-		// we don't need to cache these queries IF elasticsearch is being used.
-		if ( ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
-			$cache = false;
-		}
-		return $cache;
-	}
-endif;
-
-/**
  * Use Elasticsearch to extend message queries
  * @param array $args
  * @return array $args
