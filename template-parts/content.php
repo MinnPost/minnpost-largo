@@ -149,8 +149,11 @@
 					// this function has true/false flags in it to determine the filters it uses for Jetpack.
 					minnpost_related( 'automated' );
 				} else {
-					echo do_shortcode( '[elasticsearch-related-posts]' );
-					echo do_shortcode( '[jetpack-related-posts]' );
+					if ( shortcode_exists( 'elasticsearch-related-posts' ) ) {
+						echo do_shortcode( '[elasticsearch-related-posts]' );
+					} else {
+						echo do_shortcode( '[jetpack-related-posts]' );
+					}
 				}
 			} else {
 				// these are the manually selected recommendations that override all the automated ones.

@@ -104,6 +104,10 @@ if ( ! function_exists( 'minnpost_largo_get_elasticsearch_results' ) ) :
 		if ( ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION && function_exists( 'vip_es_get_related_posts' ) ) ) {
 			$related_posts = vip_es_get_related_posts( get_the_ID(), $count );
 		}
-		return $related_posts;
+		if ( ! empty( $related_posts ) ) {
+			return $related_posts;
+		} else {
+			return;
+		}
 	}
 endif;
