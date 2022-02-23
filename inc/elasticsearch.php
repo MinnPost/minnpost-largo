@@ -37,16 +37,47 @@ if ( ! function_exists( 'minnpost_indexable_post_types' ) ) :
 			'saswp_reviews'       => 'saswp_reviews',
 			'saswp-collections'   => 'saswp-collections',
 		);*/
-		$deny_list = array(
+		// allow for attachments.
+		$types['attachment'] = 'attachment';
+		$deny_list           = array(
 			'wp_log',
 			'vip-legacy-redirect',
 			'newsletter',
-			'saswp_reviews',
-			'saswp-collections',
+			'saswp', // schema
+			'saswp_reviews', // schema
+			'saswp_rvs_location', // schema
+			'saswp-collections', // schema
+			'jp_mem_plan', // jetpack
+			'jp_pay_order', // jetpack
+			'jp_pay_product', // jetpack
+			'msm_sitemap',
+			'deleted_event',
+			'adstxt',
+			'app-adstxt',
+			'wp_template', // for full site editing
+			'wp_template_part', // for full site editing
+			'wp_global_styles', // for full site editing
+			'wp_navigation', // for full site editing
 		);
 		// unset the items with values matching the deny list
 		$types = array_diff( $types, $deny_list );
 		return $types;
+	}
+endif;
+
+// Enable indexing of 'inherit' post statuses
+/**
+ * Change which post statuses are indexable by Elasticsearch
+ *
+ * @see https://docs.wpvip.com/how-tos/vip-search/enable-for-wp-admin/
+ * @param array $statuses statuses that are allowed
+ * @return array $statuses statuses that are allowed
+ */
+if ( ! function_exists( 'minnpost_indexable_post_statuses' ) ) :
+	add_filter( 'ep_indexable_post_status', 'minnpost_indexable_post_statuses', 10, 1 );
+	function minnpost_indexable_post_statuses( $statuses ) {
+		$statuses = array_merge( $statuses, array( 'inherit' ) );
+		return $statuses;
 	}
 endif;
 
@@ -109,5 +140,22 @@ if ( ! function_exists( 'minnpost_largo_get_elasticsearch_results' ) ) :
 		} else {
 			return;
 		}
+	}
+endif;
+
+/**
+ * Ajax elasticsearch on the admin
+ *
+ * @see https://docs.wpvip.com/how-tos/vip-search/enable-for-wp-admin/
+ * @param bool $enable
+ * @return bool $enable
+ */
+if ( ! function_exists( 'minnpost_largo_es_enable_ajax_admin' ) ) :
+	add_filter( 'ep_ajax_wp_query_integration', 'minnpost_largo_es_enable_ajax_admin' );
+	function minnpost_largo_es_enable_ajax_admin( $enable ) {
+		if ( is_admin() ) {
+			$enable = true;
+		}
+		return $enable;
 	}
 endif;
