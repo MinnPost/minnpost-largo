@@ -138,9 +138,6 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 					),
 				),
 			);
-			/*if ( 'production' === VIP_GO_ENV ) {
-				$args['es'] = true; // elasticsearch on production only
-			}*/
 		} else {
 			$args = array(
 				'post_type'      => 'cr3ativsponsor',
@@ -161,9 +158,9 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 					),
 				),
 			);
-			/*if ( 'production' === VIP_GO_ENV ) {
-				$args['es'] = true; // elasticsearch on production only
-			}*/
+		}
+		if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
+			$args['es'] = true; // elasticsearch.
 		}
 		if ( '' !== $year ) {
 			$args['year'] = $year;
@@ -326,13 +323,14 @@ if ( ! function_exists( 'minnpost_account_info' ) ) :
 						$attributes['reading_topics'][ $cat_id ] = $topic;
 					}
 				}
-				$attributes['topics_query'] = new WP_Query(
-					array(
-						'posts_per_page' => 10,
-						'category__in'   => array_keys( $attributes['reading_topics'] ),
-					)
+				$topics_query_args = array(
+					'posts_per_page' => 10,
+					'category__in'   => array_keys( $attributes['reading_topics'] ),
 				);
-
+				if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
+					$topics_query_args['es'] = true; // elasticsearch.
+				}
+				$attributes['topics_query'] = new WP_Query( $topics_query_args );
 			}
 		}
 
