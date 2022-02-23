@@ -101,7 +101,7 @@ if ( ! function_exists( 'minnpost_largo_get_elasticsearch_results' ) ) :
 	function minnpost_largo_get_elasticsearch_results( $count = 3 ) {
 		$related_posts = array();
 		// Fetches related post IDs if Elasticsearch Related Posts is active
-		if ( true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION && function_exists( 'vip_es_get_related_posts' ) ) {
+		if ( ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION && function_exists( 'vip_es_get_related_posts' ) ) ) {
 			$related_posts = vip_es_get_related_posts( get_the_ID(), $count );
 		}
 		return $related_posts;

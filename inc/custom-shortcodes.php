@@ -159,7 +159,7 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 				),
 			);
 		}
-		if ( 'production' === VIP_GO_ENV || true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) {
+		if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
 			$args['es'] = true; // elasticsearch.
 		}
 		if ( '' !== $year ) {
@@ -327,7 +327,7 @@ if ( ! function_exists( 'minnpost_account_info' ) ) :
 					'posts_per_page' => 10,
 					'category__in'   => array_keys( $attributes['reading_topics'] ),
 				);
-				if ( 'production' === VIP_GO_ENV || true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) {
+				if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
 					$topics_query_args['es'] = true; // elasticsearch.
 				}
 				$attributes['topics_query'] = new WP_Query( $topics_query_args );

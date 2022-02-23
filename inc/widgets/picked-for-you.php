@@ -56,7 +56,7 @@ if ( ! function_exists( 'minnpost_largo_picked_for_you' ) ) :
 			'category__in'   => $query_categories,
 			'orderby'        => 'date',
 		);
-		if ( 'production' === VIP_GO_ENV || true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) {
+		if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
 			$query_args['es'] = true; // elasticsearch.
 		}
 		$query_args = new WP_Query( $query_args );
