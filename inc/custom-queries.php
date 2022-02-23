@@ -153,6 +153,23 @@ if ( ! function_exists( 'custom_archive_query_vars' ) ) :
 endif;
 
 /**
+* On search queries, only return posts with the post type of post.
+*
+* @param int $category_id
+* @return array $grouped_categories
+*
+*/
+if ( ! function_exists( 'minnpost_main_search_query' ) ) :
+	add_filter( 'pre_get_posts', 'minnpost_main_search_query' );
+	function minnpost_main_search_query( $query ) {
+		if ( ! is_admin() && $query->is_search ) {
+			$query->set( 'post_type', 'post' );
+		}
+		return $query;
+	}
+endif;
+
+/**
 * Returns array of grouped categories for the given category.
 * This means the categories that are children of a parent category.
 * Ex: all the categories that are "news" categories.

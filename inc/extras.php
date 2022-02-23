@@ -205,8 +205,8 @@ add_action(
 if ( ! function_exists( 'minnpost_zoninator_elasticsearch' ) ) :
 	add_filter( 'zoninator_recent_posts_args', 'minnpost_zoninator_elasticsearch' );
 	function minnpost_zoninator_elasticsearch( $args ) {
-		if ( 'production' === VIP_GO_ENV ) {
-			$args['es'] = true; // elasticsearch on production only
+		if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
+			$args['es'] = true; // elasticsearch.
 		}
 		return $args;
 	}

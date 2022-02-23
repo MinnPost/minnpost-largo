@@ -142,7 +142,7 @@ color: #ffffff !important; text-decoration: none !important;
 
 														<p style="font-family: Georgia, 'Times New Roman', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 10px; padding: 0;">- Offer edit link: <a href="<?php echo admin_url( 'post.php?post=' . $attributes['partner_offer']->ID . '&action=edit' ); ?>"><?php echo admin_url( 'post.php?post=' . $attributes['partner_offer']->ID . '&action=edit' ); ?></a></p>
 
-														<p style="font-family: Georgia, 'Times New Roman', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 10px; padding: 0;">- Date/Time Claimed: <?php echo date_i18n( get_option( 'date_format' ), $attributes['partner_offer']->instances[ $attributes['instance_id'] ]['_mp_partner_offer_claimed_date'] ) . ' @ ' . date_i18n( get_option( 'time_format' ), $attributes['partner_offer']->instances[ $attributes['instance_id'] ]['_mp_partner_offer_claimed_date'] ); ?></p>
+														<p style="font-family: Georgia, 'Times New Roman', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 10px; padding: 0;">- Date/Time Claimed: <?php echo wp_date( get_option( 'date_format' ), $attributes['partner_offer']->instances[ $attributes['instance_id'] ]['_mp_partner_offer_claimed_date'] ) . ' @ ' . wp_date( get_option( 'time_format' ), $attributes['partner_offer']->instances[ $attributes['instance_id'] ]['_mp_partner_offer_claimed_date'] ); ?></p>
 
 														<p style="font-family: Georgia, 'Times New Roman', Times, serif; font-size: 16px; line-height: 20.787px; margin: 0 0 10px; padding: 0;">- Claiming user's name: <?php echo $attributes['partner_offer']->instances[ $attributes['instance_id'] ]['_mp_partner_offer_claim_user']['name']; ?></p>
 

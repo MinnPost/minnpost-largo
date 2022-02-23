@@ -148,7 +148,7 @@ if ( ! function_exists( 'minnpost_largo_add_remove_scripts' ) ) :
 					$code_version = false;
 				}
 				foreach ( $js_urls as $key => $js_url ) {
-					wp_enqueue_script( 'minnpost-js-' . $key . '-' . get_the_ID(), $js_url, array(), $code_version, false );
+					wp_enqueue_script( 'minnpost-js-' . $key . '-' . get_the_ID(), $js_url, array(), $code_version, true );
 				}
 			}
 		}

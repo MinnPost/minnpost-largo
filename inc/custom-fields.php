@@ -7,7 +7,8 @@
  * @package MinnPost Largo
  */
 
-// cmb2_init is the hook that works on rest api; cmb2_admin_init does not; there doesn't seem to be any difference in how often the hooks run though
+// cmb2_init is the hook that works on rest api; cmb2_admin_init does not
+// the only time we should need to run cmb2_init is if we need access to CMB2-specific functionality on the frontend or REST API
 
 /**
 * Newsletter fields
@@ -39,7 +40,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 	* @param array $conditionals
 	* @return array $conditionals
 	*/
-	add_action( 'cmb2_init', 'cmb2_newsletter_fields' );
+	add_action( 'cmb2_admin_init', 'cmb2_newsletter_fields' );
 	function cmb2_newsletter_fields() {
 
 		$object_type = 'newsletter';
@@ -190,8 +191,8 @@ if ( function_exists( 'create_newsletter' ) ) :
 				),
 			),
 		);
-		if ( 'production' === VIP_GO_ENV ) {
-			$newsletter_post_args['es'] = true; // elasticsearch on production only
+		if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
+			$newsletter_post_args['es'] = true; // elasticsearch.
 		}
 		$top_section = new_cmb2_box(
 			array(
@@ -738,7 +739,7 @@ add_filter( 'cmb2_override_excerpt_meta_save', '__return_true' );
 */
 if ( ! function_exists( 'cmb2_post_fields' ) ) :
 
-	add_action( 'cmb2_init', 'cmb2_post_fields' );
+	add_action( 'cmb2_admin_init', 'cmb2_post_fields' );
 	function cmb2_post_fields() {
 
 		$object_type = 'post';
@@ -1399,7 +1400,7 @@ endif;
 *
 */
 if ( ! function_exists( 'cmb2_page_fields' ) ) :
-	add_action( 'cmb2_init', 'cmb2_page_fields' );
+	add_action( 'cmb2_admin_init', 'cmb2_page_fields' );
 	function cmb2_page_fields() {
 
 		$object_type = 'page';
@@ -1554,7 +1555,7 @@ endif;
 *
 */
 if ( ! function_exists( 'cmb2_category_fields' ) ) :
-	add_action( 'cmb2_init', 'cmb2_category_fields' );
+	add_action( 'cmb2_admin_init', 'cmb2_category_fields' );
 	function cmb2_category_fields() {
 
 		$object_type = 'term';
@@ -1695,7 +1696,7 @@ endif;
 *
 */
 if ( ! function_exists( 'cmb2_tag_fields' ) ) :
-	add_action( 'cmb2_init', 'cmb2_tag_fields' );
+	add_action( 'cmb2_admin_init', 'cmb2_tag_fields' );
 	function cmb2_tag_fields() {
 
 		$object_type = 'term';
@@ -2048,7 +2049,7 @@ endif;
 *
 */
 if ( ! function_exists( 'cmb2_author_fields' ) ) :
-	add_action( 'cmb2_init', 'cmb2_author_fields', 9 );
+	add_action( 'cmb2_admin_init', 'cmb2_author_fields', 9 );
 	function cmb2_author_fields() {
 		$object_type = 'guest-author';
 		/**
@@ -2122,7 +2123,7 @@ endif;
 *
 */
 if ( ! function_exists( 'cmb2_user_fields' ) ) :
-	add_action( 'cmb2_init', 'cmb2_user_fields' );
+	add_action( 'cmb2_admin_init', 'cmb2_user_fields' );
 	function cmb2_user_fields() {
 
 		$object_type = 'user';
@@ -2360,7 +2361,7 @@ endif;
 *
 */
 if ( ! function_exists( 'cmb2_sponsor_fields' ) ) :
-	add_action( 'cmb2_init', 'cmb2_sponsor_fields' );
+	add_action( 'cmb2_admin_init', 'cmb2_sponsor_fields' );
 	function cmb2_sponsor_fields() {
 
 		$object_type = 'cr3ativsponsor';
@@ -2486,7 +2487,7 @@ endif;
 *
 */
 if ( ! function_exists( 'cmb2_event_fields' ) ) :
-	add_action( 'cmb2_init', 'cmb2_event_fields' );
+	add_action( 'cmb2_admin_init', 'cmb2_event_fields' );
 	function cmb2_event_fields() {
 
 		$object_type = 'tribe_events';
@@ -3002,7 +3003,14 @@ if ( ! function_exists( 'cmb2_event_website_page_fields' ) ) :
 						'show_names'   => true,
 					)
 				);
-
+				$event_posts->add_field(
+					array(
+						'name' => 'Section Heading',
+						'id'   => $prefix . 'content_posts_section_heading',
+						'type' => 'text',
+						'desc' => esc_html__( 'If you enter a value for this field, it will be displayed as a heading above the list of posts. If you leave it blank, there will not be a section-specific heading.', 'minnpost-largo' ),
+					)
+				);
 				$event_posts->add_field(
 					minnpost_post_search_field(
 						array(
@@ -3388,8 +3396,8 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 				),
 				$args
 			);
-			if ( 'production' === VIP_GO_ENV ) {
-				$args['query_args']['es'] = true; // elasticsearch on production only
+			if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
+				$args['query_args']['es'] = true; // elasticsearch.
 			}
 			return $args;
 		}
@@ -3411,8 +3419,8 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 				),
 				$args
 			);
-			if ( 'production' === VIP_GO_ENV ) {
-				$args['query_args']['es'] = true; // elasticsearch on production only
+			if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
+				$args['query_args']['es'] = true; // elasticsearch.
 			}
 			return $args;
 		}
@@ -3432,8 +3440,8 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 			),
 			$args
 		);
-		if ( 'production' === VIP_GO_ENV ) {
-			$args['query_args']['es'] = true; // elasticsearch on production only
+		if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
+			$args['query_args']['es'] = true; // elasticsearch.
 		}
 		return $args;
 
