@@ -752,7 +752,7 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 
 		if ( '' !== $image_id ) {
 			$caption = wp_get_attachment_caption( $image_id );
-			$credit  = get_media_credit_html( $image_id );
+			$credit  = minnpost_get_media_credit_html( $image_id );
 		}
 
 		// Make sure the guest author actually exists
@@ -1127,7 +1127,7 @@ if ( ! function_exists( 'minnpost_get_speaker_figure' ) ) :
 
 		if ( '' !== $image_id ) {
 			$caption = wp_get_attachment_caption( $image_id );
-			$credit  = get_media_credit_html( $image_id );
+			$credit  = minnpost_get_media_credit_html( $image_id );
 		}
 
 		if ( ( is_singular() || is_archive() ) && ! is_singular( 'newsletter' ) ) {
@@ -1294,7 +1294,7 @@ if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
 		$name = get_cat_name( $category_id, $size );
 
 		$caption = wp_get_attachment_caption( $image_id );
-		$credit  = get_media_credit_html( $image_id );
+		$credit  = minnpost_get_media_credit_html( $image_id );
 
 		if ( is_singular() || is_archive() || is_home() ) {
 			$output  = '';

@@ -3570,27 +3570,26 @@ if ( ! function_exists( 'minnpost_largo_rest_api_image_credit' ) ) :
 			'attachment',
 			'better_image_credits',
 			array(
-				'get_callback' => 'minnpost_largo_get_better_image_credits',
-				'schema' => null,
+				'get_callback' => 'minnpost_largo_get_image_credits',
+				'schema'       => null,
 			)
 		);
 	};
 endif;
 
 /**
-* Add the image credits fields to the REST API response
+* Add our image credits fields to the REST API response
 * @param array $object
 * @return array $better_image_credits
 *
 */
-if ( ! function_exists( 'minnpost_largo_get_better_image_credits' ) ) :
-	function minnpost_largo_get_better_image_credits( $object ) {
+if ( ! function_exists( 'minnpost_largo_get_image_credits' ) ) :
+	function minnpost_largo_get_image_credits( $object ) {
 		$meta                 = get_post_meta( $object['id'] );
+		$credits              = get_media_credit_data( $object['id'] );
 		$better_image_credits = array(
-			'credits'      => isset( $meta['_wp_attachment_source_name'] ) ? $meta['_wp_attachment_source_name'][0] : '',
-			'link'         => isset( $meta['_wp_attachment_source_url'] ) ? $meta['_wp_attachment_source_url'][0] : '',
-			'license'      => isset( $meta['_wp_attachment_license'] ) ? $meta['_wp_attachment_license'][0] : '',
-			'license_link' => isset( $meta['_wp_attachment_license_url'] ) ? $meta['_wp_attachment_license_url'][0] : '',
+			'credits' => isset( $credits['meta'] ) ? $credits['meta'] : '',
+			'link'    => isset( $credits['url'] ) ? $credits['url'] : '',
 		);
 		return $better_image_credits;
 	};

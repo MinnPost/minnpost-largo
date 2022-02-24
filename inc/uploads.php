@@ -100,16 +100,17 @@ if ( ! function_exists( 'image_watermark_allowed' ) ) :
 endif;
 
 /**
- * Get credit HTML
+ * Get credit data only
  *
  * @param int $post_id
- * @return string $credit
+ * @return array $credit
  *
  */
-if ( ! function_exists( 'get_media_credit_html' ) ) :
-	function get_media_credit_html( $post_id = 0 ) {
+if ( ! function_exists( 'get_media_credit_data' ) ) :
+	function get_media_credit_data( $post_id = 0 ) {
+		$credit = array();
 		if ( 0 === $post_id ) {
-			return '';
+			return $credit;
 		}
 		$credit_meta = get_post_meta( $post_id, '_wp_attachment_source_name', true );
 		$credit_url  = get_post_meta( $post_id, '_wp_attachment_source_url', true );
@@ -124,13 +125,30 @@ if ( ! function_exists( 'get_media_credit_html' ) ) :
 			$credit_url = get_post_meta( $post_id, 'media_credit_url', true );
 		}
 
-		$credit = '';
+		$credit['meta'] = $credit_meta;
+		$credit['url']  = $credit_url;
 
-		if ( '' !== $credit_meta ) {
-			if ( ! empty( $credit_url ) ) {
-				$credit = '<a href="' . esc_url( $credit_url ) . '">' . $credit_meta . '</a>';
+		return $credit;
+	}
+endif;
+
+/**
+ * Get credit HTML
+ *
+ * @param int $post_id
+ * @return string $credit
+ *
+ */
+if ( ! function_exists( 'minnpost_get_media_credit_html' ) ) :
+	function minnpost_get_media_credit_html( $post_id = 0 ) {
+
+		$credit = get_media_credit_data( $post_id );
+
+		if ( '' !== $credit['meta'] ) {
+			if ( ! empty( $credit['url'] ) ) {
+				$credit = '<a href="' . esc_url( $credit['url'] ) . '">' . $credit['meta'] . '</a>';
 			} else {
-				$credit = $credit_meta;
+				$credit = $credit['meta'];
 			}
 		}
 
@@ -175,7 +193,7 @@ if ( ! function_exists( 'minnpost_largo_image_add_caption_with_credit' ) ) :
 		* @param int    $id      The attachment ID.
 		*/
 		$caption = apply_filters( 'image_add_caption_text', $caption, $id );
-		$credit  = get_media_credit_html( $id );
+		$credit  = minnpost_get_media_credit_html( $id );
 
 		/**
 		* Filters whether to disable captions.
