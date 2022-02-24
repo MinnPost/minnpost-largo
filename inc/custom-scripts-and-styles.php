@@ -143,12 +143,17 @@ if ( ! function_exists( 'minnpost_largo_add_remove_scripts' ) ) :
 			$js_urls = get_post_meta( get_the_ID(), '_js_file_urls', true );
 			if ( '' !== $js_urls ) {
 				$js_urls      = explode( "\r\n", $js_urls );
+				$js_in_footer = true;
 				$code_version = get_post_meta( get_the_ID(), '_extra_code_version', true );
+				$js_placement = get_post_meta( get_the_ID(), '_extra_code_js_placement', true );
 				if ( '' === $code_version ) {
 					$code_version = false;
 				}
+				if ( 'head' === $js_placement ) {
+					$js_in_footer = false;
+				}
 				foreach ( $js_urls as $key => $js_url ) {
-					wp_enqueue_script( 'minnpost-js-' . $key . '-' . get_the_ID(), $js_url, array(), $code_version, true );
+					wp_enqueue_script( 'minnpost-js-' . $key . '-' . get_the_ID(), $js_url, array(), $code_version, $js_in_footer );
 				}
 			}
 		}

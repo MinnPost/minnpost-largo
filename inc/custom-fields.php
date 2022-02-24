@@ -1384,6 +1384,20 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 			);
 			$extra_code_settings->add_field(
 				array(
+					'name'             => __( 'JavaScript File Placement', 'minnpost-largo' ),
+					'id'               => '_extra_code_js_placement',
+					'type'             => 'select',
+					'show_option_none' => false,
+					'desc'             => __( 'By default, JavaScript files are placed into the document footer, right before the closing body tag. If you need to place a file into the document head, apply that setting here.', 'minnpost-largo' ),
+					'default'          => 'footer',
+					'options'          => array(
+						'footer' => __( 'Document Footer', 'minnpost-largo' ),
+						'head'   => __( 'Document Head', 'minnpost-largo' ),
+					),
+				)
+			);
+			$extra_code_settings->add_field(
+				array(
 					'name'    => __( 'Extra Code Version', 'minnpost-largo' ),
 					'id'      => '_extra_code_version',
 					'type'    => 'text',
