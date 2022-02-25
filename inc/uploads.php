@@ -141,17 +141,18 @@ endif;
  */
 if ( ! function_exists( 'minnpost_get_media_credit_html' ) ) :
 	function minnpost_get_media_credit_html( $post_id = 0 ) {
-
 		$credit = get_media_credit_data( $post_id );
-
-		if ( '' !== $credit['meta'] ) {
-			if ( ! empty( $credit['url'] ) ) {
-				$credit = '<a href="' . esc_url( $credit['url'] ) . '">' . $credit['meta'] . '</a>';
-			} else {
-				$credit = $credit['meta'];
+		if ( ! empty( $credit['meta'] || ! empty( $credit['url'] ) ) ) {
+			if ( '' !== $credit['meta'] ) {
+				if ( ! empty( $credit['url'] ) ) {
+					$credit = '<a href="' . esc_url( $credit['url'] ) . '">' . $credit['meta'] . '</a>';
+				} else {
+					$credit = $credit['meta'];
+				}
 			}
+		} else {
+			$credit = '';
 		}
-
 		return $credit;
 	}
 endif;
