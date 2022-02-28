@@ -299,3 +299,42 @@ if ( ! function_exists( 'minnpost_query_title_starts_with' ) ) :
 		return $where;
 	}
 endif;
+
+/**
+ * Filter the query for matching user records to their linked co-author records
+ *
+ * @param array $args
+ * @param object $user_data
+ * @return array $args
+ *
+ */
+if ( ! function_exists( 'minnpost_coauthor_linked_account_query' ) ) :
+	add_filter( 'staff_user_post_list_linked_account_query', 'minnpost_coauthor_linked_account_query', 10, 2 );
+	function minnpost_coauthor_linked_account_query( $args, $user_data ) {
+		$args                   = array();
+		$args['post_type']      = 'guest-author';
+		$args['posts_per_page'] = 1;
+		//$args['es'] = true; // the right meta are not indexed for this
+		$consolidated_emails   = get_user_meta( $user_data->ID, '_consolidated_emails', true );
+		$consolidated_emails   = array_map( 'trim', explode( ',', $consolidated_emails ) );
+		$consolidated_emails[] = $user_data->user_email;
+		$consolidated_emails   = array_unique( $consolidated_emails );
+		if ( 1 === count( $consolidated_emails ) ) {
+			$args['meta_key']   = 'cap-linked_account';
+			$args['meta_value'] = $user_data->user_email;
+		} else {
+			$args['meta_query'] = array(
+				'relation' => 'OR',
+			);
+			foreach ( $consolidated_emails as $email ) {
+				if ( '' !== $email ) {
+					$args['meta_query'][] = array(
+						'key'   => 'cap-linked_account',
+						'value' => $email,
+					);
+				}
+			}
+		}
+		return $args;
+	}
+endif;
