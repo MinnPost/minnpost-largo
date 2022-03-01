@@ -198,21 +198,6 @@ add_action(
 );
 
 /**
- * Use Elasticsearch for Zoninator zone queries
- * @param array $args
- * @return array $args
- */
-if ( ! function_exists( 'minnpost_zoninator_elasticsearch' ) ) :
-	add_filter( 'zoninator_recent_posts_args', 'minnpost_zoninator_elasticsearch' );
-	function minnpost_zoninator_elasticsearch( $args ) {
-		if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
-			$args['es'] = true; // elasticsearch.
-		}
-		return $args;
-	}
-endif;
-
-/**
  * Set external domains allowed for redirects
  * @param array $hosts
  * @return array $hosts

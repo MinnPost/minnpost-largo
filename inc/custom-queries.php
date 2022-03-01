@@ -265,6 +265,9 @@ if ( ! function_exists( 'minnpost_zoninator_search_args' ) ) :
 	function minnpost_zoninator_search_args( $args ) {
 		$args['post_status'] = 'publish';
 		$args['post_type']   = 'post';
+		if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
+			$args['es'] = true; // elasticsearch.
+		}
 		return $args;
 	}
 endif;
