@@ -3060,6 +3060,34 @@ if ( ! function_exists( 'cmb2_event_website_page_fields' ) ) :
 				);
 
 				/**
+				 * Secondary Body settings
+				 */
+				$secondary_body = new_cmb2_box(
+					array(
+						'id'           => $object_type . '_secondary_body_box',
+						'title'        => __( 'Secondary Body', 'minnpost-largo' ),
+						'object_types' => array( $object_type ), // Post type
+						'context'      => 'normal',
+						'priority'     => 'high',
+						'show_names'   => false,
+					)
+				);
+				$secondary_body->add_field(
+					array(
+						'id'        => $prefix . 'secondary_body',
+						'name'      => __( 'Secondary Body', 'minnpost-largo' ),
+						'desc'      => __( 'If this field has content in it, it will display below the list items added in the Page Content Settings box.', 'minnpost-largo' ),
+						'type'      => 'wysiwyg',
+						'escape_cb' => false,
+						'options'   => array(
+							'media_buttons' => true, // show insert/upload button(s)
+							'textarea_rows' => 10,
+							'teeny'         => false, // output the minimal editor config used in Press This
+						),
+					)
+				);
+
+				/**
 				 * SEO and social meta settings
 				 */
 				$seo_settings = new_cmb2_box(
