@@ -158,3 +158,18 @@ if ( ! function_exists( 'minnpost_largo_es_enable_ajax_admin' ) ) :
 		return $enable;
 	}
 endif;
+
+/**
+ * Analyzer filters in Elasticpress
+ *
+ * @see https://docs.wpvip.com/how-tos/vip-search/search-tokenization/
+ * @param array $filters
+ * @return array $filters
+ */
+if ( ! function_exists( 'minnpost_elasticpress_analyzer_filters' ) ) :
+	add_filter( 'ep_default_analyzer_filters', 'minnpost_elasticpress_analyzer_filters' );
+	function minnpost_elasticpress_analyzer_filters( $filters ) {
+		$filters[] = 'asciifolding';
+		return $filters;
+	}
+endif;
