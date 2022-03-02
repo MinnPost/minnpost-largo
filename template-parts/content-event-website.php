@@ -10,9 +10,11 @@
 $object_type           = $args['object_type'];
 $content               = get_the_content();
 $content               = apply_filters( 'the_content', $content );
+$secondary_body        = get_post_meta( get_the_ID(), '_mp_' . $object_type . '_secondary_body', true );
+$secondary_body        = apply_filters( 'the_content', $secondary_body );
 $content_posts_heading = get_post_meta( get_the_ID(), '_mp_' . $object_type . '_content_posts_section_heading', true );
 $content_posts         = get_post_meta( get_the_ID(), '_mp_' . $object_type . '_content_posts', true );
-if ( '' !== $content || ! empty( $content_posts ) ) :
+if ( '' !== $content || ! empty( $content_posts ) || '' !== $secondary_body ) :
 
 	if ( '' !== $content && ! empty( $content_posts ) ) :
 		?>
@@ -104,6 +106,13 @@ if ( '' !== $content || ! empty( $content_posts ) ) :
 					</div>
 				</div>
 				<?php endif; ?>
+			<?php endif; ?>
+			<?php if ( '' !== $secondary_body ) : ?>
+				<section class="m-event-content-section">
+					<article id="post-<?php the_ID(); ?>-secondary-body" <?php post_class( 'm-post m-' . $object_type . ' m-' . $object_type . '-archive' ); ?>>
+						<?php echo $secondary_body; ?>
+					</article>
+				</section>
 			<?php endif; ?>
 			<section class="m-event-content-section">
 				<?php minnpost_event_website_pass_link( $object_type ); ?>
