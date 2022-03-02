@@ -42,9 +42,9 @@ if ( true === $args['featured'] ) {
 		<?php endif; ?>
 	</aside>
 
-	<?php if ( ! empty( get_minnpost_post_image() ) ) : ?>
+	<?php if ( ! empty( get_minnpost_post_image( 'feature' ) ) ) : ?>
 		<figure class="m-featured-event-image">
-			<?php minnpost_post_image(); ?>
+			<?php minnpost_post_image( 'feature' ); ?>
 		</figure>
 	<div class="m-featured-event-content m-featured-event-content-with-image">
 	<?php else : ?>
