@@ -575,7 +575,7 @@ if ( ! function_exists( 'minnpost_get_event_website_pass_link' ) ) :
 			}
 			switch ( $event_year ) {
 				case 2022:
-					$url = '#';
+					$url = esc_url_raw( 'https://www.eventbrite.com/e/minnpost-festival-2022-tickets-289830289197?aff=FestivalSiteDirect' );
 					break;
 				case 2021:
 					$url = esc_url_raw( 'https://www.eventbrite.com/e/minnpost-festival-2021-tickets-140928014485' );
