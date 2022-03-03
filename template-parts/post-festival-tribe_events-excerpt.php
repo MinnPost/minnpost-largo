@@ -11,6 +11,8 @@ $post_class = 'm-post m-festival-post m-festival-post-event m-festival-post-even
 if ( '' !== get_minnpost_post_image( 'feature-large' ) ) {
 	$post_class .= ' m-festival-post-event-with-image';
 }
+$content = get_the_content();
+$content = apply_filters( 'the_content', $content );
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( $post_class ); ?>>
@@ -47,10 +49,12 @@ if ( '' !== get_minnpost_post_image( 'feature-large' ) ) {
 				</div>
 			</div>
 			<?php endif; ?>
-			<?php do_action( 'tribe_events_single_event_before_the_content' ); ?>
-			<div class="m-event-content m-festival-event-content">
-				<?php the_content(); ?>
-			</div>
+			<?php if ( '' !== $content ) : ?>
+				<?php do_action( 'tribe_events_single_event_before_the_content' ); ?>
+				<div class="m-event-content m-festival-event-content">
+					<?php echo $content; ?>
+				</div>
+			<?php endif; ?>
 			<?php get_template_part( 'tribe/events/modules/meta/speaker' ); ?>
 		</div><!-- .m-entry-content -->
 	</div>
