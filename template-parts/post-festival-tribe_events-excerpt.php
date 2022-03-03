@@ -43,19 +43,17 @@ if ( '' !== get_minnpost_post_image( 'feature-large' ) ) {
 				<?php do_action( 'tribe_events_single_event_before_the_meta' ); ?>
 				<div class="m-event-date-and-calendar">
 					<?php get_template_part( 'tribe/events/modules/meta/date', '', array( 'show_timezone' => true, 'separator' => '&ndash;' ) ); ?>
-					<?php do_action( 'tribe_events_single_event_after_the_content' ); ?>
 				</div>
 			</div>
 			<?php endif; ?>
-			<?php do_action( 'tribe_events_single_event_before_the_content' ); ?>
 			<div class="m-event-content m-festival-event-content">
 				<?php the_content(); ?>
 			</div>
 			<?php get_template_part( 'tribe/events/modules/meta/speaker' ); ?>
-		</div><!-- .m-entry-content -->
+		</div>
 	</div>
 	<?php if ( '' !== get_minnpost_post_image( 'feature-large' ) ) : ?>
 		</div>
 		<?php minnpost_post_image( 'feature-large' ); ?>
 	<?php endif; ?>
-</article> <!-- #post-x -->
+</article>
