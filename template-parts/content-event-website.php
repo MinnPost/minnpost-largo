@@ -102,7 +102,7 @@ if ( '' !== $content || ! empty( $content_posts ) || '' !== $secondary_body ) :
 							?>
 						</section>
 				<?php if ( '' !== $content && ! empty( $content_posts ) ) : ?>
-						<a class="a-button"><?php echo __( 'See all sessions', 'minnpost-largo' ); ?></a>
+					<a class="a-button" href="<?php echo site_url( '/festival/sessions' ); ?>"><?php echo __( 'See all sessions', 'minnpost-largo' ); ?></a>
 					</div>
 				</div>
 				<?php endif; ?>
