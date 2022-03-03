@@ -567,15 +567,26 @@ if ( ! function_exists( 'minnpost_get_event_website_pass_link' ) ) :
 		if ( isset( $args['class'] ) ) {
 			$class .= ' ' . $args['class'];
 		}
+		$event_year = minnpost_largo_get_event_year( $object_type, get_the_date( 'Y' ) );
 		if ( 'festival' === $object_type ) {
 			$label = esc_html__( 'Reserve your Festival pass' );
 			if ( isset( $args['label'] ) ) {
 				$label = $args['label'];
 			}
+			switch ( $event_year ) {
+				case 2022:
+					$url = '#';
+					break;
+				case 2021:
+					$url = esc_url_raw( 'https://www.eventbrite.com/e/minnpost-festival-2021-tickets-140928014485' );
+					break;
+				default:
+					$url = '#';
+			}
 			$buy_event_pass = sprintf(
 				// translators: 1) url to buy a pass, 2) link text, 3) class
 				__( '<a href="%1$s" class="%3$s">%2$s</a>', 'minnpost-largo' ),
-				esc_url_raw( 'https://www.eventbrite.com/e/minnpost-festival-2021-tickets-140928014485' ), // this will be an eventbrite link
+				$url,
 				$label,
 				$class
 			);
