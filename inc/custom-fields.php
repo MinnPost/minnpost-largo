@@ -89,6 +89,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'name'         => __( 'Preview Text', 'minnpost-largo' ),
 				'id'           => $prefix . 'preview_text',
 				'type'         => 'textarea_small',
+				'default'      => '',
 				'char_counter' => true,
 				'char_max'     => 140,
 				'desc'         => __( 'This text is displayed between the date and the "Welcome to..." message at the top of the newsletter. It is also displayed after the subject line in some email clients. You can also add the text for those clients only by using the Preview Text field when you add the Subject Line to your campaign in Mailchimp. It is limited to 140 characters.<br><br>If you need the newsletter teaser text to be longer or have special formatting, see "Introduction" below.', 'minnpost-largo' ),
@@ -827,6 +828,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'name'         => 'Title',
 				'id'           => '_mp_seo_title',
 				'type'         => 'text',
+				'default'      => '',
 				'char_counter' => true,
 				'char_max'     => 78,
 				'desc'         => sprintf(
@@ -844,6 +846,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'name'         => 'Description',
 				'id'           => '_mp_seo_description',
 				'type'         => 'textarea_small',
+				'default'      => '',
 				'char_counter' => true,
 				'char_max'     => 200,
 				'attributes'   => array(
@@ -1462,6 +1465,7 @@ if ( ! function_exists( 'cmb2_page_fields' ) ) :
 				'name'         => 'Title',
 				'id'           => '_mp_seo_title',
 				'type'         => 'text',
+				'default'      => '',
 				'char_counter' => true,
 				'char_max'     => 78,
 				'desc'         => sprintf(
@@ -1479,6 +1483,7 @@ if ( ! function_exists( 'cmb2_page_fields' ) ) :
 				'name'         => 'Description',
 				'id'           => '_mp_seo_description',
 				'type'         => 'textarea_small',
+				'default'      => '',
 				'char_counter' => true,
 				'char_max'     => 200,
 				'attributes'   => array(
@@ -2586,6 +2591,7 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 				'name'         => 'Title',
 				'id'           => '_mp_seo_title',
 				'type'         => 'text',
+				'default'      => '',
 				'char_counter' => true,
 				'char_max'     => 78,
 				'desc'         => sprintf(
@@ -2603,6 +2609,7 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 				'name'         => 'Description',
 				'id'           => '_mp_seo_description',
 				'type'         => 'textarea_small',
+				'default'      => '',
 				'char_counter' => true,
 				'char_max'     => 200,
 				'attributes'   => array(
@@ -3105,6 +3112,7 @@ if ( ! function_exists( 'cmb2_event_website_page_fields' ) ) :
 						'name'         => 'Title',
 						'id'           => '_mp_seo_title',
 						'type'         => 'text',
+						'default'      => '',
 						'char_counter' => true,
 						'char_max'     => 78,
 						'desc'         => sprintf(
@@ -3123,6 +3131,7 @@ if ( ! function_exists( 'cmb2_event_website_page_fields' ) ) :
 						'name'         => 'Description',
 						'id'           => '_mp_seo_description',
 						'type'         => 'textarea_small',
+						'default'      => '',
 						'char_counter' => true,
 						'char_max'     => 200,
 						'attributes'   => array(
@@ -3303,6 +3312,7 @@ if ( ! function_exists( 'cmb2_speaker_fields' ) ) :
 				'name'         => 'Title',
 				'id'           => '_mp_seo_title',
 				'type'         => 'text',
+				'default'      => '',
 				'char_counter' => true,
 				'char_max'     => 78,
 				'desc'         => sprintf(
@@ -3320,6 +3330,7 @@ if ( ! function_exists( 'cmb2_speaker_fields' ) ) :
 				'name'         => 'Description',
 				'id'           => '_mp_seo_description',
 				'type'         => 'textarea_small',
+				'default'      => '',
 				'char_counter' => true,
 				'char_max'     => 200,
 				'attributes'   => array(
