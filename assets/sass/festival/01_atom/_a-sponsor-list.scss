@@ -58,7 +58,7 @@
         }
     
         @include breakpoint-min( lg ) {
-            grid-template-columns: 25% 25% 25% 25%;
+            grid-template-columns: minmax(25%, 33%) minmax(25%, 33%) minmax(25%, 33%) minmax(25%, 33%);
         }
     }
     
