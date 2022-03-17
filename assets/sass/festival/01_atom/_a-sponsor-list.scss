@@ -40,11 +40,11 @@
         grid-column-gap: $standard-block-margin;
     
         @include breakpoint-min( sm ) {
-            grid-template-columns: 50% 50%;
+            grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
         }
     
         @include breakpoint-min( lg ) {
-            grid-template-columns: 33% 33% 33%;
+            grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
         }
     }
 
@@ -54,11 +54,11 @@
         grid-column-gap: $standard-block-margin;
     
         @include breakpoint-min( sm ) {
-            grid-template-columns: 50% 50%;
+            grid-template-columns: repeat(auto-fit, minmax(40%, 1fr));
         }
     
         @include breakpoint-min( lg ) {
-            grid-template-columns: minmax(25%, 33%) minmax(25%, 33%) minmax(25%, 33%) minmax(25%, 33%);
+            grid-template-columns: repeat(auto-fit, minmax(20%, 1fr));
         }
     }
     
