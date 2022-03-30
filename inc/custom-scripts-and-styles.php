@@ -183,7 +183,7 @@ endif;
 if ( ! function_exists( 'minnpost_google_analytics_dimensions' ) ) :
 	add_action( 'wp_analytics_tracking_generator_custom_dimensions', 'minnpost_google_analytics_dimensions', 10, 1 );
 	function minnpost_google_analytics_dimensions( $dimensions ) {
-		// user dimension
+		// dimension 1: user status dimension
 		if ( function_exists( 'minnpost_membership' ) ) {
 			$minnpost_membership = minnpost_membership();
 			$user_id             = get_current_user_id();
@@ -198,31 +198,44 @@ if ( ! function_exists( 'minnpost_google_analytics_dimensions' ) ) :
 				$value = 'Not Logged In';
 			}
 			$dimensions['1'] = $value;
+		}
 
-			// remove id and post type dimensions if we're not on a singular post
-			if ( ! is_singular() ) {
-				unset( $dimensions['2'] );
-				unset( $dimensions['3'] );
-			}
-			if ( is_category() || is_tag() ) {
-				// categories and tags
-				$term            = get_queried_object();
-				$dimensions['2'] = $term->term_id;
-				$dimensions['3'] = $term->taxonomy;
-			} elseif ( is_author() ) {
-				// authors
-				$dimensions['2'] = get_queried_object_id();
-				$dimensions['3'] = 'author';
-			} elseif ( is_date() ) {
-				$dimensions['3'] = 'date';
-			} elseif ( is_post_type_archive() ) {
-				$dimensions['3'] = get_post_type();
-			}
+		// remove dimension 2: id and dimension 3: post type dimensions if we're not on a singular post
+		if ( ! is_singular() ) {
+			unset( $dimensions['2'] );
+			unset( $dimensions['3'] );
+		}
 
-			if ( is_single() && function_exists( 'minnpost_get_category_name' ) ) {
-				$post_id         = get_the_ID();
-				$dimensions['4'] = minnpost_get_category_name( $post_id );
-			}
+		// Dimension 2: object id
+		// Dimension 3: object type.
+
+		// home
+		if ( is_front_page() && is_home() ) {
+			$dimensions['3'] = 'home';
+		}
+		// archives
+		if ( is_category() || is_tag() ) {
+			// categories and tags
+			$term            = get_queried_object();
+			$dimensions['2'] = $term->term_id;
+			$dimensions['3'] = $term->taxonomy;
+		} elseif ( is_author() ) {
+			// authors
+			$dimensions['2'] = get_queried_object_id();
+			$dimensions['3'] = 'author';
+		} elseif ( is_date() ) {
+			$dimensions['3'] = 'date';
+		} elseif ( is_post_type_archive() ) {
+			$dimensions['3'] = get_post_type();
+		}
+
+		// single post
+		// this is the only one that should have dimension 4.
+		if ( is_single() && function_exists( 'minnpost_get_category_name' ) ) {
+			$post_id         = get_the_ID();
+			$dimensions['4'] = minnpost_get_category_name( $post_id );
+		} else {
+			unset( $dimensions['4'] );
 		}
 
 		return $dimensions;
