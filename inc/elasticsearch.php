@@ -234,13 +234,10 @@ if ( ! function_exists( 'minnpost_largo_elasticpress_related_args' ) ) :
 			$args['post__not_in'] = $exclude_post_ids;
 		}
 
-		// date range we want.
-		$args['date_query'] = array(
-			array(
-				'year' => gmdate( 'Y' ),
-				'week' => gmdate( 'W' ),
-			),
-		);
+		// date range we want. production only.
+		//if ( 'production' === VIP_GO_ENV ) {
+		$args['date_query'] = array( 'after' => '2 weeks ago' );
+		//}
 
 		return $args;
 	}
