@@ -143,6 +143,96 @@ if ( ! function_exists( 'minnpost_largo_get_elasticsearch_results' ) ) :
 endif;
 
 /**
+ * Filter the related post arguments
+ *
+ * @param array $args
+ * @return array $args
+ *
+ */
+if ( ! function_exists( 'minnpost_largo_elasticpress_related_args' ) ) :
+	add_filter( 'ep_find_related_args', 'minnpost_largo_elasticpress_related_args' );
+	function minnpost_largo_elasticpress_related_args( $args ) {
+
+		if ( function_exists( 'minnpost_largo_get_excluded_related_terms' ) ) {
+			$exclude_ids = minnpost_largo_get_excluded_related_terms();
+		}
+
+		// settings for include/exclude of the current post category for recommendations.
+		// if both are false, it uses the default ElasticPress recommending system.
+		// if both are true, it would run the same category only and ignore the not same category flag.
+		$same_category_only = true;
+		$not_same_category  = false;
+
+		// load the current post's permalink category ID.
+		$permalink_category = minnpost_get_permalink_category_id( get_the_ID() );
+		if ( in_array( (int) $permalink_category, $exclude_ids, true ) ) {
+			// if the current category should be excluded, don't recommend stories only from this category.
+			$same_category_only = false;
+		}
+
+		// get the sponsored post group category; we always want to exclude it.
+		$sponsored = get_term_by( 'slug', 'sponsored-content', 'category' );
+
+		// start the WP_Term_Query arguments.
+		$term_args = array(
+			'taxonomy'   => 'category',
+			'fields'     => 'ids',
+			'meta_query' => array(
+				array(
+					'key'   => '_mp_category_group',
+					'value' => $sponsored->term_id,
+				),
+			),
+		);
+
+		// this array will be merged in later.
+		$if_term_args = array();
+
+		// our default ElasticPress behavior.
+		if ( false === $same_category_only && false === $not_same_category ) {
+			// get the opinion post group category; we currently exclude it by default
+			$opinion      = get_term_by( 'slug', 'opinion', 'category' );
+			$if_term_args = array(
+				'meta_query' => array(
+					'relation' => 'OR',
+					array(
+						'key'   => '_mp_category_group',
+						'value' => $opinion->term_id,
+					),
+					array(
+						'key'   => '_mp_category_group',
+						'value' => $sponsored->term_id,
+					),
+				),
+			);
+		} elseif ( true === $same_category_only ) {
+			// we only want to include the permalink category of the current post, so exclude all others.
+			$if_term_args = array(
+				'exclude' => $permalink_category,
+			);
+		} elseif ( true === $not_same_category ) {
+			// we want to exclude posts with the permalink category of the current post, in addition to other excludes.
+			$exclude_ids[] = $permalink_category;
+		}
+
+		// merge the WP_Term_Query args from the if statement.
+		$term_args = array_merge( $term_args, $if_term_args );
+
+		// generate a WP_Term_Query from the arguments.
+		$term_query = new WP_Term_Query( $term_args );
+		// merge the exclude IDs array with the WP_Term_Query results.
+		$exclude_ids = array_merge( $exclude_ids, $term_query->terms );
+		// make sure exclude ID array is unique.
+		$exclude_ids = array_unique( $exclude_ids );
+		sort( $exclude_ids );
+		// send the list of categories to exclude to the ElasticPress filter.
+		$new_args = array( 'category__not_in' => $exclude_ids );
+		$args     = array_merge( $args, $new_args );
+		return $args;
+	}
+endif;
+
+/**
  * Ajax elasticsearch on the admin
  *
  * @see https://docs.wpvip.com/how-tos/vip-search/enable-for-wp-admin/
