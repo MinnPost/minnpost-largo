@@ -154,7 +154,7 @@ if ( ! function_exists( 'minnpost_largo_elasticpress_related_args' ) ) :
 	function minnpost_largo_elasticpress_related_args( $args ) {
 
 		if ( function_exists( 'minnpost_largo_get_excluded_related_terms' ) ) {
-			$exclude_ids = minnpost_largo_get_excluded_related_terms();
+			$exclude_term_ids = minnpost_largo_get_excluded_related_terms();
 		}
 
 		// settings for include/exclude of the current post category for recommendations.
@@ -165,7 +165,7 @@ if ( ! function_exists( 'minnpost_largo_elasticpress_related_args' ) ) :
 
 		// load the current post's permalink category ID.
 		$permalink_category = minnpost_get_permalink_category_id( get_the_ID() );
-		if ( in_array( (int) $permalink_category, $exclude_ids, true ) ) {
+		if ( in_array( (int) $permalink_category, $exclude_term_ids, true ) ) {
 			// if the current category should be excluded, don't recommend stories only from this category.
 			$same_category_only = false;
 		}
@@ -212,7 +212,7 @@ if ( ! function_exists( 'minnpost_largo_elasticpress_related_args' ) ) :
 			);
 		} elseif ( true === $not_same_category ) {
 			// we want to exclude posts with the permalink category of the current post, in addition to other excludes.
-			$exclude_ids[] = $permalink_category;
+			$exclude_term_ids[] = $permalink_category;
 		}
 
 		// merge the WP_Term_Query args from the if statement.
@@ -221,13 +221,27 @@ if ( ! function_exists( 'minnpost_largo_elasticpress_related_args' ) ) :
 		// generate a WP_Term_Query from the arguments.
 		$term_query = new WP_Term_Query( $term_args );
 		// merge the exclude IDs array with the WP_Term_Query results.
-		$exclude_ids = array_merge( $exclude_ids, $term_query->terms );
+		$exclude_term_ids = array_merge( $exclude_term_ids, $term_query->terms );
 		// make sure exclude ID array is unique.
-		$exclude_ids = array_unique( $exclude_ids );
-		sort( $exclude_ids );
+		$exclude_term_ids = array_unique( $exclude_term_ids );
+		sort( $exclude_term_ids );
 		// send the list of categories to exclude to the ElasticPress filter.
-		$new_args = array( 'category__not_in' => $exclude_ids );
-		$args     = array_merge( $args, $new_args );
+		$args['category__not_in'] = $exclude_term_ids;
+
+		// post IDs we want to exclude.
+		if ( function_exists( 'minnpost_largo_get_excluded_related_posts' ) ) {
+			$exclude_post_ids     = minnpost_largo_get_excluded_related_posts();
+			$args['post__not_in'] = $exclude_post_ids;
+		}
+
+		// date range we want.
+		$args['date_query'] = array(
+			array(
+				'year' => gmdate( 'Y' ),
+				'week' => gmdate( 'W' ),
+			),
+		);
+
 		return $args;
 	}
 endif;
