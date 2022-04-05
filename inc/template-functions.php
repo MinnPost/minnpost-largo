@@ -1866,7 +1866,7 @@ if ( ! function_exists( 'minnpost_get_newsletter_logo_url' ) ) :
 					$filename = 'newsletter-logo-daily' . $filename_suffix . '.png';
 					break;
 				case 'dc_memo':
-					$filename = 'dc-memo-header-520x50' . $filename_suffix . '.png';
+					$filename = 'newsletter-logo-dcmemo' . $filename_suffix . '.png';
 					break;
 				case 'greater_mn':
 					$filename = 'newsletter-logo-mn-week' . $filename_suffix . '.png';
@@ -2045,12 +2045,8 @@ if ( ! function_exists( 'minnpost_largo_check_newsletter_legacy' ) ) :
 		if ( '' === $newsletter_type ) {
 			$newsletter_type = get_post_meta( get_the_ID(), '_mp_newsletter_type', true );
 		}
-		// for now, the DC Memo style emails are all legacy. TODO: change this when we can.
-		if ( in_array( $newsletter_type, array( 'dc_memo' ), true ) ) {
-			return true;
-		}
-
-		if ( in_array( $newsletter_type, array( 'daily_coronavirus' ), true ) ) {
+		// dc/covid emails are not legacy.
+		if ( in_array( $newsletter_type, array( 'dc_memo', 'daily_coronavirus' ), true ) ) {
 			return false;
 		}
 
