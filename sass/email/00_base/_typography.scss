@@ -16,8 +16,15 @@ blockquote {
 	@include body-preset( $size: 1 );
 	border-left: 6px solid neutral-color(black);
 	background: neutral-color(light);
+	color: neutral-color(black);
 	padding: $standard-block-padding;
 	margin: 0 0 $standard-block-margin 0;
+
+	@media (prefers-color-scheme: dark ) {
+		border-left: 6px solid neutral-color(white) !important;
+		background-color: neutral-color(dark) !important;
+		color: neutral-color(light) !important;
+	}
 }
 
 // lists

@@ -2046,8 +2046,12 @@ if ( ! function_exists( 'minnpost_largo_check_newsletter_legacy' ) ) :
 			$newsletter_type = get_post_meta( get_the_ID(), '_mp_newsletter_type', true );
 		}
 		// for now, the DC Memo style emails are all legacy. TODO: change this when we can.
-		if ( in_array( $newsletter_type, array( 'dc_memo', 'daily_coronavirus' ), true ) ) {
+		if ( in_array( $newsletter_type, array( 'dc_memo' ), true ) ) {
 			return true;
+		}
+
+		if ( in_array( $newsletter_type, array( 'daily_coronavirus' ), true ) ) {
+			return false;
 		}
 
 		// digest newsletters.
