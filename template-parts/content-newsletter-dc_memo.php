@@ -63,6 +63,38 @@
 					</div>
 					<?php do_action( 'wp_message_inserter', 'email_header', 'email' ); ?>
 
+
+					<div class="o-single-column m-newsletter-sponsor-small">
+					[outlook]
+						<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
+							<tr>
+								<td align="center" class="outlook-outer-padding">
+									<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
+										<tr>
+											<td class="outlook-inner-padding">
+						[/outlook]
+						<div class="item-contents">
+							<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="a-newsletter-sponsor-small">
+								<tr>
+									<td>
+										<span><?php echo __( 'Sponsored by&nbsp;', 'minnpost-largo' ); ?></span>
+										<a href="https://greatriverenergy.com/">
+											<img src="https://www.minnpost.com/wp-content/uploads/sites/default/files/imagecache/image_detail/images/image/great-river-energy-small.png" alt="<?php echo __( 'Great River Energy', 'minnpost-largo' ); ?>">
+										</a>
+									</td>
+								</tr>
+							</table>
+						</div>
+						[outlook]
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+						[/outlook]
+					</div>
+
 					<div class="o-single-column m-newsletter-byline">
 						[outlook]
 						<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
