@@ -137,6 +137,20 @@
 							// body text
 							$body = apply_filters( 'the_content', get_the_content() );
 							if ( '' !== $body ) :
+								// add the inline sponsor before the second h2-h6 in the body
+								$heading_counter = 1;
+								$ad_string       = '<h4 class="a-sponsored-headline">' . __( 'D.C. Memo Sponsored by Great River Energy', 'minnpost-largo' ) . '</h4><p class="a-sponsor-inline"><a href="https://greatriverenergy.com/"><img src="https://www.minnpost.com/wp-content/uploads/sites/default/files/imagecache/image_detail/images/image/great-river-energy-logo.png" alt="' . __( 'Great River Energy', 'minnpost-largo' ) . '"></a></p><h4';
+								$body            = preg_replace_callback(
+									'/<h[2-6](.*?)/',
+									function ( $match ) use ( &$heading_counter, $ad_string ) {
+										# prefix second heading that is not an h1 with ad content
+										if ( 2 === $heading_counter++ ) {
+											return $ad_string;
+										}
+										return $match[0];
+									},
+									$body
+								);
 								?>
 								<div class="o-row m-newsletter-body-text-email">
 									<?php echo $body; ?>
