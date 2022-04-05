@@ -206,7 +206,9 @@
 									$args['image_size'] = $override_size;
 								}
 								$args['extra_class'] = '';
-								if ( $post_count === $this_section_post ) {
+								if ( $post_count === $this_section_post && 2 !== $post_count ) {
+									// checking the post count prevents a spacing issue with the second ad region
+									// this is because the second ad region is connected to the second post
 									$args['extra_class'] = ' m-post-newsletter-last';
 								}
 								get_template_part( 'template-parts/post-newsletter-fullwidth', $args['newsletter_type'], $args );

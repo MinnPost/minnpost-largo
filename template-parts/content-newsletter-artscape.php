@@ -171,7 +171,7 @@
 							$args['post_id']     = $id;
 							$args['image_size']  = 'thumb';
 							$args['extra_class'] = '';
-							if ( $post_count === $this_section_post ) {
+							if ( $post_count === $this_section_post && $post_count > 2 ) {
 								$args['extra_class'] = ' m-post-newsletter-last';
 							}
 							?>
