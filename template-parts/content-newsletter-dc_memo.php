@@ -139,8 +139,7 @@
 							if ( '' !== $body ) :
 								// add the inline sponsor before the second h2-h6 in the body
 								$heading_counter = 1;
-
-								$ad_string = '<div class="o-single-column m-newsletter-sponsor-inline-region">
+								$ad_string       = '<div class="o-single-column m-newsletter-sponsor-inline-region">
 								[outlook]
 								<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
 									<tr>
@@ -163,8 +162,7 @@
 								</table>
 								[/outlook]
 							</div>';
-
-								$ad_string       .= '<h4';
+								$ad_string      .= '<h4';
 								$body            = preg_replace_callback(
 									'/<h[2-6](.*?)/',
 									function ( $match ) use ( &$heading_counter, $ad_string ) {

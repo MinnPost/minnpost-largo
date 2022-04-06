@@ -106,6 +106,7 @@
 							// body text
 							$body = apply_filters( 'the_content', get_the_content() );
 							if ( '' !== $body ) :
+								$body = apply_filters( 'format_email_content', $body, true, false );
 								?>
 								<div class="o-row m-newsletter-body">
 									<?php echo $body; ?>
