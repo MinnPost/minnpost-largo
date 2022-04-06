@@ -20,5 +20,9 @@
 }
 
 .o-columns.o-header.o-header-no-menu {
-    padding: 0 0 $standard-heading-margin 0;
+    padding: 0;
+}
+
+.body-artscape .o-columns.o-header.o-header-no-menu {
+    padding: 0 0 $standard-block-padding 0;
 }

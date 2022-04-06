@@ -31,6 +31,6 @@
 		</style> <noscript><xml><o:OfficeDocumentSettings><o:PixelsPerInch>96</o:PixelsPerInch></o:OfficeDocumentSettings></xml></noscript>
 		<![endif]-->
 	</head>
-	<body class="body">
+	<body class="body body-<?php echo $args['newsletter_type']; ?>">
 		<?php email_preview_text(); ?>
 		<div class="o-email" role="article" aria-roledescription="email" lang="en">
