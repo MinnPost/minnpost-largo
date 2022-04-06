@@ -140,22 +140,22 @@
 						}
 					}
 					if ( '' !== $author_info ) {
-						?>
-						<div class="m-author-info m-author-info-excerpt<?php if ( is_singular() ) { ?> m-author-info-singular<?php } ?><?php if ( is_single() ) { ?> m-author-info-single<?php } ?>">
-							<?php
-							$author_keys = array_keys( $coauthors );
-							$last_key    = end( $author_keys );
-							$end         = false;
-							foreach ( $coauthors as $key => $coauthor ) :
-								$author_id = $coauthor->ID;
-								if ( $key === $last_key ) {
-									$end = true;
-								}
-								minnpost_author_figure( $author_id, 'photo', 'excerpt', true, 'cap-display_name', true, '', false, false, $end );
-							endforeach;
+						$author_keys = array_keys( $coauthors );
+						$last_key    = end( $author_keys );
+						$end         = false;
+						foreach ( $coauthors as $key => $coauthor ) :
 							?>
-						</div>
-						<?php
+							<div class="m-author-info m-author-info-excerpt<?php if ( is_singular() ) { ?> m-author-info-singular<?php } ?><?php if ( is_single() ) { ?> m-author-info-single<?php } ?>">
+							<?php
+							$author_id = $coauthor->ID;
+							if ( $key === $last_key ) {
+								$end = true;
+							}
+							minnpost_author_figure( $author_id, 'photo', 'excerpt', true, 'cap-display_name', true, '', false, false, $end );
+							?>
+							</div>
+							<?php
+						endforeach;
 					}
 					?>
 
