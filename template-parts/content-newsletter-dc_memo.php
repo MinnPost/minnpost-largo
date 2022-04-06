@@ -170,9 +170,41 @@
 						[/outlook]
 					</div>
 
-					<?php do_action( 'wp_message_inserter', 'above_email_articles', 'email' ); ?>
-
-					<?php $ads = minnpost_newsletter_get_ads( $args['newsletter_type'] ); ?>
+					<div class="o-single-column m-newsletter-sponsor-large">
+					[outlook]
+						<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
+							<tr>
+								<td align="center" class="outlook-outer-padding">
+									<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
+										<tr>
+											<td class="outlook-inner-padding">
+						[/outlook]
+						<div class="item-contents">
+							<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="a-newsletter-sponsor-large">
+								<tr>
+									<td>
+										<table class="h4 a-sponsored-headline">
+											<tr>
+												<td>
+													<h4 class="a-sponsored-headline"><?php echo __( 'D.C. Memo Sponsor', 'minnpost-largo' ); ?></h4>
+												</td>
+											</tr>
+										</table>
+										<p class="a-presenting-sponsor"><?php echo __( 'Presenting sponsor', 'minnpost-largo' ); ?></p>
+										<p class="a-presenting-sponsor-image"><a href="http://greatriverenergy.com/"><img src="https://www.minnpost.com/wp-content/uploads/sites/default/files/imagecache/image_detail/images/image/great-river-energy-logo.png" alt="<?php echo __( 'Great River Energy', 'minnpost-largo' ); ?>"></a></p>
+									</td>
+								</tr>
+							</table>
+						</div>
+						[outlook]
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+						[/outlook]
+					</div>
 
 					<?php do_action( 'wp_message_inserter', 'email_before_bios', 'email' ); ?>
 
