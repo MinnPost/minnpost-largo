@@ -1,0 +1,21 @@
+.o-single-column.m-newsletter-sponsor-inline-region {
+    
+    padding: $standard-block-padding 0 $standard-block-margin 0;
+
+    table.outlook-table {
+
+        td.outlook-inner-padding,
+        td.outlook-outer-padding {
+            padding: $standard-block-padding 0;
+        }
+    }
+
+    .item-contents {
+        text-align: center;
+        padding: $standard-block-padding 0 $standard-block-margin 0;
+        border-bottom: $border-default-style;
+        border-top: $border-default-style;
+    }
+    
+    @include column( $selector: '.m-newsletter-sponsor-inline', $max-width: 100%, $text-align: center, $spacing: 0 0 $standard-block-margin 0, $mobile-spacing-only: 'false');
+}

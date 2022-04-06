@@ -139,7 +139,32 @@
 							if ( '' !== $body ) :
 								// add the inline sponsor before the second h2-h6 in the body
 								$heading_counter = 1;
-								$ad_string       = '<h4 class="a-sponsored-headline">' . __( 'D.C. Memo Sponsored by Great River Energy', 'minnpost-largo' ) . '</h4><p class="a-sponsor-inline"><a href="https://greatriverenergy.com/"><img src="https://www.minnpost.com/wp-content/uploads/sites/default/files/imagecache/image_detail/images/image/great-river-energy-logo.png" alt="' . __( 'Great River Energy', 'minnpost-largo' ) . '"></a></p><h4';
+
+								$ad_string = '<div class="o-single-column m-newsletter-sponsor-inline-region">
+								[outlook]
+								<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
+									<tr>
+										<td align="center" class="outlook-outer-padding">
+											<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
+												<tr>
+													<td class="outlook-inner-padding">
+								[/outlook]
+								<div class="item-contents">
+									<div class="m-newsletter-sponsor-inline">
+										<h4 class="a-sponsored-headline">' . __( 'D.C. Memo Sponsored by Great River Energy', 'minnpost-largo' ) . '</h4><p class="a-sponsor-inline"><a href="https://greatriverenergy.com/"><img src="https://www.minnpost.com/wp-content/uploads/sites/default/files/imagecache/image_detail/images/image/great-river-energy-logo.png" alt="' . __( 'Great River Energy', 'minnpost-largo' ) . '"></a></p>
+									</div>
+								</div>
+								[outlook]
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+								[/outlook]
+							</div>';
+
+								$ad_string       .= '<h4';
 								$body            = preg_replace_callback(
 									'/<h[2-6](.*?)/',
 									function ( $match ) use ( &$heading_counter, $ad_string ) {
