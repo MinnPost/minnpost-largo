@@ -26,8 +26,8 @@
     .o-row,
     .o-column {
     
-        div.item-contents {
-            @include meta-preset( $size: 0 );
+        div.item-contents * {
+            @include meta-preset( $size: inherit, $bold: inherit, $italic: inherit );
         }
 
         &.o-site-message-row.o-site-message-row-button {
