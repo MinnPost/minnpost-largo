@@ -1928,7 +1928,7 @@ if ( ! function_exists( 'format_email_content' ) ) :
 		}
 
 		$dom = new DOMDocument( '1.0', 'UTF-8' );
-		$dom->loadHTML( '<?xml encoding="utf-8" ?>' . $content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+		$dom->loadHTML( mb_convert_encoding( $content, 'HTML-ENTITIES', 'UTF-8' ) );
 		$xpath    = new domxpath( $dom );
 		$headings = $xpath->query( '//h1 | //h2 | //h3 | //h4 | //h5 | //h6' );
 		foreach ( $headings as $h ) {
@@ -1951,8 +1951,6 @@ if ( ! function_exists( 'format_email_content' ) ) :
 			$h->parentNode->replaceChild( $table, $h ); // phpcs:ignore
 		}
 		$content = $dom->saveHTML();
-		$content = mb_convert_encoding( $content, 'UTF-8' );
-		//error_log( 'content is ' . $content );
 		return $content;
 	}
 endif;
