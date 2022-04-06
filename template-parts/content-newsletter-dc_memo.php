@@ -151,6 +151,7 @@
 									},
 									$body
 								);
+								$body            = apply_filters( 'format_email_content', $body, true, false );
 								?>
 								<div class="o-row m-newsletter-body-text-email">
 									<?php echo $body; ?>

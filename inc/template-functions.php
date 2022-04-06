@@ -1927,6 +1927,32 @@ if ( ! function_exists( 'format_email_content' ) ) :
 			$content = str_replace( '<a href="', '<a style="color: ' . $colors['links'] . ' !important; text-decoration: underline;" href="', $content );
 		}
 
+		$dom = new DOMDocument( '1.0', 'UTF-8' );
+		$dom->loadHTML( '<?xml encoding="utf-8" ?>' . $content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
+		$xpath    = new domxpath( $dom );
+		$headings = $xpath->query( '//h1 | //h2 | //h3 | //h4 | //h5 | //h6' );
+		foreach ( $headings as $h ) {
+			/*
+			<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="h3 a-entry-title">
+				<tr>
+					<td>
+						<h3><a href="<?php echo get_the_permalink(); ?>"><?php echo minnpost_newsletter_get_entry_title(); ?></a></h3>
+					</td>
+				</tr>
+			</table>
+			*/
+			$table              = $dom->createElement( 'table', '' );  // phpcs:ignore
+			$table_class        = $dom->createAttribute( 'class' );
+			$table_class->value = $h->tagName; // phpcs:ignore
+			$table->appendChild($table_class); // phpcs:ignore
+			$tr      = $table->appendChild( $dom->CreateElement( 'tr', '' ) ); // phpcs:ignore
+			$td      = $tr->appendChild( $dom->CreateElement( 'td', '' ) );
+			$heading = $td->appendChild( $dom->createElement( $h->tagName, $h->nodeValue ) ); // phpcs:ignore
+			$h->parentNode->replaceChild( $table, $h ); // phpcs:ignore
+		}
+		$content = $dom->saveHTML();
+		$content = mb_convert_encoding( $content, 'UTF-8' );
+		//error_log( 'content is ' . $content );
 		return $content;
 	}
 endif;
