@@ -6,7 +6,16 @@
  */
 
 function mpAnalyticsTrackingEvent( type, category, action, label, value ) {
-	if ( 'undefined' !== typeof ga ) {
+	if ( typeof gtag !== 'undefined' ) {
+		var params = {
+			'event_category': category,
+			'event_label': label
+		};
+		if ( typeof value !== 'undefined' ) {
+			params.value = value;
+		}
+		gtag( type, action, params );
+	} else if ( typeof ga !== 'undefined' ) {
 		if ( 'undefined' === typeof value ) {
 			ga( 'send', type, category, action, label );
 		} else {
