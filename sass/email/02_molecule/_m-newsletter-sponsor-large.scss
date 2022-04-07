@@ -1,0 +1,29 @@
+@use "sass:math";
+
+.o-single-column.m-newsletter-sponsor-large {
+
+    .item-contents {
+        border-top: $border-default-style;
+        padding: $standard-block-padding 0 $standard-block-margin 0;
+        border-bottom: $border-default-style;   
+    }
+
+    td {
+        @include body-preset( $size: 0 );
+    }
+
+    .a-presenting-sponsor-image, .a-presenting-sponsor {
+        text-align: center;
+    }
+
+    .a-presenting-sponsor {
+        @include meta-preset( $size: -4 );
+        margin-bottom: math.div($standard-block-margin, 2);
+        color: neutral-color(medium);
+        text-transform: uppercase;
+    }
+    
+    img {
+        height: 100%;
+    }
+}

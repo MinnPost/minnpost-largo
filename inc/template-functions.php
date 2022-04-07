@@ -1866,7 +1866,7 @@ if ( ! function_exists( 'minnpost_get_newsletter_logo_url' ) ) :
 					$filename = 'newsletter-logo-daily' . $filename_suffix . '.png';
 					break;
 				case 'dc_memo':
-					$filename = 'dc-memo-header-520x50' . $filename_suffix . '.png';
+					$filename = 'newsletter-logo-dcmemo' . $filename_suffix . '.png';
 					break;
 				case 'greater_mn':
 					$filename = 'newsletter-logo-mn-week' . $filename_suffix . '.png';
@@ -1927,6 +1927,30 @@ if ( ! function_exists( 'format_email_content' ) ) :
 			$content = str_replace( '<a href="', '<a style="color: ' . $colors['links'] . ' !important; text-decoration: underline;" href="', $content );
 		}
 
+		$dom = new DOMDocument( '1.0', 'UTF-8' );
+		$dom->loadHTML( mb_convert_encoding( $content, 'HTML-ENTITIES', 'UTF-8' ) );
+		$xpath    = new domxpath( $dom );
+		$headings = $xpath->query( '//h1 | //h2 | //h3 | //h4 | //h5 | //h6' );
+		foreach ( $headings as $h ) {
+			/*
+			<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="h3 a-entry-title">
+				<tr>
+					<td>
+						<h3><a href="<?php echo get_the_permalink(); ?>"><?php echo minnpost_newsletter_get_entry_title(); ?></a></h3>
+					</td>
+				</tr>
+			</table>
+			*/
+			$table              = $dom->createElement( 'table', '' );  // phpcs:ignore
+			$table_class        = $dom->createAttribute( 'class' );
+			$table_class->value = $h->tagName; // phpcs:ignore
+			$table->appendChild($table_class); // phpcs:ignore
+			$tr      = $table->appendChild( $dom->CreateElement( 'tr', '' ) ); // phpcs:ignore
+			$td      = $tr->appendChild( $dom->CreateElement( 'td', '' ) );
+			$heading = $td->appendChild( $dom->createElement( $h->tagName, $h->nodeValue ) ); // phpcs:ignore
+			$h->parentNode->replaceChild( $table, $h ); // phpcs:ignore
+		}
+		$content = $dom->saveHTML();
 		return $content;
 	}
 endif;
@@ -2045,9 +2069,9 @@ if ( ! function_exists( 'minnpost_largo_check_newsletter_legacy' ) ) :
 		if ( '' === $newsletter_type ) {
 			$newsletter_type = get_post_meta( get_the_ID(), '_mp_newsletter_type', true );
 		}
-		// for now, the DC Memo style emails are all legacy. TODO: change this when we can.
+		// dc/covid emails are not legacy.
 		if ( in_array( $newsletter_type, array( 'dc_memo', 'daily_coronavirus' ), true ) ) {
-			return true;
+			return false;
 		}
 
 		// digest newsletters.

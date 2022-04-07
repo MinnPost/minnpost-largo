@@ -1,0 +1,26 @@
+.o-single-column.m-newsletter-sponsor-small {
+    padding: 0;
+    text-align: center;
+
+    .item-contents {
+        border-top: $border-default-style;
+        padding: $standard-block-padding 0;
+        border-bottom: 0;
+    }
+
+    .a-newsletter-sponsor-small {
+        font-style: italic;
+    }
+
+    td {
+        @include body-preset( $size: 0 );
+    }
+    
+    span, img {
+        vertical-align: middle;
+    }
+
+    img {
+        height: 24px;
+    }
+}

@@ -1,6 +1,6 @@
 <?php
 /**
- * Template part for displaying artscape newsletter content around the posts
+ * Template part for displaying DC Memo newsletter content around the posts
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
@@ -63,6 +63,38 @@
 					</div>
 					<?php do_action( 'wp_message_inserter', 'email_header', 'email' ); ?>
 
+
+					<div class="o-single-column m-newsletter-sponsor-small">
+					[outlook]
+						<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
+							<tr>
+								<td align="center" class="outlook-outer-padding">
+									<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
+										<tr>
+											<td class="outlook-inner-padding">
+						[/outlook]
+						<div class="item-contents">
+							<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="a-newsletter-sponsor-small">
+								<tr>
+									<td>
+										<span><?php echo __( 'Sponsored by&nbsp;', 'minnpost-largo' ); ?></span>
+										<a href="https://greatriverenergy.com/">
+											<img src="https://www.minnpost.com/wp-content/uploads/sites/default/files/imagecache/image_detail/images/image/great-river-energy-small.png" alt="<?php echo __( 'Great River Energy', 'minnpost-largo' ); ?>">
+										</a>
+									</td>
+								</tr>
+							</table>
+						</div>
+						[outlook]
+											</td>
+										</tr>
+									</table>
+								</td>
+							</tr>
+						</table>
+						[/outlook]
+					</div>
+
 					<div class="o-single-column m-newsletter-byline">
 						[outlook]
 						<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
@@ -101,14 +133,50 @@
 											<td class="outlook-inner-padding">
 						[/outlook]
 						<div class="item-contents">
-							<?php minnpost_newsletter_teaser(); ?>
 							<?php
 							// body text
 							$body = apply_filters( 'the_content', get_the_content() );
 							if ( '' !== $body ) :
-								$body = apply_filters( 'format_email_content', $body, true, false );
+								// add the inline sponsor before the second h2-h6 in the body
+								$heading_counter = 1;
+								$ad_string       = '<div class="o-single-column m-newsletter-sponsor-inline-region">
+								[outlook]
+								<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
+									<tr>
+										<td align="center" class="outlook-outer-padding">
+											<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
+												<tr>
+													<td class="outlook-inner-padding">
+								[/outlook]
+								<div class="item-contents">
+									<div class="m-newsletter-sponsor-inline">
+										<h4 class="a-sponsored-headline">' . __( 'D.C. Memo Sponsored by Great River Energy', 'minnpost-largo' ) . '</h4><p class="a-sponsor-inline"><a href="https://greatriverenergy.com/"><img src="https://www.minnpost.com/wp-content/uploads/sites/default/files/imagecache/image_detail/images/image/great-river-energy-logo.png" alt="' . __( 'Great River Energy', 'minnpost-largo' ) . '"></a></p>
+									</div>
+								</div>
+								[outlook]
+													</td>
+												</tr>
+											</table>
+										</td>
+									</tr>
+								</table>
+								[/outlook]
+							</div>';
+								$ad_string      .= '<h4';
+								$body            = preg_replace_callback(
+									'/<h[2-6](.*?)/',
+									function ( $match ) use ( &$heading_counter, $ad_string ) {
+										# prefix second heading that is not an h1 with ad content
+										if ( 2 === $heading_counter++ ) {
+											return $ad_string;
+										}
+										return $match[0];
+									},
+									$body
+								);
+								$body            = apply_filters( 'format_email_content', $body, true, false );
 								?>
-								<div class="o-row m-newsletter-body">
+								<div class="o-row m-newsletter-body-text-email">
 									<?php echo $body; ?>
 								</div>
 								<?php
@@ -125,20 +193,8 @@
 						[/outlook]
 					</div>
 
-					<?php do_action( 'wp_message_inserter', 'above_email_articles', 'email' ); ?>
-
-					<?php $ads = minnpost_newsletter_get_ads( $args['newsletter_type'] ); ?>
-
-					<?php
-					// artscape post section
-					$section               = 'artscape';
-					$artscape_query        = minnpost_newsletter_get_section_query( $section );
-					$args['section']       = $section;
-					$args['show_category'] = false;
-					?>
-					<?php if ( $artscape_query->have_posts() ) : ?>
-						<div class="o-single-column o-section-artscape-stories">
-						[outlook]
+					<div class="o-single-column m-newsletter-sponsor-large">
+					[outlook]
 						<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
 							<tr>
 								<td align="center" class="outlook-outer-padding">
@@ -146,96 +202,23 @@
 										<tr>
 											<td class="outlook-inner-padding">
 						[/outlook]
-
-						<?php
-						$post_count        = $artscape_query->post_count;
-						$this_section_post = 0;
-						?>
-
-						<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
-							<table role="presentation" width="100%" class="h2 a-section-title">
+						<div class="item-contents">
+							<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="a-newsletter-sponsor-large">
 								<tr>
 									<td>
-										<h2><?php echo minnpost_newsletter_get_section_title( $section ); ?></h2>
+										<table class="h4 a-sponsored-headline">
+											<tr>
+												<td>
+													<h4 class="a-sponsored-headline"><?php echo __( 'D.C. Memo Sponsor', 'minnpost-largo' ); ?></h4>
+												</td>
+											</tr>
+										</table>
+										<p class="a-presenting-sponsor"><?php echo __( 'Presenting sponsor', 'minnpost-largo' ); ?></p>
+										<p class="a-presenting-sponsor-image"><a href="http://greatriverenergy.com/"><img src="https://www.minnpost.com/wp-content/uploads/sites/default/files/imagecache/image_detail/images/image/great-river-energy-logo.png" alt="<?php echo __( 'Great River Energy', 'minnpost-largo' ); ?>"></a></p>
 									</td>
 								</tr>
 							</table>
-						<?php endif; ?>
-
-						<?php
-						$total_post_count = 0;
-						while ( $artscape_query->have_posts() ) :
-							$this_section_post++;
-							$total_post_count++;
-							$artscape_query->the_post();
-							set_query_var( 'current_post', $artscape_query->current_post );
-							$args['post_id']     = $id;
-							$args['image_size']  = 'thumb';
-							$args['extra_class'] = '';
-							if ( $post_count === $this_section_post && $post_count > 2 ) {
-								$args['extra_class'] = ' m-post-newsletter-last';
-							}
-							?>
-
-							<?php
-							// with newsletters, the individual post can override the image size for the newsletter section the post is in.
-							$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
-							if ( '' !== $override_size && 'default' !== $override_size ) {
-								$args['image_size'] = $override_size;
-							}
-							get_template_part( 'template-parts/post-newsletter', $args['newsletter_type'], $args );
-							?>
-
-							<?php if ( 1 === $total_post_count && isset( $ads[0] ) && ! empty( $ads[0] ) ) : ?>
-								<div class="o-single-column m-newsletter-ad-region">
-									[outlook]
-									<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
-										<tr>
-											<td align="center" class="outlook-outer-padding">
-												<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
-													<tr>
-														<td class="outlook-inner-padding">
-												[/outlook]
-													<div class="item-contents">
-														<?php echo $ads[0]; ?>
-													</div>
-												[outlook]
-														</td>
-													</tr>
-												</table>
-											</td>
-										</tr>
-									</table>
-									[/outlook]
-								</div>
-							<?php elseif ( 2 === $total_post_count && isset( $ads[1] ) && ! empty( $ads[1] ) ) : ?>
-								<div class="o-single-column m-newsletter-ad-region">
-									[outlook]
-									<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
-										<tr>
-											<td align="center" class="outlook-outer-padding">
-												<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-background-border">
-													<tr>
-														<td class="outlook-inner-padding">
-												[/outlook]
-													<div class="item-contents">
-														<?php echo $ads[1]; ?>
-													</div>
-												[outlook]
-														</td>
-													</tr>
-												</table>
-											</td>
-										</tr>
-									</table>
-									[/outlook]
-								</div>
-							<?php endif; ?>
-							<?php
-						endwhile;
-						wp_reset_postdata();
-						?>
-
+						</div>
 						[outlook]
 											</td>
 										</tr>
@@ -244,8 +227,7 @@
 							</tr>
 						</table>
 						[/outlook]
-						</div>
-					<?php endif; ?>
+					</div>
 
 					<?php do_action( 'wp_message_inserter', 'email_before_bios', 'email' ); ?>
 
