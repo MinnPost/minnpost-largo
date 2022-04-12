@@ -12,6 +12,8 @@
 if ( typeof wp !== 'undefined' ) {
 	wp.hooks.addAction( 'wpMessageInserterAnalyticsEvent', 'minnpostLargo', mpAnalyticsTrackingEvent, 10 );
 	wp.hooks.addAction( 'minnpostFormProcessorMailchimpAnalyticsEvent', 'minnpostLargo', mpAnalyticsTrackingEvent, 10 );
+	wp.hooks.addAction( 'minnpostMembershipAnalyticsEvent', 'minnpostLargo', mpAnalyticsTrackingEvent, 10 );
+	wp.hooks.addAction( 'minnpostMembershipAnalyticsEcommerceAction', 'minnpostLargo', mpAnalyticsTrackingEcommerceAction, 10 );
 }
 
 /*
@@ -24,7 +26,15 @@ if ( typeof wp !== 'undefined' ) {
  * non_interaction: optional
 */
 function mpAnalyticsTrackingEvent( type, category, action, label, value, non_interaction ) {
-	wp.hooks.doAction('wpAnalyticsTrackingGeneratorEvent', type, category, action, label, value, non_interaction);
+	wp.hooks.doAction( 'wpAnalyticsTrackingGeneratorEvent', type, category, action, label, value, non_interaction );
+}
+
+/*
+ * Create a Google Analytics Ecommerce action for the theme. This calls the wp-analytics-tracking-generator action.
+ *
+*/
+function mpAnalyticsTrackingEcommerceAction( type, action, product ) {
+	wp.hooks.doAction( 'wpAnalyticsTrackingGeneratorEcommerceAction', type, action, product );
 }
 
 /*
