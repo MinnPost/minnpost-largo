@@ -11,6 +11,7 @@
 */
 if ( typeof wp !== 'undefined' ) {
 	wp.hooks.addAction( 'wpMessageInserterAnalyticsEvent', 'minnpostLargo', mpAnalyticsTrackingEvent, 10 );
+	wp.hooks.addAction( 'minnpostFormProcessorMailchimpAnalyticsEvent', 'minnpostLargo', mpAnalyticsTrackingEvent, 10 );
 }
 
 /*
