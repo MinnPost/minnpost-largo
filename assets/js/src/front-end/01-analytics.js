@@ -33,8 +33,8 @@ function mpAnalyticsTrackingEvent( type, category, action, label, value, non_int
  * Create a Google Analytics Ecommerce action for the theme. This calls the wp-analytics-tracking-generator action.
  *
 */
-function mpAnalyticsTrackingEcommerceAction( type, action, product ) {
-	wp.hooks.doAction( 'wpAnalyticsTrackingGeneratorEcommerceAction', type, action, product );
+function mpAnalyticsTrackingEcommerceAction( type, action, product, step ) {
+	wp.hooks.doAction( 'wpAnalyticsTrackingGeneratorEcommerceAction', type, action, product, step );
 }
 
 /*
