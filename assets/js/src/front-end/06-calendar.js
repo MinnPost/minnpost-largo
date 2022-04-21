@@ -47,15 +47,17 @@ function showCalendar( calendarVisible ) {
         } );
 
         var calendarClose = dateHolder.querySelector( '.a-close-calendar' );
-        calendarClose.addEventListener( 'click', function( e ) {
-            e.preventDefault();
-            let expanded = 'true' === calendarVisible.getAttribute( 'aria-expanded' ) || false;
-            calendarVisible.setAttribute( 'aria-expanded', ! expanded );
-            if ( true === expanded ) {
-                calendarTransitioner.transitionHide();
-            } else {
-                calendarTransitioner.transitionShow();
-            }
-        } );
+        if ( null !== calendarClose ) {
+            calendarClose.addEventListener( 'click', function( e ) {
+                e.preventDefault();
+                let expanded = 'true' === calendarVisible.getAttribute( 'aria-expanded' ) || false;
+                calendarVisible.setAttribute( 'aria-expanded', ! expanded );
+                if ( true === expanded ) {
+                    calendarTransitioner.transitionHide();
+                } else {
+                    calendarTransitioner.transitionShow();
+                }
+            } );
+        }
     }
 }
