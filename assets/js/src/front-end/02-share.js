@@ -11,19 +11,8 @@ function trackShare( text, position = '' ) {
     if ( '' !== position ) {
         category = 'Share - ' + position;
     }
-    // track as an event, and as social if it is twitter or fb
+    // track as an event
     mpAnalyticsTrackingEvent( 'event', category, text, location.pathname );
-    if ( 'undefined' !== typeof ga ) {
-        if ( 'Facebook' === text || 'Twitter' === text ) {
-            if ( 'Facebook' === text ) {
-                ga( 'send', 'social', text, 'Share', location.pathname );
-            } else {
-                ga( 'send', 'social', text, 'Tweet', location.pathname );
-            }
-        }
-    } else {
-        return;
-    }
 }
 
 // copy the current URL to the user's clipboard
