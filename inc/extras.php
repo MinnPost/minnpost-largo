@@ -208,6 +208,7 @@ add_filter(
 		$hosts[] = 'members.minnpost.com';
 		$hosts[] = 'support.minnpost.com';
 		$hosts[] = 'givemn.org';
+		$hosts[] = 'minnpost-color-matrix.herokuapp.com';
 		return $hosts;
 	}
 );
