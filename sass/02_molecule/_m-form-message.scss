@@ -3,6 +3,7 @@
 	margin-top: -$standard-block-padding;
 	margin-bottom: $standard-block-margin;
 	border: $border-default-style;
+	border-radius: $border-radius;
 
 	&.m-form-message-error {
 		background: brand-color(red, highlight);
