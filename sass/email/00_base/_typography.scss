@@ -36,6 +36,7 @@ ol {
 	li {
 		margin: 0 0 $standard-heading-margin 0;
 		padding: 0 0 0 $standard-block-padding * 0.5;
+		@include body-preset( $size: 0 );
 
 		&:last-child {
 			margin: 0 0 $standard-heading-margin 0;
@@ -68,8 +69,6 @@ dd {
 	width: 1px;
 	overflow: hidden;
 }
-
-// email specific styles
 
 // paragraphs
 p {
