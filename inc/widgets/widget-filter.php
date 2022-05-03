@@ -187,7 +187,7 @@ endif;
 */
 if ( ! function_exists( 'minnpost_largo_spill_posts' ) ) :
 	add_filter( 'minnpost_spills_display_spill_posts', 'minnpost_largo_spill_posts', 10, 6 );
-	function minnpost_largo_spill_posts( $output = '', $query, $before_title = '', $title = '', $after_title = '', $instance = array() ) {
+	function minnpost_largo_spill_posts( $output = '', $query = '', $before_title = '', $title = '', $after_title = '', $instance = array() ) {
 		if ( isset( $query ) && $query->have_posts() ) {
 			$output = '';
 			if ( $title ) {
