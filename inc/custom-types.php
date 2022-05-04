@@ -271,6 +271,158 @@ if ( ! function_exists( 'minnpost_coauthors_in_rss' ) ) :
 endif;
 
 /**
+* Register custom post type 'cr3ativsponsor'
+* The name is because we used to rely on a plugin that is no longer active.
+*
+*/
+if ( ! function_exists( 'create_sponsor' ) ) :
+	add_action( 'init', 'create_sponsor' );
+	function create_sponsor() {
+		$labels       = array(
+			'name'                  => __( 'Sponsors', 'minnpost-largo' ),
+			'singular_name'         => __( 'Sponsor', 'minnpost-largo' ),
+			'menu_name'             => __( 'Sponsors', 'minnpost-largo' ),
+			'name_admin_bar'        => __( 'Sponsor', 'minnpost-largo' ),
+			'add_new'               => __( 'Add New Sponsor', 'minnpost-largo' ),
+			'add_new_item'          => __( 'Add New Sponsor', 'minnpost-largo' ),
+			'new_item'              => __( 'New Sponsor', 'minnpost-largo' ),
+			'edit_item'             => __( 'Edit Sponsor', 'minnpost-largo' ),
+			'update_item'           => __( 'Update Sponsor', 'minnpost-largo' ),
+			'view_item'             => __( 'View Sponsor', 'minnpost-largo' ),
+			'view_items'            => __( 'View Sponsors', 'minnpost-largo' ),
+			'all_items'             => __( 'Sponsors', 'minnpost-largo' ),
+			'archives'              => __( 'Sponsor Archives', 'minnpost-largo' ),
+			'search_items'          => __( 'Search Sponsors', 'minnpost-largo' ),
+			'parent_item_colon'     => __( 'Parent Sponsor:', 'minnpost-largo' ),
+			'not_found'             => __( 'No sponsors found.', 'minnpost-largo' ),
+			'not_found_in_trash'    => __( 'No sponsors found in Trash.', 'minnpost-largo' ),
+			'attributes'            => __( 'Sponsor Attributes', 'minnpost-largo' ),
+			'featured_image'        => __( 'Featured Image', 'minnpost-largo' ),
+			'set_featured_image'    => __( 'Set featured image', 'minnpost-largo' ),
+			'remove_featured_image' => __( 'Remove featured image', 'minnpost-largo' ),
+			'use_featured_image'    => __( 'Use as featured image', 'minnpost-largo' ),
+			'insert_into_item'      => __( 'Insert into message', 'minnpost-largo' ),
+			'uploaded_to_this_item' => __( 'Uploaded to this sponsor', 'minnpost-largo' ),
+			'items_list'            => __( 'Sponsors list', 'minnpost-largo' ),
+			'items_list_navigation' => __( 'Sponsors list navigation', 'minnpost-largo' ),
+			'filter_items_list'     => __( 'Filter sponsor list', 'minnpost-largo' ),
+		);
+		$sponsor_args = array(
+			'labels'              => $labels,
+			'public'              => true,
+			'menu_icon'           => 'dashicons-businessman',
+			'publicly_queryable'  => true,
+			'show_ui'             => true,
+			'show_in_rest'        => true,
+			'exclude_from_search' => true,
+			'query_var'           => true,
+			'rewrite'             => true,
+			'capability_type'     => 'post',
+			'hierarchical'        => false,
+			'menu_position'       => null,
+			'supports'            => array( 'title', 'editor', 'page-attributes' ),
+		);
+		register_post_type( 'cr3ativsponsor', $sponsor_args );
+	}
+endif;
+
+/**
+* Register custom taxonomy for sponsors
+*
+*/
+if ( ! function_exists( 'create_sponsor_level' ) ) :
+	add_action( 'init', 'create_sponsor_level', 0 );
+	function create_sponsor_level() {
+		register_taxonomy(
+			'cr3ativsponsor_level',
+			'cr3ativsponsor',
+			array(
+				'hierarchical' => true,
+				'label'        => __( 'Sponsor Level', 'minnpost-largo' ),
+				'query_var'    => true,
+				'rewrite'      => true,
+			)
+		);
+	}
+endif;
+
+/**
+* Remove comments and trackbacks from the sponsor post because that's absurd
+*
+*/
+if ( ! function_exists( 'minnpost_remove_sponsor_comment' ) ) :
+	add_action( 'init', 'minnpost_remove_sponsor_comment', 100 );
+	function minnpost_remove_sponsor_comment() {
+		remove_post_type_support( 'cr3ativsponsor', 'comments' );
+		remove_post_type_support( 'cr3ativsponsor', 'trackbacks' );
+	}
+endif;
+
+/**
+* Edit the sponsor list display on the admin
+*
+*/
+if ( ! function_exists( 'minnpost_edit_sponsor_columns' ) ) :
+	add_filter( 'manage_edit-cr3ativsponsor_columns', 'minnpost_edit_sponsor_columns' );
+	function minnpost_edit_sponsor_columns( $columns ) {
+		$columns = array(
+			'cb'              => '<input type="checkbox" />',
+			'title'           => __( 'Sponsor Name', 'cr3at_sponsor' ),
+			'sponsor_website' => __( 'Sponsor Website', 'cr3at_sponsor' ),
+			'sponsor_level'   => __( 'Sponsor Level', 'cr3at_sponsor' ),
+		);
+		return $columns;
+	}
+endif;
+
+/**
+* Populate columns on the post table for sponsors
+*
+* @param string $column
+* @param int $post_id
+*/
+if ( ! function_exists( 'minnpost_sponsor_columns' ) ) :
+	add_action( 'manage_cr3ativsponsor_posts_custom_column', 'minnpost_sponsor_columns', 10, 2 );
+	function minnpost_sponsor_columns( $column, $post_id ) {
+		global $post;
+		$cr3ativ_sponsorurl = get_post_meta( $post_id, 'cr3ativ_sponsorurl', $single = true );
+		switch ( $column ) {
+			case 'sponsor_website':
+				printf( $cr3ativ_sponsorurl );
+				break;
+			case 'sponsor_level':
+				$terms = get_the_terms( $post_id, 'cr3ativsponsor_level' );
+				/* If terms were found. */
+				if ( ! empty( $terms ) ) {
+					$out = array();
+					/* Loop through each term, linking to the 'edit posts' page for the specific term. */
+					foreach ( $terms as $term ) {
+						$out[] = sprintf(
+							'<a href="%s">%s</a>',
+							esc_url(
+								add_query_arg(
+									array(
+										'post_type' => $post->post_type,
+										'cr3ativsponsor_level' => $term->slug,
+									),
+									'edit.php'
+								)
+							),
+							esc_html( sanitize_term_field( 'name', $term->name, $term->term_id, 'cr3ativsponsor_level', 'display' ) )
+						);
+					}
+					/* Join the terms, separating them with a comma. */
+					echo join( ', ', $out );
+				}
+				break;
+			/* Just break out of the switch statement for everything else. */
+			default:
+				break;
+		}
+	}
+endif;
+
+/**
 * Register custom post type 'festival'
 *
 */

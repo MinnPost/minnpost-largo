@@ -2472,32 +2472,6 @@ if ( ! function_exists( 'cmb2_sponsor_fields' ) ) :
 		);
 
 	}
-
-	/**
-	* Remove comments and trackbacks from the sponsor post because that's absurd
-	*
-	*/
-	add_action( 'init', 'remove_custom_post_comment', 100 );
-	function remove_custom_post_comment() {
-		remove_post_type_support( 'cr3ativsponsor', 'comments' );
-		remove_post_type_support( 'cr3ativsponsor', 'trackbacks' );
-	}
-
-	/**
-	* Edit the sponsor list display on the admin
-	*
-	*/
-	add_filter( 'manage_edit-cr3ativsponsor_columns', 'minnpost_edit_sponsor_columns' );
-	function minnpost_edit_sponsor_columns( $columns ) {
-		$columns = array(
-			'cb'              => '<input type="checkbox" />',
-			'title'           => __( 'Sponsor Name', 'cr3at_sponsor' ),
-			'sponsor_website' => __( 'Sponsor Website', 'cr3at_sponsor' ),
-			'sponsor_level'   => __( 'Sponsor Level', 'cr3at_sponsor' ),
-		);
-		return $columns;
-	}
-
 endif;
 
 /**
