@@ -2874,10 +2874,12 @@ if ( ! function_exists( 'cmb2_event_website_page_fields' ) ) :
 		// what we need to know is if this current post type is one of the event post types.
 		$post_type = '';
 		if ( empty( $post ) && ( array_key_exists( 'post', $_GET ) ) || array_key_exists( 'post_ID', $_POST ) ) {
-			if ( isset( $_GET['post'] ) ) {
+			if ( isset( $_GET['post'] ) && ! is_array( $_GET['post'] ) ) {
 				$post = get_post( esc_attr( $_GET['post'] ) );
-			} else {
+			} elseif ( isset( $_POST['post_ID'] ) && ! is_array( $_POST['post_ID'] ) ) {
 				$post = get_post( esc_attr( $_POST['post_ID'] ) );
+			} else {
+				return; // if post is an array, we're not editing a single post.
 			}
 			$post_type = get_post_type( $post );
 		} elseif ( array_key_exists( 'post_type', $_GET ) ) {
