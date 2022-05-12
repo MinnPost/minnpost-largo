@@ -23,15 +23,13 @@ if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
 		wp_dequeue_style( 'largo-style' );
 		wp_dequeue_style( 'media-credit' );
 		wp_dequeue_style( 'widgetopts-styles' );
-		wp_dequeue_style( 'minnpost-nimbus' );
-		wp_dequeue_style( 'minnpost-donation-progress-widget' );
 		wp_dequeue_style( 'popular-widget' );
-		wp_dequeue_style( 'creativ_sponsor' );
 
 		if ( is_single() ) {
 			$is_liveblog = get_post_meta( get_the_ID(), 'liveblog', true );
 			if ( 'enable' === $is_liveblog || 'archive' === $is_liveblog ) {
-				wp_enqueue_style( 'minnpost-liveblog', get_theme_file_uri() . '/assets/css/liveblog.css', array(), filemtime( get_theme_file_path() . '/assets/css/liveblog.css' ), 'all' );
+				$liveblog_css_version = '1.0.3';
+				wp_enqueue_style( 'minnpost-liveblog', get_theme_file_uri() . '/assets/css/liveblog.css', array(), $liveblog_css_version, 'all' );
 			}
 			$css_urls = get_post_meta( get_the_ID(), '_css_file_urls', true );
 			if ( '' !== $css_urls ) {

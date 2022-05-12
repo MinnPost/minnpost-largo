@@ -1,6 +1,2 @@
-@import "../../sass/functions"; // put functions first because they get used in color variable calculations
-@import "../../sass/variables";
-@import "../../sass/type-scale";
-@import "../../sass/variables-legacy";
-@import "../../sass/mixins";
+// after deactivating the liveblog plugin and removing what it uses, this is what remains.
 @import "liveblog/*";

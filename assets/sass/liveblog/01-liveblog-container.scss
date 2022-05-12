@@ -1,3 +1,64 @@
+/* *
+* Entries
+*/
+
+.liveblog-entry {
+display: flex;
+padding: 1rem;
+background: #f7f7f7;
+border-top: 2px solid #eee;
+border-bottom: 2px solid #eee;
+}
+
+.liveblog-entry.is-key-event {
+border-top: 2px solid #111;
+}
+
+.liveblog-meta {
+color: #666;
+}
+
+.liveblog-entry-aside {
+flex-basis: 70px;
+min-width: 70px;
+margin-right: 10px;
+}
+
+.liveblog-entry-main {
+flex-grow: 1;
+}
+
+.entry-content .liveblog-meta-time,
+.entry-content .liveblog-meta-time:hover,
+.entry-content .liveblog-meta-time:focus {
+-webkit-box-shadow: none;
+box-shadow: none;
+}
+
+.liveblog-meta-time span {
+font-size: 10px;
+line-height: 12px;
+}
+
+.liveblog-meta-time span:first-child {
+font-weight: 600;
+color: #333;
+margin-bottom: 5px;
+}
+
+.liveblog-meta-authors {
+margin-bottom: .5rem;
+}
+
+.liveblog-meta-author {
+margin-right: 8px;
+}
+
+.liveblog-meta-author-name {
+font-size: 13px;
+margin-left: 8px;
+}
+
 #wpcom-liveblog-container {
-	background: $color__white;
+	background: #fff;
 }
