@@ -2064,6 +2064,51 @@ if ( ! function_exists( 'minnpost_remove_author_comments' ) ) :
 endif;
 
 /**
+* Change the contact info fields on guest authors.
+*
+* @param array $fields_to_return
+* @param array $groups
+* @return array $fields_to_return
+*/
+if ( ! function_exists( 'minnpost_author_fields' ) ) :
+	add_filter( 'coauthors_guest_author_fields', 'minnpost_author_fields', 10, 2 );
+	function minnpost_author_fields( $fields_to_return, $groups ) {
+		// remove fields
+		foreach ( $fields_to_return as $key => $value ) {
+			if ( 'jabber' === $value['key'] || 'aim' === $value['key'] || 'yahooim' === $value['key'] ) {
+				unset( $fields_to_return[ $key ] );
+			}
+		}
+
+		// add fields
+		if ( in_array( 'all', $groups, true ) || in_array( 'contact-info', $groups, true ) ) {
+			$fields_to_return[] = array(
+				'key'   => esc_attr( 'twitter' ),
+				'label' => esc_html__( 'Twitter URL', 'minnpost-largo' ),
+				'group' => 'contact-info',
+			);
+		}
+		if ( in_array( 'all', $groups, true ) || in_array( 'name', $groups, true ) ) {
+			$fields_to_return[] = array(
+				'key'   => esc_attr( 'job-title' ),
+				'label' => esc_html__( 'Job Title', 'minnpost-largo' ),
+				'group' => 'name',
+			);
+		}
+		if ( in_array( 'all', $groups, true ) || in_array( 'about', $groups, true ) ) {
+			$fields_to_return[] = array(
+				'key'           => esc_attr( 'teaser' ),
+				'label'         => esc_html__( 'Teaser', 'minnpost-largo' ),
+				'group'         => 'about',
+				'textarea_rows' => 15,
+			);
+		}
+		return $fields_to_return;
+	}
+endif;
+
+
+/**
 * Add custom fields to authors
 *
 */
