@@ -15,17 +15,6 @@ function trackShare( text, position = '' ) {
     mpAnalyticsTrackingEvent( 'event', category, text, location.pathname );
 }
 
-// copy the current URL to the user's clipboard
-function copyCurrentURL() {
-    var dummy = document.createElement( 'input' ),
-        text = window.location.href;
-    document.body.appendChild( dummy );
-    dummy.value = text;
-    dummy.select();
-    document.execCommand( 'copy' );
-    document.body.removeChild( dummy );
-}
-
 // top share button click
 document.querySelectorAll( ".m-entry-share-top a" ).forEach(
     topButton => topButton.addEventListener( "click", ( e ) => {
@@ -43,7 +32,6 @@ document.querySelectorAll( ".m-entry-share .a-share-print a" ).forEach(
     } )
 );
 
-
 // when the republish button is clicked
 // the plugin controls the rest, but we need to make sure the default event doesn't fire
 document.querySelectorAll( ".m-entry-share .a-share-republish a" ).forEach(
@@ -56,11 +44,13 @@ document.querySelectorAll( ".m-entry-share .a-share-republish a" ).forEach(
 document.querySelectorAll( ".m-entry-share .a-share-copy-url a" ).forEach(
     copyButton => copyButton.addEventListener( "click", ( e ) => {
         e.preventDefault();
-        copyCurrentURL();
-        tlite.show( ( e.target ), { grav: 'w' } );
-        setTimeout( function() {
-            tlite.hide( ( e.target ) );
-        }, 3000 );
+        let copyText = window.location.href;
+        navigator.clipboard.writeText(copyText).then(() => {
+            tlite.show( ( e.target ), { grav: 'w' } );
+            setTimeout( function() {
+                tlite.hide( ( e.target ) );
+            }, 3000 );
+        });
     } )
 );
 
