@@ -67,27 +67,7 @@ $content = htmlspecialchars( $content, ENT_HTML5, 'UTF-8', true );
 
 $content_footer = Republication_Tracker_Tool::create_content_footer( $post );
 
-/**
- * The licensing statement from this plugin
- *
- * @var HTML $license_statement
- */
-$license_statement = wp_kses_post( get_option( 'republication_tracker_tool_policy' ) );
-
-/**
- * The article source
- *
- * @var HTML $attribution_statment
- */
-$attribution_statement = sprintf(
-	// translators: %1$s is a URL, %2$s is the site home URL, and %3$s is the site title.
-	esc_html__( 'This <a target="_blank" href="%1$s">article</a> first appeared on <a target="_blank" href="%2$s">%3$s</a> and is republished here under a Creative Commons license.', 'republication-tracker-tool' ),
-	get_permalink( $post ),
-	home_url(),
-	esc_html( get_bloginfo() )
-);
-
-
+// ours
 if ( function_exists( 'minnpost_get_posted_on' ) ) {
 	$date = minnpost_get_posted_on( $post->ID, true );
 	if ( '' === $date ) {
@@ -101,6 +81,8 @@ if ( function_exists( 'minnpost_get_posted_on' ) ) {
 } else {
 	$time_string = gmdate( 'F j, Y', strtotime( $post->post_date ) );
 }
+// end ours
+
 /**
  * The article title, byline, source site, and date
  *
@@ -113,20 +95,23 @@ $article_info = sprintf(
 	minnpost_get_posted_by( $post->ID, true, false ),
 	wp_kses_post( $time_string )
 );
-// strip empty tags after automatically applying p tags
+// strip empty tags after automatically applying p tags.
 $article_info = str_replace( '<p></p>', '', wpautop( $article_info ) );
 
 /**
- * The licensing statement from this plugin's settings
+ * The licensing statement from this plugin
  *
  * @var HTML $license_statement
  */
-$license_statement = get_option( 'republication_tracker_tool_policy' );
+$license_statement = wp_kses_post( get_option( 'republication_tracker_tool_policy' ) );
 $license_statement = apply_filters( 'the_content', $license_statement );
 ?>
 
 <div id="republication-tracker-tool-modal-content" style="display:none;">
-	<a href="#" class="a-close-button republication-tracker-tool-close"><span class="screen-reader-text"><?php echo esc_html( 'Close window', 'republication-tracker-tool' ); ?></span> <i class="fas fa-times"></i></a>
+	<a href="#" class="a-close-button republication-tracker-tool-close">
+		<span class="screen-reader-text"><?php echo esc_html( 'Close window', 'republication-tracker-tool' ); ?></span>
+		<i class="fas fa-times"></i>
+	</a>
 	<div class="m-republication-info">
 	</div>
 	<header class="m-entry-header m-republication-entry-header">
