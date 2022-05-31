@@ -322,3 +322,52 @@ if ( ! function_exists( 'minnpost_elasticpress_posts_request' ) ) :
 	};
 endif;
 
+/**
+ * Co-Author Plus ES query fix.
+ *
+ * With CAP, authors are attached either with the traditional
+ * author field or via an "author" taxonomy. So we need to check both.
+ * @see https://gist.github.com/WPprodigy/a6e42dcb94bf4fb93201cf9065d79a7f
+ * @param array $formatted_args
+ * @param array $args
+ * @param object $wp_query
+ * @return array $formatted_args
+ */
+if ( ! function_exists( 'minnpost_ep_formatted_args' ) ) :
+	add_filter( 'ep_formatted_args', 'minnpost_ep_formatted_args', 10, 3 );
+	function minnpost_ep_formatted_args( $formatted_args, $args, $wp_query ) {
+		if ( is_admin() || ! $wp_query->is_author() ) {
+			return $formatted_args;
+		}
+
+		// Try to remove the default author filter if one exists, as it needs to be in an "or/should" block instead.
+		$removed_author = null;
+		if ( isset( $formatted_args['post_filter']['bool']['must'] ) ) {
+			foreach ( $formatted_args['post_filter']['bool']['must'] as $index => $es_filter ) {
+				if ( isset( $es_filter['term']['post_author.id'] ) ) {
+					$removed_author = $es_filter['term']['post_author.id'];
+					unset( $formatted_args['post_filter']['bool']['must'][ $index ] );
+				}
+			}
+		}
+
+		// There isn't a query based on the author, so let's not continue.
+		if ( null === $removed_author || empty( $wp_query->query_vars['author_name'] ) ) {
+			return $formatted_args;
+		}
+
+		$author_name = sanitize_title( $wp_query->query_vars['author_name'] );
+		$new_filters = array(
+			array( 'term' => array( 'post.author.id' => $removed_author ) ),
+			array( 'terms' => array( 'terms.author.name.raw' => $author_name ) ),
+		);
+
+		// Merge the two new filters into an "OR" block.
+		$filter_or = isset( $formatted_args['post_filter']['bool']['should'] ) ? $formatted_args['post_filter']['bool']['should'] : [];
+
+		$formatted_args['post_filter']['bool']['should'] = array_merge( $filter_or, $new_filters );
+
+		return $formatted_args;
+	};
+endif;
+
