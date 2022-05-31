@@ -336,7 +336,7 @@ endif;
 if ( ! function_exists( 'minnpost_ep_formatted_args' ) ) :
 	add_filter( 'ep_formatted_args', 'minnpost_ep_formatted_args', 10, 3 );
 	function minnpost_ep_formatted_args( $formatted_args, $args, $wp_query ) {
-		if ( is_admin() || ! $wp_query->is_author() ) {
+		if ( ! $wp_query->is_author() ) {
 			return $formatted_args;
 		}
 
