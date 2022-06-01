@@ -113,8 +113,11 @@ endif;
  * @return array $taxonomy_names the array of allowable taxonomy names
  */
 if ( ! function_exists( 'minnpost_indexable_taxonomy_names' ) ) :
-	//add_filter( 'vip_search_post_taxonomies_allow_list', 'minnpost_indexable_taxonomy_names', 10, 2 );
+	add_filter( 'vip_search_post_taxonomies_allow_list', 'minnpost_indexable_taxonomy_names', 10, 2 );
 	function minnpost_indexable_taxonomy_names( $taxonomy_names, $post ) {
+		if ( is_object( $post ) && 'guest-author' === $post->post_type ) {
+			$taxonomy_names[] = 'author';
+		}
 		return $taxonomy_names;
 	}
 endif;
