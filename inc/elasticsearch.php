@@ -280,7 +280,7 @@ if ( ! function_exists( 'minnpost_coauthors_search_authors_get_terms_args' ) ) :
 	add_filter( 'coauthors_search_authors_get_terms_args', 'minnpost_coauthors_search_authors_get_terms_args', 10, 1 );
 	function minnpost_coauthors_search_authors_get_terms_args( $args ) {
 		if ( is_admin() ) {
-			$args['number']       = -1;
+			$args['number']       = 0;
 			$args['es']           = false;
 			$args['ep_integrate'] = true;
 		}
