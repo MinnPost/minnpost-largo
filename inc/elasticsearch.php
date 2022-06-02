@@ -275,12 +275,15 @@ if ( ! function_exists( 'minnpost_elasticpress_analyzer_filters' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'minnpost_coauthors_skip_elasticsearch' ) ) :
-	add_action( 'pre_get_posts', 'minnpost_coauthors_skip_elasticsearch' );
-	function minnpost_coauthors_skip_elasticsearch( $query ) {
-		if ( ! $query->is_author() ) {
-			$query->set( 'es', false );
+
+if ( ! function_exists( 'minnpost_coauthors_search_authors_get_terms_args' ) ) :
+	add_filter( 'coauthors_search_authors_get_terms_args', 'minnpost_coauthors_search_authors_get_terms_args', 10, 1 );
+	function minnpost_coauthors_search_authors_get_terms_args( $args ) {
+		if ( is_admin() ) {
+			$args['number']       = -1;
+			$args['ep_integrate'] = true;
 		}
+		return $args;
 	}
 endif;
 
