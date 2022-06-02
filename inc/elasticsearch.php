@@ -281,6 +281,7 @@ if ( ! function_exists( 'minnpost_coauthors_search_authors_get_terms_args' ) ) :
 	function minnpost_coauthors_search_authors_get_terms_args( $args ) {
 		if ( is_admin() ) {
 			$args['number']       = -1;
+			$args['es']           = false;
 			$args['ep_integrate'] = true;
 		}
 		return $args;
