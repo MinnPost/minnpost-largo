@@ -113,11 +113,8 @@ endif;
  * @return array $taxonomy_names the array of allowable taxonomy names
  */
 if ( ! function_exists( 'minnpost_indexable_taxonomy_names' ) ) :
-	add_filter( 'vip_search_post_taxonomies_allow_list', 'minnpost_indexable_taxonomy_names', 10, 2 );
+	//add_filter( 'vip_search_post_taxonomies_allow_list', 'minnpost_indexable_taxonomy_names', 10, 2 );
 	function minnpost_indexable_taxonomy_names( $taxonomy_names, $post ) {
-		if ( is_object( $post ) && 'guest-author' === $post->post_type ) {
-			$taxonomy_names[] = 'author';
-		}
 		return $taxonomy_names;
 	}
 endif;
@@ -278,99 +275,28 @@ if ( ! function_exists( 'minnpost_elasticpress_analyzer_filters' ) ) :
 	}
 endif;
 
-/**
- * Co-Author Plus ES query fix.
- *
- * With CAP, authors are attached either with the traditional
- * author field or via an "author" taxonomy. So we need to check both.
- * @see https://gist.github.com/WPprodigy/a6e42dcb94bf4fb93201cf9065d79a7f
- * @param array $es_args
- * @param object $query
- * @return array $es_args
- */
-if ( ! function_exists( 'minnpost_elasticpress_posts_request' ) ) :
-	add_filter( 'es_posts_request', 'minnpost_elasticpress_posts_request', 20, 2 );
-	function minnpost_elasticpress_posts_request( $es_args, $query ) {
+if ( ! function_exists( 'minnpost_coauthors_skip_elasticsearch' ) ) :
+	add_action( 'pre_get_posts', 'minnpost_coauthors_skip_elasticsearch' );
+	function minnpost_coauthors_skip_elasticsearch( $query ) {
 		if ( ! $query->is_author() ) {
-			return $es_args;
+			$query->set( 'es', false );
 		}
-
-		// Remove default author filter, as it needs to be in an "OR" block instead.
-		$removed_author = false;
-		if ( isset( $es_args['filter']['and'] ) ) {
-			foreach ( $es_args['filter']['and'] as $index => $es_filter ) {
-				if ( isset( $es_filter['term']['author_login'] ) ) {
-					$removed_author = true;
-					unset( $es_args['filter']['and'][ $index ] );
-				}
-			}
-		}
-
-		// There isn't a query based on the author_name, so let's not continue.
-		if ( ! $removed_author || empty( $query->query_vars['author_name'] ) ) {
-			return $es_args;
-		}
-
-		$author_name = sanitize_title( $query->query_vars['author_name'] );
-		$new_filters = array(
-			array( 'term' => array( 'author_login' => $author_name ) ),
-			array( 'term' => array( 'taxonomy.author.name.raw_lc' => $author_name ) ),
-		);
-
-		// Merge the two new filters into an "OR" block.
-		$filter_or               = isset( $es_args['filter']['or'] ) ? $es_args['filter']['or'] : array();
-		$es_args['filter']['or'] = array_merge( $filter_or, $new_filters );
-
-		return $es_args;
-	};
+	}
 endif;
+
 
 /**
- * Co-Author Plus ES query fix.
+ * Language analyzer filters in Elasticpress
  *
- * With CAP, authors are attached either with the traditional
- * author field or via an "author" taxonomy. So we need to check both.
- * @see https://gist.github.com/WPprodigy/a6e42dcb94bf4fb93201cf9065d79a7f
- * @param array $formatted_args
- * @param array $args
- * @param object $wp_query
- * @return array $formatted_args
+ * @see https://docs.wpvip.com/how-tos/vip-search/search-tokenization/
+ * @param array $filters
+ * @return array $filters
  */
-if ( ! function_exists( 'minnpost_ep_formatted_args' ) ) :
-	add_filter( 'ep_formatted_args', 'minnpost_ep_formatted_args', 10, 3 );
-	function minnpost_ep_formatted_args( $formatted_args, $args, $wp_query ) {
-		if ( ! $wp_query->is_author() ) {
-			return $formatted_args;
-		}
-
-		// Try to remove the default author filter if one exists, as it needs to be in an "or/should" block instead.
-		$removed_author = null;
-		if ( isset( $formatted_args['post_filter']['bool']['must'] ) ) {
-			foreach ( $formatted_args['post_filter']['bool']['must'] as $index => $es_filter ) {
-				if ( isset( $es_filter['term']['post_author.id'] ) ) {
-					$removed_author = $es_filter['term']['post_author.id'];
-					unset( $formatted_args['post_filter']['bool']['must'][ $index ] );
-				}
-			}
-		}
-
-		// There isn't a query based on the author, so let's not continue.
-		if ( null === $removed_author || empty( $wp_query->query_vars['author_name'] ) ) {
-			return $formatted_args;
-		}
-
-		$author_name = sanitize_title( $wp_query->query_vars['author_name'] );
-		$new_filters = array(
-			array( 'term' => array( 'post.author.id' => $removed_author ) ),
-			array( 'terms' => array( 'terms.author.name.raw' => $author_name ) ),
-		);
-
-		// Merge the two new filters into an "OR" block.
-		$filter_or = isset( $formatted_args['post_filter']['bool']['should'] ) ? $formatted_args['post_filter']['bool']['should'] : [];
-
-		$formatted_args['post_filter']['bool']['should'] = array_merge( $filter_or, $new_filters );
-
-		return $formatted_args;
-	};
+if ( ! function_exists( 'minnpost_elasticpress_analyzer_language' ) ) :
+	//add_filter( 'ep_analyzer_language', 'minnpost_elasticpress_analyzer_language', 10, 2 );
+	function minnpost_elasticpress_analyzer_language( $language, $context ) {
+		//return 'english';
+		error_log( 'language is ' . $language );
+		return $language;
+	}
 endif;
-
