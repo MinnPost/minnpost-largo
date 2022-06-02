@@ -282,7 +282,7 @@ if ( ! function_exists( 'minnpost_coauthors_search_authors_get_terms_args' ) ) :
 		if ( is_admin() ) {
 			$args['number']       = 0;
 			$args['es']           = false;
-			$args['ep_integrate'] = true;
+			$args['ep_integrate'] = false;
 		}
 		return $args;
 	}
