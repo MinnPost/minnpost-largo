@@ -1923,14 +1923,17 @@ if ( ! function_exists( 'format_email_content' ) ) :
 
 		$content = str_replace( ' dir="ltr"', '', $content );
 
-		// links
+		// links.
 		if ( isset( $colors['links'] ) ) {
 			$content = str_replace( '<a href="', '<a style="color: ' . $colors['links'] . ' !important; text-decoration: underline;" href="', $content );
 		}
 
+		// get an xpath to parse.
 		$dom = new DOMDocument( '1.0', 'UTF-8' );
 		$dom->loadHTML( mb_convert_encoding( $content, 'HTML-ENTITIES', 'UTF-8' ) );
-		$xpath    = new domxpath( $dom );
+		$xpath = new domxpath( $dom );
+
+		// headings.
 		$headings = $xpath->query( '//h1 | //h2 | //h3 | //h4 | //h5 | //h6' );
 		foreach ( $headings as $h ) {
 			/*
@@ -1952,6 +1955,7 @@ if ( ! function_exists( 'format_email_content' ) ) :
 			$h->parentNode->replaceChild( $table, $h ); // phpcs:ignore
 		}
 
+		// for each image, format it.
 		$images = $xpath->query( '//img' );
 		foreach ( $images as $i ) {
 			/*
@@ -2032,6 +2036,13 @@ if ( ! function_exists( 'format_email_content' ) ) :
 				$image->appendChild( $image_id ); // phpcs:ignore
 			}
 			$i->parentNode->replaceChild( $image, $i ); // phpcs:ignore
+		}
+
+		// noscript is not valid in email. remove it.
+		$elements = $dom->getElementsByTagName( 'noscript' );
+		for ( $i = $elements->length; --$i >= 0; ) {
+			$noscript = $elements->item( $i );
+			$noscript->parentNode->removeChild( $noscript ); // phpcs:ignore
 		}
 		$content = $dom->saveHTML();
 		return $content;
