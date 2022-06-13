@@ -850,6 +850,7 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 										<tr>';
 				}
 				if ( '' !== $image ) {
+					$image   = apply_filters( 'format_email_content', $image, false );
 					$output .= '<td class="outlook-inner-padding">
 					[/outlook]';
 					$output .= '<div class="o-column a-newsletter-figure a-newsletter-figure-author a-newsletter-figure-author-' . $photo_size . '"><div class="item-contents">';
@@ -1950,6 +1951,88 @@ if ( ! function_exists( 'format_email_content' ) ) :
 			$heading = $td->appendChild( $dom->createElement( $h->tagName, $h->nodeValue ) ); // phpcs:ignore
 			$h->parentNode->replaceChild( $table, $h ); // phpcs:ignore
 		}
+
+		$images = $xpath->query( '//img' );
+		foreach ( $images as $i ) {
+			/*
+			<img src="url?strip=all&amp;w=width" alt="alt" style="border: 0; height: auto; line-height: 100%; max-width: 100%; outline: none; text-decoration: none;">
+			// eventually maybe loading=lazy will be supported. check caniemail.com for this.
+			*/
+			// get values for the image attributes we support.
+			$width  = $i->getAttribute( 'width' ); // phpcs:ignore
+			$height = $i->getAttribute( 'height' ); // phpcs:ignore
+			$alt    = $i->getAttribute( 'alt' ); // phpcs:ignore
+			$src    = $i->getAttribute( 'src' ); // phpcs:ignore
+			$style  = $i->getAttribute( 'style' ); // phpcs:ignore
+			$class  = $i->getAttribute( 'class' ); // phpcs:ignore
+			$border = $i->getAttribute( 'border' ); // phpcs:ignore
+			$title  = $i->getAttribute( 'title' ); // phpcs:ignore
+			$align  = $i->getAttribute( 'align' ); // phpcs:ignore
+			$id     = $i->getAttribute( 'id' ); // phpcs:ignore
+
+			// for formatting images, set its attributes.
+			$attributes = array();
+			if ( '' !== $width ) {
+				$attributes['content_width'] = $width;
+			}
+			$src = get_minnpost_modified_image_url( $src, $attributes );
+
+			// create new image and attributes for the attributes we support.
+			$image_width  = $dom->createAttribute( 'width' ); // phpcs:ignore
+			$image_height = $dom->createAttribute( 'height' ); // phpcs:ignore
+			$image_alt    = $dom->createAttribute( 'alt' ); // phpcs:ignore
+			$image_src    = $dom->createAttribute( 'src' ); // phpcs:ignore
+			$image_style  = $dom->createAttribute( 'style' ); // phpcs:ignore
+			$image_class  = $dom->createAttribute( 'class' ); // phpcs:ignore
+			$image_id     = $dom->createAttribute( 'id' ); // phpcs:ignore
+			$image_border = $dom->createAttribute( 'border' ); // phpcs:ignore
+			$image_title  = $dom->createAttribute( 'title' ); // phpcs:ignore
+			$image_align  = $dom->createAttribute( 'align' ); // phpcs:ignore
+			$image        = $dom->createElement( 'img', '' ); // phpcs:ignore
+
+			// set the values for the attributes.
+			$image_width->value  = $width;
+			$image_height->value = $height;
+			$image_alt->value    = $alt;
+			$image_src->value    = $src;
+			$image_style->value  = $style;
+			$image_class->value  = $class;
+			$image_border->value = $border;
+			$image_title->value  = $title;
+			$image_align->value  = $align;
+			$image_id->value     = $id;
+
+			// add the required things.
+			$image->appendChild( $image_alt ); // phpcs:ignore
+			$image->appendChild( $image_src ); // phpcs:ignore
+
+			// add the optional things.
+			if ( '' !== $width ) {
+				$image->appendChild( $image_width ); // phpcs:ignore
+			}
+			if ( '' !== $height ) {
+				$image->appendChild( $image_height ); // phpcs:ignore
+			}
+			if ( '' !== $style ) {
+				$image->appendChild( $image_style ); // phpcs:ignore
+			}
+			if ( '' !== $class ) {
+				$image->appendChild( $image_class ); // phpcs:ignore
+			}
+			if ( '' !== $border ) {
+				$image->appendChild( $image_border ); // phpcs:ignore
+			}
+			if ( '' !== $title ) {
+				$image->appendChild( $image_title ); // phpcs:ignore
+			}
+			if ( '' !== $align ) {
+				$image->appendChild( $image_align ); // phpcs:ignore
+			}
+			if ( '' !== $id ) {
+				$image->appendChild( $image_id ); // phpcs:ignore
+			}
+			$i->parentNode->replaceChild( $image, $i ); // phpcs:ignore
+		}
 		$content = $dom->saveHTML();
 		return $content;
 	}
@@ -2235,12 +2318,14 @@ if ( ! function_exists( 'minnpost_newsletter_get_ads' ) ) :
 		if ( 'dc_memo' !== $newsletter_type ) {
 			foreach ( $ad_divs as $key => $value ) {
 				$style = $value->getAttribute( 'style' );
-				$ads[] = '<p>' . minnpost_dom_innerhtml( $value ) . '</p>';
+				$html  = apply_filters( 'format_email_content', minnpost_dom_innerhtml( $value ), false );
+				$ads[] = '<p>' . $html . '</p>';
 			}
 		} else {
 			foreach ( $ad_divs as $key => $value ) {
 				$style = $value->getAttribute( 'style' );
-				$ads[] = '<div>' . minnpost_dom_innerhtml( $value ) . '</div>';
+				$html  = apply_filters( 'format_email_content', minnpost_dom_innerhtml( $value ), false );
+				$ads[] = '<p>' . $html . '</p>';
 			}
 		}
 		set_query_var( 'newsletter_ads', $ads );
