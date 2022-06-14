@@ -41,7 +41,7 @@ add_filter(
 if ( ! function_exists( 'minnpost_skip_apple_news' ) ) :
 	add_filter( 'apple_news_skip_push', 'skip_apple_news', 10, 1 );
 	function skip_apple_news( $post_id ) {
-		if ( 'production' !== VIP_GO_ENV ) {
+		if ( VIP_GO_ENV !== 'production' ) {
 			return true;
 		}
 	}

@@ -50,7 +50,7 @@ if ( ! function_exists( 'acm_no_ad_users' ) ) :
 		if ( ! current_user_can( 'browse_without_ads' ) ) {
 			$output = $output_html . $output_script;
 		} else {
-			if ( 'dfp_head' === $tag_id ) {
+			if ( $tag_id === 'dfp_head' ) {
 				$output = '';
 			} else {
 				$output = '<div class="acm-ad acm-ad-placeholder ad-' . sanitize_title( $tag_id ) . '">AD: ' . $tag_id . '</div>';

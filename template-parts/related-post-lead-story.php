@@ -8,7 +8,7 @@
  */
 
 $seo_title = get_post_meta( $post->ID, '_mp_seo_title', true );
-if ( '' !== $seo_title ) {
+if ( $seo_title !== '' ) {
 	$title = $seo_title;
 } else {
 	$title = get_the_title( $post->ID );

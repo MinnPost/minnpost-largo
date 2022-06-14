@@ -15,7 +15,7 @@ $post_class = 'm-post m-tonight-post m-tonight-post-event m-tonight-post-event-f
 		<?php the_title( '<h1 class="a-entry-title a-event-title a-tonight-title tribe-events-single-event-title">', '</h1>' ); ?>
 		<?php
 		$hide_notices = get_post_meta( $id, '_mp_remove_notice_from_display', true );
-		if ( 'on' !== $hide_notices ) :
+		if ( $hide_notices !== 'on' ) :
 			?>
 		<div class="m-event-notices">
 			<?php tribe_the_notices(); ?>
@@ -27,7 +27,7 @@ $post_class = 'm-post m-tonight-post m-tonight-post-event m-tonight-post-event-f
 		<div class="m-entry-content">
 			<?php
 			$hide_details = get_post_meta( $id, '_mp_remove_event_details_from_display', true );
-			if ( 'on' !== $hide_details ) :
+			if ( $hide_details !== 'on' ) :
 				?>
 			<div class="m-event-details">
 				<?php do_action( 'tribe_events_single_event_before_the_meta' ); ?>
@@ -47,7 +47,7 @@ $post_class = 'm-post m-tonight-post m-tonight-post-event m-tonight-post-event-f
 			</div>
 			<?php endif; ?>
 			<?php
-			if ( '' !== get_minnpost_post_image( 'full' ) && is_singular() ) {
+			if ( get_minnpost_post_image( 'full' ) !== '' && is_singular() ) {
 				minnpost_post_image( 'full' );
 			}
 			?>

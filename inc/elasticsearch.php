@@ -94,7 +94,7 @@ if ( ! function_exists( 'minnpost_indexable_post_meta' ) ) :
 	function minnpost_indexable_post_meta( $allow, $post = null ) {
 		// for site message queries
 		// error_log( 'post type is ' . $post->post_type );
-		if ( is_object( $post ) && 'message' === $post->post_type ) {
+		if ( is_object( $post ) && $post->post_type === 'message' ) {
 			$allow['_wp_inserted_message_region']               = true;
 			$allow['_wp_inserted_message_conditional_operator'] = true;
 			$allow['_wp_inserted_message_conditional']          = true;
@@ -132,7 +132,7 @@ if ( ! function_exists( 'minnpost_largo_get_elasticsearch_results' ) ) :
 	function minnpost_largo_get_elasticsearch_results( $count = 3 ) {
 		$related_posts = array();
 		// Fetches related post IDs if Elasticsearch Related Posts is active
-		if ( ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION && function_exists( 'vip_es_get_related_posts' ) ) ) {
+		if ( ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION === true && function_exists( 'vip_es_get_related_posts' ) ) ) {
 			$related_posts = vip_es_get_related_posts( get_the_ID(), $count );
 		}
 		if ( ! empty( $related_posts ) ) {
@@ -189,7 +189,7 @@ if ( ! function_exists( 'minnpost_largo_elasticpress_related_args' ) ) :
 		$if_term_args = array();
 
 		// our default ElasticPress behavior.
-		if ( false === $same_category_only && false === $not_same_category ) {
+		if ( $same_category_only === false && $not_same_category === false ) {
 			// get the opinion post group category; we currently exclude it by default
 			$opinion      = get_term_by( 'slug', 'opinion', 'category' );
 			$if_term_args = array(
@@ -205,12 +205,12 @@ if ( ! function_exists( 'minnpost_largo_elasticpress_related_args' ) ) :
 					),
 				),
 			);
-		} elseif ( true === $same_category_only ) {
+		} elseif ( $same_category_only === true ) {
 			// we only want to include the permalink category of the current post, so exclude all others.
 			$if_term_args = array(
 				'exclude' => $permalink_category,
 			);
-		} elseif ( true === $not_same_category ) {
+		} elseif ( $not_same_category === true ) {
 			// we want to exclude posts with the permalink category of the current post, in addition to other excludes.
 			$exclude_term_ids[] = $permalink_category;
 		}

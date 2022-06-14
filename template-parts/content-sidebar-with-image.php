@@ -11,7 +11,7 @@
 
 <li id="post-<?php the_ID(); ?>">
 <?php
-if ( ! isset( $show_image ) || true === $show_image ) {
+if ( ! isset( $show_image ) || $show_image === true ) {
 	minnpost_post_image(
 		'feature-medium',
 		array(

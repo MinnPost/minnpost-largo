@@ -15,7 +15,7 @@ $speakers     = array();
 $moderators   = array();
 foreach ( $all_speakers as $speaker ) {
 	$moderator = get_post_meta( $speaker->ID, '_mp_speaker_moderator', true );
-	if ( 'on' === $moderator ) {
+	if ( $moderator === 'on' ) {
 		$moderators[] = $speaker;
 	} else {
 		$speakers[] = $speaker;
@@ -27,30 +27,30 @@ $multiple_moderators = count( $moderators ) > 1;
 $permalink_category_slug = minnpost_get_event_category_slug( get_the_ID() );
 
 $speakers_label = __( 'Speaker:', 'minnpost-largo' );
-if ( true === $multiple_speakers ) {
+if ( $multiple_speakers === true ) {
 	$speakers_label = __( 'Speakers:', 'minnpost-largo' );
 }
 $moderators_label = __( 'Moderator:', 'minnpost-largo' );
-if ( true === $multiple_moderators ) {
+if ( $multiple_moderators === true ) {
 	$moderators_label = __( 'Moderators:', 'minnpost-largo' );
 }
 
-if ( 'festival' === $permalink_category_slug ) {
+if ( $permalink_category_slug === 'festival' ) {
 	$speakers_label = __( 'Speaker:', 'minnpost-largo' );
-	if ( true === $multiple_speakers ) {
+	if ( $multiple_speakers === true ) {
 		$speakers_label = __( 'Speakers:', 'minnpost-largo' );
 	}
 	$moderators_label = __( 'Moderator:', 'minnpost-largo' );
-	if ( true === $multiple_moderators ) {
+	if ( $multiple_moderators === true ) {
 		$moderators_label = __( 'Moderators:', 'minnpost-largo' );
 	}
-} elseif ( 'tonight' === $permalink_category_slug ) {
+} elseif ( $permalink_category_slug === 'tonight' ) {
 	$speakers_label = __( 'Guest:', 'minnpost-largo' );
-	if ( true === $multiple_speakers ) {
+	if ( $multiple_speakers === true ) {
 		$speakers_label = __( 'Guests:', 'minnpost-largo' );
 	}
 	$moderators_label = __( 'Host:', 'minnpost-largo' );
-	if ( true === $multiple_moderators ) {
+	if ( $multiple_moderators === true ) {
 		$moderators_label = __( 'Hosts:', 'minnpost-largo' );
 	}
 }
@@ -59,7 +59,7 @@ if ( 'festival' === $permalink_category_slug ) {
 <?php if ( ! empty( $speakers ) || ! empty( $moderators ) ) : ?>
 	<div class="m-speakers
 	<?php
-	if ( '' !== $permalink_category_slug ) :
+	if ( $permalink_category_slug !== '' ) :
 		?>
 		 m-<?php echo $permalink_category_slug; ?>-speakers<?php endif; ?>">
 		<?php do_action( 'tribe_events_single_meta_speaker_section_start' ); ?>
@@ -67,7 +67,7 @@ if ( 'festival' === $permalink_category_slug ) {
 		$speaker_names = '';
 		$prefix        = '';
 		$class_suffix  = '';
-		if ( '' !== $permalink_category_slug ) {
+		if ( $permalink_category_slug !== '' ) {
 			$class_suffix = ' a-' . $permalink_category_slug . '-speakers';
 		}
 		if ( ! empty( $speakers ) ) {
@@ -92,7 +92,7 @@ if ( 'festival' === $permalink_category_slug ) {
 		$moderator_names        = '';
 		$prefix                 = '';
 		$moderator_class_suffix = '';
-		if ( '' !== $permalink_category_slug ) {
+		if ( $permalink_category_slug !== '' ) {
 			$class_suffix = ' a-' . $permalink_category_slug . '-moderators';
 		}
 		if ( ! empty( $moderators ) ) {

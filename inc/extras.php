@@ -18,7 +18,7 @@ if ( ! function_exists( 'has_primary_category' ) ) :
 		$has_primary_category = false;
 		if ( is_singular( 'post' ) ) {
 			$primary_category = get_post_meta( get_the_id(), '_category_permalink', true );
-			if ( isset( $primary_category['category'] ) && '' !== $primary_category['category'] ) {
+			if ( isset( $primary_category['category'] ) && $primary_category['category'] !== '' ) {
 				// $has_primary_category = true;
 				$category_object = get_category_by_slug( $category );
 				if ( ! is_object( $category_object ) ) {
@@ -104,7 +104,7 @@ if ( ! function_exists( 'disable_autoformatting_old_content' ) ) :
 		if ( $migrated_date > $post_date ) {
 			$remove_filter = true;
 		}
-		if ( ! isset( $remove_filter ) || false === $remove_filter ) {
+		if ( ! isset( $remove_filter ) || $remove_filter === false ) {
 			return;
 		}
 		remove_filter( 'the_content', 'wpautop' );
@@ -217,7 +217,7 @@ add_filter(
 if ( ! function_exists( 'minnpost_prevent_login_redirect' ) ) :
 	add_filter( 'user_account_management_skip_login_redirect', 'minnpost_prevent_login_redirect', 10, 1 );
 	function minnpost_prevent_login_redirect( $skip_login_redirect ) {
-		if ( defined( 'A8C_PROXIED_REQUEST' ) && true === A8C_PROXIED_REQUEST ) {
+		if ( defined( 'A8C_PROXIED_REQUEST' ) && A8C_PROXIED_REQUEST === true ) {
 			// The request originates from WordPress.com VIP (Automattic)
 			$skip_login_redirect = true;
 		}
@@ -233,7 +233,7 @@ endif;
 if ( ! function_exists( 'is_membership' ) ) :
 	function is_membership() {
 		global $wp_query;
-		return ( isset( $wp_query->query['is_membership'] ) && true === $wp_query->query['is_membership'] );
+		return ( isset( $wp_query->query['is_membership'] ) && $wp_query->query['is_membership'] === true );
 	}
 endif;
 
@@ -264,7 +264,7 @@ endif;
 if ( ! function_exists( 'minnpost_largo_remove_republish_button_from_category' ) ) :
 	add_filter( 'hide_republication_widget', 'minnpost_largo_remove_republish_button_from_category', 10, 2 );
 	function minnpost_largo_remove_republish_button_from_category( $hide_republication_widget, $post ) {
-		if ( true !== $hide_republication_widget ) {
+		if ( $hide_republication_widget !== true ) {
 			// if the current post is in either of these categories, return true
 			if ( in_category( array( 55628, 55630, 55622, 55619 ), $post->ID ) ) {
 				// returning true will cause the filter to hide the button
@@ -344,10 +344,10 @@ if ( ! function_exists( 'minnpost_largo_hide_sponsored_author' ) ) :
 			$category_id = minnpost_get_permalink_category_id( $object_id );
 		}
 		$category_group_id = '';
-		if ( '' !== $category_id ) {
+		if ( $category_id !== '' ) {
 			$category          = get_category( $category_id );
 			$category_group_id = minnpost_get_category_group_id( '', $category_id );
-			if ( '' !== $category_group_id ) {
+			if ( $category_group_id !== '' ) {
 				$category_group = get_category( $category_group_id );
 			} else {
 				if ( function_exists( 'minnpost_largo_category_groups' ) ) {
@@ -357,8 +357,8 @@ if ( ! function_exists( 'minnpost_largo_hide_sponsored_author' ) ) :
 					}
 				}
 			}
-			if ( '' !== $category_group ) {
-				if ( 'sponsored-content' === $category_group->slug ) {
+			if ( $category_group !== '' ) {
+				if ( $category_group->slug === 'sponsored-content' ) {
 					$hide_author = 'on';
 				}
 			}
@@ -384,10 +384,10 @@ if ( ! function_exists( 'minnpost_largo_remove_comments_sponsored' ) ) :
 			$category_id = minnpost_get_permalink_category_id( $object_id );
 		}
 		$category_group_id = '';
-		if ( '' !== $category_id ) {
+		if ( $category_id !== '' ) {
 			$category          = get_category( $category_id );
 			$category_group_id = minnpost_get_category_group_id( '', $category_id );
-			if ( '' !== $category_group_id ) {
+			if ( $category_group_id !== '' ) {
 				$category_group = get_category( $category_group_id );
 			} else {
 				if ( function_exists( 'minnpost_largo_category_groups' ) ) {
@@ -397,8 +397,8 @@ if ( ! function_exists( 'minnpost_largo_remove_comments_sponsored' ) ) :
 					}
 				}
 			}
-			if ( '' !== $category_group ) {
-				if ( 'sponsored-content' === $category_group->slug ) {
+			if ( $category_group !== '' ) {
+				if ( $category_group->slug === 'sponsored-content' ) {
 					$comments_open = false;
 				}
 			}
@@ -420,7 +420,7 @@ if ( ! function_exists( 'minnpost_set_default_editor' ) ) :
 			if ( is_object( $post ) && isset( $post->ID ) ) {
 				$id       = $post->ID;
 				$use_html = get_post_meta( $id, '_mp_post_use_html_editor', true );
-				if ( 'on' === $use_html ) {
+				if ( $use_html === 'on' ) {
 					$editor = 'html';
 				} else {
 					$editor = 'tinymce';

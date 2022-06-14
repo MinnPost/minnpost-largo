@@ -139,7 +139,7 @@
 		<?php
 		$body = apply_filters( 'the_content', get_the_content() );
 
-		if ( '' !== $body ) {
+		if ( $body !== '' ) {
 			?>
 		<tr>
 			<td class="one-column content promo" style="border-collapse: collapse; margin: 0; padding: 0">
@@ -164,7 +164,7 @@
 		$top_stories = get_post_meta( get_the_ID(), '_mp_newsletter_top_posts', true );
 
 		$top_stories_override = get_post_meta( get_the_ID(), '_mp_newsletter_top_posts_override', true );
-		if ( '' !== $top_stories_override ) {
+		if ( $top_stories_override !== '' ) {
 			$top_stories_override = explode( ',', $top_stories_override );
 			$top_stories          = array_map( 'trim', $top_stories_override );
 		}
@@ -193,12 +193,12 @@
 		$more_stories = get_post_meta( get_the_ID(), '_mp_newsletter_more_posts', true );
 
 		$more_stories_override = get_post_meta( get_the_ID(), '_mp_newsletter_more_posts_override', true );
-		if ( '' !== $more_stories_override ) {
+		if ( $more_stories_override !== '' ) {
 			$more_stories_override = explode( ',', $more_stories_override );
 			$more_stories          = array_map( 'trim', $more_stories_override );
 		}
 
-		if ( '' !== $more_stories ) {
+		if ( $more_stories !== '' ) {
 			$more_query_args = array(
 				'post__in'       => $more_stories,
 				'posts_per_page' => -1,
@@ -221,7 +221,7 @@
 		$ad_divs  = $ad_xpath->query( "//section[contains(concat(' ', @class, ' '), ' m-widget ')]/div/p" );
 
 		$ads = array();
-		if ( 'dc_memo' !== $newsletter_type ) {
+		if ( $newsletter_type !== 'dc_memo' ) {
 			foreach ( $ad_divs as $key => $value ) {
 				$style = $value->getAttribute( 'style' );
 				$ads[] = '<p style="Margin: 0 0 10px; padding: 0">' . minnpost_dom_innerhtml( $value ) . '</p>';
@@ -333,7 +333,7 @@
 							<?php dynamic_sidebar( 'sidebar-3' ); ?>
 							<?php
 							$footer_message = get_option( 'site_footer_message', '' );
-							if ( '' !== $footer_message ) :
+							if ( $footer_message !== '' ) :
 								?>
 								<p class="address" style="font-size: 12px; Margin: 10px 0 15px; padding: 0; text-align: center;" align="center"><?php echo $footer_message; ?></p>
 							<?php endif; ?>

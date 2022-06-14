@@ -21,7 +21,7 @@
 <body <?php body_class(); ?>>
 
 	<header id="masthead" class="o-header o-header-support">
-		<div class="o-wrapper o-wrapper-site-header<?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">
+		<div class="o-wrapper o-wrapper-site-header<?php echo ( get_query_var( 'grid', false ) !== false ) ? ' o-wrapper-grid-overlay' : ''; ?>">
 			<?php get_template_part( 'template-parts/logo', 'top' ); ?>
 			<?php do_action( 'minnpost_membership_site_header', false ); ?>
 		</div>
@@ -36,4 +36,4 @@
 
 	<?php do_action( 'wp_message_inserter', 'header' ); ?>
 
-	<div id="content" class="o-wrapper o-wrapper-content<?php echo $full_class; ?><?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">
+	<div id="content" class="o-wrapper o-wrapper-content<?php echo $full_class; ?><?php echo ( get_query_var( 'grid', false ) !== false ) ? ' o-wrapper-grid-overlay' : ''; ?>">

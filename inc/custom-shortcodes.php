@@ -23,7 +23,7 @@ if ( ! function_exists( 'widget_instance' ) ) :
 
 		$spill_type = 'MinnpostSpills_Widget';
 
-		if ( '' !== $args['id'] && false !== strpos( $args['id'], strtolower( $spill_type ) ) ) {
+		if ( $args['id'] !== '' && strpos( $args['id'], strtolower( $spill_type ) ) !== false ) {
 			$id     = str_replace( strtolower( $spill_type ) . '-', '', $args['id'] );
 			$spills = get_option( 'widget_' . strtolower( $spill_type ), '' );
 			if ( is_array( $spills ) && array_key_exists( $id, $spills ) ) {
@@ -57,7 +57,7 @@ if ( ! function_exists( 'column_list' ) ) :
 		);
 
 		$output = '';
-		if ( '' !== $args['term_ids'] ) {
+		if ( $args['term_ids'] !== '' ) {
 			$output  .= '<ol class="m-columns m-columns-summary">';
 			$term_ids = explode( ',', $args['term_ids'] );
 			foreach ( $term_ids as $term_id ) {
@@ -110,16 +110,16 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 		global $post;
 		$taxonomy_name = 'cr3ativsponsor_level';
 
-		if ( '' === $category_to_show ) {
+		if ( $category_to_show === '' ) {
 			$category_to_show = 'none';
 		}
-		if ( '' === $orderby ) {
+		if ( $orderby === '' ) {
 			$orderby = 'rand';
 		}
-		if ( '' === $order ) {
+		if ( $order === '' ) {
 			$order = 'asc';
 		}
-		if ( 'none' !== $category_to_show ) {
+		if ( $category_to_show !== 'none' ) {
 			$categories_to_show = explode( ',', $category_to_show );
 			$args               = array(
 				'post_type'      => 'cr3ativsponsor',
@@ -155,21 +155,21 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 				),
 			);
 		}
-		if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
+		if ( VIP_GO_ENV === 'production' || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION === true ) ) {
 			$args['es'] = true; // elasticsearch.
 		}
-		if ( '' !== $year ) {
+		if ( $year !== '' ) {
 			$args['year'] = $year;
 		}
 
 		$display_level_class = '';
-		if ( '1' === $display_level ) {
+		if ( $display_level === '1' ) {
 			$display_level_class = 'level-one';
-		} elseif ( '2' === $display_level ) {
+		} elseif ( $display_level === '2' ) {
 			$display_level_class = 'level-two';
-		} elseif ( '3' === $display_level ) {
+		} elseif ( $display_level === '3' ) {
 			$display_level_class = 'level-three';
-		} elseif ( '4' === $display_level ) {
+		} elseif ( $display_level === '4' ) {
 			$display_level_class = 'level-four';
 		}
 
@@ -177,7 +177,7 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 		$output   = '';
 
 		if ( $sponsors->have_posts() ) {
-			if ( 'yes' === $show_level_heading ) {
+			if ( $show_level_heading === 'yes' ) {
 				$category      = get_term_by( 'slug', $category_to_show, $taxonomy_name );
 				$category_name = $category->name;
 			}
@@ -196,11 +196,11 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 				$content  = apply_filters( 'the_content', $content );
 				$twitter  = get_post_meta( get_the_ID(), 'cr3ativ_sponsortwitter', true );
 
-				if ( 'yes' === $show_link && '' !== $url ) {
+				if ( $show_link === 'yes' && $url !== '' ) {
 					$output .= '<a href="' . $url . '">';
 				}
 
-				if ( 'yes' === $show_title ) {
+				if ( $show_title === 'yes' ) {
 					$output .= '<h2 class="cr3_sponsorname">' . get_the_title() . '</h2>';
 				}
 
@@ -208,40 +208,40 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 				$image_markup = $image_data['markup'];
 				$excerpt      = get_post_meta( get_the_ID(), 'cr3ativ_sponsortext', true );
 				$excerpt      = apply_filters( 'the_content', $excerpt );
-				if ( 'yes' === $show_image ) {
+				if ( $show_image === 'yes' ) {
 					$output .= '<figure>';
 					$output .= $image_markup;
-					if ( 'yes' === $show_excerpt && '' !== $excerpt ) {
+					if ( $show_excerpt === 'yes' && $excerpt !== '' ) {
 						$output .= '<figcaption>' . $temp_excerpt . '</figcaption>';
 					}
 					$output .= '</figure>';
 				} else {
-					if ( 'yes' === $show_excerpt && '' !== $excerpt ) {
+					if ( $show_excerpt === 'yes' && $excerpt !== '' ) {
 						$output .= $excerpt;
 					}
 				}
 
-				if ( 'yes' === $show_link && '' !== $url ) {
+				if ( $show_link === 'yes' && $url !== '' ) {
 					$output .= '</a>';
 				}
 
-				if ( ( 'yes' === $show_content && '' !== $content ) || ( 'yes' === $show_link && '' !== $url ) ) {
+				if ( ( $show_content === 'yes' && $content !== '' ) || ( $show_link === 'yes' && $url !== '' ) ) {
 					$output .= '<div class="a-sponsor-content">';
 				}
 
-				if ( 'yes' === $show_content && '' !== $content ) {
+				if ( $show_content === 'yes' && $content !== '' ) {
 					$output .= $content;
 				}
 
-				if ( '' !== $twitter ) {
+				if ( $twitter !== '' ) {
 					$output .= '<p class="a-sponsor-twitter"><a href="https://twitter.com/' . $twitter . '">@' . $twitter . '</a></p>';
 				}
 
-				if ( '' !== $show_link && 'yes' === $show_link_display_text ) {
+				if ( $show_link !== '' && $show_link_display_text === 'yes' ) {
 					$output .= '<p class="a-sponsor-url"><a href="' . $url . '">' . $linktext . '</a></p>';
 				}
 
-				if ( ( 'yes' === $show_content && '' !== $content ) || ( 'yes' === $show_link && '' !== $url ) ) {
+				if ( ( $show_content === 'yes' && $content !== '' ) || ( $show_link === 'yes' && $url !== '' ) ) {
 					$output .= '</div>';
 				}
 
@@ -288,15 +288,15 @@ if ( ! function_exists( 'minnpost_account_info' ) ) :
 			return;
 		}
 		// if we are on the current user, or if this user can edit users
-		if ( false === $can_access ) {
+		if ( $can_access === false ) {
 			return __( 'You do not have permission to access this page.', 'minnpost-largo' );
 		}
 
 		$member_level = get_user_meta( $user_id, 'member_level', true );
-		if ( '' !== $member_level ) {
+		if ( $member_level !== '' ) {
 			$attributes['member_level_name']  = $member_level;
 			$attributes['member_level_value'] = sanitize_title( $member_level );
-			if ( 'Non-member' !== $member_level ) {
+			if ( $member_level !== 'Non-member' ) {
 				$attributes['member_level_value'] = strtolower( substr( $member_level, 9 ) );
 			}
 		} else {
@@ -313,7 +313,7 @@ if ( ! function_exists( 'minnpost_account_info' ) ) :
 				$topics = maybe_unserialize( $attributes['user_meta']['_reading_topics'][0] );
 				foreach ( $topics as $topic ) {
 					$term = get_term_by( 'slug', sanitize_title( $topic ), 'category' );
-					if ( false !== $term ) {
+					if ( $term !== false ) {
 						$cat_id                                  = $term->term_id;
 						$attributes['reading_topics'][ $cat_id ] = $topic;
 					}
@@ -322,7 +322,7 @@ if ( ! function_exists( 'minnpost_account_info' ) ) :
 					'posts_per_page' => 10,
 					'category__in'   => array_keys( $attributes['reading_topics'] ),
 				);
-				if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
+				if ( VIP_GO_ENV === 'production' || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION === true ) ) {
 					$topics_query_args['es'] = true; // elasticsearch.
 				}
 				$attributes['topics_query'] = new WP_Query( $topics_query_args );
@@ -365,7 +365,7 @@ if ( ! function_exists( 'minnpost_account_preferences' ) ) :
 			return;
 		}
 		// if we are on the current user, or if this user can edit users
-		if ( false === $can_access ) {
+		if ( $can_access === false ) {
 			return __( 'You do not have permission to access this page.', 'minnpost-largo' );
 		}
 
@@ -388,7 +388,7 @@ if ( ! function_exists( 'minnpost_account_preferences' ) ) :
 				}
 			}
 			$attributes['errors'] = $errors;
-			if ( isset( $user_id ) && '' !== $user_id ) {
+			if ( isset( $user_id ) && $user_id !== '' ) {
 				$attributes['user'] = get_userdata( $user_id );
 			} else {
 				$attributes['user'] = wp_get_current_user();
@@ -480,18 +480,18 @@ if ( ! function_exists( 'minnpost_largo_topics' ) ) :
 		}
 
 		$grouped = filter_var( $args['grouped'], FILTER_VALIDATE_BOOLEAN );
-		if ( true === $grouped ) {
+		if ( $grouped === true ) {
 			$group_categories  = array();
 			$groups            = minnpost_largo_category_groups();
 			$include_sponsored = filter_var( $args['sponsored'], FILTER_VALIDATE_BOOLEAN );
 			foreach ( $groups as $group ) {
-				if ( false === $include_sponsored ) {
-					if ( 'sponsored-content' === $group ) {
+				if ( $include_sponsored === false ) {
+					if ( $group === 'sponsored-content' ) {
 						continue;
 					}
 				}
 				$category = get_term_by( 'slug', $group, 'category' );
-				if ( false !== $category && ! in_array( $category->term_id, $exclude_ids, true ) ) {
+				if ( $category !== false && ! in_array( $category->term_id, $exclude_ids, true ) ) {
 					$group_categories[] = $category;
 				}
 			}
@@ -547,7 +547,7 @@ if ( ! function_exists( 'minnpost_load_remote_url' ) ) :
 			$atts
 		);
 
-		if ( '' === $args['url'] ) {
+		if ( $args['url'] === '' ) {
 			return $output;
 		}
 
@@ -573,14 +573,14 @@ if ( ! function_exists( 'minnpost_load_shortcode_string' ) ) :
 		$output = '';
 		$url    = esc_url_raw( $url );
 		$cache  = filter_var( $cache, FILTER_VALIDATE_BOOLEAN );
-		if ( '' === $cache_time ) {
+		if ( $cache_time === '' ) {
 			$cache_time = MINUTE_IN_SECONDS * 1;
 		} else {
 			$cache_time = strtotime( $cache_time );
 		}
 
-		if ( true === $cache ) {
-			if ( '' !== $part ) {
+		if ( $cache === true ) {
+			if ( $part !== '' ) {
 				$cache_part = '_' . $part;
 			} else {
 				$cache_part = '';
@@ -590,7 +590,7 @@ if ( ! function_exists( 'minnpost_load_shortcode_string' ) ) :
 			$output      = wp_cache_get( $cache_key, $cache_group );
 		}
 
-		if ( false === $cache || false === $output ) {
+		if ( $cache === false || $output === false ) {
 			$response = wp_remote_get( $url );
 			if ( ! is_wp_error( $response ) ) {
 				$output = wp_remote_retrieve_body( $response );
@@ -600,7 +600,7 @@ if ( ! function_exists( 'minnpost_load_shortcode_string' ) ) :
 				$html = new DOMDocument( '1.0', 'UTF-8' );
 				// load the HTML into the DomDocument object (this would be your source HTML)
 				$html->loadHTML( $document, LIBXML_HTML_NODEFDTD );
-				if ( 'html' === $part ) {
+				if ( $part === 'html' ) {
 					// get all <body> elements
 					$body_element = $html->getElementsByTagName( 'body' );
 					// it is to be assumed that there is only one <body> element.
@@ -612,18 +612,18 @@ if ( ! function_exists( 'minnpost_load_shortcode_string' ) ) :
 					$trim_off_end   = ( strrpos( $output, '</body>' ) ) - strlen( $output );
 					$output         = substr( $output, $trim_off_front, $trim_off_end );
 					$output         = apply_filters( 'the_content', $output );
-				} elseif ( 'css' === $part ) {
+				} elseif ( $part === 'css' ) {
 					// get all <style> elements
 					$style_element = $html->getElementsByTagName( 'style' );
 					// it is to be assumed that there is only one <style> element.
 					$style  = $style_element->item( 0 );
 					$output = $style->nodeValue;
-				} elseif ( 'js' === $part ) {
+				} elseif ( $part === 'js' ) {
 					$script_element = $html->getElementById( 'script-import' );
 					$script         = $script_element;
 					$output         = $script->nodeValue;
 				}
-				if ( true === $cache ) {
+				if ( $cache === true ) {
 					wp_cache_set( $cache_key, $output, $cache_group, $cache_time );
 				}
 			}

@@ -14,7 +14,7 @@ while ( have_posts() ) :
 	the_post();
 	$permalink_category_slug = minnpost_get_event_category_slug( get_the_ID() );
 
-	if ( '' !== $permalink_category_slug ) :
+	if ( $permalink_category_slug !== '' ) :
 		get_header( $permalink_category_slug );
 	else :
 		get_header();
@@ -27,7 +27,7 @@ while ( have_posts() ) :
 		</main><!-- #main -->
 	</div><!-- #primary -->
 	<?php
-	if ( '' !== $permalink_category_slug ) :
+	if ( $permalink_category_slug !== '' ) :
 		get_footer( $permalink_category_slug );
 	else :
 		get_footer();

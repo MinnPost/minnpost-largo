@@ -162,7 +162,7 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 		$active_class = '';
 		if ( in_array( 'current-menu-item', $classes, true ) ) {
 			$active_class = 'active';
-		} elseif ( in_array( 'current-menu-parent', $classes, true ) && '/' !== $item->url ) {
+		} elseif ( in_array( 'current-menu-parent', $classes, true ) && $item->url !== '/' ) {
 			// checking '/' because home menu should never be a parent menu
 			$active_class = 'active-parent';
 		} elseif ( in_array( 'current-menu-ancestor', $classes, true ) ) {
@@ -181,7 +181,7 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 				$active_class = '';
 			}
 			$category_group_id = minnpost_get_category_group_id( get_the_id(), $cat_id );
-			if ( '' !== $category_group_id && $category_group_id === $item->object_id ) {
+			if ( $category_group_id !== '' && $category_group_id === $item->object_id ) {
 				$active_class = 'active-parent';
 			}
 		}
@@ -189,7 +189,7 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 		$url = '';
 		if ( ! empty( $item->url ) ) {
 
-			if ( '' !== $this->user_id && get_current_user_id() !== $this->user_id ) {
+			if ( $this->user_id !== '' && get_current_user_id() !== $this->user_id ) {
 				$user_id = $this->user_id;
 			} else {
 				$user_id = get_current_user_id();
@@ -200,14 +200,14 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 
 			$url    = rtrim( $item->url, '/' );
 			$length = strlen( $url );
-			if ( '' === $url ) {
+			if ( $url === '' ) {
 				$url = home_url();
 			}
 			if ( home_url() !== $url && substr( '/wp_logout_url()', 0, $length ) === $url ) {
 				$url = wp_logout_url();
 			}
 
-			if ( '/?s=' === $url ) {
+			if ( $url === '/?s=' ) {
 				$form     = get_search_form( false );
 				$has_form = true;
 			}
@@ -219,46 +219,46 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 				}
 			}
 
-			if ( rtrim( site_url( '/user/' ), '/' ) === $url && 'Welcome' === $item->title ) {
+			if ( rtrim( site_url( '/user/' ), '/' ) === $url && $item->title === 'Welcome' ) {
 				$user = wp_get_current_user();
-				if ( isset( $user->first_name ) && '' !== trim( $user->first_name ) ) {
+				if ( isset( $user->first_name ) && trim( $user->first_name ) !== '' ) {
 					$item->title = '<span class="name">Welcome, ' . $user->first_name . '</span><span class="a-user-initial">' . $user->first_name[0] . '</span><span class="a-arrow-down"></span>';
-				} elseif ( isset( $user->display_name ) && '' !== trim( $user->display_name ) ) {
+				} elseif ( isset( $user->display_name ) && trim( $user->display_name ) !== '' ) {
 					$item->title = '<span class="name">Welcome, ' . $user->display_name . '</span><span class="a-user-initial">' . $user->display_name[0] . '</span><span class="a-arrow-down"></span>';
 				} else {
 					$item->title = '<span class="name">Welcome, ' . $user->user_email . '</span><span class="a-user-initial">' . $user->user_email[0] . '</span><span class="a-arrow-down"></span>';
 				}
 			}
-			if ( site_url( '/users/userid' ) === $url || '/users/userid' === $url ) {
+			if ( site_url( '/users/userid' ) === $url || $url === '/users/userid' ) {
 				$url = site_url( '/users/' . $user_id . '/' );
 				if ( rtrim( get_current_url(), '/' ) . '/' === $url ) {
 					$active_class = 'active';
 				}
 			}
-			if ( ( $account_parent_id !== (int) $item->menu_item_parent && $account_parent_id !== (int) $item->ID ) && strpos( $url, '/user/' ) && '' !== $user_id && get_current_user_id() !== $user_id ) {
+			if ( ( $account_parent_id !== (int) $item->menu_item_parent && $account_parent_id !== (int) $item->ID ) && strpos( $url, '/user/' ) && $user_id !== '' && get_current_user_id() !== $user_id ) {
 				$url = $url . '?user_id=' . $user_id;
 			}
 
-			if ( strpos( $url, '/user' ) && '' !== $user_id && get_current_user_id() !== $user_id ) {
+			if ( strpos( $url, '/user' ) && $user_id !== '' && get_current_user_id() !== $user_id ) {
 				$active_class = '';
 			}
-			if ( 'Your MinnPost' === $item->title && '' !== $user_id && get_current_user_id() !== $user_id ) {
+			if ( $item->title === 'Your MinnPost' && $user_id !== '' && get_current_user_id() !== $user_id ) {
 				$user        = get_userdata( $user_id );
 				$item->title = $user->first_name . "'s MinnPost";
 			}
 		}
 
-		if ( isset( $args->item_classes ) && 'values' === $args->item_classes ) {
-			if ( '' !== $active_class ) {
+		if ( isset( $args->item_classes ) && $args->item_classes === 'values' ) {
+			if ( $active_class !== '' ) {
 				$active_class .= ' ' . sanitize_title( $item->title );
 			} else {
 				$active_class = sanitize_title( $item->title );
 			}
 		}
 
-		if ( ! isset( $args->item_classes ) || 'values' !== $args->item_classes ) {
+		if ( ! isset( $args->item_classes ) || $args->item_classes !== 'values' ) {
 			$custom_classes = $this->get_custom_classes( $item->classes );
-			if ( '' !== $active_class ) {
+			if ( $active_class !== '' ) {
 				$active_class .= ' ' . $custom_classes;
 			} else {
 				$active_class = $custom_classes;
@@ -267,33 +267,33 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 
 		$active_class = apply_filters( 'minnpost_largo_nav_item_classes', $active_class, $item );
 
-		if ( '' !== $active_class ) {
+		if ( $active_class !== '' ) {
 			$active_class = ' class="' . $active_class . '"';
 		}
 
 		$minnpost_largo_menu_item_priority = get_post_meta( $item->ID, '_minnpost_largo_menu_item_priority', true );
 		$data                              = '';
-		if ( '' !== $minnpost_largo_menu_item_priority ) {
+		if ( $minnpost_largo_menu_item_priority !== '' ) {
 			$data = ' data-menu-item-priority="' . $minnpost_largo_menu_item_priority . '"';
 		}
 
 		$minnpost_largo_menu_item_mobile_text = get_post_meta( $item->ID, '_minnpost_largo_menu_item_mobile_text', true );
-		if ( '' !== $minnpost_largo_menu_item_mobile_text ) {
+		if ( $minnpost_largo_menu_item_mobile_text !== '' ) {
 			$item->title = '<span class="a-label-xxs">' . $minnpost_largo_menu_item_mobile_text . '</span><span class="a-label-xs">' . $item->title . '</span>';
 		}
 
 		$minnpost_largo_menu_item_icon = get_post_meta( $item->ID, '_minnpost_largo_menu_item_icon', true );
-		if ( '' !== $minnpost_largo_menu_item_icon ) {
+		if ( $minnpost_largo_menu_item_icon !== '' ) {
 			$item->title = '<i title="' . $item->title . '" class="' . $minnpost_largo_menu_item_icon . '"></i>';
 		}
 
 		$output .= '<li' . $active_class . $data . '><a href="' . $url . '">' . $item->title . '</a>';
 
-		if ( isset( $has_form ) && true === $has_form ) {
+		if ( isset( $has_form ) && $has_form === true ) {
 			$output .= $form;
 		}
 
-		if ( 'Your MinnPost' === $item->title ) {
+		if ( $item->title === 'Your MinnPost' ) {
 			// $output .= '<button class="menu-toggle" aria-controls="user-account-management" aria-expanded="false">' . esc_html( 'Sections', 'minnpost-largo' ) . '</button>';
 		}
 	}
@@ -363,7 +363,7 @@ class Minnpost_Email_Walker_Nav_Menu extends Minnpost_Walker_Nav_Menu {
 		$active_class = '';
 		if ( in_array( 'current-menu-item', $classes, true ) ) {
 			$active_class = 'active';
-		} elseif ( in_array( 'current-menu-parent', $classes, true ) && '/' !== $item->url ) {
+		} elseif ( in_array( 'current-menu-parent', $classes, true ) && $item->url !== '/' ) {
 			// checking '/' because home menu should never be a parent menu
 			$active_class = 'active-parent';
 		} elseif ( in_array( 'current-menu-ancestor', $classes, true ) ) {
@@ -382,7 +382,7 @@ class Minnpost_Email_Walker_Nav_Menu extends Minnpost_Walker_Nav_Menu {
 				$active_class = '';
 			}
 			$category_group_id = minnpost_get_category_group_id( get_the_id(), $cat_id );
-			if ( '' !== $category_group_id && $category_group_id === $item->object_id ) {
+			if ( $category_group_id !== '' && $category_group_id === $item->object_id ) {
 				$active_class = 'active-parent';
 			}
 		}
@@ -392,7 +392,7 @@ class Minnpost_Email_Walker_Nav_Menu extends Minnpost_Walker_Nav_Menu {
 
 			$url    = rtrim( $item->url, '/' );
 			$length = strlen( $url );
-			if ( '' === $url ) {
+			if ( $url === '' ) {
 				$url = home_url();
 			}
 			if ( home_url() !== $url && substr( '/wp_logout_url()', 0, $length ) === $url ) {
@@ -400,34 +400,34 @@ class Minnpost_Email_Walker_Nav_Menu extends Minnpost_Walker_Nav_Menu {
 			}
 		}
 
-		if ( isset( $args->item_classes ) && 'values' === $args->item_classes ) {
-			if ( '' !== $active_class ) {
+		if ( isset( $args->item_classes ) && $args->item_classes === 'values' ) {
+			if ( $active_class !== '' ) {
 				$active_class .= ' ' . sanitize_title( $item->title );
 			} else {
 				$active_class = sanitize_title( $item->title );
 			}
 		}
 
-		if ( ! isset( $args->item_classes ) || 'values' !== $args->item_classes ) {
+		if ( ! isset( $args->item_classes ) || $args->item_classes !== 'values' ) {
 			$custom_classes = $this->get_custom_classes( $item->classes );
-			if ( '' !== $active_class ) {
+			if ( $active_class !== '' ) {
 				$active_class .= ' ' . $custom_classes;
 			} else {
 				$active_class = $custom_classes;
 			}
 		}
 
-		if ( '' !== $active_class ) {
+		if ( $active_class !== '' ) {
 			$active_class = ' class="' . $active_class . '"';
 		}
 
 		// if there is a value for the icon, check and see if we have it as a downloaded image and use it, if so.
 		$minnpost_largo_menu_item_icon = get_post_meta( $item->ID, '_minnpost_largo_menu_item_icon', true );
-		if ( '' !== $minnpost_largo_menu_item_icon ) {
+		if ( $minnpost_largo_menu_item_icon !== '' ) {
 			$exploded  = explode( ' ', $minnpost_largo_menu_item_icon );
 			$icon_type = $exploded[0];
 			$icon_name = $exploded[1];
-			if ( false !== $icon_type ) {
+			if ( $icon_type !== false ) {
 				$font_awesome_suffix = 'fa' . $icon_type[2];
 			}
 			switch ( $font_awesome_suffix ) {
@@ -442,7 +442,7 @@ class Minnpost_Email_Walker_Nav_Menu extends Minnpost_Walker_Nav_Menu {
 			}
 			$icon_post_name = str_replace( 'fa-', '', $icon_name . $end );
 			$attachment_id  = wp_get_attachment_id_by_post_name( $icon_post_name );
-			if ( false !== $attachment_id ) {
+			if ( $attachment_id !== false ) {
 				$item->title  = wp_get_attachment_image( $attachment_id );
 				$active_class = ' class="with-icon"';
 			}
@@ -556,7 +556,7 @@ if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
 			}
 			if ( is_admin() ) {
 				$current_screen = get_current_screen();
-				if ( 'user-edit' === $current_screen->base && isset( $user_id )
+				if ( $current_screen->base === 'user-edit' && isset( $user_id )
 					&& ( $user_object = get_userdata( $user_id ) )
 					&& $user_object->exists()
 					&& $view_link = site_url( '/users/' . $user_id . '/' ) ) {
@@ -637,11 +637,11 @@ if ( ! function_exists( 'minnpost_largo_event_menu_classes' ) ) :
 			} else {
 				$title = $item['title'];
 			}
-			if ( 'Speakers' === $title ) {
+			if ( $title === 'Speakers' ) {
 				$classes .= ' active';
 			}
 			if ( is_singular( 'tribe_events' ) || is_singular( 'sessions' ) ) {
-				if ( 'Sessions' === $title || 'Events' === $title ) {
+				if ( $title === 'Sessions' || $title === 'Events' ) {
 					$classes .= ' active';
 				}
 			}
@@ -701,7 +701,7 @@ if ( ! function_exists( 'get_minnpost_account_management_menu' ) ) :
 			}
 		}
 		// if we are on the current user, or if this user can edit users
-		if ( true === $can_access ) {
+		if ( $can_access === true ) {
 			$menu = wp_nav_menu(
 				array(
 					'theme_location' => 'user_account_management',
@@ -746,7 +746,7 @@ if ( ! function_exists( 'get_minnpost_account_access_menu' ) ) :
 
 	function get_minnpost_account_access_menu( $user_id = '' ) {
 
-		if ( '' === $user_id ) {
+		if ( $user_id === '' ) {
 			$user_id = get_current_user_id();
 		}
 
@@ -761,7 +761,7 @@ if ( ! function_exists( 'get_minnpost_account_access_menu' ) ) :
 			}
 		}
 		// if we are on the current user, or if this user can edit users
-		if ( true === $can_access ) {
+		if ( $can_access === true ) {
 			$menu = wp_nav_menu(
 				array(
 					'theme_location' => 'user_account_access',
@@ -937,13 +937,13 @@ if ( ! function_exists( 'minnpost_largo_unpublished_indicator' ) ) :
 
 		$post_id = get_the_ID();
 
-		if ( false === $post_id ) {
+		if ( $post_id === false ) {
 			return;
 		}
 
 		$post_status = get_post_status( $post_id );
 
-		if ( 'publish' === $post_status ) {
+		if ( $post_status === 'publish' ) {
 			return;
 		}
 

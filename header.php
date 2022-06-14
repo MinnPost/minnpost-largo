@@ -27,7 +27,7 @@
 	</div>
 
 	<header id="masthead" class="o-header">
-		<div class="o-wrapper o-wrapper-site-header<?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">
+		<div class="o-wrapper o-wrapper-site-header<?php echo ( get_query_var( 'grid', false ) !== false ) ? ' o-wrapper-grid-overlay' : ''; ?>">
 			<?php get_template_part( 'template-parts/logo', 'top' ); ?>
 			<?php do_action( 'minnpost_membership_site_header', true ); ?>
 		</div>
@@ -94,11 +94,11 @@
 	<?php
 	$full_class     = '';
 	$remove_sidebar = apply_filters( 'minnpost_largo_remove_sidebar', false );
-	if ( true === $remove_sidebar ) {
+	if ( $remove_sidebar === true ) {
 		$full_class = ' o-wrapper-content-full';
 	}
 	?>
 
 	<?php do_action( 'wp_message_inserter', 'header' ); ?>
 
-	<div id="content" class="o-wrapper o-wrapper-content<?php echo $full_class; ?><?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">
+	<div id="content" class="o-wrapper o-wrapper-content<?php echo $full_class; ?><?php echo ( get_query_var( 'grid', false ) !== false ) ? ' o-wrapper-grid-overlay' : ''; ?>">

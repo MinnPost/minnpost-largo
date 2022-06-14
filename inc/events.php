@@ -102,7 +102,7 @@ if ( ! function_exists( 'minnpost_largo_vip_js_concat_filter' ) ) :
 	function minnpost_largo_vip_js_concat_filter( $do_concat, $handle ) {
 		if ( is_admin() ) {
 			// do not include tribe-events-dynamic in concatenated bundles.
-			if ( 'tribe-events-dynamic' === $handle ) {
+			if ( $handle === 'tribe-events-dynamic' ) {
 				return false;
 			}
 		}
@@ -149,10 +149,10 @@ endif;
 */
 if ( ! function_exists( 'minnpost_largo_full_event_date' ) ) :
 	function minnpost_largo_full_event_date( $event_id = '', $args = array() ) {
-		if ( '' === $event_id ) {
+		if ( $event_id === '' ) {
 			$event_id = get_the_ID();
 		}
-		if ( ! isset( $args['show_full_month_name'] ) || ( isset( $args['show_full_month_name'] ) && true !== $args['show_full_month_name'] ) ) {
+		if ( ! isset( $args['show_full_month_name'] ) || ( isset( $args['show_full_month_name'] ) && $args['show_full_month_name'] !== true ) ) {
 			$start_date = minnpost_largo_get_ap_date( tribe_get_start_date( $event_id, false, 'm/d/Y' ) );
 			$end_date   = minnpost_largo_get_ap_date( tribe_get_end_date( $event_id, false, 'm/d/Y' ) );
 		} else {
@@ -184,20 +184,20 @@ endif;
 */
 if ( ! function_exists( 'minnpost_largo_full_event_time' ) ) :
 	function minnpost_largo_full_event_time( $event_id = '', $args = array() ) {
-		if ( '' === $event_id ) {
+		if ( $event_id === '' ) {
 			$event_id = get_the_ID();
 		}
 		$timezone   = '';
 		$start_time = minnpost_largo_get_ap_time( tribe_get_start_date( $event_id, false, 'H:i' ) );
 		$end_time   = minnpost_largo_get_ap_time( tribe_get_end_date( $event_id, false, 'H:i' ) );
-		if ( isset( $args['show_timezone'] ) && true === $args['show_timezone'] ) {
+		if ( isset( $args['show_timezone'] ) && $args['show_timezone'] === true ) {
 			$timezone = '&nbsp;' . minnpost_largo_get_timezone( tribe_get_start_date( $event_id, false, 'H:i' ) );
 		}
 		$separator = esc_html__( 'to', 'minnpost-largo' );
 		if ( isset( $args['separator'] ) ) {
 			$separator = $args['separator'];
 		}
-		if ( ( $end_time !== $start_time ) && ( ! isset( $args['show_end_time'] ) || ( isset( $args['show_end_time'] ) && false !== $args['show_end_time'] ) ) ) {
+		if ( ( $end_time !== $start_time ) && ( ! isset( $args['show_end_time'] ) || ( isset( $args['show_end_time'] ) && $args['show_end_time'] !== false ) ) ) {
 			$time = sprintf(
 				// translators: 1) start time, 2) separator, 3) end time, 4) timezone
 				__( '%1$s %2$s %3$s%4$s', 'minnpost-largo' ),
@@ -247,7 +247,7 @@ endif;
 */
 if ( ! function_exists( 'minnpost_largo_get_event_year' ) ) :
 	function minnpost_largo_get_event_year( $object_type = 'festival', $year = '' ) {
-		if ( '' === $year ) {
+		if ( $year === '' ) {
 			$year = gmdate( 'Y' );
 		}
 		$directory_args  = array(
@@ -279,7 +279,7 @@ endif;
 if ( ! function_exists( 'minnpost_largo_get_old_event_menu' ) ) :
 	function minnpost_largo_get_old_event_menu( $object_type = 'festival', $event_year = '' ) {
 		$menu = array();
-		if ( '2021' === $event_year ) {
+		if ( $event_year === '2021' ) {
 			$menu = array(
 				array(
 					'class' => 'festival-passes',
@@ -348,7 +348,7 @@ if ( ! function_exists( 'minnpost_largo_get_event_website_date_range' ) ) :
 		if ( ! empty( $event_posts ) ) {
 
 			foreach ( $event_posts as $key => $event_post_id ) {
-				if ( 'publish' !== get_post_status( $event_post_id ) ) {
+				if ( get_post_status( $event_post_id ) !== 'publish' ) {
 					unset( $event_posts[ $key ] );
 				}
 				$post_year = get_the_date( 'Y', $event_post_id );
@@ -433,7 +433,7 @@ if ( ! function_exists( 'minnpost_largo_set_event_id' ) ) :
 		$event_posts = get_post_meta( $post_id, '_mp_' . $object_type . '_content_posts', true );
 		if ( ! empty( $event_posts ) ) {
 			foreach ( $event_posts as $key => $event_post_id ) {
-				if ( 'publish' !== get_post_status( $event_post_id ) ) {
+				if ( get_post_status( $event_post_id ) !== 'publish' ) {
 					unset( $event_posts[ $key ] );
 				}
 			}
@@ -479,7 +479,7 @@ if ( ! function_exists( 'minnpost_largo_get_event_website_logo_info' ) ) :
 			}
 		}
 
-		if ( 0 === $post_id ) {
+		if ( $post_id === 0 ) {
 			$title = __( 'MinnPost Event Website', 'minnpost-largo' );
 		}
 
@@ -513,7 +513,7 @@ if ( ! function_exists( 'minnpost_event_category_single_template' ) ) :
 			foreach ( $event_categories as $event_category ) {
 				$slug   = $event_category->slug;
 				$locate = locate_template( 'tribe-events/single-event-' . $slug . '.php' );
-				if ( '' !== $locate ) {
+				if ( $locate !== '' ) {
 					return $locate;
 				}
 			}
@@ -562,7 +562,7 @@ if ( ! function_exists( 'minnpost_get_event_website_pass_link' ) ) :
 			$class .= ' ' . $args['class'];
 		}
 		$event_year = minnpost_largo_get_event_year( $object_type, get_the_date( 'Y' ) );
-		if ( 'festival' === $object_type ) {
+		if ( $object_type === 'festival' ) {
 			$label = esc_html__( 'Reserve your Festival pass' );
 			if ( isset( $args['label'] ) ) {
 				$label = $args['label'];
@@ -584,7 +584,7 @@ if ( ! function_exists( 'minnpost_get_event_website_pass_link' ) ) :
 				$label,
 				$class
 			);
-		} elseif ( 'tonight' === $object_type ) {
+		} elseif ( $object_type === 'tonight' ) {
 			$buy_event_pass = sprintf(
 				// translators: 1) url to buy a pass, 2) link text
 				__( '<a href="%1$s" class="a-button">%2$s</a>', 'minnpost-largo' ),
@@ -607,7 +607,7 @@ if ( ! function_exists( 'minnpost_event_category_breadcrumb' ) ) :
 		if ( ! empty( $event_categories ) ) {
 			foreach ( $event_categories as $event_category ) {
 				$category_name = $event_category->name;
-				if ( 'festival' === $event_category->slug || 'tonight' === $event_category->slug ) {
+				if ( $event_category->slug === 'festival' || $event_category->slug === 'tonight' ) {
 					$category_link = site_url( '/' . $event_category->slug . '/' );
 				} else {
 					$category_link = get_term_link( $event_category->term_id, 'tribe_events_cat' );
@@ -627,17 +627,17 @@ endif;
 if ( ! function_exists( 'minnpost_get_event_category_name' ) ) :
 	function minnpost_get_event_category_name( $post_id = '' ) {
 		$category_name = '';
-		if ( '' === $post_id ) {
+		if ( $post_id === '' ) {
 			$post_id = get_the_ID();
 		}
 
 		$hide_category = get_post_meta( $post_id, '_mp_remove_category_from_display', true );
-		if ( 'on' === $hide_category ) {
+		if ( $hide_category === 'on' ) {
 			return $category_name;
 		}
 
 		$category_id = minnpost_get_permalink_event_category_id( $post_id );
-		if ( '' !== $category_id ) {
+		if ( $category_id !== '' ) {
 			$category = get_term( $category_id, 'tribe_events_cat' );
 		}
 
@@ -658,17 +658,17 @@ endif;
 if ( ! function_exists( 'minnpost_get_event_category_slug' ) ) :
 	function minnpost_get_event_category_slug( $post_id = '' ) {
 		$category_slug = '';
-		if ( '' === $post_id ) {
+		if ( $post_id === '' ) {
 			$post_id = get_the_ID();
 		}
 
 		$hide_category = get_post_meta( $post_id, '_mp_remove_category_from_display', true );
-		if ( 'on' === $hide_category ) {
+		if ( $hide_category === 'on' ) {
 			return $category_slug;
 		}
 
 		$category_id = minnpost_get_permalink_event_category_id( $post_id );
-		if ( '' !== $category_id ) {
+		if ( $category_id !== '' ) {
 			$category = get_term( $category_id, 'tribe_events_cat' );
 		}
 
@@ -689,12 +689,12 @@ endif;
 if ( ! function_exists( 'minnpost_get_permalink_event_category_id' ) ) :
 	function minnpost_get_permalink_event_category_id( $post_id = '' ) {
 		$category_id = '';
-		if ( '' === $post_id ) {
+		if ( $post_id === '' ) {
 			$post_id = get_the_ID();
 		}
 		$category_permalink = get_post_meta( $post_id, '_category_permalink', true );
-		if ( null !== $category_permalink && '' !== $category_permalink ) {
-			if ( isset( $category_permalink['tribe_events_cat'] ) && '' !== $category_permalink['tribe_events_cat'] ) {
+		if ( $category_permalink !== null && $category_permalink !== '' ) {
+			if ( isset( $category_permalink['tribe_events_cat'] ) && $category_permalink['tribe_events_cat'] !== '' ) {
 				$category_id = $category_permalink['tribe_events_cat'];
 			} else {
 				$categories  = get_the_terms( $post_id, 'tribe_events_cat' );
@@ -759,7 +759,7 @@ if ( ! function_exists( 'minnpost_event_speaker_box_css' ) ) :
 	add_action( 'admin_enqueue_scripts', 'minnpost_event_speaker_box_css' );
 	function minnpost_event_speaker_box_css() {
 		$show_speaker_meta_box = apply_filters( 'tribe_ext_events_add_tribe_ext_speaker_meta_box', true );
-		if ( false === $show_speaker_meta_box ) {
+		if ( $show_speaker_meta_box === false ) {
 			// wp_enqueue_style( 'custom_wp_admin_css', get_theme_file_uri() . '/admin-style.css', array(), filemtime( get_theme_file_path() . '/admin-style.css' ) );
 			$css = '#event_tribe_ext_speaker {display: none;}';
 			wp_add_inline_style( 'custom_wp_admin_css', $css );

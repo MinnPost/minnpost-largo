@@ -14,7 +14,7 @@ $post_class = 'm-post m-tonight-post m-tonight-post-event m-tonight-post-event-f
 	<div class="o-entry">
 		<div class="m-entry-content">
 			<?php
-			if ( '' !== get_minnpost_post_image( 'full' ) && is_singular() ) {
+			if ( get_minnpost_post_image( 'full' ) !== '' && is_singular() ) {
 				minnpost_post_image( 'full' );
 			}
 			?>

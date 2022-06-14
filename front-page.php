@@ -44,7 +44,7 @@ else :
 				<?php if ( $more_top_stories->have_posts() ) : ?>
 					<section class="m-archive m-archive-homepage m-zone m-zone-homepage-more-top">
 						<?php
-						if ( '' !== $top_zone->description ) {
+						if ( $top_zone->description !== '' ) {
 							$top_zone_title = $top_zone->description;
 						} elseif ( ! $top_query->have_posts() ) {
 							$top_zone_title = __( 'Top stories', 'minnpost-largo' );
@@ -63,7 +63,7 @@ else :
 							$more_top_stories->the_post();
 							get_template_part( 'template-parts/content', 'excerpt' );
 							?>
-							<?php if ( 2 === $count && ! $top_query->have_posts() ) : ?>
+							<?php if ( $count === 2 && ! $top_query->have_posts() ) : ?>
 								<?php dynamic_sidebar( 'sidebar-glean' ); ?>
 							<?php endif; ?>
 							<?php

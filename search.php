@@ -14,7 +14,7 @@ get_header(); ?>
 
 			<?php $query = ( get_query_var( 's' ) ) ? get_query_var( 's' ) : ''; ?>
 
-			<?php if ( '' !== $query && have_posts() ) : ?>
+			<?php if ( $query !== '' && have_posts() ) : ?>
 
 				<header class="m-search-result-header">
 					<h1 class="a-search-result-title"><?php printf( esc_html__( 'Search Results', 'minnpost-largo' ) ); ?></h1>
@@ -66,7 +66,7 @@ get_header(); ?>
 				<?php
 				numeric_pagination();
 
-			elseif ( '' === $query ) :
+			elseif ( $query === '' ) :
 				?>
 				<header class="m-search-result-header">
 					<h1 class="a-search-result-title"><?php printf( esc_html__( 'Search on MinnPost', 'minnpost-largo' ) ); ?></h1>

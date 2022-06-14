@@ -8,7 +8,7 @@
 if ( ! function_exists( 'minnpost_largo_user_has_topics' ) ) :
 	function minnpost_largo_user_has_topics() {
 		$user_id = get_current_user_id();
-		if ( 0 === $user_id ) {
+		if ( $user_id === 0 ) {
 			return false;
 		}
 		$user_topics = maybe_unserialize( get_user_meta( $user_id, '_reading_topics', true ) );
@@ -24,7 +24,7 @@ if ( ! function_exists( 'minnpost_largo_picked_for_you' ) ) :
 	function minnpost_largo_picked_for_you( $before_title, $title, $after_title, $content, $categories, $terms ) {
 
 		$user_id = get_current_user_id();
-		if ( 0 === $user_id ) {
+		if ( $user_id === 0 ) {
 			return;
 		}
 
@@ -40,7 +40,7 @@ if ( ! function_exists( 'minnpost_largo_picked_for_you' ) ) :
 		$user_topics = maybe_unserialize( get_user_meta( $user_id, '_reading_topics', true ) );
 		foreach ( $user_topics as $topic ) {
 			$term = get_term_by( 'slug', sanitize_title( $topic ), 'category' );
-			if ( false !== $term ) {
+			if ( $term !== false ) {
 				$cat_id             = $term->term_id;
 				$query_categories[] = $cat_id;
 			}
@@ -56,7 +56,7 @@ if ( ! function_exists( 'minnpost_largo_picked_for_you' ) ) :
 			'category__in'   => $query_categories,
 			'orderby'        => 'date',
 		);
-		if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
+		if ( VIP_GO_ENV === 'production' || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION === true ) ) {
 			$query_args['es'] = true; // elasticsearch.
 		}
 		$query_args = new WP_Query( $query_args );
@@ -65,7 +65,7 @@ if ( ! function_exists( 'minnpost_largo_picked_for_you' ) ) :
 
 		<?php if ( $query_args->have_posts() ) : ?>
 			<div class="m-widget-contents">
-				<?php if ( '' !== $content ) : ?>
+				<?php if ( $content !== '' ) : ?>
 					<?php echo $content; ?>
 				<?php endif; ?>
 				<!-- the loop -->

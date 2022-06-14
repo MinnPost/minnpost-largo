@@ -41,7 +41,7 @@
 
 			<?php
 			$hide_details = get_post_meta( $id, '_mp_remove_event_details_from_display', true );
-			if ( 'on' !== $hide_details ) :
+			if ( $hide_details !== 'on' ) :
 				?>
 			<div class="m-event-details m-tonight-dates">
 				<?php do_action( 'tribe_events_single_event_before_the_meta' ); ?>
@@ -64,7 +64,7 @@
 			</div>
 			<?php endif; ?>
 		</div>
-		<?php if ( false === $event_logo_info['is_current_url'] && ! is_singular( array( 'tribe_events', 'tribe_ext_speaker' ) ) ) : ?>
+		<?php if ( $event_logo_info['is_current_url'] === false && ! is_singular( array( 'tribe_events', 'tribe_ext_speaker' ) ) ) : ?>
 			<div class="o-wrapper o-wrapper-tonight-page-title">
 				<?php the_title( '<h1 class="a-page-title">', '</h1>' ); ?>
 			</div>
@@ -73,4 +73,4 @@
 
 	<?php do_action( 'wp_message_inserter', 'header' ); ?>
 
-	<div id="content" class="o-wrapper o-wrapper-content o-wrapper-content-tonight<?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">
+	<div id="content" class="o-wrapper o-wrapper-content o-wrapper-content-tonight<?php echo ( get_query_var( 'grid', false ) !== false ) ? ' o-wrapper-grid-overlay' : ''; ?>">

@@ -27,8 +27,8 @@ if ( ! function_exists( 'minnpost_largo_get_title' ) ) :
 			$title     = get_the_title();
 			$post_id   = get_the_ID();
 			$seo_title = get_post_meta( $post_id, '_mp_seo_title', true );
-			if ( '' !== $seo_title ) {
-				if ( false === strpos( $seo_title, get_bloginfo( 'name' ) ) ) {
+			if ( $seo_title !== '' ) {
+				if ( strpos( $seo_title, get_bloginfo( 'name' ) ) === false ) {
 					$seo_title .= ' | ' . get_bloginfo( 'name' );
 				}
 				$title = $seo_title;
@@ -70,7 +70,7 @@ if ( ! function_exists( 'minnpost_largo_get_description' ) ) :
 			$excerpt  = ! empty( $post->post_excerpt ) ? get_the_excerpt() : null;
 			$post_id  = get_the_ID();
 			$seo_desc = get_post_meta( $post_id, '_mp_seo_description', true );
-			if ( '' !== $seo_desc ) {
+			if ( $seo_desc !== '' ) {
 				$excerpt = $seo_desc;
 			}
 		} elseif ( is_front_page() ) {
@@ -105,14 +105,14 @@ if ( ! function_exists( 'minnpost_largo_get_og_image' ) ) :
 		} elseif ( is_category() ) {
 			$id         = get_query_var( 'cat' );
 			$image_data = minnpost_get_term_image( $id, 'feature' );
-			if ( '' !== $image_data ) {
+			if ( $image_data !== '' ) {
 				$image_url = isset( $image_data['image_url'] ) ? $image_data['image_url'] : '';
 			}
 		} elseif ( is_author() ) {
 			$author     = get_queried_object();
 			$id         = $author->ID;
 			$image_data = minnpost_get_author_image( $id, 'photo' );
-			if ( '' !== $image_data ) {
+			if ( $image_data !== '' ) {
 				$image_url = isset( $image_data['image_url'] ) ? $image_data['image_url'] : '';
 			}
 		}
@@ -128,7 +128,7 @@ endif;
 if ( ! function_exists( 'minnpost_largo_get_og_default' ) ) :
 	function minnpost_largo_get_og_default() {
 		$image_url = '';
-		if ( '' === $image_url ) {
+		if ( $image_url === '' ) {
 			$image_url = get_option( 'default_image_url', '' );
 		}
 		return $image_url;
@@ -177,9 +177,9 @@ if ( ! function_exists( 'minnpost_largo_news_article_schema' ) ) :
 
 		// thumbnail
 		if ( isset( $input['thumbnailUrl'] ) && function_exists( 'minnpost_largo_get_og_image' ) ) {
-			if ( '' !== minnpost_largo_get_og_image() && minnpost_largo_get_og_default() !== minnpost_largo_get_og_image() ) {
+			if ( minnpost_largo_get_og_image() !== '' && minnpost_largo_get_og_default() !== minnpost_largo_get_og_image() ) {
 				$input['thumbnailUrl'] = minnpost_largo_get_og_image();
-			} elseif ( '' !== minnpost_largo_get_og_image_thumbnail() ) {
+			} elseif ( minnpost_largo_get_og_image_thumbnail() !== '' ) {
 				$input['thumbnailUrl'] = minnpost_largo_get_og_image_thumbnail();
 			} else {
 				$input['thumbnailUrl'] = minnpost_largo_get_og_image();
@@ -209,13 +209,13 @@ if ( ! function_exists( 'minnpost_largo_author_schema' ) ) :
 			$bio       = get_post_meta( $coauthor->ID, '_mp_author_excerpt', true );
 			$job_title = get_post_meta( $coauthor->ID, 'cap-job-title', true );
 			$email     = get_post_meta( $coauthor->ID, 'cap-user_email', true );
-			if ( '' !== $bio ) {
+			if ( $bio !== '' ) {
 				$data['description'] = strip_tags( $bio );
 			}
-			if ( '' !== $job_title ) {
+			if ( $job_title !== '' ) {
 				$data['JobTitle'] = $job_title;
 			}
-			if ( '' !== $email ) {
+			if ( $email !== '' ) {
 				$data['email'] = $email;
 			}
 			if ( ! empty( $coauthor->website ) ) {
@@ -290,10 +290,10 @@ if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 		<meta property="og:locale" content="<?php echo esc_attr( get_locale() ); ?>">
 		<meta property="og:url" content="<?php echo esc_url( get_current_url() ); ?>">
 		<meta name="twitter:site" content="@<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" />
-		<?php if ( '' !== minnpost_largo_get_title() ) : ?>
+		<?php if ( minnpost_largo_get_title() !== '' ) : ?>
 			<meta property="og:title" content="<?php echo esc_attr( minnpost_largo_get_title() ); ?>">
 		<?php endif; ?>
-		<?php if ( '' !== minnpost_largo_get_description() ) : ?>
+		<?php if ( minnpost_largo_get_description() !== '' ) : ?>
 			<meta name="description" content="<?php echo esc_attr( minnpost_largo_get_description() ); ?>">
 			<meta property="og:description" content="<?php echo esc_attr( minnpost_largo_get_description() ); ?>">
 			<meta property="twitter:description" content="<?php echo minnpost_largo_get_description(); ?>">
@@ -332,7 +332,7 @@ if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 			<meta name="robots" content="noindex, nofollow">
 		<?php endif; ?>
 
-		<?php if ( 'production' !== VIP_GO_ENV ) : ?>
+		<?php if ( VIP_GO_ENV !== 'production' ) : ?>
 			<meta name="robots" content="noindex, nofollow">
 		<?php endif; ?>
 
@@ -366,10 +366,10 @@ endif;
 if ( ! function_exists( 'minnpost_largo_get_social_images' ) ) :
 	function minnpost_largo_get_social_images( $id = '' ) {
 		$meta_images = array();
-		if ( '' === $id ) {
+		if ( $id === '' ) {
 			$id = get_the_ID();
 		}
-		if ( post_password_required() || is_attachment() || false === $id ) {
+		if ( post_password_required() || is_attachment() || $id === false ) {
 			return $meta_images;
 		}
 		$meta_images = get_post_meta( $id, '_mp_social_images', true );
@@ -383,11 +383,11 @@ endif;
 if ( ! function_exists( 'minnpost_largo_default_meta_images' ) ) :
 	function minnpost_largo_default_meta_images() {
 		?>
-		<?php if ( '' !== minnpost_largo_get_og_image() ) : ?>
+		<?php if ( minnpost_largo_get_og_image() !== '' ) : ?>
 			<meta property="og:image" content="<?php echo minnpost_largo_get_og_image(); ?>">
 			<meta property="twitter:image" content="<?php echo minnpost_largo_get_og_image(); ?>">
 		<?php endif; ?>
-		<?php if ( '' !== minnpost_largo_get_og_image_thumbnail() ) : ?>
+		<?php if ( minnpost_largo_get_og_image_thumbnail() !== '' ) : ?>
 			<meta property="og:image" content="<?php echo minnpost_largo_get_og_image_thumbnail(); ?>">
 		<?php endif; ?>
 
@@ -410,7 +410,7 @@ if ( ! function_exists( 'minnpost_largo_default_meta_images' ) ) :
 			<?php endif; ?>
 		<?php endif; ?>
 
-		<?php if ( '' === minnpost_largo_get_og_image() && '' === minnpost_largo_get_og_image_thumbnail() && '' !== minnpost_largo_get_og_default() ) : ?>
+		<?php if ( minnpost_largo_get_og_image() === '' && minnpost_largo_get_og_image_thumbnail() === '' && minnpost_largo_get_og_default() !== '' ) : ?>
 			<meta property="og:image" content="<?php echo minnpost_largo_get_og_default(); ?>">
 		<?php endif; ?>
 		<?php

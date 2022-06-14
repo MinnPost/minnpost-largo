@@ -15,7 +15,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width,initial-scale=1">
 		<meta name="x-apple-disable-message-reformatting">
-		<?php if ( false === $args['is_legacy'] ) : ?>
+		<?php if ( $args['is_legacy'] === false ) : ?>
 		<meta name="color-scheme" content="light dark">
 		<meta name="supported-color-schemes" content="light dark">
 		<style_donotremove>

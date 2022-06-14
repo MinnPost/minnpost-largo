@@ -8,10 +8,10 @@
  */
 
 $post_class = 'm-post m-festival-post m-festival-post-event m-festival-post-event-excerpt';
-if ( '' !== get_minnpost_post_image( 'feature-large' ) ) {
+if ( get_minnpost_post_image( 'feature-large' ) !== '' ) {
 	$post_class .= ' m-festival-post-event-with-image';
 }
-if ( true === $args['featured'] ) {
+if ( $args['featured'] === true ) {
 	$post_class .= ' m-festival-post-event-featured';
 }
 ?>
@@ -21,7 +21,7 @@ if ( true === $args['featured'] ) {
 	<aside class="m-featured-event-details">
 		<?php
 		$hide_details = get_post_meta( $id, '_mp_remove_event_details_from_display', true );
-		if ( 'on' !== $hide_details ) :
+		if ( $hide_details !== 'on' ) :
 			?>
 		<div class="m-event-details">
 			<div class="m-event-date-and-calendar">
@@ -51,7 +51,7 @@ if ( true === $args['featured'] ) {
 		<div class="m-featured-event-content m-featured-event-content-without-image">
 	<?php endif; ?>
 		<header class="m-entry-header">
-			<?php if ( true === $args['use_permalink'] ) : ?>
+			<?php if ( $args['use_permalink'] === true ) : ?>
 				<?php the_title( '<h3 class="a-entry-title a-entry-title-excerpt a-festival-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h3>' ); ?>
 			<?php else : ?>
 				<?php the_title( '<h3 class="a-entry-title a-entry-title-excerpt a-festival-title">', '</h3>' ); ?>

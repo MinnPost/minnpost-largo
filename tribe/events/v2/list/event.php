@@ -18,7 +18,7 @@ $event_classes = tribe_get_post_class( array( 'm-post, m-event, tribe-events-cal
 			<?php $this->template( 'list/event/cost', array( 'event' => $event ) ); ?>
 		</div>
 	</header>
-	<?php if ( '' !== get_the_excerpt() ) : ?>
+	<?php if ( get_the_excerpt() !== '' ) : ?>
 		<div class="m-entry-excerpt m-entry-excerpt-event">
 			<?php the_excerpt(); ?>
 		</div>

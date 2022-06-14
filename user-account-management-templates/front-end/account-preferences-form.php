@@ -26,7 +26,7 @@
 		</div>
 	<?php endif; ?>
 
-	<?php if ( ! empty( $_GET['account-settings-update'] ) && 'true' === esc_attr( $_GET['account-settings-update'] ) ) : ?>
+	<?php if ( ! empty( $_GET['account-settings-update'] ) && esc_attr( $_GET['account-settings-update'] ) === 'true' ) : ?>
 		<div class="m-form-message m-form-message-info">
 			<p class="login-info">
 				<?php _e( 'Your preferences were successfully updated.', 'minnpost-largo' ); ?>
@@ -47,7 +47,7 @@
 				}
 				$always_load_comments = get_user_meta( $user_id, 'always_load_comments', true );
 				$always_load_comments = user_always_loads_comments( $always_load_comments );
-				if ( true === $always_load_comments ) {
+				if ( $always_load_comments === true ) {
 					$checked = ' checked';
 				}
 			}

@@ -51,14 +51,14 @@ if ( post_password_required() ) {
 		<?php
 		$commenting_policy = get_page_by_path( '/commenting-policy/', OBJECT, 'page' );
 		$excerpt           = '';
-		if ( null !== $commenting_policy ) {
+		if ( $commenting_policy !== null ) {
 			$page_id                   = $commenting_policy->ID;
 			$commenting_policy_excerpt = get_the_excerpt( $page_id );
-			if ( '' !== $commenting_policy_excerpt ) {
+			if ( $commenting_policy_excerpt !== '' ) {
 				$excerpt = apply_filters( 'the_content', $commenting_policy_excerpt );
 			}
 		}
-		if ( '' !== $excerpt ) :
+		if ( $excerpt !== '' ) :
 			?>
 		<div class="a-comment-policy-excerpt"><?php echo $excerpt; ?></div>
 		<?php endif; ?>

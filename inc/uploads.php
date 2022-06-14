@@ -64,7 +64,7 @@ endif;
 if ( ! function_exists( 'minnpost_post_thumbnail_sizes_attr' ) ) :
 	add_filter( 'wp_get_attachment_image_attributes', 'minnpost_post_thumbnail_sizes_attr', 10, 3 );
 	function minnpost_post_thumbnail_sizes_attr( $attributes, $attachment, $size = '' ) {
-		if ( 'post-thumbnail' === $size ) {
+		if ( $size === 'post-thumbnail' ) {
 			is_active_sidebar( 'sidebar-1' ) && $attributes['sizes']   = '(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 984px) 60vw, (max-width: 1362px) 62vw, 840px';
 			! is_active_sidebar( 'sidebar-1' ) && $attributes['sizes'] = '(max-width: 709px) 85vw, (max-width: 909px) 67vw, (max-width: 1362px) 88vw, 1200px';
 		}
@@ -85,7 +85,7 @@ if ( ! function_exists( 'image_watermark_allowed' ) ) :
 	function minnpost_image_watermark_allowed( $allowed, $post_id ) {
 		// allowed default is false
 		$access_level = get_post_meta( $post_id, '_access_level', true );
-		if ( '' !== $access_level ) {
+		if ( $access_level !== '' ) {
 			if ( class_exists( 'Blocked_Content_Template' ) ) {
 				$blocked_content_template = Blocked_Content_Template::get_instance();
 				$minimum_level            = $blocked_content_template->get_minimum_branded_level();
@@ -109,19 +109,19 @@ endif;
 if ( ! function_exists( 'get_media_credit_data' ) ) :
 	function get_media_credit_data( $post_id = 0 ) {
 		$credit = array();
-		if ( 0 === $post_id ) {
+		if ( $post_id === 0 ) {
 			return $credit;
 		}
 		$credit_meta = get_post_meta( $post_id, '_wp_attachment_source_name', true );
 		$credit_url  = get_post_meta( $post_id, '_wp_attachment_source_url', true );
 
 		// deprecated credit field
-		if ( '' === $credit_meta ) {
+		if ( $credit_meta === '' ) {
 			$credit_meta = get_post_meta( $post_id, 'media_credit', true );
 		}
 
 		// deprecated credit url field
-		if ( '' === $credit_url ) {
+		if ( $credit_url === '' ) {
 			$credit_url = get_post_meta( $post_id, 'media_credit_url', true );
 		}
 
@@ -142,7 +142,7 @@ if ( ! function_exists( 'minnpost_get_media_credit_html' ) ) :
 	function minnpost_get_media_credit_html( $post_id = 0 ) {
 		$credit = get_media_credit_data( $post_id );
 		if ( ! empty( $credit['meta'] || ! empty( $credit['url'] ) ) ) {
-			if ( '' !== $credit['meta'] ) {
+			if ( $credit['meta'] !== '' ) {
 				if ( ! empty( $credit['url'] ) ) {
 					$credit = '<a href="' . esc_url( $credit['url'] ) . '">' . $credit['meta'] . '</a>';
 				} else {
@@ -229,12 +229,12 @@ if ( ! function_exists( 'minnpost_largo_image_add_caption_with_credit' ) ) :
 		}
 
 		$credit_html = '';
-		if ( '' !== $credit ) {
+		if ( $credit !== '' ) {
 			$credit_html = '[image_credit]' . $credit . '[/image_credit]';
 		}
 
 		$caption_html = '';
-		if ( '' !== $caption ) {
+		if ( $caption !== '' ) {
 			$caption_html = '[image_caption]' . $caption . '[/image_caption]';
 		}
 
@@ -297,9 +297,9 @@ if ( ! function_exists( 'minnpost_largo_div_shortcode' ) ) :
 			),
 			$attributes
 		);
-		if ( 'caption' === $a['class'] ) {
+		if ( $a['class'] === 'caption' ) {
 			return '<div class="a-media-meta a-media-caption">' . $content . '</div>';
-		} elseif ( 'credit' === $a['class'] ) {
+		} elseif ( $a['class'] === 'credit' ) {
 			return '<div class="a-media-meta a-media-credit">' . $content . '</div>';
 		}
 		return $content;

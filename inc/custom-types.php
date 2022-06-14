@@ -68,7 +68,7 @@ if ( ! function_exists( 'minnpost_newsletter_default_order' ) ) :
 	add_filter( 'pre_get_posts', 'minnpost_newsletter_default_order' );
 	function minnpost_newsletter_default_order( $query ) {
 		if ( $query->is_admin ) {
-			if ( 'newsletter' === $query->get( 'post_type' ) ) {
+			if ( $query->get( 'post_type' ) === 'newsletter' ) {
 				$query->set( 'orderby', 'date' );
 				$query->set( 'order', 'DESC' );
 			}
@@ -105,9 +105,9 @@ if ( ! function_exists( 'minnpost_newsletter_column' ) ) :
 	add_action( 'manage_newsletter_posts_custom_column', 'minnpost_newsletter_column', 10, 2 );
 	function minnpost_newsletter_column( $column, $post_id ) {
 		// newsletter type
-		if ( 'type' === $column ) {
-			$type = ( '' !== get_post_meta( $post_id, '_mp_newsletter_type', true ) ) ? get_post_meta( $post_id, '_mp_newsletter_type', true ) : '';
-			if ( '' !== $type && function_exists( 'minnpost_largo_email_types' ) ) {
+		if ( $column === 'type' ) {
+			$type = ( get_post_meta( $post_id, '_mp_newsletter_type', true ) !== '' ) ? get_post_meta( $post_id, '_mp_newsletter_type', true ) : '';
+			if ( $type !== '' && function_exists( 'minnpost_largo_email_types' ) ) {
 				$type = minnpost_largo_email_types( $type );
 			}
 			echo $type;
@@ -142,7 +142,7 @@ if ( ! function_exists( 'minnpost_newsletter_posts_orderby' ) ) :
 		}
 
 		// sort by type
-		if ( 'type' === $query->get( 'orderby' ) ) {
+		if ( $query->get( 'orderby' ) === 'type' ) {
 			$query->set(
 				'meta_query',
 				array(
@@ -174,7 +174,7 @@ if ( ! function_exists( 'minnpost_filter_restrict_manage_newsletter_posts' ) ) :
 			$type = esc_attr( $_GET['post_type'] );
 		}
 		// add filter to the post type you want
-		if ( 'newsletter' === $type ) { // Replace NAME_OF_YOUR_POST with the name of custom post
+		if ( $type === 'newsletter' ) { // Replace NAME_OF_YOUR_POST with the name of custom post
 			$type_values = minnpost_largo_email_types();
 			?>
 			<select name="admin_filter_by_type">
@@ -210,9 +210,9 @@ if ( ! function_exists( 'minnpost_newsletter_posts_filter' ) ) :
 		if ( isset( $_GET['post_type'] ) ) {
 			$type = esc_attr( $_GET['post_type'] );
 		}
-		if ( 'newsletter' === $type && is_admin() && 'edit.php' === $pagenow ) {
+		if ( $type === 'newsletter' && is_admin() && $pagenow === 'edit.php' ) {
 			// filter by type
-			if ( isset( $_GET['admin_filter_by_type'] ) && '' !== $_GET['admin_filter_by_type'] ) {
+			if ( isset( $_GET['admin_filter_by_type'] ) && $_GET['admin_filter_by_type'] !== '' ) {
 				$query->query_vars['meta_key']   = '_mp_newsletter_type';
 				$query->query_vars['meta_value'] = esc_attr( $_GET['admin_filter_by_type'] );
 			}
@@ -241,7 +241,7 @@ if ( ! function_exists( 'coauthors_cpt_parent_file' ) ) :
 	add_filter( 'parent_file', 'coauthors_cpt_parent_file' );
 	function coauthors_cpt_parent_file( $parent_file ) {
 		global $current_screen;
-		if ( in_array( $current_screen->base, array( 'post', 'edit' ), true ) && 'guest-author' === $current_screen->post_type ) {
+		if ( in_array( $current_screen->base, array( 'post', 'edit' ), true ) && $current_screen->post_type === 'guest-author' ) {
 			$parent_file = 'users.php';
 		}
 		return $parent_file;
@@ -669,7 +669,7 @@ endif;
 if ( ! function_exists( 'minnpost_deleted_event_args' ) ) :
 	add_filter( 'register_post_type_args', 'minnpost_deleted_event_args', 20, 2 );
 	function minnpost_deleted_event_args( $args, $post_type ) {
-		if ( 'deleted_event' === $post_type ) {
+		if ( $post_type === 'deleted_event' ) {
 			$args['label'] = __( 'Deleted Events', 'minnpost-largo' );
 		}
 		return $args;

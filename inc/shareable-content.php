@@ -70,7 +70,7 @@ $content_footer = Republication_Tracker_Tool::create_content_footer( $post );
 // ours
 if ( function_exists( 'minnpost_get_posted_on' ) ) {
 	$date = minnpost_get_posted_on( $post->ID, true );
-	if ( '' === $date ) {
+	if ( $date === '' ) {
 		return;
 	}
 	$time_string = sprintf(

@@ -21,7 +21,7 @@
 $event_logo_info = minnpost_largo_get_event_website_logo_info( 'festival' );
 $event_year      = minnpost_largo_get_event_year( 'festival', get_the_date( 'Y' ) );
 $classes[]       = 'festival-' . $event_year;
-if ( isset( $event_logo_info['is_current_url'] ) && true === $event_logo_info['is_current_url'] ) {
+if ( isset( $event_logo_info['is_current_url'] ) && $event_logo_info['is_current_url'] === true ) {
 	$classes[] = 'festival-landing-page';
 }
 ?>
@@ -60,7 +60,7 @@ if ( isset( $event_logo_info['is_current_url'] ) && true === $event_logo_info['i
 				<?php endif; ?>
 			</nav><!-- #navigation-primary -->
 		</div>
-		<?php if ( false === $event_logo_info['is_current_url'] && ! is_singular( array( 'tribe_events', 'tribe_ext_speaker' ) ) ) : ?>
+		<?php if ( $event_logo_info['is_current_url'] === false && ! is_singular( array( 'tribe_events', 'tribe_ext_speaker' ) ) ) : ?>
 			<div class="o-wrapper o-wrapper-festival-page-title">
 				<?php the_title( '<h1 class="a-page-title">', '</h1>' ); ?>
 			</div>
@@ -69,4 +69,4 @@ if ( isset( $event_logo_info['is_current_url'] ) && true === $event_logo_info['i
 
 	<?php do_action( 'wp_message_inserter', 'header' ); ?>
 
-	<div id="content" class="o-wrapper o-wrapper-content o-wrapper-content-festival<?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">
+	<div id="content" class="o-wrapper o-wrapper-content o-wrapper-content-festival<?php echo ( get_query_var( 'grid', false ) !== false ) ? ' o-wrapper-grid-overlay' : ''; ?>">

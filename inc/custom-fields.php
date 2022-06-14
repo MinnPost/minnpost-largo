@@ -24,7 +24,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 	function check_current_screen() {
 		$screen = get_current_screen();
 		$type   = $screen->post_type;
-		if ( 'newsletter' === $type ) {
+		if ( $type === 'newsletter' ) {
 			add_action( 'pre_get_posts', 'newsletter_pre_get_posts' );
 		}
 	}
@@ -192,7 +192,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				),
 			),
 		);
-		if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
+		if ( VIP_GO_ENV === 'production' || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION === true ) ) {
 			$newsletter_post_args['es'] = true; // elasticsearch.
 		}
 		$top_section = new_cmb2_box(
@@ -715,7 +715,7 @@ function minnpost_largo_admin_hide_excerpt_field() {
 add_filter( 'admin_init', 'minnpost_largo_admin_hide_excerpt_field' );
 function _minnpost_largo_admin_hide_excerpt_field() {
 	$screen = get_current_screen();
-	if ( isset( $screen->post_type ) && 'post' === $screen->post_type || 'tribe_events' === $screen->post_type ) {
+	if ( isset( $screen->post_type ) && $screen->post_type === 'post' || $screen->post_type === 'tribe_events' ) {
 		remove_meta_box( 'postexcerpt', null, 'normal' );
 	}
 }
@@ -1806,7 +1806,7 @@ if ( ! function_exists( 'remove_default_category_tag_description' ) ) :
 	add_action( 'admin_head', 'remove_default_category_tag_description' );
 	function remove_default_category_tag_description() {
 		global $current_screen;
-		if ( 'edit-category' === $current_screen->id || 'edit-post_tag' === $current_screen->id ) { ?>
+		if ( $current_screen->id === 'edit-category' || $current_screen->id === 'edit-post_tag' ) { ?>
 			<script>
 			jQuery(function($) {
 				$('textarea#description, textarea#tag-description').closest('tr.form-field, div.form-field').remove();
@@ -1826,7 +1826,7 @@ if ( ! function_exists( 'minnpost_largo_grouped_categories' ) ) :
 	function minnpost_largo_grouped_categories() {
 		// categories that can be grouped with this category
 		$options = array();
-		if ( is_admin() && ( isset( $_GET['taxonomy'] ) && 'category' === sanitize_key( $_GET['taxonomy'] ) && isset( $_GET['tag_ID'] ) ) || isset( $_POST['tag_ID'] ) && 'category' === sanitize_key( $_POST['taxonomy'] ) ) {
+		if ( is_admin() && ( isset( $_GET['taxonomy'] ) && sanitize_key( $_GET['taxonomy'] ) === 'category' && isset( $_GET['tag_ID'] ) ) || isset( $_POST['tag_ID'] ) && sanitize_key( $_POST['taxonomy'] ) === 'category' ) {
 
 			if ( isset( $_GET['tag_ID'] ) ) {
 				$category_id = absint( $_GET['tag_ID'] );
@@ -1862,14 +1862,14 @@ endif;
 if ( ! function_exists( 'minnpost_largo_get_grouped_categories' ) ) :
 	add_filter( 'cmb2_override__mp_category_grouped_categories_meta_value', 'minnpost_largo_get_grouped_categories', 10, 4 );
 	function minnpost_largo_get_grouped_categories( $data, $object_id, $args, $field ) {
-		if ( is_admin() && ( isset( $_GET['taxonomy'] ) && 'category' === sanitize_key( $_GET['taxonomy'] ) && isset( $_GET['tag_ID'] ) ) || isset( $_POST['tag_ID'] ) && 'category' === sanitize_key( $_POST['taxonomy'] ) ) {
+		if ( is_admin() && ( isset( $_GET['taxonomy'] ) && sanitize_key( $_GET['taxonomy'] ) === 'category' && isset( $_GET['tag_ID'] ) ) || isset( $_POST['tag_ID'] ) && sanitize_key( $_POST['taxonomy'] ) === 'category' ) {
 			$value   = array();
 			$cat_ids = array_keys( $field->args['options'] );
 			if ( ! empty( $cat_ids ) ) {
 				foreach ( $cat_ids as $cat_id ) {
 					if ( isset( $args['id'] ) && $args['id'] !== $cat_id ) {
 						$category_group = get_term_meta( $cat_id, '_mp_category_group', true );
-						if ( '' !== $category_group ) {
+						if ( $category_group !== '' ) {
 							if ( $category_group === $args['id'] ) {
 								$value[] = $cat_id;
 							}
@@ -1894,7 +1894,7 @@ endif;
 if ( ! function_exists( 'minnpost_largo_set_grouped_categories' ) ) :
 	add_filter( 'cmb2_override__mp_category_grouped_categories_meta_save', 'minnpost_largo_set_grouped_categories', 10, 4 );
 	function minnpost_largo_set_grouped_categories( $override, $args, $field_args, $field ) {
-		if ( is_admin() && ( isset( $_GET['taxonomy'] ) && 'category' === sanitize_key( $_GET['taxonomy'] ) && isset( $_GET['tag_ID'] ) ) || isset( $_POST['tag_ID'] ) && 'category' === sanitize_key( $_POST['taxonomy'] ) ) {
+		if ( is_admin() && ( isset( $_GET['taxonomy'] ) && sanitize_key( $_GET['taxonomy'] ) === 'category' && isset( $_GET['tag_ID'] ) ) || isset( $_POST['tag_ID'] ) && sanitize_key( $_POST['taxonomy'] ) === 'category' ) {
 
 			if ( isset( $_GET['tag_ID'] ) ) {
 				$category_id = absint( $_GET['tag_ID'] );
@@ -1938,9 +1938,9 @@ endif;
 if ( ! function_exists( 'minnpost_largo_manage_category_custom_fields' ) ) :
 	add_filter( 'manage_category_custom_column', 'minnpost_largo_manage_category_custom_fields', 10, 3 );
 	function minnpost_largo_manage_category_custom_fields( $string, $column_name, $term_id ) {
-		if ( '_mp_category_group' === $column_name ) {
+		if ( $column_name === '_mp_category_group' ) {
 			$category_group_id = get_term_meta( $term_id, $column_name, true );
-			if ( '' !== $category_group_id ) {
+			if ( $category_group_id !== '' ) {
 				$category = get_the_category_by_ID( $category_group_id );
 				echo $category;
 			}
@@ -1958,7 +1958,7 @@ if ( ! function_exists( 'minnpost_largo_featured_column_options' ) ) :
 	function minnpost_largo_featured_column_options() {
 		// featured columns that appear on categories
 		$options = array();
-		if ( is_admin() && ( isset( $_GET['taxonomy'] ) && 'category' === sanitize_key( $_GET['taxonomy'] ) && isset( $_GET['tag_ID'] ) ) || isset( $_POST['tag_ID'] ) && 'category' === sanitize_key( $_POST['taxonomy'] ) ) {
+		if ( is_admin() && ( isset( $_GET['taxonomy'] ) && sanitize_key( $_GET['taxonomy'] ) === 'category' && isset( $_GET['tag_ID'] ) ) || isset( $_POST['tag_ID'] ) && sanitize_key( $_POST['taxonomy'] ) === 'category' ) {
 
 			if ( isset( $_GET['tag_ID'] ) ) {
 				$category_id = absint( $_GET['tag_ID'] );
@@ -2005,7 +2005,7 @@ if ( ! function_exists( 'minnpost_largo_category_group_options' ) ) :
 		$options = array();
 		foreach ( $choices as $choice ) {
 			$category = minnpost_largo_group_category( $choice );
-			if ( false !== $category ) {
+			if ( $category !== false ) {
 				$options[ $category->term_id ] = $category->name;
 			}
 		}
@@ -2066,7 +2066,7 @@ if ( ! function_exists( 'minnpost_author_fields' ) ) :
 	function minnpost_author_fields( $fields_to_return, $groups ) {
 		// remove fields
 		foreach ( $fields_to_return as $key => $value ) {
-			if ( 'jabber' === $value['key'] || 'aim' === $value['key'] || 'yahooim' === $value['key'] ) {
+			if ( $value['key'] === 'jabber' || $value['key'] === 'aim' || $value['key'] === 'yahooim' ) {
 				unset( $fields_to_return[ $key ] );
 			}
 		}
@@ -3440,7 +3440,7 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 	function minnpost_post_search_field( $args, $type = 'post_search_ajax' ) {
 
 		// this is the attached post field default
-		if ( 'custom_attached_posts' === $type ) {
+		if ( $type === 'custom_attached_posts' ) {
 			$args = array_merge(
 				array(
 					'desc'    => '',
@@ -3458,14 +3458,14 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 				),
 				$args
 			);
-			if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
+			if ( VIP_GO_ENV === 'production' || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION === true ) ) {
 				$args['query_args']['es'] = true; // elasticsearch.
 			}
 			return $args;
 		}
 
 		// this is the cmb2-field-ajax-search plugin
-		if ( 'post_ajax_search' === $type ) {
+		if ( $type === 'post_ajax_search' ) {
 			$args = array_merge(
 				array(
 					'desc'       => '',
@@ -3481,7 +3481,7 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 				),
 				$args
 			);
-			if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
+			if ( VIP_GO_ENV === 'production' || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION === true ) ) {
 				$args['query_args']['es'] = true; // elasticsearch.
 			}
 			return $args;
@@ -3502,7 +3502,7 @@ if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 			),
 			$args
 		);
-		if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
+		if ( VIP_GO_ENV === 'production' || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION === true ) ) {
 			$args['query_args']['es'] = true; // elasticsearch.
 		}
 		return $args;
@@ -3564,7 +3564,7 @@ if ( ! function_exists( 'minnpost_largo_email_types' ) ) :
 			'artscape'          => __( 'Artscape', 'minnpost-largo' ),
 			'republication'     => __( 'Republication', 'minnpost-largo' ),
 		);
-		if ( '' !== $type ) {
+		if ( $type !== '' ) {
 			return $types[ $type ];
 		}
 		return $types;
@@ -3585,7 +3585,7 @@ if ( ! function_exists( 'minnpost_largo_check_remove_sidebar' ) ) :
 			return $remove_sidebar;
 		}
 
-		if ( '' === $post_id ) {
+		if ( $post_id === '' ) {
 			$post_id = get_the_ID();
 		}
 
@@ -3596,7 +3596,7 @@ if ( ! function_exists( 'minnpost_largo_check_remove_sidebar' ) ) :
 		}*/
 
 		$remove_sidebar_meta_v2 = get_post_meta( $post_id, '_mp_remove_right_sidebar_v2', true );
-		if ( isset( $remove_sidebar_meta_v2 ) && 'on' === $remove_sidebar_meta_v2 ) {
+		if ( isset( $remove_sidebar_meta_v2 ) && $remove_sidebar_meta_v2 === 'on' ) {
 			$remove_sidebar = true;
 		}
 

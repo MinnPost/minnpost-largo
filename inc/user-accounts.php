@@ -20,7 +20,7 @@ if ( ! function_exists( 'login_url' ) ) :
 		$login_url    = site_url( '/user/login/' );
 		$register_url = site_url( '/user/register/' );
 
-		if ( '' !== $redirect && get_current_url() !== $login_url && get_current_url() !== $register_url ) {
+		if ( $redirect !== '' && get_current_url() !== $login_url && get_current_url() !== $register_url ) {
 			$login_url = add_query_arg( 'redirect_to', $redirect, $login_url );
 		}
 		return $login_url;
@@ -105,7 +105,7 @@ endif;
 if ( ! function_exists( 'user_account_error_messages' ) ) :
 	add_filter( 'user_account_management_custom_error_message', 'user_account_error_messages', 10, 3 );
 	function user_account_error_messages( $message, $error_code, $data ) {
-		if ( 'spam' === $error_code ) {
+		if ( $error_code === 'spam' ) {
 			$error = sprintf(
 				// translators: param is our email address
 				esc_html__( 'Oops! For some reason our automated system has flagged your account information as spam. You can try to create an account using a different email address, or if you think this was in error contact us at %1$s.', 'user-account-management' ),
@@ -221,7 +221,7 @@ if ( ! function_exists( 'restrict_comment_moderators' ) ) :
 		$member_roles = array( 'member_bronze', 'member_silver', 'member_gold', 'member_platinum' );
 		$user->roles  = array_diff( (array) $user->roles, $member_roles );
 		if ( in_array( 'comment_moderator', (array) $user->roles, true ) ) {
-			if ( ( 'edit.php' === $pagenow || 'post.php' === $pagenow || 'post-new.php' === $pagenow ) ) {
+			if ( ( $pagenow === 'edit.php' || $pagenow === 'post.php' || $pagenow === 'post-new.php' ) ) {
 				wp_die( esc_html__( 'You are not allowed to access this part of the site', 'minnpost-largo' ) );
 			}
 		}
@@ -342,9 +342,9 @@ if ( ! function_exists( 'save_minnpost_user_data' ) ) :
 	add_action( 'user_account_management_post_user_data_save', 'save_minnpost_user_data', 10, 3 );
 	function save_minnpost_user_data( $user_data, $existing_user_data, $user_id ) {
 		// handle consolidated email addresses
-		if ( isset( $user_data['ID'] ) && array_key_exists( '_consolidated_emails', $user_data ) && '' !== $user_data['_consolidated_emails'] ) {
+		if ( isset( $user_data['ID'] ) && array_key_exists( '_consolidated_emails', $user_data ) && $user_data['_consolidated_emails'] !== '' ) {
 			$all_emails = array_map( 'trim', explode( ',', $user_data['_consolidated_emails'] ) );
-		} elseif ( isset( $user_data['ID'] ) || 0 !== $user_id ) {
+		} elseif ( isset( $user_data['ID'] ) || $user_id !== 0 ) {
 			$all_emails   = array();
 			$all_emails[] = isset( $user_data['user_email'] ) ? $user_data['user_email'] : $existing_user_data['user_email'];
 		}
@@ -360,29 +360,29 @@ if ( ! function_exists( 'save_minnpost_user_data' ) ) :
 			$all_emails = implode( ',', $all_emails );
 			if ( isset( $user_data['ID'] ) ) {
 				update_user_meta( $user_data['ID'], '_consolidated_emails', $all_emails );
-			} elseif ( 0 !== $user_id ) {
+			} elseif ( $user_id !== 0 ) {
 				update_user_meta( $user_id, '_consolidated_emails', $all_emails );
 			}
 		}
 
 		// always load comments field. allow it to be emptied.
-		if ( isset( $user_data['ID'] ) && array_key_exists( 'always_load_comments', $user_data ) && '' !== $user_data['always_load_comments'] ) {
+		if ( isset( $user_data['ID'] ) && array_key_exists( 'always_load_comments', $user_data ) && $user_data['always_load_comments'] !== '' ) {
 			update_user_meta( $user_data['ID'], 'always_load_comments', $user_data['always_load_comments'] );
-		} elseif ( isset( $user_data['ID'] ) && array_key_exists( 'always_load_comments', $user_data ) && '' === $user_data['always_load_comments'] ) {
+		} elseif ( isset( $user_data['ID'] ) && array_key_exists( 'always_load_comments', $user_data ) && $user_data['always_load_comments'] === '' ) {
 			update_user_meta( $user_data['ID'], 'always_load_comments', '' );
 		}
 
 		// reading preferences field. allow it to be emptied.
-		if ( isset( $user_data['ID'] ) && array_key_exists( '_reading_topics', $user_data ) && '' !== $user_data['_reading_topics'] ) {
+		if ( isset( $user_data['ID'] ) && array_key_exists( '_reading_topics', $user_data ) && $user_data['_reading_topics'] !== '' ) {
 			update_user_meta( $user_data['ID'], '_reading_topics', $user_data['_reading_topics'] );
-		} elseif ( isset( $user_data['ID'] ) && array_key_exists( '_reading_topics', $user_data ) && '' === $user_data['_reading_topics'] ) {
+		} elseif ( isset( $user_data['ID'] ) && array_key_exists( '_reading_topics', $user_data ) && $user_data['_reading_topics'] === '' ) {
 			update_user_meta( $user_data['ID'], '_reading_topics', array() );
 		}
 
 		// street address field. allow it to be emptied.
-		if ( isset( $user_data['ID'] ) && array_key_exists( '_street_address', $user_data ) && '' !== $user_data['_street_address'] ) {
+		if ( isset( $user_data['ID'] ) && array_key_exists( '_street_address', $user_data ) && $user_data['_street_address'] !== '' ) {
 			update_user_meta( $user_data['ID'], '_street_address', $user_data['_street_address'] );
-		} elseif ( isset( $user_data['ID'] ) && array_key_exists( '_street_address', $user_data ) && '' === $user_data['_street_address'] ) {
+		} elseif ( isset( $user_data['ID'] ) && array_key_exists( '_street_address', $user_data ) && $user_data['_street_address'] === '' ) {
 			update_user_meta( $user_data['ID'], '_street_address', '' );
 		}
 	}
@@ -422,7 +422,7 @@ if ( ! function_exists( 'minnpost_largo_check_consolidated_emails' ) ) :
 			// this is stored user data
 			$emails = array_map( 'trim', explode( ',', $user_data['_consolidated_emails'][0] ) );
 		}
-		if ( false !== ( $key = array_search( $current_email, $emails, true ) ) ) {
+		if ( ( $key = array_search( $current_email, $emails, true ) ) !== false ) {
 			unset( $emails[ $key ] );
 		}
 		return $emails;

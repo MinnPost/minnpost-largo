@@ -15,12 +15,12 @@
 	global $post;
 	$post_slug    = $post->post_name;
 	$custom_class = '';
-	if ( 'columns' === $post_slug || 'news-region' === $post_slug ) {
+	if ( $post_slug === 'columns' || $post_slug === 'news-region' ) {
 		$custom_class = ' m-entry-content-custom';
 	}
 	?>
 
-	<?php if ( '' !== minnpost_get_replace_category_text() ) : ?>
+	<?php if ( minnpost_get_replace_category_text() !== '' ) : ?>
 		<div class="m-page-classification">
 			<?php minnpost_replace_category_text(); ?>
 		</div>
@@ -32,7 +32,7 @@
 	}
 
 	$remove_title_from_display = get_post_meta( get_the_ID(), '_mp_remove_title_from_display', true );
-	if ( ! isset( $remove_title_from_display ) || 'on' !== $remove_title_from_display ) {
+	if ( ! isset( $remove_title_from_display ) || $remove_title_from_display !== 'on' ) {
 		?>
 		<?php if ( ! is_archive() ) : ?>
 			<header class="m-entry-header

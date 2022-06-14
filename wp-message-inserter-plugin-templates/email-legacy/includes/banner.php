@@ -33,9 +33,9 @@ $session_count_operator = isset( $message['meta'][ $prefix . 'operator_session' 
 			$banner_max_width      = isset( $screen_size[ $prefix . 'banner_max_width' ] ) ? $screen_size[ $prefix . 'banner_max_width' ] : 'page';
 			$banner_max_width_text = isset( $screen_size[ $prefix . 'banner_max_width_text' ] ) ? $screen_size[ $prefix . 'banner_max_width_text' ] : '';
 			$banner_max_width_unit = isset( $screen_size[ $prefix . 'banner_max_width_unit' ] ) ? $screen_size[ $prefix . 'banner_max_width_unit' ] : '';
-			if ( 'page' !== $banner_max_width && 'custom' !== $banner_max_width ) {
+			if ( $banner_max_width !== 'page' && $banner_max_width !== 'custom' ) {
 				$banner_size = 'max-width:' . $banner_max_width;
-			} elseif ( '' !== $banner_max_width_text && '' !== $banner_max_width_unit ) {
+			} elseif ( $banner_max_width_text !== '' && $banner_max_width_unit !== '' ) {
 				$banner_size = 'max-width:' . $banner_max_width_text . $banner_max_width_unit;
 			}
 
@@ -43,22 +43,22 @@ $session_count_operator = isset( $message['meta'][ $prefix . 'operator_session' 
 
 			// session data attributes
 			$session_data_attributes = '';
-			if ( '' !== $check_session && '' !== $session_count_check && '' !== $session_count_operator ) {
+			if ( $check_session !== '' && $session_count_check !== '' && $session_count_operator !== '' ) {
 				$session_data_attributes = ' data-session-count-to-check="' . $session_count_check . '" data-session-count-operator="' . $session_count_operator . '"';
 			}
 
 			?>
 
-			<div class="m-wp-insert-message-item m-wp-insert-message-item-<?php echo $key; ?> m-wp-insert-message-item-<?php echo $type; ?><?php echo ( 'page' === $banner_max_width ) ? ' banner-width-page' : ''; ?>" style="padding: 15px 10px 5px 10px; Margin: 15px 0; border: 1px solid #cccccf; <?php echo $banner_style; ?>">
+			<div class="m-wp-insert-message-item m-wp-insert-message-item-<?php echo $key; ?> m-wp-insert-message-item-<?php echo $type; ?><?php echo ( $banner_max_width === 'page' ) ? ' banner-width-page' : ''; ?>" style="padding: 15px 10px 5px 10px; Margin: 15px 0; border: 1px solid #cccccf; <?php echo $banner_style; ?>">
 
-				<?php if ( 'dualcol' === $screen_size[ $prefix . 'banner_layout' ] ) : ?>
+				<?php if ( $screen_size[ $prefix . 'banner_layout' ] === 'dualcol' ) : ?>
 					<!-- Dual Col -->
-					<div class="dual-wrap <?php echo ( isset( $screen_size[ $prefix . 'banner_flip_columns' ] ) && 'on' === $screen_size[ $prefix . 'banner_flip_columns' ] ) ? 'flip' : ''; ?>">
+					<div class="dual-wrap <?php echo ( isset( $screen_size[ $prefix . 'banner_flip_columns' ] ) && $screen_size[ $prefix . 'banner_flip_columns' ] === 'on' ) ? 'flip' : ''; ?>">
 						<div class="col">
 							<?php require 'banner/text.php'; ?>
 						</div>
 						<div class="col">
-							<?php if ( 'button' === $screen_size[ $prefix . 'cta_type_email' ] ) : ?>
+							<?php if ( $screen_size[ $prefix . 'cta_type_email' ] === 'button' ) : ?>
 								<?php require 'banner/cta-button.php'; ?>
 							<?php endif; ?>
 							<?php require 'banner/disclaimer.php'; ?>
@@ -66,11 +66,11 @@ $session_count_operator = isset( $message['meta'][ $prefix . 'operator_session' 
 					</div>
 				<?php endif; ?>
 
-				<?php if ( 'stacked' === $screen_size[ $prefix . 'banner_layout' ] ) : ?>
+				<?php if ( $screen_size[ $prefix . 'banner_layout' ] === 'stacked' ) : ?>
 					<!-- Stacked Banner -->
 					<div class="stack-wrap">
 						<?php require 'banner/text.php'; ?>
-						<?php if ( 'button' === $screen_size[ $prefix . 'cta_type_email' ] ) : ?>
+						<?php if ( $screen_size[ $prefix . 'cta_type_email' ] === 'button' ) : ?>
 							<?php require 'banner/cta-button.php'; ?>
 						<?php endif; ?>
 						<?php require 'banner/disclaimer.php'; ?>
