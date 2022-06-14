@@ -213,7 +213,7 @@
 		$sidebar = ob_get_contents();
 		ob_end_clean();
 
-		$ad_dom = new DomDocument;
+		$ad_dom = new DomDocument();
 		libxml_use_internal_errors( true );
 		$ad_dom->loadHTML( $sidebar, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
 		libxml_use_internal_errors( false );

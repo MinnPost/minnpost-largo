@@ -6,11 +6,11 @@
  */
 
 /**
-* Detect whether a user has the capability of moderating comments
-* This depends on the comment_moderator role and its capabilities
-*
-* @return bool $can_moderate
-*/
+ * Detect whether a user has the capability of moderating comments
+ * This depends on the comment_moderator role and its capabilities
+ *
+ * @return bool $can_moderate
+ */
 if ( ! function_exists( 'user_can_moderate' ) ) :
 	function user_can_moderate() {
 		$can_moderate = false;
@@ -28,7 +28,6 @@ endif;
 * @param int $post_id
 * @param string $context
 * @return string $link
-*
 */
 if ( ! function_exists( 'minnpost_largo_comment_table_post_link' ) ) :
 	add_action( 'get_edit_post_link', 'minnpost_largo_comment_table_post_link', 10, 3 );
@@ -45,7 +44,6 @@ endif;
 *
 * @param array $columns
 * @return array $columns
-*
 */
 if ( ! function_exists( 'minnpost_largo_comment_columns' ) ) :
 	add_filter( 'manage_edit-comments_columns', 'minnpost_largo_comment_columns' );
@@ -61,7 +59,6 @@ endif;
 *
 * @param string $column
 * @return int $comment_id
-*
 */
 if ( ! function_exists( 'minnpost_largo_comment_date_column' ) ) :
 	add_action( 'manage_comments_custom_column', 'minnpost_largo_comment_date_column', 10, 2 );
@@ -94,7 +91,6 @@ endif;
 
 /**
 * Remove comment support from post types where we don't want comments
-*
 */
 if ( ! function_exists( 'minnpost_remove_comment_support' ) ) :
 	add_action( 'init', 'minnpost_remove_comment_support', 100 );
@@ -148,7 +144,6 @@ endif;
  * @param string $text   Optional. Anchor text. If null, default is 'Approve This'. Default null.
  * @param string $before Optional. Display before approve link. Default empty.
  * @param string $after  Optional. Display after approve link. Default empty.
- *
  */
 if ( ! function_exists( 'approve_comment_link' ) ) :
 	function approve_comment_link( $text = null, $before = '', $after = '' ) {
@@ -314,7 +309,6 @@ endif;
 /**
 * Remove the scheduled delete action from the theme.
 * This keeps the trash from being emptied, ever. We leave unapproved comments in there.
-*
 */
 if ( ! function_exists( 'remove_schedule_delete' ) ) :
 	function remove_schedule_delete() {
@@ -338,9 +332,9 @@ add_filter(
 
 /**
 * Use a spinner image from Core instead of the one from the lazy load comments plugin
+ *
 * @param string $image_tag
 * @return string $image_tag
-*
 */
 if ( ! function_exists( 'minnpost_largo_lazy_load_loading_image' ) ) :
 	add_filter( 'llc_loader_element_content', 'minnpost_largo_lazy_load_loading_image' );
@@ -352,9 +346,9 @@ endif;
 
 /**
 * Use the 1x spinner image from Core instead of the one from the simple comment editing plugin
+ *
 * @param string $image_url
 * @return string $image_url
-*
 */
 if ( ! function_exists( 'minnpost_largo_comment_edit_loading_image' ) ) :
 	add_filter( 'sce_loading_img', 'minnpost_largo_comment_edit_loading_image' );
@@ -366,9 +360,9 @@ endif;
 
 /**
 * When lazy loading comments, allow users to indicate they always want to load comments.
+ *
 * @param bool $can_lazyload
 * @return bool $can_lazyload
-*
 */
 if ( ! function_exists( 'minnpost_largo_always_load_comments_for_user' ) ) :
 	add_filter( 'llc_can_lazy_load', 'minnpost_largo_always_load_comments_for_user' );
@@ -392,9 +386,9 @@ endif;
 
 /**
 * Allow for checking if the URL has a replytocom parameter. This means the user is replying to a comment.
+ *
 * @param array $vars
 * @return array $vars
-*
 */
 if ( ! function_exists( 'add_query_vars_reply_comment' ) ) :
 	add_filter( 'query_vars', 'add_query_vars_reply_comment' );
@@ -407,9 +401,9 @@ endif;
 /**
 * This is used to determine whether the always load comment variable is true
 * regardless of which source it's coming from.
+ *
 * @param bool $always_load_comments
 * @return bool $always_load_comments
-*
 */
 if ( ! function_exists( 'user_always_loads_comments' ) ) :
 	function user_always_loads_comments( $always_load_comments = false ) {
@@ -424,9 +418,9 @@ endif;
 
 /**
 * Class for show comments button
+ *
 * @param string $class
 * @return string $class
-*
 */
 if ( ! function_exists( 'minnpost_largo_load_comments_button_class' ) ) :
 	add_filter( 'llc_button_class', 'minnpost_largo_load_comments_button_class' );
@@ -438,9 +432,9 @@ endif;
 
 /**
 * Text for show comments button
+ *
 * @param string $text
 * @return string $text
-*
 */
 if ( ! function_exists( 'minnpost_largo_load_comments_button_text' ) ) :
 	add_filter( 'llc_button_text', 'minnpost_largo_load_comments_button_text' );
@@ -452,9 +446,9 @@ endif;
 
 /**
 * Don't center the comments div because why would anyone even do that
+ *
 * @param bool $center
 * @return bool $center
-*
 */
 if ( ! function_exists( 'minnpost_largo_load_comments_button_center' ) ) :
 	add_filter( 'llc_enable_loader_center', 'minnpost_largo_load_comments_button_center' );
@@ -466,7 +460,6 @@ endif;
 
 /**
 * Ajax method to set user comment load preference
-*
 */
 if ( ! function_exists( 'minnpost_largo_load_comments_set_user_meta' ) ) :
 	add_action( 'wp_ajax_minnpost_largo_load_comments_set_user_meta', 'minnpost_largo_load_comments_set_user_meta' );
@@ -498,8 +491,8 @@ endif;
 
 /**
 * HTML for the toggle switch used to always load comments
+ *
 * @param string $position
-*
 */
 if ( ! function_exists( 'minnpost_largo_load_comments_switch' ) ) :
 	function minnpost_largo_load_comments_switch( $position ) {
@@ -541,8 +534,8 @@ endif;
 
 /**
 * Text for the edit button on comments
+ *
 * @param string $translated_text
-*
 */
 add_filter(
 	'sce_text_edit',
@@ -553,8 +546,8 @@ add_filter(
 
 /**
 * Text for the save button on comments
+ *
 * @param string $translated_text
-*
 */
 add_filter(
 	'sce_text_save',
@@ -565,8 +558,8 @@ add_filter(
 
 /**
 * Text for the cancel edit button on comments
+ *
 * @param string $translated_text
-*
 */
 add_filter(
 	'sce_text_cancel',
@@ -577,8 +570,8 @@ add_filter(
 
 /**
 * Text for the delete button on comments
+ *
 * @param string $translated_text
-*
 */
 add_filter(
 	'sce_text_delete',

@@ -34,7 +34,8 @@
 							<div class="item-contents">
 								<img src="<?php minnpost_newsletter_logo( get_the_ID(), false ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="light-img">
 								<?php
-								/* this doesn't currently work because the mailchimp importer removes display none elements.
+								/*
+								 this doesn't currently work because the mailchimp importer removes display none elements.
 								[not-outlook]
 									<div class="dark-img-wrapper -emogrifier-keep">
 										<img src="<?php minnpost_newsletter_logo( get_the_ID(), true ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="dark-img -emogrifier-keep">
@@ -76,13 +77,13 @@
 								wp_nav_menu(
 									array(
 										'theme_location' => 'primary_links',
-										'menu_id'      => 'primary-links',
-										'depth'        => 1,
-										'container'    => false,
-										'walker'       => new Minnpost_Email_Walker_Nav_Menu,
-										'priority'     => '20',
-										'items_wrap'   => '<tr id="%1$s" class="m-menu m-menu-%1$s">%3$s</tr>',
-										'item_classes' => 'values',
+										'menu_id'        => 'primary-links',
+										'depth'          => 1,
+										'container'      => false,
+										'walker'         => new Minnpost_Email_Walker_Nav_Menu(),
+										'priority'       => '20',
+										'items_wrap'     => '<tr id="%1$s" class="m-menu m-menu-%1$s">%3$s</tr>',
+										'item_classes'   => 'values',
 									)
 								);
 								?>
@@ -496,7 +497,7 @@
 
 					<?php
 					// editors choice post section
-					$section                    = 'editors';
+					$section                      = 'editors';
 					$newsletter_recommended_query = z_get_zone_query( 'newsletter-recommended-stories' );
 					if ( $newsletter_recommended_query->have_posts() ) {
 						$editors_query = $newsletter_recommended_query;
@@ -647,13 +648,13 @@
 										wp_nav_menu(
 											array(
 												'theme_location' => 'minnpost_network_email',
-												'menu_id'        => 'minnpost-network-emails',
-												'depth'          => 1,
-												'container'      => false,
-												'walker'         => new Minnpost_Email_Walker_Nav_Menu,
-												'priority'       => '20',
-												'items_wrap'     => '<tr id="%1$s" class="m-menu m-menu-%1$s">%3$s</tr>',
-												'item_classes'   => 'values',
+												'menu_id'  => 'minnpost-network-emails',
+												'depth'    => 1,
+												'container' => false,
+												'walker'   => new Minnpost_Email_Walker_Nav_Menu(),
+												'priority' => '20',
+												'items_wrap' => '<tr id="%1$s" class="m-menu m-menu-%1$s">%3$s</tr>',
+												'item_classes' => 'values',
 											)
 										);
 										?>

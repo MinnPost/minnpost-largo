@@ -38,7 +38,7 @@ if ( isset( $event_logo_info['is_current_url'] ) && true === $event_logo_info['i
 							'theme_location' => 'festival',
 							'menu_id'        => 'festival-menu',
 							'container'      => false,
-							'walker'         => new Minnpost_Walker_Nav_Menu,
+							'walker'         => new Minnpost_Walker_Nav_Menu(),
 							'item_classes'   => 'values',
 							'items_wrap'     => '<ul id="%1$s" class="m-menu m-menu-%1$s">%3$s</ul>',
 						)

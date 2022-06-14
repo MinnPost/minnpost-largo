@@ -1,7 +1,6 @@
 <?php
 /**
  * Single Event Meta (Website) Template
- *
  */
 ?>
 <?php if ( tribe_get_event_website_link() ) : ?>

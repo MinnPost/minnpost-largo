@@ -8,30 +8,27 @@
 $new_minnpost_setting = new Minnpost_General_Setting();
 
 /**
-* This class handles additional settings fields for this theme.
-*
-* This includes:
-* default image URL for sharing
-* Site footer message
-* Email address for site emails
-* Name of sender for site emails
-* Site blurb for default meta description
-*
-*/
+ * This class handles additional settings fields for this theme.
+ *
+ * This includes:
+ * default image URL for sharing
+ * Site footer message
+ * Email address for site emails
+ * Name of sender for site emails
+ * Site blurb for default meta description
+ */
 class Minnpost_General_Setting {
 
 	/**
-	* Admin hook to register the fields
-	*
-	*/
+	 * Admin hook to register the fields
+	 */
 	function __construct() {
 		add_filter( 'admin_init', array( $this, 'register_fields' ) );
 	}
 
 	/**
-	* Use the settings api to create the basic text fields
-	*
-	*/
+	 * Use the settings api to create the basic text fields
+	 */
 	function register_fields() {
 
 		// default site blurb

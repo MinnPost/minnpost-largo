@@ -70,7 +70,11 @@ if ( $is_republishable_story ) : ?>
 									<p style="font-family: Helvetica, Arial, sans-serif; font-size: 16px; line-height: 20.787px; Margin: 0; padding: 0;" class="read-or-republish">
 										<?php if ( class_exists( 'Republication_Tracker_Tool' ) ) : ?>
 											<a href="<?php echo esc_url( get_permalink() . '#show-republish' ); ?>" style="color:#801018;text-decoration: none;font-weight: bold;">Republish story</a>&nbsp;|&nbsp;
-										<?php endif; ?><a href="<?php echo esc_url( get_permalink() ); ?>" style="color:#801018;text-decoration: none;font-weight: normal;<?php if ( ! class_exists( 'Republication_Tracker_Tool' ) ) : ?>font-weight: bold;<?php endif; ?>">Read story</a>
+										<?php endif; ?><a href="<?php echo esc_url( get_permalink() ); ?>" style="color:#801018;text-decoration: none;font-weight: normal;
+													 <?php
+														if ( ! class_exists( 'Republication_Tracker_Tool' ) ) :
+															?>
+											font-weight: bold;<?php endif; ?>">Read story</a>
 									</p>
 								</div>
 							</td>

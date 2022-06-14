@@ -6,12 +6,12 @@
  */
 
 /**
-* Handle deregistering event CSS and JS
-*/
+ * Handle deregistering event CSS and JS
+ */
 if ( ! function_exists( 'minnpost_largo_remove_tribe_styles' ) ) :
 	add_action( 'wp_enqueue_scripts', 'minnpost_largo_remove_tribe_styles', 9999 );
 	function minnpost_largo_remove_tribe_styles() {
-		//this is based on using the "skeleton styles" option
+		// this is based on using the "skeleton styles" option
 		if ( ! is_admin() ) {
 			$styles  = array(
 				'tribe-events-bootstrap-datepicker-css',
@@ -96,7 +96,6 @@ endif;
 * @param string $handle
 * @return bool $do_concat
 * @see https://wordpress.org/support/topic/add-another-organizer-button-does-not-work-in-hosted-environment/
-*
 */
 if ( ! function_exists( 'minnpost_largo_vip_js_concat_filter' ) ) :
 	add_filter( 'js_do_concat', 'minnpost_largo_vip_js_concat_filter', 10, 2 );
@@ -116,7 +115,6 @@ endif;
 *
 * @param bool $should_enqueue_frontend
 * @return bool $should_enqueue_frontend
-*
 */
 if ( ! function_exists( 'minnpost_largo_do_not_enqueue_event_frontend' ) ) :
 	add_filter( 'tribe_events_assets_should_enqueue_frontend', 'minnpost_largo_do_not_enqueue_event_frontend', 30 );
@@ -134,7 +132,6 @@ endif;
 *
 * @param array $columns
 * @return array $columns
-*
 */
 if ( ! function_exists( 'minnpost_largo_event_columns' ) ) :
 	add_filter( 'manage_edit-tribe_events_columns', 'minnpost_largo_event_columns' );
@@ -149,7 +146,6 @@ endif;
 *
 * @param int $event_id
 * @return string $time
-*
 */
 if ( ! function_exists( 'minnpost_largo_full_event_date' ) ) :
 	function minnpost_largo_full_event_date( $event_id = '', $args = array() ) {
@@ -185,7 +181,6 @@ endif;
 *
 * @param int $event_id
 * @return string $time
-*
 */
 if ( ! function_exists( 'minnpost_largo_full_event_time' ) ) :
 	function minnpost_largo_full_event_time( $event_id = '', $args = array() ) {
@@ -225,7 +220,6 @@ endif;
 
 /**
 * Changes the text labels for Google Calendar and iCal buttons on a single event page
-*
 */
 if ( ! function_exists( 'minnpost_largo_single_event_links' ) ) :
 	if ( ! class_exists( 'Tribe__Events__Main' ) ) {
@@ -246,10 +240,10 @@ endif;
 
 /**
 * Get the year for the event website. It's based on the publish date of the directory page.
+ *
 * @param int $post_id
 * @param array $args
 * @return int $post_id
-*
 */
 if ( ! function_exists( 'minnpost_largo_get_event_year' ) ) :
 	function minnpost_largo_get_event_year( $object_type = 'festival', $year = '' ) {
@@ -277,10 +271,10 @@ endif;
 
 /**
 * Preserve old menu links for the event website. It's based on the publish date of the directory page.
+ *
 * @param int $post_id
 * @param array $args
 * @return array $menu
-*
 */
 if ( ! function_exists( 'minnpost_largo_get_old_event_menu' ) ) :
 	function minnpost_largo_get_old_event_menu( $object_type = 'festival', $event_year = '' ) {
@@ -333,10 +327,10 @@ endif;
 
 /**
 * Set the event website date range based on the specified page slug that contains the events.
+ *
 * @param string $object_type
 * @param string $event_slug
 * @return string $output
-*
 */
 if ( ! function_exists( 'minnpost_largo_get_event_website_date_range' ) ) :
 	function minnpost_largo_get_event_website_date_range( $object_type = 'festival', $event_slug = '' ) {
@@ -379,7 +373,7 @@ if ( ! function_exists( 'minnpost_largo_get_event_website_date_range' ) ) :
 
 			if ( $start_day === $end_day ) {
 				// same day - 1st April 2012
-				//$output = minnpost_largo_get_ap_date( $start_date );
+				// $output = minnpost_largo_get_ap_date( $start_date );
 				$date_time = new DateTime( $start_date );
 				$output    = $date_time->format( 'F j, Y' );
 			} elseif ( gmdate( 'Y-m', $start_timestamp ) === gmdate( 'Y-m', $end_timestamp ) ) {
@@ -417,10 +411,10 @@ endif;
 
 /**
 * Set the event ID if it's not the current post ID.
+ *
 * @param int $post_id
 * @param array $args
 * @return int $post_id
-*
 */
 if ( ! function_exists( 'minnpost_largo_set_event_id' ) ) :
 	add_filter( 'minnpost_largo_set_event_id', 'minnpost_largo_set_event_id', 10, 2 );
@@ -445,8 +439,8 @@ if ( ! function_exists( 'minnpost_largo_set_event_id' ) ) :
 			}
 			if ( ! empty( $event_posts[0] ) ) {
 				$first_event_id = $event_posts[0];
-				//$last_event_key = array_key_last( $event_posts );
-				//$last_event_id  = $event_posts[ $last_event_key ];
+				// $last_event_key = array_key_last( $event_posts );
+				// $last_event_id  = $event_posts[ $last_event_key ];
 				$post_id = $first_event_id;
 			}
 		}
@@ -456,9 +450,9 @@ endif;
 
 /**
 * Get the info for the event website page logo
+ *
 * @param string $object_type
 * @return array $event_logo_info
-*
 */
 if ( ! function_exists( 'minnpost_largo_get_event_website_logo_info' ) ) :
 	function minnpost_largo_get_event_website_logo_info( $object_type = 'festival' ) {
@@ -505,9 +499,9 @@ endif;
 
 /**
 * Allow events to load if their category has a template
+ *
 * @param string $type
 * @return string $type
-*
 */
 if ( ! function_exists( 'minnpost_event_category_single_template' ) ) :
 	add_filter( 'tribe_events_template', 'minnpost_event_category_single_template', 10, 2 );
@@ -530,9 +524,9 @@ endif;
 
 /**
 * Edit the events that are returned for a given speaker
+ *
 * @param array $events
 * @return array $events
-*
 */
 if ( ! function_exists( 'minnpost_event_website_get_speaker_events' ) ) :
 	add_filter( 'tribe_ext_tribe_ext_speaker_get_events', 'minnpost_event_website_get_speaker_events', 10, 2 );
@@ -546,8 +540,8 @@ endif;
 
 /**
 * Display a link to buy an event pass
+ *
 * @param string $object_type
-*
 */
 if ( ! function_exists( 'minnpost_event_website_pass_link' ) ) :
 	function minnpost_event_website_pass_link( $object_type = 'festival', $args = array() ) {
@@ -558,8 +552,8 @@ endif;
 
 /**
 * Get a link to buy an event pass
+ *
 * @return string $buy_event_pass
-*
 */
 if ( ! function_exists( 'minnpost_get_event_website_pass_link' ) ) :
 	function minnpost_get_event_website_pass_link( $object_type = 'festival', $args = array() ) {
@@ -604,7 +598,6 @@ endif;
 
 /**
 * Event category breadcrumb
-*
 */
 if ( ! function_exists( 'minnpost_event_category_breadcrumb' ) ) :
 	function minnpost_event_category_breadcrumb() {
@@ -630,7 +623,6 @@ endif;
 *
 * @param int $post_id
 * @return string $category_name
-*
 */
 if ( ! function_exists( 'minnpost_get_event_category_name' ) ) :
 	function minnpost_get_event_category_name( $post_id = '' ) {
@@ -662,7 +654,6 @@ endif;
 *
 * @param int $post_id
 * @return string $category_slug
-*
 */
 if ( ! function_exists( 'minnpost_get_event_category_slug' ) ) :
 	function minnpost_get_event_category_slug( $post_id = '' ) {
@@ -694,7 +685,6 @@ endif;
 *
 * @param int $post_id
 * @return int $category_id
-*
 */
 if ( ! function_exists( 'minnpost_get_permalink_event_category_id' ) ) :
 	function minnpost_get_permalink_event_category_id( $post_id = '' ) {
@@ -722,8 +712,8 @@ endif;
 
 /**
 * Display the disclaimer
+ *
 * @param string $object_type
-*
 */
 if ( ! function_exists( 'minnpost_event_website_disclaimer_text' ) ) :
 	function minnpost_event_website_disclaimer_text( $object_type = 'festival' ) {
@@ -734,9 +724,9 @@ endif;
 
 /**
 * Get the styled disclaimer text
+ *
 * @param string $object_type
 * @return string $disclaimer_text
-*
 */
 if ( ! function_exists( 'minnpost_event_website_get_disclaimer_text' ) ) :
 	function minnpost_event_website_get_disclaimer_text( $object_type = 'festival' ) {
@@ -748,12 +738,12 @@ endif;
 
 /**
 * The speaker picker is broken in current versions of The Event Calendar, so we can add our own.
+ *
 * @param bool $show_speaker_meta_box
 * @return bool $show_speaker_meta_box
-*
 */
 if ( ! function_exists( 'minnpost_hide_default_speaker_meta_box' ) ) :
-	//add_filter( 'tribe_ext_events_add_tribe_ext_speaker_meta_box', 'minnpost_hide_default_speaker_meta_box' );
+	// add_filter( 'tribe_ext_events_add_tribe_ext_speaker_meta_box', 'minnpost_hide_default_speaker_meta_box' );
 	function minnpost_hide_default_speaker_meta_box( $show_speaker_meta_box ) {
 		return false;
 	}
@@ -761,9 +751,9 @@ endif;
 
 /**
 * Based on whether the speaker picker is broken, we might need some extra css.
+ *
 * @param bool $show_speaker_meta_box
 * @return bool $show_speaker_meta_box
-*
 */
 if ( ! function_exists( 'minnpost_event_speaker_box_css' ) ) :
 	add_action( 'admin_enqueue_scripts', 'minnpost_event_speaker_box_css' );
@@ -779,11 +769,11 @@ endif;
 
 /**
 * Load the linked event posts by type if we're using our own field to save them.
+ *
 * @param array $result
 * @param int $post_id
 * @param string $post_type
 * @return array $result
-*
 */
 if ( ! function_exists( 'minnpost_get_linked_event_posts' ) ) :
 	add_filter( 'tribe_events_get_linked_posts_by_post_type', 'minnpost_get_linked_event_posts', 10, 3 );

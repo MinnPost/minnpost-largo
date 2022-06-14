@@ -2,7 +2,6 @@
 /**
  * Filter widget output
  *
- *
  * @package MinnPost Largo
  */
 
@@ -12,12 +11,12 @@ add_filter( 'widget_text', 'do_shortcode' );
 
 /**
 * Change the output of our widgets
+ *
 * @param string $widget_output
 * @param string $widget_type
 * @param int $widget_id
 * @param int $sidebar_id
 * @return string $widget_output
-*
 */
 if ( ! function_exists( 'minnpost_widget_output_filter' ) ) :
 	add_filter( 'widget_output', 'minnpost_widget_output_filter', 10, 4 );
@@ -129,7 +128,6 @@ endif;
 * @param array $widget
 * @param array $args
 * @return array $widget
-*
 */
 add_filter( 'widget_display_callback', 'minnpost_widget_display_callback', 10, 3 );
 function minnpost_widget_display_callback( $instance, $widget, $args ) {
@@ -146,9 +144,9 @@ function minnpost_widget_display_callback( $instance, $widget, $args ) {
 
 /**
 * Filter the WP_Query for a spill widget
+ *
 * @param array $args
 * @return array $args
-*
 */
 if ( ! function_exists( 'minnpost_largo_spill_query' ) ) :
 	add_filter( 'minnpost_spills_query', 'minnpost_largo_spill_query', 10, 1 );
@@ -176,6 +174,7 @@ endif;
 
 /**
 * Filter the output of a WP_Query for a spill widget
+ *
 * @param string $output
 * @param object $query
 * @param string $before_title
@@ -183,7 +182,6 @@ endif;
 * @param string $after_title
 * @param array $instance
 * @return string $output
-*
 */
 if ( ! function_exists( 'minnpost_largo_spill_posts' ) ) :
 	add_filter( 'minnpost_spills_display_spill_posts', 'minnpost_largo_spill_posts', 10, 6 );
@@ -233,9 +231,9 @@ endif;
 
 /**
 * Extend widget options
+ *
 * @param string $display_logic
 * @return string $display_logic
-*
 */
 if ( ! function_exists( 'minnpost_largo_extend_widget_options' ) ) :
 	add_filter( 'extended_widget_options_logic_override', 'minnpost_largo_extend_widget_options', 10, 1 );
@@ -251,12 +249,12 @@ endif;
 
 /**
 * If we're not in production, extend the timeframe for most commented so we can actually see some
+ *
 * @param array $args
 * @param string $post_type
 * @param bool $show_pass_post
 * @param int $duration
 * @return array $args
-*
 */
 if ( 'production' !== VIP_GO_ENV ) {
 	if ( ! function_exists( 'minnpost_largo_most_commented_args' ) ) :
@@ -273,11 +271,11 @@ if ( 'production' !== VIP_GO_ENV ) {
 
 /**
 * Override the widget HTML output for the zone posts widget
+ *
 * @param string $html
 * @param array $posts
 * @param object $query
 * @return string $html
-*
 */
 if ( ! function_exists( 'minnpost_largo_widget_zone_posts_html' ) ) :
 	add_filter( 'widget_zone_posts_override_html', 'minnpost_largo_widget_zone_posts_html', 10, 3 );

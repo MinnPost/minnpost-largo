@@ -32,7 +32,16 @@ $post_class = 'm-post m-festival-post m-festival-post-event m-festival-post-even
 			<div class="m-event-details">
 				<?php do_action( 'tribe_events_single_event_before_the_meta' ); ?>
 				<div class="m-event-date-and-calendar">
-					<?php get_template_part( 'tribe/events/modules/meta/date', '', array( 'show_timezone' => true, 'separator' => '&ndash;' ) ); ?>
+					<?php
+					get_template_part(
+						'tribe/events/modules/meta/date',
+						'',
+						array(
+							'show_timezone' => true,
+							'separator'     => '&ndash;',
+						)
+					);
+					?>
 					<?php do_action( 'tribe_events_single_event_after_the_content' ); ?>
 				</div>
 			</div>

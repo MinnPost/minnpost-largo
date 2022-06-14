@@ -55,13 +55,13 @@ $session_count_operator = isset( $message['meta'][ $prefix . 'operator_session' 
 					<!-- Dual Col -->
 					<div class="dual-wrap <?php echo ( isset( $screen_size[ $prefix . 'banner_flip_columns' ] ) && 'on' === $screen_size[ $prefix . 'banner_flip_columns' ] ) ? 'flip' : ''; ?>">
 						<div class="col">
-							<?php require( 'banner/text.php' ); ?>
+							<?php require 'banner/text.php'; ?>
 						</div>
 						<div class="col">
 							<?php if ( 'button' === $screen_size[ $prefix . 'cta_type_email' ] ) : ?>
-								<?php require( 'banner/cta-button.php' ); ?>
+								<?php require 'banner/cta-button.php'; ?>
 							<?php endif; ?>
-							<?php require( 'banner/disclaimer.php' ); ?>
+							<?php require 'banner/disclaimer.php'; ?>
 						</div>
 					</div>
 				<?php endif; ?>
@@ -69,11 +69,11 @@ $session_count_operator = isset( $message['meta'][ $prefix . 'operator_session' 
 				<?php if ( 'stacked' === $screen_size[ $prefix . 'banner_layout' ] ) : ?>
 					<!-- Stacked Banner -->
 					<div class="stack-wrap">
-						<?php require( 'banner/text.php' ); ?>
+						<?php require 'banner/text.php'; ?>
 						<?php if ( 'button' === $screen_size[ $prefix . 'cta_type_email' ] ) : ?>
-							<?php require( 'banner/cta-button.php' ); ?>
+							<?php require 'banner/cta-button.php'; ?>
 						<?php endif; ?>
-						<?php require( 'banner/disclaimer.php' ); ?>
+						<?php require 'banner/disclaimer.php'; ?>
 					</div>
 				<?php endif; ?>
 			</div>

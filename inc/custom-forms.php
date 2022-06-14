@@ -28,7 +28,6 @@ endif;
 
 /**
  * Archive date forms should send users to the destination URL
- *
  */
 if ( ! function_exists( 'minnpost_largo_date_archive_submit' ) ) :
 	add_action( 'admin_post_nopriv_date_archive_submit', 'minnpost_largo_date_archive_submit' );

@@ -3,7 +3,6 @@
  * View: List View
  *
  * This overrides the default the-events-calendar/views/v2/list.php
- *
  */
 $container_classes[] = 'm-layout-primary';
 ?>

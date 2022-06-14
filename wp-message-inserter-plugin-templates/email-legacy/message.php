@@ -106,5 +106,5 @@ usort(
 		</td> <!-- end .one-column.message -->
 	</tr> <!-- end row -->
 <?php elseif ( 'banner' === $type ) : ?>
-	<?php require( 'includes/banner.php' ); ?>
+	<?php require 'includes/banner.php'; ?>
 <?php endif; ?>

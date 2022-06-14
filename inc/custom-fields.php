@@ -2,6 +2,7 @@
 /**
  * Create custom fields for standard and custom content types.
  * Currently this uses the CMB2 plugin
+ *
  * @link https://github.com/WebDevStudios/CMB2
  *
  * @package MinnPost Largo
@@ -11,10 +12,9 @@
 // the only time we should need to run cmb2_init is if we need access to CMB2-specific functionality on the frontend or REST API
 
 /**
-* Newsletter fields
-* Even though this is a custom type, it does not currently depend on any plugins aside from CMB2
-*
-*/
+ * Newsletter fields
+ * Even though this is a custom type, it does not currently depend on any plugins aside from CMB2
+ */
 if ( function_exists( 'create_newsletter' ) ) :
 	// speed up the post loading for newsletters a little
 	if ( is_admin() ) {
@@ -55,7 +55,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'title'        => __( 'Setup', 'minnpost-largo' ),
 				'object_types' => array( $object_type ),
 				'context'      => 'after_title',
-				//'priority'     => 'high',
+				// 'priority'     => 'high',
 			)
 		);
 		$newsletter_setup->add_field(
@@ -324,7 +324,7 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'priority'     => 'high',
 				'show_names'   => true, // Show field names on the left
 				'classes'      => 'cmb2-newsletter-section cmb2-newsletter-section-daily cmb2-newsletter-section-greater_mn cmb2-newsletter-section-sunday_review',
-				'attributes' => array(
+				'attributes'   => array(
 					'data-conditional-id'    => $prefix . 'type',
 					'data-conditional-value' => wp_json_encode( array( 'daily', 'greater_mn', 'sunday_review' ) ),
 				),
@@ -572,7 +572,8 @@ if ( function_exists( 'create_newsletter' ) ) :
 				'post_search_ajax'
 			)
 		);
-		/*$republication_section->add_field(
+		/*
+		$republication_section->add_field(
 			array(
 				'name'        => __( 'Preview of Upcoming Stories', 'minnpost-largo' ),
 				'id'          => $prefix . 'upcoming',
@@ -690,20 +691,18 @@ function minnpost_largo_after_newsletter_section_output( $cmb_id, $object_id, $o
 
 /**
 * Post fields
-*
 */
 
 /**
 * Remove featured images from theme
 * We do this because we use the CMB2 file field for post images, instead of the built in featured image
 * This is kind of unfortunate, but it is necessary at least in this design.
-*
 */
 if ( ! function_exists( 'remove_featured_images_from_child_theme' ) ) :
 	add_action( 'after_setup_theme', 'remove_featured_images_from_child_theme', 11 );
 	function remove_featured_images_from_child_theme() {
 		remove_theme_support( 'post-thumbnails' );
-		//add_theme_support( 'post-thumbnails', array( 'post' ) );
+		// add_theme_support( 'post-thumbnails', array( 'post' ) );
 	}
 endif;
 
@@ -736,7 +735,6 @@ add_filter( 'cmb2_override_excerpt_meta_save', '__return_true' );
 
 /**
 * Add custom fields to posts
-*
 */
 if ( ! function_exists( 'cmb2_post_fields' ) ) :
 
@@ -890,10 +888,10 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'type'         => 'file',
 				'preview_size' => array( 130, 85 ),
 				'options'      => array(
-					//'url' => false, // Hide the text input for the url
+					// 'url' => false, // Hide the text input for the url
 				),
 				'text'         => array(
-					//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
+					// 'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
 				),
 				// query_args are passed to wp.media's library query.
 				'query_args'   => array(
@@ -939,10 +937,10 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'type'         => 'file',
 				'preview_size' => array( 130, 85 ),
 				'options'      => array(
-					//'url' => false, // Hide the text input for the url
+					// 'url' => false, // Hide the text input for the url
 				),
 				'text'         => array(
-					//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
+					// 'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
 				),
 				// query_args are passed to wp.media's library query.
 				'query_args'   => array(
@@ -1291,7 +1289,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'id'         => '_mp_related_category',
 				'type'       => 'term_ajax_search',
 				'query_args' => array(
-					'taxonomy' => 'category', //Enter Taxonomy Slug
+					'taxonomy' => 'category', // Enter Taxonomy Slug
 					'default'  => '',
 				),
 			)
@@ -1303,7 +1301,7 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'id'         => '_mp_related_tag',
 				'type'       => 'term_ajax_search',
 				'query_args' => array(
-					'taxonomy' => 'post_tag', //Enter Taxonomy Slug
+					'taxonomy' => 'post_tag', // Enter Taxonomy Slug
 					'default'  => '',
 				),
 			)
@@ -1414,7 +1412,6 @@ endif;
 
 /**
 * Add custom fields to pages
-*
 */
 if ( ! function_exists( 'cmb2_page_fields' ) ) :
 	add_action( 'cmb2_admin_init', 'cmb2_page_fields' );
@@ -1571,7 +1568,6 @@ endif;
 
 /**
 * Add custom fields to categories
-*
 */
 if ( ! function_exists( 'cmb2_category_fields' ) ) :
 	add_action( 'cmb2_admin_init', 'cmb2_category_fields' );
@@ -1712,7 +1708,6 @@ endif;
 
 /**
 * Add custom fields to tags
-*
 */
 if ( ! function_exists( 'cmb2_tag_fields' ) ) :
 	add_action( 'cmb2_admin_init', 'cmb2_tag_fields' );
@@ -1806,7 +1801,6 @@ endif;
 /**
 * Remove the default description from categories and tags
 * We do this because we have a whole body field for them; it is a wysiwyg field
-*
 */
 if ( ! function_exists( 'remove_default_category_tag_description' ) ) :
 	add_action( 'admin_head', 'remove_default_category_tag_description' );
@@ -1825,8 +1819,8 @@ endif;
 
 /**
 * Array of categories for grouped categories
+ *
 * @return $options
-*
 */
 if ( ! function_exists( 'minnpost_largo_grouped_categories' ) ) :
 	function minnpost_largo_grouped_categories() {
@@ -1858,12 +1852,12 @@ endif;
 
 /**
 * Get the grouped categories for the given category
+ *
 * @param array $data
 * @param string $object_id
 * @param array $args
 * @param object $field
 * @return $value
-*
 */
 if ( ! function_exists( 'minnpost_largo_get_grouped_categories' ) ) :
 	add_filter( 'cmb2_override__mp_category_grouped_categories_meta_value', 'minnpost_largo_get_grouped_categories', 10, 4 );
@@ -1890,12 +1884,12 @@ endif;
 
 /**
 * Set the grouped categories for the given category
+ *
 * @param bool $override
 * @param array $args
 * @param array $field_args
 * @param object $field
 * @return int|WP_Error|bool $updated
-*
 */
 if ( ! function_exists( 'minnpost_largo_set_grouped_categories' ) ) :
 	add_filter( 'cmb2_override__mp_category_grouped_categories_meta_save', 'minnpost_largo_set_grouped_categories', 10, 4 );
@@ -1922,9 +1916,9 @@ endif;
 
 /**
 * Manage admin columns for categories
+ *
 * @param array $category_columns
 * @return array $category_columns
-*
 */
 if ( ! function_exists( 'minnpost_largo_manage_category_columns' ) ) :
 	add_filter( 'manage_edit-category_columns', 'minnpost_largo_manage_category_columns', 10, 2 );
@@ -1936,10 +1930,10 @@ endif;
 
 /**
 * Add data to admin columns for categories
+ *
 * @param string $string is blank
 * @param string $column_name
 * @param int $term_id
-*
 */
 if ( ! function_exists( 'minnpost_largo_manage_category_custom_fields' ) ) :
 	add_filter( 'manage_category_custom_column', 'minnpost_largo_manage_category_custom_fields', 10, 3 );
@@ -1957,8 +1951,8 @@ endif;
 /**
 * Array of categories for featured columns
 * This is deprecated
+ *
 * @return $options
-*
 */
 if ( ! function_exists( 'minnpost_largo_featured_column_options' ) ) :
 	function minnpost_largo_featured_column_options() {
@@ -1990,8 +1984,8 @@ endif;
 
 /**
 * Store the category slugs for the group categories
+ *
 * @return $choices
-*
 */
 if ( ! function_exists( 'minnpost_largo_category_groups' ) ) :
 	function minnpost_largo_category_groups() {
@@ -2002,8 +1996,8 @@ endif;
 
 /**
 * For the category group custom field, generate the options
+ *
 * @return $options
-*
 */
 if ( ! function_exists( 'minnpost_largo_category_group_options' ) ) :
 	function minnpost_largo_category_group_options() {
@@ -2021,9 +2015,9 @@ endif;
 
 /**
 * For a category group option, get the category data
+ *
 * @param $slug
 * @return $category
-*
 */
 if ( ! function_exists( 'minnpost_largo_group_category' ) ) :
 	function minnpost_largo_group_category( $slug ) {
@@ -2034,13 +2028,11 @@ endif;
 
 /**
 * Custom Author fields
-*
 */
 
 /**
 * Remove guest author bio and comments from custom author
 * Bio is probably a wysiwyg thing, but I honestly don't remember.
-*
 */
 if ( ! function_exists( 'remove_author_fields' ) ) :
 	add_action( 'add_meta_boxes', 'remove_author_fields', 19 );
@@ -2053,7 +2045,6 @@ endif;
 
 /**
 * Remove comment support from authors
-*
 */
 if ( ! function_exists( 'minnpost_remove_author_comments' ) ) :
 	add_action( 'init', 'minnpost_remove_author_comments', 100 );
@@ -2110,7 +2101,6 @@ endif;
 
 /**
 * Add custom fields to authors
-*
 */
 if ( ! function_exists( 'cmb2_author_fields' ) ) :
 	add_action( 'cmb2_admin_init', 'cmb2_author_fields', 9 );
@@ -2184,7 +2174,6 @@ endif;
 
 /**
 * Add fields to users
-*
 */
 if ( ! function_exists( 'cmb2_user_fields' ) ) :
 	add_action( 'cmb2_admin_init', 'cmb2_user_fields' );
@@ -2403,7 +2392,7 @@ if ( ! function_exists( 'get_member_levels' ) ) :
 		if ( ! class_exists( 'MinnPost_Membership' ) ) {
 			$file = TEMPLATEPATH . 'plugins/minnpost-membership/minnpost-membership.php';
 			if ( file_exists( $file ) ) {
-				require_once( $file );
+				require_once $file;
 			} else {
 				return $values;
 			}
@@ -2422,7 +2411,6 @@ endif;
 /**
 * Add fields to sponsors
 * This all depends on the cr3ativ sponsor plugin, which is kind of bad but sufficient.
-*
 */
 if ( ! function_exists( 'cmb2_sponsor_fields' ) ) :
 	add_action( 'cmb2_admin_init', 'cmb2_sponsor_fields' );
@@ -2485,10 +2473,10 @@ if ( ! function_exists( 'cmb2_sponsor_fields' ) ) :
 				'id'         => '_mp_post_thumbnail_image',
 				'type'       => 'file',
 				'options'    => array(
-					//'url' => false, // Hide the text input for the url
+					// 'url' => false, // Hide the text input for the url
 				),
 				'text'       => array(
-					//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
+					// 'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
 				),
 				// query_args are passed to wp.media's library query.
 				'query_args' => array(
@@ -2504,10 +2492,10 @@ if ( ! function_exists( 'cmb2_sponsor_fields' ) ) :
 				'id'         => '_mp_post_main_image',
 				'type'       => 'file',
 				'options'    => array(
-					//'url' => false, // Hide the text input for the url
+					// 'url' => false, // Hide the text input for the url
 				),
 				'text'       => array(
-					//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
+					// 'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
 				),
 				// query_args are passed to wp.media's library query.
 				'query_args' => array(
@@ -2522,7 +2510,6 @@ endif;
 /**
 * Add custom fields to events
 * This all depends on the The Events Calendar plugin
-*
 */
 if ( ! function_exists( 'cmb2_event_fields' ) ) :
 	add_action( 'cmb2_admin_init', 'cmb2_event_fields' );
@@ -2561,9 +2548,11 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 		/**
 		 * Event speaker settings
 		 * We only use this when the default linked post type behavior does not work.
+		 *
 		 * @see inc/events.php tribe_ext_events_add_tribe_ext_speaker_meta_box hook.
 		 */
-		/*$event_speaker_posts = new_cmb2_box(
+		/*
+		$event_speaker_posts = new_cmb2_box(
 			array(
 				'id'           => $object_type . '_event_posts',
 				'title'        => __( 'Speakers', 'minnpost-largo' ),
@@ -2670,10 +2659,10 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 				'id'         => '_mp_post_thumbnail_image',
 				'type'       => 'file',
 				'options'    => array(
-					//'url' => false, // Hide the text input for the url
+					// 'url' => false, // Hide the text input for the url
 				),
 				'text'       => array(
-					//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
+					// 'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
 				),
 				// query_args are passed to wp.media's library query.
 				'query_args' => array(
@@ -2718,10 +2707,10 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 				'type'         => 'file',
 				'preview_size' => array( 130, 85 ),
 				'options'      => array(
-					//'url' => false, // Hide the text input for the url
+					// 'url' => false, // Hide the text input for the url
 				),
 				'text'         => array(
-					//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
+					// 'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
 				),
 				// query_args are passed to wp.media's library query.
 				'query_args'   => array(
@@ -2759,7 +2748,8 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 				'desc' => __( 'If checked, this event will open with the HTML editor visible.', 'minnpost-largo' ),
 			)
 		);
-		/*$display_settings->add_field(
+		/*
+		$display_settings->add_field(
 			array(
 				'name' => __( 'Remove category from display?', 'minnpost-largo' ),
 				'id'   => '_mp_remove_category_from_display',
@@ -2799,7 +2789,8 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 				'desc' => __( 'If checked, this event will not display any of its details in their normal locations, including date, venue, and cost information.', 'minnpost-largo' ),
 			)
 		);
-		/*$display_settings->add_field(
+		/*
+		$display_settings->add_field(
 			array(
 				'name' => __( 'Remove author(s) from display?', 'minnpost-largo' ),
 				'id'   => '_mp_remove_author_from_display',
@@ -2898,7 +2889,6 @@ endif;
 
 /**
 * Add custom fields to event website pages
-*
 */
 if ( ! function_exists( 'cmb2_event_website_page_fields' ) ) :
 	add_action( 'cmb2_admin_init', 'cmb2_event_website_page_fields' );
@@ -3202,10 +3192,10 @@ if ( ! function_exists( 'cmb2_event_website_page_fields' ) ) :
 						'id'         => '_mp_post_thumbnail_image',
 						'type'       => 'file',
 						'options'    => array(
-							//'url' => false, // Hide the text input for the url
+							// 'url' => false, // Hide the text input for the url
 						),
 						'text'       => array(
-							//'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
+							// 'add_upload_file_text' => 'Add Image', // Change upload button text. Default: "Add or Upload File"
 						),
 						// query_args are passed to wp.media's library query.
 						'query_args' => array(
@@ -3249,7 +3239,6 @@ endif;
 
 /**
 * Add custom fields to speakers
-*
 */
 if ( ! function_exists( 'cmb2_speaker_fields' ) ) :
 	add_action( 'cmb2_admin_init', 'cmb2_speaker_fields' );
@@ -3378,7 +3367,6 @@ endif;
 
 /**
 * Ad & Sponsorship settings if ads are enabled on events
-*
 */
 if ( ! function_exists( 'cmb2_event_ad_fields' ) ) :
 	function cmb2_event_ad_fields() {
@@ -3443,10 +3431,10 @@ endif;
 /**
 * Generate arguments for CMB2 field for picking other posts on an edit post screen.
 * This can support either custom_attached_posts or post_ajax_search field types from CMB2 plugins
+ *
 * @param array $args
 * @param string $type
 * @return array $args
-*
 */
 if ( ! function_exists( 'minnpost_post_search_field' ) ) :
 	function minnpost_post_search_field( $args, $type = 'post_search_ajax' ) {
@@ -3524,7 +3512,6 @@ endif;
 
 /**
 * Remove raw html meta box from non-admins
-*
 */
 if ( ! function_exists( 'limit_raw_html_box' ) ) :
 	add_action( 'do_meta_boxes', 'limit_raw_html_box' );
@@ -3540,7 +3527,6 @@ endif;
 * Change expiration of public post preview links
 *
 * @return int $nonce_life
-*
 */
 if ( ! function_exists( 'minnpost_public_preview_nonce_life' ) ) :
 	add_filter( 'ppp_nonce_life', 'minnpost_public_preview_nonce_life' );
@@ -3551,7 +3537,6 @@ endif;
 
 /**
 * Remove liveblog meta box from non-editors
-*
 */
 if ( ! function_exists( 'limit_liveblog_box' ) ) :
 	add_action( 'do_meta_boxes', 'limit_liveblog_box' );
@@ -3564,9 +3549,9 @@ endif;
 
 /**
 * Array of supported newsletter types. Or, a string of a single type name.
+ *
 * @param string $type
 * @return array $types
-*
 */
 if ( ! function_exists( 'minnpost_largo_email_types' ) ) :
 	function minnpost_largo_email_types( $type = '' ) {
@@ -3592,7 +3577,6 @@ endif;
 * @param bool $remove_sidebar
 * @param int $post_id
 * @return bool $remove_sidebar
-*
 */
 if ( ! function_exists( 'minnpost_largo_check_remove_sidebar' ) ) :
 	add_filter( 'minnpost_largo_remove_sidebar', 'minnpost_largo_check_remove_sidebar' );
@@ -3605,7 +3589,8 @@ if ( ! function_exists( 'minnpost_largo_check_remove_sidebar' ) ) :
 			$post_id = get_the_ID();
 		}
 
-		/*$remove_sidebar_meta = get_post_meta( $post_id, '_mp_remove_right_sidebar', true );
+		/*
+		$remove_sidebar_meta = get_post_meta( $post_id, '_mp_remove_right_sidebar', true );
 		if ( isset( $remove_sidebar_meta ) && 'on' === $remove_sidebar_meta ) {
 			$remove_sidebar = true;
 		}*/
@@ -3621,7 +3606,6 @@ endif;
 
 /**
 * Add the image credits fields to the REST API response
-*
 */
 if ( ! function_exists( 'minnpost_largo_rest_api_image_credit' ) ) :
 	add_action( 'rest_api_init', 'minnpost_largo_rest_api_image_credit' );
@@ -3639,9 +3623,9 @@ endif;
 
 /**
 * Add our image credits fields to the REST API response
+ *
 * @param array $object
 * @return array $better_image_credits
-*
 */
 if ( ! function_exists( 'minnpost_largo_get_image_credits' ) ) :
 	function minnpost_largo_get_image_credits( $object ) {

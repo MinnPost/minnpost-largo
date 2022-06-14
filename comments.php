@@ -66,7 +66,7 @@ if ( post_password_required() ) {
 		<?php minnpost_largo_load_comments_switch( 'before' ); ?>
 		<ol>
 			<?php
-			$comments_query = new WP_Comment_Query;
+			$comments_query = new WP_Comment_Query();
 			$comments       = $comments_query->query( $params );
 			wp_list_comments(
 				array(

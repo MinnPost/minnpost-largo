@@ -13,7 +13,15 @@ get_header(); ?>
 	<main id="main" class="site-main m-homepage-zones">
 		<?php if ( function_exists( 'z_get_zone' ) ) : ?>
 			<?php $top_query = z_get_zone_query( 'homepage-top' ); ?>
-		<div id="home-list" class="o-homepage-listing<?php if ( $top_query->have_posts() ) : ?> o-homepage-listing-with-top<?php else : ?> o-homepage-listing-without-top<?php endif; ?>">
+		<div id="home-list" class="o-homepage-listing
+			<?php
+			if ( $top_query->have_posts() ) :
+				?>
+			 o-homepage-listing-with-top
+				<?php
+else :
+	?>
+			 o-homepage-listing-without-top<?php endif; ?>">
 				<?php if ( $top_query->have_posts() ) : ?>
 					<?php $post_count = $top_query->post_count; ?>
 					<section class="m-archive m-archive-top m-archive-has-<?php echo (int) $post_count; ?>-post m-zone m-zone-homepage-top">
@@ -53,7 +61,7 @@ get_header(); ?>
 						$count = 1;
 						while ( $more_top_stories->have_posts() ) :
 							$more_top_stories->the_post();
-							get_template_part( 'template-parts/content', 'excerpt' ); 
+							get_template_part( 'template-parts/content', 'excerpt' );
 							?>
 							<?php if ( 2 === $count && ! $top_query->have_posts() ) : ?>
 								<?php dynamic_sidebar( 'sidebar-glean' ); ?>

@@ -6,7 +6,6 @@
  * The only thing it does for us is load the single-event templates.
  *
  * This overrides the default the-events-calendar/views/default-template.php
- *
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

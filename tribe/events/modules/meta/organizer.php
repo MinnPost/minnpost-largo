@@ -10,10 +10,10 @@
  */
 
 $organizer_ids = tribe_get_organizer_ids();
-$multiple = count( $organizer_ids ) > 1;
+$multiple      = count( $organizer_ids ) > 1;
 
-$phone = tribe_get_organizer_phone();
-$email = tribe_get_organizer_email();
+$phone   = tribe_get_organizer_phone();
+$email   = tribe_get_organizer_email();
 $website = tribe_get_organizer_website_link();
 ?>
 
@@ -31,7 +31,7 @@ $website = tribe_get_organizer_website_link();
 			?>
 			<dt style="display:none;"><?php // This element is just to make sure we have a valid HTML ?></dt>
 			<dd class="tribe-organizer">
-				<?php echo tribe_get_organizer_link( $organizer ) ?>
+				<?php echo tribe_get_organizer_link( $organizer ); ?>
 			</dd>
 			<?php
 		}
@@ -40,7 +40,7 @@ $website = tribe_get_organizer_website_link();
 			if ( ! empty( $phone ) ) {
 				?>
 				<dt class="tribe-organizer-tel-label">
-					<?php esc_html_e( 'Phone:', 'the-events-calendar' ) ?>
+					<?php esc_html_e( 'Phone:', 'the-events-calendar' ); ?>
 				</dt>
 				<dd class="tribe-organizer-tel">
 					<?php echo esc_html( $phone ); ?>
@@ -51,7 +51,7 @@ $website = tribe_get_organizer_website_link();
 			if ( ! empty( $email ) ) {
 				?>
 				<dt class="tribe-organizer-email-label">
-					<?php esc_html_e( 'Email:', 'the-events-calendar' ) ?>
+					<?php esc_html_e( 'Email:', 'the-events-calendar' ); ?>
 				</dt>
 				<dd class="tribe-organizer-email">
 					<?php echo esc_html( $email ); ?>
@@ -62,7 +62,7 @@ $website = tribe_get_organizer_website_link();
 			if ( ! empty( $website ) ) {
 				?>
 				<dt class="tribe-organizer-url-label">
-					<?php esc_html_e( 'Website:', 'the-events-calendar' ) ?>
+					<?php esc_html_e( 'Website:', 'the-events-calendar' ); ?>
 				</dt>
 				<dd class="tribe-organizer-url">
 					<?php echo $website; ?>

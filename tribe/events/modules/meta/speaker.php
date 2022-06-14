@@ -57,7 +57,11 @@ if ( 'festival' === $permalink_category_slug ) {
 ?>
 
 <?php if ( ! empty( $speakers ) || ! empty( $moderators ) ) : ?>
-	<div class="m-speakers<?php if ( '' !== $permalink_category_slug ) : ?> m-<?php echo $permalink_category_slug; ?>-speakers<?php endif; ?>">
+	<div class="m-speakers
+	<?php
+	if ( '' !== $permalink_category_slug ) :
+		?>
+		 m-<?php echo $permalink_category_slug; ?>-speakers<?php endif; ?>">
 		<?php do_action( 'tribe_events_single_meta_speaker_section_start' ); ?>
 		<?php
 		$speaker_names = '';
@@ -85,9 +89,9 @@ if ( 'festival' === $permalink_category_slug ) {
 		}
 		?>
 		<?php
-		$moderator_names         = '';
-		$prefix                  = '';
-		$moderator_class_suffix  = '';
+		$moderator_names        = '';
+		$prefix                 = '';
+		$moderator_class_suffix = '';
 		if ( '' !== $permalink_category_slug ) {
 			$class_suffix = ' a-' . $permalink_category_slug . '-moderators';
 		}

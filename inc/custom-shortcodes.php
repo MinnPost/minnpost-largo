@@ -2,16 +2,14 @@
 /**
  * Create custom shortcodes
  *
- *
  * @package MinnPost Largo
  */
 
 /**
-* Add widget instance shortcode
-*
-* @param array $atts
-*
-*/
+ * Add widget instance shortcode
+ *
+ * @param array $atts
+ */
 if ( ! function_exists( 'widget_instance' ) ) :
 	add_shortcode( 'widget_instance', 'widget_instance' );
 	function widget_instance( $atts ) {
@@ -46,7 +44,6 @@ endif;
 * This allows us to display list of categories as shortcode
 *
 * @param array $atts
-*
 */
 if ( ! function_exists( 'column_list' ) ) :
 	add_shortcode( 'column_list', 'column_list' );
@@ -83,7 +80,6 @@ endif;
 * @param array $atts
 * @param string $content
 * @return string $output
-*
 */
 if ( ! function_exists( 'mp_sponsors' ) ) :
 	add_shortcode( 'mp_sponsors', 'mp_sponsors' );
@@ -268,7 +264,6 @@ endif;
 * @param array $attributes
 * @param string $content
 * @return string output of get_template_html from account management plugin
-*
 */
 if ( ! function_exists( 'minnpost_account_info' ) ) :
 	add_shortcode( 'account-info', 'minnpost_account_info' );
@@ -346,7 +341,6 @@ endif;
 * @param array $attributes
 * @param string $content
 * @return string output of get_template_html from account management plugin
-*
 */
 if ( ! function_exists( 'minnpost_account_preferences' ) ) :
 	add_shortcode( 'custom-account-preferences-form', 'minnpost_account_preferences' );
@@ -442,7 +436,6 @@ endif;
 * Add logo shortcode
 *
 * @param array $atts
-*
 */
 if ( ! function_exists( 'minnpost_logo' ) ) :
 	add_shortcode( 'minnpost_logo', 'minnpost_logo' );
@@ -467,7 +460,6 @@ endif;
 * Shortcode to display topics on a page
 *
 * @param array $atts
-*
 */
 if ( ! function_exists( 'minnpost_largo_topics' ) ) :
 	add_shortcode( 'topics', 'minnpost_largo_topics' );
@@ -541,10 +533,9 @@ endif;
 *
 * @param array $atts
 * @return string $output
-*
 */
 if ( ! function_exists( 'minnpost_load_remote_url' ) ) :
-	//add_shortcode( 'minnpost_load_remote_url', 'minnpost_load_remote_url' );
+	// add_shortcode( 'minnpost_load_remote_url', 'minnpost_load_remote_url' );
 	function minnpost_load_remote_url( $atts ) {
 		$output = '';
 		$args   = shortcode_atts(
@@ -576,7 +567,6 @@ endif;
 * @param bool $cache
 * @param string $cache_time
 * @return string $output
-*
 */
 if ( ! function_exists( 'minnpost_load_shortcode_string' ) ) :
 	function minnpost_load_shortcode_string( $url, $part = '', $cache = true, $cache_time = '' ) {
@@ -621,7 +611,7 @@ if ( ! function_exists( 'minnpost_load_shortcode_string' ) ) :
 					$trim_off_front = strpos( $output, '<body>' ) + 6;
 					$trim_off_end   = ( strrpos( $output, '</body>' ) ) - strlen( $output );
 					$output         = substr( $output, $trim_off_front, $trim_off_end );
-					$output = apply_filters( 'the_content', $output );
+					$output         = apply_filters( 'the_content', $output );
 				} elseif ( 'css' === $part ) {
 					// get all <style> elements
 					$style_element = $html->getElementsByTagName( 'style' );

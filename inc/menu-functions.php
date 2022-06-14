@@ -6,9 +6,8 @@
  */
 
 /**
-* Create the menus we need
-*
-*/
+ * Create the menus we need
+ */
 if ( ! function_exists( 'minnpost_menus' ) ) :
 	add_action( 'init', 'minnpost_menus' );
 	function minnpost_menus() {
@@ -37,7 +36,6 @@ endif;
 * @param object $item
 * @param int $depth
 * @param array $args
-*
 */
 if ( ! function_exists( 'minnpost_largo_menu_custom_fields' ) ) :
 	add_action( 'wp_nav_menu_item_custom_fields', 'minnpost_largo_menu_custom_fields', 10, 4 );
@@ -119,11 +117,10 @@ if ( ! function_exists( 'minnpost_largo_nav_update' ) ) :
 endif;
 
 /**
-* Nav Menu Walker
-*
-* @param int $user_id
-*
-*/
+ * Nav Menu Walker
+ *
+ * @param int $user_id
+ */
 class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 
 	private $user_id;
@@ -142,20 +139,19 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 	}
 
 	/**
-	* Start element and change its classes
-	* We use this to:
-	* - set the classes we want, mainly for current items
-	* - change the urls for user specific items
-	*
-	* @param string $output - don't ever remove the & because php will complain about the parent class
-	* @param object $item
-	* @param int $depth
-	* @param array $args
-	* @param int $id
-	*
-	* @return string $output
-	*
-	*/
+	 * Start element and change its classes
+	 * We use this to:
+	 * - set the classes we want, mainly for current items
+	 * - change the urls for user specific items
+	 *
+	 * @param string $output - don't ever remove the & because php will complain about the parent class
+	 * @param object $item
+	 * @param int    $depth
+	 * @param array  $args
+	 * @param int    $id
+	 *
+	 * @return string $output
+	 */
 	public function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
 
 		$classes = array();
@@ -298,7 +294,7 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 		}
 
 		if ( 'Your MinnPost' === $item->title ) {
-			//$output .= '<button class="menu-toggle" aria-controls="user-account-management" aria-expanded="false">' . esc_html( 'Sections', 'minnpost-largo' ) . '</button>';
+			// $output .= '<button class="menu-toggle" aria-controls="user-account-management" aria-expanded="false">' . esc_html( 'Sections', 'minnpost-largo' ) . '</button>';
 		}
 	}
 
@@ -308,12 +304,11 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 	}
 
 	/**
-	* Return the custom classes added in the admin by filtering out the default WordPress classes
-	*
-	* @param array $all_classes
-	* @return string $custom_classes
-	*
-	*/
+	 * Return the custom classes added in the admin by filtering out the default WordPress classes
+	 *
+	 * @param array $all_classes
+	 * @return string $custom_classes
+	 */
 	private function get_custom_classes( $all_classes ) {
 		if ( is_array( $all_classes ) ) {
 			$custom_classes = array_filter(
@@ -330,11 +325,10 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 }
 
 /**
-* Nav Menu Walker for email
-*
-* @param int $user_id
-*
-*/
+ * Nav Menu Walker for email
+ *
+ * @param int $user_id
+ */
 class Minnpost_Email_Walker_Nav_Menu extends Minnpost_Walker_Nav_Menu {
 
 	// start and end submenu output with an unordered list
@@ -346,20 +340,19 @@ class Minnpost_Email_Walker_Nav_Menu extends Minnpost_Walker_Nav_Menu {
 	}
 
 	/**
-	* Start element and change its classes
-	* We use this to:
-	* - set the classes we want, mainly for current items
-	* - change the urls for user specific items
-	*
-	* @param string $output - don't ever remove the & because php will complain about the parent class
-	* @param object $item
-	* @param int $depth
-	* @param array $args
-	* @param int $id
-	*
-	* @return string $output
-	*
-	*/
+	 * Start element and change its classes
+	 * We use this to:
+	 * - set the classes we want, mainly for current items
+	 * - change the urls for user specific items
+	 *
+	 * @param string $output - don't ever remove the & because php will complain about the parent class
+	 * @param object $item
+	 * @param int    $depth
+	 * @param array  $args
+	 * @param int    $id
+	 *
+	 * @return string $output
+	 */
 	public function start_el( &$output, $item, $depth = 0, $args = array(), $id = 0 ) {
 
 		$classes = array();
@@ -464,12 +457,11 @@ class Minnpost_Email_Walker_Nav_Menu extends Minnpost_Walker_Nav_Menu {
 	}
 
 	/**
-	* Return the custom classes added in the admin by filtering out the default WordPress classes
-	*
-	* @param array $all_classes
-	* @return string $custom_classes
-	*
-	*/
+	 * Return the custom classes added in the admin by filtering out the default WordPress classes
+	 *
+	 * @param array $all_classes
+	 * @return string $custom_classes
+	 */
 	private function get_custom_classes( $all_classes ) {
 		if ( is_array( $all_classes ) ) {
 			$custom_classes = array_filter(
@@ -488,7 +480,6 @@ class Minnpost_Email_Walker_Nav_Menu extends Minnpost_Walker_Nav_Menu {
 /**
 * Show the admin bar only for users with see_admin_bar capability
 * This relies on the MinnPost Roles and Capabilities plugin which creates this capability and assigns it to roles
-*
 */
 if ( ! current_user_can( 'see_admin_bar' ) ) {
 	add_filter( 'show_admin_bar', '__return_false' );
@@ -496,7 +487,6 @@ if ( ! current_user_can( 'see_admin_bar' ) ) {
 
 /**
 * Show the debug bar menu - included with WP VIP Go - to administrator level users
-*
 */
 if ( ! function_exists( 'minnpost_largo_debug_bar_render' ) ) :
 	add_filter( 'debug_bar_enable', 'minnpost_largo_debug_bar_render', 100, 1 );
@@ -512,7 +502,6 @@ endif;
 /**
 * Change links and menus in the admin bar
 * This relies on user access levels, and a little bit on the MinnPost Roles and Capabilities plugin (for the comment moderator part)
-*
 */
 if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
 	add_action( 'wp_before_admin_bar_render', 'minnpost_largo_admin_bar_render' );
@@ -598,7 +587,8 @@ if ( ! function_exists( 'minnpost_largo_admin_bar_render' ) ) :
 		$wp_admin_bar->remove_menu( 'customize' );
 		$wp_admin_bar->remove_menu( 'tribe-events' );
 
-		/*if ( is_a( $current_object, 'WP_User' )
+		/*
+		if ( is_a( $current_object, 'WP_User' )
 			&& current_user_can( 'edit_user', $current_object->ID )
 			&& $edit_user_link = get_edit_user_link( $current_object->ID ) )
 		{
@@ -619,7 +609,7 @@ if ( ! function_exists( 'minnpost_largo_menu_support' ) ) :
 						'theme_location' => 'support_actions',
 						'menu_id'        => 'primary-actions',
 						'container'      => false,
-						'walker'         => new Minnpost_Walker_Nav_Menu,
+						'walker'         => new Minnpost_Walker_Nav_Menu(),
 						'item_classes'   => 'values',
 						'items_wrap'     => '<ul id="%1$s" class="m-menu m-menu-%1$s">%3$s</ul>',
 					)
@@ -633,10 +623,10 @@ endif;
 
 /**
 * Change menu classes for festival/tonight/event menus. This applies to archive and singular speakers and sessions.
+ *
 * @param string $classes
 * @param object $item
 * @return string $classes
-*
 */
 if ( ! function_exists( 'minnpost_largo_event_menu_classes' ) ) :
 	add_filter( 'minnpost_largo_nav_item_classes', 'minnpost_largo_event_menu_classes', 10, 2 );
@@ -662,7 +652,6 @@ endif;
 
 /**
 * Outputs the user account management menu
-*
 */
 if ( ! function_exists( 'minnpost_account_management_menu' ) ) :
 	function minnpost_account_management_menu() {
@@ -697,7 +686,6 @@ endif;
 *
 * @param int $user_id
 * @return object $menu
-*
 */
 if ( ! function_exists( 'get_minnpost_account_management_menu' ) ) :
 	function get_minnpost_account_management_menu( $user_id = '' ) {
@@ -732,7 +720,6 @@ endif;
 
 /**
 * Outputs the user account access menu
-*
 */
 if ( ! function_exists( 'minnpost_account_access_menu' ) ) :
 	function minnpost_account_access_menu() {
@@ -754,7 +741,6 @@ endif;
 *
 * @param int $user_id
 * @return object $menu
-*
 */
 if ( ! function_exists( 'get_minnpost_account_access_menu' ) ) :
 
@@ -794,7 +780,6 @@ endif;
 /**
 * Remove pages from admin menu
 * This relies on user access levels, and on the MinnPost Roles and Capabilities plugin
-*
 */
 if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 	add_action( 'admin_menu', 'minnpost_largo_remove_menu_pages', 999 );
@@ -847,7 +832,7 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 
 		// thumbnails
 		if ( ! current_user_can( 'upload_files' ) ) {
-			//settings
+			// settings
 			remove_submenu_page( 'options-general.php', 'options-media.php' );
 		}
 
@@ -911,7 +896,6 @@ endif;
 
 /**
 * Set Zoninator access capabilities
-*
 */
 if ( ! function_exists( 'minnpost_largo_add_zones' ) ) :
 	add_filter( 'zoninator_add_zone_cap', 'minnpost_largo_add_zones', 10, 1 );
@@ -936,7 +920,6 @@ endif;
 
 /**
 * Add unpublished indicator to admin bar menu
-*
 */
 if ( ! function_exists( 'minnpost_largo_unpublished_indicator' ) ) :
 	add_action( 'admin_bar_menu', 'minnpost_largo_unpublished_indicator', 81 );
@@ -977,7 +960,6 @@ endif;
 
 /**
 * Any admin bar CSS customizations should go here so they're consistent on front and back end
-*
 */
 if ( ! function_exists( 'minnpost_style_tool_bar' ) ) :
 	add_action( 'admin_head', 'minnpost_style_tool_bar' );

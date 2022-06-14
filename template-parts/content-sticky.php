@@ -10,7 +10,7 @@
 ?>
 
 <article id="post-<?php the_ID(); ?>" <?php post_class( 'm-post' ); ?>>
-    
+	
 	<?php if ( '' === minnpost_get_replace_category_text() ) : ?>
 		<?php minnpost_category_breadcrumb(); ?>
 	<?php else : ?>

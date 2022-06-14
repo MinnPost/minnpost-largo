@@ -6,10 +6,10 @@
  */
 
 /**
-* Easy method to get the current URL
-*
-* @return string $current_url
-*/
+ * Easy method to get the current URL
+ *
+ * @return string $current_url
+ */
 if ( ! function_exists( 'get_current_url' ) ) :
 	function get_current_url() {
 		if ( is_page() || is_single() ) {
@@ -25,7 +25,6 @@ endif;
 /**
  * Change get_option( 'home' ) and any functions that rely on it to use
  * the value of the WP_HOME constant.
- *
  */
 if ( ! function_exists( 'change_get_option_home' ) ) :
 	add_filter( 'pre_option_home', 'change_get_option_home' );

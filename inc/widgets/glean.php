@@ -58,7 +58,7 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 								<?php if ( 'post' === get_post_type() ) : ?>
 									<?php
 									if ( '' !== minnpost_get_posted_on() ) {
-										$date    = minnpost_get_posted_on();
+										$date = minnpost_get_posted_on();
 										echo sprintf(
 											'<time class="a-entry-date published updated" datetime="%1$s">%2$s</time>',
 											$date['published']['machine'],

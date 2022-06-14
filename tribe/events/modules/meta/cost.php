@@ -1,7 +1,6 @@
 <?php
 /**
  * Single Event Meta (Cost) Template
- *
  */
 ?>
 <?php if ( tribe_get_cost() ) : ?>

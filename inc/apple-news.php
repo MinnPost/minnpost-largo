@@ -37,7 +37,6 @@ add_filter(
 
 /**
  * Apple News: don't push to apple news if this is not production
- *
  */
 if ( ! function_exists( 'minnpost_skip_apple_news' ) ) :
 	add_filter( 'apple_news_skip_push', 'skip_apple_news', 10, 1 );

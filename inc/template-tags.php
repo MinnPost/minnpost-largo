@@ -9,13 +9,12 @@
  */
 
 /**
-* Output story image based on where it should go
-*
-* @param string $size
-* @param array $attributes
-* @param int $id
-*
-*/
+ * Output story image based on where it should go
+ *
+ * @param string $size
+ * @param array $attributes
+ * @param int $id
+ */
 if ( ! function_exists( 'minnpost_post_image' ) ) :
 	/**
 	 * Outputs story image, whether large or various kinds of thumbnail, depending on where it is called
@@ -70,7 +69,6 @@ endif;
 * Output when the article was posted
 *
 * @param int $id
-*
 */
 if ( ! function_exists( 'minnpost_posted_on' ) ) :
 	/**
@@ -97,7 +95,6 @@ endif;
 * Output the dateline for a newsletter
 *
 * @param int $id
-*
 */
 if ( ! function_exists( 'minnpost_newsletter_today' ) ) :
 	/**
@@ -125,7 +122,6 @@ endif;
 * Output the teaser for a newsletter
 *
 * @param int $id
-*
 */
 if ( ! function_exists( 'minnpost_newsletter_teaser' ) ) :
 	/**
@@ -147,7 +143,6 @@ endif;
 * Output the newsletter type welcome sentence for a newsletter
 *
 * @param int $id
-*
 */
 if ( ! function_exists( 'minnpost_newsletter_type_welcome' ) ) :
 	/**
@@ -191,7 +186,6 @@ endif;
 *
 * @param int $id
 * @param bool $include_title
-*
 */
 if ( ! function_exists( 'minnpost_posted_by' ) ) :
 	function minnpost_posted_by( $id = '', $include_title = true, $link_name = true ) {
@@ -202,7 +196,8 @@ if ( ! function_exists( 'minnpost_posted_by' ) ) :
 	}
 endif;
 
-/*add_filter( 'the_author', 'minnpost_largo_author_display_name' );
+/*
+add_filter( 'the_author', 'minnpost_largo_author_display_name' );
 function minnpost_largo_author_display_name( $name ) {
 	if ( '' !== get_the_author_meta( 'job-title' ) ) {
 		$name .= '&nbsp;|&nbsp;' . get_the_author_meta( 'job-title' );
@@ -214,7 +209,6 @@ function minnpost_largo_author_display_name( $name ) {
 * Output the share buttons
 *
 * @param int $post_id
-*
 */
 if ( ! function_exists( 'minnpost_share_buttons' ) ) :
 	function minnpost_share_buttons( $post_id = '' ) {
@@ -294,7 +288,6 @@ endif;
 *
 * @param string $placement
 * @param int $post_id
-*
 */
 if ( ! function_exists( 'minnpost_related_on_listing' ) ) :
 	function minnpost_related_on_listing( $placement, $post_id ) {
@@ -308,12 +301,10 @@ if ( ! function_exists( 'minnpost_related_on_listing' ) ) :
 					global $post;
 					foreach ( $related_posts as $post ) :
 						setup_postdata( $post );
-						include(
-							locate_template(
-								array(
-									'template-parts/related-post-' . $placement . '.php',
-									'template-parts/related-post.php',
-								)
+						include locate_template(
+							array(
+								'template-parts/related-post-' . $placement . '.php',
+								'template-parts/related-post.php',
 							)
 						);
 					endforeach;
@@ -333,7 +324,6 @@ endif;
 * @param string $type
 * @param int $count
 * @param bool $only_show_images_if_not_missing
-*
 */
 if ( ! function_exists( 'minnpost_related' ) ) :
 	function minnpost_related( $type = 'content', $count = 3, $only_show_images_if_not_missing = false ) {
@@ -376,12 +366,10 @@ if ( ! function_exists( 'minnpost_related' ) ) :
 			}
 			foreach ( $related_posts as $post ) :
 				setup_postdata( $post );
-				include(
-					locate_template(
-						array(
-							'template-parts/related-post-' . $type . '.php',
-							'template-parts/related-post.php',
-						)
+				include locate_template(
+					array(
+						'template-parts/related-post-' . $type . '.php',
+						'template-parts/related-post.php',
 					)
 				);
 			endforeach;
@@ -395,7 +383,6 @@ endif;
 
 /**
 * Display the related terms a post should link to
-*
 */
 if ( ! function_exists( 'minnpost_related_terms' ) ) :
 	function minnpost_related_terms() {
@@ -444,7 +431,6 @@ endif;
 * @param bool $include_title
 * @param bool $lazy_load
 * @param bool $end
-*
 */
 if ( ! function_exists( 'minnpost_author_figure' ) ) :
 	function minnpost_author_figure( $author_id = '', $photo_size = 'photo', $text_field = 'excerpt', $include_text = true, $name_field = 'display_name', $include_name = false, $title_field = 'job-title', $include_title = true, $lazy_load = true, $end = false ) {
@@ -463,7 +449,6 @@ endif;
 * @param bool $include_name
 * @param bool $include_title
 * @param bool $lazy_load
-*
 */
 if ( ! function_exists( 'minnpost_speaker_figure' ) ) :
 	function minnpost_speaker_figure( $speaker_id = '', $photo_size = 'photo', $text_field = 'the_excerpt', $include_text = true, $name_field = 'display_name', $include_name = false, $include_link = false, $title_field = '_tribe_ext_speaker_title', $include_title = true, $include_twitter = false, $twitter_field = '_tribe_ext_speaker_twitter_username', $lazy_load = true ) {
@@ -481,7 +466,6 @@ endif;
 * @param string $include_name
 * @param string $link_on
 * @param bool $lazy_load
-*
 */
 if ( ! function_exists( 'minnpost_term_figure' ) ) :
 	function minnpost_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false, $link_on = 'title', $lazy_load = true ) {
@@ -494,7 +478,6 @@ endif;
 * Outputs any additional links for the term archive page (rss, twitter, etc.)
 *
 * @param int $category_id
-*
 */
 if ( ! function_exists( 'minnpost_term_extra_links' ) ) :
 	function minnpost_term_extra_links( $category_id = '' ) {
@@ -508,7 +491,6 @@ endif;
 * @param int $category_id
 * @param string $size
 * @return string $text
-*
 */
 if ( ! function_exists( 'minnpost_entry_footer' ) ) :
 	function minnpost_entry_footer() {
@@ -564,7 +546,6 @@ endif;
 * Outputs edit link to users with that permission
 *
 * @param int $id
-*
 */
 if ( ! function_exists( 'minnpost_edit_link' ) ) :
 	function minnpost_edit_link( $id = '' ) {
@@ -595,7 +576,6 @@ endif;
 * Outputs HTML for the post sidebar, if it is present
 *
 * @param int $post_id
-*
 */
 if ( ! function_exists( 'minnpost_post_sidebar' ) ) :
 	function minnpost_post_sidebar( $post_id = '' ) {
@@ -617,7 +597,6 @@ endif;
 *
 * @param int $post_id
 * @param bool $show_group
-*
 */
 if ( ! function_exists( 'minnpost_category_breadcrumb' ) ) :
 	function minnpost_category_breadcrumb( $post_id = '', $show_group = true ) {
@@ -669,7 +648,6 @@ endif;
 * @param bool $show_group
 * @param bool $use_category_group_name_as_class
 * @param bool $use_links
-*
 */
 if ( ! function_exists( 'minnpost_category_breadcrumb_newsletter' ) ) :
 	function minnpost_category_breadcrumb_newsletter( $post_id = '', $show_group = true, $use_category_group_name_as_class = false, $use_links = false ) {
@@ -741,7 +719,6 @@ endif;
 * @param bool $show_group
 * @param bool $use_category_group_name_as_class
 * @param bool $use_links
-*
 */
 if ( ! function_exists( 'minnpost_category_breadcrumb_newsletter_outlook' ) ) :
 	function minnpost_category_breadcrumb_newsletter_outlook( $post_id = '', $show_group = true, $use_category_group_name_as_class = true, $use_links = false ) {
@@ -812,7 +789,6 @@ endif;
 * Outputs HTML for pre title text
 *
 * @param int $post_id
-*
 */
 if ( ! function_exists( 'minnpost_replace_category_text' ) ) :
 	function minnpost_replace_category_text( $post_id = '' ) {
@@ -831,7 +807,6 @@ endif;
 *
 * @param string $object_type
 * @param int $object_id
-*
 */
 if ( ! function_exists( 'minnpost_content_sponsorship' ) ) :
 	function minnpost_content_sponsorship( $object_type = 'post', $object_id = '' ) {
@@ -847,7 +822,6 @@ endif;
 * Outputs HTML for deck
 *
 * @param int $post_id
-*
 */
 if ( ! function_exists( 'minnpost_deck' ) ) :
 	function minnpost_deck( $post_id = '' ) {
@@ -863,7 +837,6 @@ endif;
 * Outputs HTML for MinnPost Plus content
 *
 * @param int $post_id
-*
 */
 if ( ! function_exists( 'minnpost_plus_icon' ) ) :
 	function minnpost_plus_icon( $post_id = '', $lazy_load = true ) {
@@ -906,7 +879,6 @@ endif;
 
 /**
 * Outputs HTML for numeric pagination on archive pages
-*
 */
 if ( ! function_exists( 'numeric_pagination' ) ) :
 	function numeric_pagination() {
@@ -981,7 +953,6 @@ endif;
 *
 * @param int $newsletter_id
 * @param bool $transparent
-*
 */
 if ( ! function_exists( 'minnpost_newsletter_logo' ) ) :
 	function minnpost_newsletter_logo( $newsletter_id = '', $transparent = false ) {
@@ -997,11 +968,10 @@ endif;
 * @param string $news_right_top
 * @param string $type
 * @return array $data
-*
 */
 if ( ! function_exists( 'minnpost_newsletter_arrange' ) ) :
 	function minnpost_newsletter_arrange( $content, $news_right_top, $type = '' ) {
-		$promo_dom = new DomDocument;
+		$promo_dom = new DomDocument();
 		libxml_use_internal_errors( true );
 		$promo_dom->loadHTML( $content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
 		libxml_use_internal_errors( false );
@@ -1012,14 +982,14 @@ if ( ! function_exists( 'minnpost_newsletter_arrange' ) ) :
 		$promo_xpath = new DOMXpath( $promo_dom );
 		$promo_div   = $promo_xpath->query( "//div[contains(concat(' ', @class, ' '), ' image ')]/div" );
 
-		$dom = new DomDocument;
+		$dom = new DomDocument();
 		libxml_use_internal_errors( true );
 		$dom->loadHTML( $content, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
 		libxml_use_internal_errors( false );
 		$xpath = new DOMXpath( $dom );
 		$divs  = $xpath->query( "//div[contains(concat(' ', @class, ' '), ' story ')]" );
 
-		$ad_dom = new DomDocument;
+		$ad_dom = new DomDocument();
 
 		libxml_use_internal_errors( true );
 		$ad_dom->loadHTML( $news_right_top, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
@@ -1080,7 +1050,6 @@ endif;
 * @param string $image_url
 * @param array $attributes
 * @return string $image
-*
 */
 if ( ! function_exists( 'minnpost_largo_manual_image_tag' ) ) :
 	function minnpost_largo_manual_image_tag( $image_id = '', $image_url = '', $attributes = array(), $object_type = 'post' ) {
@@ -1127,7 +1096,6 @@ endif;
 *
 * @param bool $use_shortcode
 * @param int $post_id
-*
 */
 if ( ! function_exists( 'email_preview_text' ) ) :
 	function email_preview_text( $use_shortcode = true, $post_id = 0 ) {

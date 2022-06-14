@@ -34,7 +34,8 @@
 							<div class="item-contents">
 								<img src="<?php minnpost_newsletter_logo( get_the_ID(), false ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="light-img">
 								<?php
-								/* this doesn't currently work because the mailchimp importer removes display none elements.
+								/*
+								 this doesn't currently work because the mailchimp importer removes display none elements.
 								[not-outlook]
 									<div class="dark-img-wrapper -emogrifier-keep">
 										<img src="<?php minnpost_newsletter_logo( get_the_ID(), true ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="dark-img -emogrifier-keep">
@@ -166,7 +167,7 @@
 								$body            = preg_replace_callback(
 									'/<h[2-6](.*?)/',
 									function ( $match ) use ( &$heading_counter, $ad_string ) {
-										# prefix second heading that is not an h1 with ad content
+										// prefix second heading that is not an h1 with ad content
 										if ( 2 === $heading_counter++ ) {
 											return $ad_string;
 										}
@@ -243,7 +244,15 @@
 					}
 					if ( '' !== $author_info ) {
 						?>
-						<div class="m-author-info m-author-info-excerpt<?php if ( is_singular() ) { ?> m-author-info-singular<?php } ?><?php if ( is_single() ) { ?> m-author-info-single<?php } ?>">
+						<div class="m-author-info m-author-info-excerpt
+						<?php
+						if ( is_singular() ) {
+							?>
+							 m-author-info-singular<?php } ?>
+							<?php
+							if ( is_single() ) {
+								?>
+							 m-author-info-single<?php } ?>">
 							<?php
 							$author_keys = array_keys( $coauthors );
 							$last_key    = end( $author_keys );
@@ -280,13 +289,13 @@
 										wp_nav_menu(
 											array(
 												'theme_location' => 'minnpost_network_email',
-												'menu_id'        => 'minnpost-network-emails',
-												'depth'          => 1,
-												'container'      => false,
-												'walker'         => new Minnpost_Email_Walker_Nav_Menu,
-												'priority'       => '20',
-												'items_wrap'     => '<tr id="%1$s" class="m-menu m-menu-%1$s">%3$s</tr>',
-												'item_classes'   => 'values',
+												'menu_id'  => 'minnpost-network-emails',
+												'depth'    => 1,
+												'container' => false,
+												'walker'   => new Minnpost_Email_Walker_Nav_Menu(),
+												'priority' => '20',
+												'items_wrap' => '<tr id="%1$s" class="m-menu m-menu-%1$s">%3$s</tr>',
+												'item_classes' => 'values',
 											)
 										);
 										?>

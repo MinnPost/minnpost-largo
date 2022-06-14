@@ -7,9 +7,8 @@
  */
 
 /**
-* Register custom post type 'newsletter'
-*
-*/
+ * Register custom post type 'newsletter'
+ */
 if ( ! function_exists( 'create_newsletter' ) ) :
 	add_action( 'init', 'create_newsletter' );
 	function create_newsletter() {
@@ -64,7 +63,6 @@ endif;
 *
 * @param object $query
 * @return object $query
-*
 */
 if ( ! function_exists( 'minnpost_newsletter_default_order' ) ) :
 	add_filter( 'pre_get_posts', 'minnpost_newsletter_default_order' );
@@ -167,7 +165,6 @@ endif;
 
 /**
 * Dropdown for filtering newsletters by type and region.
-*
 */
 if ( ! function_exists( 'minnpost_filter_restrict_manage_newsletter_posts' ) ) :
 	add_action( 'restrict_manage_posts', 'minnpost_filter_restrict_manage_newsletter_posts' );
@@ -176,8 +173,8 @@ if ( ! function_exists( 'minnpost_filter_restrict_manage_newsletter_posts' ) ) :
 		if ( isset( $_GET['post_type'] ) ) {
 			$type = esc_attr( $_GET['post_type'] );
 		}
-		//add filter to the post type you want
-		if ( 'newsletter' === $type ) { //Replace NAME_OF_YOUR_POST with the name of custom post
+		// add filter to the post type you want
+		if ( 'newsletter' === $type ) { // Replace NAME_OF_YOUR_POST with the name of custom post
 			$type_values = minnpost_largo_email_types();
 			?>
 			<select name="admin_filter_by_type">
@@ -201,9 +198,9 @@ endif;
 
 /**
 * Filter the admin query for newsletters by what type or region they are, if one is present.
+ *
 * @param object $query
 * @return object $query
-*
 */
 if ( ! function_exists( 'minnpost_newsletter_posts_filter' ) ) :
 	add_filter( 'parse_query', 'minnpost_newsletter_posts_filter' );
@@ -228,7 +225,6 @@ endif;
 *
 * @param array $post_types
 * @return array $post_types
-*
 */
 add_filter(
 	'coauthors_supported_post_types',
@@ -273,7 +269,6 @@ endif;
 /**
 * Register custom post type 'cr3ativsponsor'
 * The name is because we used to rely on a plugin that is no longer active.
-*
 */
 if ( ! function_exists( 'create_sponsor' ) ) :
 	add_action( 'init', 'create_sponsor' );
@@ -328,7 +323,6 @@ endif;
 
 /**
 * Register custom taxonomy for sponsors
-*
 */
 if ( ! function_exists( 'create_sponsor_level' ) ) :
 	add_action( 'init', 'create_sponsor_level', 0 );
@@ -348,7 +342,6 @@ endif;
 
 /**
 * Remove comments and trackbacks from the sponsor post because that's absurd
-*
 */
 if ( ! function_exists( 'minnpost_remove_sponsor_comment' ) ) :
 	add_action( 'init', 'minnpost_remove_sponsor_comment', 100 );
@@ -360,7 +353,6 @@ endif;
 
 /**
 * Edit the sponsor list display on the admin
-*
 */
 if ( ! function_exists( 'minnpost_edit_sponsor_columns' ) ) :
 	add_filter( 'manage_edit-cr3ativsponsor_columns', 'minnpost_edit_sponsor_columns' );
@@ -424,7 +416,6 @@ endif;
 
 /**
 * Register custom post type 'festival'
-*
 */
 if ( ! function_exists( 'create_festival_page' ) ) :
 	add_action( 'init', 'create_festival_page' );
@@ -477,7 +468,7 @@ if ( ! function_exists( 'create_festival_page' ) ) :
 				'title',
 				'revisions',
 				'editor',
-				//'author',
+				// 'author',
 			),
 			'hierarchical'        => false,
 			'public'              => true,
@@ -500,7 +491,6 @@ endif;
 
 /**
 * Register custom post type 'tonight'
-*
 */
 if ( ! function_exists( 'create_tonight_page' ) ) :
 	add_action( 'init', 'create_tonight_page' );
@@ -553,7 +543,7 @@ if ( ! function_exists( 'create_tonight_page' ) ) :
 				'title',
 				'revisions',
 				'editor',
-				//'author',
+				// 'author',
 			),
 			'hierarchical'        => false,
 			'public'              => true,
@@ -586,10 +576,11 @@ if ( ! function_exists( 'minnpost_exclude_from_search' ) ) :
 	function minnpost_exclude_from_search( $post_type, $args ) {
 
 		// public types
-		//$public_types = get_post_types( array( 'public' => true ), 'names' );
-		//error_log( 'public types is ' . print_r( $public_types, true ) );
+		// $public_types = get_post_types( array( 'public' => true ), 'names' );
+		// error_log( 'public types is ' . print_r( $public_types, true ) );
 
-		/* default value with non-public types enabled is:
+		/*
+		 default value with non-public types enabled is:
 		$post_types = array(
 			[post] => post
 			[page] => page
@@ -697,7 +688,7 @@ if ( ! function_exists( 'minnpost_message_regions' ) ) :
 		$regions = array(
 			'header'                  => __( 'Site Header', 'minnpost-largo' ),
 			'above_article_body'      => __( 'Above Article Body', 'minnpost-largo' ),
-			//'article_middle'        => __( 'Article Middle', 'minnpost-largo' ),
+			// 'article_middle'        => __( 'Article Middle', 'minnpost-largo' ),
 			'below_article_body'      => __( 'Below Article Body', 'minnpost-largo' ),
 			'article_bottom'          => __( 'Article Bottom', 'minnpost-largo' ),
 			'above_homepage_articles' => __( 'Above Homepage Articles', 'minnpost-largo' ),

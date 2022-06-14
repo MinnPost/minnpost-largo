@@ -26,7 +26,7 @@
 							'menu_id'        => 'footer-primary-links',
 							'depth'          => 1,
 							'container'      => false,
-							'walker'         => new Minnpost_Walker_Nav_Menu,
+							'walker'         => new Minnpost_Walker_Nav_Menu(),
 						)
 					);
 					?>
@@ -40,7 +40,7 @@
 							'menu_id'        => 'minnpost-network',
 							'depth'          => 1,
 							'container'      => false,
-							'walker'         => new Minnpost_Walker_Nav_Menu,
+							'walker'         => new Minnpost_Walker_Nav_Menu(),
 						)
 					);
 					?>

@@ -10,11 +10,11 @@
  */
 
 /**
-* Ad conditionals that aren't already included in the ad plugin
-*
-* @param array $conditionals
-* @return array $conditionals
-*/
+ * Ad conditionals that aren't already included in the ad plugin
+ *
+ * @param array $conditionals
+ * @return array $conditionals
+ */
 if ( ! function_exists( 'minnpost_acm_whitelisted_conditionals' ) ) :
 	add_filter( 'acm_whitelisted_conditionals', 'minnpost_acm_whitelisted_conditionals' );
 	function minnpost_acm_whitelisted_conditionals( $conditionals ) {
@@ -33,7 +33,6 @@ endif;
 * @param array $output
 * @param int $tag_id
 * @return string $output
-*
 */
 if ( ! function_exists( 'acm_no_ad_users' ) ) :
 	add_filter( 'acm_output_html_after_tokens_processed', 'acm_no_ad_users', 10, 2 );
@@ -66,7 +65,6 @@ endif;
 *
 * @param int $adcount
 * @return int $adcount
-*
 */
 if ( ! function_exists( 'minnpost_acm_ad_count' ) ) :
 	add_filter( 'acm_ad_code_count', 'minnpost_acm_ad_count' );
@@ -81,7 +79,6 @@ endif;
 *
 * @param string $current_provider_slug
 * @return string $current_provider_slug
-*
 */
 if ( ! function_exists( 'minnpost_acm_default_provider' ) ) :
 	add_filter( 'acm_provider_slug', 'minnpost_acm_default_provider' );
@@ -91,4 +88,4 @@ if ( ! function_exists( 'minnpost_acm_default_provider' ) ) :
 	}
 endif;
 
-//add_filter( 'acm_display_ad_codes_without_conditionals', '__return_true' );
+// add_filter( 'acm_display_ad_codes_without_conditionals', '__return_true' );

@@ -9,12 +9,12 @@
 
 
 /**
-* Allows us to determine if a popup should be shown to the user, after the conditions have been processed.
-* We use this to prevent popups on /support, /user, /account urls
-*
-* @param bool $show_message
-* @return string $region
-*/
+ * Allows us to determine if a popup should be shown to the user, after the conditions have been processed.
+ * We use this to prevent popups on /support, /user, /account urls
+ *
+ * @param bool $show_message
+ * @return string $region
+ */
 if ( ! function_exists( 'minnpost_message_show' ) ) :
 	add_filter( 'wp_message_inserter_show_message', 'minnpost_message_show', 10, 2 );
 	function minnpost_message_show( $show_message, $region ) {
@@ -110,7 +110,8 @@ if ( ! function_exists( 'minnpost_site_message_conditionals' ) ) :
 				'target',
 			),
 		);
-		/*$conditionals['benefit_eligible']     = array(
+		/*
+		$conditionals['benefit_eligible']     = array(
 			'group'    => __( 'User', 'minnpost-largo' ),
 			'name'     => __( 'User: Eligible For Benefit', 'minnpost-largo' ),
 			'fields'   => array(
@@ -422,7 +423,7 @@ if ( ! function_exists( 'minnpost_role_options' ) ) :
 		if ( null === $roles ) {
 			$roles = array();
 			if ( ! function_exists( 'get_editable_roles' ) ) {
-				require_once( ABSPATH . '/wp-admin/includes/user.php' );
+				require_once ABSPATH . '/wp-admin/includes/user.php';
 			}
 			$editable_roles = array_keys( get_editable_roles() );
 			foreach ( $editable_roles as $editable_role ) {
@@ -660,6 +661,7 @@ endif;
 
 /**
  * Use Elasticsearch to extend message queries
+ *
  * @param array $args
  * @return array $args
  */
@@ -667,7 +669,8 @@ if ( ! function_exists( 'minnpost_extend_message_args' ) ) :
 	add_filter( 'wp_message_inserter_post_args', 'minnpost_extend_message_args', 10, 1 );
 	function minnpost_extend_message_args( $args ) {
 		if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
-			/* if the bug where elasticsearch seemingly can't handle orderby comes back, these are solutions:
+			/*
+			 if the bug where elasticsearch seemingly can't handle orderby comes back, these are solutions:
 			if ( ! isset( $args['orderby'] ) ) {
 				$args['es'] = true; // elasticsearch.
 			} else {

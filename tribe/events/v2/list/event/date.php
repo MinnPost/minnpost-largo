@@ -3,7 +3,6 @@
  * View: List View - Single Event Date
  *
  * This overrides the default the-events-calendar/views/v2/list/event/date.php
- *
  */
 use Tribe__Date_Utils as Dates;
 $event_date_attr = $event->dates->start->format( Dates::DBDATEFORMAT );

@@ -7,7 +7,7 @@
  * @package MinnPost Largo
  */
 
-//use Pelago\Emogrifier\CssInliner;
+// use Pelago\Emogrifier\CssInliner;
 
 use Pelago\Emogrifier\CssInliner;
 use Pelago\Emogrifier\HtmlProcessor\CssToAttributeConverter;
@@ -58,7 +58,7 @@ if ( false === $is_legacy ) {
 	// remove newlines.
 	$html = preg_replace( "/\n/", '', $html );
 	// remove spaces between HTML tags. this causes issues for Outlook on windows, apparently.
-	//$html = preg_replace( '/>\s*</', '><', $html );
+	// $html = preg_replace( '/>\s*</', '><', $html );
 	// wrap the HTML at 500 characters for email clients.
 	$html = wordwrap( $html, 500 );
 } else {

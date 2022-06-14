@@ -7,14 +7,13 @@
  */
 
 /**
-* Return login url for users
-*
-* @param string $login_url
-* @param string $redirect
-* @param bool $force_reauth
-* @return string $login_url
-*
-*/
+ * Return login url for users
+ *
+ * @param string $login_url
+ * @param string $redirect
+ * @param bool $force_reauth
+ * @return string $login_url
+ */
 if ( ! function_exists( 'login_url' ) ) :
 	add_filter( 'login_url', 'login_url', 10, 3 );
 	function login_url( $login_url, $redirect, $force_reauth ) {
@@ -33,7 +32,6 @@ endif;
 *
 * @param string $register_url
 * @return string
-*
 */
 if ( ! function_exists( 'register_url' ) ) :
 	add_filter( 'register_url', 'register_url', 10, 1 );
@@ -48,7 +46,6 @@ endif;
 * @param string $lostpassword_url
 * @param string $redirect
 * @return string
-*
 */
 if ( ! function_exists( 'lostpassword_url' ) ) :
 	add_filter( 'lostpassword_url', 'my_lost_password_page', 10, 2 );
@@ -62,7 +59,6 @@ endif;
 *
 * @param string $login_form_action
 * @return string
-*
 */
 if ( ! function_exists( 'login_form_action' ) ) :
 	add_filter( 'user_account_management_login_form_action', 'login_form_action', 10, 1 );
@@ -77,7 +73,6 @@ endif;
 *
 * @param string $register_form_action
 * @return string
-*
 */
 if ( ! function_exists( 'register_form_action' ) ) :
 	add_filter( 'user_account_management_register_form_action', 'register_form_action', 10, 1 );
@@ -92,7 +87,6 @@ endif;
 *
 * @param string $lost_password_form_action
 * @return string
-*
 */
 if ( ! function_exists( 'lost_password_form_action' ) ) :
 	add_filter( 'user_account_management_lost_password_form_action', 'lost_password_form_action', 10, 1 );
@@ -107,7 +101,6 @@ endif;
 *
 * @param string $lost_password_form_action
 * @return string
-*
 */
 if ( ! function_exists( 'user_account_error_messages' ) ) :
 	add_filter( 'user_account_management_custom_error_message', 'user_account_error_messages', 10, 3 );
@@ -130,7 +123,6 @@ endif;
 *
 * @param string $template
 * @return string $template
-*
 */
 if ( ! function_exists( 'minnpost_largo_user_child_template' ) ) :
 	add_filter( 'page_template', 'minnpost_largo_user_child_template', 10, 1 );
@@ -144,17 +136,17 @@ if ( ! function_exists( 'minnpost_largo_user_child_template' ) ) :
 
 		if ( ( isset( $post->post_parent ) && $post->post_parent === $id ) || ( isset( $post->ID ) && $post->ID === $id ) ) {
 			// get top level parent page
-			//$parent = get_post( reset( array_reverse( get_post_ancestors( $post->ID ) ) ) );
+			// $parent = get_post( reset( array_reverse( get_post_ancestors( $post->ID ) ) ) );
 			// or ...
 			// when you need closest parent post instead
 			$parent = get_post( $post->post_parent );
 
 			$child_template = locate_template(
-				[
+				array(
 					$parent->post_name . '-' . $post->post_name . '.php',
 					$parent->post_name . '-' . $post->ID . '.php',
 					$parent->post_name . '.php',
-				]
+				)
 			);
 			if ( $child_template ) {
 				return $child_template;
@@ -169,7 +161,6 @@ endif;
 *
 * @param array $vars
 * @return array $vars
-*
 */
 if ( ! function_exists( 'minnpost_largo_user_rewrite' ) ) :
 	add_filter( 'query_vars', 'minnpost_largo_user_rewrite' );
@@ -184,7 +175,6 @@ endif;
 *
 * @param array $vars
 * @return array $vars
-*
 */
 if ( ! function_exists( 'minnpost_largo_user_rewrite_rule' ) ) :
 	add_action( 'init', 'minnpost_largo_user_rewrite_rule' );
@@ -203,7 +193,6 @@ endif;
 *
 * @param string $original_template
 * @return string
-*
 */
 if ( ! function_exists( 'minnpost_largo_user_rewrite_catch' ) ) :
 	add_action( 'template_include', 'minnpost_largo_user_rewrite_catch' );
@@ -223,8 +212,6 @@ endif;
 * This stops comment moderators from doing things with posts
 * WordPress would otherwise allow this, but it is not viable for us
 * This depends on the MinnPost Roles and Capabilities plugin
-*
-*
 */
 if ( ! function_exists( 'restrict_comment_moderators' ) ) :
 	add_action( 'admin_init', 'restrict_comment_moderators', 1 );
@@ -248,7 +235,6 @@ endif;
 * @param array $posted
 * @param array $existing_user_data
 * @return array $user_data
-*
 */
 if ( ! function_exists( 'add_to_user_data' ) ) :
 	add_filter( 'user_account_management_add_to_user_data', 'add_to_user_data', 10, 3 );
@@ -325,7 +311,6 @@ endif;
 * @param string $user_email
 * @param int $user_id
 * @return string $user_email
-*
 */
 if ( ! function_exists( 'mailchimp_set_form_user_email' ) ) :
 	add_filter( 'minnpost_form_processor_mailchimp_set_form_user_email', 'mailchimp_set_form_user_email', 10, 2 );
@@ -352,7 +337,6 @@ endif;
 * @param array $user_data
 * @param array $existing_user_data
 * @param int $user_id
-*
 */
 if ( ! function_exists( 'save_minnpost_user_data' ) ) :
 	add_action( 'user_account_management_post_user_data_save', 'save_minnpost_user_data', 10, 3 );
@@ -409,7 +393,6 @@ endif;
 *
 * @param array $query_args
 * @return array $existing_user_data
-*
 */
 if ( ! function_exists( 'filter_wp_dropdown_users_args' ) ) :
 	add_filter( 'wp_dropdown_users_args', 'filter_wp_dropdown_users_args' );

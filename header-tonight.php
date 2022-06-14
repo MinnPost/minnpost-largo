@@ -31,7 +31,7 @@
 						'theme_location' => 'tonight',
 						'menu_id'        => 'tonight-menu',
 						'container'      => false,
-						'walker'         => new Minnpost_Walker_Nav_Menu,
+						'walker'         => new Minnpost_Walker_Nav_Menu(),
 						'item_classes'   => 'values',
 						'items_wrap'     => '<ul id="%1$s" class="m-menu m-menu-%1$s">%3$s</ul>',
 					)
@@ -46,7 +46,19 @@
 			<div class="m-event-details m-tonight-dates">
 				<?php do_action( 'tribe_events_single_event_before_the_meta' ); ?>
 				<div class="m-event-date-and-calendar">
-					<?php get_template_part( 'tribe/events/modules/meta/date', '', array( 'object_type' => 'tonight', 'event_slug' => 'minnpost-tonight-2021', 'show_full_month_name' => true, 'show_timezone' => true, 'separator' => '&ndash;' ) ); ?>
+					<?php
+					get_template_part(
+						'tribe/events/modules/meta/date',
+						'',
+						array(
+							'object_type'          => 'tonight',
+							'event_slug'           => 'minnpost-tonight-2021',
+							'show_full_month_name' => true,
+							'show_timezone'        => true,
+							'separator'            => '&ndash;',
+						)
+					);
+					?>
 					<?php do_action( 'tribe_events_single_event_after_the_content' ); ?>
 				</div>
 			</div>

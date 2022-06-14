@@ -3,7 +3,8 @@
 // child theme can now use get_theme_file_path()
 
 // use parent styles?
-/*add_action( 'wp_enqueue_scripts', 'enqueue_parent_styles' );
+/*
+add_action( 'wp_enqueue_scripts', 'enqueue_parent_styles' );
 function enqueue_parent_styles() {
 	wp_enqueue_style( 'parent-style', get_theme_file_path().'/style.min.css' );
 }*/
@@ -51,7 +52,7 @@ require get_theme_file_path() . '/inc/custom-shortcodes.php';
 /**
  * Implement the Custom Header feature.
  */
-//require get_theme_file_path() . '/inc/custom-header.php';
+// require get_theme_file_path() . '/inc/custom-header.php';
 
 /**
  * Custom template functions for this theme.

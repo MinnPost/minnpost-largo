@@ -3,7 +3,6 @@
  * View: List Event
  *
  * This overrides the default the-events-calendar/views/v2/list/event.php
- *
  */
 
 $event_classes = tribe_get_post_class( array( 'm-post, m-event, tribe-events-calendar-list__event', 'tribe-common-g-row' ), $event->ID );

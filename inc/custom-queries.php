@@ -3,7 +3,6 @@
  * Create custom wp queries
  *
  * @package MinnPost Largo
- *
  */
 
 /*
@@ -85,7 +84,8 @@ if ( ! function_exists( 'custom_archive_query_vars' ) ) :
 
 					// if we have category IDs to exclude, exclude them from the query
 					if ( ! empty( $exclude_ids ) && is_array( $exclude_ids ) ) {
-						/*$taxonomy_parameters[] = array(
+						/*
+						$taxonomy_parameters[] = array(
 							'taxonomy' => 'category',
 							'field'    => 'term_id',
 							'terms'    => $exclude_ids,
@@ -157,7 +157,6 @@ endif;
 *
 * @param int $category_id
 * @return array $grouped_categories
-*
 */
 if ( ! function_exists( 'minnpost_main_search_query' ) ) :
 	add_filter( 'pre_get_posts', 'minnpost_main_search_query' );
@@ -176,7 +175,6 @@ endif;
 *
 * @param int $category_id
 * @return array $grouped_categories
-*
 */
 if ( ! function_exists( 'minnpost_get_grouped_categories' ) ) :
 	function minnpost_get_grouped_categories( $category_id = '' ) {
@@ -204,7 +202,6 @@ endif;
 *
 * @param int $category_id
 * @return array $grouping_category
-*
 */
 if ( ! function_exists( 'minnpost_get_grouping_category' ) ) :
 	function minnpost_get_grouping_category( $category_id = '' ) {
@@ -222,7 +219,6 @@ endif;
 *
 * @param int $category_id
 * @return array $exclude_ids
-*
 */
 if ( ! function_exists( 'minnpost_get_grouping_categories_to_exclude' ) ) :
 	function minnpost_get_grouping_categories_to_exclude( $category_id = '' ) {
@@ -278,7 +274,6 @@ endif;
  * @param string $where
  * @param object $query
  * @return string $where
- *
  */
 if ( ! function_exists( 'minnpost_query_title_starts_with' ) ) :
 	add_filter( 'posts_where', 'minnpost_query_title_starts_with', 10, 2 );
@@ -309,7 +304,6 @@ endif;
  * @param array $args
  * @param object $user_data
  * @return array $args
- *
  */
 if ( ! function_exists( 'minnpost_coauthor_linked_account_query' ) ) :
 	add_filter( 'staff_user_post_list_linked_account_query', 'minnpost_coauthor_linked_account_query', 10, 2 );
@@ -317,7 +311,7 @@ if ( ! function_exists( 'minnpost_coauthor_linked_account_query' ) ) :
 		$args                   = array();
 		$args['post_type']      = 'guest-author';
 		$args['posts_per_page'] = 1;
-		//$args['es'] = true; // the right meta are not indexed for this
+		// $args['es'] = true; // the right meta are not indexed for this
 		$consolidated_emails   = get_user_meta( $user_data->ID, '_consolidated_emails', true );
 		$consolidated_emails   = array_map( 'trim', explode( ',', $consolidated_emails ) );
 		$consolidated_emails[] = $user_data->user_email;

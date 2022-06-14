@@ -6,9 +6,8 @@
  */
 
 /**
-* Remove default largo sidebar settings
-*
-*/
+ * Remove default largo sidebar settings
+ */
 if ( ! function_exists( 'minnpost_largo_remove_widgets_init' ) ) :
 	add_action( 'widgets_init', 'minnpost_largo_remove_widgets_init', 11 );
 	function minnpost_largo_remove_widgets_init() {
@@ -34,7 +33,6 @@ endif;
  * Register our sidebar widget areas.
  *
  * @link https://developer.wordpress.org/themes/functionality/sidebars/#registering-a-sidebar
- *
  */
 if ( ! function_exists( 'minnpost_largo_widgets_init' ) ) :
 	add_action( 'widgets_init', 'minnpost_largo_widgets_init', 20 );

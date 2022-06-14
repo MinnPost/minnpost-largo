@@ -6,12 +6,11 @@
  */
 
 /**
-* Handle adding and removing of front end CSS in this theme
-* This also handles whether the CSS should be served as minified based on WP_DEBUG value
-* We can't use SCRIPT_DEBUG because our server fails to minify, so we have to keep that set to true, but these files are already minified.
-* todo: we should figure out if the above is still true on VIP
-*
-*/
+ * Handle adding and removing of front end CSS in this theme
+ * This also handles whether the CSS should be served as minified based on WP_DEBUG value
+ * We can't use SCRIPT_DEBUG because our server fails to minify, so we have to keep that set to true, but these files are already minified.
+ * todo: we should figure out if the above is still true on VIP
+ */
 if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
 	add_action( 'wp_enqueue_scripts', 'minnpost_largo_add_remove_styles', 10 );
 	function minnpost_largo_add_remove_styles() {
@@ -48,7 +47,6 @@ endif;
 
 /**
 * Handle adding and removing of front end CSS for the MinnPost Festival pages only
-*
 */
 if ( ! function_exists( 'minnpost_largo_festival_styles' ) ) :
 	add_action( 'wp_enqueue_scripts', 'minnpost_largo_festival_styles', 10 );
@@ -69,7 +67,6 @@ endif;
 
 /**
 * Handle adding and removing of front end CSS for the MinnPost Tonight pages only
-*
 */
 if ( ! function_exists( 'minnpost_largo_tonight_styles' ) ) :
 	add_action( 'wp_enqueue_scripts', 'minnpost_largo_tonight_styles', 10 );
@@ -90,7 +87,6 @@ endif;
 
 /**
 * Add polyfill for CSS properties
-*
 */
 if ( ! function_exists( 'minnpost_largo_custom_properties_polyfill' ) ) :
 	add_filter( 'wp_head', 'minnpost_largo_custom_properties_polyfill' );
@@ -103,7 +99,6 @@ endif;
 
 /**
 * Add typekit to link preconnect
-*
 */
 if ( ! function_exists( 'minnpost_largo_typekit_head' ) ) :
 	add_filter( 'wp_head', 'minnpost_largo_typekit_head' );
@@ -118,15 +113,14 @@ endif;
 * Handle adding and removing of front end JavaScript in this theme
 * This also handles whether the JavaScript should be served as minified based on WP_DEBUG value
 * We can't use SCRIPT_DEBUG because our server fails to minify, so we have to keep that set to true, but these files are already minified.
-*
 */
 if ( ! function_exists( 'minnpost_largo_add_remove_scripts' ) ) :
 	add_action( 'wp_enqueue_scripts', 'minnpost_largo_add_remove_scripts' );
 	function minnpost_largo_add_remove_scripts() {
-		//wp_add_inline_script( 'jquery-core', '$=jQuery;' ); // this would be nice, but it causes conflict with older scripts
+		// wp_add_inline_script( 'jquery-core', '$=jQuery;' ); // this would be nice, but it causes conflict with older scripts
 		// add
-		//wp_enqueue_script( 'modernizr', get_theme_file_uri() . '/assets/js/modernizr-custom.min.js', array(), '1.0', false );
-		//wp_enqueue_script( 'minnpost', get_theme_file_uri() . '/assets/js/minnpost.min.js', array( 'jquery', 'modernizr' ), filemtime( get_theme_file_path() . '/assets/js/minnpost.min.js' ), true );
+		// wp_enqueue_script( 'modernizr', get_theme_file_uri() . '/assets/js/modernizr-custom.min.js', array(), '1.0', false );
+		// wp_enqueue_script( 'minnpost', get_theme_file_uri() . '/assets/js/minnpost.min.js', array( 'jquery', 'modernizr' ), filemtime( get_theme_file_path() . '/assets/js/minnpost.min.js' ), true );
 		if ( class_exists( 'Republication_Tracker_Tool' ) ) {
 			wp_enqueue_script( 'republication-tracker-tool-js', plugins_url() . '/republication-tracker-tool/' . 'assets/widget.js', array( 'jquery' ), '1.0', true );
 		}
@@ -164,7 +158,6 @@ endif;
 
 /**
 * Handle adding and removing of admin JavaScript and CSS in this theme
-*
 */
 if ( ! function_exists( 'minnpost_admin_style' ) ) :
 	add_action( 'admin_enqueue_scripts', 'minnpost_admin_style' );
@@ -176,7 +169,6 @@ endif;
 
 /**
 * Custom dimensions for Google Analytics
-*
 */
 if ( ! function_exists( 'minnpost_google_analytics_dimensions' ) ) :
 	add_action( 'wp_analytics_tracking_generator_custom_dimensions', 'minnpost_google_analytics_dimensions', 10, 1 );
@@ -245,7 +237,6 @@ endif;
 *
 * @param array $classes
 * @return array $classes
-*
 */
 if ( ! function_exists( 'minnpost_largo_body_classes' ) ) :
 	add_filter( 'body_class', 'minnpost_largo_body_classes' );
@@ -284,10 +275,9 @@ endif;
 
 /**
 * Add inline CSS from a remote URL we're loading via shortcode
-*
 */
 if ( ! function_exists( 'minnpost_shortcode_styles' ) ) :
-	//add_action( 'wp_enqueue_scripts', 'minnpost_shortcode_styles', 10 );
+	// add_action( 'wp_enqueue_scripts', 'minnpost_shortcode_styles', 10 );
 	function minnpost_shortcode_styles() {
 		global $post;
 		if ( ! is_main_query() || ! is_singular() ) {
@@ -304,7 +294,7 @@ if ( ! function_exists( 'minnpost_shortcode_styles' ) ) :
 				$get = str_replace( ' ', '&', $matches[3][ $key ] );
 				parse_str( $get, $output );
 
-				//get all shortcode attribute keys
+				// get all shortcode attribute keys
 				$keys     = array_unique( array_merge( $keys, array_keys( $output ) ) );
 				$result[] = $output;
 			}
@@ -315,7 +305,7 @@ if ( ! function_exists( 'minnpost_shortcode_styles' ) ) :
 					foreach ( $keys as $attr_key ) {
 						$result[ $key ][ $attr_key ] = isset( $result[ $key ][ $attr_key ] ) ? $result[ $key ][ $attr_key ] : null;
 					}
-					//sort the array key
+					// sort the array key
 					ksort( $result[ $key ] );
 					if ( ! isset( $result[ $key ]['url'] ) ) {
 						unset( $result[ $key ] );
@@ -336,10 +326,9 @@ endif;
 
 /**
 * Add inline JavaScript from a remote URL we're loading via shortcode
-*
 */
 if ( ! function_exists( 'minnpost_shortcode_scripts' ) ) :
-	//add_action( 'wp_enqueue_scripts', 'minnpost_shortcode_scripts', 10 );
+	// add_action( 'wp_enqueue_scripts', 'minnpost_shortcode_scripts', 10 );
 	function minnpost_shortcode_scripts() {
 		global $post;
 		if ( ! is_main_query() || ! is_singular() ) {
@@ -356,7 +345,7 @@ if ( ! function_exists( 'minnpost_shortcode_scripts' ) ) :
 				$get = str_replace( ' ', '&', $matches[3][ $key ] );
 				parse_str( $get, $output );
 
-				//get all shortcode attribute keys
+				// get all shortcode attribute keys
 				$keys     = array_unique( array_merge( $keys, array_keys( $output ) ) );
 				$result[] = $output;
 			}
@@ -367,7 +356,7 @@ if ( ! function_exists( 'minnpost_shortcode_scripts' ) ) :
 					foreach ( $keys as $attr_key ) {
 						$result[ $key ][ $attr_key ] = isset( $result[ $key ][ $attr_key ] ) ? $result[ $key ][ $attr_key ] : null;
 					}
-					//sort the array key
+					// sort the array key
 					ksort( $result[ $key ] );
 					if ( ! isset( $result[ $key ]['url'] ) ) {
 						unset( $result[ $key ] );

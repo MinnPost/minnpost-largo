@@ -35,7 +35,11 @@
 	if ( ! isset( $remove_title_from_display ) || 'on' !== $remove_title_from_display ) {
 		?>
 		<?php if ( ! is_archive() ) : ?>
-			<header class="m-entry-header<?php if ( is_singular() || is_404() ) { ?> m-entry-header-singular<?php } ?>">
+			<header class="m-entry-header
+			<?php
+			if ( is_singular() || is_404() ) {
+				?>
+				 m-entry-header-singular<?php } ?>">
 				<?php the_title( '<h1 class="a-entry-title">', '</h1>' ); ?>
 			</header><!-- .m-entry-header -->
 		<?php endif; ?>

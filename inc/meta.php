@@ -6,9 +6,8 @@
  */
 
 /**
-* Make sure theme always uses the <title> tag. This fixes a homepage issue.
-*
-*/
+ * Make sure theme always uses the <title> tag. This fixes a homepage issue.
+ */
 if ( ! function_exists( 'minnpost_largo_title_tag' ) ) :
 	add_action( 'after_setup_theme', 'minnpost_largo_title_tag' );
 	function minnpost_largo_title_tag() {
@@ -202,7 +201,7 @@ if ( ! function_exists( 'minnpost_largo_author_schema' ) ) :
 		$pieces    = array();
 		foreach ( $coauthors as $coauthor ) {
 			$data = array(
-				//'@id' => $id,
+				// '@id' => $id,
 				'@type' => 'Person',
 				'name'  => $coauthor->display_name,
 			);
@@ -237,7 +236,6 @@ endif;
 
 /**
 * Set meta tags in <head>
-*
 */
 if ( ! function_exists( 'minnpost_largo_add_meta_tags' ) ) :
 	add_action( 'wp_head', 'minnpost_largo_add_meta_tags' );
@@ -346,7 +344,6 @@ endif;
 * Output social image meta fields
 *
 * @param int $id
-*
 */
 if ( ! function_exists( 'minnpost_largo_social_images' ) ) :
 	function minnpost_largo_social_images( $id = '' ) {
@@ -365,7 +362,6 @@ endif;
 *
 * @param int $id
 * @param array $meta_images
-*
 */
 if ( ! function_exists( 'minnpost_largo_get_social_images' ) ) :
 	function minnpost_largo_get_social_images( $id = '' ) {
@@ -383,7 +379,6 @@ endif;
 
 /**
 * Output default images into <meta> tags
-*
 */
 if ( ! function_exists( 'minnpost_largo_default_meta_images' ) ) :
 	function minnpost_largo_default_meta_images() {
@@ -424,7 +419,6 @@ endif;
 
 /**
 * Set a favicon.ico for wp-admin URLs
-*
 */
 if ( ! function_exists( 'admin_favicon' ) ) :
 	add_action( 'admin_head', 'admin_favicon' );
@@ -435,7 +429,6 @@ endif;
 
 /**
 * Remove admin dashboard widgets we don't want. They're stored in $wp_meta_boxes.
-*
 */
 if ( ! function_exists( 'remove_dashboard_widgets' ) ) :
 	add_action( 'wp_dashboard_setup', 'remove_dashboard_widgets' );

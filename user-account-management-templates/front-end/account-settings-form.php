@@ -104,7 +104,7 @@
 
 		<div class="m-form-item m-form-street-address m-form-change-street-address">
 			<label for="street-address"><?php echo esc_html__( 'Street address:', 'minnpost-largo' ); ?></label>
-			<?php 
+			<?php
 			if ( isset( $_POST['street_address'] ) ) {
 				$street_address = sanitize_text_field( $_POST['street_address'] );
 			} elseif ( isset( $attributes['user_meta']['_street_address'] ) ) {

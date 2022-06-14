@@ -43,19 +43,19 @@
 						'menu_id'        => 'primary-links',
 						'depth'          => 1,
 						'container'      => false,
-						'walker'         => new Minnpost_Walker_Nav_Menu,
+						'walker'         => new Minnpost_Walker_Nav_Menu(),
 						'priority'       => '20',
 						'items_wrap'     => '<ul hidden id="%1$s" class="m-menu m-menu-%1$s">%3$s</ul>',
-						//'item_classes'   => 'values',
+						// 'item_classes'   => 'values',
 					)
 				);
 				wp_nav_menu(
 					array(
 						'theme_location' => 'primary_actions',
 						'menu_id'        => 'primary-actions',
-						//'depth'          => 1,
+						// 'depth'          => 1,
 						'container'      => false,
-						'walker'         => new Minnpost_Walker_Nav_Menu,
+						'walker'         => new Minnpost_Walker_Nav_Menu(),
 						'item_classes'   => 'values',
 						'items_wrap'     => '<ul id="%1$s" class="m-menu m-menu-%1$s">%3$s</ul>',
 					)

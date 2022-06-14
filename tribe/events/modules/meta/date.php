@@ -1,7 +1,6 @@
 <?php
 /**
  * Single Event Meta (Date) Template
- *
  */
 use Tribe__Date_Utils as Dates;
 $event_id        = apply_filters( 'minnpost_largo_set_event_id', get_the_ID(), $args );

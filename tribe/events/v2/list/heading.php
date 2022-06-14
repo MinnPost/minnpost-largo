@@ -3,7 +3,6 @@
  * View: Heading
  *
  * This changes the page heading between past and upcoming events
- *
  */
 ?>
 

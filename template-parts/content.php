@@ -30,7 +30,15 @@
 	}
 	?>
 
-	<header class="m-entry-header<?php if ( is_singular() ) { ?> m-entry-header-singular<?php } ?><?php if ( is_single() ) { ?> m-entry-header-single<?php } ?>">
+	<header class="m-entry-header
+	<?php
+	if ( is_singular() ) {
+		?>
+		 m-entry-header-singular<?php } ?>
+		<?php
+		if ( is_single() ) {
+			?>
+		 m-entry-header-single<?php } ?>">
 		<?php
 		$hide_title = get_post_meta( $id, '_mp_remove_title_from_display', true );
 		if ( 'on' !== $hide_title ) {
@@ -84,7 +92,7 @@
 	<div class="o-entry<?php echo $layout_class; ?>">
 		<?php
 		// keep share buttons horizontal if instructed
-		$layout_class_meta = '';
+		$layout_class_meta               = '';
 		$share_buttons_always_horizontal = get_post_meta( $id, '_mp_share_buttons_always_horizontal', true );
 		if ( 'on' === $share_buttons_always_horizontal ) {
 			$layout_class_meta .= ' m-entry-meta-horizontal';
@@ -117,7 +125,15 @@
 	}
 	if ( '' !== $author_info ) {
 		?>
-	<aside class="m-author-info m-author-info-excerpt<?php if ( is_singular() ) { ?> m-author-info-singular<?php } ?><?php if ( is_single() ) { ?> m-author-info-single<?php } ?>">
+	<aside class="m-author-info m-author-info-excerpt
+		<?php
+		if ( is_singular() ) {
+			?>
+		 m-author-info-singular<?php } ?>
+		<?php
+		if ( is_single() ) {
+			?>
+		 m-author-info-single<?php } ?>">
 		<?php
 		foreach ( $coauthors as $coauthor ) :
 			$author_id = $coauthor->ID;

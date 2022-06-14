@@ -6,10 +6,9 @@
  */
 
 /**
-* Add image settings for posts.
-* These are created when an image is uploaded.
-*
-*/
+ * Add image settings for posts.
+ * These are created when an image is uploaded.
+ */
 if ( ! function_exists( 'minnpost_image_settings' ) ) :
 	add_action( 'after_setup_theme', 'minnpost_image_settings' );
 	function minnpost_image_settings() {
@@ -25,29 +24,31 @@ if ( ! function_exists( 'minnpost_image_settings' ) ) :
 		add_image_size( 'author-teaser', '75', '9999', false );
 		add_image_size( 'author-thumbnail', '130', '85', true );
 		add_image_size( 'partner-logo', '200', '9999', false );
-		add_image_size( 'sponsor-thumb', '130', '130', false ); 
+		add_image_size( 'sponsor-thumb', '130', '130', false );
 	}
 endif;
 
 /**
 * Add image sizes to media chooser
 * These are added to dropdown when images are chosen in posts
-*
 */
 if ( ! function_exists( 'minnpost_image_size_chooser' ) ) :
 	add_filter( 'image_size_names_choose', 'minnpost_image_size_chooser' );
 	function minnpost_image_size_chooser( $sizes ) {
-		return array_merge( $sizes, array(
-			'feature'                  => __( 'Feature', 'minnpost-largo' ),
-			'feature-large'            => __( 'Feature large', 'minnpost-largo' ),
-			'feature-medium'           => __( 'Feature medium', 'minnpost-largo' ),
-			'newsletter-thumbnail'     => __( 'Newsletter thumbnail', 'minnpost-largo' ),
-			'category-featured-column' => __( 'Featured column', 'minnpost-largo' ),
-			'author-image'             => __( 'Author photo', 'minnpost-largo' ),
-			'author-teaser'            => __( 'Author teaser', 'minnpost-largo' ),
-			'author-thumbnail'         => __( 'Author thumbnail', 'minnpost-largo' ),
-			'partner-logo'             => __( 'Partner logo', 'minnpost-largo' ),
-		) );
+		return array_merge(
+			$sizes,
+			array(
+				'feature'                  => __( 'Feature', 'minnpost-largo' ),
+				'feature-large'            => __( 'Feature large', 'minnpost-largo' ),
+				'feature-medium'           => __( 'Feature medium', 'minnpost-largo' ),
+				'newsletter-thumbnail'     => __( 'Newsletter thumbnail', 'minnpost-largo' ),
+				'category-featured-column' => __( 'Featured column', 'minnpost-largo' ),
+				'author-image'             => __( 'Author photo', 'minnpost-largo' ),
+				'author-teaser'            => __( 'Author teaser', 'minnpost-largo' ),
+				'author-thumbnail'         => __( 'Author thumbnail', 'minnpost-largo' ),
+				'partner-logo'             => __( 'Partner logo', 'minnpost-largo' ),
+			)
+		);
 	}
 endif;
 
@@ -104,7 +105,6 @@ endif;
  *
  * @param int $post_id
  * @return array $credit
- *
  */
 if ( ! function_exists( 'get_media_credit_data' ) ) :
 	function get_media_credit_data( $post_id = 0 ) {
@@ -137,7 +137,6 @@ endif;
  *
  * @param int $post_id
  * @return string $credit
- *
  */
 if ( ! function_exists( 'minnpost_get_media_credit_html' ) ) :
 	function minnpost_get_media_credit_html( $post_id = 0 ) {
@@ -169,7 +168,6 @@ endif;
  * @param string $size
  * @param string $alt
  * @return string $html
- *
  */
 if ( ! function_exists( 'minnpost_largo_image_add_caption_with_credit' ) ) :
 	// remove the existing filter
@@ -261,7 +259,6 @@ endif;
  * @param array $attributes
  * @param string $content
  * @return string $content
- *
  */
 if ( ! function_exists( 'minnpost_largo_image_caption' ) ) :
 	add_shortcode( 'image_caption', 'minnpost_largo_image_caption' );
@@ -276,7 +273,6 @@ endif;
  * @param array $attributes
  * @param string $content
  * @return string $content
- *
  */
 if ( ! function_exists( 'minnpost_largo_image_credit' ) ) :
 	add_shortcode( 'image_credit', 'minnpost_largo_image_credit' );
@@ -291,14 +287,16 @@ endif;
  * @param array $attributes
  * @param string $content
  * @return string $content
- *
  */
 if ( ! function_exists( 'minnpost_largo_div_shortcode' ) ) :
 	add_shortcode( 'div', 'minnpost_largo_div_shortcode' );
 	function minnpost_largo_div_shortcode( $attributes, $content = '' ) {
-		$a = shortcode_atts( array(
-			'class' => '',
-		), $attributes );
+		$a = shortcode_atts(
+			array(
+				'class' => '',
+			),
+			$attributes
+		);
 		if ( 'caption' === $a['class'] ) {
 			return '<div class="a-media-meta a-media-caption">' . $content . '</div>';
 		} elseif ( 'credit' === $a['class'] ) {
@@ -315,7 +313,6 @@ endif;
  * @param array $attributes
  * @param string $content
  * @return string $html
- *
  */
 if ( ! function_exists( 'minnpost_largo_fix_shortcode' ) ) :
 	add_filter( 'img_caption_shortcode', 'minnpost_largo_fix_shortcode', 10, 3 );
@@ -379,7 +376,6 @@ add_filter( 'img_caption_shortcode_width', '__return_false' );
 *
 * @param string $image_size
 * @return string $image_size
-*
 */
 if ( ! function_exists( 'minnpost_largo_staff_image_size' ) ) :
 	add_filter( 'staff_user_post_list_image_size', 'minnpost_largo_staff_image_size' );

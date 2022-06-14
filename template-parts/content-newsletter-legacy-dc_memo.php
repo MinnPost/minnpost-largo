@@ -257,7 +257,7 @@ a[x-apple-data-detectors] {
 				$body            = preg_replace_callback(
 					'/<h[2-6](.*?)/',
 					function ( $match ) use ( &$heading_counter, $ad_string ) {
-						# prefix second heading that is not an h1 with ad content
+						// prefix second heading that is not an h1 with ad content
 						if ( 2 === $heading_counter++ ) {
 							return $ad_string;
 						}

@@ -3,7 +3,6 @@
  * View: List View
  *
  * This overrides the default the-events-calendar/views/v2/list/nav.php
- *
  */
 
 $years = minnpost_event_addon_event_years( 'tribe-bar-year', 'DESC', false, true );

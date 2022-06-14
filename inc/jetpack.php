@@ -6,9 +6,8 @@
  */
 
 /**
-* Remove share links that are automatically added
-*
-*/
+ * Remove share links that are automatically added
+ */
 if ( ! function_exists( 'jptweak_remove_share' ) ) :
 	add_action( 'loop_start', 'jptweak_remove_share' );
 	function jptweak_remove_share() {
@@ -22,13 +21,11 @@ endif;
 
 /**
 * Remove count from share buttons
-*
 */
 add_filter( 'jetpack_sharing_counts', '__return_false' );
 
 /**
 * Implode front end CSS added by Jetpack.
-*
 */
 add_filter( 'jetpack_implode_frontend_css', '__return_false', 99 );
 
@@ -199,7 +196,6 @@ endif;
  *
  * @param array $filters
  * @return array $filters
- *
  */
 if ( ! function_exists( 'minnpost_largo_jetpack_exclude_category' ) ) :
 	add_filter( 'jetpack_relatedposts_filter_filters', 'minnpost_largo_jetpack_exclude_category' );
@@ -295,7 +291,6 @@ endif;
  * @param array $exclude_post_ids
  * @param int $post_id
  * @return array $coronavirus_update_ids
- *
  */
 if ( ! function_exists( 'minnpost_related_exclude_coronavirus_updates' ) ) :
 	add_filter( 'jetpack_relatedposts_filter_exclude_post_ids', 'minnpost_related_exclude_coronavirus_updates' );
@@ -314,7 +309,6 @@ endif;
  *
  * @param array $date_range
  * @return array $date_range
- *
  */
 if ( ! function_exists( 'minnpost_largo_jetpack_related_date_range' ) ) :
 	add_filter( 'jetpack_relatedposts_filter_date_range', 'minnpost_largo_jetpack_related_date_range' );

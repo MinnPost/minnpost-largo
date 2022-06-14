@@ -13,7 +13,7 @@
 	<p class="registered-since">On MinnPost since <?php echo minnpost_largo_get_ap_date( $user->user_registered ); ?></p>
 
 	<?php
-	# The comment functions use the query var 'cpage', so we'll ensure that's set
+	// The comment functions use the query var 'cpage', so we'll ensure that's set
 	$page = (int) get_query_var( 'page' );
 	if ( 0 === $page ) {
 		$page = 1;

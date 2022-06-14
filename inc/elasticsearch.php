@@ -18,7 +18,8 @@ if ( ! function_exists( 'minnpost_indexable_post_types' ) ) :
 		// indexable types. this list below is current as of 2/18/22.
 		// use $public_types = get_post_types( array( 'public' => true ), 'names' );
 		// to get more types that are available to be indexed.
-		/*$types = array(
+		/*
+		$types = array(
 			'post'                => 'post',
 			'page'                => 'page',
 			'thank_you_gift'      => 'thank_you_gift',
@@ -92,7 +93,7 @@ if ( ! function_exists( 'minnpost_indexable_post_meta' ) ) :
 	add_filter( 'vip_search_post_meta_allow_list', 'minnpost_indexable_post_meta', 10, 2 );
 	function minnpost_indexable_post_meta( $allow, $post = null ) {
 		// for site message queries
-		//error_log( 'post type is ' . $post->post_type );
+		// error_log( 'post type is ' . $post->post_type );
 		if ( is_object( $post ) && 'message' === $post->post_type ) {
 			$allow['_wp_inserted_message_region']               = true;
 			$allow['_wp_inserted_message_conditional_operator'] = true;
@@ -113,7 +114,7 @@ endif;
  * @return array $taxonomy_names the array of allowable taxonomy names
  */
 if ( ! function_exists( 'minnpost_indexable_taxonomy_names' ) ) :
-	//add_filter( 'vip_search_post_taxonomies_allow_list', 'minnpost_indexable_taxonomy_names', 10, 2 );
+	// add_filter( 'vip_search_post_taxonomies_allow_list', 'minnpost_indexable_taxonomy_names', 10, 2 );
 	function minnpost_indexable_taxonomy_names( $taxonomy_names, $post ) {
 		return $taxonomy_names;
 	}
@@ -147,7 +148,6 @@ endif;
  *
  * @param array $args
  * @return array $args
- *
  */
 if ( ! function_exists( 'minnpost_largo_elasticpress_related_args' ) ) :
 	add_filter( 'ep_find_related_args', 'minnpost_largo_elasticpress_related_args' );
@@ -235,9 +235,9 @@ if ( ! function_exists( 'minnpost_largo_elasticpress_related_args' ) ) :
 		}
 
 		// date range we want. production only.
-		//if ( 'production' === VIP_GO_ENV ) {
+		// if ( 'production' === VIP_GO_ENV ) {
 		$args['date_query'] = array( 'after' => '2 weeks ago' );
-		//}
+		// }
 
 		return $args;
 	}
@@ -296,9 +296,9 @@ endif;
  * @return array $filters
  */
 if ( ! function_exists( 'minnpost_elasticpress_analyzer_language' ) ) :
-	//add_filter( 'ep_analyzer_language', 'minnpost_elasticpress_analyzer_language', 10, 2 );
+	// add_filter( 'ep_analyzer_language', 'minnpost_elasticpress_analyzer_language', 10, 2 );
 	function minnpost_elasticpress_analyzer_language( $language, $context ) {
-		//return 'english';
+		// return 'english';
 		error_log( 'language is ' . $language );
 		return $language;
 	}

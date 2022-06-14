@@ -2,20 +2,18 @@
 /**
  * Custom template functions for this theme.
  *
- *
  * @package MinnPost Largo
  */
 
 /**
-* Get the story image based on where it should go
-*
-* @param string $size
-* @param array $attributes
-* @param int $id
-*
-* @return array $image_data
-*
-*/
+ * Get the story image based on where it should go
+ *
+ * @param string $size
+ * @param array $attributes
+ * @param int $id
+ *
+ * @return array $image_data
+ */
 if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 	/**
 	 * Returns story image, whether large or various kinds of thumbnail, depending on where it is called
@@ -116,7 +114,6 @@ endif;
 * @param array $attributes
 *
 * @return string $image_url
-*
 */
 if ( ! function_exists( 'get_minnpost_modified_image_url' ) ) :
 	function get_minnpost_modified_image_url( $image_url, $attributes = array() ) {
@@ -136,7 +133,6 @@ endif;
 *
 * @param int $id
 * @return string
-*
 */
 if ( ! function_exists( 'minnpost_get_posted_on' ) ) :
 	/**
@@ -203,7 +199,6 @@ endif;
 * @param string $part
 * @param string $part_to_remove
 * @return string $date
-*
 */
 if ( ! function_exists( 'minnpost_largo_get_ap_date' ) ) :
 	function minnpost_largo_get_ap_date( $date_string, $part = '', $part_to_remove = '' ) {
@@ -275,7 +270,6 @@ endif;
 *
 * @return string $time_string
 * @return string $time
-*
 */
 if ( ! function_exists( 'minnpost_largo_get_ap_time' ) ) :
 	function minnpost_largo_get_ap_time( $time_string ) {
@@ -326,7 +320,6 @@ endif;
 *
 * @param string $time_string
 * @return string $timezone
-*
 */
 if ( ! function_exists( 'minnpost_largo_get_timezone' ) ) :
 	function minnpost_largo_get_timezone( $time_string ) {
@@ -346,7 +339,6 @@ endif;
 * @param bool $include_title
 * @param bool $link_name
 * @return string
-*
 */
 if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
 	function minnpost_get_posted_by( $id = '', $include_title = false, $link_name = false ) {
@@ -420,7 +412,6 @@ endif;
 *
 * @param string $placement
 * @param int $post_id
-*
 */
 if ( ! function_exists( 'minnpost_get_related_on_listing' ) ) :
 	function minnpost_get_related_on_listing( $placement, $post_id ) {
@@ -446,7 +437,6 @@ endif;
 * @param int $post_id
 * @param int $count
 * @return array $related
-*
 */
 if ( ! function_exists( 'minnpost_get_related' ) ) :
 	function minnpost_get_related( $type = 'content', $post_id = 0, $count = 3 ) {
@@ -584,7 +574,6 @@ endif;
 * Get the related terms a post should link to
 *
 * @return array $related_terms
-*
 */
 if ( ! function_exists( 'minnpost_get_related_terms' ) ) :
 	function minnpost_get_related_terms() {
@@ -608,7 +597,6 @@ endif;
 * Get the terms that should be excluded from related posts
 *
 * @return array $exclude_ids
-*
 */
 if ( ! function_exists( 'minnpost_largo_get_excluded_related_terms' ) ) :
 	function minnpost_largo_get_excluded_related_terms() {
@@ -634,7 +622,6 @@ endif;
 * Get the posts that should be excluded from related posts
 *
 * @return array $post_ids
-*
 */
 if ( ! function_exists( 'minnpost_largo_get_excluded_related_posts' ) ) :
 	function minnpost_largo_get_excluded_related_posts() {
@@ -694,7 +681,6 @@ endif;
 * @param bool $end
 *
 * @return string $output
-*
 */
 if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 	/**
@@ -757,7 +743,7 @@ if ( ! function_exists( 'minnpost_get_author_figure' ) ) :
 
 		// Make sure the guest author actually exists
 		if ( class_exists( 'CoAuthors_Guest_Authors' ) ) {
-			$guest_authors = new CoAuthors_Guest_Authors;
+			$guest_authors = new CoAuthors_Guest_Authors();
 			$guest_author  = $guest_authors->get_guest_author_by( 'ID', (int) $author_id );
 			if ( ! $guest_author ) {
 				$count = 0;
@@ -972,13 +958,13 @@ endif;
 * @param string $size
 *
 * @return array $image_data
-*
 */
 if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 	function minnpost_get_author_image( $author_id = '', $size = 'photo', $lazy_load = true ) {
 
 		$author_sizes = array(
-			/*array(
+			/*
+			array(
 				'name'      => 'photo',
 				'media'     => '(min-width: 80em)',
 				'width'     => 225,
@@ -988,7 +974,7 @@ if ( ! function_exists( 'minnpost_get_author_image' ) ) :
 				'name'  => 'author-photo',
 				'media' => '(min-width: 640px)',
 				'width' => 190,
-				//'placement' => 'post',
+				// 'placement' => 'post',
 			),
 			array(
 				'name'  => 'author-teaser',
@@ -1082,7 +1068,6 @@ endif;
 * @param bool $end
 *
 * @return string $output
-*
 */
 if ( ! function_exists( 'minnpost_get_speaker_figure' ) ) :
 	function minnpost_get_speaker_figure( $speaker_id = '', $photo_size = 'full', $text_field = 'the_excerpt', $include_text = true, $name_field = 'the_title', $include_name = true, $include_link = false, $title_field = '_tribe_ext_speaker_title', $include_title = true, $include_twitter = false, $twitter_field = '_tribe_ext_speaker_twitter_username', $lazy_load = true ) {
@@ -1123,7 +1108,7 @@ if ( ! function_exists( 'minnpost_get_speaker_figure' ) ) :
 			return;
 		}
 
-		//$text = wpautop( $text ); // for some reason the paragraphs don't work without this
+		// $text = wpautop( $text ); // for some reason the paragraphs don't work without this
 		$text = apply_filters( 'the_content', $text );
 
 		if ( '' !== $image_id ) {
@@ -1218,7 +1203,6 @@ endif;
 * @param bool $lazy_load
 *
 * @return array $image_data
-*
 */
 if ( ! function_exists( 'minnpost_get_speaker_image' ) ) :
 	function minnpost_get_speaker_image( $speaker_id = '', $size = 'full', $lazy_load = true ) {
@@ -1273,7 +1257,6 @@ endif;
 * @param bool $lazy_load
 * @param array $attributes
 * @return string $output
-*
 */
 if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
 	function minnpost_get_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false, $link_on = 'title', $lazy_load = true, $attributes = array() ) {
@@ -1335,7 +1318,6 @@ endif;
 * @param bool $lazy_load
 * @param array $attributes
 * @return array $image_data
-*
 */
 if ( ! function_exists( 'minnpost_get_term_image' ) ) :
 	function minnpost_get_term_image( $category_id = '', $size = 'feature', $lazy_load = true, $attributes = array() ) {
@@ -1380,7 +1362,6 @@ endif;
 * @param int $category_id
 * @param string $size
 * @return string $text
-*
 */
 if ( ! function_exists( 'minnpost_get_term_text' ) ) :
 	function minnpost_get_term_text( $category_id = '', $size = 'feature' ) {
@@ -1400,7 +1381,6 @@ endif;
 *
 * @param int $category_id
 * @return string $list_item
-*
 */
 if ( ! function_exists( 'minnpost_get_term_extra_links' ) ) :
 	function minnpost_get_term_extra_links( $category_id = '' ) {
@@ -1431,7 +1411,6 @@ endif;
 *
 * @param int $post_id
 * @return string $category_name
-*
 */
 if ( ! function_exists( 'minnpost_get_category_name' ) ) :
 	function minnpost_get_category_name( $post_id = '' ) {
@@ -1463,7 +1442,6 @@ endif;
 *
 * @param int $post_id
 * @return int $category_id
-*
 */
 if ( ! function_exists( 'minnpost_get_permalink_category_id' ) ) :
 	function minnpost_get_permalink_category_id( $post_id = '' ) {
@@ -1495,7 +1473,6 @@ endif;
 * @param int $post_id
 * @param int $category_id
 * @return int $category_group_id
-*
 */
 if ( ! function_exists( 'minnpost_get_category_group_id' ) ) :
 	function minnpost_get_category_group_id( $post_id = '', $category_id = '' ) {
@@ -1519,7 +1496,6 @@ endif;
 *
 * @param int $post_id
 * @return string $pre_title_text
-*
 */
 if ( ! function_exists( 'minnpost_get_replace_category_text' ) ) :
 	function minnpost_get_replace_category_text( $post_id = '' ) {
@@ -1537,7 +1513,6 @@ endif;
 * @param string $object_type
 * @param int $object_id
 * @return string
-*
 */
 if ( ! function_exists( 'minnpost_get_content_sponsorship' ) ) :
 	function minnpost_get_content_sponsorship( $object_type = 'post', $object_id = '' ) {
@@ -1630,7 +1605,6 @@ endif;
 * @param int $post_id
 * @param int $category_id
 * @return string
-*
 */
 if ( ! function_exists( 'minnpost_get_deck' ) ) :
 	function minnpost_get_deck( $post_id = '' ) {
@@ -1651,7 +1625,6 @@ endif;
 *
 * @param string $title
 * @return string $title
-*
 */
 add_filter(
 	'get_the_archive_title',
@@ -1681,7 +1654,6 @@ add_filter(
 *
 * @param string $title
 * @return string $title
-*
 */
 if ( ! function_exists( 'minnpost_user_title_parts' ) ) :
 	add_filter( 'document_title_parts', 'minnpost_user_title_parts' );
@@ -1695,14 +1667,14 @@ if ( ! function_exists( 'minnpost_user_title_parts' ) ) :
 	}
 endif;
 
-/**
-* Returns a username or profile link to be used on comments
-*
-* @param object $comment
-* @return object $comment
-*
-*/
+
 if ( ! function_exists( 'get_user_name_or_profile_link' ) ) :
+	/**
+	 * Returns a username or profile link to be used on comments
+	 *
+	 * @param object $comment the comment object.
+	 * @return object $comment
+	 */
 	function get_user_name_or_profile_link( $comment ) {
 
 		if ( $comment->user_id ) {
@@ -1734,7 +1706,6 @@ endif;
 * @param string $object_type
 * @param bool $lazy_load
 * @return array $attributes
-*
 */
 if ( ! function_exists( 'minnpost_largo_add_lazy_load_attributes' ) ) :
 	add_filter( 'minnpost_largo_lazy_load_attributes', 'minnpost_largo_add_lazy_load_attributes', 10, 3 );
@@ -1775,7 +1746,6 @@ endif;
 *
 * @param int $post_id
 * @return string $teaser
-*
 */
 if ( ! function_exists( 'minnpost_get_newsletter_teaser' ) ) :
 	function minnpost_get_newsletter_teaser( $post_id ) {
@@ -1806,7 +1776,6 @@ endif;
 *
 * @param int $post_id
 * @return string $teaser
-*
 */
 if ( ! function_exists( 'minnpost_get_republication_newsletter_teaser' ) ) :
 	function minnpost_get_republication_newsletter_teaser( $post_id = '' ) {
@@ -1827,7 +1796,6 @@ endif;
 *
 * @param int $post_id
 * @return string $newsletter_type
-*
 */
 if ( ! function_exists( 'minnpost_get_newsletter_type' ) ) :
 	function minnpost_get_newsletter_type( $post_id ) {
@@ -1845,7 +1813,6 @@ endif;
 * @param int $newsletter_id
 * @param bool $transparent
 * @return string $logo_url
-*
 */
 if ( ! function_exists( 'minnpost_get_newsletter_logo_url' ) ) :
 	function minnpost_get_newsletter_logo_url( $newsletter_id = '', $transparent = false ) {
@@ -1910,7 +1877,6 @@ endif;
 * @param bool $message
 * @param array $colors
 * @return string $content
-*
 */
 if ( ! function_exists( 'format_email_content' ) ) :
 	add_filter( 'format_email_content', 'format_email_content', 10, 4 );
@@ -2055,7 +2021,6 @@ endif;
 * @param string $content
 * @param bool $message
 * @return string $content
-*
 */
 if ( ! function_exists( 'format_email_content_legacy' ) ) :
 	add_filter( 'format_email_content_legacy', 'format_email_content_legacy', 10, 3 );
@@ -2096,7 +2061,6 @@ endif;
 *
 * @param string $html
 * @return string $html
-*
 */
 if ( ! function_exists( 'minnpost_email_shortcodes_after_emogrifier' ) ) :
 	add_filter( 'do_shortcodes_after_emogrifier', 'minnpost_email_shortcodes_after_emogrifier', 10, 1 );
@@ -2129,7 +2093,6 @@ endif;
 * @param int $post_id
 * @param string $section
 * @return array $story_ids
-*
 */
 if ( ! function_exists( 'minnpost_largo_get_newsletter_stories' ) ) :
 	function minnpost_largo_get_newsletter_stories( $post_id, $section ) {
@@ -2155,7 +2118,6 @@ endif;
 * @param string $newsletter_type
 * @param int $post_id
 * @return bool $is_legacy
-*
 */
 if ( ! function_exists( 'minnpost_largo_check_newsletter_legacy' ) ) :
 	add_filter( 'minnpost_largo_newsletter_legacy', 'minnpost_largo_check_newsletter_legacy', 10, 3 );
@@ -2207,7 +2169,6 @@ endif;
 * @param string $section
 * @param int $newsletter_id
 * @return string $section_title
-*
 */
 if ( ! function_exists( 'minnpost_newsletter_get_section_title' ) ) :
 	function minnpost_newsletter_get_section_title( $section, $newsletter_id = '' ) {
@@ -2225,7 +2186,6 @@ endif;
 * @param string $section
 * @param int $newsletter_id
 * @return object $section_query
-*
 */
 if ( ! function_exists( 'minnpost_newsletter_get_section_query' ) ) :
 	function minnpost_newsletter_get_section_query( $section, $newsletter_id = '' ) {
@@ -2254,7 +2214,6 @@ endif;
 *
 * @param int $post_id
 * @return string $title
-*
 */
 if ( ! function_exists( 'minnpost_newsletter_get_entry_title' ) ) :
 	function minnpost_newsletter_get_entry_title( $post_id = 0 ) {
@@ -2279,7 +2238,6 @@ endif;
 *
 * @param int $post_id
 * @return string $excerpt
-*
 */
 if ( ! function_exists( 'minnpost_newsletter_get_entry_excerpt' ) ) :
 	function minnpost_newsletter_get_entry_excerpt( $post_id = 0 ) {
@@ -2305,7 +2263,6 @@ endif;
 *
 * @param string $newsletter_type
 * @return array $ads
-*
 */
 if ( ! function_exists( 'minnpost_newsletter_get_ads' ) ) :
 	function minnpost_newsletter_get_ads( $newsletter_type = '' ) {
@@ -2319,7 +2276,7 @@ if ( ! function_exists( 'minnpost_newsletter_get_ads' ) ) :
 			return $ads;
 		}
 
-		$ad_dom = new DomDocument;
+		$ad_dom = new DomDocument();
 		libxml_use_internal_errors( true );
 		$ad_dom->loadHTML( $sidebar, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
 		libxml_use_internal_errors( false );
@@ -2350,16 +2307,15 @@ endif;
 * @param string $hide_republish_button
 * @param int $post_id
 * @return string $hide_republish_button
-*
 */
 if ( ! function_exists( 'minnpost_largo_hide_republish_button' ) ) :
-	//add_filter( 'minnpost_largo_republish_button_from_display', 'minnpost_largo_hide_republish_button', 10, 2 );
+	// add_filter( 'minnpost_largo_republish_button_from_display', 'minnpost_largo_hide_republish_button', 10, 2 );
 	function minnpost_largo_hide_republish_button( $hide_republish_button = '', $post_id = 0 ) {
 		if ( 0 === $post_id ) {
 			$post_id = get_the_ID();
 		}
 		// to hide the button, return "on" as the value.
-		//$hide_republish_button = 'on';
+		// $hide_republish_button = 'on';
 		return $hide_republish_button;
 	}
 endif;
@@ -2370,7 +2326,6 @@ endif;
 * @param string $show_republish_button
 * @param int $post_id
 * @return string $show_republish_button
-*
 */
 if ( ! function_exists( 'minnpost_largo_show_republish_button' ) ) :
 	add_filter( 'minnpost_largo_show_republish_button_on_display', 'minnpost_largo_show_republish_button', 10, 2 );

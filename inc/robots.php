@@ -7,12 +7,11 @@
  */
 
 /**
-* Nofollow for non-production domains
-*
-* @param array $args
-* @return array $args
-*
-*/
+ * Nofollow for non-production domains
+ *
+ * @param array $args
+ * @return array $args
+ */
 if ( ! function_exists( 'minnpost_largo_domain_nofollow' ) ) :
 	add_action( 'do_robotstxt', 'minnpost_largo_domain_nofollow' );
 	function minnpost_largo_domain_nofollow() {

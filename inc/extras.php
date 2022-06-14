@@ -7,19 +7,19 @@
  */
 
 /**
-* Method for checking if a post has the supplied category as its primary
-*
-* @param int $category
-*
-* @return bool $has_primary_category
-*/
+ * Method for checking if a post has the supplied category as its primary
+ *
+ * @param int $category
+ *
+ * @return bool $has_primary_category
+ */
 if ( ! function_exists( 'has_primary_category' ) ) :
 	function has_primary_category( $category ) {
 		$has_primary_category = false;
 		if ( is_singular( 'post' ) ) {
 			$primary_category = get_post_meta( get_the_id(), '_category_permalink', true );
 			if ( isset( $primary_category['category'] ) && '' !== $primary_category['category'] ) {
-				//$has_primary_category = true;
+				// $has_primary_category = true;
 				$category_object = get_category_by_slug( $category );
 				if ( ! is_object( $category_object ) ) {
 					return $has_primary_category;
@@ -76,7 +76,7 @@ endif;
 * Currently this method is unused.
 */
 if ( ! function_exists( 'minnpost_unregister_widgets' ) ) :
-	//add_action( 'widgets_init', 'minnpost_unregister_widgets', 11 );
+	// add_action( 'widgets_init', 'minnpost_unregister_widgets', 11 );
 	function minnpost_unregister_widgets() {
 		unregister_widget( 'WP_Widget_Pages' );
 		unregister_widget( 'WP_Widget_Calendar' );
@@ -89,13 +89,12 @@ if ( ! function_exists( 'minnpost_unregister_widgets' ) ) :
 		unregister_widget( 'WP_Widget_Recent_Comments' );
 		unregister_widget( 'WP_Widget_RSS' );
 		unregister_widget( 'WP_Widget_Tag_Cloud' );
-		//unregister_widget( 'WP_Nav_Menu_Widget' );
+		// unregister_widget( 'WP_Nav_Menu_Widget' );
 	}
 endif;
 
 /**
 * Disable WP's autoformatting on content imported from Drupal
-*
 */
 if ( ! function_exists( 'disable_autoformatting_old_content' ) ) :
 	add_action( 'wp', 'disable_autoformatting_old_content' );
@@ -114,7 +113,6 @@ endif;
 
 /**
 * Remove tagline field from display
-*
 */
 if ( ! function_exists( 'remove_tagline' ) ) :
 	add_filter( 'document_title_parts', 'remove_tagline' );
@@ -144,7 +142,6 @@ endif;
 /**
 * Remove <head> hooks that we don't need
 * Some of these are default; others are added by other plugins
-*
 */
 if ( ! function_exists( 'minnpost_remove_head_hooks' ) ) :
 	function minnpost_remove_head_hooks() {
@@ -171,7 +168,6 @@ endif;
 * @param object $wp_query
 *
 * @return array $headers
-*
 */
 add_filter(
 	'wp_headers',
@@ -187,7 +183,6 @@ add_filter(
 
 /**
 * Remove the RSD link from <head>
-*
 */
 add_action(
 	'wp',
@@ -199,6 +194,7 @@ add_action(
 
 /**
  * Set external domains allowed for redirects
+ *
  * @param array $hosts
  * @return array $hosts
  */
@@ -214,6 +210,7 @@ add_filter(
 
 /**
  * Prevent VIP Support users from being redirected to /user/login. They can use wp-login.php.
+ *
  * @param boolean $skip_login_redirect
  * @return boolean $skip_login_redirect
  */
@@ -230,6 +227,7 @@ endif;
 
 /**
  * Check to see if we're on a membership URL
+ *
  * @return bool
  */
 if ( ! function_exists( 'is_membership' ) ) :
@@ -246,6 +244,7 @@ endif;
 
 /**
  * Allow the url to set if we should overlay the grid
+ *
  * @return array $vars
  */
 if ( ! function_exists( 'minnpost_largo_grid_overlay_var' ) ) :
@@ -288,7 +287,7 @@ if ( ! function_exists( 'minnpost_largo_republication_modal' ) ) :
 		$republication_content_file = get_theme_file_path() . '/inc/shareable-content.php';
 		?>
 		<div class="o-republication-tracker-tool-modal" id="republication-tracker-tool-modal" style="display:none;" data-postid="<?php echo get_the_ID(); ?>" data-pluginsdir="<?php echo esc_attr( plugins_url() ); ?>">
-			<?php include_once( $republication_content_file ); ?>
+			<?php include_once $republication_content_file; ?>
 		</div>
 		<?php
 	}
@@ -296,6 +295,7 @@ endif;
 
 /**
  * Filter the Slack notification
+ *
  * @param array $notification
  * @param string $message
  * @param array $attachments
@@ -308,7 +308,7 @@ if ( ! function_exists( 'minnpost_slack_notification' ) ) :
 		// clear out the fields array
 		$notification['attachments'][0]['fields'] = array();
 		// edit the message that gets posted a bit
-		$notification['text']                     = str_replace( 'published right now!', 'just published.', $notification['text'] );
+		$notification['text'] = str_replace( 'published right now!', 'just published.', $notification['text'] );
 		return $notification;
 	}
 endif;
@@ -329,7 +329,6 @@ add_action(
 *
 * @param string $hide_author
 * @return string $hide_author
-*
 */
 if ( ! function_exists( 'minnpost_largo_hide_sponsored_author' ) ) :
 	add_filter( 'minnpost_largo_hide_author', 'minnpost_largo_hide_sponsored_author' );
@@ -373,7 +372,6 @@ endif;
 *
 * @param bool $comments_open
 * @return bool $comments_open
-*
 */
 if ( ! function_exists( 'minnpost_largo_remove_comments_sponsored' ) ) :
 	add_filter( 'comments_open', 'minnpost_largo_remove_comments_sponsored', 20, 1 );
@@ -415,7 +413,7 @@ endif;
 if ( ! function_exists( 'minnpost_set_default_editor' ) ) :
 	add_filter( 'wp_default_editor', 'minnpost_set_default_editor' );
 	function minnpost_set_default_editor( $editor ) {
-		//$screen = get_current_screen();
+		// $screen = get_current_screen();
 
 		if ( is_admin() ) {
 			global $post;

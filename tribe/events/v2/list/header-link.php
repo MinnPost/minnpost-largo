@@ -3,7 +3,6 @@
  * View: Header Link
  *
  * This sits in the header and toggles between past and upcoming event URLs.
- *
  */
 ?>
 

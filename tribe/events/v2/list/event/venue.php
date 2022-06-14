@@ -5,7 +5,6 @@
  * This overrides the default the-events-calendar/views/v2/list/event/venue.php
  *
  * See more documentation about our views templating system.
- *
  */
 
 if ( ! $event->venues->count() ) {
@@ -19,7 +18,11 @@ $venue = $event->venues[0];
 	</span>
 	<span class="adr a-event-venue-address">
 		<?php if ( ! empty( $venue->address ) ) : ?>
-		<span class="street-address"><?php echo esc_html( $venue->address ); ?><?php if ( ! empty( $venue->address ) && ! empty( $venue->city ) ) : ?><?php echo esc_html( ',', 'minnpost-largo' ); ?><?php endif; ?></span>
+		<span class="street-address"><?php echo esc_html( $venue->address ); ?>
+												<?php
+												if ( ! empty( $venue->address ) && ! empty( $venue->city ) ) :
+													?>
+													<?php echo esc_html( ',', 'minnpost-largo' ); ?><?php endif; ?></span>
 		<?php endif; ?>
 		<?php if ( ! empty( $venue->city ) ) : ?>
 			<span class="locality"><?php echo esc_html( $venue->city ); ?></span>
