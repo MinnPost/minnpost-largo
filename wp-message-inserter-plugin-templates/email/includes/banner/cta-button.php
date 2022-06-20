@@ -6,7 +6,7 @@
  */
 ?>
 
-<?php if ( is_array( $screen_size[ $prefix . 'banner_buttondetails' ] ) ) : ?>
+<?php if ( isset( $screen_size[ $prefix . 'banner_buttondetails' ] ) && is_array( $screen_size[ $prefix . 'banner_buttondetails' ] ) ) : ?>
 	<?php
 	$button_bgcolor   = isset( $screen_size[ $prefix . 'banner_btn_bgcolor' ] ) ? $screen_size[ $prefix . 'banner_btn_bgcolor' ] : '';
 	$button_textcolor = isset( $screen_size[ $prefix . 'banner_btn_textcolor' ] ) ? $screen_size[ $prefix . 'banner_btn_textcolor' ] : '';
