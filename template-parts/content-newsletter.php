@@ -113,23 +113,23 @@
 							// teaser text
 							$do_not_show_automatic_teaser_items = get_post_meta( get_the_ID(), '_mp_newsletter_do_not_show_automatic_teaser_items', true );
 							$do_not_show_teaser_text            = get_post_meta( get_the_ID(), '_mp_newsletter_do_not_show_teaser_text', true );
-							if ( $do_not_show_automatic_teaser_items !== 'on' || $do_not_show_teaser_text !== 'on' ) :
+							if ( 'on' !== $do_not_show_automatic_teaser_items || 'on' !== $do_not_show_teaser_text ) :
 								?>
 								<div class="o-row m-teaser">
 								<?php
 							endif;
 							?>
-							<?php if ( $do_not_show_automatic_teaser_items !== 'on' ) : ?>
+							<?php if ( 'on' !== $do_not_show_automatic_teaser_items ) : ?>
 								<?php minnpost_newsletter_today(); ?>
 							<?php endif; ?>
-							<?php if ( $do_not_show_teaser_text !== 'on' ) : ?>
+							<?php if ( 'on' !== $do_not_show_teaser_text ) : ?>
 								<?php minnpost_newsletter_teaser(); ?>
 							<?php endif; ?>
-							<?php if ( $do_not_show_automatic_teaser_items !== 'on' ) : ?>
+							<?php if ( 'on' !== $do_not_show_automatic_teaser_items ) : ?>
 								<?php minnpost_newsletter_type_welcome(); ?>
 							<?php endif; ?>
 							<?php
-							if ( $do_not_show_automatic_teaser_items !== 'on' || $do_not_show_teaser_text !== 'on' ) :
+							if ( 'on' !== $do_not_show_automatic_teaser_items || 'on' !== $do_not_show_teaser_text ) :
 								?>
 								</div>
 								<?php
@@ -139,7 +139,7 @@
 							<?php
 							// body text
 							$body = apply_filters( 'the_content', get_the_content() );
-							if ( $body !== '' ) :
+							if ( '' !== $body ) :
 								?>
 								<div class="o-row m-newsletter-body">
 									<?php echo $body; ?>
@@ -187,7 +187,7 @@
 											<tr>
 												<td class="outlook-inner-padding">
 							[/outlook]
-							<?php if ( minnpost_newsletter_get_section_title( $section ) !== '' ) : ?>
+							<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
 								<table role="presentation" width="100%" class="h2 a-section-title">
 									<tr>
 										<td>
@@ -203,11 +203,11 @@
 								$args['post_id'] = $id;
 								// with newsletters, the individual post can override the image size for the newsletter section the post is in.
 								$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
-								if ( $override_size !== '' && $override_size !== 'default' ) {
+								if ( '' !== $override_size && 'default' !== $override_size ) {
 									$args['image_size'] = $override_size;
 								}
 								$args['extra_class'] = '';
-								if ( $post_count === $this_section_post && $post_count !== 2 ) {
+								if ( $post_count === $this_section_post && 2 !== $post_count ) {
 									// checking the post count prevents a spacing issue with the second ad region
 									// this is because the second ad region is connected to the second post
 									$args['extra_class'] = ' m-post-newsletter-last';
@@ -227,7 +227,7 @@
 						</div>
 					<?php endif; ?>
 
-					<?php if ( $total_post_count === 1 && isset( $ads[0] ) && ! empty( $ads[0] ) ) : ?>
+					<?php if ( 1 === $total_post_count && isset( $ads[0] ) && ! empty( $ads[0] ) ) : ?>
 						<div class="o-single-column m-newsletter-ad-region">
 							[outlook]
 							<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
@@ -274,7 +274,7 @@
 						$this_section_post = 0;
 						?>
 
-						<?php if ( minnpost_newsletter_get_section_title( $section ) !== '' ) : ?>
+						<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
 							<table role="presentation" width="100%" class="h2 a-section-title">
 								<tr>
 									<td>
@@ -291,7 +291,7 @@
 							$news_query->the_post();
 							set_query_var( 'current_post', $news_query->current_post );
 							$args['post_id'] = $id;
-							if ( $this_section_post !== 1 ) {
+							if ( 1 !== $this_section_post ) {
 								$args['image_size'] = 'none';
 							} else {
 								$args['image_size'] = 'full';
@@ -305,13 +305,13 @@
 							<?php
 							// with newsletters, the individual post can override the image size for the newsletter section the post is in.
 							$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
-							if ( $override_size !== '' && $override_size !== 'default' ) {
+							if ( '' !== $override_size && 'default' !== $override_size ) {
 								$args['image_size'] = $override_size;
 							}
 							get_template_part( 'template-parts/post-newsletter-fullwidth', $args['newsletter_type'], $args );
 							?>
 
-							<?php if ( $total_post_count === 1 && isset( $ads[0] ) && ! empty( $ads[0] ) ) : ?>
+							<?php if ( 1 === $total_post_count && isset( $ads[0] ) && ! empty( $ads[0] ) ) : ?>
 								<div class="o-single-column m-newsletter-ad-region">
 									[outlook]
 									<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
@@ -333,7 +333,7 @@
 									</table>
 									[/outlook]
 								</div>
-							<?php elseif ( $total_post_count === 2 && isset( $ads[1] ) && ! empty( $ads[1] ) ) : ?>
+							<?php elseif ( 2 === $total_post_count && isset( $ads[1] ) && ! empty( $ads[1] ) ) : ?>
 								<div class="o-single-column m-newsletter-ad-region">
 									[outlook]
 									<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
@@ -398,7 +398,7 @@
 							$this_section_post = 0;
 							?>
 
-							<?php if ( minnpost_newsletter_get_section_title( $section ) !== '' ) : ?>
+							<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
 								<table role="presentation" width="100%" class="h2 a-section-title">
 									<tr>
 										<td>
@@ -415,7 +415,7 @@
 								$opinion_query->the_post();
 								set_query_var( 'current_post', $opinion_query->current_post );
 								$args['post_id'] = $id;
-								if ( $this_section_post !== 1 ) {
+								if ( 1 !== $this_section_post ) {
 									$args['image_size'] = 'none';
 								} else {
 									$args['image_size'] = 'full';
@@ -429,13 +429,13 @@
 								<?php
 								// with newsletters, the individual post can override the image size for the newsletter section the post is in.
 								$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
-								if ( $override_size !== '' && $override_size !== 'default' ) {
+								if ( '' !== $override_size && 'default' !== $override_size ) {
 									$args['image_size'] = $override_size;
 								}
 								get_template_part( 'template-parts/post-newsletter-fullwidth', $args['newsletter_type'], $args );
 								?>
 
-								<?php if ( $total_post_count === 1 && isset( $ads[0] ) && ! empty( $ads[0] ) ) : ?>
+								<?php if ( 1 === $total_post_count && isset( $ads[0] ) && ! empty( $ads[0] ) ) : ?>
 									<div class="o-single-column m-newsletter-ad-region">
 										[outlook]
 										<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
@@ -457,7 +457,7 @@
 										</table>
 										[/outlook]
 									</div>
-								<?php elseif ( $total_post_count === 2 && isset( $ads[1] ) && ! empty( $ads[1] ) ) : ?>
+								<?php elseif ( 2 === $total_post_count && isset( $ads[1] ) && ! empty( $ads[1] ) ) : ?>
 									<div class="o-single-column m-newsletter-ad-region">
 										[outlook]
 										<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
@@ -509,7 +509,7 @@
 					$use_other_section_settings = get_post_meta( get_the_ID(), '_mp_newsletter_editors_use_other_section_settings', true );
 					$remove_editors_section     = get_post_meta( get_the_ID(), '_mp_newsletter_remove_editors_section', true );
 					?>
-					<?php if ( $remove_editors_section !== 'on' && $editors_query->have_posts() ) : ?>
+					<?php if ( 'on' !== $remove_editors_section && $editors_query->have_posts() ) : ?>
 						<div class="o-single-column o-section-editors-stories">
 							[outlook]
 							<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
@@ -526,7 +526,7 @@
 							$args['image_size'] = 'none';
 							?>
 
-							<?php if ( minnpost_newsletter_get_section_title( $section ) !== '' ) : ?>
+							<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
 								<table role="presentation" width="100%" class="h2 a-section-title">
 									<tr>
 										<td>
@@ -543,9 +543,9 @@
 								$editors_query->the_post();
 								set_query_var( 'current_post', $editors_query->current_post );
 								$args['post_id'] = $id;
-								if ( $use_other_section_settings === 'on' ) {
+								if ( 'on' === $use_other_section_settings ) {
 									$args['show_category'] = true;
-									if ( $this_section_post !== 1 ) {
+									if ( 1 !== $this_section_post ) {
 										$args['image_size'] = 'none';
 									} else {
 										$args['image_size'] = 'full';
@@ -560,13 +560,13 @@
 								<?php
 								// with newsletters, the individual post can override the image size for the newsletter section the post is in.
 								$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
-								if ( $override_size !== '' && $override_size !== 'default' ) {
+								if ( '' !== $override_size && 'default' !== $override_size ) {
 									$args['image_size'] = $override_size;
 								}
 								get_template_part( 'template-parts/post-newsletter-fullwidth', $args['newsletter_type'], $args );
 								?>
 
-								<?php if ( $total_post_count === 1 && isset( $ads[0] ) && ! empty( $ads[0] ) ) : ?>
+								<?php if ( 1 === $total_post_count && isset( $ads[0] ) && ! empty( $ads[0] ) ) : ?>
 									<div class="o-single-column m-newsletter-ad-region">
 										[outlook]
 										<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
@@ -588,7 +588,7 @@
 										</table>
 										[/outlook]
 									</div>
-								<?php elseif ( $total_post_count === 2 && isset( $ads[1] ) && ! empty( $ads[1] ) ) : ?>
+								<?php elseif ( 2 === $total_post_count && isset( $ads[1] ) && ! empty( $ads[1] ) ) : ?>
 									<div class="o-single-column m-newsletter-ad-region">
 										[outlook]
 										<table role="presentation" width="100%" cellpadding="0" cellspacing="0" class="outlook-table">
@@ -662,7 +662,7 @@
 								</div>
 								<?php
 								$footer_message = get_option( 'site_footer_message', '' );
-								if ( $footer_message !== '' ) :
+								if ( '' !== $footer_message ) :
 									?>
 									<p class="a-footer-message"><?php echo $footer_message; ?></p>
 								<?php endif; ?>

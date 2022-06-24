@@ -17,7 +17,7 @@ function minnpost_largo_comment( $comment, $args, $depth ) {
 		$class[] = 'o-comment-has-children';
 	}
 
-	if ( $status !== 'approved' ) {
+	if ( 'approved' !== $status ) {
 		$class[] = 'o-comment-unpublished';
 	}
 	if ( (int) get_current_user_id() === (int) $comment->user_id ) {
@@ -43,7 +43,7 @@ function minnpost_largo_comment( $comment, $args, $depth ) {
 	} else {
 		$commenter_name = comment_author( $comment->comment_ID );
 	}
-	if ( $commenter_name !== '' ) {
+	if ( '' !== $commenter_name ) {
 		$comment_byline = sprintf(
 			// translators: 1) user profile name/link, 2) comment link, 3) ap style comment date, 4) ap style comment time
 			esc_html__( 'By %1$s ' ),
@@ -54,7 +54,7 @@ function minnpost_largo_comment( $comment, $args, $depth ) {
 	// comment date
 	$comment_dateline = '';
 	if ( function_exists( 'get_ap_comment_date' ) && function_exists( 'get_ap_comment_time' ) ) {
-		if ( get_ap_comment_date() === 'today' ) {
+		if ( 'today' === get_ap_comment_date() ) {
 			$comment_dateline = sprintf(
 				// translators: 1) is the human readable time difference
 				_x( '%1$s ago', '%2$s = human-readable time difference', 'minnpost-largo' ),
@@ -84,13 +84,13 @@ function minnpost_largo_comment( $comment, $args, $depth ) {
 	<li>
 		<div <?php comment_class( $class ); ?> id="comment-<?php comment_ID(); ?>">
 			<div class="m-comment-meta">
-				<?php if ( $comment_byline !== '' ) : ?>
+				<?php if ( '' !== $comment_byline ) : ?>
 					<div class="a-comment-byline"><?php echo $comment_byline; ?></div>
 				<?php endif; ?>
-				<?php if ( $comment_dateline !== '' ) : ?>
+				<?php if ( '' !== $comment_dateline ) : ?>
 					<div class="a-comment-dateline"><?php echo $comment_dateline; ?></div>
 				<?php endif; ?>
-				<?php if ( $comment_reply_line !== '' ) : ?>
+				<?php if ( '' !== $comment_reply_line ) : ?>
 					<div class="a-comment-replyline">
 						<?php echo $comment_reply_line; ?>
 						<a class="a-comment-parent" href="<?php echo htmlspecialchars( get_comment_link( $comment->comment_parent ) ); ?>">
@@ -100,7 +100,7 @@ function minnpost_largo_comment( $comment, $args, $depth ) {
 				<?php endif; ?>
 			</div>
 			<div class="m-comment-entry">
-				<?php if ( $status !== 'approved' && (int) get_current_user_id() === (int) $comment->user_id ) : ?>
+				<?php if ( 'approved' !== $status && (int) get_current_user_id() === (int) $comment->user_id ) : ?>
 					<p class="a-moderation-notice a-moderation-notice-pending"><?php echo __( 'Your comment is awaiting moderation.', 'minnpost-largo' ); ?></p>
 				<?php endif; ?>
 				<?php comment_text(); ?>
@@ -120,7 +120,7 @@ function minnpost_largo_comment( $comment, $args, $depth ) {
 					?>
 				</div>
 				<?php
-				if ( $comment->comment_approved === '0' ) {
+				if ( '0' === $comment->comment_approved ) {
 					$text = __( 'Approve', 'minnpost-largo' );
 				} else {
 					$text = __( 'Unapprove', 'minnpost-largo' );

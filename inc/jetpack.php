@@ -84,7 +84,7 @@ if ( ! function_exists( 'minnpost_largo_exclude_post_from_lazy_load' ) ) :
 		if ( isset( $post ) && is_object( $post ) ) {
 			$post_id           = $post->ID;
 			$prevent_lazy_load = get_post_meta( $post_id, '_mp_prevent_lazyload', true );
-			if ( $prevent_lazy_load === 'on' ) {
+			if ( 'on' === $prevent_lazy_load ) {
 				return false;
 			}
 		}
@@ -237,7 +237,7 @@ if ( ! function_exists( 'minnpost_largo_jetpack_exclude_category' ) ) :
 		$if_term_args = array();
 
 		// our default Jetpack behavior.
-		if ( $same_category_only === false && $not_same_category === false ) {
+		if ( false === $same_category_only && false === $not_same_category ) {
 			// get the opinion post group category; we currently exclude it by default
 			$opinion      = get_term_by( 'slug', 'opinion', 'category' );
 			$if_term_args = array(
@@ -253,12 +253,12 @@ if ( ! function_exists( 'minnpost_largo_jetpack_exclude_category' ) ) :
 					),
 				),
 			);
-		} elseif ( $same_category_only === true ) {
+		} elseif ( true === $same_category_only ) {
 			// we only want to include the permalink category of the current post, so exclude all others.
 			$if_term_args = array(
 				'exclude' => $permalink_category,
 			);
-		} elseif ( $not_same_category === true ) {
+		} elseif ( true === $not_same_category ) {
 			// we want to exclude posts with the permalink category of the current post, in addition to other excludes.
 			$exclude_ids[] = $permalink_category;
 		}

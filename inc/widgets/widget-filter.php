@@ -33,19 +33,19 @@ if ( ! function_exists( 'minnpost_widget_output_filter' ) ) :
 		}
 
 		// target custom html widget
-		if ( strpos( $widget_output, 'm-widget m-widget-text m-widget-custom-html' ) !== false && $widget_type === 'custom_html' ) {
+		if ( false !== strpos( $widget_output, 'm-widget m-widget-text m-widget-custom-html' ) && 'custom_html' === $widget_type ) {
 
 			$widget_output = str_replace( '<div id="custom_html-', '<section id="custom_html-', $widget_output );
 			// site branding in sitewide footer
-			if ( strpos( $widget_output, 'a-site-branding' ) !== false ) {
+			if ( false !== strpos( $widget_output, 'a-site-branding' ) ) {
 				$widget_output = str_replace( 'class="m-widget m-widget-text m-widget-custom-html"', 'class="m-widget m-widget-text m-widget-custom-html m-widget-site-branding"', $widget_output );
 			}
 			// mailchimp form
-			if ( strpos( $widget_output, 'm-form-minnpost-form-processor-mailchimp' ) !== false ) {
+			if ( false !== strpos( $widget_output, 'm-form-minnpost-form-processor-mailchimp' ) ) {
 				$widget_output = str_replace( 'class="m-widget m-widget-text m-widget-custom-html"', 'class="m-widget m-widget-text m-widget-custom-html m-form-minnpost-form-processor-mailchimp"', $widget_output );
 			}
 			// sponsor list
-			if ( strpos( $widget_output, 'a-sponsor-list' ) !== false ) {
+			if ( false !== strpos( $widget_output, 'a-sponsor-list' ) ) {
 				$widget_output = str_replace( 'class="m-widget m-widget-text m-widget-custom-html"', 'class="m-widget m-widget-text m-widget-custom-html m-widget-sponsor-list"', $widget_output );
 			}
 			$widget_output = str_replace( '</div></div>', '</div></section>', $widget_output );
@@ -59,7 +59,7 @@ if ( ! function_exists( 'minnpost_widget_output_filter' ) ) :
 			$paragraphs = $doc->getElementsByTagName( 'p' );
 			foreach ( $paragraphs as $paragraph ) {
 				foreach ( $paragraph->childNodes as $node ) { // phpcs:ignore WordPress
-					if ( isset( $node->tagName ) && $node->tagName === 'a' && $node->getAttribute( 'class' ) === 'a-more' ) { // phpcs:ignore WordPress
+					if ( isset( $node->tagName ) && 'a' === $node->tagName && 'a-more' === $node->getAttribute( 'class' ) ) { // phpcs:ignore WordPress
 						$move = $paragraph->ownerDocument->saveHTML( $paragraph ); // phpcs:ignore WordPress
 						$paragraph->parentNode->removeChild( $paragraph ); // phpcs:ignore WordPress
 					}
@@ -76,7 +76,7 @@ if ( ! function_exists( 'minnpost_widget_output_filter' ) ) :
 		}
 
 		// target minnpost spill widget
-		if ( strpos( $widget_output, 'm-widget m-minnpost-spills-widget' ) !== false && $widget_type === 'minnpostspills_widget' ) {
+		if ( false !== strpos( $widget_output, 'm-widget m-minnpost-spills-widget' ) && 'minnpostspills_widget' === $widget_type ) {
 			$widget_output = str_replace( '<div id="minnpostspills_widget-', '<section id="minnpostspills_widget-', $widget_output );
 			$widget_output = str_replace(
 				'</div>
@@ -91,7 +91,7 @@ if ( ! function_exists( 'minnpost_widget_output_filter' ) ) :
 		}
 
 		// target the recommended widget
-		if ( strpos( $widget_output, 'class="m-widget m-widget-zone-posts' ) !== false && $widget_type === 'zoninator_zoneposts_widget' ) {
+		if ( false !== strpos( $widget_output, 'class="m-widget m-widget-zone-posts' ) && 'zoninator_zoneposts_widget' === $widget_type ) {
 			$widget_output = str_replace( '<div id="zoninator_zoneposts_widget-', '<section id="zoninator-zoneposts-widget-', $widget_output );
 			$widget_output = preg_replace( '/\>\s+\</m', '><', $widget_output );
 			$widget_output = str_replace( '<ul', '<div class="m-widget-contents"><ul', $widget_output );
@@ -110,7 +110,7 @@ if ( ! function_exists( 'minnpost_widget_output_filter' ) ) :
 		}
 
 		// target most commented widget
-		if ( strpos( $widget_output, 'class="m-widget m-widget-most-commented"' ) !== false && $widget_type === 'most-commented' ) {
+		if ( false !== strpos( $widget_output, 'class="m-widget m-widget-most-commented"' ) && 'most-commented' === $widget_type ) {
 			$widget_output = str_replace( '<div id="most-commented-', '<section id="most-commented-widget-', $widget_output );
 			$widget_output = str_replace( '</ol></div>', '</ol></div></section>', $widget_output );
 			$widget_output = str_replace( '<ol', '<div class="m-widget-contents"><ol', $widget_output );
@@ -133,9 +133,9 @@ add_filter( 'widget_display_callback', 'minnpost_widget_display_callback', 10, 3
 function minnpost_widget_display_callback( $instance, $widget, $args ) {
 	global $post;
 	// if this is a newsletter, only show widgets that contain an is_singular( 'newsletter' ) conditional
-	if ( is_object( $post ) && $post->post_type === 'newsletter' ) {
+	if ( is_object( $post ) && 'newsletter' === $post->post_type ) {
 		$class = array_column( $instance, 'class' );
-		if ( strpos( $class[0]['logic'], addslashes( 'is_singular("newsletter")' ) ) === false && strpos( $class[0]['logic'], 'is_singular("newsletter")' ) === false ) {
+		if ( false === strpos( $class[0]['logic'], addslashes( 'is_singular("newsletter")' ) ) && false === strpos( $class[0]['logic'], 'is_singular("newsletter")' ) ) {
 			return false;
 		}
 	}
@@ -190,7 +190,7 @@ if ( ! function_exists( 'minnpost_largo_spill_posts' ) ) :
 			$output = '';
 			if ( $title ) {
 				$before_title = str_replace( 'widget-title', 'a-widget-title', $before_title );
-				if ( isset( $instance['url'] ) && $instance['url'] !== '' ) {
+				if ( isset( $instance['url'] ) && '' !== $instance['url'] ) {
 					$output .= $before_title . '<a href="' . site_url( $instance['url'] ) . '">' . $title . '</a>' . $after_title;
 				} else {
 					$output .= $before_title . $title . $after_title;
@@ -205,10 +205,10 @@ if ( ! function_exists( 'minnpost_largo_spill_posts' ) ) :
 				$output .= '<article id="' . get_the_ID() . '" class="m-post m-post-spill">';
 				$output .= '<header class="m-entry-header">';
 				$output .= '<h4 class="h5 a-entry-title a-spill-item-title"><a href="' . esc_url( get_the_permalink() ) . '">' . get_the_title() . '</a></h4>';
-				if ( minnpost_get_posted_by() !== '' ) {
+				if ( '' !== minnpost_get_posted_by() ) {
 					$output .= '<div class="m-entry-byline">' . minnpost_get_posted_by() . '</div>';
 				}
-				if ( minnpost_get_posted_on() !== '' ) {
+				if ( '' !== minnpost_get_posted_on() ) {
 					$date    = minnpost_get_posted_on();
 					$output .= sprintf(
 						'<time class="a-entry-date published updated" datetime="%1$s">%2$s</time>',
@@ -221,7 +221,7 @@ if ( ! function_exists( 'minnpost_largo_spill_posts' ) ) :
 			}
 			wp_reset_postdata();
 			$output .= '</div>';
-			if ( isset( $instance['button_label'] ) && $instance['button_label'] !== '' ) {
+			if ( isset( $instance['button_label'] ) && '' !== $instance['button_label'] ) {
 				$output .= '<div class="a-spill-actions"><a href="' . $instance['url'] . '" class="a-button-content">' . $instance['button_label'] . '</a></div>';
 			}
 		}
@@ -238,7 +238,7 @@ endif;
 if ( ! function_exists( 'minnpost_largo_extend_widget_options' ) ) :
 	add_filter( 'extended_widget_options_logic_override', 'minnpost_largo_extend_widget_options', 10, 1 );
 	function minnpost_largo_extend_widget_options( $display_logic ) {
-		if ( $display_logic === 'false === is_membership()' ) {
+		if ( 'false === is_membership()' === $display_logic ) {
 			if ( ! function_exists( 'is_membership' ) ) {
 				return false;
 			}
@@ -256,7 +256,7 @@ endif;
 * @param int $duration
 * @return array $args
 */
-if ( VIP_GO_ENV !== 'production' ) {
+if ( 'production' !== VIP_GO_ENV ) {
 	if ( ! function_exists( 'minnpost_largo_most_commented_args' ) ) :
 		add_filter( 'most_commented_widget_args_pre_cache', 'minnpost_largo_most_commented_args', 10, 4 );
 		add_filter( 'most_commented_widget_args_ids', 'minnpost_largo_most_commented_args', 10, 4 );

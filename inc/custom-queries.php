@@ -53,7 +53,7 @@ if ( ! function_exists( 'custom_archive_query_vars' ) ) :
 
 					// if this category has a parent category id
 					// this means it's a child category like metro
-					if ( $grouping_category_id !== '' ) {
+					if ( '' !== $grouping_category_id ) {
 						// get the children of the other parent categories that aren't this one
 						// this is an array of IDs to exclude
 						$exclude_ids = minnpost_get_grouping_categories_to_exclude( $grouping_category_id );
@@ -222,13 +222,13 @@ endif;
 */
 if ( ! function_exists( 'minnpost_get_grouping_categories_to_exclude' ) ) :
 	function minnpost_get_grouping_categories_to_exclude( $category_id = '' ) {
-		if ( $category_id === '' ) {
+		if ( '' === $category_id ) {
 			return array();
 		}
 		$cache_key   = md5( 'minnpost_largo_grouping_categories_exclude_' . $category_id );
 		$cache_group = 'minnpost';
 		$exclude_ids = wp_cache_get( $cache_key, $cache_group );
-		if ( $exclude_ids === false ) {
+		if ( false === $exclude_ids ) {
 			$exclude_ids = array();
 			if ( function_exists( 'minnpost_largo_category_groups' ) ) {
 				$choices = minnpost_largo_category_groups();
@@ -261,7 +261,7 @@ if ( ! function_exists( 'minnpost_zoninator_search_args' ) ) :
 	function minnpost_zoninator_search_args( $args ) {
 		$args['post_status'] = 'publish';
 		$args['post_type']   = 'post';
-		if ( VIP_GO_ENV === 'production' || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION === true ) ) {
+		if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
 			$args['es'] = true; // elasticsearch.
 		}
 		return $args;
@@ -316,7 +316,7 @@ if ( ! function_exists( 'minnpost_coauthor_linked_account_query' ) ) :
 		$consolidated_emails   = array_map( 'trim', explode( ',', $consolidated_emails ) );
 		$consolidated_emails[] = $user_data->user_email;
 		$consolidated_emails   = array_unique( $consolidated_emails );
-		if ( count( $consolidated_emails ) === 1 ) {
+		if ( 1 === count( $consolidated_emails ) ) {
 			$args['meta_key']   = 'cap-linked_account';
 			$args['meta_value'] = $user_data->user_email;
 		} else {
@@ -324,7 +324,7 @@ if ( ! function_exists( 'minnpost_coauthor_linked_account_query' ) ) :
 				'relation' => 'OR',
 			);
 			foreach ( $consolidated_emails as $email ) {
-				if ( $email !== '' ) {
+				if ( '' !== $email ) {
 					$args['meta_query'][] = array(
 						'key'   => 'cap-linked_account',
 						'value' => $email,

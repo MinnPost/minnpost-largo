@@ -6,8 +6,8 @@
  */
 ?>
 
-<?php if ( tribe_is_past() === true ) : ?>
+<?php if ( true === tribe_is_past() ) : ?>
 	<a class="past-events-link events-link" href="<?php echo site_url( '/events/list/' ); ?>"><?php echo __( 'Upcoming Events', 'minnpost-largo' ); ?></a>
-<?php elseif ( tribe_is_upcoming() === true ) : ?>
+<?php elseif ( true === tribe_is_upcoming() ) : ?>
 	<a class="past-events-link events-link" href="<?php echo site_url( '/events/list/?eventDisplay=past&amp;tribe-bar-year=' . date( 'Y' ) ); ?>"><?php echo __( 'Past Events', 'minnpost-largo' ); ?></a>
 <?php endif; ?>

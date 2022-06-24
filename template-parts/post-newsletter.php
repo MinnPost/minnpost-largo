@@ -2,7 +2,7 @@
 	<tr>
 		<td class="m-post m-post-newsletter m-post-newsletter-<?php echo $args['newsletter_type']; ?><?php echo isset( $args['extra_class'] ) ? $args['extra_class'] : ''; ?>">
 			<div class="post-contents">
-				<?php if ( $args['image_size'] !== 'none' ) : ?>
+				<?php if ( 'none' !== $args['image_size'] ) : ?>
 					<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="m-post-image m-post-image-<?php echo $args['image_size']; ?>">
 						<tr>
 							<td>

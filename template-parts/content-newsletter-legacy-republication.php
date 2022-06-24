@@ -150,12 +150,12 @@
 		// default value for the republication newsletter summary
 		$content = minnpost_get_republication_newsletter_teaser();
 		// allow it to be overridden by the post content field
-		if ( get_the_content() !== '' ) {
+		if ( '' !== get_the_content() ) {
 			$content = get_the_content();
 		}
 		$body = apply_filters( 'the_content', $content );
 
-		if ( $body !== '' ) {
+		if ( '' !== $body ) {
 			// email content filter
 			$body = apply_filters( 'format_email_content_legacy', $body );
 			?>
@@ -207,7 +207,7 @@
 		$upcoming = get_post_meta( get_the_ID(), '_mp_newsletter_upcoming', true );
 		$upcoming = apply_filters( 'the_content', $upcoming );
 
-		if ( $upcoming !== '' ) {
+		if ( '' !== $upcoming ) {
 			// email content filter
 			$upcoming = apply_filters( 'format_email_content_legacy', $upcoming );
 			?>
@@ -242,7 +242,7 @@
 							<?php dynamic_sidebar( 'sidebar-3' ); ?>
 							<?php
 							$footer_message = get_option( 'site_footer_message', '' );
-							if ( $footer_message !== '' ) :
+							if ( '' !== $footer_message ) :
 								?>
 								<p class="address" style="font-size: 12px; Margin: 10px 0 15px; padding: 0; text-align: center;" align="center"><?php echo $footer_message; ?></p>
 							<?php endif; ?>

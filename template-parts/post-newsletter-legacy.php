@@ -9,15 +9,15 @@
 
 if ( ( $current_post + 1 ) === (int) $found_posts ) {
 	$label = ' story-last';
-} elseif ( ( $current_post + 1 ) == 1 ) {
+} elseif ( 1 == ( $current_post + 1 ) ) {
 	$label = ' story-first';
 } else {
 	$label = '';
 }
 
-if ( $label === ' story-first' ) {
+if ( ' story-first' === $label ) {
 	$end_styles = ' Margin-top: 18px;';
-} elseif ( $label === ' story-last' ) {
+} elseif ( ' story-last' === $label ) {
 	$end_styles = ' padding-bottom: 18px;Margin-bottom: 0;';
 } else {
 	$end_styles = '';
@@ -34,7 +34,7 @@ if ( $is_top_story ) : ?>
 <?php endif; ?>
 		<div class="story story-<?php echo $current_post + 1; ?><?php echo $label; ?>" style="display: inline-block; Margin-right: 20px; max-width: 280px; vertical-align: middle; width: 100%;">
 			<div class="story-inner" style="border-bottom-color: #cccccf; border-bottom-style: solid; border-bottom-width: 2px; Margin-bottom: 18px; padding-bottom: 18px;<?php echo $end_styles; ?>">
-				<?php if ( $show_top_departments === 'on' ) : ?>
+				<?php if ( 'on' === $show_top_departments ) : ?>
 					<h4 style="color: #555556; display: block; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 10px; font-weight: normal; line-height: 100%; Margin: 0 0 5px; text-align: left; text-transform: uppercase" align="left"><?php echo minnpost_get_category_name(); ?></h4>
 				<?php endif; ?>
 				<h3 style="color: #1a1818; display: block; font-family: Helvetica, Arial, Geneva, sans-serif; font-size: 22px; font-weight: bold; line-height: 1.05; Margin: 0 0 10px; padding: 0; text-align: left" align="left">

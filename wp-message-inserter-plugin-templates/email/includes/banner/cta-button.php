@@ -12,26 +12,26 @@
 	$button_textcolor = isset( $screen_size[ $prefix . 'banner_btn_textcolor' ] ) ? $screen_size[ $prefix . 'banner_btn_textcolor' ] : '';
 	$button_style     = '';
 
-	if ( $button_bgcolor !== '' || $button_textcolor !== '' ) {
+	if ( '' !== $button_bgcolor || '' !== $button_textcolor ) {
 		$button_style = ' style="';
-		if ( $button_bgcolor !== '' ) {
+		if ( '' !== $button_bgcolor ) {
 			$button_style .= 'background: ' . $button_bgcolor . ' !important;';
 		}
-		if ( $button_textcolor !== '' ) {
+		if ( '' !== $button_textcolor ) {
 			$button_style .= 'color: ' . $button_textcolor . ' !important;';
 		}
 		$button_style .= '"';
 	}
 	$button_href = '';
 	$button_url  = isset( $screen_size[ $prefix . 'banner_buttondetails' ]['url'] ) ? $screen_size[ $prefix . 'banner_buttondetails' ]['url'] : '';
-	if ( $button_url !== '' ) {
+	if ( '' !== $button_url ) {
 		$button_href = ' href="' . $button_url . '"';
 	}
 	$button_emoji = isset( $screen_size[ $prefix . 'banner_buttonemoji' ] ) ? $screen_size[ $prefix . 'banner_buttonemoji' ] : '';
 	$button_text  = isset( $screen_size[ $prefix . 'banner_buttondetails' ]['text'] ) ? $screen_size[ $prefix . 'banner_buttondetails' ]['text'] : '';
 	?>
 
-	<?php if ( $button_style !== '' ) : ?>
+	<?php if ( '' !== $button_style ) : ?>
 		<style>
 			.wp-message-inserter-message-id-<?php echo $id; ?> p.a-button-site-message a:hover,
 			.wp-message-inserter-message-id-<?php echo $id; ?> p.a-button-site-message a:focus,
@@ -43,15 +43,15 @@
 		</style>
 	<?php endif; ?>
 
-	<?php if ( $button_text !== '' ) : ?>
+	<?php if ( '' !== $button_text ) : ?>
 		<?php
 		$value  = '';
-		$value .= '<a' . $button_style . $button_href . ( ( isset( $screen_size[ $prefix . 'banner_buttondetails' ]['blank'] ) && $screen_size[ $prefix . 'banner_buttondetails' ]['blank'] === 'true' ) ? 'target="_blank"' : '' ) . '>';
+		$value .= '<a' . $button_style . $button_href . ( ( isset( $screen_size[ $prefix . 'banner_buttondetails' ]['blank'] ) && 'true' === $screen_size[ $prefix . 'banner_buttondetails' ]['blank'] ) ? 'target="_blank"' : '' ) . '>';
 		$text   = '';
-		if ( $button_emoji !== '' ) {
+		if ( '' !== $button_emoji ) {
 			$text .= $button_emoji . '&nbsp;';
 		}
-		if ( $button_text !== '' ) {
+		if ( '' !== $button_text ) {
 			$text  .= $button_text;
 			$value .= '<!--[if mso]><i>&nbsp;</i><![endif]--><span>' . $text . '</span><!--[if mso]><i>&nbsp;</i><![endif]-->';
 		}

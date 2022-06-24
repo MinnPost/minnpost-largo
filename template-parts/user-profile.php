@@ -15,7 +15,7 @@
 	<?php
 	// The comment functions use the query var 'cpage', so we'll ensure that's set
 	$page = (int) get_query_var( 'page' );
-	if ( $page === 0 ) {
+	if ( 0 === $page ) {
 		$page = 1;
 	}
 	$comments_per_page = 10;
@@ -48,12 +48,12 @@
 		'prev_next' => true,
 	);
 	$pagination        = paginate_links( $args );
-	if ( ! empty( $pagination ) && ( $page !== 1 || $pages !== $page ) ) {
+	if ( ! empty( $pagination ) && ( 1 !== $page || $pages !== $page ) ) {
 		$doc = new DOMDocument();
 		libxml_use_internal_errors( true );
 		$doc->loadHTML( $pagination, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD );
 		libxml_use_internal_errors( false );
-		if ( $page !== 1 ) {
+		if ( 1 !== $page ) {
 			$ul   = $doc->getElementsByTagName( 'ul' )->item( 0 );
 			$node = $ul->childNodes->item( 0 );
 			$li   = $doc->createElement( 'li' );

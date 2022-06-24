@@ -105,7 +105,7 @@
 							<?php
 							// body text
 							$body = apply_filters( 'the_content', get_the_content() );
-							if ( $body !== '' ) :
+							if ( '' !== $body ) :
 								$body = apply_filters( 'format_email_content', $body, true, false );
 								?>
 								<div class="o-row m-newsletter-body-text-email">
@@ -135,13 +135,13 @@
 					$hide_author = get_post_meta( $id, '_mp_remove_author_from_display', true );
 					$coauthors   = get_coauthors( get_the_ID() );
 					$author_info = '';
-					if ( $hide_author !== 'on' && empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) ) ) {
+					if ( 'on' !== $hide_author && empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) ) ) {
 						foreach ( $coauthors as $key => $coauthor ) {
 							$author_id    = $coauthor->ID;
 							$author_info .= minnpost_get_author_figure( $author_id, 'photo', 'excerpt', true, 'cap-display_name', true, '', false, false );
 						}
 					}
-					if ( $author_info !== '' ) {
+					if ( '' !== $author_info ) {
 						$author_keys = array_keys( $coauthors );
 						$last_key    = end( $author_keys );
 						$end         = false;
@@ -202,7 +202,7 @@
 								</div>
 								<?php
 								$footer_message = get_option( 'site_footer_message', '' );
-								if ( $footer_message !== '' ) :
+								if ( '' !== $footer_message ) :
 									?>
 									<p class="a-footer-message"><?php echo $footer_message; ?></p>
 								<?php endif; ?>

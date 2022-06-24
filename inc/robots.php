@@ -15,7 +15,7 @@
 if ( ! function_exists( 'minnpost_largo_domain_nofollow' ) ) :
 	add_action( 'do_robotstxt', 'minnpost_largo_domain_nofollow' );
 	function minnpost_largo_domain_nofollow() {
-		if ( VIP_GO_ENV !== 'production' ) {
+		if ( 'production' !== VIP_GO_ENV ) {
 			echo 'User-agent: *' . PHP_EOL;
 			echo 'Disallow: /' . PHP_EOL;
 		}

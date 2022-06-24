@@ -22,7 +22,7 @@ $args = array(
 );
 
 ob_start();
-if ( $is_legacy === false ) {
+if ( false === $is_legacy ) {
 	$css = wp_strip_all_tags( file_get_contents( get_stylesheet_directory() . '/email.css' ) );
 	$css = str_replace( 'margin', 'Margin', $css );
 	$css = str_replace( '*,:after,:before{box-sizing:inherit}', '', $css );
@@ -31,7 +31,7 @@ get_header( 'newsletter', $args );
 
 while ( have_posts() ) :
 	the_post();
-	if ( $is_legacy === false ) {
+	if ( false === $is_legacy ) {
 		get_template_part( 'template-parts/content-newsletter', $newsletter_type, $args );
 	} else {
 		get_template_part( 'template-parts/content-newsletter-legacy', $newsletter_type, $args );
@@ -42,7 +42,7 @@ get_footer( 'newsletter', $args );
 
 $html = ob_get_contents();
 ob_end_clean();
-if ( $is_legacy === false ) {
+if ( false === $is_legacy ) {
 	// get the HTML and inline the CSS.
 	$css_inliner = CssInliner::fromHtml( $html )->inlineCss( $css );
 	// make a DOMDocument out of it.

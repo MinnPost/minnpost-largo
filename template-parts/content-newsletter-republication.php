@@ -71,27 +71,27 @@
 							$republication_newsletter_override_teaser = get_post_meta( get_the_ID(), '_mp_newsletter_republication_newsletter_override_teaser', true );
 							$do_not_show_automatic_teaser_items       = get_post_meta( get_the_ID(), '_mp_newsletter_do_not_show_automatic_teaser_items', true );
 							$do_not_show_teaser_text                  = get_post_meta( get_the_ID(), '_mp_newsletter_do_not_show_teaser_text', true );
-							if ( $do_not_show_automatic_teaser_items !== 'on' || $do_not_show_teaser_text !== 'on' ) :
+							if ( 'on' !== $do_not_show_automatic_teaser_items || 'on' !== $do_not_show_teaser_text ) :
 								?>
 								<div class="o-row m-teaser">
 								<?php
 							endif;
 							?>
-							<?php if ( $republication_newsletter_override_teaser !== 'on' ) : ?>
+							<?php if ( 'on' !== $republication_newsletter_override_teaser ) : ?>
 								<?php minnpost_newsletter_teaser(); ?>
 							<?php else : ?>
-								<?php if ( $do_not_show_automatic_teaser_items !== 'on' ) : ?>
+								<?php if ( 'on' !== $do_not_show_automatic_teaser_items ) : ?>
 									<?php minnpost_newsletter_today(); ?>
 								<?php endif; ?>
-								<?php if ( $do_not_show_teaser_text !== 'on' ) : ?>
+								<?php if ( 'on' !== $do_not_show_teaser_text ) : ?>
 									<?php minnpost_newsletter_teaser(); ?>
 								<?php endif; ?>
-								<?php if ( $do_not_show_automatic_teaser_items !== 'on' ) : ?>
+								<?php if ( 'on' !== $do_not_show_automatic_teaser_items ) : ?>
 									<?php minnpost_newsletter_type_welcome(); ?>
 								<?php endif; ?>
 							<?php endif; ?>
 							<?php
-							if ( $do_not_show_automatic_teaser_items !== 'on' || $do_not_show_teaser_text !== 'on' ) :
+							if ( 'on' !== $do_not_show_automatic_teaser_items || 'on' !== $do_not_show_teaser_text ) :
 								?>
 								</div>
 								<?php
@@ -101,7 +101,7 @@
 							<?php
 							// body text
 							$body = apply_filters( 'the_content', get_the_content() );
-							if ( $body !== '' ) :
+							if ( '' !== $body ) :
 								?>
 								<div class="o-row m-newsletter-body">
 									<?php echo $body; ?>
@@ -146,7 +146,7 @@
 							$this_section_post = 0;
 							?>
 
-							<?php if ( minnpost_newsletter_get_section_title( $section ) !== '' ) : ?>
+							<?php if ( '' !== minnpost_newsletter_get_section_title( $section ) ) : ?>
 								<table role="presentation" width="100%" class="h2 a-section-title">
 									<tr>
 										<td>
@@ -165,10 +165,10 @@
 								$args['image_for_republish_stories'] = get_post_meta( $newsletter_id, '_mp_newsletter_image_for_republish_stories', true );
 								$args['post_id']                     = $id;
 								// if there's no image, or if it's the first story and we want to treat it differently.
-								if ( $args['image_for_republish_stories'] !== '' ) {
-									if ( $args['image_for_republish_stories'] === 'none' || ( $this_section_post !== 1 && $args['image_for_republish_stories'] === 'full-first' ) ) {
+								if ( '' !== $args['image_for_republish_stories'] ) {
+									if ( 'none' === $args['image_for_republish_stories'] || ( 1 !== $this_section_post && 'full-first' === $args['image_for_republish_stories'] ) ) {
 										$args['image_size'] = 'none';
-									} elseif ( $args['image_for_republish_stories'] === 'thumb' ) {
+									} elseif ( 'thumb' === $args['image_for_republish_stories'] ) {
 										$args['image_size'] = 'thumb';
 									} else {
 										$args['image_size'] = 'full';
@@ -185,7 +185,7 @@
 								<?php
 								// with newsletters, the individual post can override the image size for the newsletter section the post is in.
 								$override_size = esc_html( get_post_meta( $args['post_id'], '_mp_post_newsletter_image_size', true ) );
-								if ( $override_size !== '' && $override_size !== 'default' ) {
+								if ( '' !== $override_size && 'default' !== $override_size ) {
 									$args['image_size'] = $override_size;
 								}
 								get_template_part( 'template-parts/post-newsletter', $args['newsletter_type'], $args );
@@ -238,7 +238,7 @@
 								</div>
 								<?php
 								$footer_message = get_option( 'site_footer_message', '' );
-								if ( $footer_message !== '' ) :
+								if ( '' !== $footer_message ) :
 									?>
 									<p class="a-footer-message"><?php echo $footer_message; ?></p>
 								<?php endif; ?>

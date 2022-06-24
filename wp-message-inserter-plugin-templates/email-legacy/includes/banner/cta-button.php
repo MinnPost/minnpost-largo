@@ -12,33 +12,33 @@
 	$button_textcolor = isset( $screen_size[ $prefix . 'banner_btn_textcolor' ] ) ? $screen_size[ $prefix . 'banner_btn_textcolor' ] : '';
 	$button_style     = '';
 
-	if ( $button_bgcolor !== '' || $button_textcolor !== '' ) {
+	if ( '' !== $button_bgcolor || '' !== $button_textcolor ) {
 		$button_style = ' style="-moz-border-radius: 4px; -webkit-border-radius: 4px; border: 1px solid ' . $button_bgcolor . '; border-radius: 4px; display: inline-block; font-size: 16px; padding: 8px 12px; text-decoration: none; font-weight: bold;';
-		if ( $button_bgcolor !== '' ) {
+		if ( '' !== $button_bgcolor ) {
 			$button_style .= 'background: ' . $button_bgcolor . ';';
 		}
-		if ( $button_textcolor !== '' ) {
+		if ( '' !== $button_textcolor ) {
 			$button_style .= 'color: ' . $button_textcolor . ' !important;';
 		}
 		$button_style .= '"';
 	}
 	$button_href = '';
 	$button_url  = isset( $screen_size[ $prefix . 'banner_buttondetails' ]['url'] ) ? $screen_size[ $prefix . 'banner_buttondetails' ]['url'] : '';
-	if ( $button_url !== '' ) {
+	if ( '' !== $button_url ) {
 		$button_href = ' href="' . $button_url . '"';
 	}
 	$button_emoji = isset( $screen_size[ $prefix . 'banner_buttonemoji' ] ) ? $screen_size[ $prefix . 'banner_buttonemoji' ] : '';
 	$button_text  = isset( $screen_size[ $prefix . 'banner_buttondetails' ]['text'] ) ? $screen_size[ $prefix . 'banner_buttondetails' ]['text'] : '';
 	?>
-	<?php if ( $button_text !== '' ) : ?>
+	<?php if ( '' !== $button_text ) : ?>
 		<?php
 		$value  = '';
-		$value .= '<a class="a-button"' . $button_style . $button_href . ( ( isset( $screen_size[ $prefix . 'banner_buttondetails' ]['blank'] ) && $screen_size[ $prefix . 'banner_buttondetails' ]['blank'] === 'true' ) ? 'target="_blank"' : '' ) . '>';
+		$value .= '<a class="a-button"' . $button_style . $button_href . ( ( isset( $screen_size[ $prefix . 'banner_buttondetails' ]['blank'] ) && 'true' === $screen_size[ $prefix . 'banner_buttondetails' ]['blank'] ) ? 'target="_blank"' : '' ) . '>';
 		$text   = '';
-		if ( $button_emoji !== '' ) {
+		if ( '' !== $button_emoji ) {
 			$text .= $button_emoji . '&nbsp;';
 		}
-		if ( $button_text !== '' ) {
+		if ( '' !== $button_text ) {
 			$text  .= $button_text;
 			$value .= '<!--[if mso]>&nbsp;<![endif]-->' . $text . '<!--[if mso]>&nbsp;<![endif]-->';
 		}

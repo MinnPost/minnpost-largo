@@ -15,7 +15,7 @@
 
 	<footer id="site-footer" class="o-footer">
 
-		<div class="o-wrapper o-wrapper-site-footer<?php echo ( get_query_var( 'grid', false ) !== false ) ? ' o-wrapper-grid-overlay' : ''; ?>">
+		<div class="o-wrapper o-wrapper-site-footer<?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">
 
 			<aside class="o-footer-links">
 				<nav id="footer-primary" class="m-secondary-navigation">
@@ -48,7 +48,7 @@
 
 				<?php
 				$footer_message = get_option( 'site_footer_message', '' );
-				if ( $footer_message !== '' ) :
+				if ( '' !== $footer_message ) :
 					?>
 					<p class="a-footer-message"><?php echo $footer_message; ?></p>
 				<?php endif; ?>

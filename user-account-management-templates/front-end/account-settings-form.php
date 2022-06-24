@@ -7,7 +7,7 @@
 	<input type="hidden" name="user_account_management_action" value="account-settings-update">
 	<input type="hidden" name="user_account_management_redirect" value="<?php echo esc_url( $attributes['redirect'] ); ?>"/>
 	<input type="hidden" name="user_account_management_account_settings_nonce" value="<?php echo esc_attr( wp_create_nonce( 'uam-account-settings-nonce' ) ); ?>"/>
-	<?php if ( $attributes['include_city_state'] === '1' && $attributes['hidden_city_state'] === '1' ) : ?>
+	<?php if ( '1' === $attributes['include_city_state'] && '1' === $attributes['hidden_city_state'] ) : ?>
 		<input type="hidden" name="city" value="<?php echo $attributes['city_value']; ?>">
 		<input type="hidden" name="state" value="<?php echo $attributes['state_value']; ?>">
 	<?php endif; ?>
@@ -30,7 +30,7 @@
 		</div>
 	<?php endif; ?>
 
-	<?php if ( ! empty( $_GET['account-settings-update'] ) && esc_attr( wp_unslash( $_GET['account-settings-update'] ) ) === 'true' ) : ?>
+	<?php if ( ! empty( $_GET['account-settings-update'] ) && 'true' === esc_attr( wp_unslash( $_GET['account-settings-update'] ) ) ) : ?>
 		<div class="m-form-message m-form-message-info">
 			<p class="login-info">
 				<?php echo esc_html__( 'Your account settings were successfully updated.', 'minnpost-largo' ); ?>
@@ -43,7 +43,7 @@
 			<?php
 			$user_other_emails = minnpost_largo_check_consolidated_emails( $attributes['user_meta'], $attributes['email_value'] );
 			$email_count       = count( $user_other_emails );
-			if ( $email_count === 0 ) {
+			if ( 0 === $email_count ) {
 				$label = sprintf( esc_html__( 'Email address:', 'minnpost-largo' ), $email_count );
 			} else {
 				$label = sprintf( esc_html__( 'Email addresses:', 'minnpost-largo' ), $email_count );
@@ -91,7 +91,7 @@
 			<input type="text" name="last_name" id="last-name" value="<?php echo $attributes['last_name_value']; ?>" required>
 		</div>
 
-		<?php if ( $attributes['include_city_state'] === '1' && $attributes['hidden_city_state'] !== '1' ) : ?>
+		<?php if ( '1' === $attributes['include_city_state'] && '1' !== $attributes['hidden_city_state'] ) : ?>
 			<div class="m-form-item m-form-city m-form-change-city">
 				<label for="city"><?php echo esc_html__( 'City:', 'minnpost-largo' ); ?> <span class="a-form-item-required" title="<?php echo esc_html__( 'This field is required.', 'minnpost-largo' ); ?>">*</span></label>
 				<input type="text" name="city" id="city" value="<?php echo $attributes['city_value']; ?>"  required>

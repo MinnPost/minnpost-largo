@@ -27,7 +27,7 @@ get_header(); ?>
 		if ( isset( $object_type ) ) {
 			$archive_type = $object_type;
 			$sponsorship  = minnpost_get_content_sponsorship( $object_type, $object_id );
-			if ( $object_type === 'author' ) {
+			if ( 'author' === $object_type ) {
 				$figure = minnpost_get_author_figure();
 			} else {
 				$figure = minnpost_get_term_figure( $object_id );
@@ -55,7 +55,7 @@ get_header(); ?>
 			<div class="m-archive-info m-term-info m-term-full-info">
 				<?php
 				$text = minnpost_get_term_text( $object_id );
-				if ( $text !== '' ) {
+				if ( '' !== $text ) {
 					echo $text;
 				}
 				?>
@@ -109,7 +109,7 @@ get_header(); ?>
 		<?php endif; ?>
 
 		<?php
-		if ( isset( $sponsorship ) && $sponsorship !== '' && isset( $object_type ) ) {
+		if ( isset( $sponsorship ) && '' !== $sponsorship && isset( $object_type ) ) {
 			echo '<div class="m-category-info">';
 				minnpost_content_sponsorship( $object_type, $object_id );
 			echo '</div>';

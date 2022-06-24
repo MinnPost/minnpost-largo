@@ -15,7 +15,7 @@ $speakers     = array();
 $moderators   = array();
 foreach ( $all_speakers as $speaker ) {
 	$moderator = get_post_meta( $speaker->ID, '_mp_speaker_moderator', true );
-	if ( $moderator === 'on' ) {
+	if ( 'on' === $moderator ) {
 		$moderators[] = $speaker;
 	} else {
 		$speakers[] = $speaker;
@@ -27,30 +27,30 @@ $multiple_moderators = count( $moderators ) > 1;
 $permalink_category_slug = minnpost_get_event_category_slug( get_the_ID() );
 
 $speakers_label = __( 'Speaker:', 'minnpost-largo' );
-if ( $multiple_speakers === true ) {
+if ( true === $multiple_speakers ) {
 	$speakers_label = __( 'Speakers:', 'minnpost-largo' );
 }
 $moderators_label = __( 'Moderator:', 'minnpost-largo' );
-if ( $multiple_moderators === true ) {
+if ( true === $multiple_moderators ) {
 	$moderators_label = __( 'Moderators:', 'minnpost-largo' );
 }
 
-if ( $permalink_category_slug === 'festival' ) {
+if ( 'festival' === $permalink_category_slug ) {
 	$speakers_label = __( 'Speaker:', 'minnpost-largo' );
-	if ( $multiple_speakers === true ) {
+	if ( true === $multiple_speakers ) {
 		$speakers_label = __( 'Speakers:', 'minnpost-largo' );
 	}
 	$moderators_label = __( 'Moderator:', 'minnpost-largo' );
-	if ( $multiple_moderators === true ) {
+	if ( true === $multiple_moderators ) {
 		$moderators_label = __( 'Moderators:', 'minnpost-largo' );
 	}
-} elseif ( $permalink_category_slug === 'tonight' ) {
+} elseif ( 'tonight' === $permalink_category_slug ) {
 	$speakers_label = __( 'Guest:', 'minnpost-largo' );
-	if ( $multiple_speakers === true ) {
+	if ( true === $multiple_speakers ) {
 		$speakers_label = __( 'Guests:', 'minnpost-largo' );
 	}
 	$moderators_label = __( 'Host:', 'minnpost-largo' );
-	if ( $multiple_moderators === true ) {
+	if ( true === $multiple_moderators ) {
 		$moderators_label = __( 'Hosts:', 'minnpost-largo' );
 	}
 }
@@ -63,7 +63,7 @@ if ( $permalink_category_slug === 'festival' ) {
 		$speaker_names = '';
 		$prefix        = '';
 		$class_suffix  = '';
-		if ( $permalink_category_slug !== '' ) {
+		if ( '' !== $permalink_category_slug ) {
 			$class_suffix = ' a-' . $permalink_category_slug . '-speakers';
 		}
 		if ( ! empty( $all_speakers ) ) {

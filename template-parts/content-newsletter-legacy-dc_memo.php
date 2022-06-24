@@ -210,7 +210,7 @@ a[x-apple-data-detectors] {
 				</td> <!-- end .one-column.header -->
 			</tr> <!-- end row -->
 
-			<?php if ( minnpost_get_posted_by() !== '' ) : ?>
+			<?php if ( '' !== minnpost_get_posted_by() ) : ?>
 				<tr>
 					<td class="one-column header" style="border-collapse: collapse; border-bottom-width: 2px; border-bottom-color: #cccccf; border-bottom-style: solid; Margin: 0; padding: 0;">
 				<!--[if (gte mso 9)|(IE)]>
@@ -250,7 +250,7 @@ a[x-apple-data-detectors] {
 
 			<?php
 			$body = apply_filters( 'the_content', get_the_content() );
-			if ( $body !== '' ) :
+			if ( '' !== $body ) :
 				// add the inline sponsor before the second h2-h6 in the body
 				$heading_counter = 1;
 				$ad_string       = '<h4 class="sponsored" style="color: #738bc0; Margin: 15px 0; display: block; font-size: 14px; line-height: 1; font-family: Helvetica, Arial, Geneva, sans-serif; font-weight: bold; text-transform: uppercase; border-top-color: #cccccf; border-top-style: solid; border-top-width: 2px; padding-top: 15px;" align="left">D.C. Memo Sponsored by Great River Energy</h4><p class="inline-sponsor" style="font-family: Georgia, &quot;Times New Roman&quot;, Times, serif; font-size: 16px; line-height: 20.787px; Margin: 0 0 15px; padding: 0;" align="center"><a href="http://greatriverenergy.com/" style="color: #801019; text-decoration: none;"><img src="https://www.minnpost.com/wp-content/uploads/sites/default/files/imagecache/image_detail/images/image/great-river-energy-logo.png" alt="Great River Energy" align="center" style="height: 86px; line-height: 100%; outline: none; text-decoration: none; display: block; Margin: 0 10px 5px 0; border: 0 none;" /></a></p><h4';
@@ -258,7 +258,7 @@ a[x-apple-data-detectors] {
 					'/<h[2-6](.*?)/',
 					function ( $match ) use ( &$heading_counter, $ad_string ) {
 						// prefix second heading that is not an h1 with ad content
-						if ( $heading_counter++ === 2 ) {
+						if ( 2 === $heading_counter++ ) {
 							return $ad_string;
 						}
 						return $match[0];
@@ -314,13 +314,13 @@ a[x-apple-data-detectors] {
 			$hide_author = get_post_meta( $id, '_mp_remove_author_from_display', true );
 			$coauthors   = get_coauthors( get_the_ID() );
 			$author_info = '';
-			if ( $hide_author !== 'on' && empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) ) ) {
+			if ( 'on' !== $hide_author && empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) ) ) {
 				foreach ( $coauthors as $key => $coauthor ) {
 					$author_id    = $coauthor->ID;
 					$author_info .= minnpost_get_author_figure( $author_id, 'author-teaser', 'excerpt', true, 'cap-display_name', true, '', false, false );
 				}
 			}
-			if ( $author_info !== '' ) {
+			if ( '' !== $author_info ) {
 				?>
 				<tr>
 					<td class="two-column content author" style="border-collapse: collapse; Margin: 0; padding: 0;">
@@ -362,7 +362,7 @@ a[x-apple-data-detectors] {
 								<?php dynamic_sidebar( 'sidebar-3' ); ?>
 								<?php
 								$footer_message = get_option( 'site_footer_message', '' );
-								if ( $footer_message !== '' ) :
+								if ( '' !== $footer_message ) :
 									?>
 									<p class="address" style="font-size: 12px; Margin: 10px 0 15px; padding: 0; text-align: center;" align="center"><?php echo $footer_message; ?></p>
 								<?php endif; ?>

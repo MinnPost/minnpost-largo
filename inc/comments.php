@@ -63,7 +63,7 @@ endif;
 if ( ! function_exists( 'minnpost_largo_comment_date_column' ) ) :
 	add_action( 'manage_comments_custom_column', 'minnpost_largo_comment_date_column', 10, 2 );
 	function minnpost_largo_comment_date_column( $column, $comment_id ) {
-		if ( $column === 'custom_date' ) {
+		if ( 'custom_date' === $column ) {
 			$comment   = get_comment( $comment_id );
 			$submitted = sprintf(
 				/* translators: 1: comment date, 2: comment time */
@@ -121,7 +121,7 @@ if ( ! function_exists( 'get_approve_comment_link' ) ) :
 		// make approve/unapprove links work without approval
 		$nonce_action = 'approve-comment_' . $comment->comment_ID;
 		$nonce        = wp_create_nonce( $nonce_action );
-		if ( $comment->comment_approved === '0' ) {
+		if ( '0' === $comment->comment_approved ) {
 			$location = admin_url( 'comment.php?action=approvecomment&amp;c=' ) . $comment->comment_ID . '&_wpnonce=' . esc_attr( $nonce );
 		} else {
 			$location = admin_url( 'comment.php?action=unapprovecomment&amp;c=' ) . $comment->comment_ID . '&_wpnonce=' . esc_attr( $nonce );
@@ -151,8 +151,8 @@ if ( ! function_exists( 'approve_comment_link' ) ) :
 		if ( ! current_user_can( 'edit_comment', $comment->comment_ID ) ) {
 			return;
 		}
-		if ( $text === null ) {
-			if ( $comment->comment_approved === '0' ) {
+		if ( null === $text ) {
+			if ( '0' === $comment->comment_approved ) {
 				$text = __( 'Approve This' );
 			} else {
 				$text = __( 'Unapprove This' );
@@ -216,7 +216,7 @@ if ( ! function_exists( 'spam_comment_link' ) ) :
 		if ( ! current_user_can( 'edit_comment', $comment->comment_ID ) ) {
 			return;
 		}
-		if ( $text === null ) {
+		if ( null === $text ) {
 			$text = __( 'Spam This' );
 		}
 		$link = '<a class="comment-spam-link" href="' . esc_url( get_spam_comment_link( $comment ) ) . '">' . $text . '</a>';
@@ -273,7 +273,7 @@ if ( ! function_exists( 'trash_comment_link' ) ) :
 		if ( ! current_user_can( 'edit_comment', $comment->comment_ID ) ) {
 			return;
 		}
-		if ( $text === null ) {
+		if ( null === $text ) {
 			$text = __( 'Trash This' );
 		}
 		$link = '<a class="comment-trash-link" href="' . esc_url( get_trash_comment_link( $comment ) ) . '">' . $text . '</a>';
@@ -299,7 +299,7 @@ if ( ! function_exists( 'get_comment_status_by_access' ) ) :
 	function get_comment_status_by_access() {
 		$status       = 'approve';
 		$can_moderate = user_can_moderate();
-		if ( $can_moderate === true ) {
+		if ( true === $can_moderate ) {
 			$status = 'all';
 		}
 		return $status;
@@ -369,10 +369,10 @@ if ( ! function_exists( 'minnpost_largo_always_load_comments_for_user' ) ) :
 	function minnpost_largo_always_load_comments_for_user( $can_lazyload ) {
 		$user_id      = get_current_user_id();
 		$can_lazyload = true; // set a default of true; user overrides it
-		if ( $user_id !== 0 ) {
+		if ( 0 !== $user_id ) {
 			$always_load_comments = get_user_meta( $user_id, 'always_load_comments', true );
 			$always_load_comments = user_always_loads_comments( $always_load_comments );
-			if ( $always_load_comments === true ) {
+			if ( true === $always_load_comments ) {
 				$can_lazyload = false;
 			}
 		}
@@ -407,7 +407,7 @@ endif;
 */
 if ( ! function_exists( 'user_always_loads_comments' ) ) :
 	function user_always_loads_comments( $always_load_comments = false ) {
-		if ( $always_load_comments === 'on' || filter_var( $always_load_comments, FILTER_VALIDATE_BOOLEAN ) === true ) {
+		if ( 'on' === $always_load_comments || true === filter_var( $always_load_comments, FILTER_VALIDATE_BOOLEAN ) ) {
 			$always_load_comments = true;
 		} else {
 			$always_load_comments = false;
@@ -467,14 +467,14 @@ if ( ! function_exists( 'minnpost_largo_load_comments_set_user_meta' ) ) :
 	function minnpost_largo_load_comments_set_user_meta() {
 		// if there is no logged in user, don't do anything
 		$user_id = get_current_user_id();
-		if ( $user_id === 0 ) {
+		if ( 0 === $user_id ) {
 			die();
 		}
 
 		$always_show = isset( $_POST['value'] ) ? (int) $_POST['value'] : 0;
 		$update      = update_user_meta( $user_id, 'always_load_comments', $always_show );
 
-		if ( $always_show === 1 ) {
+		if ( 1 === $always_show ) {
 			$return = array(
 				'show'    => true,
 				'message' => __( 'You will always see comments loaded when you are logged in', 'minnpost-largo' ),
@@ -507,7 +507,7 @@ if ( ! function_exists( 'minnpost_largo_load_comments_switch' ) ) :
 		if ( comments_open() ) :
 			?>
 			<div class="m-user-always-show-comments m-user-always-show-comments-<?php echo $position; ?>">
-			<?php if ( $user_id === 0 ) : ?>
+			<?php if ( 0 === $user_id ) : ?>
 				<span class="always-show-comments">
 				<?php
 				$login_url = site_url( '/user/login/' );
@@ -522,7 +522,7 @@ if ( ! function_exists( 'minnpost_largo_load_comments_switch' ) ) :
 			<?php else : ?>
 				<label class="always-show-comments" for="always-show-comments-<?php echo $position; ?>"><?php echo esc_html__( 'Always show comments when you are logged in', 'minnpost-largo' ); ?></label>
 				<label class="a-switch a-switch-always-show-comments a-switch-always-show-comments-<?php echo $position; ?>">
-					<input type="checkbox" class="a-checkbox-always-show-comments" id="always-show-comments-<?php echo $position; ?>"<?php echo ( $always_load_comments === true ) ? ' value="0" checked' : ' value="1"'; ?>>
+					<input type="checkbox" class="a-checkbox-always-show-comments" id="always-show-comments-<?php echo $position; ?>"<?php echo ( true === $always_load_comments ) ? ' value="0" checked' : ' value="1"'; ?>>
 					<span class="slider round"></span>
 				</label>
 			<?php endif; ?>

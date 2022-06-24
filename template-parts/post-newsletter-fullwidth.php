@@ -8,7 +8,7 @@
 						<td class="outlook-inner-padding">
 	[/outlook]
 	<div class="post-contents">
-		<?php if ( $args['image_size'] !== 'none' ) : ?>
+		<?php if ( 'none' !== $args['image_size'] ) : ?>
 			<table role="presentation" cellpadding="0" cellspacing="0" width="100%" class="m-post-image m-post-image-<?php echo $args['image_size']; ?>">
 				<tr>
 					<td>
@@ -35,7 +35,7 @@
 				</tr>
 			</table>
 		<?php endif; ?>
-		<?php if ( $args['show_category'] === true ) : ?>
+		<?php if ( true === $args['show_category'] ) : ?>
 			[not-outlook]
 				<?php minnpost_category_breadcrumb_newsletter(); ?>
 			[/not-outlook]

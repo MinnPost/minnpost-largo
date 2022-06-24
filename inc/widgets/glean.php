@@ -19,7 +19,7 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 		}
 		if ( $title ) {
 			$before_title = str_replace( 'widget-title', 'a-widget-title', $before_title );
-			if ( $content !== '' ) {
+			if ( '' !== $content ) {
 				$title = sprintf(
 					'<span>%1$s</span>: %2$s',
 					$title,
@@ -36,7 +36,7 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 			'cat'            => $category,
 			'orderby'        => 'date',
 		);
-		if ( VIP_GO_ENV === 'production' || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION === true ) && $use_elasticsearch === true ) {
+		if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) && true === $use_elasticsearch ) {
 			$glean_query_args['es'] = true; // elasticsearch.
 		}
 		$glean_query = new WP_Query( $glean_query_args );
@@ -52,12 +52,12 @@ if ( ! function_exists( 'minnpost_largo_glean' ) ) :
 					while ( $glean_query->have_posts() ) :
 							$glean_query->the_post();
 						?>
-						<?php if ( $i === 0 ) : ?>
+						<?php if ( 0 === $i ) : ?>
 							<header class="m-entry-header">
 								<?php the_title( '<h4 class="a-entry-title a-spill-entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h4>' ); ?>
-								<?php if ( get_post_type() === 'post' ) : ?>
+								<?php if ( 'post' === get_post_type() ) : ?>
 									<?php
-									if ( minnpost_get_posted_on() !== '' ) {
+									if ( '' !== minnpost_get_posted_on() ) {
 										$date = minnpost_get_posted_on();
 										echo sprintf(
 											'<time class="a-entry-date published updated" datetime="%1$s">%2$s</time>',

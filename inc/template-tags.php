@@ -20,33 +20,33 @@ if ( ! function_exists( 'minnpost_post_image' ) ) :
 	 * Outputs story image, whether large or various kinds of thumbnail, depending on where it is called
 	 */
 	function minnpost_post_image( $size = 'thumbnail', $attributes = array(), $id = '', $lazy_load = true ) {
-		if ( $id === '' ) {
+		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
 		$image_data = get_minnpost_post_image( $size, $attributes, $id, $lazy_load );
-		if ( $image_data !== '' && ! empty( $image_data ) ) {
+		if ( '' !== $image_data && ! empty( $image_data ) ) {
 			$image_id  = $image_data['image_id'];
 			$image_url = $image_data['image_url'];
 			$image     = $image_data['markup'];
 			$size      = $image_data['size'];
 		}
 
-		if ( post_password_required() || is_attachment() || ( ! isset( $image_id ) && ! isset( $image_url ) ) || empty( $image ) || $id === false ) {
+		if ( post_password_required() || is_attachment() || ( ! isset( $image_id ) && ! isset( $image_url ) ) || empty( $image ) || false === $id ) {
 			return;
 		}
 
 		$caption = wp_get_attachment_caption( $image_id );
 		$credit  = minnpost_get_media_credit_html( $image_id );
 
-		if ( is_singular() && ! is_singular( 'newsletter' ) && ( ! isset( $attributes['location'] ) || ( $attributes['location'] !== 'interest' && $attributes['location'] !== 'related' ) ) ) : ?>
+		if ( is_singular() && ! is_singular( 'newsletter' ) && ( ! isset( $attributes['location'] ) || ( 'interest' !== $attributes['location'] && 'related' !== $attributes['location'] ) ) ) : ?>
 			<figure class="m-post-image m-post-image-<?php echo $size; ?>">
 				<?php echo $image; ?>
-				<?php if ( $caption !== '' || $credit !== '' ) { ?>
+				<?php if ( '' !== $caption || '' !== $credit ) { ?>
 				<figcaption>
-					<?php if ( $caption !== '' ) { ?>
+					<?php if ( '' !== $caption ) { ?>
 						<div class="a-media-meta a-media-caption"><?php echo $caption; ?></div>
 					<?php } ?>
-					<?php if ( $credit !== '' ) { ?>
+					<?php if ( '' !== $credit ) { ?>
 						<div class="a-media-meta a-media-credit"><?php echo $credit; ?></div>
 					<?php } ?>
 				</figcaption>
@@ -75,11 +75,11 @@ if ( ! function_exists( 'minnpost_posted_on' ) ) :
 	 * Prints HTML with meta information for the current post-date/time.
 	 */
 	function minnpost_posted_on( $id = '', $time_ago = true ) {
-		if ( $id === '' ) {
+		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
 		$date = minnpost_get_posted_on( $id, $time_ago );
-		if ( $date === '' ) {
+		if ( '' === $date ) {
 			return;
 		}
 		$time_string = sprintf(
@@ -101,11 +101,11 @@ if ( ! function_exists( 'minnpost_newsletter_today' ) ) :
 	 * Prints HTML with meta information for the current post-date/time.
 	 */
 	function minnpost_newsletter_today( $id = '' ) {
-		if ( $id === '' ) {
+		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
 		$date = minnpost_get_posted_on( $id );
-		if ( $date === '' ) {
+		if ( '' === $date ) {
 			return;
 		}
 		$time_string = sprintf(
@@ -128,11 +128,11 @@ if ( ! function_exists( 'minnpost_newsletter_teaser' ) ) :
 	 * Prints HTML with newsletter teaser
 	 */
 	function minnpost_newsletter_teaser( $id = '' ) {
-		if ( $id === '' ) {
+		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
 		$teaser = minnpost_get_newsletter_teaser( $id );
-		if ( $teaser === '' ) {
+		if ( '' === $teaser ) {
 			return;
 		}
 		echo $teaser;
@@ -149,21 +149,21 @@ if ( ! function_exists( 'minnpost_newsletter_type_welcome' ) ) :
 	 * Prints HTML with newsletter type
 	 */
 	function minnpost_newsletter_type_welcome( $id = '' ) {
-		if ( $id === '' ) {
+		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
 		$newsletter_type = minnpost_get_newsletter_type( $id );
-		if ( $newsletter_type === '' ) {
+		if ( '' === $newsletter_type ) {
 			return;
 		}
 		$hide_suffix = false;
-		if ( $newsletter_type === 'sunday_review' ) {
+		if ( 'sunday_review' === $newsletter_type ) {
 			$hide_suffix = true;
 		}
-		if ( $newsletter_type !== '' && function_exists( 'minnpost_largo_email_types' ) ) {
+		if ( '' !== $newsletter_type && function_exists( 'minnpost_largo_email_types' ) ) {
 			$newsletter_type = minnpost_largo_email_types( $newsletter_type );
 		}
-		if ( $hide_suffix === false ) {
+		if ( false === $hide_suffix ) {
 			$newsletter_type = sprintf(
 				// translators: 1) is the newsletter type
 				'%1$s newsletter',
@@ -189,7 +189,7 @@ endif;
 */
 if ( ! function_exists( 'minnpost_posted_by' ) ) :
 	function minnpost_posted_by( $id = '', $include_title = true, $link_name = true ) {
-		if ( $id === '' ) {
+		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
 		echo minnpost_get_posted_by( $id, $include_title, $link_name );
@@ -212,13 +212,13 @@ function minnpost_largo_author_display_name( $name ) {
 */
 if ( ! function_exists( 'minnpost_share_buttons' ) ) :
 	function minnpost_share_buttons( $post_id = '' ) {
-		if ( $post_id === '' ) {
+		if ( '' === $post_id ) {
 			$post_id = get_the_ID();
 		}
 
 		// don't show share buttons if instructed
 		$hide_share_buttons = get_post_meta( $post_id, '_mp_remove_share_buttons_from_display', true );
-		if ( $hide_share_buttons === 'on' ) {
+		if ( 'on' === $hide_share_buttons ) {
 			return;
 		}
 
@@ -226,7 +226,7 @@ if ( ! function_exists( 'minnpost_share_buttons' ) ) :
 
 		// keep share buttons horizontal if instructed
 		$share_buttons_always_horizontal = get_post_meta( $post_id, '_mp_share_buttons_always_horizontal', true );
-		if ( $share_buttons_always_horizontal === 'on' ) {
+		if ( 'on' === $share_buttons_always_horizontal ) {
 			$layout_class .= ' m-entry-share-horizontal';
 		}
 
@@ -268,7 +268,7 @@ if ( ! function_exists( 'minnpost_share_buttons' ) ) :
 				// when to hide the republish button.
 				$hide_republish_button = get_post_meta( $post_id, '_mp_remove_republish_button_from_display', true );
 				$hide_republish_button = apply_filters( 'minnpost_largo_remove_republish_button_from_display', '', $post_id );
-				if ( $hide_republish_button !== 'on' && $show_republish_button === 'on' ) :
+				if ( 'on' !== $hide_republish_button && 'on' === $show_republish_button ) :
 					?>
 					<li class="a-share a-share-republish">
 						<a href="#" class="republication-tracker-tool-button" aria-label="<?php echo __( 'Republish this article.', 'minnpost-largo' ); ?>" data-share-action="<?php echo __( 'Republish', 'minnpost-largo' ); ?>">
@@ -327,8 +327,8 @@ endif;
 */
 if ( ! function_exists( 'minnpost_related' ) ) :
 	function minnpost_related( $type = 'content', $count = 3, $only_show_images_if_not_missing = false ) {
-		if ( $type === 'automated' ) {
-			if ( ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION === true && function_exists( 'vip_es_get_related_posts' ) ) ) {
+		if ( 'automated' === $type ) {
+			if ( ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION && function_exists( 'vip_es_get_related_posts' ) ) ) {
 				$related_posts = minnpost_largo_get_elasticsearch_results( $count );
 			} elseif ( function_exists( 'minnpost_largo_get_jetpack_results' ) ) {
 				$related_posts = minnpost_largo_get_jetpack_results( $count );
@@ -343,7 +343,7 @@ if ( ! function_exists( 'minnpost_related' ) ) :
 		if ( ! empty( $related_posts ) ) :
 			?>
 		<h3 class="a-related-title a-related-title-<?php echo $type; ?>">
-			<?php if ( get_post_meta( get_the_ID(), '_mp_related_content_label', true ) !== '' ) : ?>
+			<?php if ( '' !== get_post_meta( get_the_ID(), '_mp_related_content_label', true ) ) : ?>
 				<?php echo get_post_meta( get_the_ID(), '_mp_related_content_label', true ); ?>
 			<?php else : ?>
 				<?php echo esc_html__( 'Read these stories next', 'minnpost-largo' ); ?>
@@ -353,7 +353,7 @@ if ( ! function_exists( 'minnpost_related' ) ) :
 			<?php
 			global $post;
 			$image_size = 'feature-medium';
-			if ( $only_show_images_if_not_missing === true ) {
+			if ( true === $only_show_images_if_not_missing ) {
 				$show_image = true;
 				foreach ( $related_posts as $post ) {
 					setup_postdata( $post );
@@ -495,7 +495,7 @@ endif;
 if ( ! function_exists( 'minnpost_entry_footer' ) ) :
 	function minnpost_entry_footer() {
 		// Hide category and tag text for pages.
-		if ( get_post_type() === 'post' ) {
+		if ( 'post' === get_post_type() ) {
 			/* translators: used between list items, there is a space after the comma */
 			$categories_list = get_the_category_list( esc_html__( ', ', 'minnpost-largo' ) );
 			if ( $categories_list && minnpost_categorized_blog() ) {
@@ -549,14 +549,14 @@ endif;
 */
 if ( ! function_exists( 'minnpost_edit_link' ) ) :
 	function minnpost_edit_link( $id = '' ) {
-		if ( $id === '' ) {
+		if ( '' === $id ) {
 			$id = get_the_ID();
-			if ( $id === 0 ) {
+			if ( 0 === $id ) {
 				return;
 			}
 		}
 		$user = wp_get_current_user();
-		if ( $user->ID === 0 || in_array( 'comment_moderator', (array) $user->roles, true ) ) {
+		if ( 0 === $user->ID || in_array( 'comment_moderator', (array) $user->roles, true ) ) {
 			return;
 		}
 		edit_post_link(
@@ -580,13 +580,13 @@ endif;
 if ( ! function_exists( 'minnpost_post_sidebar' ) ) :
 	function minnpost_post_sidebar( $post_id = '' ) {
 
-		if ( $post_id === '' ) {
+		if ( '' === $post_id ) {
 			$post_id = get_the_ID();
 		}
 
 		$sidebar = apply_filters( 'the_content', get_post_meta( $post_id, '_mp_post_sidebar', true ) );
 
-		if ( $sidebar !== null && $sidebar !== '' ) {
+		if ( null !== $sidebar && '' !== $sidebar ) {
 			echo '<section id="post-sidebar" class="m-post-sidebar">' . $sidebar . '</section>';
 		}
 	}
@@ -601,18 +601,18 @@ endif;
 if ( ! function_exists( 'minnpost_category_breadcrumb' ) ) :
 	function minnpost_category_breadcrumb( $post_id = '', $show_group = true ) {
 
-		if ( $post_id === '' ) {
+		if ( '' === $post_id ) {
 			$post_id = get_the_ID();
 		}
 		$category_id       = minnpost_get_permalink_category_id( $post_id );
 		$category_group_id = '';
 		$category_is_group = false;
-		if ( $category_id !== '' ) {
+		if ( '' !== $category_id ) {
 			$category      = get_category( $category_id );
 			$category_link = get_category_link( $category );
-			if ( $show_group === true ) {
+			if ( true === $show_group ) {
 				$category_group_id = minnpost_get_category_group_id( $post_id, $category_id );
-				if ( $category_group_id !== '' ) {
+				if ( '' !== $category_group_id ) {
 					$category_group = get_category( $category_group_id );
 					echo '<div class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '">';
 					echo '<div class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category_group->term_id ) ) . '">' . $category_group->name . '</a></div>';
@@ -625,9 +625,9 @@ if ( ! function_exists( 'minnpost_category_breadcrumb' ) ) :
 					}
 				}
 			}
-			if ( $category_is_group === false ) {
+			if ( false === $category_is_group ) {
 				$category_name = isset( $category->name ) ? $category->name : '';
-				if ( $category_name !== '' ) {
+				if ( '' !== $category_name ) {
 					echo '<div class="a-breadcrumb a-category-name"><a href="' . $category_link . '">' . $category_name . '</a></div>';
 				}
 			} else {
@@ -635,7 +635,7 @@ if ( ! function_exists( 'minnpost_category_breadcrumb' ) ) :
 				echo '<div class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category->term_id ) ) . '">' . $category->name . '</a></div>';
 			}
 		}
-		if ( $category_group_id !== '' || $category_is_group === true ) {
+		if ( '' !== $category_group_id || true === $category_is_group ) {
 			echo '</div>';
 		}
 	}
@@ -652,25 +652,25 @@ endif;
 if ( ! function_exists( 'minnpost_category_breadcrumb_newsletter' ) ) :
 	function minnpost_category_breadcrumb_newsletter( $post_id = '', $show_group = true, $use_category_group_name_as_class = false, $use_links = false ) {
 
-		if ( $post_id === '' ) {
+		if ( '' === $post_id ) {
 			$post_id = get_the_ID();
 		}
 		$category_id       = minnpost_get_permalink_category_id( $post_id );
 		$category_group_id = '';
 		$category_is_group = false;
-		if ( $category_id !== '' ) {
+		if ( '' !== $category_id ) {
 			$category      = get_category( $category_id );
 			$category_link = get_category_link( $category );
-			if ( $show_group === true ) {
+			if ( true === $show_group ) {
 				$category_group_id = minnpost_get_category_group_id( $post_id, $category_id );
-				if ( $category_group_id !== '' ) {
+				if ( '' !== $category_group_id ) {
 					$category_group = get_category( $category_group_id );
-					if ( $use_category_group_name_as_class === true ) {
+					if ( true === $use_category_group_name_as_class ) {
 						echo '<div class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '">';
 					} else {
 						echo '<div class="a-breadcrumbs">';
 					}
-					if ( $use_links === true ) {
+					if ( true === $use_links ) {
 						echo '<div class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category_group->term_id ) ) . '">' . $category_group->name . '</a></div>';
 					} else {
 						echo '<div class="a-breadcrumb a-category-group"><span>' . $category_group->name . '</span></div>';
@@ -684,29 +684,29 @@ if ( ! function_exists( 'minnpost_category_breadcrumb_newsletter' ) ) :
 					}
 				}
 			}
-			if ( $category_is_group === false ) {
+			if ( false === $category_is_group ) {
 				$category_name = isset( $category->name ) ? $category->name : '';
-				if ( $category_name !== '' ) {
-					if ( $use_links === true ) {
+				if ( '' !== $category_name ) {
+					if ( true === $use_links ) {
 						echo '<div class="a-breadcrumb a-category-name"><a href="' . $category_link . '">' . $category_name . '</a></div>';
 					} else {
 						echo '<div class="a-breadcrumb a-category-name"><span>' . $category_name . '</span></div>';
 					}
 				}
 			} else {
-				if ( $use_category_group_name_as_class === true ) {
+				if ( true === $use_category_group_name_as_class ) {
 					echo '<div class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '">';
 				} else {
 					echo '<div class="a-breadcrumbs">';
 				}
-				if ( $use_links === true ) {
+				if ( true === $use_links ) {
 					echo '<div class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category->term_id ) ) . '">' . $category->name . '</a></div>';
 				} else {
 					echo '<div class="a-breadcrumb a-category-group"><span>' . $category->name . '</span></div>';
 				}
 			}
 		}
-		if ( $category_group_id !== '' || $category_is_group === true ) {
+		if ( '' !== $category_group_id || true === $category_is_group ) {
 			echo '</div>';
 		}
 	}
@@ -723,25 +723,25 @@ endif;
 if ( ! function_exists( 'minnpost_category_breadcrumb_newsletter_outlook' ) ) :
 	function minnpost_category_breadcrumb_newsletter_outlook( $post_id = '', $show_group = true, $use_category_group_name_as_class = true, $use_links = false ) {
 
-		if ( $post_id === '' ) {
+		if ( '' === $post_id ) {
 			$post_id = get_the_ID();
 		}
 		$category_id       = minnpost_get_permalink_category_id( $post_id );
 		$category_group_id = '';
 		$category_is_group = false;
-		if ( $category_id !== '' ) {
+		if ( '' !== $category_id ) {
 			$category      = get_category( $category_id );
 			$category_link = get_category_link( $category );
-			if ( $show_group === true ) {
+			if ( true === $show_group ) {
 				$category_group_id = minnpost_get_category_group_id( $post_id, $category_id );
-				if ( $category_group_id !== '' ) {
+				if ( '' !== $category_group_id ) {
 					$category_group = get_category( $category_group_id );
-					if ( $use_category_group_name_as_class === true && isset( $category_group->slug ) ) {
+					if ( true === $use_category_group_name_as_class && isset( $category_group->slug ) ) {
 						echo '<table class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '"><tr><td>';
 					} else {
 						echo '<table class="a-breadcrumbs"><tr><td>';
 					}
-					if ( $use_links === true ) {
+					if ( true === $use_links ) {
 						echo '<span class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category_group->term_id ) ) . '">' . $category_group->name . '</a></span><span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>';
 					} else {
 						echo '<span class="a-breadcrumb a-category-group">' . $category_group->name . '</span><span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>';
@@ -755,10 +755,10 @@ if ( ! function_exists( 'minnpost_category_breadcrumb_newsletter_outlook' ) ) :
 					}
 				}
 			}
-			if ( $category_is_group === false ) {
+			if ( false === $category_is_group ) {
 				$category_name = isset( $category->name ) ? $category->name : '';
-				if ( $category_name !== '' ) {
-					if ( $use_links === true ) {
+				if ( '' !== $category_name ) {
+					if ( true === $use_links ) {
 						echo '<span class="a-breadcrumb a-category-name"><a href="' . $category_link . '">' . $category_name . '</a></span>';
 					} else {
 						echo '<span class="a-breadcrumb a-category-name">' . $category_name . '</span>';
@@ -766,12 +766,12 @@ if ( ! function_exists( 'minnpost_category_breadcrumb_newsletter_outlook' ) ) :
 				}
 			} else {
 				if ( isset( $category_group ) ) {
-					if ( $use_category_group_name_as_class === true ) {
+					if ( true === $use_category_group_name_as_class ) {
 						echo '<span class="a-breadcrumbs a-breadcrumbs-' . sanitize_title( $category_group->slug ) . '">';
 					} else {
 						echo '<span class="a-breadcrumbs">';
 					}
-					if ( $use_links === true ) {
+					if ( true === $use_links ) {
 						echo '<span class="a-breadcrumb a-category-group"><a href="' . esc_url( get_category_link( $category->term_id ) ) . '">' . $category->name . '</a></span>';
 					} else {
 						echo '<span class="a-breadcrumb a-category-group">' . $category->name . '</span>';
@@ -779,7 +779,7 @@ if ( ! function_exists( 'minnpost_category_breadcrumb_newsletter_outlook' ) ) :
 				}
 			}
 		}
-		if ( ( $category_group_id !== '' || $category_is_group === true ) && isset( $category_group->slug ) ) {
+		if ( ( '' !== $category_group_id || true === $category_is_group ) && isset( $category_group->slug ) ) {
 			echo '</td></tr></table>';
 		}
 	}
@@ -792,11 +792,11 @@ endif;
 */
 if ( ! function_exists( 'minnpost_replace_category_text' ) ) :
 	function minnpost_replace_category_text( $post_id = '' ) {
-		if ( $post_id === '' ) {
+		if ( '' === $post_id ) {
 			$post_id = get_the_ID();
 		}
 		$replace_category_text = minnpost_get_replace_category_text( $post_id );
-		if ( $replace_category_text !== '' ) {
+		if ( '' !== $replace_category_text ) {
 			echo '<div class="a-breadcrumb">' . $replace_category_text . '</div>';
 		}
 	}
@@ -811,7 +811,7 @@ endif;
 if ( ! function_exists( 'minnpost_content_sponsorship' ) ) :
 	function minnpost_content_sponsorship( $object_type = 'post', $object_id = '' ) {
 		$sponsorship = minnpost_get_content_sponsorship( $object_type, $object_id );
-		if ( $sponsorship !== '' ) {
+		if ( '' !== $sponsorship ) {
 			$sponsorship = apply_filters( 'the_content', $sponsorship );
 			echo '<div class="a-sponsorship">' . $sponsorship . '</div>';
 		}
@@ -825,7 +825,7 @@ endif;
 */
 if ( ! function_exists( 'minnpost_deck' ) ) :
 	function minnpost_deck( $post_id = '' ) {
-		if ( $post_id === '' ) {
+		if ( '' === $post_id ) {
 			$post_id = get_the_ID();
 		}
 		$deck = minnpost_get_deck( $post_id );
@@ -840,14 +840,14 @@ endif;
 */
 if ( ! function_exists( 'minnpost_plus_icon' ) ) :
 	function minnpost_plus_icon( $post_id = '', $lazy_load = true ) {
-		if ( $post_id === '' ) {
+		if ( '' === $post_id ) {
 			$post_id = get_the_ID();
 		}
-		if ( $post_id === false ) {
+		if ( false === $post_id ) {
 			return;
 		}
 		$access_level = get_post_meta( $post_id, '_access_level', true );
-		if ( $access_level !== '' ) {
+		if ( '' !== $access_level ) {
 			if ( class_exists( 'Blocked_Content_Template' ) ) {
 				$blocked_content_template = Blocked_Content_Template::get_instance();
 				$minimum_level            = $blocked_content_template->get_minimum_branded_level();
@@ -1002,7 +1002,7 @@ if ( ! function_exists( 'minnpost_newsletter_arrange' ) ) :
 		foreach ( $divs as $key => $value ) {
 			$class = $value->getAttribute( 'class' );
 			$style = $value->getAttribute( 'style' );
-			if ( $key === 0 || $key === 1 ) {
+			if ( 0 === $key || 1 === $key ) {
 				$contents[] = '<div class="' . $class . '" style="' . $style . '">' . minnpost_dom_innerhtml( $value ) . '</div>';
 			} else {
 				$bottom .= '<div class="' . $class . '">' . minnpost_dom_innerhtml( $value ) . '</div>';
@@ -1017,7 +1017,7 @@ if ( ! function_exists( 'minnpost_newsletter_arrange' ) ) :
 		}
 
 		$ads = array();
-		if ( $type !== 'dc_memo' ) {
+		if ( 'dc_memo' !== $type ) {
 			foreach ( $ad_divs as $key => $value ) {
 				$style = $value->getAttribute( 'style' );
 				$ads[] = '<p style="Margin: 0 0 10px; padding: 0">' . minnpost_dom_innerhtml( $value ) . '</p>';
@@ -1054,7 +1054,7 @@ endif;
 if ( ! function_exists( 'minnpost_largo_manual_image_tag' ) ) :
 	function minnpost_largo_manual_image_tag( $image_id = '', $image_url = '', $attributes = array(), $object_type = 'post' ) {
 		$image = '';
-		if ( $image_id !== '' ) {
+		if ( '' !== $image_id ) {
 			$alt = get_post_meta( $image_id, '_wp_attachment_image_alt', true );
 		} elseif ( isset( $attributes['alt'] ) ) {
 			$alt = $attributes['alt'];
@@ -1063,7 +1063,7 @@ if ( ! function_exists( 'minnpost_largo_manual_image_tag' ) ) :
 		}
 
 		$image = '<img src="' . $image_url . '" alt="' . $alt . '"';
-		if ( $object_type === 'newsletter' ) {
+		if ( 'newsletter' === $object_type ) {
 			if ( isset( $attributes['title'] ) ) {
 				$image .= ' title="' . $attributes['title'] . '"';
 			}
@@ -1099,12 +1099,12 @@ endif;
 */
 if ( ! function_exists( 'email_preview_text' ) ) :
 	function email_preview_text( $use_shortcode = true, $post_id = 0 ) {
-		if ( $post_id === 0 ) {
+		if ( 0 === $post_id ) {
 			$post_id = get_the_ID();
 		}
 		$preview_text = get_post_meta( $post_id, '_mp_newsletter_preview_text', true );
-		if ( $preview_text !== '' ) :
-			if ( $use_shortcode === false ) :
+		if ( '' !== $preview_text ) :
+			if ( false === $use_shortcode ) :
 				?>
 				<span class="a-preview-text"><?php echo $preview_text; ?></span>
 			<?php else : ?>
@@ -1114,7 +1114,7 @@ if ( ! function_exists( 'email_preview_text' ) ) :
 		else :
 			?>
 			<!--*|IF:MC_PREVIEW_TEXT|*-->
-			<?php if ( $use_shortcode === false ) : ?>
+			<?php if ( false === $use_shortcode ) : ?>
 				<span class="a-preview-text">*|MC_PREVIEW_TEXT|*</span>
 			<?php else : ?>
 				[preview_text]*|MC_PREVIEW_TEXT|*[/preview_text]
@@ -1122,7 +1122,7 @@ if ( ! function_exists( 'email_preview_text' ) ) :
 			<!--*|END:IF|*-->
 			<?php
 		endif;
-		if ( $use_shortcode === false ) :
+		if ( false === $use_shortcode ) :
 			?>
 			<div class="a-after-preview-text">&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;&zwnj;&nbsp;</div>
 		<?php else : ?>

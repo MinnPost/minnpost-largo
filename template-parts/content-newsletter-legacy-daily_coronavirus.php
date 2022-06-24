@@ -174,7 +174,7 @@ a[x-apple-data-detectors] {
 				</td> <!-- end .one-column.header -->
 			</tr> <!-- end row -->
 
-			<?php if ( minnpost_get_posted_by() !== '' ) : ?>
+			<?php if ( '' !== minnpost_get_posted_by() ) : ?>
 				<tr>
 					<td class="one-column header" style="border-collapse: collapse; border-bottom-width: 2px; border-bottom-color: #cccccf; border-bottom-style: solid; Margin: 0; padding: 0;">
 				<!--[if (gte mso 9)|(IE)]>
@@ -214,7 +214,7 @@ a[x-apple-data-detectors] {
 
 			<?php
 			$body = apply_filters( 'the_content', get_the_content() );
-			if ( $body !== '' ) :
+			if ( '' !== $body ) :
 				// email content filter
 				$body = apply_filters( 'format_email_content_legacy', $body );
 				?>
@@ -253,13 +253,13 @@ a[x-apple-data-detectors] {
 			$hide_author = get_post_meta( $id, '_mp_remove_author_from_display', true );
 			$coauthors   = get_coauthors( get_the_ID() );
 			$author_info = '';
-			if ( $hide_author !== 'on' && empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) ) ) {
+			if ( 'on' !== $hide_author && empty( esc_html( get_post_meta( $id, '_mp_subtitle_settings_byline', true ) ) ) ) {
 				foreach ( $coauthors as $key => $coauthor ) {
 					$author_id    = $coauthor->ID;
 					$author_info .= minnpost_get_author_figure( $author_id, 'author-teaser', 'excerpt', true, 'cap-display_name', true, '', false, false );
 				}
 			}
-			if ( $author_info !== '' ) {
+			if ( '' !== $author_info ) {
 				?>
 				<tr>
 					<td class="two-column content author" style="border-collapse: collapse; Margin: 0; padding: 0;">
@@ -301,7 +301,7 @@ a[x-apple-data-detectors] {
 								<?php dynamic_sidebar( 'sidebar-3' ); ?>
 								<?php
 								$footer_message = get_option( 'site_footer_message', '' );
-								if ( $footer_message !== '' ) :
+								if ( '' !== $footer_message ) :
 									?>
 									<p class="address" style="font-size: 12px; Margin: 10px 0 15px; padding: 0; text-align: center;" align="center"><?php echo $footer_message; ?></p>
 								<?php endif; ?>

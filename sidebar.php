@@ -10,7 +10,7 @@
 
 <?php
 $remove_sidebar = apply_filters( 'minnpost_largo_remove_sidebar', false );
-if ( $remove_sidebar === true ) {
+if ( true === $remove_sidebar ) {
 	return;
 }
 ?>

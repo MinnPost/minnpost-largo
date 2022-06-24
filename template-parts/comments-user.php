@@ -21,7 +21,7 @@
 				// comment date
 				$comment_dateline = '';
 				if ( function_exists( 'get_ap_comment_date' ) && function_exists( 'get_ap_comment_time' ) ) {
-					if ( get_ap_comment_date() === 'today' ) {
+					if ( 'today' === get_ap_comment_date() ) {
 						$comment_dateline = sprintf(
 							// translators: 1) is the human readable time difference
 							_x( '%1$s ago', '%2$s = human-readable time difference', 'minnpost-largo' ),
@@ -58,7 +58,7 @@
 						<div class="a-comment-byline">
 							<?php echo $comment_byline; ?>
 						</div>
-						<?php if ( $comment_dateline !== '' ) : ?>
+						<?php if ( '' !== $comment_dateline ) : ?>
 							<div class="a-comment-dateline"><?php echo $comment_dateline; ?></div>
 						<?php endif; ?>
 					</div>
