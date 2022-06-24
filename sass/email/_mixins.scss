@@ -191,8 +191,6 @@
 
 // layout column
 @mixin column( $selector: '.o-column', $max-width: inherit, $width: 100%, $vertical-align: middle, $text-align: center, $spacing: 0, $desktop-spacing-only: 'false', $mobile-spacing-only: 'true' ) {
-	background-color: inherit;
-	color: inherit;
 	div#{$selector} {
         width: $width;
         max-width: $max-width-email * math.div($max-width, 100%);
