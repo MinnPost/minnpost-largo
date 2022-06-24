@@ -2154,14 +2154,6 @@ if ( ! function_exists( 'cmb2_author_fields' ) ) :
 		);
 		$author_setup->add_field(
 			array(
-				'name' => __( 'Staff Member?', 'minnpost-largo' ),
-				'id'   => '_staff_member',
-				'type' => 'checkbox',
-				'desc' => '',
-			)
-		);
-		$author_setup->add_field(
-			array(
 				'name' => __( 'Prevent lazy loading of embed ads?', 'minnpost-largo' ),
 				'id'   => 'arcads_dfp_acm_provider_post_prevent_lazyload',
 				'type' => 'checkbox',
