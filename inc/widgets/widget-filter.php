@@ -132,10 +132,13 @@ endif;
 add_filter( 'widget_display_callback', 'minnpost_widget_display_callback', 10, 3 );
 function minnpost_widget_display_callback( $instance, $widget, $args ) {
 	global $post;
-	// if this is a newsletter, only show widgets that contain an is_singular( 'newsletter' ) conditional
+	// if this is a newsletter, only show widgets that contain an is_singular( 'newsletter' ) conditional.
 	if ( is_object( $post ) && 'newsletter' === $post->post_type ) {
-		$class = array_column( $instance, 'class' );
-		if ( false === strpos( $class[0]['logic'], addslashes( 'is_singular("newsletter")' ) ) && false === strpos( $class[0]['logic'], 'is_singular("newsletter")' ) ) {
+		$class         = array_column( $instance, 'class' );
+		$display_logic = stripslashes( trim( $class[0]['logic'] ) );
+		$display_logic = apply_filters( 'widget_options_logic_override', $display_logic );
+		$display_logic = apply_filters( 'extended_widget_options_logic_override', $display_logic );
+		if ( stristr( $display_logic, "is_singular('newsletter')" ) === false && stristr( $display_logic, 'is_singular("newsletter")' ) === false ) {
 			return false;
 		}
 	}

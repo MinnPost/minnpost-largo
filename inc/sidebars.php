@@ -5,6 +5,9 @@
  * @package MinnPost Largo
  */
 
+// turn off the block widget editor.
+add_filter( 'use_widgets_block_editor', '__return_false' );
+
 /**
  * Remove default largo sidebar settings
  */
