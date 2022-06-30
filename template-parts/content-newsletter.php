@@ -35,12 +35,13 @@
 								<img src="<?php minnpost_newsletter_logo( get_the_ID(), false ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="light-img">
 								<?php
 								/*
-								 this doesn't currently work because the mailchimp importer removes display none elements.
+								This doesn't currently work because the mailchimp importer removes display none elements.
 								[not-outlook]
 									<div class="dark-img-wrapper -emogrifier-keep">
 										<img src="<?php minnpost_newsletter_logo( get_the_ID(), true ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="dark-img -emogrifier-keep">
 									</div>
-								[/not-outlook]*/
+								[/not-outlook]
+								*/
 								?>
 							</div>
 						</div>
@@ -110,7 +111,7 @@
 						[/outlook]
 						<div class="item-contents">
 							<?php
-							// teaser text
+							// teaser text.
 							$do_not_show_automatic_teaser_items = get_post_meta( get_the_ID(), '_mp_newsletter_do_not_show_automatic_teaser_items', true );
 							$do_not_show_teaser_text            = get_post_meta( get_the_ID(), '_mp_newsletter_do_not_show_teaser_text', true );
 							if ( 'on' !== $do_not_show_automatic_teaser_items || 'on' !== $do_not_show_teaser_text ) :
@@ -137,7 +138,7 @@
 							?>
 
 							<?php
-							// body text
+							// body text.
 							$body = apply_filters( 'the_content', get_the_content() );
 							if ( '' !== $body ) :
 								?>
@@ -163,7 +164,7 @@
 					<?php $ads = minnpost_newsletter_get_ads( $args['newsletter_type'] ); ?>
 
 					<?php
-					// top post section
+					// top post section.
 					$section               = 'top';
 					$top_query             = minnpost_newsletter_get_section_query( $section );
 					$args['image_size']    = 'full';

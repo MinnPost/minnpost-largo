@@ -35,12 +35,13 @@
 								<img src="<?php minnpost_newsletter_logo( get_the_ID(), false ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="light-img">
 								<?php
 								/*
-								 this doesn't currently work because the mailchimp importer removes display none elements.
+								This doesn't currently work because the mailchimp importer removes display none elements.
 								[not-outlook]
 									<div class="dark-img-wrapper -emogrifier-keep">
 										<img src="<?php minnpost_newsletter_logo( get_the_ID(), true ); ?>" alt="<?php bloginfo( 'name' ); ?>" class="dark-img -emogrifier-keep">
 									</div>
-								[/not-outlook]*/
+								[/not-outlook]
+								*/
 								?>
 							</div>
 						</div>
@@ -104,7 +105,7 @@
 						<div class="item-contents">
 							<?php minnpost_newsletter_teaser(); ?>
 							<?php
-							// body text
+							// body text.
 							$body = apply_filters( 'the_content', get_the_content() );
 							if ( '' !== $body ) :
 								$body = apply_filters( 'format_email_content', $body, true, false );
@@ -131,7 +132,7 @@
 					<?php $ads = minnpost_newsletter_get_ads( $args['newsletter_type'] ); ?>
 
 					<?php
-					// artscape post section
+					// artscape post section.
 					$section               = 'artscape';
 					$artscape_query        = minnpost_newsletter_get_section_query( $section );
 					$args['section']       = $section;
