@@ -107,22 +107,28 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 	}
 endif;
 
-/**
-* Get the image URL based on the attributes array's modifications to it
-*
-* @param string $image_url
-* @param array $attributes
-*
-* @return string $image_url
-*/
+
 if ( ! function_exists( 'get_minnpost_modified_image_url' ) ) :
+	/**
+	 * Get the image URL based on the attributes array's modifications to it
+	 *
+	 * @param string $image_url the image url.
+	 * @param array  $attributes the array of image attributes.
+	 * @return string $image_url
+	 */
 	function get_minnpost_modified_image_url( $image_url, $attributes = array() ) {
 		if ( '' === $image_url ) {
 			return $image_url;
 		}
-		$image_url .= '?strip=all';
-		if ( isset( $attributes['content_width'] ) ) {
-			$image_url .= '&amp;w=' . $attributes['content_width'];
+		if ( ! isset( $attributes['keep_metadata'] ) ) {
+			$image_url .= '?strip=all';
+		}
+		if ( isset( $attributes['content_width'] ) && ! is_singular( 'newsletter' ) ) {
+			if ( wp_parse_url( $image_url, PHP_URL_QUERY ) ) {
+				$image_url .= '&amp;w=' . $attributes['content_width'];
+			} else {
+				$image_url .= '?w=' . $attributes['content_width'];
+			}
 		}
 		return $image_url;
 	}
@@ -1869,17 +1875,17 @@ if ( ! function_exists( 'minnpost_get_newsletter_logo_url' ) ) :
 	}
 endif;
 
-/**
-* Format a string for email-friendly display
-*
-* @param string $content
-* @param bool $body
-* @param bool $message
-* @param array $colors
-* @return string $content
-*/
 if ( ! function_exists( 'format_email_content' ) ) :
 	add_filter( 'format_email_content', 'format_email_content', 10, 4 );
+	/**
+	 * Format a string for email-friendly display
+	 *
+	 * @param string $content html string.
+	 * @param bool   $body    whether we're in body text.
+	 * @param bool   $message whether we're in a site message.
+	 * @param array  $colors  array of color codes.
+	 * @return string $content the filtered content.
+	 */
 	function format_email_content( $content, $body = true, $message = false, $colors = array() ) {
 
 		$is_legacy = apply_filters( 'minnpost_largo_newsletter_legacy', false, '', get_the_ID() );
