@@ -156,6 +156,24 @@ if ( ! function_exists( 'minnpost_largo_add_remove_scripts' ) ) :
 	}
 endif;
 
+if ( ! function_exists( 'minnpost_remove_jquery_migrate' ) ) :
+	//add_action( 'wp_default_scripts', 'minnpost_remove_jquery_migrate' );
+	/**
+	 * Remove jQuery Migrate
+	 *
+	 * @param WP_Scripts $scripts the default WP JavaScripts object.
+	 */
+	function minnpost_remove_jquery_migrate( $scripts ) {
+		if ( ! is_admin() && isset( $scripts->registered['jquery'] ) ) {
+			$script = $scripts->registered['jquery'];
+			if ( $script->deps ) {
+				// Check whether the script has any dependencies.
+				$script->deps = array_diff( $script->deps, array( 'jquery-migrate' ) );
+			}
+		}
+	}
+endif;
+
 /**
 * Handle adding and removing of admin JavaScript and CSS in this theme
 */
@@ -167,13 +185,16 @@ if ( ! function_exists( 'minnpost_admin_style' ) ) :
 	}
 endif;
 
-/**
-* Custom dimensions for Google Analytics
-*/
 if ( ! function_exists( 'minnpost_google_analytics_dimensions' ) ) :
 	add_action( 'wp_analytics_tracking_generator_custom_dimensions', 'minnpost_google_analytics_dimensions', 10, 1 );
+	/**
+	 * Custom dimensions for Google Analytics
+	 *
+	 * @param array $dimensions is the already existing dimensions.
+	 * @return array $dimensions is the new array of dimensions.
+	 */
 	function minnpost_google_analytics_dimensions( $dimensions ) {
-		// dimension 1: user status dimension
+		// dimension 1: user status dimension.
 		if ( function_exists( 'minnpost_membership' ) ) {
 			$minnpost_membership = minnpost_membership();
 			$user_id             = get_current_user_id();
@@ -190,7 +211,7 @@ if ( ! function_exists( 'minnpost_google_analytics_dimensions' ) ) :
 			$dimensions['1'] = $value;
 		}
 
-		// remove dimension 2: id and dimension 3: post type dimensions if we're not on a singular post
+		// remove dimension 2: id and dimension 3: post type dimensions if we're not on a singular post.
 		if ( ! is_singular() ) {
 			unset( $dimensions['2'] );
 			unset( $dimensions['3'] );
@@ -199,18 +220,18 @@ if ( ! function_exists( 'minnpost_google_analytics_dimensions' ) ) :
 		// Dimension 2: object id
 		// Dimension 3: object type.
 
-		// home
+		// home.
 		if ( is_front_page() && is_home() ) {
 			$dimensions['3'] = 'home';
 		}
-		// archives
+		// archives.
 		if ( is_category() || is_tag() ) {
-			// categories and tags
+			// categories and tags.
 			$term            = get_queried_object();
 			$dimensions['2'] = $term->term_id;
 			$dimensions['3'] = $term->taxonomy;
 		} elseif ( is_author() ) {
-			// authors
+			// authors.
 			$dimensions['2'] = get_queried_object_id();
 			$dimensions['3'] = 'author';
 		} elseif ( is_date() ) {
@@ -229,6 +250,22 @@ if ( ! function_exists( 'minnpost_google_analytics_dimensions' ) ) :
 		}
 
 		return $dimensions;
+	}
+endif;
+
+if ( ! function_exists( 'minnpost_google_analytics_show_analytics_code' ) ) :
+	add_action( 'wp_analytics_tracking_generator_show_analytics_code', 'minnpost_google_analytics_show_analytics_code', 10, 1 );
+	/**
+	 * Whether to show analytics code
+	 *
+	 * @param bool $show_analytics_code whether or not to show the code.
+	 * @return bool $show_analytics_code whether or not to show the code.
+	 */
+	function minnpost_google_analytics_show_analytics_code( $show_analytics_code ) {
+		if ( 'production' !== VIP_GO_ENV ) {
+			$show_analytics_code = true;
+		}
+		return $show_analytics_code;
 	}
 endif;
 
