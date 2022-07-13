@@ -14,6 +14,7 @@ class ComposerStaticInit4a18d788b77de8cfd63083b020564233
         'S' => 
         array (
             'Symfony\\Component\\CssSelector\\' => 30,
+            'Sabberworm\\CSS\\' => 15,
         ),
         'P' => 
         array (
@@ -39,6 +40,10 @@ class ComposerStaticInit4a18d788b77de8cfd63083b020564233
         array (
             0 => __DIR__ . '/..' . '/symfony/css-selector',
         ),
+        'Sabberworm\\CSS\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/sabberworm/php-css-parser/src',
+        ),
         'Psr\\Http\\Message\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/http-message/src',
@@ -61,11 +66,16 @@ class ComposerStaticInit4a18d788b77de8cfd63083b020564233
         ),
     );
 
+    public static $classMap = array (
+        'Composer\\InstalledVersions' => __DIR__ . '/..' . '/composer/InstalledVersions.php',
+    );
+
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
             $loader->prefixLengthsPsr4 = ComposerStaticInit4a18d788b77de8cfd63083b020564233::$prefixLengthsPsr4;
             $loader->prefixDirsPsr4 = ComposerStaticInit4a18d788b77de8cfd63083b020564233::$prefixDirsPsr4;
+            $loader->classMap = ComposerStaticInit4a18d788b77de8cfd63083b020564233::$classMap;
 
         }, null, ClassLoader::class);
     }

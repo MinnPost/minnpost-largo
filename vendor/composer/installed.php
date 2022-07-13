@@ -1,71 +1,100 @@
-<?php return array (
-  'root' => 
-  array (
-    'pretty_version' => 'dev-master',
-    'version' => 'dev-master',
-    'aliases' => 
-    array (
+<?php return array(
+    'root' => array(
+        'name' => 'minnpost/minnpost-largo',
+        'pretty_version' => 'dev-master',
+        'version' => 'dev-master',
+        'reference' => '4b4c53303a8a0110a5976a6035165b022289a7ec',
+        'type' => 'wordpress-theme',
+        'install_path' => __DIR__ . '/../../',
+        'aliases' => array(),
+        'dev' => true,
     ),
-    'reference' => 'bf4dfc2193c29067b7f7095200df438d4241a7db',
-    'name' => 'minnpost/minnpost-largo',
-  ),
-  'versions' => 
-  array (
-    'brain/cortex' => 
-    array (
-      'pretty_version' => '1.0.0-alpha.7',
-      'version' => '1.0.0.0-alpha7',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '0f33ad8578fa051ab5e46e14c9478df4d728e49a',
+    'versions' => array(
+        'brain/cortex' => array(
+            'pretty_version' => '1.0.0-alpha.8',
+            'version' => '1.0.0.0-alpha8',
+            'reference' => '4c9cf21d3f25775cbd6faf6a75638b1c11ac0368',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../brain/cortex',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'composer/installers' => array(
+            'pretty_version' => '1.x-dev',
+            'version' => '1.9999999.9999999.9999999-dev',
+            'reference' => '894a0b5c5d34c88b69b097f2aae1439730fa6836',
+            'type' => 'composer-plugin',
+            'install_path' => __DIR__ . '/./installers',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'minnpost/minnpost-largo' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => '4b4c53303a8a0110a5976a6035165b022289a7ec',
+            'type' => 'wordpress-theme',
+            'install_path' => __DIR__ . '/../../',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'nikic/fast-route' => array(
+            'pretty_version' => 'v0.7.0',
+            'version' => '0.7.0.0',
+            'reference' => '8164b4a0d8afde4eae5f1bfc39084972ba23ad36',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../nikic/fast-route',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'pelago/emogrifier' => array(
+            'pretty_version' => 'v6.0.0',
+            'version' => '6.0.0.0',
+            'reference' => 'aa72d5407efac118f3896bcb995a2cba793df0ae',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../pelago/emogrifier',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'psr/http-message' => array(
+            'pretty_version' => 'dev-master',
+            'version' => 'dev-master',
+            'reference' => 'efd67d1dc14a7ef4fc4e518e7dee91c271d524e4',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../psr/http-message',
+            'aliases' => array(
+                0 => '1.0.x-dev',
+            ),
+            'dev_requirement' => false,
+        ),
+        'roundcube/plugin-installer' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '*',
+            ),
+        ),
+        'sabberworm/php-css-parser' => array(
+            'pretty_version' => '8.4.0',
+            'version' => '8.4.0.0',
+            'reference' => 'e41d2140031d533348b2192a83f02d8dd8a71d30',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../sabberworm/php-css-parser',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
+        'shama/baton' => array(
+            'dev_requirement' => false,
+            'replaced' => array(
+                0 => '*',
+            ),
+        ),
+        'symfony/css-selector' => array(
+            'pretty_version' => '6.0.x-dev',
+            'version' => '6.0.9999999.9999999-dev',
+            'reference' => 'ab2746acddc4f03a7234c8441822ac5d5c63efe9',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../symfony/css-selector',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
     ),
-    'minnpost/minnpost-largo' => 
-    array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'bf4dfc2193c29067b7f7095200df438d4241a7db',
-    ),
-    'nikic/fast-route' => 
-    array (
-      'pretty_version' => 'v0.7.0',
-      'version' => '0.7.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => '8164b4a0d8afde4eae5f1bfc39084972ba23ad36',
-    ),
-    'pelago/emogrifier' => 
-    array (
-      'pretty_version' => 'v5.0.0',
-      'version' => '5.0.0.0',
-      'aliases' => 
-      array (
-      ),
-      'reference' => 'b43b650880d189b0ada61d95d0729c7424b1752d',
-    ),
-    'psr/http-message' => 
-    array (
-      'pretty_version' => 'dev-master',
-      'version' => 'dev-master',
-      'aliases' => 
-      array (
-        0 => '1.0.x-dev',
-      ),
-      'reference' => 'efd67d1dc14a7ef4fc4e518e7dee91c271d524e4',
-    ),
-    'symfony/css-selector' => 
-    array (
-      'pretty_version' => '5.x-dev',
-      'version' => '5.9999999.9999999.9999999-dev',
-      'aliases' => 
-      array (
-        0 => '9999999-dev',
-      ),
-      'reference' => 'f8315dad49f6b48de98954741c65f6ff59ad15d2',
-    ),
-  ),
 );
