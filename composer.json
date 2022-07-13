@@ -9,9 +9,7 @@
         }
     ],
     "require": {
-        "brain/cortex": "~1.0.0",
-        "composer/installers": "~1.7",
-        "pelago/emogrifier": "5.0.1"
+        "pelago/emogrifier": "^6.0"
     },
     "minimum-stability": "dev"
 }
