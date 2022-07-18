@@ -9,7 +9,7 @@ namespace Pelago\Emogrifier\HtmlProcessor;
  *
  * The "vanilla" subclass is the HtmlNormalizer.
  *
- * @psalm-consistent-constructor
+ * @author Oliver Klee <github@oliverklee.de>
  */
 abstract class AbstractHtmlProcessor
 {
@@ -57,14 +57,14 @@ abstract class AbstractHtmlProcessor
         = '%<template[\\s>][^<]*+(?:<(?!/template>)[^<]*+)*+(?:</template>|$)%i';
 
     /**
-     * @var ?\DOMDocument
+     * @var \DOMDocument|null
      */
     protected $domDocument = null;
 
     /**
-     * @var ?\DOMXPath
+     * @var \DOMXPath
      */
-    private $xPath = null;
+    protected $xPath = null;
 
     /**
      * The constructor.
@@ -130,9 +130,15 @@ abstract class AbstractHtmlProcessor
      */
     public function getDomDocument(): \DOMDocument
     {
-        if (!$this->domDocument instanceof \DOMDocument) {
-            $message = self::class . '::setDomDocument() has not yet been called on ' . static::class;
-            throw new \UnexpectedValueException($message, 1570472239);
+        if ($this->domDocument === null) {
+            throw new \UnexpectedValueException(
+                (
+                    self::class .
+                    '::setDomDocument() has not yet been called on ' .
+                    static::class
+                ),
+                1570472239
+            );
         }
 
         return $this->domDocument;
@@ -145,21 +151,6 @@ abstract class AbstractHtmlProcessor
     {
         $this->domDocument = $domDocument;
         $this->xPath = new \DOMXPath($this->domDocument);
-    }
-
-    /**
-     * @return \DOMXPath
-     *
-     * @throws \UnexpectedValueException
-     */
-    protected function getXPath(): \DOMXPath
-    {
-        if (!$this->xPath instanceof \DOMXPath) {
-            $message = self::class . '::setDomDocument() has not yet been called on ' . static::class;
-            throw new \UnexpectedValueException($message, 1617819086);
-        }
-
-        return $this->xPath;
     }
 
     /**
@@ -205,17 +196,10 @@ abstract class AbstractHtmlProcessor
      * This method assumes that there always is a BODY element.
      *
      * @return \DOMElement
-     *
-     * @throws \RuntimeException
      */
     private function getBodyElement(): \DOMElement
     {
-        $node = $this->getDomDocument()->getElementsByTagName('body')->item(0);
-        if (!$node instanceof \DOMElement) {
-            throw new \RuntimeException('There is no body element.', 1617922607);
-        }
-
-        return $node;
+        return $this->getDomDocument()->getElementsByTagName('body')->item(0);
     }
 
     /**
@@ -328,7 +312,7 @@ abstract class AbstractHtmlProcessor
             );
         } elseif ($hasHtmlTag) {
             $reworkedHtml = \preg_replace(
-                '/<html(.*?)>/is',
+                '/<html(.*?)>/i',
                 '<html$1><head>' . self::CONTENT_TYPE_META_TAG . '</head>',
                 $html
             );
@@ -459,12 +443,12 @@ abstract class AbstractHtmlProcessor
      */
     private function ensureExistenceOfBodyElement(): void
     {
-        if ($this->getDomDocument()->getElementsByTagName('body')->item(0) instanceof \DOMElement) {
+        if ($this->getDomDocument()->getElementsByTagName('body')->item(0) !== null) {
             return;
         }
 
         $htmlElement = $this->getDomDocument()->getElementsByTagName('html')->item(0);
-        if (!$htmlElement instanceof \DOMElement) {
+        if ($htmlElement === null) {
             throw new \UnexpectedValueException('There is no HTML element although there should be one.', 1569930853);
         }
         $htmlElement->appendChild($this->getDomDocument()->createElement('body'));

@@ -9,7 +9,7 @@
         }
     ],
     "require": {
-        "pelago/emogrifier": "^6.0"
+        "pelago/emogrifier": "5.0.1"
     },
     "minimum-stability": "dev"
 }

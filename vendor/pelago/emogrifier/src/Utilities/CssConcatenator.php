@@ -36,6 +36,8 @@ namespace Pelago\Emogrifier\Utilities;
  * ` }
  *
  * @internal
+ *
+ * @author Jake Hotson <jake.github@qzdesign.co.uk>
  */
 class CssConcatenator
 {
@@ -43,48 +45,38 @@ class CssConcatenator
      * Array of media rules in order.  Each element is an object with the following properties:
      * - string `media` - The media query string, e.g. "@media screen and (max-width:639px)", or an empty string for
      *   rules not within a media query block;
-     * - object[] `ruleBlocks` - Array of rule blocks in order, where each element is an object with the following
+     * - \stdClass[] `ruleBlocks` - Array of rule blocks in order, where each element is an object with the following
      *   properties:
      *   - mixed[] `selectorsAsKeys` - Array whose keys are selectors for the rule block (values are of no
      *     significance);
      *   - string `declarationsBlock` - The property declarations, e.g. "margin-top: 0.5em; padding: 0".
      *
-     * @var array<int, object{
-     *   media: string,
-     *   ruleBlocks: array<int, object{
-     *     selectorsAsKeys: array<string, array-key>,
-     *     declarationsBlock: string
-     *   }>
-     * }>
+     * @var \stdClass[]
      */
     private $mediaRules = [];
 
     /**
      * Appends a declaration block to the CSS.
      *
-     * @param array<array-key, string> $selectors
-     *        array of selectors for the rule, e.g. ["ul", "ol", "p:first-child"]
-     * @param string $declarationsBlock
-     *        the property declarations, e.g. "margin-top: 0.5em; padding: 0"
-     * @param string $media
-     *        the media query for the rule, e.g. "@media screen and (max-width:639px)", or an empty string if none
+     * @param string[] $selectors Array of selectors for the rule, e.g. ["ul", "ol", "p:first-child"].
+     * @param string $declarationsBlock The property declarations, e.g. "margin-top: 0.5em; padding: 0".
+     * @param string $media The media query for the rule, e.g. "@media screen and (max-width:639px)",
+     *        or an empty string if none.
      */
     public function append(array $selectors, string $declarationsBlock, string $media = ''): void
     {
         $selectorsAsKeys = \array_flip($selectors);
 
         $mediaRule = $this->getOrCreateMediaRuleToAppendTo($media);
-        $ruleBlocks = $mediaRule->ruleBlocks;
-        $lastRuleBlock = \end($ruleBlocks);
+        $lastRuleBlock = \end($mediaRule->ruleBlocks);
 
-        $hasSameDeclarationsAsLastRule = \is_object($lastRuleBlock)
+        $hasSameDeclarationsAsLastRule = $lastRuleBlock !== false
             && $declarationsBlock === $lastRuleBlock->declarationsBlock;
         if ($hasSameDeclarationsAsLastRule) {
             $lastRuleBlock->selectorsAsKeys += $selectorsAsKeys;
         } else {
-            $lastRuleBlockSelectors = \is_object($lastRuleBlock) ? $lastRuleBlock->selectorsAsKeys : [];
-            $hasSameSelectorsAsLastRule = \is_object($lastRuleBlock)
-                && self::hasEquivalentSelectors($selectorsAsKeys, $lastRuleBlockSelectors);
+            $hasSameSelectorsAsLastRule = $lastRuleBlock !== false
+                && self::hasEquivalentSelectors($selectorsAsKeys, $lastRuleBlock->selectorsAsKeys);
             if ($hasSameSelectorsAsLastRule) {
                 $lastDeclarationsBlockWithoutSemicolon = \rtrim(\rtrim($lastRuleBlock->declarationsBlock), ';');
                 $lastRuleBlock->declarationsBlock = $lastDeclarationsBlockWithoutSemicolon . ';' . $declarationsBlock;
@@ -106,18 +98,12 @@ class CssConcatenator
      * @param string $media The media query for rules to be appended, e.g. "@media screen and (max-width:639px)",
      *        or an empty string if none.
      *
-     * @return object{
-     *           media: string,
-     *           ruleBlocks: array<int, object{
-     *             selectorsAsKeys: array<string, array-key>,
-     *             declarationsBlock: string
-     *           }>
-     *         }
+     * @return \stdClass Object with properties as described for elements of `$mediaRules`.
      */
-    private function getOrCreateMediaRuleToAppendTo(string $media): object
+    private function getOrCreateMediaRuleToAppendTo(string $media): \stdClass
     {
         $lastMediaRule = \end($this->mediaRules);
-        if (\is_object($lastMediaRule) && $media === $lastMediaRule->media) {
+        if ($lastMediaRule !== false && $media === $lastMediaRule->media) {
             return $lastMediaRule;
         }
 
@@ -132,9 +118,9 @@ class CssConcatenator
     /**
      * Tests if two sets of selectors are equivalent (i.e. the same selectors, possibly in a different order).
      *
-     * @param array<string, array-key> $selectorsAsKeys1
-     *        array in which the selectors are the keys, and the values are of no significance
-     * @param array<string, array-key> $selectorsAsKeys2 another such array
+     * @param mixed[] $selectorsAsKeys1 Array in which the selectors are the keys, and the values are of no
+     *        significance.
+     * @param mixed[] $selectorsAsKeys2 Another such array.
      *
      * @return bool
      */
@@ -145,37 +131,28 @@ class CssConcatenator
     }
 
     /**
-     * @param object{
-     *          media: string,
-     *          ruleBlocks: array<int, object{
-     *            selectorsAsKeys: array<string, array-key>,
-     *            declarationsBlock: string
-     *          }>
-     *        } $mediaRule
+     * @param \stdClass $mediaRule Object with properties as described for elements of `$mediaRules`.
      *
      * @return string CSS for the media rule.
      */
-    private static function getMediaRuleCss(object $mediaRule): string
+    private static function getMediaRuleCss(\stdClass $mediaRule): string
     {
-        $ruleBlocks = $mediaRule->ruleBlocks;
-        $css = \implode('', \array_map([self::class, 'getRuleBlockCss'], $ruleBlocks));
-        $media = $mediaRule->media;
-        if ($media !== '') {
-            $css = $media . '{' . $css . '}';
+        $css = \implode('', \array_map([self::class, 'getRuleBlockCss'], $mediaRule->ruleBlocks));
+        if ($mediaRule->media !== '') {
+            $css = $mediaRule->media . '{' . $css . '}';
         }
         return $css;
     }
 
     /**
-     * @param object{selectorsAsKeys: array<string, array-key>, declarationsBlock: string} $ruleBlock
+     * @param \stdClass $ruleBlock Object with properties as described for elements of the `ruleBlocks` property of
+     *        elements of `$mediaRules`.
      *
      * @return string CSS for the rule block.
      */
-    private static function getRuleBlockCss(object $ruleBlock): string
+    private static function getRuleBlockCss(\stdClass $ruleBlock): string
     {
-        $selectorsAsKeys = $ruleBlock->selectorsAsKeys;
-        $selectors = \array_keys($selectorsAsKeys);
-        $declarationsBlock = $ruleBlock->declarationsBlock;
-        return \implode(',', $selectors) . '{' . $declarationsBlock . '}';
+        $selectors = \array_keys($ruleBlock->selectorsAsKeys);
+        return \implode(',', $selectors) . '{' . $ruleBlock->declarationsBlock . '}';
     }
 }

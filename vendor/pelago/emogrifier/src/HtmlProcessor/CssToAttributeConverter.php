@@ -11,6 +11,8 @@ namespace Pelago\Emogrifier\HtmlProcessor;
  * It will only add attributes, but leaves the style attribute untouched.
  *
  * To trigger the conversion, call the convertCssToVisualAttributes method.
+ *
+ * @author Oliver Klee <github@oliverklee.de>
  */
 class CssToAttributeConverter extends AbstractHtmlProcessor
 {
@@ -20,7 +22,7 @@ class CssToAttributeConverter extends AbstractHtmlProcessor
      * only for certain values, the mapping is an object with a whitelist
      * of nodes and values.
      *
-     * @var array<string, array{attribute: string, nodes?: array<int, string>, values?: array<int, string>}>
+     * @var mixed[][]
      */
     private $cssToHtmlMap = [
         'background-color' => [
@@ -28,7 +30,7 @@ class CssToAttributeConverter extends AbstractHtmlProcessor
         ],
         'text-align' => [
             'attribute' => 'align',
-            'nodes' => ['p', 'div', 'td', 'th'],
+            'nodes' => ['p', 'div', 'td'],
             'values' => ['left', 'right', 'center', 'justify'],
         ],
         'float' => [
@@ -43,7 +45,7 @@ class CssToAttributeConverter extends AbstractHtmlProcessor
     ];
 
     /**
-     * @var array<string, array<string, string>>
+     * @var string[][]
      */
     private static $parsedCssCache = [];
 
@@ -70,7 +72,7 @@ class CssToAttributeConverter extends AbstractHtmlProcessor
      */
     private function getAllNodesWithStyleAttribute(): \DOMNodeList
     {
-        return $this->getXPath()->query('//*[@style]');
+        return $this->xPath->query('//*[@style]');
     }
 
     /**
@@ -89,7 +91,7 @@ class CssToAttributeConverter extends AbstractHtmlProcessor
      *
      * @param string $cssDeclarationsBlock the CSS declarations block without the curly braces, may be empty
      *
-     * @return array<string, string>
+     * @return string[]
      *         the CSS declarations with the property names as array keys and the property values as array values
      */
     private function parseCssDeclarationsBlock(string $cssDeclarationsBlock): array
@@ -100,7 +102,6 @@ class CssToAttributeConverter extends AbstractHtmlProcessor
 
         $properties = [];
         foreach (\preg_split('/;(?!base64|charset)/', $cssDeclarationsBlock) as $declaration) {
-            /** @var array<int, string> $matches */
             $matches = [];
             if (!\preg_match('/^([A-Za-z\\-]+)\\s*:\\s*(.+)$/s', \trim($declaration), $matches)) {
                 continue;
@@ -121,7 +122,7 @@ class CssToAttributeConverter extends AbstractHtmlProcessor
      * This method maps CSS styles to HTML attributes and adds those to the
      * node.
      *
-     * @param array<string, string> $styles the new CSS styles taken from the global styles to be applied to this node
+     * @param string[] $styles the new CSS styles taken from the global styles to be applied to this node
      * @param \DOMElement $node node to apply styles to
      */
     private function mapCssToHtmlAttributes(array $styles, \DOMElement $node): void
@@ -210,7 +211,6 @@ class CssToAttributeConverter extends AbstractHtmlProcessor
     private function mapBackgroundProperty(\DOMElement $node, string $value): void
     {
         // parse out the color, if any
-        /** @var array<int, string> $styles */
         $styles = \explode(' ', $value, 2);
         $first = $styles[0];
         if (\is_numeric($first[0]) || \strncmp($first, 'url', 3) === 0) {
@@ -279,17 +279,16 @@ class CssToAttributeConverter extends AbstractHtmlProcessor
     }
 
     /**
-     * Parses a shorthand CSS value and splits it into individual values.  For example: `padding: 0 auto;` - `0 auto` is
-     * split into top: 0, left: auto, bottom: 0, right: auto.
+     * Parses a shorthand CSS value and splits it into individual values
      *
-     * @param string $value a CSS property value with 1, 2, 3 or 4 sizes
+     * @param string $value a string of CSS value with 1, 2, 3 or 4 sizes
+     *        For example: padding: 0 auto; '0 auto' is split into top: 0, left: auto, bottom: 0, right: auto.
      *
-     * @return array<string, string>
-     *         an array of values for top, right, bottom and left (using these as associative array keys)
+     * @return string[] an array of values for top, right, bottom and left (using these as associative array keys)
      */
     private function parseCssShorthandValue(string $value): array
     {
-        /** @var array<int, string> $values */
+        /** @var string[] $values */
         $values = \preg_split('/\\s+/', $value);
 
         $css = [];

@@ -9,6 +9,9 @@ use Pelago\Emogrifier\Utilities\ArrayIntersector;
 
 /**
  * This class can remove things from HTML.
+ *
+ * @author Oliver Klee <github@oliverklee.de>
+ * @author Jake Hotson <jake.github@qzdesign.co.uk>
  */
 class HtmlPruner extends AbstractHtmlProcessor
 {
@@ -31,7 +34,7 @@ class HtmlPruner extends AbstractHtmlProcessor
      */
     public function removeElementsWithDisplayNone(): self
     {
-        $elementsWithStyleDisplayNone = $this->getXPath()->query(self::DISPLAY_NONE_MATCHER);
+        $elementsWithStyleDisplayNone = $this->xPath->query(self::DISPLAY_NONE_MATCHER);
         if ($elementsWithStyleDisplayNone->length === 0) {
             return $this;
         }
@@ -55,13 +58,13 @@ class HtmlPruner extends AbstractHtmlProcessor
      * This method also has the (presumably beneficial) side-effect of minifying (removing superfluous whitespace from)
      * `class` attributes.
      *
-     * @param array<array-key, string> $classesToKeep names of classes that should not be removed
+     * @param string[] $classesToKeep names of classes that should not be removed
      *
      * @return self fluent interface
      */
     public function removeRedundantClasses(array $classesToKeep = []): self
     {
-        $elementsWithClassAttribute = $this->getXPath()->query('//*[@class]');
+        $elementsWithClassAttribute = $this->xPath->query('//*[@class]');
 
         if ($classesToKeep !== []) {
             $this->removeClassesFromElements($elementsWithClassAttribute, $classesToKeep);
@@ -78,7 +81,7 @@ class HtmlPruner extends AbstractHtmlProcessor
      * removing the `class` attribute itself if the resultant list is empty.
      *
      * @param \DOMNodeList $elements
-     * @param array<array-key, string> $classesToKeep
+     * @param string[] $classesToKeep
      */
     private function removeClassesFromElements(\DOMNodeList $elements, array $classesToKeep): void
     {
