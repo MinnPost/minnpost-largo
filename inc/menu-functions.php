@@ -324,22 +324,6 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 	}
 }
 
-add_filter( 'wp_nav_menu', 'minnpost_largo_email_menu', PHP_INT_MAX, 2 );
-/**
- * Filter the email menu markup
- *
- * @param string $nav_menu the HTML.
- * @param object $args the full object.
- * @return string $nav_menu
- */
-function minnpost_largo_email_menu( $nav_menu, $args ) {
-	// Override the primary menu.
-	if ( is_singular( 'newsletter' ) && 'minnpost_network_email' === $args->theme_location ) {
-		$nav_menu = apply_filters( 'format_email_content', $nav_menu, true, false );
-	}
-	return $nav_menu;
-}
-
 /**
  * Nav Menu Walker for email
  *
@@ -459,12 +443,18 @@ class Minnpost_Email_Walker_Nav_Menu extends Minnpost_Walker_Nav_Menu {
 			$icon_post_name = str_replace( 'fa-', '', $icon_name . $end );
 			$attachment_id  = wp_get_attachment_id_by_post_name( $icon_post_name );
 			if ( false !== $attachment_id ) {
-				$item->title  = wp_get_attachment_image( $attachment_id );
+				$image     = wp_get_attachment_image( $attachment_id );
+				$image_url = wp_get_attachment_url( $attachment_id );
+				if ( function_exists( 'get_minnpost_modified_image_url' ) ) {
+					$image_url = get_minnpost_modified_image_url( $image_url, array() );
+				}
+				$image        = minnpost_largo_manual_image_tag( $attachment_id, $image_url, array(), 'newsletter' );
+				$item->title  = $image;
 				$active_class = ' class="with-icon"';
 			}
 		}
-
 		$output .= '<td' . $active_class . '><a href="' . $url . '">' . $item->title . '</a>';
+		$output  = apply_filters( 'format_email_content', $output, true, false );
 	}
 
 	// end item with a </td>
