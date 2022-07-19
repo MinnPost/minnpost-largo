@@ -324,6 +324,22 @@ class Minnpost_Walker_Nav_Menu extends Walker_Nav_Menu {
 	}
 }
 
+add_filter( 'wp_nav_menu', 'minnpost_largo_email_menu', PHP_INT_MAX, 2 );
+/**
+ * Filter the email menu markup
+ *
+ * @param string $nav_menu the HTML.
+ * @param object $args the full object.
+ * @return string $nav_menu
+ */
+function minnpost_largo_email_menu( $nav_menu, $args ) {
+	// Override the primary menu.
+	if ( is_singular( 'newsletter' ) && 'minnpost_network_email' === $args->theme_location ) {
+		$nav_menu = apply_filters( 'format_email_content', $nav_menu, true, false );
+	}
+	return $nav_menu;
+}
+
 /**
  * Nav Menu Walker for email
  *
@@ -449,7 +465,6 @@ class Minnpost_Email_Walker_Nav_Menu extends Minnpost_Walker_Nav_Menu {
 		}
 
 		$output .= '<td' . $active_class . '><a href="' . $url . '">' . $item->title . '</a>';
-		$output  = apply_filters( 'format_email_content', $output, true, false );
 	}
 
 	// end item with a </td>
