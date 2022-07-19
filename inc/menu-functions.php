@@ -449,6 +449,7 @@ class Minnpost_Email_Walker_Nav_Menu extends Minnpost_Walker_Nav_Menu {
 		}
 
 		$output .= '<td' . $active_class . '><a href="' . $url . '">' . $item->title . '</a>';
+		$output  = apply_filters( 'format_email_content', $output, true, false );
 	}
 
 	// end item with a </td>

@@ -1902,7 +1902,11 @@ if ( ! function_exists( 'format_email_content' ) ) :
 
 		// get an xpath to parse.
 		$dom = new DOMDocument( '1.0', 'UTF-8' );
+		// set error level.
+		$internal_errors = libxml_use_internal_errors( true );
 		$dom->loadHTML( mb_convert_encoding( $content, 'HTML-ENTITIES', 'UTF-8' ) );
+		// Restore error level.
+		libxml_use_internal_errors( $internal_errors );
 		$xpath = new domxpath( $dom );
 
 		// headings.
