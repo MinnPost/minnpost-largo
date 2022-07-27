@@ -116,3 +116,15 @@ class Minnpost_General_Setting {
 	}
 
 }
+
+if ( ! function_exists( 'minnpost_hide_notices_to_all_but_admin' ) ) :
+	add_action( 'in_admin_header', 'minnpost_hide_notices_to_all_but_admin', 99 );
+	/**
+	 * Remove admin notices for people that are not administrators. This helps editor and business level users.
+	 */
+	function minnpost_hide_notices_to_all_but_admin() {
+		if ( ! current_user_can( 'administrator' ) ) {
+			remove_all_actions( 'admin_notices' );
+		}
+	}
+endif;
