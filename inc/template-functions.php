@@ -2352,3 +2352,24 @@ if ( ! function_exists( 'minnpost_largo_show_republish_button' ) ) :
 		return $show_republish_button;
 	}
 endif;
+
+/**
+* Prevent the republish button from showing.
+*
+* @param string $hide_republish_button
+* @param int $post_id
+* @return string $hide_republish_button
+*/
+if ( ! function_exists( 'minnpost_largo_remove_republish_button' ) ) :
+	add_filter( 'minnpost_largo_remove_republish_button_from_display', 'minnpost_largo_remove_republish_button', 10, 2 );
+	function minnpost_largo_remove_republish_button( $hide_republish_button = 'on', $post_id = 0 ) {
+		if ( 0 === $post_id ) {
+			$post_id = get_the_ID();
+		}
+		$current_status = get_post_status( $post_id );
+		if ( false === $current_status || 'publish' !== $current_status ) {
+			$hide_republish_button = 'on';
+		}
+		return $hide_republish_button;
+	}
+endif;
