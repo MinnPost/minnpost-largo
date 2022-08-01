@@ -500,10 +500,11 @@
 					// editors choice post section
 					$section                      = 'editors';
 					$newsletter_recommended_query = z_get_zone_query( 'newsletter-recommended-stories' );
-					if ( $newsletter_recommended_query->have_posts() ) {
-						$editors_query = $newsletter_recommended_query;
-					} else {
+					$editor_picks_override        = minnpost_newsletter_get_section_query( $section );
+					if ( $editor_picks_override->have_posts() ) {
 						$editors_query = minnpost_newsletter_get_section_query( $section );
+					} else {
+						$editors_query = $newsletter_recommended_query;
 					}
 					$args['section']            = $section;
 					$args['show_category']      = false;
