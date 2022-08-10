@@ -500,17 +500,19 @@ if ( ! function_exists( 'minnpost_largo_topics' ) ) :
 		if ( isset( $group_categories ) ) {
 			$output .= '<div class="o-grouped-categories">';
 			foreach ( $group_categories as $topic ) {
-				$output       .= '<section class="m-group-category">';
-				$output       .= '<h2 class="a-group-category-title">' . $topic->name . '</h2>';
-				$grouped_query = new WP_Term_Query(
-					array(
-						'taxonomy'     => 'category',
-						'meta_key'     => '_mp_category_group',
-						'meta_value'   => $topic->term_id,
-						'meta_compare' => '=',
-						'exclude'      => $exclude_ids,
-					)
+				$output .= '<section class="m-group-category">';
+				$output .= '<h2 class="a-group-category-title">' . $topic->name . '</h2>';
+				$args    = array(
+					'taxonomy'     => 'category',
+					'meta_key'     => '_mp_category_group',
+					'meta_value'   => $topic->term_id,
+					'meta_compare' => '=',
+					'exclude'      => $exclude_ids,
 				);
+				if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
+					$args['es'] = true; // elasticsearch.
+				}
+				$grouped_query = new WP_Term_Query( $args );
 				if ( ! empty( $grouped_query->terms ) ) {
 					$output .= '<ol class="a-grouped-categories">';
 					foreach ( $grouped_query->terms as $category ) {
@@ -626,6 +628,66 @@ if ( ! function_exists( 'minnpost_load_shortcode_string' ) ) :
 				if ( true === $cache ) {
 					wp_cache_set( $cache_key, $output, $cache_group, $cache_time );
 				}
+			}
+		}
+		return $output;
+	}
+endif;
+
+if ( ! function_exists( 'mp_load_tags' ) ) :
+	add_shortcode( 'mp_load_tag', 'mp_load_tags' );
+	/**
+	 * List posts from tags
+	 * By giving a shortcode a list of tags, plus other parameters, we can create a dynamic list of posts from certain tags.
+	 *
+	 * @param array  $attributes the array of shortcode attributes.
+	 * @param string $content the content inside the shortcode.
+	 * @return string $output
+	 */
+	function mp_load_tags( $attributes, $content ) {
+		$attributes = shortcode_atts(
+			array(
+				'tags'          => '', // explode it after.
+				'tag_field'     => 'slug',
+				'posts_per_tag' => 10,
+				'show_image'    => 'no',
+				'image_size'    => '',
+				'show_title'    => 'yes',
+				'show_excerpt'  => 'no',
+				'show_content'  => 'no',
+			),
+			$attributes
+		);
+
+		// query values.
+		$tags          = array_map( 'trim', explode( ',', $attributes['tags'] ) );
+		$tag_field     = $attributes['tag_field'];
+		$posts_per_tag = (int) $attributes['posts_per_tag'];
+
+		$output = '';
+
+		foreach ( $tags as $tag ) {
+			if ( null === term_exists( $tag, 'post_tag' ) ) {
+				continue;
+			}
+			$args = array(
+				'post_type'      => 'post',
+				'tag'            => $tag,
+				'posts_per_page' => $posts_per_tag,
+			);
+			if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
+				$args['es'] = true; // elasticsearch.
+			}
+			$tag_posts = new WP_Query( $args );
+			if ( $tag_posts->have_posts() ) {
+				$tag_data = get_term_by( 'slug', $tag, 'post_tag' );
+				$output  .= '<section><h2>' . $tag_data->name . '</h2><ul>';
+				while ( $tag_posts->have_posts() ) {
+					$tag_posts->the_post();
+					$output .= '<li><a href="' . get_permalink() . '">' . get_the_title() . '</a>';
+					$output .= '</li>';
+				}
+				$output .= '</ul></section>';
 			}
 		}
 		return $output;
