@@ -635,7 +635,7 @@ if ( ! function_exists( 'minnpost_load_shortcode_string' ) ) :
 endif;
 
 if ( ! function_exists( 'mp_load_tags' ) ) :
-	add_shortcode( 'mp_load_tag', 'mp_load_tags' );
+	add_shortcode( 'mp_load_tags', 'mp_load_tags' );
 	/**
 	 * List posts from tags
 	 * By giving a shortcode a list of tags, plus other parameters, we can create a dynamic list of posts from certain tags.
