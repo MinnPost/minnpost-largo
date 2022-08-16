@@ -647,14 +647,19 @@ if ( ! function_exists( 'mp_load_tags' ) ) :
 	function mp_load_tags( $attributes, $content ) {
 		$attributes = shortcode_atts(
 			array(
-				'tags'          => '', // explode it after.
-				'tag_field'     => 'slug',
-				'posts_per_tag' => 10,
-				'show_image'    => 'no',
-				'image_size'    => '',
-				'show_title'    => 'yes',
-				'show_excerpt'  => 'no',
-				'show_content'  => 'no',
+				'tags'              => '', // explode it after.
+				'tag_field'         => 'slug',
+				'show_tag_image'    => 'no',
+				'tag_image_size'    => 'full',
+				'show_tag_title'    => 'yes',
+				'show_tag_excerpt'  => 'no',
+				'show_tag_content'  => 'no',
+				'posts_per_tag'     => 10,
+				'show_post_image'   => 'no',
+				'post_image_size'   => '',
+				'show_post_title'   => 'yes',
+				'show_post_excerpt' => 'no',
+				'show_post_content' => 'no',
 			),
 			$attributes
 		);
@@ -681,7 +686,28 @@ if ( ! function_exists( 'mp_load_tags' ) ) :
 			$tag_posts = new WP_Query( $args );
 			if ( $tag_posts->have_posts() ) {
 				$tag_data = get_term_by( 'slug', $tag, 'post_tag' );
-				$output  .= '<section><h2>' . $tag_data->name . '</h2><ul>';
+				$output  .= '<section>';
+				if ( 'yes' === $attributes['show_tag_title'] ) {
+					$output .= '<h2>' . $tag_data->name . '</h2>';
+				}
+				if ( 'yes' === $attributes['show_tag_image'] ) {
+					$term_image = minnpost_get_term_image( $tag_data->term_id, $attributes['tag_image_size'], true, array(), 'tag' );
+					if ( is_array( $term_image ) && '' !== $term_image['markup'] ) {
+						$output .= $term_image['markup'];
+					}
+				}
+				if ( 'yes' === $attributes['show_tag_excerpt'] ) {
+					$excerpt = minnpost_get_term_text( $tag_data->term_id, 'excerpt', 'tag' );
+					if ( '' !== $excerpt ) {
+						$output .= $excerpt;
+					}
+				} elseif ( 'yes' === $attributes['show_tag_content'] ) {
+					$content = minnpost_get_term_text( $tag_data->term_id, 'feature', 'tag' );
+					if ( '' !== $content ) {
+						$output .= $content;
+					}
+				}
+				$output .= '<ul>';
 				while ( $tag_posts->have_posts() ) {
 					$tag_posts->the_post();
 					$output .= '<li><a href="' . get_permalink() . '">' . get_the_title() . '</a>';

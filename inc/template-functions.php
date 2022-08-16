@@ -1316,36 +1316,37 @@ if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
 	}
 endif;
 
-/**
-* Returns term image, large or thumbnail, to put inside the figure
-*
-* @param int $category_id
-* @param string $size
-* @param bool $lazy_load
-* @param array $attributes
-* @return array $image_data
-*/
 if ( ! function_exists( 'minnpost_get_term_image' ) ) :
-	function minnpost_get_term_image( $category_id = '', $size = 'feature', $lazy_load = true, $attributes = array() ) {
-		$image_url = get_term_meta( $category_id, '_mp_category_main_image', true );
-		if ( 'feature' !== $size ) {
-			$image_url = get_term_meta( $category_id, '_mp_category_' . $size . '_image', true );
-			$image_id  = get_term_meta( $category_id, '_mp_category_' . $size . '_image_id', true );
+	/**
+	 * Returns term image, large or thumbnail, to put inside the figure
+	 *
+	 * @param int    $term_id the category or tag's id.
+	 * @param string $size what size of image.
+	 * @param bool   $lazy_load whether or not to lazy load the image.
+	 * @param array  $attributes array of attributes.
+	 * @param string $term_type is category or tag, for retrieving the meta.
+	 * @return array $image_data
+	 */
+	function minnpost_get_term_image( $term_id = '', $size = 'feature', $lazy_load = true, $attributes = array(), $term_type = 'category' ) {
+		$image_url = get_term_meta( $term_id, '_mp_' . $term_type . '_main_image', true );
+		if ( 'feature' !== $size && 'full' !== $size ) {
+			$image_url = get_term_meta( $term_id, '_mp_' . $term_type . '_' . $size . '_image', true );
+			$image_id  = get_term_meta( $term_id, '_mp_' . $term_type . '_' . $size . '_image_id', true );
 		}
 
 		if ( ! isset( $image_id ) ) {
-			$image_id = get_term_meta( $category_id, '_mp_category_main_image_id', true );
+			$image_id = get_term_meta( $term_id, '_mp_' . $term_type . '_main_image_id', true );
 		}
 
 		if ( post_password_required() || is_attachment() || ( ! $image_id && ! $image_url ) ) {
 			return '';
 		}
 
-		// set up lazy load attributes
-		$attributes = apply_filters( 'minnpost_largo_lazy_load_attributes', $attributes, $category_id, 'term', $lazy_load );
+		// set up lazy load attributes.
+		$attributes = apply_filters( 'minnpost_largo_lazy_load_attributes', $attributes, $term_id, 'term', $lazy_load );
 
 		if ( '' !== wp_get_attachment_image( $image_id, $size ) ) {
-			// this requires that the custom image sizes in custom-fields.php work correctly
+			// this requires that the custom image sizes in custom-fields.php work correctly.
 			$image     = wp_get_attachment_image( $image_id, $size, false, $attributes );
 			$image_url = wp_get_attachment_url( $image_id );
 		} else {
@@ -1362,20 +1363,21 @@ if ( ! function_exists( 'minnpost_get_term_image' ) ) :
 	}
 endif;
 
-/**
-* Returns term description or excerpt, by itself
-*
-* @param int $category_id
-* @param string $size
-* @return string $text
-*/
 if ( ! function_exists( 'minnpost_get_term_text' ) ) :
-	function minnpost_get_term_text( $category_id = '', $size = 'feature' ) {
+	/**
+	 * Returns term description or excerpt, by itself
+	 *
+	 * @param int    $term_id the term ID.
+	 * @param string $size the size of the text.
+	 * @param string $term_type categor or tag.
+	 * @return string $text
+	 */
+	function minnpost_get_term_text( $term_id = '', $size = 'feature', $term_type = 'category' ) {
 		$text = '';
-		if ( 'feature' === $size ) { // full text
-			$text = get_term_meta( $category_id, '_mp_category_body', true );
-		} else { // excerpt
-			$text = get_term_meta( $category_id, '_mp_category_excerpt', true );
+		if ( 'feature' === $size ) { // full text.
+			$text = get_term_meta( $term_id, '_mp_' . $term_type . '_body', true );
+		} else { // excerpt.
+			$text = get_term_meta( $term_id, '_mp_' . $term_type . '_excerpt', true );
 		}
 		$text = apply_filters( 'the_content', $text );
 		return $text;
