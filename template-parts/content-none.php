@@ -21,7 +21,7 @@ $query       = new WP_Query(
 	array(
 		'post_type'     => 'page',
 		'post_name__in' => $postnames,
-		'order'         => 'ASC',
+		'order'         => 'DESC',
 		'orderby'       => 'menu_order',
 		'showposts'     => 1,
 	)
