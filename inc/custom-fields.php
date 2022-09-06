@@ -738,6 +738,11 @@ add_filter( 'cmb2_override_excerpt_meta_save', '__return_true' );
 */
 if ( ! function_exists( 'cmb2_post_fields' ) ) :
 
+	add_filter( 'excerpt_save_pre', 'minnpost_clean_excerpt', 10, 1 );
+	function minnpost_clean_excerpt( $content ) {
+		return preg_replace( '/<span[^>]+\>|<\/span>/i', '', $content );
+	}
+
 	add_action( 'cmb2_admin_init', 'cmb2_post_fields' );
 	function cmb2_post_fields() {
 
