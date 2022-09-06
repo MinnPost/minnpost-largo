@@ -3630,3 +3630,15 @@ if ( ! function_exists( 'minnpost_largo_get_image_credits' ) ) :
 		return $better_image_credits;
 	};
 endif;
+
+add_filter( 'coauthors_default_author', 'minnpost_largo_default_author', 10, 1 );
+function minnpost_largo_default_author( $author_id ) {
+	$author_id = '';
+	return $author_id;
+}
+
+add_filter( 'coauthors_guest_authors_force', 'minnpost_largo_coauthors_guest_authors_force', 10, 1 );
+function minnpost_largo_coauthors_guest_authors_force( $force_guest_authors ) {
+	$force_guest_authors = true;
+	return $force_guest_authors;
+}
