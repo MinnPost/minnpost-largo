@@ -955,6 +955,44 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 		);
 
 		/**
+		 * Date display settings
+		 */
+		$date_display_settings = new_cmb2_box(
+			array(
+				'id'           => 'date_display_settings',
+				'title'        => __( 'Date Display Settings', 'minnpost-largo' ),
+				'object_types' => array( $object_type ),
+				//'context'      => 'normal',
+				//'priority'     => 'high',
+				'closed'       => true,
+			)
+		);
+		$date_display_settings->add_field(
+			array(
+				'name' => __( 'Dateline', 'minnpost-largo' ),
+				'id'   => '_mp_date_display_settings_dateline',
+				'type' => 'text',
+				'desc' => __( 'If present, a value in this field will override any date information associated with this post. This applies everywhere the post is displayed (on the post itself, on the homepage, and on any relevant archive listings.', 'minnpost-largo' ),
+			)
+		);
+		$date_display_settings->add_field(
+			array(
+				'name' => __( 'Hide Date Field on Homepage', 'minnpost-largo' ),
+				'id'   => '_mp_date_display_hide_on_homepage',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, whenever this post is displayed on the homepage, it will be without a dateline, even if the value is overridden on other pages.', 'minnpost-largo' ),
+			)
+		);
+		$date_display_settings->add_field(
+			array(
+				'name' => __( 'Hide Date Field Everywhere', 'minnpost-largo' ),
+				'id'   => '_mp_remove_date_from_display',
+				'type' => 'checkbox',
+				'desc' => __( 'If checked, the dateline will not display anywhere, including on the post itself.', 'minnpost-largo' ),
+			)
+		);
+
+		/**
 		 * Display settings
 		 */
 		$display_settings = new_cmb2_box(
@@ -1029,14 +1067,6 @@ if ( ! function_exists( 'cmb2_post_fields' ) ) :
 				'id'   => '_mp_remove_deck_from_display',
 				'type' => 'checkbox',
 				'desc' => __( 'If checked, any deck content will be ignored.', 'minnpost-largo' ),
-			)
-		);
-		$display_settings->add_field(
-			array(
-				'name' => __( 'Remove date from display?', 'minnpost-largo' ),
-				'id'   => '_mp_remove_date_from_display',
-				'type' => 'checkbox',
-				'desc' => __( 'If checked, the post date will not display.', 'minnpost-largo' ),
 			)
 		);
 		$display_settings->add_field(
@@ -2786,39 +2816,6 @@ if ( ! function_exists( 'cmb2_event_fields' ) ) :
 				'desc' => __( 'If checked, this event will not display any of its details in their normal locations, including date, venue, and cost information.', 'minnpost-largo' ),
 			)
 		);
-		/*
-		$display_settings->add_field(
-			array(
-				'name' => __( 'Remove author(s) from display?', 'minnpost-largo' ),
-				'id'   => '_mp_remove_author_from_display',
-				'type' => 'checkbox',
-				'desc' => __( 'If checked, the post author(s) will not display.', 'minnpost-largo' ),
-			)
-		);
-		$display_settings->add_field(
-			array(
-				'name' => __( 'Remove deck from display?', 'minnpost-largo' ),
-				'id'   => '_mp_remove_deck_from_display',
-				'type' => 'checkbox',
-				'desc' => __( 'If checked, any deck content will be ignored.', 'minnpost-largo' ),
-			)
-		);
-		$display_settings->add_field(
-			array(
-				'name' => __( 'Remove date from display?', 'minnpost-largo' ),
-				'id'   => '_mp_remove_date_from_display',
-				'type' => 'checkbox',
-				'desc' => __( 'If checked, the post date will not display.', 'minnpost-largo' ),
-			)
-		);
-		$display_settings->add_field(
-			array(
-				'name' => __( 'Remove newsletter signup from display?', 'minnpost-largo' ),
-				'id'   => '_mp_remove_newsletter_signup_from_display',
-				'type' => 'checkbox',
-				'desc' => __( 'If checked, this post will not have a newsletter signup box.', 'minnpost-largo' ),
-			)
-		);*/
 		$display_settings->add_field(
 			array(
 				'name' => __( 'Remove share buttons from display?', 'minnpost-largo' ),

@@ -153,6 +153,12 @@ if ( ! function_exists( 'minnpost_get_posted_on' ) ) :
 		if ( 'on' === $hide_date ) {
 			return $posted_on;
 		}
+		if ( is_home() ) {
+			$hide_date_on_homepage = get_post_meta( $id, '_mp_date_display_hide_on_homepage', true );
+			if ( 'on' === $hide_date_on_homepage ) {
+				return $posted_on;
+			}
+		}
 		if ( function_exists( 'get_ap_date' ) ) {
 			$date = array(
 				'published' => array(
@@ -175,6 +181,12 @@ if ( ! function_exists( 'minnpost_get_posted_on' ) ) :
 					'human'   => esc_html( get_the_modified_date( '', $id ) ),
 				),
 			);
+		}
+
+		// allow for the date to be overridden by text
+		$dateline_override = get_post_meta( $id, '_mp_date_display_settings_dateline', true );
+		if ( '' !== $dateline_override ) {
+			$date['published']['human'] = esc_html( $dateline_override );
 		}
 
 		// override "today"
