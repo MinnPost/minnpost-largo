@@ -4,6 +4,7 @@
  *
  * This overrides the default the-events-calendar/views/v2/list.php
  */
+get_header();
 $container_classes[] = 'm-layout-primary';
 ?>
 <div id="primary"<?php tribe_classes( $container_classes ); ?>>
@@ -37,3 +38,4 @@ $container_classes[] = 'm-layout-primary';
 
 <?php
 get_sidebar();
+get_footer();
