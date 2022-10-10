@@ -658,7 +658,7 @@ if ( ! function_exists( 'minnpost_largo_get_excluded_related_posts' ) ) :
 		}
 
 		if ( empty( $coronavirus_update_ids ) ) {
-			// load all posts that start with "The daily coronavirus update: "
+			// load all posts that start with "The daily coronavirus update: ".
 			$coronavirus_update_query = new WP_Query(
 				array(
 					'title_starts_with' => array( 'The daily coronavirus update: ', 'Coronavirus in Minnesota: ' ),
@@ -672,11 +672,11 @@ if ( ! function_exists( 'minnpost_largo_get_excluded_related_posts' ) ) :
 
 			// cache the array of IDs for one hour.
 			if ( true === $cache_coronavirus_update_ids ) {
-				wp_cache_set( $cache_key, $coronavirus_update_ids, $cache_group, HOUR_IN_SECONDS * 1 );
+				wp_cache_set( $cache_key, $coronavirus_update_ids, $cache_group, MONTH_IN_SECONDS * 1 );
 			}
 		}
 
-		// we could merge arrays here later, if we have multiple arrays
+		// we could merge arrays here later, if we have multiple arrays.
 		$exclude_ids = $coronavirus_update_ids;
 
 		// add the current post id.
