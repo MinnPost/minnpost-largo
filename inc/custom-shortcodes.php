@@ -661,6 +661,7 @@ if ( ! function_exists( 'mp_load_tags' ) ) :
 				'show_post_excerpt'   => 'no',
 				'show_post_content'   => 'no',
 				'show_post_only_once' => 'no',
+				'exclude_opinion'     => 'yes',
 			),
 			$attributes
 		);
@@ -672,16 +673,58 @@ if ( ! function_exists( 'mp_load_tags' ) ) :
 
 		$output          = '';
 		$output_post_ids = array();
+		// get the sponsored post group category; we always want to exclude it.
+		$sponsored = get_term_by( 'slug', 'sponsored-content', 'category' );
+
+		// optionally remove opinion categories.
+		$exclude_term_ids = array();
+		if ( 'yes' === $attributes['exclude_opinion'] ) {
+			$opinion = get_term_by( 'slug', 'opinion', 'category' );
+			// start the WP_Term_Query arguments.
+			$term_args    = array(
+				'taxonomy'   => 'category',
+				'fields'     => 'ids',
+				'meta_query' => array(
+					array(
+						'key'   => '_mp_category_group',
+						'value' => $sponsored->term_id,
+					),
+				),
+			);
+			$if_term_args = array(
+				'meta_query' => array(
+					'relation' => 'OR',
+					array(
+						'key'   => '_mp_category_group',
+						'value' => $opinion->term_id,
+					),
+					array(
+						'key'   => '_mp_category_group',
+						'value' => $sponsored->term_id,
+					),
+				),
+			);
+			// merge the WP_Term_Query args from the if statement.
+			$term_args = array_merge( $term_args, $if_term_args );
+
+			// generate a WP_Term_Query from the arguments.
+			$term_query       = new WP_Term_Query( $term_args );
+			$exclude_term_ids = $term_query->terms;
+			// make sure exclude ID array is unique.
+			$exclude_term_ids = array_unique( $exclude_term_ids );
+			sort( $exclude_term_ids );
+		}
 
 		foreach ( $tags as $tag ) {
 			if ( null === term_exists( $tag, 'post_tag' ) ) {
 				continue;
 			}
 			$args = array(
-				'post_type'      => 'post',
-				'tag'            => $tag,
-				'posts_per_page' => $posts_per_tag,
-				'post__not_in'   => $output_post_ids,
+				'post_type'        => 'post',
+				'tag'              => $tag,
+				'posts_per_page'   => $posts_per_tag,
+				'post__not_in'     => $output_post_ids,
+				'category__not_in' => $exclude_term_ids,
 			);
 			if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
 				$args['es'] = true; // elasticsearch.
