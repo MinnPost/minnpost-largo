@@ -707,6 +707,11 @@ if ( ! function_exists( 'mp_load_tags' ) ) :
 			// merge the WP_Term_Query args from the if statement.
 			$term_args = array_merge( $term_args, $if_term_args );
 
+			// elasticsearch.
+			if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
+				$term_args['es'] = true;
+			}
+
 			// generate a WP_Term_Query from the arguments.
 			$term_query       = new WP_Term_Query( $term_args );
 			$exclude_term_ids = $term_query->terms;
