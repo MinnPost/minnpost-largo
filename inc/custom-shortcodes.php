@@ -689,15 +689,13 @@ if ( ! function_exists( 'mp_load_tags' ) ) :
 			$tag_posts = new WP_Query( $args );
 			if ( $tag_posts->have_posts() ) {
 				$tag_data = get_term_by( 'slug', $tag, 'post_tag' );
-				$output  .= '<section>';
+				$output  .= '<section class="o-mp-load-tags">';
 				if ( 'yes' === $attributes['show_tag_title'] ) {
 					$output .= '<h2>' . $tag_data->name . '</h2>';
 				}
 				if ( 'yes' === $attributes['show_tag_image'] ) {
-					$term_image = minnpost_get_term_image( $tag_data->term_id, $attributes['tag_image_size'], true, array(), 'tag' );
-					if ( is_array( $term_image ) && '' !== $term_image['markup'] ) {
-						$output .= $term_image['markup'];
-					}
+					$term_figure = minnpost_get_term_figure( $tag_data->term_id, $attributes['tag_image_size'], false, false, '', true, array(), 'tag', true );
+					$output     .= $term_figure;
 				}
 				if ( 'yes' === $attributes['show_tag_excerpt'] ) {
 					$excerpt = minnpost_get_term_text( $tag_data->term_id, 'excerpt', 'tag' );

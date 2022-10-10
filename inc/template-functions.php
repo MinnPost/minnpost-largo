@@ -1277,9 +1277,9 @@ endif;
 * @return string $output
 */
 if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
-	function minnpost_get_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false, $link_on = 'title', $lazy_load = true, $attributes = array() ) {
+	function minnpost_get_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false, $link_on = 'title', $lazy_load = true, $attributes = array(), $term_type = 'category', $include_image_meta = false ) {
 
-		$image_data = minnpost_get_term_image( $category_id, $size );
+		$image_data = minnpost_get_term_image( $category_id, $size, $lazy_load, $attributes, $term_type );
 		if ( '' !== $image_data ) {
 			$image_id  = $image_data['image_id'];
 			$image_url = $image_data['image_url'];
@@ -1305,7 +1305,7 @@ if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
 				$output .= '<a href="' . get_category_link( $category_id ) . '">';
 			}
 			$output .= $image;
-			if ( true === $include_text && '' !== $text ) {
+			if ( true === $include_text && '' !== $text || true === $include_image_meta ) {
 				$output .= '<figcaption>';
 				if ( true === $include_name && '' !== $name ) {
 					$output .= '<h3 class="a-category-title">';
@@ -1317,6 +1317,17 @@ if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
 					$output .= '</h3>';
 				}
 				$output .= $text;
+
+				if ( true === $include_image_meta ) {
+					if ( '' !== $caption ) {
+						$output .= '<div class="a-media-meta a-media-caption">' . $caption . '</div>';
+					}
+
+					if ( '' !== $credit ) {
+						$output .= '<div class="a-media-meta a-media-credit">' . $credit . '</div>';
+					}
+				}
+
 				$output .= '</figcaption>';
 			}
 			if ( 'figure' === $link_on ) {
