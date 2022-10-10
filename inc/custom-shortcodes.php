@@ -647,19 +647,20 @@ if ( ! function_exists( 'mp_load_tags' ) ) :
 	function mp_load_tags( $attributes, $content ) {
 		$attributes = shortcode_atts(
 			array(
-				'tags'              => '', // explode it after.
-				'tag_field'         => 'slug',
-				'show_tag_image'    => 'no',
-				'tag_image_size'    => 'full',
-				'show_tag_title'    => 'yes',
-				'show_tag_excerpt'  => 'no',
-				'show_tag_content'  => 'no',
-				'posts_per_tag'     => 10,
-				'show_post_image'   => 'no',
-				'post_image_size'   => '',
-				'show_post_title'   => 'yes',
-				'show_post_excerpt' => 'no',
-				'show_post_content' => 'no',
+				'tags'                => '', // explode it after.
+				'tag_field'           => 'slug',
+				'show_tag_image'      => 'no',
+				'tag_image_size'      => 'full',
+				'show_tag_title'      => 'yes',
+				'show_tag_excerpt'    => 'no',
+				'show_tag_content'    => 'no',
+				'posts_per_tag'       => 10,
+				'show_post_image'     => 'no',
+				'post_image_size'     => '',
+				'show_post_title'     => 'yes',
+				'show_post_excerpt'   => 'no',
+				'show_post_content'   => 'no',
+				'show_post_only_once' => 'no',
 			),
 			$attributes
 		);
@@ -669,7 +670,8 @@ if ( ! function_exists( 'mp_load_tags' ) ) :
 		$tag_field     = $attributes['tag_field'];
 		$posts_per_tag = (int) $attributes['posts_per_tag'];
 
-		$output = '';
+		$output          = '';
+		$output_post_ids = array();
 
 		foreach ( $tags as $tag ) {
 			if ( null === term_exists( $tag, 'post_tag' ) ) {
@@ -679,6 +681,7 @@ if ( ! function_exists( 'mp_load_tags' ) ) :
 				'post_type'      => 'post',
 				'tag'            => $tag,
 				'posts_per_page' => $posts_per_tag,
+				'post__not_in'   => $output_post_ids,
 			);
 			if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
 				$args['es'] = true; // elasticsearch.
@@ -710,6 +713,9 @@ if ( ! function_exists( 'mp_load_tags' ) ) :
 				$output .= '<ul>';
 				while ( $tag_posts->have_posts() ) {
 					$tag_posts->the_post();
+					if ( 'yes' === $attributes['show_post_only_once'] ) {
+						$output_post_ids[] = get_the_ID();
+					}
 					$output .= '<li><a href="' . get_permalink() . '">' . get_the_title() . '</a>';
 					$output .= '</li>';
 				}
