@@ -742,7 +742,7 @@ if ( ! function_exists( 'mp_load_tags' ) ) :
 					$output .= '<h2>' . $tag_data->name . '</h2>';
 				}
 				if ( 'yes' === $attributes['show_tag_image'] ) {
-					$term_figure = minnpost_get_term_figure( $tag_data->term_id, $attributes['tag_image_size'], false, false, '', true, array(), 'tag', true );
+					$term_figure = minnpost_get_term_figure( $tag_data->term_id, $attributes['tag_image_size'], false, false, '', true, array(), 'tag', false, true );
 					$output     .= $term_figure;
 				}
 				if ( 'yes' === $attributes['show_tag_excerpt'] ) {

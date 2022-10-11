@@ -457,17 +457,17 @@ if ( ! function_exists( 'minnpost_speaker_figure' ) ) :
 	}
 endif;
 
-/**
-* Outputs term image, large or thumbnail, with/without the description or excerpt, all inside a <figure>
-*
-* @param int $category_id
-* @param string $size
-* @param string $include_text
-* @param string $include_name
-* @param string $link_on
-* @param bool $lazy_load
-*/
 if ( ! function_exists( 'minnpost_term_figure' ) ) :
+	/**
+	 * Outputs term image, large or thumbnail, with/without the description or excerpt, all inside a <figure>
+	 *
+	 * @param int    $category_id
+	 * @param string $size
+	 * @param string $include_text
+	 * @param string $include_name
+	 * @param string $link_on
+	 * @param bool   $lazy_load
+	 */
 	function minnpost_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false, $link_on = 'title', $lazy_load = true ) {
 		$output = minnpost_get_term_figure( $category_id, $size, $include_text, $include_name, $link_on, $lazy_load );
 		echo $output;

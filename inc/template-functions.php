@@ -1264,20 +1264,23 @@ if ( ! function_exists( 'minnpost_get_speaker_image' ) ) :
 	}
 endif;
 
-/**
-* Returns term image, large or thumbnail, with/without the description or excerpt, all inside a <figure>
-*
-* @param int $category_id
-* @param string $size
-* @param bool $include_text
-* @param bool $include_name
-* @param string $link_on
-* @param bool $lazy_load
-* @param array $attributes
-* @return string $output
-*/
 if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
-	function minnpost_get_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false, $link_on = 'title', $lazy_load = true, $attributes = array(), $term_type = 'category', $include_image_meta = false ) {
+	/**
+	 * Returns term image, large or thumbnail, with/without the description or excerpt, all inside a <figure>
+	 *
+	 * @param int    $category_id
+	 * @param string $size
+	 * @param bool   $include_text
+	 * @param bool   $include_name
+	 * @param string $link_on
+	 * @param bool   $lazy_load
+	 * @param array  $attributes
+	 * @param string $term_type
+	 * @param bool   $include_image_caption
+	 * @param bool   $include_image_credit
+	 * @return string $output
+	 */
+	function minnpost_get_term_figure( $category_id = '', $size = 'feature', $include_text = true, $include_name = false, $link_on = 'title', $lazy_load = true, $attributes = array(), $term_type = 'category', $include_image_caption = false, $include_image_credit = false ) {
 
 		$image_data = minnpost_get_term_image( $category_id, $size, $lazy_load, $attributes, $term_type );
 		if ( '' !== $image_data ) {
@@ -1305,7 +1308,7 @@ if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
 				$output .= '<a href="' . get_category_link( $category_id ) . '">';
 			}
 			$output .= $image;
-			if ( true === $include_text && '' !== $text || true === $include_image_meta ) {
+			if ( true === $include_text && '' !== $text || ( true === $include_image_caption || $include_image_credit ) ) {
 				$output .= '<figcaption>';
 				if ( true === $include_name && '' !== $name ) {
 					$output .= '<h3 class="a-category-title">';
@@ -1318,12 +1321,11 @@ if ( ! function_exists( 'minnpost_get_term_figure' ) ) :
 				}
 				$output .= $text;
 
-				if ( true === $include_image_meta ) {
-					if ( '' !== $caption ) {
+				if ( true === $include_image_credit || true === $include_image_caption ) {
+					if ( '' !== $caption && true === $include_image_caption ) {
 						$output .= '<div class="a-media-meta a-media-caption">' . $caption . '</div>';
 					}
-
-					if ( '' !== $credit ) {
+					if ( '' !== $credit && true === $include_image_credit ) {
 						$output .= '<div class="a-media-meta a-media-credit">' . $credit . '</div>';
 					}
 				}
