@@ -812,8 +812,7 @@ if ( ! function_exists( 'minnpost_content_sponsorship' ) ) :
 	function minnpost_content_sponsorship( $object_type = 'post', $object_id = '' ) {
 		$sponsorship = minnpost_get_content_sponsorship( $object_type, $object_id );
 		if ( '' !== $sponsorship ) {
-			$sponsorship = apply_filters( 'the_content', $sponsorship );
-			echo '<div class="a-sponsorship">' . $sponsorship . '</div>';
+			echo '<div class="a-sponsorship">' . wp_kses_post( $sponsorship ) . '</div>';
 		}
 	}
 endif;
