@@ -1,10 +1,19 @@
 .liveblog-entry {
 	background: #fff;
-	margin-bottom: 20px;
 	border-top: 0;
+	border-bottom: 1px solid #d6d6da;
+	margin-bottom: 1.5em;
+	padding: 0 0 0.75em 0;
+	display: block;
+	/*font-size: var(--scale-1);*/
 }
 
 .liveblog-entry-aside {
+	flex-basis: unset;
+	min-width: unset;
+	margin-right: unset;
+	margin-bottom: 0.5rem;
+
 	a {
 		span:nth-of-type(2) {
 			display: none;
@@ -12,20 +21,56 @@
 	}
 }
 
+.liveblog-meta-time {
+	font-weight: 700;
+
+	span {
+		line-height: unset;
+		font-size: unset;
+
+		&:first-child {
+			font-weight: unset;
+			color: inherit;
+			margin-bottom: unset;
+		}
+	}
+}
+
 .liveblog-meta-author {
+	margin: unset;
+
 	.liveblog-meta-author-name {
-		margin-left: 0;
-		line-height: normal;
-		border-bottom: 1px solid #efeff0;
-		&:after {
-			content: ":";
-			margin-left: 0.15em;
+		font-size: inherit;
+		margin-left: unset;
+
+		&:before {
+			content: "By ";
+			margin-right: 0.15em;
 		}
 	}
 }
 
 .liveblog-entry-content {
+	/*font-family: ff-meta-web-pro,helvetica,arial,sans-serif;
+	font-size: var(--scale-1);
+	font-size-adjust: .495;
+	font-style: normal;
+	font-weight: 400;
+	line-height: 1.3;*/
+	margin: .5em 0 1em;
+	max-width: 70ch;
+
+	font-family: "ff-meta-serif-web-pro",georgia,cambria,Times New Roman,times,serif;
+	font-size-adjust: .46;
+	line-height: 1.3;
+	overflow-wrap: break-word;
+
+
 	* {
 		word-break: normal;
 	}
+}
+
+.liveblog-entry-tools {
+	margin: .5em 0 1em;
 }
