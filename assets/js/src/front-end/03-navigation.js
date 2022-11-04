@@ -2,7 +2,7 @@
  * File navigation.js.
  *
  * Navigation scripts. Includes mobile or toggle behavior, analytics tracking of specific menus.
- * This file does require jQuery.
+ * This file does require jQuery in the functions at the bottom.
  */
 
 function setupPrimaryNav() {
@@ -86,9 +86,15 @@ function setupPrimaryNav() {
 		} );
 	}
 
-	// escape key press
-	$( document ).keyup( function( e ) {
-		if ( 27 === e.keyCode ) {
+	document.onkeydown = function(evt) {
+		evt = evt || window.event;
+		var isEscape = false;
+		if ( "key" in evt ) {
+			isEscape = ( evt.key === "Escape" || evt.key === "Esc" );
+		} else {
+			isEscape = ( evt.keyCode === 27 );
+		}
+		if ( isEscape ) {
 			let primaryNavExpanded = 'true' === primaryNavToggle.getAttribute( 'aria-expanded' ) || false;
 			let userNavExpanded = 'true' === userNavToggle.getAttribute( 'aria-expanded' ) || false;
 			let searchIsVisible = 'true' === searchVisible.getAttribute( 'aria-expanded' ) || false;
@@ -105,48 +111,41 @@ function setupPrimaryNav() {
 				searchTransitioner.transitionHide();
 			}
 		}
-	} );
+	};
 }
+setupPrimaryNav(); // this whole function does not require jquery.
 
-function setupScrollNav( selector, navSelector, contentSelector ) {
+function setupScrollNav() {
 
-	var ua = window.navigator.userAgent;
-	var isIE = /MSIE|Trident/.test( ua );
-	if ( isIE ) {
-		return;
-	}
+	let subNavScrollers = document.querySelectorAll( '.m-sub-navigation' );
+	subNavScrollers.forEach((currentValue) => {
+		PriorityNavScroller( {
+			selector: currentValue,
+			navSelector: '.m-subnav-navigation',
+			contentSelector: '.m-menu-sub-navigation',
+			itemSelector: 'li, a',
+			buttonLeftSelector: '.nav-scroller-btn--left',
+			buttonRightSelector: '.nav-scroller-btn--right'
+		} );
+	});
 
-	// Init with all options at default setting
-	const priorityNavScrollerDefault = PriorityNavScroller( {
-		selector: selector,
-		navSelector: navSelector,
-		contentSelector: contentSelector,
-		itemSelector: 'li, a',
-		buttonLeftSelector: '.nav-scroller-btn--left',
-		buttonRightSelector: '.nav-scroller-btn--right'
+	let paginationScrollers = document.querySelectorAll( '.m-pagination-navigation' );
+	paginationScrollers.forEach((currentValue) => {
+		PriorityNavScroller( {
+			selector: currentValue,
+			navSelector: '.m-pagination-container',
+			contentSelector: '.m-pagination-list',
+			itemSelector: 'li, a',
+			buttonLeftSelector: '.nav-scroller-btn--left',
+			buttonRightSelector: '.nav-scroller-btn--right'
+		} );
+	});
 
-		//scrollStep: 'average'
-	} );
-
-	// Init multiple nav scrollers with the same options
-	/*let navScrollers = document.querySelectorAll('.nav-scroller');
-
-	navScrollers.forEach((currentValue, currentIndex) => {
-	  PriorityNavScroller({
-	    selector: currentValue
-	  });
-	});*/
 }
+setupScrollNav(); // this whole function does not require jquery.
 
-setupPrimaryNav();
 
-if ( 0 < $( '.m-sub-navigation' ).length ) {
-	setupScrollNav( '.m-sub-navigation', '.m-subnav-navigation', '.m-menu-sub-navigation' );
-}
-if ( 0 < $( '.m-pagination-navigation' ).length ) {
-	setupScrollNav( '.m-pagination-navigation', '.m-pagination-container', '.m-pagination-list' );
-}
-
+// this is the part that requires jquery.
 $( 'a', $( '.o-site-sidebar' ) ).click( function() {
 	var widgetTitle         = $( this ).closest( '.m-widget' ).find( 'h3' ).text();
 	var zoneTitle           = $( this ).closest( '.m-zone' ).find( '.a-zone-title' ).text();
