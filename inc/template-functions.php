@@ -416,8 +416,10 @@ if ( ! function_exists( 'minnpost_get_posted_by' ) ) :
 					return $byline;
 				}
 			} else {
-				// default byline from WordPress core
-				return 'By&nbsp;<a href="' . get_the_author_posts_url( get_the_author_meta( 'ID' ) ) . '">' . the_author( $id ) . '</a>';
+				// default byline from WordPress core.
+				if ( function_exists( 'get_the_author_posts_url' ) ) {
+					return 'By&nbsp;<a href="' . get_the_author_posts_url( get_the_author_meta( 'ID' ) ) . '">' . the_author( $id ) . '</a>';
+				}
 			}
 		}
 		return $posted_by;
