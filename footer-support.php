@@ -59,7 +59,9 @@
 
 			</aside>
 
-			<?php echo vip_powered_wpcom( 1 ); ?>
+			<?php if ( function_exists( 'vip_powered_wpcom' ) ) : ?>
+				<?php echo vip_powered_wpcom( 1 ); ?>
+			<?php endif; ?>
 
 		</div>
 	</footer>

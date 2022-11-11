@@ -27,8 +27,12 @@ if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
 		if ( is_single() ) {
 			$is_liveblog = get_post_meta( get_the_ID(), 'liveblog', true );
 			if ( 'enable' === $is_liveblog || 'archive' === $is_liveblog ) {
-				$liveblog_css_version = '1.0.3';
-				wp_enqueue_style( 'minnpost-liveblog', get_theme_file_uri() . '/assets/css/liveblog.css', array(), $liveblog_css_version, 'all' );
+				if ( 'production' === VIP_GO_ENV ) {
+					$liveblog_css_version = '1.0.3';
+					wp_enqueue_style( 'minnpost-liveblog', get_theme_file_uri() . '/assets/css/liveblog.css', array(), $liveblog_css_version, 'all' );
+				} else {
+					wp_enqueue_style( 'minnpost-liveblog', get_theme_file_uri() . '/assets/css/liveblog.css', array(), filemtime( get_theme_file_path() . '/assets/css/liveblog.css' ), 'all' );
+				}
 			}
 			$css_urls = get_post_meta( get_the_ID(), '_css_file_urls', true );
 			if ( '' !== $css_urls ) {

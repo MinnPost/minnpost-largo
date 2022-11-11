@@ -196,9 +196,12 @@ endif;
 */
 if ( ! function_exists( 'minnpost_largo_author_schema' ) ) :
 	function minnpost_largo_get_author_schema() {
-
-		$coauthors = get_coauthors( get_the_ID() );
-		$pieces    = array();
+		$pieces = array();
+		if ( function_exists( 'get_coauthors' ) ) {
+			$coauthors = get_coauthors( get_the_ID() );
+		} else {
+			return $pieces;
+		}
 		foreach ( $coauthors as $coauthor ) {
 			$data = array(
 				// '@id' => $id,

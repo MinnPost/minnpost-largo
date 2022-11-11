@@ -647,19 +647,21 @@ if ( ! function_exists( 'mp_load_tags' ) ) :
 	function mp_load_tags( $attributes, $content ) {
 		$attributes = shortcode_atts(
 			array(
-				'tags'              => '', // explode it after.
-				'tag_field'         => 'slug',
-				'show_tag_image'    => 'no',
-				'tag_image_size'    => 'full',
-				'show_tag_title'    => 'yes',
-				'show_tag_excerpt'  => 'no',
-				'show_tag_content'  => 'no',
-				'posts_per_tag'     => 10,
-				'show_post_image'   => 'no',
-				'post_image_size'   => '',
-				'show_post_title'   => 'yes',
-				'show_post_excerpt' => 'no',
-				'show_post_content' => 'no',
+				'tags'                => '', // explode it after.
+				'tag_field'           => 'slug',
+				'show_tag_image'      => 'no',
+				'tag_image_size'      => 'full',
+				'show_tag_title'      => 'yes',
+				'show_tag_excerpt'    => 'no',
+				'show_tag_content'    => 'no',
+				'posts_per_tag'       => 10,
+				'show_post_image'     => 'no',
+				'post_image_size'     => '',
+				'show_post_title'     => 'yes',
+				'show_post_excerpt'   => 'no',
+				'show_post_content'   => 'no',
+				'show_post_only_once' => 'no',
+				'exclude_opinion'     => 'yes',
 			),
 			$attributes
 		);
@@ -669,16 +671,65 @@ if ( ! function_exists( 'mp_load_tags' ) ) :
 		$tag_field     = $attributes['tag_field'];
 		$posts_per_tag = (int) $attributes['posts_per_tag'];
 
-		$output = '';
+		$output          = '';
+		$output_post_ids = array();
+		// get the sponsored post group category; we always want to exclude it.
+		$sponsored = get_term_by( 'slug', 'sponsored-content', 'category' );
+
+		// optionally remove opinion categories.
+		$exclude_term_ids = array();
+		if ( 'yes' === $attributes['exclude_opinion'] ) {
+			$opinion = get_term_by( 'slug', 'opinion', 'category' );
+			// start the WP_Term_Query arguments.
+			$term_args    = array(
+				'taxonomy'   => 'category',
+				'fields'     => 'ids',
+				'meta_query' => array(
+					array(
+						'key'   => '_mp_category_group',
+						'value' => $sponsored->term_id,
+					),
+				),
+			);
+			$if_term_args = array(
+				'meta_query' => array(
+					'relation' => 'OR',
+					array(
+						'key'   => '_mp_category_group',
+						'value' => $opinion->term_id,
+					),
+					array(
+						'key'   => '_mp_category_group',
+						'value' => $sponsored->term_id,
+					),
+				),
+			);
+			// merge the WP_Term_Query args from the if statement.
+			$term_args = array_merge( $term_args, $if_term_args );
+
+			// elasticsearch.
+			if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
+				$term_args['es'] = true;
+			}
+
+			// generate a WP_Term_Query from the arguments.
+			$term_query       = new WP_Term_Query( $term_args );
+			$exclude_term_ids = $term_query->terms;
+			// make sure exclude ID array is unique.
+			$exclude_term_ids = array_unique( $exclude_term_ids );
+			sort( $exclude_term_ids );
+		}
 
 		foreach ( $tags as $tag ) {
 			if ( null === term_exists( $tag, 'post_tag' ) ) {
 				continue;
 			}
 			$args = array(
-				'post_type'      => 'post',
-				'tag'            => $tag,
-				'posts_per_page' => $posts_per_tag,
+				'post_type'        => 'post',
+				'tag'              => $tag,
+				'posts_per_page'   => $posts_per_tag,
+				'post__not_in'     => $output_post_ids,
+				'category__not_in' => $exclude_term_ids,
 			);
 			if ( 'production' === VIP_GO_ENV || ( defined( 'VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION' ) && true === VIP_ENABLE_VIP_SEARCH_QUERY_INTEGRATION ) ) {
 				$args['es'] = true; // elasticsearch.
@@ -686,15 +737,13 @@ if ( ! function_exists( 'mp_load_tags' ) ) :
 			$tag_posts = new WP_Query( $args );
 			if ( $tag_posts->have_posts() ) {
 				$tag_data = get_term_by( 'slug', $tag, 'post_tag' );
-				$output  .= '<section>';
+				$output  .= '<section class="o-mp-load-tags">';
 				if ( 'yes' === $attributes['show_tag_title'] ) {
 					$output .= '<h2>' . $tag_data->name . '</h2>';
 				}
 				if ( 'yes' === $attributes['show_tag_image'] ) {
-					$term_image = minnpost_get_term_image( $tag_data->term_id, $attributes['tag_image_size'], true, array(), 'tag' );
-					if ( is_array( $term_image ) && '' !== $term_image['markup'] ) {
-						$output .= $term_image['markup'];
-					}
+					$term_figure = minnpost_get_term_figure( $tag_data->term_id, $attributes['tag_image_size'], false, false, '', true, array(), 'tag', false, true );
+					$output     .= $term_figure;
 				}
 				if ( 'yes' === $attributes['show_tag_excerpt'] ) {
 					$excerpt = minnpost_get_term_text( $tag_data->term_id, 'excerpt', 'tag' );
@@ -710,6 +759,9 @@ if ( ! function_exists( 'mp_load_tags' ) ) :
 				$output .= '<ul>';
 				while ( $tag_posts->have_posts() ) {
 					$tag_posts->the_post();
+					if ( 'yes' === $attributes['show_post_only_once'] ) {
+						$output_post_ids[] = get_the_ID();
+					}
 					$output .= '<li><a href="' . get_permalink() . '">' . get_the_title() . '</a>';
 					$output .= '</li>';
 				}
