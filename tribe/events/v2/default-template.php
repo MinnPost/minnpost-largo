@@ -18,8 +18,5 @@ get_header();
 
 echo tribe( Template_Bootstrap::class )->get_view_html();
 
-$single = tribe( Template_Bootstrap::class )->is_single_event();
-if ( 1 !== $single ) {
-    get_sidebar(); // because single events are still legacy, they include the sidebar separately.
-}
+get_sidebar();
 get_footer();
