@@ -26,7 +26,7 @@ if ( ! function_exists( 'minnpost_largo_remove_tribe_styles' ) ) :
 				'tribe-common-skeleton-style',
 				'tribe-events-views-v2-bootstrap-datepicker-styles-css',
 				'tribe-events-views-v2-skeleton',
-				'tribe-events-v2-single-skeleton-css',
+				'tribe-events-v2-single-skeleton',
 			);
 			$scripts = array(
 				'tribe-common',
