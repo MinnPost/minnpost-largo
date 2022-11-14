@@ -91,24 +91,6 @@ if ( ! function_exists( 'minnpost_largo_remove_tribe_styles' ) ) :
 endif;
 
 /**
-* Filter to modify the bootstrapped html from The Events Calendar before it gets displayed.
-*
-* @param string $html the final HTML that gets displayed.
-* @param Tribe__Context $context plugin context used to set up the view.
-* @param string $view_slug The slug of the View that we've built, based on the context but possibly altered in the build process.
-* @param WP_Query $query The current WP Query object.
-* @return string $html
-* @see https://docs.theeventscalendar.com/reference/hooks/tribe_events_views_v2_bootstrap_html/
-*/
-if ( ! function_exists( 'minnpost_largo_events_v2_bootstrap_html' ) ) :
-	add_filter( 'tribe_events_views_v2_bootstrap_html', 'minnpost_largo_events_v2_bootstrap_html', 10, 4 );
-	function minnpost_largo_events_v2_bootstrap_html( $html, $context, $view_slug, $query ) {
-		$html = '<div id="primary" class="m-layout-primary">' . $html . '</div>';
-		return $html;
-	}
-endif;
-
-/**
 * Filter to modify the html that gets added before event data by The Events Calendar.
 *
 * @param string $before the before HTML value that gets displayed.
