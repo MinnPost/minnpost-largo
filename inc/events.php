@@ -225,22 +225,27 @@ if ( ! function_exists( 'minnpost_largo_full_event_time' ) ) :
 		if ( isset( $args['separator'] ) ) {
 			$separator = $args['separator'];
 		}
-		if ( ( $end_time !== $start_time ) && ( ! isset( $args['show_end_time'] ) || ( isset( $args['show_end_time'] ) && false !== $args['show_end_time'] ) ) ) {
-			$time = sprintf(
-				// translators: 1) start time, 2) separator, 3) end time, 4) timezone
-				__( '%1$s %2$s %3$s%4$s', 'minnpost-largo' ),
-				$start_time,
-				$separator,
-				$end_time,
-				$timezone
-			);
+		$event_all_day = get_post_meta( $event_id, '_EventAllDay', true );
+		if ( 'yes' === $event_all_day ) {
+			$time = '';
 		} else {
-			// translators: 1) start time, 2) timezone
-			$time = sprintf(
-				'%1$s%2$s',
-				$start_time,
-				$timezone
-			);
+			if ( ( $end_time !== $start_time ) && ( ! isset( $args['show_end_time'] ) || ( isset( $args['show_end_time'] ) && false !== $args['show_end_time'] ) ) ) {
+				$time = sprintf(
+					// translators: 1) start time, 2) separator, 3) end time, 4) timezone
+					__( '%1$s %2$s %3$s%4$s', 'minnpost-largo' ),
+					$start_time,
+					$separator,
+					$end_time,
+					$timezone
+				);
+			} else {
+				// translators: 1) start time, 2) timezone
+				$time = sprintf(
+					'%1$s%2$s',
+					$start_time,
+					$timezone
+				);
+			}
 		}
 		return $time;
 	}
