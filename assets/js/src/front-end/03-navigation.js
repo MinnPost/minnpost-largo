@@ -86,13 +86,13 @@ function setupPrimaryNav() {
 		} );
 	}
 
-	document.onkeydown = function(evt) {
+	document.onkeydown = function( evt ) {
 		evt = evt || window.event;
 		var isEscape = false;
-		if ( "key" in evt ) {
-			isEscape = ( evt.key === "Escape" || evt.key === "Esc" );
+		if ( 'key' in evt ) {
+			isEscape = ( 'Escape' === evt.key || 'Esc' === evt.key );
 		} else {
-			isEscape = ( evt.keyCode === 27 );
+			isEscape = ( 27 === evt.keyCode );
 		}
 		if ( isEscape ) {
 			let primaryNavExpanded = 'true' === primaryNavToggle.getAttribute( 'aria-expanded' ) || false;
@@ -118,7 +118,7 @@ setupPrimaryNav(); // this whole function does not require jquery.
 function setupScrollNav() {
 
 	let subNavScrollers = document.querySelectorAll( '.m-sub-navigation' );
-	subNavScrollers.forEach((currentValue) => {
+	subNavScrollers.forEach( ( currentValue ) => {
 		PriorityNavScroller( {
 			selector: currentValue,
 			navSelector: '.m-subnav-navigation',
@@ -127,10 +127,10 @@ function setupScrollNav() {
 			buttonLeftSelector: '.nav-scroller-btn--left',
 			buttonRightSelector: '.nav-scroller-btn--right'
 		} );
-	});
+	} );
 
 	let paginationScrollers = document.querySelectorAll( '.m-pagination-navigation' );
-	paginationScrollers.forEach((currentValue) => {
+	paginationScrollers.forEach( ( currentValue ) => {
 		PriorityNavScroller( {
 			selector: currentValue,
 			navSelector: '.m-pagination-container',
@@ -139,7 +139,7 @@ function setupScrollNav() {
 			buttonLeftSelector: '.nav-scroller-btn--left',
 			buttonRightSelector: '.nav-scroller-btn--right'
 		} );
-	});
+	} );
 
 }
 setupScrollNav(); // this whole function does not require jquery.

@@ -8,7 +8,7 @@
 const targets = document.querySelectorAll( '.a-events-cal-links' );
 targets.forEach( function( target ) {
     setCalendar( target );
-});
+} );
 
 function setCalendar( target ) {
     if ( null !== target ) {
@@ -24,7 +24,7 @@ function setCalendar( target ) {
 const calendarsVisible = document.querySelectorAll( '.m-event-datetime a' );
 calendarsVisible.forEach( function( calendarVisible ) {
     showCalendar( calendarVisible );
-});
+} );
 
 function showCalendar( calendarVisible ) {
     const dateHolder = calendarVisible.closest( '.m-event-date-and-calendar' );

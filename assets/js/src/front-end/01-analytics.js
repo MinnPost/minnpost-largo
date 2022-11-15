@@ -9,7 +9,7 @@
  * Call hooks from other places.
  * This allows other plugins that we maintain to pass data to the theme's analytics method.
 */
-if ( typeof wp !== 'undefined' ) {
+if ( 'undefined' !== typeof wp ) {
 	wp.hooks.addAction( 'wpMessageInserterAnalyticsEvent', 'minnpostLargo', mpAnalyticsTrackingEvent, 10 );
 	wp.hooks.addAction( 'minnpostFormProcessorMailchimpAnalyticsEvent', 'minnpostLargo', mpAnalyticsTrackingEvent, 10 );
 	wp.hooks.addAction( 'minnpostMembershipAnalyticsEvent', 'minnpostLargo', mpAnalyticsTrackingEvent, 10 );
