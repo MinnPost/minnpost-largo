@@ -24,7 +24,7 @@ if ( ! function_exists( 'minnpost_largo_get_title' ) ) :
 	add_filter( 'pre_get_document_title', 'minnpost_largo_get_title' );
 	function minnpost_largo_get_title() {
 		if ( is_post_type_archive('tribe_events') ) {
-			return $title;
+			return;
 		}
 		if ( is_page() || is_single() || is_post_type_archive( 'festival' ) || is_post_type_archive( 'tonight' ) ) {
 			$title     = get_the_title();
