@@ -25,29 +25,33 @@
 			<aside class="o-footer-links">
 				<nav id="footer-primary" class="m-secondary-navigation">
 					<?php
-					wp_nav_menu(
-						array(
-							'theme_location' => 'footer_primary',
-							'menu_id'        => 'footer-primary-links',
-							'depth'          => 1,
-							'container'      => false,
-							'walker'         => new Minnpost_Walker_Nav_Menu(),
-						)
-					);
+					if ( class_exists( 'Minnpost_Walker_Nav_Menu' ) ) :
+						wp_nav_menu(
+							array(
+								'theme_location' => 'footer_primary',
+								'menu_id'        => 'footer-primary-links',
+								'depth'          => 1,
+								'container'      => false,
+								'walker'         => new Minnpost_Walker_Nav_Menu(),
+							)
+						);
+					endif;
 					?>
 				</nav><!-- #footer-primary -->
 
 				<nav id="footer-network" class="m-secondary-navigation">
 					<?php
-					wp_nav_menu(
-						array(
-							'theme_location' => 'minnpost_network',
-							'menu_id'        => 'minnpost-network',
-							'depth'          => 1,
-							'container'      => false,
-							'walker'         => new Minnpost_Walker_Nav_Menu(),
-						)
-					);
+					if ( class_exists( 'Minnpost_Walker_Nav_Menu' ) ) :
+						wp_nav_menu(
+							array(
+								'theme_location' => 'minnpost_network',
+								'menu_id'        => 'minnpost-network',
+								'depth'          => 1,
+								'container'      => false,
+								'walker'         => new Minnpost_Walker_Nav_Menu(),
+							)
+						);
+					endif;
 					?>
 				</nav><!-- #footer-network -->
 

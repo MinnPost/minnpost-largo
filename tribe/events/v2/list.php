@@ -32,7 +32,9 @@ $container_classes[] = 'm-layout-primary';
 		<?php $this->template( 'components/after' ); ?>
 		<?php $this->template( 'list/nav' ); ?>
 
-		<?php numeric_pagination(); ?>
+		<?php if ( function_exists( 'numeric_pagination' ) ) : ?>
+			<?php numeric_pagination(); ?>
+		<?php endif; ?>
 	</main>
 </div>
 
