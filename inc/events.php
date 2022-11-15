@@ -104,6 +104,19 @@ if ( ! function_exists( 'minnpost_largo_events_before_html' ) ) :
 	}
 endif;
 
+if ( ! function_exists( 'minnpost_largo_get_event_title' ) ) :
+	add_filter( 'pre_get_document_title', 'minnpost_largo_get_event_title' );
+	function minnpost_largo_get_event_title() {
+		if ( is_post_type_archive('tribe_events') ) {
+			$title = tribe_get_events_title();
+			if ( substr( $title, -strlen( ' | ' . get_bloginfo( 'name' ) ) ) !== ' | ' . get_bloginfo( 'name' ) ) {
+				$title .= ' | ' . get_bloginfo( 'name' );
+			}
+			return $title;
+		}
+	}
+endif;
+
 /**
 * Filter to stop concatenating a JavaScript on VIP Go environments.
 *
