@@ -26,6 +26,7 @@ if ( ! function_exists( 'minnpost_largo_remove_tribe_styles' ) ) :
 				'tribe-common-skeleton-style',
 				'tribe-events-views-v2-bootstrap-datepicker-styles-css',
 				'tribe-events-views-v2-skeleton',
+				'tribe-events-v2-single-skeleton',
 			);
 			$scripts = array(
 				'tribe-common',
@@ -86,6 +87,20 @@ if ( ! function_exists( 'minnpost_largo_remove_tribe_styles' ) ) :
 			wp_dequeue_script( $scripts );
 			wp_dequeue_style( $styles );
 		}
+	}
+endif;
+
+/**
+* Filter to modify the html that gets added before event data by The Events Calendar.
+*
+* @param string $before the before HTML value that gets displayed.
+* @return string $before
+*/
+if ( ! function_exists( 'minnpost_largo_events_before_html' ) ) :
+	add_filter( 'tribe_events_before_html', 'minnpost_largo_events_before_html', 10, 4 );
+	function minnpost_largo_events_before_html( $before ) {
+		$before = '';
+		return $before;
 	}
 endif;
 
