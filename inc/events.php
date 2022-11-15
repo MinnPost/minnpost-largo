@@ -118,6 +118,27 @@ if ( ! function_exists( 'minnpost_largo_get_event_title' ) ) :
 endif;
 
 /**
+* Whether to override The Event Calendar templating. This shouldn't be necessary, but as of 6.0 it appears that it is.
+*
+* @param bool $hijack
+* @param string $template
+* @param object $context
+* @param object $query
+* @return bool $hijack
+* @see https://wordpress.org/support/topic/version-6-0-causes-a-redirect-from-category-page-urls-and-loads-tec-template/
+*/
+if ( ! function_exists( 'minnpost_largo_event_template_hierarchy' ) ) :
+	add_filter( 'tribe_events_views_v2_use_wp_template_hierarchy', 'minnpost_largo_event_template_hierarchy', 10, 4 );
+	function minnpost_largo_event_template_hierarchy( $hijack, $template, $context, $query ) {
+		$hijack = true;
+		if ( is_post_type_archive( 'tribe_events' ) || is_singular( 'tribe_events' ) ) {
+			$hijack = false;
+		}
+		return $hijack;
+	}
+endif;
+
+/**
 * Filter to stop concatenating a JavaScript on VIP Go environments.
 *
 * @param bool $do_concat
