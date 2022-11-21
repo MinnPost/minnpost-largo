@@ -34,7 +34,7 @@ if ( ! function_exists( 'minnpost_gtm4wp_wp_header_begin' ) ) :
             (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
             new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
             j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            '//www.googletagmanager.com/gtm.'+'js?id='+i+dl+'&gtm_auth=kVpcZKythZ8hbACxZyUNWA&gtm_preview=env-5&gtm_cookies_win=x';f.parentNode.insertBefore(j,f);
+            '//www.googletagmanager.com/gtm.'+'js?id='+i+dl+'&gtm_auth=<?php echo defined( 'GTM4WP_GTM_AUTH' ) ? GTM4WP_GTM_AUTH : ""; ?>&gtm_preview=<?php echo defined( 'GTM4WP_GTM_PREVIEW' ) ? GTM4WP_GTM_PREVIEW : ""; ?>&gtm_cookies_win=x';f.parentNode.insertBefore(j,f);
             })(window,document,'script','dataLayer','<?php echo defined( 'GTM4WP_GTM_TAG_ID' ) ? GTM4WP_GTM_TAG_ID : ""; ?>');
             </script>
             <?php if ( defined( 'GTM4WP_OPTIMIZE_CONTAINER_ID' ) ) : ?>
@@ -51,10 +51,13 @@ if ( ! function_exists( 'minnpost_gtm4wp_wp_header_begin' ) ) :
 endif;
 
 if ( ! function_exists( 'minnpost_gtmcode_body_insert' ) ) :
-    //add_action( 'wp_body_open', 'minnpost_gtmcode_body_insert', 5, 0 );
+    add_action( 'wp_body_open', 'minnpost_gtmcode_body_insert', 10, 0 );
     function minnpost_gtmcode_body_insert() {
-        if ( function_exists( 'gtm4wp_the_gtm_tag' ) ) {
-            gtm4wp_the_gtm_tag();
-        }
+        ?>
+        <!-- GTM Container placement set to off -->
+        <!-- Google Tag Manager (noscript) -->
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo defined( 'GTM4WP_GTM_TAG_ID' ) ? GTM4WP_GTM_TAG_ID : ""; ?>&amp;gtm_auth=<?php echo defined( 'GTM4WP_GTM_AUTH' ) ? GTM4WP_GTM_AUTH : ""; ?>&amp;gtm_preview=<?php echo defined( 'GTM4WP_GTM_PREVIEW' ) ? GTM4WP_GTM_PREVIEW : ""; ?>&amp;gtm_cookies_win=x" height="0" width="0" style="display:none;visibility:hidden" aria-hidden="true"></iframe></noscript>
+        <!-- End Google Tag Manager (noscript) -->
+        <?php
     }
 endif;
