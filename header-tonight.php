@@ -20,6 +20,7 @@
 
 <body <?php body_class(); ?>>
 
+	<?php wp_body_open(); ?>
 	<header id="masthead" class="o-header o-header-tonight">
 		<?php $event_logo_info = minnpost_largo_get_event_website_logo_info( 'tonight' ); ?>
 		<div class="o-wrapper o-wrapper-site-navigation">

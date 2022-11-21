@@ -27,6 +27,7 @@ if ( isset( $event_logo_info['is_current_url'] ) && true === $event_logo_info['i
 ?>
 <body <?php body_class( $classes ); ?>>
 
+	<?php wp_body_open(); ?>
 	<header id="masthead" class="o-header o-header-festival">
 		<div class="o-wrapper o-wrapper-site-navigation">
 			<?php get_template_part( 'template-parts/logo', 'festival', $event_logo_info ); ?>

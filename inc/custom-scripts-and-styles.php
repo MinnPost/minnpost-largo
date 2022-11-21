@@ -12,6 +12,8 @@
  * todo: we should figure out if the above is still true on VIP
  */
 if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
+	remove_action( 'wp_enqueue_scripts', 'wp_enqueue_global_styles' );
+	remove_action( 'wp_body_open', 'wp_global_styles_render_svg_filters' );
 	add_action( 'wp_enqueue_scripts', 'minnpost_largo_add_remove_styles', 10 );
 	function minnpost_largo_add_remove_styles() {
 		// add
