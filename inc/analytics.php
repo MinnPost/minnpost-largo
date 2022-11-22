@@ -27,37 +27,52 @@ if ( ! function_exists( 'minnpost_gtm4wp_wp_header_begin' ) ) :
         if ( 'production' !== VIP_GO_ENV ) {
             $output_container_code = true;
         }
-        if ( true === $output_container_code ) :
-            ?>
-            <!-- minnpost template for environment-specific google tag manager and optimize -->
-            <script>
-            (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-            new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-            j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-            '//www.googletagmanager.com/gtm.'+'js?id='+i+dl+'&gtm_auth=<?php echo defined( 'GTM4WP_GTM_AUTH' ) ? GTM4WP_GTM_AUTH : ""; ?>&gtm_preview=<?php echo defined( 'GTM4WP_GTM_PREVIEW' ) ? GTM4WP_GTM_PREVIEW : ""; ?>&gtm_cookies_win=x';f.parentNode.insertBefore(j,f);
-            })(window,document,'script','dataLayer','<?php echo defined( 'GTM4WP_GTM_TAG_ID' ) ? GTM4WP_GTM_TAG_ID : ""; ?>');
-            </script>
-            <?php if ( defined( 'GTM4WP_OPTIMIZE_CONTAINER_ID' ) ) : ?>
-            <style>.async-hide { opacity: 0 !important} </style>
-            <script>(function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
-            h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
-            (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
-            })(window,document.documentElement,'async-hide','dataLayer',4000,
-            {'<?php echo defined( 'GTM4WP_OPTIMIZE_CONTAINER_ID' ) ? GTM4WP_OPTIMIZE_CONTAINER_ID : ""; ?>':true});</script>
-            <!-- end minnpost template -->
-            <?php endif;
-        endif;
+
+        if ( defined( 'GTM4WP_OPTION_GTM_CODE' ) && isset( $GLOBALS['gtm4wp_options'][ GTM4WP_OPTION_GTM_CODE ] ) ) {
+            $_gtm_codes = explode( ',', str_replace( array( ';', ' ' ), array( ',', '' ), $GLOBALS['gtm4wp_options'][ GTM4WP_OPTION_GTM_CODE ] ) );
+            foreach ( $_gtm_codes as $one_gtm_id ) {
+                if ( preg_match( '/^GTM-[A-Z0-9]+$/', $one_gtm_id ) ) {
+                    if ( true === $output_container_code ) :
+                        ?>
+                        <!-- minnpost template for environment-specific google tag manager and optimize -->
+                        <script>
+                        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                        '//www.googletagmanager.com/gtm.'+'js?id='+i+dl+'&gtm_auth=<?php echo defined( 'GTM4WP_GTM_AUTH' ) ? GTM4WP_GTM_AUTH : ""; ?>&gtm_preview=<?php echo defined( 'GTM4WP_GTM_PREVIEW' ) ? GTM4WP_GTM_PREVIEW : ""; ?>&gtm_cookies_win=x';f.parentNode.insertBefore(j,f);
+                        })(window,document,'script','dataLayer','<?php echo esc_attr( $one_gtm_id ); ?>');
+                        </script>
+                        <?php if ( defined( 'GTM4WP_OPTIMIZE_CONTAINER_ID' ) ) : ?>
+                            <style>.async-hide { opacity: 0 !important} </style>
+                            <script>(function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
+                            h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
+                            (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
+                            })(window,document.documentElement,'async-hide','dataLayer',4000,
+                            {'<?php echo defined( 'GTM4WP_OPTIMIZE_CONTAINER_ID' ) ? GTM4WP_OPTIMIZE_CONTAINER_ID : ""; ?>':true});</script>
+                            <!-- end minnpost template -->
+                        <?php endif;
+                    endif;
+                }
+            }
+        }
     }
 endif;
 
 if ( ! function_exists( 'minnpost_gtmcode_body_insert' ) ) :
     add_action( 'wp_body_open', 'minnpost_gtmcode_body_insert', 10, 0 );
     function minnpost_gtmcode_body_insert() {
+        if ( defined( 'GTM4WP_OPTION_GTM_CODE' ) && isset( $GLOBALS['gtm4wp_options'][ GTM4WP_OPTION_GTM_CODE ] ) ) {
+            $_gtm_codes = explode( ',', str_replace( array( ';', ' ' ), array( ',', '' ), $GLOBALS['gtm4wp_options'][ GTM4WP_OPTION_GTM_CODE ] ) );
+            foreach ( $_gtm_codes as $one_gtm_id ) {
+                if ( preg_match( '/^GTM-[A-Z0-9]+$/', $one_gtm_id ) ) {
         ?>
         <!-- GTM Container placement set to off -->
         <!-- Google Tag Manager (noscript) -->
-        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo defined( 'GTM4WP_GTM_TAG_ID' ) ? GTM4WP_GTM_TAG_ID : ""; ?>&amp;gtm_auth=<?php echo defined( 'GTM4WP_GTM_AUTH' ) ? GTM4WP_GTM_AUTH : ""; ?>&amp;gtm_preview=<?php echo defined( 'GTM4WP_GTM_PREVIEW' ) ? GTM4WP_GTM_PREVIEW : ""; ?>&amp;gtm_cookies_win=x" height="0" width="0" style="display:none;visibility:hidden" aria-hidden="true"></iframe></noscript>
+        <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=<?php echo esc_attr( $one_gtm_id ); ?>&amp;gtm_auth=<?php echo defined( 'GTM4WP_GTM_AUTH' ) ? GTM4WP_GTM_AUTH : ""; ?>&amp;gtm_preview=<?php echo defined( 'GTM4WP_GTM_PREVIEW' ) ? GTM4WP_GTM_PREVIEW : ""; ?>&amp;gtm_cookies_win=x" height="0" width="0" style="display:none;visibility:hidden" aria-hidden="true"></iframe></noscript>
         <!-- End Google Tag Manager (noscript) -->
         <?php
+                }
+            }
+        }
     }
 endif;
