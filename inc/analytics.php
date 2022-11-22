@@ -34,7 +34,7 @@ if ( ! function_exists( 'minnpost_gtm4wp_wp_header_begin' ) ) :
                 if ( preg_match( '/^GTM-[A-Z0-9]+$/', $one_gtm_id ) ) {
                     if ( true === $output_container_code ) :
                         ?>
-                        <!-- minnpost template for environment-specific google tag manager and optimize -->
+                        <!-- minnpost template for environment-specific google tag manager -->
                         <script>
                         (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
                         new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
@@ -42,15 +42,7 @@ if ( ! function_exists( 'minnpost_gtm4wp_wp_header_begin' ) ) :
                         '//www.googletagmanager.com/gtm.'+'js?id='+i+dl+'&gtm_auth=<?php echo defined( 'GTM4WP_GTM_AUTH' ) ? GTM4WP_GTM_AUTH : ""; ?>&gtm_preview=<?php echo defined( 'GTM4WP_GTM_PREVIEW' ) ? GTM4WP_GTM_PREVIEW : ""; ?>&gtm_cookies_win=x';f.parentNode.insertBefore(j,f);
                         })(window,document,'script','dataLayer','<?php echo esc_attr( $one_gtm_id ); ?>');
                         </script>
-                        <?php if ( defined( 'GTM4WP_OPTIMIZE_CONTAINER_ID' ) ) : ?>
-                            <style>.async-hide { opacity: 0 !important} </style>
-                            <script>(function(a,s,y,n,c,h,i,d,e){s.className+=' '+y;h.start=1*new Date;
-                            h.end=i=function(){s.className=s.className.replace(RegExp(' ?'+y),'')};
-                            (a[n]=a[n]||[]).hide=h;setTimeout(function(){i();h.end=null},c);h.timeout=c;
-                            })(window,document.documentElement,'async-hide','dataLayer',4000,
-                            {'<?php echo defined( 'GTM4WP_OPTIMIZE_CONTAINER_ID' ) ? GTM4WP_OPTIMIZE_CONTAINER_ID : ""; ?>':true});</script>
-                            <!-- end minnpost template -->
-                        <?php endif;
+                        <?php
                     endif;
                 }
             }
