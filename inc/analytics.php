@@ -4,7 +4,7 @@ if ( ! function_exists( 'minnpost_gtm4wp_wp_header_begin' ) ) :
     add_action( 'wp_head', 'minnpost_gtm4wp_wp_header_begin', 2, 0 );
     function minnpost_gtm4wp_wp_header_begin() {
         $output_container_code = true;
-        if ( isset( $GLOBALS['gtm4wp_options'][ GTM4WP_OPTION_NOGTMFORLOGGEDIN ] ) ) {
+        if ( defined( 'GTM4WP_OPTION_NOGTMFORLOGGEDIN' ) && isset( $GLOBALS['gtm4wp_options'][ GTM4WP_OPTION_NOGTMFORLOGGEDIN ] ) ) {
             $disabled_roles = explode( ',', (string) $GLOBALS['gtm4wp_options'][ GTM4WP_OPTION_NOGTMFORLOGGEDIN ] );
             if ( count( $disabled_roles ) > 0 ) {
                 $current_user = wp_get_current_user();
