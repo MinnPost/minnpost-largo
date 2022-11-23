@@ -831,7 +831,7 @@ if ( ! function_exists( 'minnpost_largo_remove_menu_pages' ) ) :
 		// advertising
 		if ( ! current_user_can( 'manage_advertising' ) ) {
 			// tools
-			remove_submenu_page( 'tools.php', 'ad-code-manager' );
+			remove_submenu_page( 'options-general.php', 'ad-code-manager' );
 			// settings
 			remove_submenu_page( 'options-general.php', 'arcads-dfp-acm-provider' );
 		}
