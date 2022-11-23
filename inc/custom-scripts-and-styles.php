@@ -259,22 +259,6 @@ if ( ! function_exists( 'minnpost_google_analytics_dimensions' ) ) :
 	}
 endif;
 
-if ( ! function_exists( 'minnpost_google_analytics_show_analytics_code' ) ) :
-	add_action( 'wp_analytics_tracking_generator_show_analytics_code', 'minnpost_google_analytics_show_analytics_code', 10, 1 );
-	/**
-	 * Whether to show analytics code
-	 *
-	 * @param bool $show_analytics_code whether or not to show the code.
-	 * @return bool $show_analytics_code whether or not to show the code.
-	 */
-	function minnpost_google_analytics_show_analytics_code( $show_analytics_code ) {
-		if ( 'production' !== VIP_GO_ENV ) {
-			$show_analytics_code = true;
-		}
-		return $show_analytics_code;
-	}
-endif;
-
 /**
 * Filter body class
 *
