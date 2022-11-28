@@ -267,7 +267,7 @@ if ( ! function_exists( 'minnpost_google_analytics_show_analytics_code' ) ) :
 	 */
 	function minnpost_google_analytics_show_analytics_code( $show_analytics_code ) {
 		if ( 'production' !== VIP_GO_ENV ) {
-			$show_analytics_code = true;
+			//$show_analytics_code = true;
 		}
 		return $show_analytics_code;
 	}
