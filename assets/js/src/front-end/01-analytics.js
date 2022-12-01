@@ -10,10 +10,17 @@
  * This allows other plugins that we maintain to pass data to the theme's analytics method.
 */
 if ( 'undefined' !== typeof wp ) {
+	// for analytics
 	wp.hooks.addAction( 'wpMessageInserterAnalyticsEvent', 'minnpostLargo', mpAnalyticsTrackingEvent, 10 );
 	wp.hooks.addAction( 'minnpostFormProcessorMailchimpAnalyticsEvent', 'minnpostLargo', mpAnalyticsTrackingEvent, 10 );
 	wp.hooks.addAction( 'minnpostMembershipAnalyticsEvent', 'minnpostLargo', mpAnalyticsTrackingEvent, 10 );
 	wp.hooks.addAction( 'minnpostMembershipAnalyticsEcommerceAction', 'minnpostLargo', mpAnalyticsTrackingEcommerceAction, 10 );
+
+	// for data layer to Google Tag Manager
+	//wp.hooks.addAction( 'wpMessageInserterDataLayerEvent', 'minnpostLargo', mpDataLayerEvent, 10 );
+	wp.hooks.addAction( 'minnpostFormProcessorMailchimpDataLayerEvent', 'minnpostLargo', mpDataLayerEvent, 10 );
+	//wp.hooks.addAction( 'minnpostMembershipDataLayerEvent', 'minnpostLargo', mpDataLayerEvent, 10 );
+	//wp.hooks.addAction( 'minnpostMembershipDataLayerEcommerceAction', 'minnpostLargo', mpDataLayerEcommerce, 10 );
 }
 
 /*
@@ -27,6 +34,17 @@ if ( 'undefined' !== typeof wp ) {
 */
 function mpAnalyticsTrackingEvent( type, category, action, label, value, non_interaction ) {
 	wp.hooks.doAction( 'wpAnalyticsTrackingGeneratorEvent', type, category, action, label, value, non_interaction );
+}
+
+/*
+ * Create a datalayer event for the theme using the gtm4wp plugin. This sets the dataLayer object for Google Tag Manager.
+ * It should only have data that is not avaialable to GTM by default.
+ * dataLayer: the object that should be added
+*/
+function mpDataLayerEvent( dataLayer ) {
+	if ( Object.keys( dataLayer ).length !== 0 ) {
+		window.dataLayer.push( dataLayer );
+	}
 }
 
 /*
