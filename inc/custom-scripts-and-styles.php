@@ -123,14 +123,23 @@ endif;
 if ( ! function_exists( 'minnpost_largo_add_remove_scripts' ) ) :
 	add_action( 'wp_enqueue_scripts', 'minnpost_largo_add_remove_scripts' );
 	function minnpost_largo_add_remove_scripts() {
-		// wp_add_inline_script( 'jquery-core', '$=jQuery;' ); // this would be nice, but it causes conflict with older scripts
 		// add
 		// wp_enqueue_script( 'modernizr', get_theme_file_uri() . '/assets/js/modernizr-custom.min.js', array(), '1.0', false );
 		// wp_enqueue_script( 'minnpost', get_theme_file_uri() . '/assets/js/minnpost.min.js', array( 'jquery', 'modernizr' ), filemtime( get_theme_file_path() . '/assets/js/minnpost.min.js' ), true );
+
+		$main_js_dependencies = array( 'jquery', 'wp-hooks' );
+		if ( defined( 'THEME_VERSION' ) ) {
+			$main_js_version = THEME_VERSION;
+		}
+		if ( 'local' === VIP_GO_ENV || ! defined( 'THEME_VERSION' ) ) {
+			$main_js_version = filemtime( get_theme_file_path() . '/assets/js/minnpost.min.js' );
+		}
+
 		if ( class_exists( 'Republication_Tracker_Tool' ) ) {
 			wp_enqueue_script( 'republication-tracker-tool-js', plugins_url() . '/republication-tracker-tool/' . 'assets/widget.js', array( 'jquery' ), '1.0', true );
 		}
-		wp_enqueue_script( 'minnpost', get_theme_file_uri() . '/assets/js/minnpost.min.js', array( 'jquery', 'wp-hooks' ), filemtime( get_theme_file_path() . '/assets/js/minnpost.min.js' ), true );
+		
+		wp_enqueue_script( 'minnpost', get_theme_file_uri() . '/assets/js/minnpost.min.js', $main_js_dependencies, $main_js_version, true );
 		// localize
 		$params = array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
