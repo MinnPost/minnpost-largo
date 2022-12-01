@@ -39,11 +39,11 @@ function mpAnalyticsTrackingEvent( type, category, action, label, value, non_int
 /*
  * Create a datalayer event for the theme using the gtm4wp plugin. This sets the dataLayer object for Google Tag Manager.
  * It should only have data that is not avaialable to GTM by default.
- * dataLayer: the object that should be added
+ * dataLayerContent: the object that should be added
 */
-function mpDataLayerEvent( dataLayer ) {
-	if ( Object.keys( dataLayer ).length !== 0 ) {
-		window.dataLayer.push( dataLayer );
+function mpDataLayerEvent( dataLayerContent ) {
+	if ( 'undefined' !== typeof dataLayer && Object.keys( dataLayerContent ).length !== 0 ) {
+		dataLayer.push( dataLayerContent );
 	}
 }
 
