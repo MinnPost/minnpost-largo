@@ -17,7 +17,7 @@ if ( 'undefined' !== typeof wp ) {
 	wp.hooks.addAction( 'minnpostMembershipAnalyticsEcommerceAction', 'minnpostLargo', mpAnalyticsTrackingEcommerceAction, 10 );
 
 	// for data layer to Google Tag Manager
-	//wp.hooks.addAction( 'wpMessageInserterDataLayerEvent', 'minnpostLargo', mpDataLayerEvent, 10 );
+	wp.hooks.addAction( 'wpMessageInserterDataLayerEvent', 'minnpostLargo', mpDataLayerEvent, 10 );
 	wp.hooks.addAction( 'minnpostFormProcessorMailchimpDataLayerEvent', 'minnpostLargo', mpDataLayerEvent, 10 );
 	//wp.hooks.addAction( 'minnpostMembershipDataLayerEvent', 'minnpostLargo', mpDataLayerEvent, 10 );
 	//wp.hooks.addAction( 'minnpostMembershipDataLayerEcommerceAction', 'minnpostLargo', mpDataLayerEcommerce, 10 );
