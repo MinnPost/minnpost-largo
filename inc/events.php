@@ -333,7 +333,48 @@ endif;
 if ( ! function_exists( 'minnpost_largo_get_old_event_menu' ) ) :
 	function minnpost_largo_get_old_event_menu( $object_type = 'festival', $event_year = '' ) {
 		$menu = array();
-		if ( '2021' === $event_year ) {
+		if ( '2022' === $event_year ) {
+			$menu = array(
+				array(
+					'class' => 'festival-passes',
+					'url'   => 'https://www.eventbrite.com/e/minnpost-festival-2022-tickets-289830289197?aff=FestivalSiteDirect',
+					'title' => __( 'Festival Passes', 'minnpost-largo' ),
+				),
+				array(
+					'class' => 'sessions',
+					'url'   => site_url( '/festival/sessions-20221' ),
+					'title' => __( 'Sessions', 'minnpost-largo' ),
+				),
+				array(
+					'class' => 'speakers',
+					'url'   => site_url( '/festival/speakers-2022' ),
+					'title' => __( 'Speakers', 'minnpost-largo' ),
+				),
+				array(
+					'class' => 'sponsors',
+					'url'   => site_url( '/festival/sponsors-2022' ),
+					'title' => __( 'Sponsors', 'minnpost-largo' ),
+				),
+				array(
+					'class' => 'vip-packages',
+					'url'   => site_url( '/festival/vip-packages-2022' ),
+					'title' => __( 'VIP Packages', 'minnpost-largo' ),
+				),
+				array(
+					'class' => 'vip-supporters',
+					'url'   => site_url( '/festival/vip-supporters-2022' ),
+					'title' => __( 'VIP Supporters', 'minnpost-largo' ),
+				),
+			);
+			global $wp;
+			foreach ( $menu as $key => $item ) {
+				$menu[ $key ]['class'] .= minnpost_largo_event_menu_classes( $item['class'], $item );
+				$current_slug           = site_url( add_query_arg( array(), $wp->request ) );
+				if ( $current_slug === $item['url'] ) {
+					$menu[ $key ]['class'] .= ' active';
+				}
+			}
+		} elseif ( '2021' === $event_year ) {
 			$menu = array(
 				array(
 					'class' => 'festival-passes',
@@ -642,7 +683,7 @@ if ( ! function_exists( 'minnpost_get_event_website_pass_link' ) ) :
 			$buy_event_pass = sprintf(
 				// translators: 1) url to buy a pass, 2) link text
 				__( '<a href="%1$s" class="a-button">%2$s</a>', 'minnpost-largo' ),
-				esc_url_raw( 'https://www.eventbrite.com/e/minnpost-tonight-tickets-169166105375' ), // this will be an eventbrite link
+				esc_url_raw( 'https://www.eventbrite.com/e/minnpost-tonight-tickets-169166105375' ),
 				esc_html__( 'Reserve your tickets' )
 			);
 		}
