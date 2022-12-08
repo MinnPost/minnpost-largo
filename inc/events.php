@@ -345,12 +345,16 @@ if ( ! function_exists( 'minnpost_largo_get_event_website_date_range' ) ) :
 			if ( isset( $event_site_settings[ 'minnpost_largo_' . $event_year . '_end_date' ] ) ) {
 				$end_date = esc_html( $event_site_settings[ 'minnpost_largo_' . $event_year . '_end_date' ] );
 			}
-			$start_timestamp = strtotime( $start_date );
-			$end_timestamp   = strtotime( $end_date );
+			if ( isset( $start_date ) ) {
+				$start_timestamp = strtotime( $start_date );
+			}
+			if ( isset( $end_date ) ) {
+				$end_timestamp = strtotime( $end_date );
+			}
 			$start_day = minnpost_largo_get_ap_date( $start_date );
 			$end_day   = minnpost_largo_get_ap_date( $end_date );
 		}
-		if ( ! isset( $start_day ) || ! isset( $end_day ) ) {
+		if ( ! isset( $start_day ) || ! isset( $end_day ) || ! isset( $start_timestamp ) || ! isset( $end_timestamp ) ) {
 			// otherwise, use the event start and stop times to generate the dates
 			if ( $event_year && gmdate( 'Y' ) !== $event_year ) {
 				$event_slug .= '-' . $event_year;
