@@ -324,103 +324,6 @@ if ( ! function_exists( 'minnpost_largo_get_event_year' ) ) :
 endif;
 
 /**
-* Preserve old menu links for the event website. It's based on the publish date of the directory page.
- *
-* @param int $post_id
-* @param array $args
-* @return array $menu
-*/
-if ( ! function_exists( 'minnpost_largo_get_old_event_menu' ) ) :
-	function minnpost_largo_get_old_event_menu( $object_type = 'festival', $event_year = '' ) {
-		$menu = array();
-		if ( '2022' === $event_year ) {
-			$menu = array(
-				array(
-					'class' => 'festival-passes',
-					'url'   => 'https://www.eventbrite.com/e/minnpost-festival-2022-tickets-289830289197?aff=FestivalSiteDirect',
-					'title' => __( 'Festival Passes', 'minnpost-largo' ),
-				),
-				array(
-					'class' => 'sessions',
-					'url'   => site_url( '/festival/sessions-20221' ),
-					'title' => __( 'Sessions', 'minnpost-largo' ),
-				),
-				array(
-					'class' => 'speakers',
-					'url'   => site_url( '/festival/speakers-2022' ),
-					'title' => __( 'Speakers', 'minnpost-largo' ),
-				),
-				array(
-					'class' => 'sponsors',
-					'url'   => site_url( '/festival/sponsors-2022' ),
-					'title' => __( 'Sponsors', 'minnpost-largo' ),
-				),
-				array(
-					'class' => 'vip-packages',
-					'url'   => site_url( '/festival/vip-packages-2022' ),
-					'title' => __( 'VIP Packages', 'minnpost-largo' ),
-				),
-				array(
-					'class' => 'vip-supporters',
-					'url'   => site_url( '/festival/vip-supporters-2022' ),
-					'title' => __( 'VIP Supporters', 'minnpost-largo' ),
-				),
-			);
-			global $wp;
-			foreach ( $menu as $key => $item ) {
-				$menu[ $key ]['class'] .= minnpost_largo_event_menu_classes( $item['class'], $item );
-				$current_slug           = site_url( add_query_arg( array(), $wp->request ) );
-				if ( $current_slug === $item['url'] ) {
-					$menu[ $key ]['class'] .= ' active';
-				}
-			}
-		} elseif ( '2021' === $event_year ) {
-			$menu = array(
-				array(
-					'class' => 'festival-passes',
-					'url'   => 'https://www.eventbrite.com/e/minnpost-festival-2021-tickets-140928014485',
-					'title' => __( 'Festival Passes', 'minnpost-largo' ),
-				),
-				array(
-					'class' => 'sessions',
-					'url'   => site_url( '/festival/sessions-2021' ),
-					'title' => __( 'Sessions', 'minnpost-largo' ),
-				),
-				array(
-					'class' => 'speakers',
-					'url'   => site_url( '/festival/speakers-2021' ),
-					'title' => __( 'Speakers', 'minnpost-largo' ),
-				),
-				array(
-					'class' => 'sponsors',
-					'url'   => site_url( '/festival/sponsors-2021' ),
-					'title' => __( 'Sponsors', 'minnpost-largo' ),
-				),
-				array(
-					'class' => 'vip-packages',
-					'url'   => site_url( '/festival/vip-packages-2021' ),
-					'title' => __( 'VIP Packages', 'minnpost-largo' ),
-				),
-				array(
-					'class' => 'vip-supporters',
-					'url'   => site_url( '/festival/vip-supporters-2021' ),
-					'title' => __( 'VIP Supporters', 'minnpost-largo' ),
-				),
-			);
-			global $wp;
-			foreach ( $menu as $key => $item ) {
-				$menu[ $key ]['class'] .= minnpost_largo_event_menu_classes( $item['class'], $item );
-				$current_slug           = site_url( add_query_arg( array(), $wp->request ) );
-				if ( $current_slug === $item['url'] ) {
-					$menu[ $key ]['class'] .= ' active';
-				}
-			}
-		}
-		return $menu;
-	}
-endif;
-
-/**
 * Set the event website date range based on the specified page slug that contains the events.
  *
 * @param string $object_type
@@ -432,74 +335,95 @@ if ( ! function_exists( 'minnpost_largo_get_event_website_date_range' ) ) :
 		$output = '';
 		// rewrite the event slug based on the year, if necessary.
 		$event_year = minnpost_largo_get_event_year( $object_type, get_the_date( 'Y' ) );
-		if ( $event_year && gmdate( 'Y' ) !== $event_year ) {
-			$event_slug .= '-' . $event_year;
-		}
-		$post = get_page_by_path( $event_slug, OBJECT, $object_type );
-		if ( ! is_object( $post ) ) {
-			return $output;
-		}
-		$event_posts = get_post_meta( $post->ID, '_mp_' . $object_type . '_content_posts', true );
-		if ( ! empty( $event_posts ) ) {
 
-			foreach ( $event_posts as $key => $event_post_id ) {
-				if ( 'publish' !== get_post_status( $event_post_id ) ) {
-					unset( $event_posts[ $key ] );
-				}
-				$post_year = get_the_date( 'Y', $event_post_id );
-				if ( $post_year !== $event_year ) {
-					unset( $event_posts[ $key ] );
-				}
-				if ( empty( $event_posts ) ) {
-					return $output;
-				}
+		// check for a settings page with a start and end date.
+		$event_site_settings = get_option( 'minnpost_largo_' . $object_type . '_settings', '' );
+		if ( '' !== $event_site_settings && is_array( $event_site_settings ) ) {
+			if ( isset( $event_site_settings[ 'minnpost_largo_' . $event_year . '_start_date' ] ) ) {
+				$start_date = esc_html( $event_site_settings[ 'minnpost_largo_' . $event_year . '_start_date' ] );
 			}
+			if ( isset( $event_site_settings[ 'minnpost_largo_' . $event_year . '_end_date' ] ) ) {
+				$end_date = esc_html( $event_site_settings[ 'minnpost_largo_' . $event_year . '_end_date' ] );
+			}
+			$start_timestamp = strtotime( $start_date );
+			$end_timestamp   = strtotime( $end_date );
+			$start_day = minnpost_largo_get_ap_date( $start_date );
+			$end_day   = minnpost_largo_get_ap_date( $end_date );
+		}
+		if ( ! isset( $start_day ) || ! isset( $end_day ) ) {
+			// otherwise, use the event start and stop times to generate the dates
+			if ( $event_year && gmdate( 'Y' ) !== $event_year ) {
+				$event_slug .= '-' . $event_year;
+			}
+			$post = get_page_by_path( $event_slug, OBJECT, $object_type );
+			if ( ! is_object( $post ) ) {
+				return $output;
+			}
+			$event_posts = get_post_meta( $post->ID, '_mp_' . $object_type . '_content_posts', true );
+			if ( ! empty( $event_posts ) ) {
 
-			$first_event_id = $event_posts[0];
-			$last_event_key = array_key_last( $event_posts );
-			$last_event_id  = $event_posts[ $last_event_key ];
+				foreach ( $event_posts as $key => $event_post_id ) {
+					if ( 'publish' !== get_post_status( $event_post_id ) ) {
+						unset( $event_posts[ $key ] );
+					}
+					$post_year = get_the_date( 'Y', $event_post_id );
+					if ( $post_year !== $event_year ) {
+						unset( $event_posts[ $key ] );
+					}
+					if ( empty( $event_posts ) ) {
+						return $output;
+					}
+				}
 
-			$start_timestamp = tribe_get_start_date( $first_event_id, false, 'U' );
-			$end_timestamp   = tribe_get_end_date( $last_event_id, false, 'U' );
-			$start_date      = tribe_get_start_date( $first_event_id, false, 'c' );
-			$end_date        = tribe_get_end_date( $last_event_id, false, 'c' );
-			$start_day       = minnpost_largo_get_ap_date( tribe_get_start_date( $first_event_id, false, 'm/d/Y' ) );
-			$end_day         = minnpost_largo_get_ap_date( tribe_get_end_date( $last_event_id, false, 'm/d/Y' ) );
+				$first_event_id = $event_posts[0];
+				$last_event_key = array_key_last( $event_posts );
+				$last_event_id  = $event_posts[ $last_event_key ];
 
-			if ( $start_day === $end_day ) {
-				// same day - 1st April 2012
-				// $output = minnpost_largo_get_ap_date( $start_date );
-				$date_time = new DateTime( $start_date );
-				$output    = $date_time->format( 'F j, Y' );
-			} elseif ( gmdate( 'Y-m', $start_timestamp ) === gmdate( 'Y-m', $end_timestamp ) ) {
-				// same year and month - 3rd - 21st March 2012
-				$output = sprintf(
-					// translators: parameters are start and end dates
-					esc_html__( '%1$s %2$s &ndash; %3$s, %4$s', 'minnpost-largo' ),
-					minnpost_largo_get_ap_date( $start_date, 'month' ),
-					minnpost_largo_get_ap_date( $start_date, 'day' ),
-					minnpost_largo_get_ap_date( $end_date, 'day' ),
-					minnpost_largo_get_ap_date( $start_date, 'year' ),
-				);
-			} elseif ( gmdate( 'Y', $start_timestamp ) === gmdate( 'Y', $end_timestamp ) ) {
-				// same year - 29th January - 2nd February 2012
-				$output = sprintf(
-					// translators: parameters are start and end dates
-					esc_html__( '%1$s &ndash; %2$s, %3$s', 'minnpost-largo' ),
-					minnpost_largo_get_ap_date( $start_date, '', 'year' ),
-					minnpost_largo_get_ap_date( $end_date, '', 'year' ),
-					minnpost_largo_get_ap_date( $start_date, 'year' ),
-				);
+				$start_timestamp = tribe_get_start_date( $first_event_id, false, 'U' );
+				$end_timestamp   = tribe_get_end_date( $last_event_id, false, 'U' );
+				$start_date      = tribe_get_start_date( $first_event_id, false, 'c' );
+				$end_date        = tribe_get_end_date( $last_event_id, false, 'c' );
+				$start_day       = minnpost_largo_get_ap_date( tribe_get_start_date( $first_event_id, false, 'm/d/Y' ) );
+				$end_day         = minnpost_largo_get_ap_date( tribe_get_end_date( $last_event_id, false, 'm/d/Y' ) );
 			} else {
-				// completely different - 8th December 2012 - 2nd Janurary 2013
-				$output = sprintf(
-					// translators: parameters are start and end dates
-					esc_html__( '%1$s &ndash; %2$s', 'minnpost-largo' ),
-					minnpost_largo_get_ap_date( $start_date ),
-					minnpost_largo_get_ap_date( $end_date )
-				);
+				return $output;
 			}
 		}
+
+		if ( $start_day === $end_day ) {
+			// same day - 1st April 2012
+			// $output = minnpost_largo_get_ap_date( $start_date );
+			$date_time = new DateTime( $start_date );
+			$output    = $date_time->format( 'F j, Y' );
+		} elseif ( gmdate( 'Y-m', $start_timestamp ) === gmdate( 'Y-m', $end_timestamp ) ) {
+			// same year and month - 3rd - 21st March 2012
+			$output = sprintf(
+				// translators: parameters are start and end dates
+				esc_html__( '%1$s %2$s &ndash; %3$s, %4$s', 'minnpost-largo' ),
+				minnpost_largo_get_ap_date( $start_date, 'month' ),
+				minnpost_largo_get_ap_date( $start_date, 'day' ),
+				minnpost_largo_get_ap_date( $end_date, 'day' ),
+				minnpost_largo_get_ap_date( $start_date, 'year' ),
+			);
+		} elseif ( gmdate( 'Y', $start_timestamp ) === gmdate( 'Y', $end_timestamp ) ) {
+			// same year - 29th January - 2nd February 2012
+			$output = sprintf(
+				// translators: parameters are start and end dates
+				esc_html__( '%1$s &ndash; %2$s, %3$s', 'minnpost-largo' ),
+				minnpost_largo_get_ap_date( $start_date, '', 'year' ),
+				minnpost_largo_get_ap_date( $end_date, '', 'year' ),
+				minnpost_largo_get_ap_date( $start_date, 'year' ),
+			);
+		} else {
+			// completely different - 8th December 2012 - 2nd Janurary 2013
+			$output = sprintf(
+				// translators: parameters are start and end dates
+				esc_html__( '%1$s &ndash; %2$s', 'minnpost-largo' ),
+				minnpost_largo_get_ap_date( $start_date ),
+				minnpost_largo_get_ap_date( $end_date )
+			);
+		}
+	
 		return $output;
 	}
 endif;
@@ -634,6 +558,182 @@ if ( ! function_exists( 'minnpost_event_website_get_speaker_events' ) ) :
 endif;
 
 /**
+ * Hook in and register a submenu options page for the Appearance menu.
+ */
+if ( ! function_exists( 'minnpost_largo_register_festival_options_menu' ) ) :
+	add_action( 'cmb2_admin_init', 'minnpost_largo_register_festival_options_menu' );
+	function minnpost_largo_register_festival_options_menu() {
+		$festival_settings = new_cmb2_box( array(
+			'id'           => 'minnpost_largo_festival_settings',
+			'title'        => esc_html__( 'Festival Settings', 'minnpost-largo' ),
+			'object_types' => array( 'options-page' ),
+			'option_key'   => 'minnpost_largo_festival_settings', // The option key and admin menu page slug.
+			'parent_slug'  => 'edit.php?post_type=tribe_events', // Make options page a submenu item of the themes menu.
+			'capability'   => 'edit_event_website_page', // Cap required to view options-page.
+		) );
+		$festival_settings->add_field( array(
+			'name'    => esc_html__( 'Years', 'minnpost-largo' ),
+			'desc'    => esc_html__( 'Enter the years for festival websites, separated by commas, and then save. Fields will be created for each year. Enter the years like this: 2021, 2022,2023. Spaces do not matter.', 'minnpost-largo' ),
+			'id'      => 'minnpost_festival_years',
+			'type'    => 'text',
+			'default' => '',
+		) );
+		$festival_settings_value = get_option( 'minnpost_largo_festival_settings', '' );
+		$festival_years          = $festival_settings_value['minnpost_festival_years'];
+		$festival_years          = array_map( 'trim', explode( ',', $festival_years ) );
+		rsort( $festival_years );
+		foreach ( $festival_years as $festival_year ) {
+			$start_date_label = sprintf(
+				// translators: 1) which year it is
+				esc_html__( '%1$s Start Date', 'minnpost-largo' ),
+				$festival_year
+			);
+			$festival_settings->add_field(
+				array(
+					'name'    => $start_date_label,
+					'desc'    => esc_html__( 'Choose or enter the start date for the site header', 'minnpost-largo' ),
+					'id'      => 'minnpost_largo_' . $festival_year . '_start_date',
+					'type'    => 'text_date',
+					'default' => '',
+				)
+			);
+			$end_date_label = sprintf(
+				// translators: 1) which year it is
+				esc_html__( '%1$s End Date', 'minnpost-largo' ),
+				$festival_year
+			);
+			$festival_settings->add_field(
+				array(
+					'name'    => $end_date_label,
+					'desc'    => esc_html__( 'Choose or enter the end date for the site header', 'minnpost-largo' ),
+					'id'      => 'minnpost_largo_' . $festival_year . '_end_date',
+					'type'    => 'text_date',
+					'default' => '',
+				)
+			);
+			$url_label = sprintf(
+				// translators: 1) which year it is
+				esc_html__( '%1$s Button URL', 'minnpost-largo' ),
+				$festival_year
+			);
+			$festival_settings->add_field(
+				array(
+					'name'    => $url_label,
+					'desc'    => esc_html__( 'Enter the url for the button', 'minnpost-largo' ),
+					'id'      => 'minnpost_largo_' . $festival_year . '_button_url',
+					'type'    => 'text',
+					'default' => '',
+				)
+			);
+			$text_label = sprintf(
+				// translators: 1) which year it is
+				esc_html__( '%1$s Button Text', 'minnpost-largo' ),
+				$festival_year
+			);
+			$festival_settings->add_field(
+				array(
+					'name'    => $text_label,
+					'desc'    => esc_html__( 'Enter the text for the button', 'minnpost-largo' ),
+					'id'      => 'minnpost_largo_' . $festival_year . '_button_text',
+					'type'    => 'text',
+					'default' => '',
+				)
+			);
+			$header_image_label = sprintf(
+				// translators: 1) which year it is
+				esc_html__( '%1$s Header Image', 'minnpost-largo' ),
+				$festival_year
+			);
+			$festival_settings->add_field(
+				array(
+					'name'       => $header_image_label,
+					'desc'       => esc_html__( 'Choose the header image, or enter the URL, from the media library. It is expected to be 350px tall and will be positioned near the top left.', 'minnpost-largo' ),
+					'id'         => 'minnpost_largo_' . $festival_year . '_header_image',
+					'type'       => 'file',
+					'text'       => array(
+						'add_upload_file_text' => esc_html__( 'Add Image', 'minnpost-largo' ),
+					),
+					'query_args' => array(
+						// Only allow gif, jpg, or png images
+						'type' => array(
+							'image/gif',
+							'image/jpeg',
+							'image/png',
+						),
+					),
+				)
+			);
+			$landing_page_header_image_label = sprintf(
+				// translators: 1) which year it is
+				esc_html__( '%1$s Landing Page Header Image', 'minnpost-largo' ),
+				$festival_year
+			);
+			$festival_settings->add_field(
+				array(
+					'name'       => $landing_page_header_image_label,
+					'desc'       => esc_html__( 'For the landing page only: choose the header image, or enter the URL, from the media library. It is expected to be 600px tall and will be positioned near the top left. If no file is selected here, the landing page will use the standard header image.', 'minnpost-largo' ),
+					'id'         => 'minnpost_largo_' . $festival_year . '_landing_page_header_image',
+					'type'       => 'file',
+					'text'       => array(
+						'add_upload_file_text' => esc_html__( 'Add Image', 'minnpost-largo' ),
+					),
+					'query_args' => array(
+						// Only allow gif, jpg, or png images
+						'type' => array(
+							'image/gif',
+							'image/jpeg',
+							'image/png',
+						),
+					),
+				)
+			);
+			$header_color_top_label = sprintf(
+				// translators: 1) which year it is
+				esc_html__( '%1$s Header Background Color Top', 'minnpost-largo' ),
+				$festival_year
+			);
+			$festival_settings->add_field(
+				array(
+					'name'    => $header_color_top_label,
+					'id'      => 'minnpost_largo_' . $festival_year . '_header_color_top',
+					'type'    => 'colorpicker',
+					'default' => '#ffffff',
+					'desc'    => esc_html__( 'The header will use the top and bottom colors in a gradient, unless they are the same.', 'minnpost-largo' ),
+				)
+			);
+			$header_color_bottom_label = sprintf(
+				// translators: 1) which year it is
+				esc_html__( '%1$s Header Background Color Bottom', 'minnpost-largo' ),
+				$festival_year
+			);
+			$festival_settings->add_field(
+				array(
+					'name'    => $header_color_bottom_label,
+					'id'      => 'minnpost_largo_' . $festival_year . '_header_color_bottom',
+					'type'    => 'colorpicker',
+					'default' => '#ffffff',
+					'desc'    => esc_html__( 'The header will use the top and bottom colors in a gradient, unless they are the same.', 'minnpost-largo' ),
+				)
+			);
+			$disclaimer_label = sprintf(
+				// translators: 1) which year it is
+				esc_html__( '%1$s Disclaimer Text', 'minnpost-largo' ),
+				$festival_year
+			);
+			$festival_settings->add_field(
+				array(
+					'name'    => $disclaimer_label,
+					'desc'    => esc_html__( 'Enter the disclaimer text for the bottom of the site', 'minnpost-largo' ),
+					'id'      => 'minnpost_largo_' . $festival_year . '_disclaimer_text',
+					'type'    => 'textarea_small',
+					'default' => '',
+				)
+			);
+		}
+	}
+endif;
+
+/**
 * Display a link to buy an event pass
  *
 * @param string $object_type
@@ -658,19 +758,17 @@ if ( ! function_exists( 'minnpost_get_event_website_pass_link' ) ) :
 		}
 		$event_year = minnpost_largo_get_event_year( $object_type, get_the_date( 'Y' ) );
 		if ( 'festival' === $object_type ) {
-			$label = esc_html__( 'Reserve your Festival pass' );
+			$festival_settings = get_option( 'minnpost_largo_festival_settings', '' );
+			$label             = '';
+			if ( isset( $festival_settings[ 'minnpost_largo_' . $event_year . '_button_text' ] ) ) {
+				$label = esc_html( $festival_settings[ 'minnpost_largo_' . $event_year . '_button_text' ] );
+			}
 			if ( isset( $args['label'] ) ) {
 				$label = $args['label'];
 			}
-			switch ( $event_year ) {
-				case 2022:
-					$url = esc_url_raw( 'https://www.eventbrite.com/e/minnpost-festival-2022-tickets-289830289197?aff=FestivalSiteDirect' );
-					break;
-				case 2021:
-					$url = esc_url_raw( 'https://www.eventbrite.com/e/minnpost-festival-2021-tickets-140928014485' );
-					break;
-				default:
-					$url = '#';
+			$url = '#';
+			if ( isset( $festival_settings[ 'minnpost_largo_' . $event_year . '_button_url' ] ) ) {
+				$url = esc_url_raw( $festival_settings[ 'minnpost_largo_' . $event_year . '_button_url' ] );
 			}
 			$buy_event_pass = sprintf(
 				// translators: 1) url to buy a pass, 2) link text, 3) class
@@ -825,8 +923,17 @@ endif;
 */
 if ( ! function_exists( 'minnpost_event_website_get_disclaimer_text' ) ) :
 	function minnpost_event_website_get_disclaimer_text( $object_type = 'festival' ) {
-		$disclaimer_text = esc_html__( 'MinnPost is a 501(c)(3) nonprofit that receives support from donors, members, foundations, advertisers and sponsors. Donors and sponsors that underwrite MinnPost events play no role in determining the content, featured guests or line of questioning.', 'minnpost-largo' );
-		$disclaimer_text = '<aside class="a-' . $object_type . '-minnpost-notice"><p>' . $disclaimer_text . '</p></aside>';
+		$event_year      = minnpost_largo_get_event_year( $object_type, get_the_date( 'Y' ) );
+		$disclaimer_text = '';
+		if ( isset( $event_year ) ) {
+			$festival_settings = get_option( 'minnpost_largo_festival_settings', '' );
+			if ( isset( $festival_settings[ 'minnpost_largo_' . $event_year . '_disclaimer_text' ] ) ) {
+				$disclaimer_text = esc_html( $festival_settings[ 'minnpost_largo_' . $event_year . '_disclaimer_text' ] );
+			}
+		}
+		if ( '' !== $disclaimer_text ) {
+			$disclaimer_text = '<aside class="a-' . $object_type . '-minnpost-notice"><p>' . $disclaimer_text . '</p></aside>';
+		}
 		return $disclaimer_text;
 	}
 endif;
@@ -845,19 +952,127 @@ if ( ! function_exists( 'minnpost_hide_default_speaker_meta_box' ) ) :
 endif;
 
 /**
-* Based on whether the speaker picker is broken, we might need some extra css.
- *
-* @param bool $show_speaker_meta_box
-* @return bool $show_speaker_meta_box
+* Handle adding and removing of front end CSS for the MinnPost Festival pages only
 */
-if ( ! function_exists( 'minnpost_event_speaker_box_css' ) ) :
-	add_action( 'admin_enqueue_scripts', 'minnpost_event_speaker_box_css' );
-	function minnpost_event_speaker_box_css() {
+if ( ! function_exists( 'minnpost_largo_festival_styles' ) ) :
+	add_action( 'wp_enqueue_scripts', 'minnpost_largo_festival_styles', 10 );
+	function minnpost_largo_festival_styles() {
+		if ( is_post_type_archive( 'festival' ) || is_singular( 'festival' ) || ( is_singular( 'tribe_ext_speaker' ) && has_term( 'festival', 'tribe_events_cat' ) ) ) {
+			wp_dequeue_style( 'minnpost-style' );
+			wp_enqueue_style( 'minnpost-festival', get_theme_file_uri() . '/assets/css/festival.css', array(), filemtime( get_theme_file_path() . '/assets/css/festival.css' ), 'all' );
+			$event_year = minnpost_largo_get_event_year( 'festival', get_the_date( 'Y' ) );
+			if ( isset( $event_year ) ) {
+				$year_css          = '';
+				$festival_settings = get_option( 'minnpost_largo_festival_settings', '' );
+				if ( isset( $festival_settings[ 'minnpost_largo_' . $event_year . '_header_color_top' ] ) ) {
+					$header_color_top = esc_html( $festival_settings[ 'minnpost_largo_' . $event_year . '_header_color_top' ] );
+					$year_css        .= '.o-header-festival { background: ' . $header_color_top . ';';
+				}
+				if ( isset( $festival_settings[ 'minnpost_largo_' . $event_year . '_header_color_bottom' ] ) ) {
+					$header_color_bottom = esc_html( $festival_settings[ 'minnpost_largo_' . $event_year . '_header_color_bottom' ] );
+				}
+				if ( isset( $festival_settings[ 'minnpost_largo_' . $event_year . '_header_image' ] ) ) {
+					$header_image = esc_html( $festival_settings[ 'minnpost_largo_' . $event_year . '_header_image' ] );
+				}
+				if ( isset( $festival_settings[ 'minnpost_largo_' . $event_year . '_landing_page_header_image' ] ) ) {
+					$landing_page_header_image = esc_html( $festival_settings[ 'minnpost_largo_' . $event_year . '_landing_page_header_image' ] );
+				}
+				if ( isset( $header_color_top ) && isset( $header_color_bottom ) && isset( $header_image ) ) {
+					$year_css .= 'background: url(' . $header_image . ') no-repeat 24% 100%, linear-gradient(to bottom, ' . $header_color_top . ', ' . $header_color_bottom . ');';
+				}
+				if ( isset( $festival_settings[ 'minnpost_largo_' . $event_year . '_header_color_top' ] ) ) {
+					$year_css .= '}';
+				}
+				if ( isset( $header_color_top ) && isset( $header_color_bottom ) && isset( $landing_page_header_image ) ) {
+					$year_css .= '@media screen and (min-width: 50em) { body.festival-landing-page.festival-' . $event_year . ' .o-header-festival { background: url(' . $landing_page_header_image . ') no-repeat 2% 100%, linear-gradient(to bottom, ' . $header_color_top . ', ' . $header_color_bottom . '); } }';
+				}
+				if ( '' !== $year_css ) {
+					wp_add_inline_style( 'minnpost-festival', $year_css );
+				}
+			}
+		}
+		if ( is_singular( 'tribe_events' ) && has_term( 'festival', 'tribe_events_cat' ) ) {
+			$locate = locate_template( 'tribe-events/single-event-festival.php' );
+			if ( '' !== $locate ) {
+				wp_dequeue_style( 'minnpost-style' );
+				wp_enqueue_style( 'minnpost-festival', get_theme_file_uri() . '/assets/css/festival.css', array(), filemtime( get_theme_file_path() . '/assets/css/festival.css' ), 'all' );
+			}
+		}
+	}
+endif;
+
+/**
+* Handle archived MinnPost Festival menus
+*/
+if ( ! function_exists( 'minnpost_largo_tonight_styles' ) ) :
+	add_filter( 'wp_nav_menu_objects', 'minnpost_largo_old_festival_menu', 20, 2 );
+	function minnpost_largo_old_festival_menu( $sorted_menu_items, $args ) {
+		if ( 'festival' !== $args->theme_location ) {
+			return $sorted_menu_items;
+		}
+		$event_year = minnpost_largo_get_event_year( 'festival', get_the_date( 'Y' ) );
+		$event_slug = '';
+		if ( $event_year && gmdate( 'Y' ) !== $event_year ) {
+			$event_slug .= '-' . $event_year;
+		}
+		if ( '' !== $event_slug ) {
+			foreach ( $sorted_menu_items as $item ) {
+				$active_class = sanitize_title( $item->title );
+				if ( in_array( 'menu-item-object-festival', $item->classes, true ) ) {
+					$item->url = untrailingslashit( $item->url );
+					$item->url = trailingslashit( $item->url . '-' . $event_year );
+					$item->url = esc_url_raw( $item->url );
+				} elseif ( 'festival-passes' === $active_class ) {
+					$item->url = '#';
+					$festival_settings = get_option( 'minnpost_largo_festival_settings', '' );
+					if ( isset( $festival_settings[ 'minnpost_largo_' . $event_year . '_button_url' ] ) ) {
+						$item->url = esc_url_raw( $festival_settings[ 'minnpost_largo_' . $event_year . '_button_url' ] );
+					}
+				}
+			}
+		}
+		return $sorted_menu_items;
+	}
+endif;
+
+
+/**
+* Handle adding and removing of front end CSS for the MinnPost Tonight pages only
+*/
+if ( ! function_exists( 'minnpost_largo_tonight_styles' ) ) :
+	add_action( 'wp_enqueue_scripts', 'minnpost_largo_tonight_styles', 10 );
+	function minnpost_largo_tonight_styles() {
+		if ( is_post_type_archive( 'tonight' ) || is_singular( 'tonight' ) || ( is_singular( 'tribe_ext_speaker' ) && has_term( 'tonight', 'tribe_events_cat' ) ) ) {
+			wp_dequeue_style( 'minnpost-style' );
+			wp_enqueue_style( 'minnpost-tonight', get_theme_file_uri() . '/assets/css/tonight.css', array(), filemtime( get_theme_file_path() . '/assets/css/tonight.css' ), 'all' );
+		}
+		if ( is_singular( 'tribe_events' ) && has_term( 'tonight', 'tribe_events_cat' ) ) {
+			$locate = locate_template( 'tribe-events/single-event-tonight.php' );
+			if ( '' !== $locate ) {
+				wp_dequeue_style( 'minnpost-style' );
+				wp_enqueue_style( 'minnpost-tonight', get_theme_file_uri() . '/assets/css/tonight.css', array(), filemtime( get_theme_file_path() . '/assets/css/tonight.css' ), 'all' );
+			}
+		}
+	}
+endif;
+
+/**
+* Do any editing to enqueued scripts
+ *
+ * @param string $hook
+*/
+if ( ! function_exists( 'minnpost_event_enqueue_scripts' ) ) :
+	add_action( 'admin_enqueue_scripts', 'minnpost_event_enqueue_scripts' );
+	function minnpost_event_enqueue_scripts( $hook ) {
 		$show_speaker_meta_box = apply_filters( 'tribe_ext_events_add_tribe_ext_speaker_meta_box', true );
 		if ( false === $show_speaker_meta_box ) {
 			// wp_enqueue_style( 'custom_wp_admin_css', get_theme_file_uri() . '/admin-style.css', array(), filemtime( get_theme_file_path() . '/admin-style.css' ) );
 			$css = '#event_tribe_ext_speaker {display: none;}';
 			wp_add_inline_style( 'custom_wp_admin_css', $css );
+		}
+		// the festival settings page will fail if we don't enqueue media assets.
+		if ( 'tribe_events_page_minnpost_largo_festival_settings' === $hook ) {
+			wp_enqueue_media();
 		}
 	}
 endif;
