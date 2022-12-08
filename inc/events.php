@@ -579,156 +579,158 @@ if ( ! function_exists( 'minnpost_largo_register_festival_options_menu' ) ) :
 			'default' => '',
 		) );
 		$festival_settings_value = get_option( 'minnpost_largo_festival_settings', '' );
-		$festival_years          = $festival_settings_value['minnpost_festival_years'];
-		$festival_years          = array_map( 'trim', explode( ',', $festival_years ) );
-		rsort( $festival_years );
-		foreach ( $festival_years as $festival_year ) {
-			$start_date_label = sprintf(
-				// translators: 1) which year it is
-				esc_html__( '%1$s Start Date', 'minnpost-largo' ),
-				$festival_year
-			);
-			$festival_settings->add_field(
-				array(
-					'name'    => $start_date_label,
-					'desc'    => esc_html__( 'Choose or enter the start date for the site header', 'minnpost-largo' ),
-					'id'      => 'minnpost_largo_' . $festival_year . '_start_date',
-					'type'    => 'text_date',
-					'default' => '',
-				)
-			);
-			$end_date_label = sprintf(
-				// translators: 1) which year it is
-				esc_html__( '%1$s End Date', 'minnpost-largo' ),
-				$festival_year
-			);
-			$festival_settings->add_field(
-				array(
-					'name'    => $end_date_label,
-					'desc'    => esc_html__( 'Choose or enter the end date for the site header', 'minnpost-largo' ),
-					'id'      => 'minnpost_largo_' . $festival_year . '_end_date',
-					'type'    => 'text_date',
-					'default' => '',
-				)
-			);
-			$url_label = sprintf(
-				// translators: 1) which year it is
-				esc_html__( '%1$s Button URL', 'minnpost-largo' ),
-				$festival_year
-			);
-			$festival_settings->add_field(
-				array(
-					'name'    => $url_label,
-					'desc'    => esc_html__( 'Enter the url for the button', 'minnpost-largo' ),
-					'id'      => 'minnpost_largo_' . $festival_year . '_button_url',
-					'type'    => 'text',
-					'default' => '',
-				)
-			);
-			$text_label = sprintf(
-				// translators: 1) which year it is
-				esc_html__( '%1$s Button Text', 'minnpost-largo' ),
-				$festival_year
-			);
-			$festival_settings->add_field(
-				array(
-					'name'    => $text_label,
-					'desc'    => esc_html__( 'Enter the text for the button', 'minnpost-largo' ),
-					'id'      => 'minnpost_largo_' . $festival_year . '_button_text',
-					'type'    => 'text',
-					'default' => '',
-				)
-			);
-			$header_image_label = sprintf(
-				// translators: 1) which year it is
-				esc_html__( '%1$s Header Image', 'minnpost-largo' ),
-				$festival_year
-			);
-			$festival_settings->add_field(
-				array(
-					'name'       => $header_image_label,
-					'desc'       => esc_html__( 'Choose the header image, or enter the URL, from the media library. It is expected to be 350px tall and will be positioned near the top left.', 'minnpost-largo' ),
-					'id'         => 'minnpost_largo_' . $festival_year . '_header_image',
-					'type'       => 'file',
-					'text'       => array(
-						'add_upload_file_text' => esc_html__( 'Add Image', 'minnpost-largo' ),
-					),
-					'query_args' => array(
-						// Only allow gif, jpg, or png images
-						'type' => array(
-							'image/gif',
-							'image/jpeg',
-							'image/png',
+		$festival_years          = isset( $festival_settings_value['minnpost_festival_years'] ) ? $festival_settings_value['minnpost_festival_years'] : '';
+		if ( '' !== $festival_years ) {
+			$festival_years          = array_map( 'trim', explode( ',', $festival_years ) );
+			rsort( $festival_years );
+			foreach ( $festival_years as $festival_year ) {
+				$start_date_label = sprintf(
+					// translators: 1) which year it is
+					esc_html__( '%1$s Start Date', 'minnpost-largo' ),
+					$festival_year
+				);
+				$festival_settings->add_field(
+					array(
+						'name'    => $start_date_label,
+						'desc'    => esc_html__( 'Choose or enter the start date for the site header', 'minnpost-largo' ),
+						'id'      => 'minnpost_largo_' . $festival_year . '_start_date',
+						'type'    => 'text_date',
+						'default' => '',
+					)
+				);
+				$end_date_label = sprintf(
+					// translators: 1) which year it is
+					esc_html__( '%1$s End Date', 'minnpost-largo' ),
+					$festival_year
+				);
+				$festival_settings->add_field(
+					array(
+						'name'    => $end_date_label,
+						'desc'    => esc_html__( 'Choose or enter the end date for the site header', 'minnpost-largo' ),
+						'id'      => 'minnpost_largo_' . $festival_year . '_end_date',
+						'type'    => 'text_date',
+						'default' => '',
+					)
+				);
+				$url_label = sprintf(
+					// translators: 1) which year it is
+					esc_html__( '%1$s Button URL', 'minnpost-largo' ),
+					$festival_year
+				);
+				$festival_settings->add_field(
+					array(
+						'name'    => $url_label,
+						'desc'    => esc_html__( 'Enter the url for the button', 'minnpost-largo' ),
+						'id'      => 'minnpost_largo_' . $festival_year . '_button_url',
+						'type'    => 'text',
+						'default' => '',
+					)
+				);
+				$text_label = sprintf(
+					// translators: 1) which year it is
+					esc_html__( '%1$s Button Text', 'minnpost-largo' ),
+					$festival_year
+				);
+				$festival_settings->add_field(
+					array(
+						'name'    => $text_label,
+						'desc'    => esc_html__( 'Enter the text for the button', 'minnpost-largo' ),
+						'id'      => 'minnpost_largo_' . $festival_year . '_button_text',
+						'type'    => 'text',
+						'default' => '',
+					)
+				);
+				$header_image_label = sprintf(
+					// translators: 1) which year it is
+					esc_html__( '%1$s Header Image', 'minnpost-largo' ),
+					$festival_year
+				);
+				$festival_settings->add_field(
+					array(
+						'name'       => $header_image_label,
+						'desc'       => esc_html__( 'Choose the header image, or enter the URL, from the media library. It is expected to be 350px tall and will be positioned near the top left.', 'minnpost-largo' ),
+						'id'         => 'minnpost_largo_' . $festival_year . '_header_image',
+						'type'       => 'file',
+						'text'       => array(
+							'add_upload_file_text' => esc_html__( 'Add Image', 'minnpost-largo' ),
 						),
-					),
-				)
-			);
-			$landing_page_header_image_label = sprintf(
-				// translators: 1) which year it is
-				esc_html__( '%1$s Landing Page Header Image', 'minnpost-largo' ),
-				$festival_year
-			);
-			$festival_settings->add_field(
-				array(
-					'name'       => $landing_page_header_image_label,
-					'desc'       => esc_html__( 'For the landing page only: choose the header image, or enter the URL, from the media library. It is expected to be 600px tall and will be positioned near the top left. If no file is selected here, the landing page will use the standard header image.', 'minnpost-largo' ),
-					'id'         => 'minnpost_largo_' . $festival_year . '_landing_page_header_image',
-					'type'       => 'file',
-					'text'       => array(
-						'add_upload_file_text' => esc_html__( 'Add Image', 'minnpost-largo' ),
-					),
-					'query_args' => array(
-						// Only allow gif, jpg, or png images
-						'type' => array(
-							'image/gif',
-							'image/jpeg',
-							'image/png',
+						'query_args' => array(
+							// Only allow gif, jpg, or png images
+							'type' => array(
+								'image/gif',
+								'image/jpeg',
+								'image/png',
+							),
 						),
-					),
-				)
-			);
-			$header_color_top_label = sprintf(
-				// translators: 1) which year it is
-				esc_html__( '%1$s Header Background Color Top', 'minnpost-largo' ),
-				$festival_year
-			);
-			$festival_settings->add_field(
-				array(
-					'name'    => $header_color_top_label,
-					'id'      => 'minnpost_largo_' . $festival_year . '_header_color_top',
-					'type'    => 'colorpicker',
-					'default' => '#ffffff',
-					'desc'    => esc_html__( 'The header will use the top and bottom colors in a gradient, unless they are the same.', 'minnpost-largo' ),
-				)
-			);
-			$header_color_bottom_label = sprintf(
-				// translators: 1) which year it is
-				esc_html__( '%1$s Header Background Color Bottom', 'minnpost-largo' ),
-				$festival_year
-			);
-			$festival_settings->add_field(
-				array(
-					'name'    => $header_color_bottom_label,
-					'id'      => 'minnpost_largo_' . $festival_year . '_header_color_bottom',
-					'type'    => 'colorpicker',
-					'default' => '#ffffff',
-					'desc'    => esc_html__( 'The header will use the top and bottom colors in a gradient, unless they are the same.', 'minnpost-largo' ),
-				)
-			);
-			$disclaimer_label = sprintf(
-				// translators: 1) which year it is
-				esc_html__( '%1$s Disclaimer Text', 'minnpost-largo' ),
-				$festival_year
-			);
-			$festival_settings->add_field(
-				array(
-					'name'    => $disclaimer_label,
-					'desc'    => esc_html__( 'Enter the disclaimer text for the bottom of the site', 'minnpost-largo' ),
-					'id'      => 'minnpost_largo_' . $festival_year . '_disclaimer_text',
-					'type'    => 'textarea_small',
-					'default' => '',
-				)
-			);
+					)
+				);
+				$landing_page_header_image_label = sprintf(
+					// translators: 1) which year it is
+					esc_html__( '%1$s Landing Page Header Image', 'minnpost-largo' ),
+					$festival_year
+				);
+				$festival_settings->add_field(
+					array(
+						'name'       => $landing_page_header_image_label,
+						'desc'       => esc_html__( 'For the landing page only: choose the header image, or enter the URL, from the media library. It is expected to be 600px tall and will be positioned near the top left. If no file is selected here, the landing page will use the standard header image.', 'minnpost-largo' ),
+						'id'         => 'minnpost_largo_' . $festival_year . '_landing_page_header_image',
+						'type'       => 'file',
+						'text'       => array(
+							'add_upload_file_text' => esc_html__( 'Add Image', 'minnpost-largo' ),
+						),
+						'query_args' => array(
+							// Only allow gif, jpg, or png images
+							'type' => array(
+								'image/gif',
+								'image/jpeg',
+								'image/png',
+							),
+						),
+					)
+				);
+				$header_color_top_label = sprintf(
+					// translators: 1) which year it is
+					esc_html__( '%1$s Header Background Color Top', 'minnpost-largo' ),
+					$festival_year
+				);
+				$festival_settings->add_field(
+					array(
+						'name'    => $header_color_top_label,
+						'id'      => 'minnpost_largo_' . $festival_year . '_header_color_top',
+						'type'    => 'colorpicker',
+						'default' => '#ffffff',
+						'desc'    => esc_html__( 'The header will use the top and bottom colors in a gradient, unless they are the same.', 'minnpost-largo' ),
+					)
+				);
+				$header_color_bottom_label = sprintf(
+					// translators: 1) which year it is
+					esc_html__( '%1$s Header Background Color Bottom', 'minnpost-largo' ),
+					$festival_year
+				);
+				$festival_settings->add_field(
+					array(
+						'name'    => $header_color_bottom_label,
+						'id'      => 'minnpost_largo_' . $festival_year . '_header_color_bottom',
+						'type'    => 'colorpicker',
+						'default' => '#ffffff',
+						'desc'    => esc_html__( 'The header will use the top and bottom colors in a gradient, unless they are the same.', 'minnpost-largo' ),
+					)
+				);
+				$disclaimer_label = sprintf(
+					// translators: 1) which year it is
+					esc_html__( '%1$s Disclaimer Text', 'minnpost-largo' ),
+					$festival_year
+				);
+				$festival_settings->add_field(
+					array(
+						'name'    => $disclaimer_label,
+						'desc'    => esc_html__( 'Enter the disclaimer text for the bottom of the site', 'minnpost-largo' ),
+						'id'      => 'minnpost_largo_' . $festival_year . '_disclaimer_text',
+						'type'    => 'textarea_small',
+						'default' => '',
+					)
+				);
+			}
 		}
 	}
 endif;
