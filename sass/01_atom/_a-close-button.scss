@@ -7,11 +7,13 @@
 	width: 2em;
 	line-height: 2em;
 	font-size: 1em;
-	text-align: center;
-	vertical-align: middle;
-	display: inline-block;
+	//text-align: center;
+	//vertical-align: middle;
+	display: inline-flex;
 	min-height: 0;
-	align-self: center;
+	//align-self: center;
+	align-items: center;
+  	justify-content: center;
 
 	&:link,
 	&:visited {

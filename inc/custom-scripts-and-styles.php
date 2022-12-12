@@ -7,18 +7,23 @@
 
 /**
  * Handle adding and removing of front end CSS in this theme
- * This also handles whether the CSS should be served as minified based on WP_DEBUG value
- * We can't use SCRIPT_DEBUG because our server fails to minify, so we have to keep that set to true, but these files are already minified.
- * todo: we should figure out if the above is still true on VIP
  */
 if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
 	add_action( 'wp_enqueue_scripts', 'minnpost_largo_add_remove_styles', 10 );
 	function minnpost_largo_add_remove_styles() {
-		// add
+		if ( defined( 'THEME_VERSION' ) ) {
+			$main_css_version       = THEME_VERSION;
+			$main_print_css_version = THEME_VERSION;
+		}
+		if ( 'local' === VIP_GO_ENV || ! defined( 'THEME_VERSION' ) ) {
+			$main_css_version       = filemtime( get_theme_file_path() . '/style.css' );
+			$main_print_css_version = filemtime( get_theme_file_path() . '/print.css' );
+		}
+		// add.
 		wp_enqueue_style( 'minnpost-fonts', 'https://use.typekit.net/cxj7fzg.css', array(), '1.0.0', 'all' );
-		wp_enqueue_style( 'minnpost-style', get_theme_file_uri() . '/style.css', array(), filemtime( get_theme_file_path() . '/style.css' ), 'all' );
-		wp_enqueue_style( 'minnpost-style-print', get_theme_file_uri() . '/print.css', array(), filemtime( get_theme_file_path() . '/print.css' ), 'print' );
-		// remove
+		wp_enqueue_style( 'minnpost-style', get_theme_file_uri() . '/style.css', array(), $main_css_version, 'all' );
+		wp_enqueue_style( 'minnpost-style-print', get_theme_file_uri() . '/print.css', array(), $main_print_css_version, 'print' );
+		// remove.
 		wp_dequeue_style( 'largo-style' );
 		wp_dequeue_style( 'media-credit' );
 		wp_dequeue_style( 'widgetopts-styles' );
@@ -44,46 +49,6 @@ if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
 				foreach ( $css_urls as $key => $css_url ) {
 					wp_enqueue_style( 'minnpost-css-' . $key . '-' . get_the_ID(), $css_url, array(), $code_version, 'all' );
 				}
-			}
-		}
-	}
-endif;
-
-/**
-* Handle adding and removing of front end CSS for the MinnPost Festival pages only
-*/
-if ( ! function_exists( 'minnpost_largo_festival_styles' ) ) :
-	add_action( 'wp_enqueue_scripts', 'minnpost_largo_festival_styles', 10 );
-	function minnpost_largo_festival_styles() {
-		if ( is_post_type_archive( 'festival' ) || is_singular( 'festival' ) || ( is_singular( 'tribe_ext_speaker' ) && has_term( 'festival', 'tribe_events_cat' ) ) ) {
-			wp_dequeue_style( 'minnpost-style' );
-			wp_enqueue_style( 'minnpost-festival', get_theme_file_uri() . '/assets/css/festival.css', array(), filemtime( get_theme_file_path() . '/assets/css/festival.css' ), 'all' );
-		}
-		if ( is_singular( 'tribe_events' ) && has_term( 'festival', 'tribe_events_cat' ) ) {
-			$locate = locate_template( 'tribe-events/single-event-festival.php' );
-			if ( '' !== $locate ) {
-				wp_dequeue_style( 'minnpost-style' );
-				wp_enqueue_style( 'minnpost-festival', get_theme_file_uri() . '/assets/css/festival.css', array(), filemtime( get_theme_file_path() . '/assets/css/festival.css' ), 'all' );
-			}
-		}
-	}
-endif;
-
-/**
-* Handle adding and removing of front end CSS for the MinnPost Tonight pages only
-*/
-if ( ! function_exists( 'minnpost_largo_tonight_styles' ) ) :
-	add_action( 'wp_enqueue_scripts', 'minnpost_largo_tonight_styles', 10 );
-	function minnpost_largo_tonight_styles() {
-		if ( is_post_type_archive( 'tonight' ) || is_singular( 'tonight' ) || ( is_singular( 'tribe_ext_speaker' ) && has_term( 'tonight', 'tribe_events_cat' ) ) ) {
-			wp_dequeue_style( 'minnpost-style' );
-			wp_enqueue_style( 'minnpost-tonight', get_theme_file_uri() . '/assets/css/tonight.css', array(), filemtime( get_theme_file_path() . '/assets/css/tonight.css' ), 'all' );
-		}
-		if ( is_singular( 'tribe_events' ) && has_term( 'tonight', 'tribe_events_cat' ) ) {
-			$locate = locate_template( 'tribe-events/single-event-tonight.php' );
-			if ( '' !== $locate ) {
-				wp_dequeue_style( 'minnpost-style' );
-				wp_enqueue_style( 'minnpost-tonight', get_theme_file_uri() . '/assets/css/tonight.css', array(), filemtime( get_theme_file_path() . '/assets/css/tonight.css' ), 'all' );
 			}
 		}
 	}
@@ -121,15 +86,24 @@ endif;
 if ( ! function_exists( 'minnpost_largo_add_remove_scripts' ) ) :
 	add_action( 'wp_enqueue_scripts', 'minnpost_largo_add_remove_scripts' );
 	function minnpost_largo_add_remove_scripts() {
-		// wp_add_inline_script( 'jquery-core', '$=jQuery;' ); // this would be nice, but it causes conflict with older scripts
-		// add
+		// add.
 		// wp_enqueue_script( 'modernizr', get_theme_file_uri() . '/assets/js/modernizr-custom.min.js', array(), '1.0', false );
 		// wp_enqueue_script( 'minnpost', get_theme_file_uri() . '/assets/js/minnpost.min.js', array( 'jquery', 'modernizr' ), filemtime( get_theme_file_path() . '/assets/js/minnpost.min.js' ), true );
+
+		$main_js_dependencies = array( 'jquery', 'wp-hooks' );
+		if ( defined( 'THEME_VERSION' ) ) {
+			$main_js_version = THEME_VERSION;
+		}
+		if ( 'local' === VIP_GO_ENV || ! defined( 'THEME_VERSION' ) ) {
+			$main_js_version = filemtime( get_theme_file_path() . '/assets/js/minnpost.min.js' );
+		}
+
 		if ( class_exists( 'Republication_Tracker_Tool' ) ) {
 			wp_enqueue_script( 'republication-tracker-tool-js', plugins_url() . '/republication-tracker-tool/' . 'assets/widget.js', array( 'jquery' ), '1.0', true );
 		}
-		wp_enqueue_script( 'minnpost', get_theme_file_uri() . '/assets/js/minnpost.min.js', array( 'jquery', 'wp-hooks' ), filemtime( get_theme_file_path() . '/assets/js/minnpost.min.js' ), true );
-		// localize
+
+		wp_enqueue_script( 'minnpost', get_theme_file_uri() . '/assets/js/minnpost.min.js', $main_js_dependencies, $main_js_version, true );
+		// localize.
 		$params = array(
 			'ajaxurl' => admin_url( 'admin-ajax.php' ),
 		);
@@ -154,7 +128,7 @@ if ( ! function_exists( 'minnpost_largo_add_remove_scripts' ) ) :
 			}
 		}
 
-		// remove
+		// remove.
 		wp_dequeue_script( 'largo-navigation' );
 		wp_dequeue_script( 'popular-widget' );
 	}
@@ -184,8 +158,17 @@ endif;
 if ( ! function_exists( 'minnpost_admin_style' ) ) :
 	add_action( 'admin_enqueue_scripts', 'minnpost_admin_style' );
 	function minnpost_admin_style( $hook ) {
-		wp_enqueue_style( 'custom_wp_admin_css', get_theme_file_uri() . '/admin-style.css', array(), filemtime( get_theme_file_path() . '/admin-style.css' ) );
-		wp_enqueue_script( 'minnpost-largo-admin', get_theme_file_uri() . '/assets/js/minnpost-largo-admin.min.js', array( 'jquery' ), filemtime( get_theme_file_path() . '/assets/js/minnpost-largo-admin.min.js' ), true );
+		$admin_js_dependencies = array( 'jquery' );
+		if ( defined( 'THEME_VERSION' ) ) {
+			$admin_js_version  = THEME_VERSION;
+			$admin_css_version = THEME_VERSION;
+		}
+		if ( 'local' === VIP_GO_ENV || ! defined( 'THEME_VERSION' ) ) {
+			$admin_js_version  = filemtime( get_theme_file_path() . '/assets/js/minnpost-largo-admin.min.js' );
+			$admin_css_version = filemtime( get_theme_file_path() . '/admin-style.css' );
+		}
+		wp_enqueue_style( 'custom_wp_admin_css', get_theme_file_uri() . '/admin-style.css', array(), $admin_css_version );
+		wp_enqueue_script( 'minnpost-largo-admin', get_theme_file_uri() . '/assets/js/minnpost-largo-admin.min.js', $admin_js_dependencies, $admin_js_version, true );
 	}
 endif;
 
