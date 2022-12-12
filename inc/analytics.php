@@ -1,5 +1,89 @@
 <?php
 
+if ( ! function_exists( 'minnpost_google_analytics_dimensions' ) ) :
+	add_action( 'wp_analytics_tracking_generator_custom_dimensions', 'minnpost_google_analytics_dimensions', 10, 1 );
+	/**
+	 * Custom dimensions for Google Analytics
+	 *
+	 * @param array $dimensions is the already existing dimensions.
+	 * @return array $dimensions is the new array of dimensions.
+	 */
+	function minnpost_google_analytics_dimensions( $dimensions ) {
+		// dimension 1: user status dimension.
+		if ( function_exists( 'minnpost_membership' ) ) {
+			$minnpost_membership = minnpost_membership();
+			$user_id             = get_current_user_id();
+			if ( 0 !== $user_id ) {
+				$user_state = $minnpost_membership->user_info->user_member_level( $user_id )['name'];
+				if ( 'Non-member' === $user_state ) {
+					$value = 'Logged In Non-Member';
+				} else {
+					$value = get_bloginfo( 'name' ) . ' ' . $user_state;
+				}
+			} else {
+				$value = 'Not Logged In';
+			}
+			$dimensions['1'] = $value;
+		}
+
+		// remove dimension 2: id and dimension 3: post type dimensions if we're not on a singular post.
+		if ( ! is_singular() ) {
+			unset( $dimensions['2'] );
+			unset( $dimensions['3'] );
+		}
+
+		// Dimension 2: object id
+		// Dimension 3: object type.
+
+		// home.
+		if ( is_front_page() && is_home() ) {
+			$dimensions['3'] = 'home';
+		}
+		// archives.
+		if ( is_category() || is_tag() ) {
+			// categories and tags.
+			$term            = get_queried_object();
+			$dimensions['2'] = $term->term_id;
+			$dimensions['3'] = $term->taxonomy;
+		} elseif ( is_author() ) {
+			// authors.
+			$dimensions['2'] = get_queried_object_id();
+			$dimensions['3'] = 'author';
+		} elseif ( is_date() ) {
+			$dimensions['3'] = 'date';
+		} elseif ( is_post_type_archive() ) {
+			$dimensions['3'] = get_post_type();
+		}
+
+		// single post
+		// this is the only one that should have dimension 4.
+		if ( is_single() && function_exists( 'minnpost_get_category_name' ) ) {
+			$post_id         = get_the_ID();
+			$dimensions['4'] = minnpost_get_category_name( $post_id );
+		} else {
+			unset( $dimensions['4'] );
+		}
+
+		return $dimensions;
+	}
+endif;
+
+if ( ! function_exists( 'minnpost_google_analytics_show_analytics_code' ) ) :
+	add_action( 'wp_analytics_tracking_generator_show_analytics_code', 'minnpost_google_analytics_show_analytics_code', 10, 1 );
+	/**
+	 * Whether to show analytics code
+	 *
+	 * @param bool $show_analytics_code whether or not to show the code.
+	 * @return bool $show_analytics_code whether or not to show the code.
+	 */
+	function minnpost_google_analytics_show_analytics_code( $show_analytics_code ) {
+		if ( 'production' !== VIP_GO_ENV ) {
+			$show_analytics_code = true;
+		}
+		return $show_analytics_code;
+	}
+endif;
+
 if ( ! function_exists( 'minnpost_gtm4wp_wp_header_begin' ) ) :
 	add_action( 'wp_head', 'minnpost_gtm4wp_wp_header_begin', 2, 0 );
 	function minnpost_gtm4wp_wp_header_begin() {
