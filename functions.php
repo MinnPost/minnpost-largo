@@ -10,7 +10,7 @@ function enqueue_parent_styles() {
 }*/
 
 $theme = wp_get_theme();
-define( 'THEME_VERSION', $theme->Version );
+define( 'THEME_VERSION', $theme->Version ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
 
 /**
  * Composer Libraries

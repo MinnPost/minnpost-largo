@@ -1,7 +1,6 @@
 .o-header-festival {
     margin-bottom: $standard-block-margin;
-    background: festival-color(top);
-    background: url('/wp-content/themes/minnpost-largo/assets/img/events/festival/mncapitol-small.png') no-repeat 24% 100%, linear-gradient(to bottom, festival-color(top), festival-color(bottom));
+    //background: url('/wp-content/themes/minnpost-largo/assets/img/events/festival/mncapitol-small.png') no-repeat 24% 100%, linear-gradient(to bottom, festival-color(top), festival-color(bottom));
     min-height: $header-height-mobile;
 
     @include breakpoint-min( md ) {
@@ -12,7 +11,7 @@
 body.festival-landing-page.festival-2021 .o-header-festival {
 
     @include breakpoint-min( md ) {
-        background: url('/wp-content/themes/minnpost-largo/assets/img/events/festival/mncapitol-large.png') no-repeat 2% 100%, linear-gradient(to bottom, festival-color(top), festival-color(bottom));
+        //background: url('/wp-content/themes/minnpost-largo/assets/img/events/festival/mncapitol-large.png') no-repeat 2% 100%, linear-gradient(to bottom, festival-color(top), festival-color(bottom));
         min-height: $header-height-homepage-desktop;
         background-size: contain;
     }
