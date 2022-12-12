@@ -966,9 +966,25 @@ endif;
 if ( ! function_exists( 'minnpost_largo_festival_styles' ) ) :
 	add_action( 'wp_enqueue_scripts', 'minnpost_largo_festival_styles', 10 );
 	function minnpost_largo_festival_styles() {
+		$use_festival_css = false;
 		if ( is_post_type_archive( 'festival' ) || is_singular( 'festival' ) || ( is_singular( 'tribe_ext_speaker' ) && has_term( 'festival', 'tribe_events_cat' ) ) ) {
+			$use_festival_css = true;
+		}
+		if ( is_singular( 'tribe_events' ) && has_term( 'festival', 'tribe_events_cat' ) ) {
+			$locate = locate_template( 'tribe-events/single-event-festival.php' );
+			if ( '' !== $locate ) {
+				$use_festival_css = true;
+			}
+		}
+		if ( true === $use_festival_css ) {
+			if ( defined( 'THEME_VERSION' ) ) {
+				$festival_css_version = THEME_VERSION;
+			}
+			if ( 'local' === VIP_GO_ENV || ! defined( 'THEME_VERSION' ) ) {
+				$festival_css_version = filemtime( get_theme_file_path() . '/assets/css/festival.css' );
+			}
 			wp_dequeue_style( 'minnpost-style' );
-			wp_enqueue_style( 'minnpost-festival', get_theme_file_uri() . '/assets/css/festival.css', array(), filemtime( get_theme_file_path() . '/assets/css/festival.css' ), 'all' );
+			wp_enqueue_style( 'minnpost-festival', get_theme_file_uri() . '/assets/css/festival.css', array(), $festival_css_version, 'all' );
 			$event_year = minnpost_largo_get_event_year( 'festival', get_the_date( 'Y' ) );
 			if ( isset( $event_year ) ) {
 				$year_css          = '';
@@ -998,13 +1014,6 @@ if ( ! function_exists( 'minnpost_largo_festival_styles' ) ) :
 				if ( '' !== $year_css ) {
 					wp_add_inline_style( 'minnpost-festival', $year_css );
 				}
-			}
-		}
-		if ( is_singular( 'tribe_events' ) && has_term( 'festival', 'tribe_events_cat' ) ) {
-			$locate = locate_template( 'tribe-events/single-event-festival.php' );
-			if ( '' !== $locate ) {
-				wp_dequeue_style( 'minnpost-style' );
-				wp_enqueue_style( 'minnpost-festival', get_theme_file_uri() . '/assets/css/festival.css', array(), filemtime( get_theme_file_path() . '/assets/css/festival.css' ), 'all' );
 			}
 		}
 	}
@@ -1051,15 +1060,21 @@ endif;
 if ( ! function_exists( 'minnpost_largo_tonight_styles' ) ) :
 	add_action( 'wp_enqueue_scripts', 'minnpost_largo_tonight_styles', 10 );
 	function minnpost_largo_tonight_styles() {
+		if ( defined( 'THEME_VERSION' ) ) {
+			$tonight_css_version = THEME_VERSION;
+		}
+		if ( 'local' === VIP_GO_ENV || ! defined( 'THEME_VERSION' ) ) {
+			$tonight_css_version = filemtime( get_theme_file_path() . '/assets/css/tonight.css' );
+		}
 		if ( is_post_type_archive( 'tonight' ) || is_singular( 'tonight' ) || ( is_singular( 'tribe_ext_speaker' ) && has_term( 'tonight', 'tribe_events_cat' ) ) ) {
 			wp_dequeue_style( 'minnpost-style' );
-			wp_enqueue_style( 'minnpost-tonight', get_theme_file_uri() . '/assets/css/tonight.css', array(), filemtime( get_theme_file_path() . '/assets/css/tonight.css' ), 'all' );
+			wp_enqueue_style( 'minnpost-tonight', get_theme_file_uri() . '/assets/css/tonight.css', array(), $tonight_css_version, 'all' );
 		}
 		if ( is_singular( 'tribe_events' ) && has_term( 'tonight', 'tribe_events_cat' ) ) {
 			$locate = locate_template( 'tribe-events/single-event-tonight.php' );
 			if ( '' !== $locate ) {
 				wp_dequeue_style( 'minnpost-style' );
-				wp_enqueue_style( 'minnpost-tonight', get_theme_file_uri() . '/assets/css/tonight.css', array(), filemtime( get_theme_file_path() . '/assets/css/tonight.css' ), 'all' );
+				wp_enqueue_style( 'minnpost-tonight', get_theme_file_uri() . '/assets/css/tonight.css', array(), $tonight_css_version, 'all' );
 			}
 		}
 	}
