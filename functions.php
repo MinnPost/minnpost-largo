@@ -9,6 +9,9 @@ function enqueue_parent_styles() {
 	wp_enqueue_style( 'parent-style', get_theme_file_path().'/style.min.css' );
 }*/
 
+$theme = wp_get_theme();
+define( 'THEME_VERSION', $theme->Version ); // phpcs:ignore WordPress.NamingConventions.ValidVariableName.UsedPropertyNotSnakeCase
+
 /**
  * Composer Libraries
  */
