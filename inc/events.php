@@ -1013,7 +1013,7 @@ endif;
 /**
 * Handle archived MinnPost Festival menus
 */
-if ( ! function_exists( 'minnpost_largo_tonight_styles' ) ) :
+if ( ! function_exists( 'minnpost_largo_old_festival_menu' ) ) :
 	add_filter( 'wp_nav_menu_objects', 'minnpost_largo_old_festival_menu', 20, 2 );
 	function minnpost_largo_old_festival_menu( $sorted_menu_items, $args ) {
 		if ( 'festival' !== $args->theme_location ) {
