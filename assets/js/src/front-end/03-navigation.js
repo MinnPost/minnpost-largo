@@ -2,7 +2,7 @@
  * File navigation.js.
  *
  * Navigation scripts. Includes mobile or toggle behavior, analytics tracking of specific menus.
- * This file does require jQuery in the functions at the bottom.
+ * This file does not require jQuery.
  */
 
 function setupPrimaryNav() {
@@ -113,7 +113,7 @@ function setupPrimaryNav() {
 		}
 	};
 }
-setupPrimaryNav(); // this whole function does not require jquery.
+setupPrimaryNav();
 
 function setupScrollNav() {
 
@@ -142,22 +142,33 @@ function setupScrollNav() {
 	} );
 
 }
-setupScrollNav(); // this whole function does not require jquery.
+setupScrollNav();
 
+// sidebar link click
+document.querySelectorAll( '.o-site-sidebar a' ).forEach(
+    sidebarLink => sidebarLink.addEventListener( 'click', ( e ) => {
+		let closestWidget       = sidebarLink.closest( '.m-widget' );
+		let closestZone         = sidebarLink.closest( '.m-zone' );
+		let widgetTitle         = '';
+		let zoneTitle           = '';
+		let sidebarSectionTitle = '';
+		if ( null !== closestWidget ) {
+			widgetTitle = closestWidget.querySelector( 'h3' ).textContent;
+		} else if ( null !== closestZone ) {
+			zoneTitle = closestZone.querySelector( '.a-zone-title' ).textContent;
+		}
+		if ( null !== widgetTitle ) {
+			sidebarSectionTitle = widgetTitle;
+		} else if ( null !== zoneTitle ) {
+			sidebarSectionTitle = zoneTitle;
+		}
+		mpAnalyticsTrackingEvent( 'event', 'Sidebar Link', 'Click', sidebarSectionTitle );
+    } )
+);
 
-// this is the part that requires jquery.
-$( 'a', $( '.o-site-sidebar' ) ).click( function() {
-	var widgetTitle         = $( this ).closest( '.m-widget' ).find( 'h3' ).text();
-	var zoneTitle           = $( this ).closest( '.m-zone' ).find( '.a-zone-title' ).text();
-	var sidebarSectionTitle = '';
-	if ( '' !== widgetTitle ) {
-		sidebarSectionTitle = widgetTitle;
-	} else if ( '' !== zoneTitle ) {
-		sidebarSectionTitle = zoneTitle;
-	}
-	mpAnalyticsTrackingEvent( 'event', 'Sidebar Link', 'Click', sidebarSectionTitle );
-} );
-
-$( 'a', $( '.m-related' ) ).click( function() {
-	mpAnalyticsTrackingEvent( 'event', 'Related Section Link', 'Click', location.pathname );
-} );
+// related section link click
+document.querySelectorAll( '.m-related a' ).forEach(
+    relatedLink => relatedLink.addEventListener( 'click', ( e ) => {
+		mpAnalyticsTrackingEvent( 'event', 'Related Section Link', 'Click', location.pathname );
+    } )
+);
