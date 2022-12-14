@@ -19,8 +19,7 @@ if ( 'undefined' !== typeof wp ) {
 	// for data layer to Google Tag Manager
 	wp.hooks.addAction( 'wpMessageInserterDataLayerEvent', 'minnpostLargo', mpDataLayerEvent, 10 );
 	wp.hooks.addAction( 'minnpostFormProcessorMailchimpDataLayerEvent', 'minnpostLargo', mpDataLayerEvent, 10 );
-	//wp.hooks.addAction( 'minnpostMembershipDataLayerEvent', 'minnpostLargo', mpDataLayerEvent, 10 );
-	//wp.hooks.addAction( 'minnpostMembershipDataLayerEcommerceAction', 'minnpostLargo', mpDataLayerEcommerce, 10 );
+	wp.hooks.addAction( 'minnpostMembershipDataLayerEcommerceAction', 'minnpostLargo', mpDataLayerEcommerce, 10 );
 }
 
 /*
@@ -53,6 +52,24 @@ function mpDataLayerEvent( dataLayerContent ) {
 */
 function mpAnalyticsTrackingEcommerceAction( type, action, product, step ) {
 	wp.hooks.doAction( 'wpAnalyticsTrackingGeneratorEcommerceAction', type, action, product, step );
+}
+
+/*
+ * Set up dataLayer stuff for ecommerce via Google Tag Manager using the gtm4wp plugin.
+ *
+*/
+function mpDataLayerEcommerce( dataLayerContent ) {
+	if ( 'undefined' !== typeof dataLayer && Object.keys( dataLayerContent ).length !== 0 ) {
+		dataLayer.push({ ecommerce: null }); // first, make sure there aren't multiple things happening.
+		if ( 'undefined' !== typeof dataLayerContent.action && 'undefined' !== typeof dataLayerContent.product ) {
+			dataLayer.push({
+				event: dataLayerContent.action,
+				ecommerce: {
+					items: [dataLayerContent.product]
+				}
+			});
+		}
+	}
 }
 
 /*
