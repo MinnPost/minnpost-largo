@@ -37,7 +37,7 @@ if (showCommentsButton) {
 	} );
 }
 
-// Set user meta value for always showing comments if that button is clicked
+// Set user meta value for always showing comments if that button is clicked. this uses jquery.
 $( document ).on( 'click', '.a-checkbox-always-show-comments', function() {
 	var that = $( this );
 	if ( that.is( ':checked' ) ) {
@@ -68,6 +68,7 @@ $( document ).on( 'click', '.a-checkbox-always-show-comments', function() {
 	} );
 } );
 
+// this uses jquery.
 ! ( function( d ) {
 	if ( ! d.currentScript ) {
 		var data = {
