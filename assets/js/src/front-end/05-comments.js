@@ -29,10 +29,13 @@ function trackShowComments( always, id, clickValue ) {
 	mpAnalyticsTrackingEvent( 'event', categoryPrefix + 'Show Comments' + categorySuffix, action, location.pathname );
 }
 
-// when showing comments once, track it as an analytics event
-$( document ).on( 'click', '.a-button-show-comments', function() {
-	trackShowComments( false, '', '' );
-} );
+// when showing comments once, allow it to be an analytics event
+const showCommentsButton = document.querySelector( '.a-button-show-comments' );
+if (showCommentsButton) {
+	showCommentsButton.addEventListener('click', function (e) {
+		trackShowComments( false, '', '' );
+	} );
+}
 
 // Set user meta value for always showing comments if that button is clicked
 $( document ).on( 'click', '.a-checkbox-always-show-comments', function() {
