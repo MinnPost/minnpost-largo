@@ -20,6 +20,7 @@
 
 <body <?php body_class(); ?>>
 
+	<?php wp_body_open(); ?>
 	<header id="masthead" class="o-header o-header-support">
 		<div class="o-wrapper o-wrapper-site-header<?php echo ( false !== get_query_var( 'grid', false ) ) ? ' o-wrapper-grid-overlay' : ''; ?>">
 			<?php get_template_part( 'template-parts/logo', 'top' ); ?>

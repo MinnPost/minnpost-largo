@@ -20,6 +20,7 @@
 
 <body <?php body_class(); ?>>
 
+	<?php wp_body_open(); ?>
 	<div class="m-ad-region m-ad-region-leaderboard">
 		<div class="o-wrapper">
 			<?php do_action( 'acm_tag', 'leaderboard' ); ?>

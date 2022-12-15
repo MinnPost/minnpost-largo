@@ -29,12 +29,15 @@ function trackShowComments( always, id, clickValue ) {
 	mpAnalyticsTrackingEvent( 'event', categoryPrefix + 'Show Comments' + categorySuffix, action, location.pathname );
 }
 
-// when showing comments once, track it as an analytics event
-$( document ).on( 'click', '.a-button-show-comments', function() {
-	trackShowComments( false, '', '' );
-} );
+// when showing comments once, allow it to be an analytics event
+const showCommentsButton = document.querySelector( '.a-button-show-comments' );
+if (showCommentsButton) {
+	showCommentsButton.addEventListener('click', function (e) {
+		trackShowComments( false, '', '' );
+	} );
+}
 
-// Set user meta value for always showing comments if that button is clicked
+// Set user meta value for always showing comments if that button is clicked. this uses jquery.
 $( document ).on( 'click', '.a-checkbox-always-show-comments', function() {
 	var that = $( this );
 	if ( that.is( ':checked' ) ) {
@@ -65,6 +68,7 @@ $( document ).on( 'click', '.a-checkbox-always-show-comments', function() {
 	} );
 } );
 
+// this uses jquery.
 ! ( function( d ) {
 	if ( ! d.currentScript ) {
 		var data = {

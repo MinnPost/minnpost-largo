@@ -120,6 +120,11 @@ require get_theme_file_path() . '/inc/widgets/glean.php';
 require get_theme_file_path() . '/inc/widgets/picked-for-you.php';
 
 /**
+ * Analytics setup
+ */
+require get_theme_file_path() . '/inc/analytics.php';
+
+/**
  * Custom ad providers for the ad-code-manager plugin
  */
 require get_theme_file_path() . '/inc/custom-ad-providers.php';
