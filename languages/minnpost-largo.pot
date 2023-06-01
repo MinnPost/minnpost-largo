@@ -1,4 +1,4 @@
-# Copyright (C) 2022 minnpost-largo
+# Copyright (C) 2023 minnpost-largo
 # This file is distributed under the same license as the minnpost-largo package.
 msgid ""
 msgstr ""
