@@ -204,7 +204,7 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 					$output .= '<h2 class="cr3_sponsorname">' . get_the_title() . '</h2>';
 				}
 
-				$image_data   = get_minnpost_post_image( $image_size, array( 'location' => 'sponsorlist' ), get_the_ID() );
+				$image_data   = get_minnpost_post_image( 'full', array( 'location' => 'sponsorlist' ), get_the_ID() );
 				$image_markup = isset( $image_data['markup'] ) ? $image_data['markup'] : '';
 				$excerpt      = get_post_meta( get_the_ID(), 'cr3ativ_sponsortext', true );
 				$excerpt      = apply_filters( 'the_content', $excerpt );
