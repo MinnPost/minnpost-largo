@@ -1,33 +1,35 @@
 .o-footer .o-footer-hat section ul.a-sponsor-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: center;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-around;
+	align-items: center;
 }
 
 .o-footer .o-footer-hat section ul.a-sponsor-list li.a-sponsor,
 li.a-sponsor {
-  margin-bottom: $standard-block-margin;
+	margin-bottom: $standard-block-margin;
 
-  > a {
-    display: block;
-  }
+	> a {
+		display: block;
+	}
 
-  figure {
-    margin: 0;
-    display: flex;
+	figure {
+		margin: 0;
+		display: flex;
 
-    > a {
-      display: block;
-    }
+		> a {
+			display: block;
+		}
 
-    img {
-      display: block;
-      align-self: flex-start;
-      min-width: 200px;
-      height: auto;
-      object-fit: cover;
-      text-align: center;
-    }
-  }
+		img {
+			display: block;
+			align-self: flex-start;
+			min-width: 200px;
+			height: auto;
+			object-fit: cover;
+			text-align: center;
+			max-height: 150px;
+			object-fit: contain;
+		}
+	}
 }
