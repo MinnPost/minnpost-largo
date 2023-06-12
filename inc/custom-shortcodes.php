@@ -90,7 +90,7 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 					'display_level'          => 'default',
 					'show_level_heading'     => 'no',
 					'show_image'             => 'yes',
-					'image_size'             => '',
+					'image_size'             => 'full',
 					'show_title'             => 'yes',
 					'show_link'              => 'yes',
 					'show_link_display_text' => 'no',
