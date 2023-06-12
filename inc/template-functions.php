@@ -18,7 +18,7 @@ if ( ! function_exists( 'get_minnpost_post_image' ) ) :
 	/**
 	 * Returns story image, whether large or various kinds of thumbnail, depending on where it is called
 	 */
-	function get_minnpost_post_image( $size = 'thumbnail', $attributes = array(), $id = '', $lazy_load = true ) {
+	function get_minnpost_post_image( $size = 'full', $attributes = array(), $id = '', $lazy_load = true ) {
 		if ( '' === $id ) {
 			$id = get_the_ID();
 		}
