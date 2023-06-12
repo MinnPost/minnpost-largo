@@ -204,7 +204,7 @@ if ( ! function_exists( 'mp_sponsors' ) ) :
 					$output .= '<h2 class="cr3_sponsorname">' . get_the_title() . '</h2>';
 				}
 
-				$image_data   = get_minnpost_post_image( 'full', array( 'location' => 'sponsorlist' ), get_the_ID() );
+				$image_data   = get_minnpost_post_image( $image_size, array( 'location' => 'sponsorlist' ), get_the_ID() );
 				$image_markup = isset( $image_data['markup'] ) ? $image_data['markup'] : '';
 				$excerpt      = get_post_meta( get_the_ID(), 'cr3ativ_sponsortext', true );
 				$excerpt      = apply_filters( 'the_content', $excerpt );
@@ -742,7 +742,7 @@ if ( ! function_exists( 'mp_load_tags' ) ) :
 					$output .= '<h2>' . $tag_data->name . '</h2>';
 				}
 				if ( 'yes' === $attributes['show_tag_image'] ) {
-					$term_figure = minnpost_get_term_figure( $tag_data->term_id, $attributes['tag_image_size'], false, false, '', true, array(), 'tag', false, true );
+					$term_figure = minnpost_get_term_figure( $tag_data->term_id, $attributes['tag_image_size'], false, false, '', true, array(), 'tag', true );
 					$output     .= $term_figure;
 				}
 				if ( 'yes' === $attributes['show_tag_excerpt'] ) {
