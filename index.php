@@ -12,7 +12,15 @@
  * @package MinnPost Largo
  */
 
-get_header(); ?>
+get_header(); 
+
+$author = get_user_by('slug', get_query_var('author_name'));
+
+if (!$author) {
+	wp_redirect(home_url('/404/'));
+}
+
+?>
 
 	<div id="primary" class="m-layout-primary">
 		<main id="main" class="site-main">
