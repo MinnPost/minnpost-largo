@@ -41,4 +41,4 @@ Nicolas Gallagher and Jonathan Neal http://necolas.github.com/normalize.css/
 @import "04_template/*";
 @import "05_page/*";
 @import "legacy-content-classes";
-@import "ie-11-under" // overrides for ie 11 and under. if there is anything necesary for ms edge, it should not go here.
+@import "ie-11-under"; // overrides for ie 11 and under. if there is anything necesary for ms edge, it should not go here.

@@ -1,0 +1,162 @@
+.who-is-running-listing {
+	.listing-container {
+		display: flex;
+		flex-direction: column;
+		gap: 2rem;
+
+		.section {
+			margin-top: 1rem;
+		}
+	}
+
+	.data-set-container {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		flex-direction: column;
+		gap: 0.5rem;
+
+		.data-set {
+			border: 1px solid #d6d6da;
+			padding: 0.8rem;
+
+			img {
+				width: 130px;
+				height: 130px;
+				object-fit: cover;
+			}
+
+			.party {
+				display: flex;
+				align-items: center;
+				gap: 7px;
+				color: #869298;
+
+				span {
+					font-size: 14px;
+					color: #1a1818;
+				}
+
+				.badge {
+					border-radius: 50%;
+					align-items: center;
+					color: #fff;
+					background-color: #869298;
+					font-weight: 700;
+					height: 1.25em;
+					width: 1.25em;
+					display: inline-flex;
+					justify-content: center;
+					flex: 0 0 auto;
+
+					&.dfl {
+						background: #0793ab;
+					}
+
+					&.republican {
+						background: #a1000f;
+					}
+				}
+			}
+
+			h4 {
+				font-size: 1.1rem;
+				margin-bottom: 15px;
+			}
+			h5 {
+				font-size: 17px;
+				font-family: ff-meta-web-pro, helvetica, arial, sans-serif;
+				margin-bottom: 8px;
+			}
+			p {
+				font-size: 16px;
+				font-family: ff-meta-web-pro, helvetica, arial, sans-serif;
+			}
+			.blurb {
+				margin-top: 10px;
+			}
+		}
+
+		.data-set.dropped {
+			display: none;
+
+			&.active {
+				display: block;
+			}
+		}
+	}
+
+	.hidden-party,
+	.hidden-district {
+		display: none;
+	}
+
+	.listing-filter {
+		margin-bottom: 2rem;
+
+		.filter-container {
+			width: 100%;
+			display: grid;
+			gap: 0.5rem;
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+
+		.search-container input {
+			width: 100%;
+			margin-bottom: 0.5rem;
+		}
+	}
+
+	.no-longer-running {
+		display: flex;
+		gap: 1rem;
+		justify-content: flex-end;
+		margin-top: 1rem;
+		font-family: ff-meta-web-pro, helvetica, arial, sans-serif;
+		font-size: 16px;
+		align-items: center;
+
+		#show-non-running {
+			border-radius: 24px;
+			background: #869298;
+			position: relative;
+			width: 51px;
+			padding: 0.6rem;
+			cursor: pointer;
+
+			span {
+				height: 18px;
+				width: 18px;
+				background: #fff;
+				border-radius: 100%;
+				display: block;
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				margin: auto;
+				left: 5px;
+				transition: all 0.3s ease;
+			}
+
+			&.active {
+				background: #7f121c;
+
+				span {
+					transform: translateX(100%);
+				}
+			}
+		}
+	}
+
+	@media screen and (max-width: 550px) {
+		.data-set-container {
+			display: flex;
+			gap: 2rem;
+		}
+
+		.listing-filter .filter-container {
+			width: 100%;
+			display: flex;
+			flex-direction: column;
+		}
+	}
+}

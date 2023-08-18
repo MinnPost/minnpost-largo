@@ -14,18 +14,18 @@
  * @param bool $force_reauth
  * @return string $login_url
  */
-if ( ! function_exists( 'login_url' ) ) :
-	add_filter( 'login_url', 'login_url', 10, 3 );
-	function login_url( $login_url, $redirect, $force_reauth ) {
-		$login_url    = site_url( '/user/login/' );
-		$register_url = site_url( '/user/register/' );
+// if ( ! function_exists( 'login_url' ) ) :
+// 	add_filter( 'login_url', 'login_url', 10, 3 );
+// 	function login_url( $login_url, $redirect, $force_reauth ) {
+// 		$login_url    = site_url( '/user/login/' );
+// 		$register_url = site_url( '/user/register/' );
 
-		if ( '' !== $redirect && get_current_url() !== $login_url && get_current_url() !== $register_url ) {
-			$login_url = add_query_arg( 'redirect_to', $redirect, $login_url );
-		}
-		return $login_url;
-	}
-endif;
+// 		if ( '' !== $redirect && get_current_url() !== $login_url && get_current_url() !== $register_url ) {
+// 			$login_url = add_query_arg( 'redirect_to', $redirect, $login_url );
+// 		}
+// 		return $login_url;
+// 	}
+// endif;
 
 /**
 * Return register url for users

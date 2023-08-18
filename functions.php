@@ -168,3 +168,8 @@ require get_theme_file_path() . '/inc/jetpack.php';
  * Settings for popup plugin, site messages plugin, etc.
  */
 require get_theme_file_path() . '/inc/popups-site-messages.php';
+
+/**
+ * Settings Who is running page data
+ */
+require get_theme_file_path() . '/inc/who-is-running.php';

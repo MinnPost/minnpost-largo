@@ -41,6 +41,7 @@ if ( ! function_exists( 'minnpost_largo_add_remove_styles' ) ) :
 					wp_enqueue_style( 'minnpost-liveblog', get_theme_file_uri() . '/assets/css/liveblog.css', array(), filemtime( get_theme_file_path() . '/assets/css/liveblog.css' ), 'all' );
 				}
 			}
+			wp_enqueue_style( 'minnpost-who-is-running', get_theme_file_uri() . '/assets/css/who-is-running.css', array(), '', 'all' );
 			$css_urls = get_post_meta( get_the_ID(), '_css_file_urls', true );
 			if ( '' !== $css_urls ) {
 				$css_urls     = explode( "\r\n", $css_urls );
