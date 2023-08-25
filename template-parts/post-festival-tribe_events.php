@@ -44,6 +44,11 @@ $post_class = 'm-post m-festival-post m-festival-post-event m-festival-post-even
 					?>
 					<?php do_action( 'tribe_events_single_event_after_the_content' ); ?>
 				</div>
+				<?php
+				get_template_part(
+					'tribe/events/modules/meta/venue'
+				);
+				?>
 			</div>
 			<?php endif; ?>
 			<?php

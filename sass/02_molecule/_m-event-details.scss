@@ -1,4 +1,18 @@
 .m-event-details {
+	@include body-preset($size: -1);
+	display: flex;
+	font-size: 1rem;
+	justify-content: space-between;
 
-	@include body-preset( $size: -1 );
+	.m-event-venue {
+		margin: 0;
+	}
+
+	@media screen and (max-width: 998px) {
+		flex-direction: column;
+	}
+}
+
+body {
+	display: none !important;
 }

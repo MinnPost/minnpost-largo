@@ -38,6 +38,11 @@ if ( true === $args['featured'] ) {
 				);
 				?>
 			</div>
+			<?php
+				get_template_part(
+					'tribe/events/modules/meta/venue-simple'
+				);
+				?>
 		</div>
 		<?php endif; ?>
 	</aside>

@@ -1,4 +1,15 @@
 .m-festival-post-event-featured .m-event-details {
-    font-family: $webfont__sans;
-    font-size: var(--scale1);
+	font-family: $webfont__sans;
+	font-size: var(--scale1);
+	display: flex;
+	font-size: 1rem;
+	justify-content: space-between;
+
+	.m-event-venue {
+		margin: 0;
+	}
+
+	@media screen and (max-width: 998px) {
+		flex-direction: column;
+	}
 }
