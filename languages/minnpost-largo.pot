@@ -2114,7 +2114,7 @@ msgstr ""
 msgid "Return to %1$s Homepage"
 msgstr ""
 
-#: template-parts/post-festival-tribe_events-excerpt-featured.php:63
+#: template-parts/post-festival-tribe_events-excerpt-featured.php:68
 msgid "Get a Festival Pass"
 msgstr ""
 

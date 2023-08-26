@@ -46,7 +46,7 @@ $post_class = 'm-post m-festival-post m-festival-post-event m-festival-post-even
 				</div>
 				<?php
 				get_template_part(
-					'tribe/events/modules/meta/venue'
+					'tribe/events/modules/meta/venue-include-gmap'
 				);
 				?>
 			</div>

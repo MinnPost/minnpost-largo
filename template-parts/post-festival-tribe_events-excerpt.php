@@ -53,6 +53,11 @@ if ( '' !== get_minnpost_post_image( 'feature-large' ) ) {
 					);
 					?>
 				</div>
+				<?php
+				get_template_part(
+					'tribe/events/modules/meta/venue'
+				);
+				?>
 			</div>
 			<?php endif; ?>
 			<div class="m-event-content m-festival-event-content">
