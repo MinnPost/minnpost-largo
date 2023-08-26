@@ -1,7 +1,7 @@
 .m-event-details {
 	@include body-preset($size: -1);
 	display: flex;
-	font-size: 0.9rem;
+	font-size: 0.9rem !important;
 	justify-content: space-between;
 
 	.m-event-venue {
