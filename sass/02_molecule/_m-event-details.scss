@@ -1,14 +1,26 @@
 .m-event-details {
 	@include body-preset($size: -1);
 	display: flex;
-	font-size: 1rem;
+	font-size: 0.9rem;
 	justify-content: space-between;
 
 	.m-event-venue {
 		margin: 0;
+		font-size: 0.8rem;
+		width: 50%;
+		display: flex;
+		justify-content: flex-end;
+		text-align: right;
 	}
 
 	@media screen and (max-width: 998px) {
 		flex-direction: column;
+
+		.m-event-venue {
+			width: 100%;
+			display: flex;
+			justify-content: flex-start;
+			text-align: left;
+		}
 	}
 }

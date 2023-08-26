@@ -2262,7 +2262,7 @@ msgstr ""
 msgid "Hosts:"
 msgstr ""
 
-#: tribe/events/modules/meta/venue.php:44
+#: tribe/events/modules/meta/venue-include-gmap.php:27, tribe/events/modules/meta/venue.php:44
 msgid "On Google Maps"
 msgstr ""
 
