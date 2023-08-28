@@ -29,7 +29,7 @@
     return $office_sought;
   }
 ?>
-
+<?php if ($data) { ?>
 <div class="who-is-running-listing">
     <div class="listing-filter">
       <div class="search-container">
@@ -209,3 +209,4 @@
     });
   });
 </script>
+<?php }; ?>
