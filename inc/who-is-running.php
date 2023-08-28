@@ -71,6 +71,9 @@ function save_csv_file($post_id) {
       $csv_file_url = $upload_dir['url'] . '/' . $csv_file_name;
       update_post_meta($post_id, 'csv_file_url', $csv_file_url);
 
+      if ($csv_file_name == "") {
+        return;
+      }
       $csv_data = array_map('str_getcsv', file($csv_file));
 
       global $wpdb;
