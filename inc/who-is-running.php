@@ -78,36 +78,84 @@ function save_csv_file($post_id) {
 
       global $wpdb;
 
-      $table_name = $wpdb->prefix . 'who_is_running_dataset';
+      // Determine the type of CSV based on the column header
+      $csv_type = strtolower($csv_data[0][1]); // Assuming "party" or "city" is the third column
 
-      $wpdb->delete(
-          $table_name,
-          array('post_id' => $post_id),
-          array('%d')
-      );
+      if ($csv_type == 'party') {
+        $table_name = $wpdb->prefix . 'who_is_running_dataset';
 
-      array_shift($csv_data);
-      foreach ($csv_data as $row) {
-          $data = [
-              'post_id' => $post_id,
-              'name' => $row[0],
-              'office_sought' => $row[1],
-              'party' => $row[2],
-              'hometown' => $row[3],
-              'incumbent' => convert_csv_boolean_to_db_value($row[4]),
-              'endorsed' => convert_csv_boolean_to_db_value($row[5]),
-              'dropped_out' => convert_csv_boolean_to_db_value($row[6]),
-              'date_added' => convert_csv_date_to_mysql_format($row[7]),
-              'date_dropped_out' => convert_csv_date_to_mysql_format($row[8]),
-              'approved' => convert_csv_boolean_to_db_value($row[9]),
-              'blurb' => str_replace(array("\r\n", "\r", "\n"), '', $row[10]),
-              'headshot_url' => $row[11],
-              'website' => $row[12]
-          ];
+        $wpdb->delete(
+            $table_name,
+            array('post_id' => $post_id),
+            array('%d')
+        );
+  
+        array_shift($csv_data);
+        foreach ($csv_data as $row) {
+            $data = [
+                'post_id' => $post_id,
+                'name' => $row[0],
+                'office_sought' => $row[1],
+                'party' => $row[2],
+                'hometown' => $row[3],
+                'incumbent' => convert_csv_boolean_to_db_value($row[4]),
+                'endorsed' => convert_csv_boolean_to_db_value($row[5]),
+                'dropped_out' => convert_csv_boolean_to_db_value($row[6]),
+                'date_added' => convert_csv_date_to_mysql_format($row[7]),
+                'date_dropped_out' => convert_csv_date_to_mysql_format($row[8]),
+                'approved' => convert_csv_boolean_to_db_value($row[9]),
+                'blurb' => str_replace(array("\r\n", "\r", "\n"), '', $row[10]),
+                'headshot_url' => $row[11],
+                'website' => $row[12]
+            ];
+  
+            $data['post_id'] = $post_id;
+  
+            $wpdb->insert($table_name, $data);
+        }
+      } elseif ($csv_type == "city") {
+        $table_name = $wpdb->prefix . 'who_is_running_questions_dataset';
 
-          $data['post_id'] = $post_id;
+        $wpdb->delete(
+            $table_name,
+            array('post_id' => $post_id),
+            array('%d')
+        );
+  
+        $headings = array_shift($csv_data);
+        $end_question_col = array_search('website', $headings); // Find the index of 'website' heading
 
-          $wpdb->insert($table_name, $data);
+        foreach ($csv_data as $row) {
+            // ... your existing code to process common data
+        
+            // Assuming the first question starts at column index 10
+            $start_question_col = 10;
+        
+            $data = [
+                'post_id' => $post_id,
+                'name' => $row[0],
+                'office_sought' => $row[1],
+                'city' => $row[2], // Assuming 'city' corresponds to the new 'city' column
+                'hometown' => $row[3],
+                'incumbent' => convert_csv_boolean_to_db_value($row[4]),
+                'endorsed' => convert_csv_boolean_to_db_value($row[5]),
+                'dropped_out' => convert_csv_boolean_to_db_value($row[6]),
+                'date_added' => convert_csv_date_to_mysql_format($row[7]),
+                'date_dropped_out' => convert_csv_date_to_mysql_format($row[8]),
+                'approved' => convert_csv_boolean_to_db_value($row[9]),
+            ];
+        
+            for ($i = $start_question_col; $i < $end_question_col; $i++) {
+                $data['question_' . ($i - $start_question_col + 1)] = $headings[$i];
+                $data['answer_' . ($i - $start_question_col + 1)] = $row[$i];
+            }
+        
+            // Populate 'website' from the last column (assumption)
+            $data['website'] = end($row);
+        
+            $wpdb->insert($table_name, $data);
+        }
+        
       }
   }
 }
@@ -150,6 +198,7 @@ function create_who_is_running_dataset_table() {
 }
 
 add_action('admin_init', 'create_who_is_running_dataset_table');
+
 
 add_action('wp_ajax_search_data', 'ajax_search_data');
 add_action('wp_ajax_nopriv_search_data', 'ajax_search_data'); // For non-logged-in users
@@ -229,6 +278,112 @@ function ajax_search_data() {
                         $html_output .= '<h5>✖️ Out of the race</h5>';
                     }
                     $html_output .= '<p class="blurb">' . wp_kses_post($item['blurb']) . '</p>';
+                    $html_output .= '</div>';
+                }
+            }
+            $html_output .= '</div>';
+            $html_output .= '</div>';
+        }
+        $html_output .= '</div>';
+    endforeach;
+
+    // Echo the HTML markup as the response
+    echo $html_output;
+    wp_die();
+}
+
+add_action('wp_ajax_search_questions_data', 'ajax_search_questions_data');
+add_action('wp_ajax_nopriv_search_questions_data', 'ajax_search_questions_data'); // For non-logged-in users
+
+function ajax_search_questions_data() {
+    $search_term = sanitize_text_field($_POST['search_term']);
+    $post_id = intval($_POST['post_id']); 
+
+    // Modify the query to filter based on the search term
+    global $wpdb;
+    $table_name = $wpdb->prefix . 'who_is_running_questions_dataset';
+    $query = $wpdb->prepare("SELECT * FROM $table_name WHERE post_id = %d AND (name LIKE %s OR city LIKE %s OR office_sought LIKE %s)", $post_id, '%' . $wpdb->esc_like($search_term) . '%', '%' . $wpdb->esc_like($search_term) . '%', '%' . $wpdb->esc_like($search_term) . '%');
+    $filtered_data = $wpdb->get_results($query, ARRAY_A);
+
+
+    $nested_sectioned_data = array();
+
+    function get_parent_group($office_sought) {
+        if (preg_match('/^(.*?)(\d+)$/', $office_sought, $matches)) {
+          return $matches[1];
+        }
+        
+        return $office_sought;
+      }
+      
+    foreach ($filtered_data as $item) {
+        $office_sought = $item['office_sought'];
+        $parent_group = get_parent_group($office_sought);
+    
+        if (!isset($nested_sectioned_data[$parent_group])) {
+            $nested_sectioned_data[$parent_group] = array();
+        }
+        if (!isset($nested_sectioned_data[$parent_group][$office_sought])) {
+            $nested_sectioned_data[$parent_group][$office_sought] = array();
+        }
+        $nested_sectioned_data[$parent_group][$office_sought][] = $item;
+    }
+
+
+    foreach ($nested_sectioned_data as $parent_group => $section_data) : 
+        $html_output .= '<div class="parent-group">';
+        $html_output .= '<h2 data-district="' . esc_attr(str_replace(' ', '-', $parent_group)) . '">' . esc_html($parent_group) . '</h2>';
+        foreach ($section_data as $office_sought => $group_data) {
+            $html_output .= '<div class="section">';
+            if (esc_html($office_sought) != esc_html($parent_group)) {
+                $html_output .= '<h3 data-district="' . esc_attr(str_replace(' ', '-', $office_sought)) . '">' . esc_html($office_sought) . '</h3>';
+            }
+            $html_output .= '<div class="data-set-container">';
+            foreach ($group_data as $item) {
+                if (esc_html($item['name'])) {
+                    $html_output .= '<div data-city="' . esc_attr(str_replace(' ', '-', $item['city'])) . '" data-district="' . esc_attr(str_replace(' ', '-', $office_sought)) . '" class="data-set ' . (esc_html($item['dropped_out']) ? 'dropped' : '') . '">';
+                    if (esc_html($item['headshot_url'])) {
+                        $html_output .= '<img src="' . esc_html($item['headshot_url']) . '" alt="' . esc_html($item['name']) . '">';
+                    } 
+                    $html_output .= '<h4 class="name">' . esc_html($item['name']) . '</h4>';
+                    $html_output .= '<h5 class="party">';
+                    if (esc_html($item['city']) == "Republican") {
+                        $html_output .= '<span class="badge republican">R</span>';
+                    } elseif (esc_html($item['city']) == "DFL") {
+                        $html_output .= '<span class="badge dfl">D</span>';
+                    }
+                    $html_output .= esc_html($item['city']);
+                    if (esc_html($item['endorsed'])) {
+                        $html_output .= '<span>(✔️ Endorsed)</span>';
+                    }
+                    $html_output .= '</h5>';
+                    $html_output .= '<h5 class="hometown">🏠 Lives in: ' . esc_html($item['hometown']) . '</h5>';
+                    if (esc_html($item['incumbent'])) {
+                        $html_output .= '<h5 class="incumbent">⭐ Member of House</h5>';
+                    }
+                    if (esc_html($item['website'])) {
+                        $html_output .= '<h5>🔗 <a target="_blank" class="website" href="' . esc_html($item['website']) . '">Campaign website</a></h5>';
+                    }
+                    if (esc_html($item['dropped_out'])) {
+                        $html_output .= '<h5>✖️ Out of the race</h5>';
+                    }
+                    $html_output .= '
+                        <h5 class="read-qa">ℹ️ Read Q&A <span><svg xmlns="http://www.w3.org/2000/svg" width="21px" height="21px" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.00003 8.5C6.59557 8.5 6.23093 8.74364 6.07615 9.11732C5.92137 9.49099 6.00692 9.92111 6.29292 10.2071L11.2929 15.2071C11.6834 15.5976 12.3166 15.5976 12.7071 15.2071L17.7071 10.2071C17.9931 9.92111 18.0787 9.49099 17.9239 9.11732C17.7691 8.74364 17.4045 8.5 17 8.5H7.00003Z" fill="#000000"/></svg></span></h5>
+                        <div class="accordion-container">';
+
+                    for ($i = 1; $i <= 20; $i++) {
+                        if (esc_html($item['answer_' . $i])) {
+                            $html_output .= '
+                                <div class="accordion">
+                                    <h5>' . esc_html($item['question_' . $i]) . '</h5>
+                                    <p>' . esc_html($item['answer_' . $i]) . '</p>
+                                </div>';
+                        }
+                    }
+
+                    $html_output .= '
+                        </div>';
+
                     $html_output .= '</div>';
                 }
             }

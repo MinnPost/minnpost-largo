@@ -97,7 +97,7 @@
 			width: 100%;
 			display: grid;
 			gap: 0.5rem;
-			grid-template-columns: repeat(3, minmax(0, 1fr));
+			grid-template-columns: repeat(2, minmax(0, 1fr));
 		}
 
 		.search-container input {
@@ -144,6 +144,35 @@
 					transform: translateX(100%);
 				}
 			}
+		}
+	}
+
+	.read-qa {
+		display: flex;
+		align-items: center;
+		cursor: pointer;
+
+		span {
+			display: flex;
+			align-items: center;
+		}
+
+		&.active {
+			span {
+				transform: rotate(180deg);
+			}
+		}
+	}
+
+	.accordion-container {
+		display: none;
+		flex-direction: column;
+		background: white;
+
+		&.active {
+			display: flex;
+			gap: 1rem;
+			margin-top: 1rem;
 		}
 	}
 
