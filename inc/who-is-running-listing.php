@@ -166,9 +166,13 @@
       $('#district-select').on('change', function() {
           var selectedDistrict = $(this).val();
 
+          $('.parent-group').removeClass('hidden')
+          $('.section').removeClass('hidden')
+
           if (selectedDistrict == "blank") {
             $('.data-set').removeClass('hidden-district');
             $('h2').removeClass('hidden-district')
+            $('.parent-group').removeClass('hidden-district')
             $('h3').removeClass('hidden-district')
             return;
           }
@@ -192,12 +196,14 @@
                   $(this).find('h2').removeClass('hidden-district');
               } else {
                   $(this).find('h2').addClass('hidden-district');
+                  $(this).addClass('hidden');
               }
               dataDistrict2.each(function() {
                 if ($(this).data('district') == selectedDistrict) {
                   $(this).removeClass('hidden-district')
                 } else {
                   $(this).addClass('hidden-district')
+                  $(this).closest('.section').addClass('hidden')
                 }
               })
           });
@@ -229,20 +235,36 @@
         <input id="listing-search" type="text" placeholder="Search for a candidate, party, region, or district">
       </div>
       <div class="filter-container">
-        <select id="city-select" name="party">
-          <option value="blank">Choose a city...</option>
-          <?php foreach (array_unique(array_column($data, 'city')) as $party) : ?>
-            <?php if (!empty(esc_attr($party))) : ?>
-              <option value="<?php echo esc_attr(str_replace(' ', '-', $party)); ?>"><?php echo esc_html($party); ?></option>
-            <?php endif; ?>
-          <?php endforeach; ?>
-        </select>
         <select id="district-select" name="district">
-          <option value="blank">Choose an office...</option>
+          <option value="blank">Choose a city...</option>
           <?php foreach (array_unique(array_column($data, 'office_sought')) as $office_sought) : ?>
               <?php if (!empty(esc_attr($office_sought))) : ?>
                 <option value="<?php echo esc_attr(str_replace(' ', '-', $office_sought)); ?>"><?php echo esc_html($office_sought); ?></option>
               <?php endif; ?>
+          <?php endforeach; ?>
+        </select>
+        <select id="city-select" name="party">
+          <option value="blank">Choose an office...</option>
+          <?php
+            $uniqueCities = array_unique(array_column($data, 'city'));
+
+            // Custom sort function
+            uasort($uniqueCities, function($a, $b) {
+                // Extract numbers from the strings 'Ward x' using regex
+                preg_match('/\d+/', $a, $matchesA);
+                preg_match('/\d+/', $b, $matchesB);
+                
+                $numberA = isset($matchesA[0]) ? (int) $matchesA[0] : 0;
+                $numberB = isset($matchesB[0]) ? (int) $matchesB[0] : 0;
+
+                // Compare the extracted numbers
+                return $numberA <=> $numberB;
+            });
+          ?>
+          <?php foreach ($uniqueCities as $party) : ?>
+            <?php if (!empty(esc_attr($party))) : ?>
+              <option value="<?php echo esc_attr(str_replace(' ', '-', $party)); ?>"><?php echo esc_html($party); ?></option>
+            <?php endif; ?>
           <?php endforeach; ?>
         </select>
       </div>
