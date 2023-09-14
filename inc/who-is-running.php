@@ -199,6 +199,72 @@ function create_who_is_running_dataset_table() {
 
 add_action('admin_init', 'create_who_is_running_dataset_table');
 
+function create_who_is_running_questions_dataset_table() {
+	global $wpdb;
+	$table_name = $wpdb->prefix . 'who_is_running_questions_dataset';
+
+	$sql = "CREATE TABLE IF NOT EXISTS $table_name (
+			id INT AUTO_INCREMENT PRIMARY KEY,
+			post_id VARCHAR(255),
+			name VARCHAR(255),
+			office_sought VARCHAR(255),
+			city VARCHAR(255),
+			hometown VARCHAR(255),
+			incumbent BOOLEAN,
+			endorsed BOOLEAN,
+			dropped_out BOOLEAN,
+			date_added DATE,
+			date_dropped_out DATE,
+			approved BOOLEAN,
+			question_1 TEXT,
+            answer_1 TEXT,
+			question_2 TEXT,
+            answer_2 TEXT,
+			question_3 TEXT,
+            answer_3 TEXT,
+			question_4 TEXT,
+            answer_4 TEXT,
+			question_5 TEXT,
+            answer_5 TEXT,
+			question_6 TEXT,
+            answer_6 TEXT,
+			question_7 TEXT,
+            answer_7 TEXT,
+			question_8 TEXT,
+            answer_8 TEXT,
+			question_9 TEXT,
+            answer_9 TEXT,
+			question_10 TEXT,
+            answer_10 TEXT,
+			question_11 TEXT,
+            answer_11 TEXT,
+			question_12 TEXT,
+            answer_12 TEXT,
+			question_13 TEXT,
+            answer_13 TEXT,
+			question_14 TEXT,
+            answer_14 TEXT,
+			question_15 TEXT,
+            answer_15 TEXT,
+			question_16 TEXT,
+            answer_16 TEXT,
+			question_17 TEXT,
+            answer_17 TEXT,
+			question_18 TEXT,
+            answer_18 TEXT,
+			question_19 TEXT,
+            answer_19 TEXT,
+			question_20 TEXT,
+            answer_20 TEXT,
+			website VARCHAR(255)
+	)";
+
+	require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
+	dbDelta($sql);
+}
+
+add_action('admin_init', 'create_who_is_running_questions_dataset_table');
+
 
 add_action('wp_ajax_search_data', 'ajax_search_data');
 add_action('wp_ajax_nopriv_search_data', 'ajax_search_data'); // For non-logged-in users
