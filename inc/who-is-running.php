@@ -330,15 +330,15 @@ function ajax_search_data() {
                     }
                     $html_output .= esc_html($item['party']);
                     if (esc_html($item['endorsed'])) {
-                        $html_output .= '<span>(✔️ Endorsed)</span>';
+                        $html_output .= '<span>(✔️ Incumbent)</span>';
                     }
                     $html_output .= '</h5>';
-                    $html_output .= '<h5 class="hometown">🏠 Lives in: ' . esc_html($item['hometown']) . '</h5>';
+                    $html_output .= '<h5 class="hometown">Lives in: ' . esc_html($item['hometown']) . '</h5>';
                     if (esc_html($item['incumbent'])) {
-                        $html_output .= '<h5 class="incumbent">⭐ Member of House</h5>';
+                        $html_output .= '<h5 class="incumbent">Member of House</h5>';
                     }
                     if (esc_html($item['website'])) {
-                        $html_output .= '<h5>🔗 <a target="_blank" class="website" href="' . esc_html($item['website']) . '">Campaign website</a></h5>';
+                        $html_output .= '<h5><a target="_blank" class="website" href="' . esc_html($item['website']) . '">Campaign website</a></h5>';
                     }
                     if (esc_html($item['dropped_out'])) {
                         $html_output .= '<h5>✖️ Out of the race</h5>';
@@ -420,21 +420,21 @@ function ajax_search_questions_data() {
                     }
                     $html_output .= esc_html($item['city']);
                     if (esc_html($item['endorsed'])) {
-                        $html_output .= '<span>(✔️ Endorsed)</span>';
+                        $html_output .= '<span>(✔️ Incumbent)</span>';
                     }
                     $html_output .= '</h5>';
-                    $html_output .= '<h5 class="hometown">🏠 Lives in: ' . esc_html($item['hometown']) . '</h5>';
+                    $html_output .= '<h5 class="hometown">Lives in: ' . esc_html($item['hometown']) . '</h5>';
                     if (esc_html($item['incumbent'])) {
-                        $html_output .= '<h5 class="incumbent">⭐ Member of House</h5>';
+                        $html_output .= '<h5 class="incumbent">Member of House</h5>';
                     }
                     if (esc_html($item['website'])) {
-                        $html_output .= '<h5>🔗 <a target="_blank" class="website" href="' . esc_html($item['website']) . '">Campaign website</a></h5>';
+                        $html_output .= '<h5><a target="_blank" class="website" href="' . esc_html($item['website']) . '">Campaign website</a></h5>';
                     }
                     if (esc_html($item['dropped_out'])) {
                         $html_output .= '<h5>✖️ Out of the race</h5>';
                     }
                     $html_output .= '
-                        <h5 class="read-qa">ℹ️ Read Q&A <span><svg xmlns="http://www.w3.org/2000/svg" width="21px" height="21px" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.00003 8.5C6.59557 8.5 6.23093 8.74364 6.07615 9.11732C5.92137 9.49099 6.00692 9.92111 6.29292 10.2071L11.2929 15.2071C11.6834 15.5976 12.3166 15.5976 12.7071 15.2071L17.7071 10.2071C17.9931 9.92111 18.0787 9.49099 17.9239 9.11732C17.7691 8.74364 17.4045 8.5 17 8.5H7.00003Z" fill="#000000"/></svg></span></h5>
+                        <h5 class="read-qa">Read Q&A <span><svg xmlns="http://www.w3.org/2000/svg" width="21px" height="21px" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.00003 8.5C6.59557 8.5 6.23093 8.74364 6.07615 9.11732C5.92137 9.49099 6.00692 9.92111 6.29292 10.2071L11.2929 15.2071C11.6834 15.5976 12.3166 15.5976 12.7071 15.2071L17.7071 10.2071C17.9931 9.92111 18.0787 9.49099 17.9239 9.11732C17.7691 8.74364 17.4045 8.5 17 8.5H7.00003Z" fill="#000000"/></svg></span></h5>
                         <div class="accordion-container">';
 
                     for ($i = 1; $i <= 20; $i++) {
