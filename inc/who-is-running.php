@@ -134,15 +134,15 @@ function save_csv_file($post_id) {
             $data = [
                 'post_id' => $post_id,
                 'name' => $row[0],
-                'office_sought' => $row[1],
-                'city' => $row[2], // Assuming 'city' corresponds to the new 'city' column
-                'hometown' => $row[3],
-                'incumbent' => convert_csv_boolean_to_db_value($row[4]),
-                'endorsed' => convert_csv_boolean_to_db_value($row[5]),
-                'dropped_out' => convert_csv_boolean_to_db_value($row[6]),
-                'date_added' => convert_csv_date_to_mysql_format($row[7]),
-                'date_dropped_out' => convert_csv_date_to_mysql_format($row[8]),
-                'approved' => convert_csv_boolean_to_db_value($row[9]),
+                'office_sought' => $row[2],
+                'city' => $row[1], // Assuming 'city' corresponds to the new 'city' column
+                'hometown' => $row[4],
+                'incumbent' => convert_csv_boolean_to_db_value($row[5]),
+                'endorsed' => convert_csv_boolean_to_db_value($row[6]),
+                'dropped_out' => convert_csv_boolean_to_db_value($row[7]),
+                'date_added' => convert_csv_date_to_mysql_format($row[8]),
+                'date_dropped_out' => convert_csv_date_to_mysql_format($row[9]),
+                'approved' => convert_csv_boolean_to_db_value($row[10]),
             ];
         
             for ($i = $start_question_col; $i < $end_question_col; $i++) {
@@ -330,15 +330,15 @@ function ajax_search_data() {
                     }
                     $html_output .= esc_html($item['party']);
                     if (esc_html($item['endorsed'])) {
-                        $html_output .= '<span>(✔️ Incumbent)</span>';
+                        $html_output .= '<span>(✔️ Endorsed)</span>';
                     }
                     $html_output .= '</h5>';
-                    $html_output .= '<h5 class="hometown">Lives in: ' . esc_html($item['hometown']) . '</h5>';
+                    $html_output .= '<h5 class="hometown">🏠 Lives in: ' . esc_html($item['hometown']) . '</h5>';
                     if (esc_html($item['incumbent'])) {
-                        $html_output .= '<h5 class="incumbent">Member of House</h5>';
+                        $html_output .= '<h5 class="incumbent">⭐ Incumbent</h5>';
                     }
                     if (esc_html($item['website'])) {
-                        $html_output .= '<h5><a target="_blank" class="website" href="' . esc_html($item['website']) . '">Campaign website</a></h5>';
+                        $html_output .= '<h5>🔗 <a target="_blank" class="website" href="' . esc_html($item['website']) . '">Campaign website</a></h5>';
                     }
                     if (esc_html($item['dropped_out'])) {
                         $html_output .= '<h5>✖️ Out of the race</h5>';
@@ -420,30 +420,40 @@ function ajax_search_questions_data() {
                     }
                     $html_output .= esc_html($item['city']);
                     if (esc_html($item['endorsed'])) {
-                        $html_output .= '<span>(✔️ Incumbent)</span>';
+                        $html_output .= '<span>(✔️ Endorsed)</span>';
                     }
                     $html_output .= '</h5>';
-                    $html_output .= '<h5 class="hometown">Lives in: ' . esc_html($item['hometown']) . '</h5>';
+                    $html_output .= '<h5 class="hometown">🏠 Lives in: ' . esc_html($item['hometown']) . '</h5>';
                     if (esc_html($item['incumbent'])) {
-                        $html_output .= '<h5 class="incumbent">Member of House</h5>';
+                        $html_output .= '<h5 class="incumbent">⭐ Incumbent</h5>';
                     }
                     if (esc_html($item['website'])) {
-                        $html_output .= '<h5><a target="_blank" class="website" href="' . esc_html($item['website']) . '">Campaign website</a></h5>';
+                        $html_output .= '<h5>🔗 <a target="_blank" class="website" href="' . esc_html($item['website']) . '">Campaign website</a></h5>';
                     }
                     if (esc_html($item['dropped_out'])) {
                         $html_output .= '<h5>✖️ Out of the race</h5>';
                     }
-                    $html_output .= '
-                        <h5 class="read-qa">Read Q&A <span><svg xmlns="http://www.w3.org/2000/svg" width="21px" height="21px" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.00003 8.5C6.59557 8.5 6.23093 8.74364 6.07615 9.11732C5.92137 9.49099 6.00692 9.92111 6.29292 10.2071L11.2929 15.2071C11.6834 15.5976 12.3166 15.5976 12.7071 15.2071L17.7071 10.2071C17.9931 9.92111 18.0787 9.49099 17.9239 9.11732C17.7691 8.74364 17.4045 8.5 17 8.5H7.00003Z" fill="#000000"/></svg></span></h5>
-                        <div class="accordion-container">';
-
+                    $hasAnswers = false;
                     for ($i = 1; $i <= 20; $i++) {
-                        if (esc_html($item['answer_' . $i])) {
-                            $html_output .= '
-                                <div class="accordion">
-                                    <h5>' . esc_html($item['question_' . $i]) . '</h5>
-                                    <p>' . esc_html($item['answer_' . $i]) . '</p>
-                                </div>';
+                        if (!empty($item['answer_' . $i])) {
+                            $hasAnswers = true;
+                            break; 
+                        }
+                    }
+
+                    if ($hasAnswers) {
+                        $html_output .= '
+                            <h5 class="read-qa">ℹ️ Read Q&A <span><svg xmlns="http://www.w3.org/2000/svg" width="21px" height="21px" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.00003 8.5C6.59557 8.5 6.23093 8.74364 6.07615 9.11732C5.92137 9.49099 6.00692 9.92111 6.29292 10.2071L11.2929 15.2071C11.6834 15.5976 12.3166 15.5976 12.7071 15.2071L17.7071 10.2071C17.9931 9.92111 18.0787 9.49099 17.9239 9.11732C17.7691 8.74364 17.4045 8.5 17 8.5H7.00003Z" fill="#000000"/></svg></span></h5>
+                            <div class="accordion-container">';
+
+                        for ($i = 1; $i <= 20; $i++) {
+                            if (esc_html($item['answer_' . $i])) {
+                                $html_output .= '
+                                    <div class="accordion">
+                                        <h5>' . esc_html($item['question_' . $i]) . '</h5>
+                                        <p>' . esc_html($item['answer_' . $i]) . '</p>
+                                    </div>';
+                            }
                         }
                     }
 

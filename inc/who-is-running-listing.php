@@ -235,21 +235,21 @@
         <input id="listing-search" type="text" placeholder="Search for a candidate, party, region, or district">
       </div>
       <div class="filter-container">
-        <select id="district-select" name="district">
+        <select id="city-select" name="party">
           <option value="blank">Choose a city...</option>
-          <?php foreach (array_unique(array_column($data, 'office_sought')) as $office_sought) : ?>
-              <?php if (!empty(esc_attr($office_sought))) : ?>
-                <option value="<?php echo esc_attr(str_replace(' ', '-', $office_sought)); ?>"><?php echo esc_html($office_sought); ?></option>
-              <?php endif; ?>
+          <?php foreach (array_unique(array_column($data, 'city')) as $party) : ?>
+            <?php if (!empty(esc_attr($party))) : ?>
+              <option value="<?php echo esc_attr(str_replace(' ', '-', $party)); ?>"><?php echo esc_html($party); ?></option>
+            <?php endif; ?>
           <?php endforeach; ?>
         </select>
-        <select id="city-select" name="party">
+        <select id="district-select" name="district">
           <option value="blank">Choose an office...</option>
           <?php
-            $uniqueCities = array_unique(array_column($data, 'city'));
+            $uniqueOffice = array_unique(array_column($data, 'office_sought'));
 
             // Custom sort function
-            uasort($uniqueCities, function($a, $b) {
+            uasort($uniqueOffice, function($a, $b) {
                 // Extract numbers from the strings 'Ward x' using regex
                 preg_match('/\d+/', $a, $matchesA);
                 preg_match('/\d+/', $b, $matchesB);
@@ -261,10 +261,10 @@
                 return $numberA <=> $numberB;
             });
           ?>
-          <?php foreach ($uniqueCities as $party) : ?>
-            <?php if (!empty(esc_attr($party))) : ?>
-              <option value="<?php echo esc_attr(str_replace(' ', '-', $party)); ?>"><?php echo esc_html($party); ?></option>
-            <?php endif; ?>
+          <?php foreach ($uniqueOffice as $office_sought) : ?>
+              <?php if (!empty(esc_attr($office_sought))) : ?>
+                <option value="<?php echo esc_attr(str_replace(' ', '-', $office_sought)); ?>"><?php echo esc_html($office_sought); ?></option>
+              <?php endif; ?>
           <?php endforeach; ?>
         </select>
       </div>
@@ -302,17 +302,18 @@
                                     <span>(✔️ Endorsed)</span>
                                   <?php }; ?>
                                 </h5>
-                                <h5 class="hometown">Lives in: <?php echo esc_html($item['hometown']); ?></h5>
+                                <h5 class="hometown">🏠 Lives in: <?php echo esc_html($item['hometown']); ?></h5>
                                 <?php if (esc_html($item['incumbent'])) { ?>
-                                <h5 class="incumbent">Member of House</h5>
+                                <h5 class="incumbent">⭐ Incumbent</h5>
                                 <?php }; ?>
                                 <?php if (esc_html($item['website'])) { ?>
-                                <h5><a target="_blank" class="website" href="<?= esc_html($item['website']); ?>">Campaign website</a></h5>
+                                <h5>🔗 <a target="_blank" class="website" href="<?= esc_html($item['website']); ?>">Campaign website</a></h5>
                                 <?php }; ?>
                                 <?php if (esc_html($item['dropped_out'])) { ?>
                                 <h5>✖️ Out of the race</h5>
                                 <?php }; ?>
-                                <h5 class="read-qa">Read Q&A <span><svg xmlns="http://www.w3.org/2000/svg" width="21px" height="21px" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.00003 8.5C6.59557 8.5 6.23093 8.74364 6.07615 9.11732C5.92137 9.49099 6.00692 9.92111 6.29292 10.2071L11.2929 15.2071C11.6834 15.5976 12.3166 15.5976 12.7071 15.2071L17.7071 10.2071C17.9931 9.92111 18.0787 9.49099 17.9239 9.11732C17.7691 8.74364 17.4045 8.5 17 8.5H7.00003Z" fill="#000000"/></svg></span></h5>
+                                <?php if (!empty($item['answer_1']) || !empty($item['answer_2']) || !empty($item['answer_3']) || !empty($item['answer_4']) || !empty($item['answer_5']) || !empty($item['answer_6']) || !empty($item['answer_7']) || !empty($item['answer_8']) || !empty($item['answer_9']) || !empty($item['answer_10']) || !empty($item['answer_11']) || !empty($item['answer_12']) || !empty($item['answer_13']) || !empty($item['answer_14']) || !empty($item['answer_15']) || !empty($item['answer_16']) || !empty($item['answer_17']) || !empty($item['answer_18']) || !empty($item['answer_19']) || !empty($item['answer_20'])) { ?>
+                                <h5 class="read-qa">ℹ️ Read Q&A <span><svg xmlns="http://www.w3.org/2000/svg" width="21px" height="21px" viewBox="0 0 24 24" fill="none"><path fill-rule="evenodd" clip-rule="evenodd" d="M7.00003 8.5C6.59557 8.5 6.23093 8.74364 6.07615 9.11732C5.92137 9.49099 6.00692 9.92111 6.29292 10.2071L11.2929 15.2071C11.6834 15.5976 12.3166 15.5976 12.7071 15.2071L17.7071 10.2071C17.9931 9.92111 18.0787 9.49099 17.9239 9.11732C17.7691 8.74364 17.4045 8.5 17 8.5H7.00003Z" fill="#000000"/></svg></span></h5>
                                 <div class="accordion-container">
                                   <?php if (esc_html($item['answer_1'])) { ?> 
                                     <div class="accordion">
@@ -434,20 +435,8 @@
                                       <p><?php echo esc_html($item['answer_20']); ?></p>
                                     </div>
                                   <?php } ?>
-                                  <?php if (esc_html($item['answer_1'])) { ?> 
-                                    <div class="accordion">
-                                      <h5><?php echo esc_html($item['question_1']); ?></h5>
-                                      <p><?php echo esc_html($item['answer_1']); ?></p>
-                                    </div>
-                                  <?php } ?>
-                                  <?php if (esc_html($item['answer_1'])) { ?> 
-                                    <div class="accordion">
-                                      <h5><?php echo esc_html($item['question_1']); ?></h5>
-                                      <p><?php echo esc_html($item['answer_1']); ?></p>
-                                    </div>
-                                  <?php } ?>
-
                                 </div>
+                                <?php } ?>
                             </div>
                             <?php endif; ?>
                         <?php endforeach; ?>
