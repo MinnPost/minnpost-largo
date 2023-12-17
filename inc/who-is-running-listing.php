@@ -17,16 +17,20 @@
 
   $nested_sectioned_data = array();
   foreach ($data as $item) {
+      $city = $item['city']; // Assuming 'city' is the field name in your data
       $office_sought = $item['office_sought'];
       $parent_group = get_parent_group($office_sought);
-  
-      if (!isset($nested_sectioned_data[$parent_group])) {
-          $nested_sectioned_data[$parent_group] = array();
+
+      if (!isset($nested_sectioned_data[$city])) {
+          $nested_sectioned_data[$city] = array();
       }
-      if (!isset($nested_sectioned_data[$parent_group][$office_sought])) {
-          $nested_sectioned_data[$parent_group][$office_sought] = array();
+      if (!isset($nested_sectioned_data[$city][$parent_group])) {
+          $nested_sectioned_data[$city][$parent_group] = array();
       }
-      $nested_sectioned_data[$parent_group][$office_sought][] = $item;
+      if (!isset($nested_sectioned_data[$city][$parent_group][$office_sought])) {
+          $nested_sectioned_data[$city][$parent_group][$office_sought] = array();
+      }
+      $nested_sectioned_data[$city][$parent_group][$office_sought][] = $item;
   }
 
   function get_parent_group($office_sought) {
@@ -36,6 +40,19 @@
     
     return $office_sought;
   }
+
+  function ward_sort($a, $b) {
+    // Extract the numeric part from the ward names
+    preg_match('/Ward (\d+)/', $a, $matchesA);
+    $numA = isset($matchesA[1]) ? (int)$matchesA[1] : 0;
+
+    preg_match('/Ward (\d+)/', $b, $matchesB);
+    $numB = isset($matchesB[1]) ? (int)$matchesB[1] : 0;
+
+    // Compare the numbers
+    return $numA - $numB;
+}
+
 ?>
 <?php if ($data) { ?>
 <?php if ($data_type == "generic") { ?>
@@ -174,6 +191,7 @@
             $('h2').removeClass('hidden-district')
             $('.parent-group').removeClass('hidden-district')
             $('h3').removeClass('hidden-district')
+            $('.section').removeClass('hidden-district')
             return;
           }
           
@@ -183,8 +201,10 @@
               
               if (selectedDistrict === '' || dataDistrict === selectedDistrict) {
                   $(this).removeClass('hidden-district');
+                  $(this).removeClass('hidden-district');
               } else {
                   $(this).addClass('hidden-district');
+                  $(this).parent().addClass('hidden-district');
               }
           });
 
@@ -274,11 +294,14 @@
       </div>
     </div>
     <div id="data-feed-listing" class="listing-container">
-      <?php foreach ($nested_sectioned_data as $parent_group => $section_data) : ?>
-          <div class="parent-group">
-              <h2 data-district="<?php echo esc_attr(str_replace(' ', '-', $parent_group)); ?>"><?php echo esc_html($parent_group); ?></h2>
-              <?php foreach ($section_data as $office_sought => $group_data) : ?>
-                  <div class="section">
+      <?php foreach ($nested_sectioned_data as $city => $city_data) : ?>
+          <h1><?php echo esc_html($city); ?></h1>
+          <?php foreach ($city_data as $parent_group => $section_data) : ?>
+            <?php uksort($section_data, 'ward_sort'); ?>
+              <div class="parent-group">
+                  <h2><?php echo esc_html($parent_group); ?></h2>
+                  <?php foreach ($section_data as $office_sought => $group_data) : ?>
+                    <div class="section">
                     <?php if (esc_html($office_sought) != esc_html($parent_group)): ?>
                       <h3 data-district="<?php echo esc_attr(str_replace(' ', '-', $office_sought)); ?>"><?php echo esc_html($office_sought); ?></h3>
                     <?php endif; ?>
@@ -442,8 +465,9 @@
                         <?php endforeach; ?>
                       </div>
                   </div>
-              <?php endforeach; ?>
-          </div>
+                  <?php endforeach; ?>
+              </div>
+          <?php endforeach; ?>
       <?php endforeach; ?>
     </div>
   </div>
@@ -527,8 +551,10 @@
               dataDistrict2.each(function() {
                 if ($(this).data('district') == selectedDistrict) {
                   $(this).removeClass('hidden-district')
+                  $(this).parent().removeClass('hidden-district')
                 } else {
                   $(this).addClass('hidden-district')
+                  $(this).parent().addClass('hidden-district')
                 }
               })
           });
